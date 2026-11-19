@@ -1,5 +1,6 @@
 """Public release commands against a real completed runner export."""
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -22,13 +23,16 @@ class ReleaseCliTests(unittest.TestCase):
             selected = next(r for r in runs if r["episode_id"] == "S02")
             command = [sys.executable, str(ROOT / "run.py"), "replay",
                        "--root", str(paths.root), "--exports", str(paths.exports), "--check", "--run"]
+            environment = {**os.environ, "PYTHONIOENCODING": "utf-8"}
             replay = subprocess.run(command + [selected["run_id"]], cwd=ROOT,
-                                    capture_output=True, text=True, encoding="utf-8", timeout=30)
+                                    capture_output=True, text=True, encoding="utf-8", timeout=30,
+                                    env=environment)
             self.assertEqual(replay.returncode, 0, replay.stdout + replay.stderr)
             self.assertIn("наблюдения совпали", replay.stdout)
             self.assertIn("Повтор оценки: совпала", replay.stdout)
             missing = subprocess.run(command + ["unknown-run"], cwd=ROOT,
-                                     capture_output=True, text=True, encoding="utf-8", timeout=30)
+                                     capture_output=True, text=True, encoding="utf-8", timeout=30,
+                                     env=environment)
             self.assertEqual(missing.returncode, 2, missing.stdout + missing.stderr)
 
 
