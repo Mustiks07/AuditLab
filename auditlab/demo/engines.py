@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib
 import importlib.util
+import sys
 from pathlib import Path
 
 from . import standin
@@ -11,6 +12,8 @@ STANDIN = "demo-standin"
 
 
 def _module(name: str):
+    if name in sys.modules:
+        return sys.modules[name]
     try:
         if importlib.util.find_spec(name) is None:
             return None
@@ -42,6 +45,14 @@ def scorer():
             return dict(mod.score_submission(submission, truth, steps))
         return score, "auditlab.evaluator"
     return standin.score, STANDIN
+
+
+def runner():
+    """Trusted runner of Claude Pro 1: make_env("train").reset(seed, {snapshot_dir, export_dir, policy_name})."""
+    mod = _module("auditlab.runner")
+    if mod is not None and hasattr(mod, "make_env"):
+        return mod.make_env, "auditlab.runner"
+    return None, STANDIN
 
 
 def verifier():

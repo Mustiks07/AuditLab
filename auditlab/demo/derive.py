@@ -45,7 +45,7 @@ def allocation(snapshot: Snapshot, payment: Record) -> dict[str, object]:
         f = record.fields
         if f.get("account") != "UNAPPLIED" or f.get("payment_id") != pid:
             continue
-        credit, debit = int(f.get("credit_minor") or 0), int(f.get("debit_minor") or 0)
+        credit = int(f.get("credit_minor") or 0)
         field, sign = ("credit_minor", 1) if credit else ("debit_minor", -1)
         label = "поступление на нераспределённый остаток" if sign > 0 else "зачёт с нераспределённого остатка"
         item = _operand(record, field, sign, label)

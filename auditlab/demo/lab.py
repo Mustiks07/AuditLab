@@ -9,6 +9,7 @@ an existing run directory is never overwritten.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -82,72 +83,117 @@ def _load_truth(paths: DemoPaths, episode_id: str) -> dict:
 
 
 # ---------------------------------------------------------------- one experiment
-def execute(paths: DemoPaths, public_src: Path, truth: dict, meta: dict, *, policy_name: str = "reconcile",
-            truncate_after: int | None = None) -> dict:
-    """Run the auditor on a public snapshot and publish a completed export."""
+def _find(paths: DemoPaths, key: str) -> dict | None:
+    """Already published export for this sample/operation key (idempotency)."""
+    for directory in sorted(paths.exports.glob("*/console.json")):
+        try:
+            console = json.loads(directory.read_text(encoding="utf-8"))
+            if console.get("key") == key:
+                run = json.loads((directory.parent / "run.json").read_text(encoding="utf-8"))
+                return {**console, **run}
+        except (OSError, ValueError):
+            continue
+    return None
+
+
+def _jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def execute(paths: DemoPaths, public_src: Path, truth: dict, meta: dict, *, policy_name: str = "reconcile") -> dict:
+    """Run the auditor on a public snapshot and publish one completed export.
+
+    With auditlab.runner merged, the real trusted runner is used exactly as in
+    docs/INTERFACES.md (snapshot_dir with public/ + private/, new export_dir);
+    otherwise the labelled stand-in loop. Console metadata goes to console.json,
+    the runner's run.json is not modified. Truncated attempts are kept on disk
+    but the console never lists them.
+    """
     paths.ensure()
-    run_id = meta["run_id"]
-    final = paths.exports / run_id
-    if final.exists():
-        return json.loads((final / "run.json").read_text(encoding="utf-8"))
-    tmp = Path(tempfile.mkdtemp(prefix=f".tmp-{run_id}-", dir=paths.exports))
+    key = meta["key"]
+    done = _find(paths, key)
+    if done:
+        return done
+    work = Path(tempfile.mkdtemp(prefix=".work-", dir=paths.root))
     try:
-        (tmp / "public").mkdir()
+        episode = work / "episode"
+        (episode / "public").mkdir(parents=True)
+        (episode / "private").mkdir()
         for name in PUBLIC_FILES:
             if (public_src / name).exists():
-                shutil.copyfile(public_src / name, tmp / "public" / name)
-        snap = Snapshot(tmp / "public")
-        session, session_engine = engines.session(tmp / "public")
+                shutil.copyfile(public_src / name, episode / "public" / name)
+        _dump(episode / "private" / "truth.json", truth)
+        snap = Snapshot(episode / "public")
+        staged = work / "export"
         policy, policy_engine = engines.policy(policy_name, 0)
-        score_fn, score_engine = engines.scorer()
+        make_env, runner_engine = engines.runner()
         started = time.monotonic()
-        result = standin.run_episode(session, policy, truth, snap.manifest, score_fn)
+        if make_env is not None:
+            env = make_env("train")
+            observation, _ = env.reset(0, {"snapshot_dir": str(episode), "export_dir": str(staged),
+                                           "policy_name": policy_name})
+            for _ in range(standin.MAX_STEPS):
+                observation, _, terminated, truncated, _ = env.step(policy.act(copy.deepcopy(observation)))
+                if terminated or truncated:
+                    break
+            if not (staged / "run.json").is_file():
+                raise LabError("runner_no_export", "The runner finished without publishing an export.")
+            engine = {"runner": runner_engine, "session": runner_engine, "policy": policy_engine,
+                      "evaluator": runner_engine}
+        else:
+            session, session_engine = engines.session(episode / "public")
+            score_fn, score_engine = engines.scorer()
+            result = standin.run_episode(session, policy, truth, snap.manifest, score_fn)
+            staged.mkdir()
+            shutil.copytree(episode / "public", staged / "public")
+            with (staged / "trajectories.jsonl").open("w", encoding="utf-8") as out:
+                for line in result["trajectory"]:
+                    out.write(json.dumps(line, ensure_ascii=False, separators=(",", ":")) + "\n")
+            _dump(staged / "submission.json", result["submission"])
+            _dump(staged / "score.json", result["score"])
+            _dump(staged / "run.json", {"run_id": meta["run_id"], "episode_id": snap.manifest.get("episode_id"),
+                                        "policy": getattr(policy, "name", policy_name), "mode": "train",
+                                        "status": result["status"]})
+            engine = {"runner": engines.STANDIN, "session": session_engine, "policy": policy_engine,
+                      "evaluator": score_engine}
         elapsed = round(time.monotonic() - started, 4)
-        trajectory = result["trajectory"]
-        status = result["status"]
-        if truncate_after is not None:  # labelled sample of an interrupted attempt
-            trajectory = trajectory[:truncate_after]
-            status = "aborted"
-        with (tmp / "trajectories.jsonl").open("w", encoding="utf-8") as out:
-            for line in trajectory:
-                out.write(json.dumps(line, ensure_ascii=False, separators=(",", ":")) + "\n")
-        if status != "aborted":
-            _dump(tmp / "submission.json", result["submission"])
-            _dump(tmp / "score.json", result["score"])
+        run = json.loads((staged / "run.json").read_text(encoding="utf-8"))
         verify, verify_engine = engines.verifier()
-        if verify is not None:
-            findings = [dict(f) for f in verify(tmp / "public")]
-            _dump(tmp / "verifier.json", {"engine": verify_engine, "findings": findings})
-        run = {
-            "run_id": run_id,
-            "episode_id": snap.manifest.get("episode_id"),
-            "policy": getattr(policy, "name", policy_name),
-            "mode": "train",
-            "status": status,
+        if verify is not None:  # independent check gets its own copy of public/ only
+            shutil.copytree(staged / "public", work / "verify" / "public")
+            findings = [dict(f) for f in verify(work / "verify" / "public")]
+            _dump(staged / "verifier.json", {"engine": verify_engine, "findings": findings})
+        trajectory = _jsonl(staged / "trajectories.jsonl")
+        score = json.loads((staged / "score.json").read_text(encoding="utf-8")) if (staged / "score.json").exists() else {}
+        submission = json.loads((staged / "submission.json").read_text(encoding="utf-8")) if (staged / "submission.json").exists() else {}
+        console = {
+            "key": key,
             "label": meta.get("label", "live_experiment"),
             "company": meta.get("company") or f"Компания {snap.manifest.get('episode_id')}",
             "period": {"start": snap.manifest.get("period_start"), "end": snap.manifest.get("period_end")},
             "created_at": meta.get("created_at") or _now(),
-            "engine": {"session": session_engine, "policy": policy_engine, "evaluator": score_engine,
-                       "generator": meta.get("generator", "fixture"), "verifier": verify_engine or "not_connected"},
+            "engine": {**engine, "generator": meta.get("generator", "fixture"), "verifier": verify_engine or "not_connected"},
             "steps": len(trajectory),
-            "inspection_steps": result["inspection_steps"] if status != "aborted" else len(trajectory),
-            "reward": result["score"]["reward"] if status != "aborted" else None,
-            "findings": len(result["submission"]["findings"]) if status != "aborted" else None,
-            "elapsed_s": elapsed if not meta.get("created_at") else None,
+            "inspection_steps": sum(1 for line in trajectory if (line.get("action") or {}).get("action") != "submit"),
+            "reward": score.get("reward"),
+            "findings": len(submission.get("findings") or []),
+            "elapsed_s": None if meta.get("created_at") else elapsed,
         }
-        for key in ("pair_id", "parent_run_id", "change", "prediction", "note", "reason", "journal_available",
-                    "derived_from", "op_key"):
-            if meta.get(key) is not None:
-                run[key] = meta[key]
-        _dump(tmp / "run.json", run)
-        _save_truth(paths, truth, {"run_id": run_id, "source": str(meta.get("generator", "fixture")),
+        for field in ("pair_id", "parent_run_id", "change", "prediction", "note", "derived_from", "op_key"):
+            if meta.get(field) is not None:
+                console[field] = meta[field]
+        _dump(staged / "console.json", console)
+        _save_truth(paths, truth, {"run_id": run["run_id"], "source": str(meta.get("generator", "fixture")),
                                    "parent_run_id": meta.get("parent_run_id"), "change": meta.get("change")})
-        os.replace(tmp, final)
-        return run
-    except BaseException:
-        shutil.rmtree(tmp, ignore_errors=True)
-        raise
+        final = paths.exports / str(run["run_id"])
+        if final.exists():
+            raise LabError("run_exists", "An export with this run_id already exists; it is never overwritten.")
+        os.replace(staged, final)
+        return {**console, **run}
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
 
 
 def build_samples(paths: DemoPaths) -> list[str]:
@@ -155,17 +201,10 @@ def build_samples(paths: DemoPaths) -> list[str]:
     made = []
     for run_id, source, company, pair_id in SAMPLES:
         truth = json.loads((source / "private" / "truth.json").read_text(encoding="utf-8"))
-        execute(paths, source / "public", truth, {"run_id": run_id, "label": "training_sample", "company": company,
-                                                  "pair_id": pair_id, "created_at": SAMPLE_CREATED, "note": SAMPLE_NOTE})
-        made.append(run_id)
-    s02 = SAMPLES[1][1]
-    truth = json.loads((s02 / "private" / "truth.json").read_text(encoding="utf-8"))
-    execute(paths, s02 / "public", truth, {
-        "run_id": "TRAIN-S02-aborted", "label": "training_sample", "company": "Компания S02 · оборванная попытка",
-        "created_at": SAMPLE_CREATED, "note": SAMPLE_NOTE + " Обрыв смоделирован для проверки отображения.",
-        "reason": "policy_crash: адаптер политики завершился с кодом 1 после шага 3", "journal_available": True},
-        truncate_after=3)
-    made.append("TRAIN-S02-aborted")
+        run = execute(paths, source / "public", truth, {
+            "key": f"sample:{run_id}", "run_id": run_id, "label": "training_sample", "company": company,
+            "pair_id": pair_id, "created_at": SAMPLE_CREATED, "note": SAMPLE_NOTE})
+        made.append(run["run_id"])
     return made
 
 
@@ -211,14 +250,14 @@ def live_change(paths: DemoPaths, source_run_id: str, change: dict, prediction: 
             source_dir = store.run_dir(source_run_id)
         except (NotFound, Refused) as exc:
             raise LabError("unknown_run", f"Run {source_run_id} is not an open completed export.") from exc
-        source_meta = json.loads((source_dir / "run.json").read_text(encoding="utf-8"))
+        source_meta = store.meta(source_run_id)
         h = _short(op_key)
         episode = f"{str(source_meta['episode_id'])[:40]}-L{h[:4]}"
         with tempfile.TemporaryDirectory(dir=paths.root) as scratch:
             built = standin.apply_change(source_dir / "public", change, Path(scratch) / "public", episode)
             pid = source_meta.get("pair_id") or f"PAIR-{source_run_id}"
             run = execute(paths, Path(scratch) / "public", built["truth"], {
-                "run_id": f"LIVE-{h}", "label": "live_experiment", "generator": engines.STANDIN,
+                "key": f"op:{op_key}", "run_id": f"LIVE-{h}", "label": "live_experiment", "generator": engines.STANDIN,
                 "company": f"{source_meta.get('company') or source_meta['episode_id']} · изменён факт",
                 "parent_run_id": source_run_id, "pair_id": pid, "op_key": op_key,
                 "change": {**change, "moved": built["moved"]},
@@ -248,7 +287,7 @@ def rescore(paths: DemoPaths, source_run_id: str, finding_index: int, replace_fr
             source_dir = store.run_dir(source_run_id)
         except (NotFound, Refused) as exc:
             raise LabError("unknown_run", f"Run {source_run_id} is not an open completed export.") from exc
-        meta = json.loads((source_dir / "run.json").read_text(encoding="utf-8"))
+        meta = store.meta(source_run_id)
         submission = store.read(source_run_id, "submission.json")
         trajectory = store.read(source_run_id, "trajectories.jsonl") or []
         if not submission:
@@ -284,14 +323,16 @@ def rescore(paths: DemoPaths, source_run_id: str, finding_index: int, replace_fr
                 _dump(tmp / "score.json", new_score)
                 if (source_dir / "verifier.json").exists():
                     shutil.copyfile(source_dir / "verifier.json", tmp / "verifier.json")
-                run = {**{k: meta[k] for k in ("episode_id", "policy", "mode", "company", "period", "pair_id") if k in meta},
-                       "run_id": run_id, "status": "completed", "label": "rescore_copy", "created_at": _now(),
-                       "engine": {**(meta.get("engine") or {}), "evaluator": score_engine},
-                       "steps": len(trajectory), "inspection_steps": steps, "reward": new_score["reward"],
-                       "findings": len(findings), "parent_run_id": source_run_id, "op_key": op_key,
-                       "derived_from": {"run_id": source_run_id, "finding_index": finding_index,
-                                        "replaced": {"from": replace_from, "to": replace_to}}}
-                _dump(tmp / "run.json", run)
+                _dump(tmp / "run.json", {"run_id": run_id, "episode_id": meta["episode_id"], "policy": meta["policy"],
+                                         "mode": "train", "status": "completed"})
+                _dump(tmp / "console.json", {
+                    **{k: meta[k] for k in ("company", "period", "pair_id") if k in meta},
+                    "key": f"op:{op_key}", "label": "rescore_copy", "created_at": _now(),
+                    "engine": {**(meta.get("engine") or {}), "evaluator": score_engine},
+                    "steps": len(trajectory), "inspection_steps": steps, "reward": new_score["reward"],
+                    "findings": len(findings), "parent_run_id": source_run_id, "op_key": op_key,
+                    "derived_from": {"run_id": source_run_id, "finding_index": finding_index,
+                                     "replaced": {"from": replace_from, "to": replace_to}}})
                 os.replace(tmp, final)
             except BaseException:
                 shutil.rmtree(tmp, ignore_errors=True)

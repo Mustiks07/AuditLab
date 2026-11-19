@@ -1,0 +1,25 @@
+{
+  "key": "sample:TRAIN-S02-reconcile",
+  "label": "training_sample",
+  "company": "Компания S02 · зачёт после границы",
+  "period": {
+    "start": "2026-11-01T00:00:00+05:00",
+    "end": "2026-12-01T00:00:00+05:00"
+  },
+  "created_at": "2026-11-19T12:00:00+05:00",
+  "engine": {
+    "runner": "demo-standin",
+    "session": "demo-standin",
+    "policy": "demo-standin",
+    "evaluator": "demo-standin",
+    "generator": "fixture",
+    "verifier": "not_connected"
+  },
+  "steps": 7,
+  "inspection_steps": 6,
+  "reward": 0.988,
+  "findings": 1,
+  "elapsed_s": null,
+  "pair_id": "foundation-allocation",
+  "note": "Учебный экспорт: открытые разработческие данные, прогон учебной сборки консоли. Не результат конкурсного раннера."
+}
