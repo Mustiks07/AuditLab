@@ -17,7 +17,7 @@
 [offline.md](../release/offline.md), сеть контейнеру нужна только для проброса порта на localhost):
 
 ```sh
-AUDITLAB_RUNTIME_IMAGE=$(python3.11 -c "import json; print(json.load(open('manifest.json'))['images']['runtime']['id'])")
+AUDITLAB_RUNTIME_IMAGE=$(python3.11 offline.py image --role runtime)
 mkdir -p demo-results
 docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop ALL \
   --security-opt no-new-privileges --cpus 2 --memory 2g \

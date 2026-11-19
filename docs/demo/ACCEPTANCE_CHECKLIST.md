@@ -15,8 +15,8 @@
 - [ ] ОС и ядро (`uname -srm`, `/etc/os-release`), `python3.11 --version`, `docker version`.
 - [ ] `docker info --format '{{.CgroupVersion}} {{.Driver}} {{.DriverStatus}}'`.
   Нужен **cgroup v2**; на v1 лимиты не подтверждаются, и это законно даёт exit 2.
-  Хранилище образов должно быть классическим (`Driver` = `overlay2`); если в `DriverStatus` указан
-  `io.containerd.snapshotter.v1`, см. раздел «Перед запуском» в offline.md.
+  Записать хранилище: классическое или `io.containerd.snapshotter.v1` (containerd).
+  Ограничение старого RC1 и отдельные CI-свидетельства нового комплекта — в offline.md.
 - [ ] `docker images -q | wc -l` до загрузки: образов проекта быть не должно.
 
 ## 1. Комплект

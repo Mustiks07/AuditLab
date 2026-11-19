@@ -76,15 +76,46 @@ jobs:
           compression-level: 0
           retention-days: 14
   offline-rehearsal:
-    name: Internal offline rehearsal on a fresh host
+    name: Internal offline rehearsal (${{ matrix.image-store }})
     needs: offline-bundle
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        image-store: [classic, containerd]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11.14'
+      - name: Stop the default daemon before the isolated Docker 29 check
+        if: matrix.image-store == 'containerd'
+        run: sudo systemctl stop docker.service docker.socket
+      - name: Install pinned Docker 29 with containerd image storage
+        if: matrix.image-store == 'containerd'
+        id: modern-docker
+        uses: docker/setup-docker-action@3f1ab1ab0e29231562e4db4ca600c1a49653bac6 # v5
+        with:
+          version: v29.0.1
+          set-host: 'true'
+          daemon-config: '{"features":{"containerd-snapshotter":true}}'
+      - name: Expose the isolated daemon at the trusted controller socket
+        if: matrix.image-store == 'containerd'
+        env:
+          DOCKER_SOCKET: ${{ steps.modern-docker.outputs.sock }}
+        run: sudo ln -sf "${DOCKER_SOCKET#unix://}" /var/run/docker.sock
+      - name: Verify the intended storage backend is actually active
+        env:
+          IMAGE_STORE: ${{ matrix.image-store }}
+        run: |
+          python - <<'PYSTORE'
+          import json, os, subprocess
+          info = json.loads(subprocess.check_output(['docker', 'info', '--format', '{{json .}}']))
+          modern = 'io.containerd.snapshotter.v1' in str(info.get('DriverStatus'))
+          assert modern == (os.environ['IMAGE_STORE'] == 'containerd'), info.get('DriverStatus')
+          print(json.dumps({key: info.get(key) for key in ('ServerVersion', 'Driver', 'DriverStatus', 'CgroupVersion')}))
+          PYSTORE
       - uses: actions/download-artifact@v4
         with:
           name: offline-bundle-${{ github.sha }}
@@ -106,8 +137,20 @@ jobs:
         run: python build/ci-release/offline.py verify --suite rehearsal --output-root artifacts/offline-ci
       - name: Require complete internal measurements and actual resource limits
         run: python tools/check_rehearsal_evidence.py --results artifacts/offline-ci --bundle build/ci-release --expected-revision "$GITHUB_SHA" --output artifacts/offline-ci/evidence-summary.json
+      - name: Verify the receiver command for resolving demo and replay image IDs
+        run: |
+          python - <<'PYIMAGES'
+          import json, subprocess, sys
+          from pathlib import Path
+          launches = list(Path('artifacts/offline-ci').glob('verify-*/launch.json'))
+          assert len(launches) == 1
+          launch = json.loads(launches[0].read_text())
+          resolved = {role: subprocess.check_output([sys.executable, 'build/ci-release/offline.py', 'image', '--role', role], text=True).strip() for role in ('runtime', 'policy', 'verifier')}
+          assert resolved == {role: image['id'] for role, image in launch['loaded_images'].items()}
+          Path('artifacts/offline-ci/resolved-images.json').write_text(json.dumps(resolved, indent=2))
+          PYIMAGES
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: offline-evidence-${{ github.sha }}
+          name: offline-evidence-${{ matrix.image-store }}-${{ github.sha }}
           path: artifacts/offline-ci/

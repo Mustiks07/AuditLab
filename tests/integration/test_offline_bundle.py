@@ -1,5 +1,7 @@
 """Offline launcher contract: corrupt packages never reach Docker, no implicit pulls or mounts."""
 import hashlib
+from contextlib import redirect_stdout
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -25,6 +27,48 @@ def manifest_for(directory):
 
 
 class OfflineBundleTests(unittest.TestCase):
+    def test_resolve_classic_and_containerd_identities_without_using_tags(self):
+        config, descriptor = "sha256:" + "a" * 64, "sha256:" + "b" * 64
+        image = dict(id=config, oci_manifest_digest=descriptor, architecture="amd64", os="linux", tag="mutable:tag")
+        def inspected(identity):
+            return subprocess.CompletedProcess([], 0, json.dumps(dict(Id=identity, Os="linux", Architecture="amd64")))
+        with patch("offline.subprocess.run", return_value=inspected(config)) as docker:
+            self.assertEqual(offline.loaded_image(image, {})["id"], config)
+            self.assertEqual(docker.call_count, 1)
+        with patch("offline.subprocess.run", side_effect=[subprocess.CompletedProcess([], 1), inspected(descriptor)]) as docker:
+            resolved = offline.loaded_image(image, {})
+            self.assertEqual((resolved["id"], resolved["source_id"]), (descriptor, config))
+            self.assertEqual([c.args[0][3] for c in docker.call_args_list], [config, descriptor])
+            command = offline.runtime_command({"images": {r: resolved for r in ("runtime", "policy", "verifier")}},
+                                              Path("/tmp/results"), "0,1", "rehearsal", 0)
+            self.assertIn(descriptor, command)
+            self.assertIn("AUDITLAB_POLICY_IMAGE=" + descriptor, command)
+            self.assertNotIn("mutable:tag", command)
+
+    def test_unrelated_loaded_identity_and_platform_are_rejected(self):
+        image = dict(id="sha256:" + "a" * 64, architecture="amd64")
+        for changed in (dict(Id="sha256:" + "b" * 64), dict(Os="windows"), dict(Architecture="arm64")):
+            actual = dict(Id=image["id"], Os="linux", Architecture="amd64") | changed
+            with self.subTest(changed=changed), patch("offline.subprocess.run", return_value=
+                    subprocess.CompletedProcess([], 0, json.dumps(actual))), self.assertRaises(ValueError):
+                offline.loaded_image(image, {})
+        with patch("offline.subprocess.run", return_value=subprocess.CompletedProcess([], 1)), self.assertRaises(ValueError):
+            offline.loaded_image(image, {})
+
+    def test_image_command_prints_only_verified_id_and_never_loads_or_pulls(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest = manifest_for(root)
+            identity = manifest["images"]["runtime"]["id"]
+            stdout = io.StringIO()
+            with patch("offline.subprocess.run", return_value=subprocess.CompletedProcess([], 0,
+                       json.dumps(dict(Id=identity, Os="linux")))) as docker, redirect_stdout(stdout):
+                self.assertEqual(offline.main(["image", "--bundle", str(root)]), 0)
+            self.assertEqual(stdout.getvalue(), identity + "\n")
+            self.assertEqual(docker.call_args.args[0][:3], ["docker", "image", "inspect"])
+            self.assertEqual(docker.call_args.kwargs["env"]["DOCKER_HOST"], "unix:///var/run/docker.sock")
+            self.assertNotIn("DOCKER_CONTEXT", docker.call_args.kwargs["env"])
+
     def test_corrupt_payload_is_rejected_before_any_docker_invocation(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

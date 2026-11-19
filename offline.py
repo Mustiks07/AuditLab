@@ -46,9 +46,40 @@ def verify_bundle(bundle):
     for role, image in manifest["images"].items():
         if not isinstance(image, dict) or not IMAGE_ID.fullmatch(image.get("id", "")) or image.get("os") != "linux":
             raise ValueError(f"invalid Linux image identity: {role}")
+        if "oci_manifest_digest" in image and (not isinstance(image["oci_manifest_digest"], str)
+                                               or not IMAGE_ID.fullmatch(image["oci_manifest_digest"])):
+            raise ValueError(f"invalid OCI manifest identity: {role}")
     if not re.fullmatch(r"[0-9a-f]{40}", manifest.get("source_revision", "")):
         raise ValueError("invalid source revision")
     return manifest
+
+
+def local_docker_environment():
+    environment = {**os.environ, "DOCKER_HOST": "unix:///var/run/docker.sock"}
+    environment.pop("DOCKER_CONTEXT", None)
+    return environment
+
+
+def loaded_image(image, environment):
+    """Classic storage addresses configs; containerd addresses OCI manifests.
+
+    Both immutable identities originate in the checked archive. Never select a
+    mutable tag at runtime or accept an unrelated image that happens to exist.
+    """
+    identities = [image["id"]]
+    if image.get("oci_manifest_digest") and image["oci_manifest_digest"] not in identities:
+        identities.append(image["oci_manifest_digest"])
+    for identity in identities:
+        inspected = subprocess.run(["docker", "image", "inspect", identity, "--format", "{{json .}}"],
+                                   capture_output=True, text=True, env=environment)
+        if inspected.returncode:
+            continue
+        actual = json.loads(inspected.stdout)
+        if actual.get("Id") != identity or actual.get("Os") != "linux" or (
+                image.get("architecture") and actual.get("Architecture") != image["architecture"]):
+            raise ValueError("loaded image identity or platform differs from the bundle")
+        return {**image, "source_id": image["id"], "id": identity}
+    raise ValueError(f"bundle image is not loaded: {image['id']}; run offline.py verify first")
 
 
 def select_cpus(explicit=None):
@@ -124,7 +155,9 @@ def write_report(path, report):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("verify", "check"))
+    parser.add_argument("command", choices=("verify", "check", "image"))
+    parser.add_argument("--role", choices=("runtime", "verifier", "policy"), default="runtime",
+                        help="image command: print the verified local immutable ID for this role")
     parser.add_argument("--bundle", type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument("--suite", choices=("quick", "rehearsal"), default="quick")
     parser.add_argument("--output-root", type=Path, default=None)
@@ -137,6 +170,9 @@ def main(argv=None):
             raise ValueError("launcher requires Python 3.11")
         # Complete every payload check before the first Docker command, especially docker load.
         manifest = verify_bundle(args.bundle)
+        if args.command == "image":
+            print(loaded_image(manifest["images"][args.role], local_docker_environment())["id"])
+            return 0
         print(f"Bundle hashes verified; source {manifest['source_revision']}", flush=True)
         if args.command == "check":
             return 0
@@ -149,8 +185,7 @@ def main(argv=None):
                   "images": manifest["images"], "cpu_set": cpu_set, "controller_memory_limit": "2g",
                   "network": "none", "suite": args.suite, "started_at": datetime.now(timezone.utc).isoformat()}
         write_report(report_path, report)
-        environment = {**os.environ, "DOCKER_HOST": "unix:///var/run/docker.sock"}
-        environment.pop("DOCKER_CONTEXT", None)
+        environment = local_docker_environment()
         info = subprocess.run(["docker", "--host", "unix:///var/run/docker.sock", "info", "--format", "{{json .}}"],
                               check=True, text=True, capture_output=True, env=environment)
         daemon = json.loads(info.stdout)
@@ -165,14 +200,10 @@ def main(argv=None):
         load_started = time.monotonic()
         subprocess.run(["docker", "load", "--input", str(args.bundle.resolve() / "images.tar")], check=True, env=environment)
         report["image_load_seconds"] = time.monotonic() - load_started
-        for role, image in manifest["images"].items():
-            inspected = subprocess.run(["docker", "image", "inspect", image["id"], "--format", "{{json .}}"],
-                                       check=True, capture_output=True, text=True, env=environment)
-            actual = json.loads(inspected.stdout)
-            if actual.get("Id") != image["id"] or actual.get("Os") != "linux":
-                raise ValueError(f"loaded image identity differs for {role}")
-        command = runtime_command(manifest, output, cpu_set, args.suite, Path("/var/run/docker.sock").stat().st_gid)
-        report.update(phase="verification", command=command)
+        resolved = {role: loaded_image(image, environment) for role, image in manifest["images"].items()}
+        runtime_manifest = {**manifest, "images": resolved}
+        command = runtime_command(runtime_manifest, output, cpu_set, args.suite, Path("/var/run/docker.sock").stat().st_gid)
+        report.update(phase="verification", command=command, loaded_images=resolved)
         write_report(report_path, report)
         print(f"Running offline verification on CPUs {cpu_set}; results: {output}", flush=True)
         verification_started = time.monotonic()

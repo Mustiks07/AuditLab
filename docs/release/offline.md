@@ -53,8 +53,18 @@ hardlink в дереве исходников отвергаются. Генер
 
 ### Перед запуском: хранилище образов и cgroup
 
-Комплект проверен на классическом хранилище образов Docker (`overlay2`). Новые установки
-Docker Engine 29 по умолчанию используют containerd image store. На нём `docker load` из
+Сборщик сохраняет все три образа **по тегам**, проверяет соответствие тегов image IDs
+в Docker-каталоге и полноту OCI-индекса. CI испытывает один и тот же комплект на
+двух свежих хостах: классическое хранилище и Docker 29.0.1 с containerd image store.
+Артефакты `offline-evidence-classic-SHA` и `offline-evidence-containerd-SHA` разделены;
+успех одного хранилища не подтверждает другое. Во время исполнения pulls запрещены,
+каждый контейнер запускается по проверенной неизменяемой идентичности образа.
+Манифест хранит исходный config ID и OCI manifest digest: классическое хранилище
+использует первый, containerd — второй. Launcher принимает только эти проверенные
+идентификаторы, не mutable tag; выбранные значения записываются в `launch.json.loaded_images`.
+
+**Ограничение старого `v0.1.0-rc.1`:** он проверен на классическом хранилище Docker (`overlay2`).
+Новые установки Docker Engine 29 по умолчанию используют containerd image store. На нём RC1 `docker load` из
 `images.tar` загружает **один безымянный образ из трёх** (в OCI `index.json` комплекта
 `v0.1.0-rc.1` один манифест, в `manifest.json` три образа без `RepoTags`), и `verify` завершается
 `Offline launch failed: ... docker image inspect sha256:9cad68... returned non-zero exit status 1`.
@@ -64,15 +74,19 @@ Docker Engine 29 по умолчанию используют containerd image s
 docker info --format '{{.Driver}} {{.DriverStatus}} cgroup={{.CgroupVersion}}'
 ```
 
-`overlay2 ... cgroup=2` — подходящая конфигурация. Если в выводе есть `io.containerd.snapshotter.v1`,
-на проверочной машине переключите демон на классическое хранилище и перезапустите его. Уже
+Для повторения именно RC1 `overlay2 ... cgroup=2` — подходящая конфигурация. Если в выводе есть
+`io.containerd.snapshotter.v1`, временный обход для RC1 — на отдельной проверочной машине
+переключить демон на классическое хранилище и перезапустить его. Уже
 загруженные образы при этом не видны:
 
 ```json
 {"features": {"containerd-snapshotter": false}}
 ```
 
-(`/etc/docker/daemon.json`, затем перезапуск Docker). `cgroup=1` даёт только функциональную
+Это настройка `features` в `/etc/docker/daemon.json` с сохранением остальных параметров,
+затем перезапуск Docker; не меняйте рабочий демон с чужими контейнерами ради проверки RC1.
+Для нового комплекта проверяйте свидетельства своей версии на нужном хранилище.
+`cgroup=1` даёт только функциональную
 проверку: launcher пишет `Resource limits are not supported by this daemon`, ресурсные строки
 остаются `not_checked`, а `verify` и evidence checker законно возвращают 2.
 
@@ -144,7 +158,7 @@ JSON/stdin; ему не требуется том каталога controller.
 а порт доступен только с localhost; интерфейс и ресурсы находятся в образе.
 
 ```sh
-AUDITLAB_RUNTIME_IMAGE=$(python -c "import json; print(json.load(open('manifest.json'))['images']['runtime']['id'])")
+AUDITLAB_RUNTIME_IMAGE=$(python offline.py image --role runtime)
 mkdir -p demo-results
 docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop ALL \
   --security-opt no-new-privileges --cpus 2 --memory 2g \
@@ -152,6 +166,11 @@ docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop A
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" \
   "$AUDITLAB_RUNTIME_IMAGE" python run.py demo --host 0.0.0.0 --root /results/demo
 ```
+
+Команда `image` проверяет хеши комплекта и возвращает только неизменяемый ID уже
+загруженного локального образа. В старом RC1 этой команды нет: для него на
+классическом хранилище берите `images.runtime.id` из `manifest.json`, как в инструкции
+внутри RC1. Новый launcher не изменяет архив RC1 задним числом.
 
 Откройте `http://127.0.0.1:8765/`: сервер в контейнере слушает `0.0.0.0`; образ `v0.1.0-rc.1` печатает
 адрес `http://0.0.0.0:8765/`, его в браузере не открывайте. Сценарий защиты на 3 минуты:
