@@ -1,0 +1,24 @@
+name: Integration checks
+on:
+  push:
+    branches: [main, integration/release]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.14'
+      - name: Run available checks (incomplete release is reported explicitly)
+        run: python run.py verify --output artifacts/ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-${{ github.sha }}
+          path: artifacts/ci/
