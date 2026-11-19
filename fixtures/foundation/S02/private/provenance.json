@@ -1,0 +1,12 @@
+{
+  "episode_id": "S02",
+  "source": "handwritten public integration example",
+  "changes": [
+    {
+      "event": "J4",
+      "field": "timestamp",
+      "before": "2026-11-30T23:59:00+05:00",
+      "after": "2026-12-01T00:01:00+05:00"
+    }
+  ]
+}
