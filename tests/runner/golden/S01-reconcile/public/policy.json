@@ -1,0 +1,12 @@
+{
+  "allocation": {
+    "deadline": "2026-12-01T00:00:00+05:00",
+    "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its remaining balance is credits minus debits. The settlement index includes every UNAPPLIED row for the payment strictly before the reporting boundary."
+  },
+  "period": {
+    "end_exclusive": true,
+    "recognition": "invoice issue date for invoice; transaction date for cash and settlement"
+  },
+  "fx_date": "Local date of the source event",
+  "rounding": "ROUND_HALF_UP"
+}
