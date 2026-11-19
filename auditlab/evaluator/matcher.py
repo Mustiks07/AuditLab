@@ -4,8 +4,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from fractions import Fraction
 
-from auditlab.contracts import MAX_STEPS, Score, Submission
-from auditlab.evaluator.schema import SubmissionError, validate_submission
+from auditlab.contracts import MAX_EVIDENCE, MAX_STEPS, Score, Submission
+from auditlab.evaluator.schema import ISSUE_TYPES, SubmissionError, validate_submission
 
 INSPECTION_COST = Fraction(2, 1000)
 
@@ -30,22 +30,43 @@ def _canon_ids(ids: list[str]) -> tuple[str, ...]:
 
 
 def validate_truth(truth: object) -> None:
-    """Reject a reference that violates the uniqueness rule of SPEC §9.3 or lacks required fields."""
+    """Validate closed truth before matching, without coercion (SPEC §5 and §9.3).
+
+    A financial issue is identified by type and canonical affected entities. Changing
+    its amount, currency or evidence does not create a second financial cause.
+    """
     if not isinstance(truth, dict) or not isinstance(truth.get("episode_id"), str) \
-            or not isinstance(truth.get("issues"), list):
+            or not truth["episode_id"] or not isinstance(truth.get("issues"), list):
         raise TruthError("truth must be an object with episode_id and issues")
     seen: set[tuple] = set()
     issue_ids: set[str] = set()
     for issue in truth["issues"]:
-        try:
-            key = (issue["type"], _canon_ids(issue["affected_ids"]), issue["currency"],
-                   int(issue["expected_amount_minor"]))
-            sets = issue["evidence_sets"]
-            issue_id = issue["issue_id"]
-        except (KeyError, TypeError, ValueError) as error:
-            raise TruthError(f"malformed truth issue: {error!r}") from error
-        if not sets or any(not group for group in sets):
-            raise TruthError("every issue needs at least one non-empty evidence set")
+        if not isinstance(issue, dict):
+            raise TruthError("truth issue must be an object")
+        issue_id = issue.get("issue_id")
+        if not isinstance(issue_id, str) or not issue_id:
+            raise TruthError("issue_id must be a non-empty string")
+        issue_type = issue.get("type")
+        if not isinstance(issue_type, str) or issue_type not in ISSUE_TYPES:
+            raise TruthError("unknown truth issue type")
+        affected = issue.get("affected_ids")
+        if not isinstance(affected, list) or not affected \
+                or any(not isinstance(value, str) or not value for value in affected):
+            raise TruthError("affected_ids must be a non-empty list of non-empty strings")
+        amount = issue.get("expected_amount_minor")
+        if not isinstance(amount, int) or isinstance(amount, bool) or amount < 0:
+            raise TruthError("expected_amount_minor must be a nonnegative integer, not boolean")
+        currency = issue.get("currency")
+        if not isinstance(currency, str) or not currency:
+            raise TruthError("currency must be a non-empty string")
+        sets = issue.get("evidence_sets")
+        if not isinstance(sets, list) or not sets:
+            raise TruthError("evidence_sets must be a non-empty list")
+        for group in sets:
+            if not isinstance(group, list) or not 1 <= len(group) <= MAX_EVIDENCE \
+                    or any(not isinstance(value, str) or not value for value in group):
+                raise TruthError("each evidence set must contain 1..10 non-empty string IDs")
+        key = (issue_type, _canon_ids(affected))
         if key in seen or issue_id in issue_ids:
             raise TruthError("duplicate financial issue in truth")
         seen.add(key)

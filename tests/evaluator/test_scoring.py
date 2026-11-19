@@ -159,33 +159,28 @@ class SemanticAndStructural(unittest.TestCase):
 
 
 class MatchingOptimality(unittest.TestCase):
-    def two_issue_truth(self):
-        def issue(iid, amount, evidence):
-            return {"issue_id": iid, "type": "payment_allocation", "affected_ids": ["payment/P1"],
-                    "expected_amount_minor": amount, "currency": "KZT", "evidence_sets": evidence}
-        return {"episode_id": "T", "issues": [issue("A", 100, [["e1"], ["e2"]]),
-                                              issue("B", 101, [["e1"]])]}
-
-    def finding(self, evidence):
-        return finding(affected_ids=["payment/P1"], claimed_amount_minor=100, evidence_ids=evidence)
-
     def test_greedy_first_choice_loses_a_match(self):
-        # Greedy would give the first finding (e1) to issue A and strand the second finding (e2),
-        # which can only serve A. Maximum matching: e1 -> B, e2 -> A.
-        for order in ([["e1"], ["e2"]], [["e2"], ["e1"]]):
-            subm = sub("T", *[self.finding(e) for e in order])
-            score = evaluate(subm, self.two_issue_truth(), 0, tolerance_minor=1).score
-            self.assertEqual((score["tp"], score["fp"], score["fn"]), (2, 0, 0), order)
+        # This graph deliberately has overlapping candidates. Financial truth cannot
+        # create these candidates by duplicating one (type, affected_ids) cause.
+        from auditlab.evaluator.matcher import _max_matching
+        for adjacency in ([[0, 1], [0]], [[0], [0, 1]]):
+            owners = _max_matching(adjacency, 2)
+            self.assertEqual(sum(owner is not None for owner in owners), 2)
+            self.assertEqual(len(set(owners)), 2)
+            for right, left in enumerate(owners):
+                self.assertIn(right, adjacency[left])
 
     def test_permutation_stable(self):
-        truth = self.two_issue_truth()
-        findings = [self.finding(["e1"]), self.finding(["e2"]), self.finding(["e1", "e2"])]
-        results = set()
+        from auditlab.evaluator.matcher import _max_matching
         import itertools
-        for perm in itertools.permutations(findings):
-            r = evaluate(sub("T", *perm), truth, 3, tolerance_minor=1)
-            results.add((r.score["tp"], r.score["fp"], r.score["fn"], r.score["reward"]))
-        self.assertEqual(results, {(2, 1, 0, results.copy().pop()[3])})
+        # The low-level maximum-cardinality algorithm must not become greedy.
+        # All permutations preserve two matches and leave exactly one left vertex unmatched.
+        for adjacency in itertools.permutations([[0, 1], [0], [0, 1]]):
+            owners = _max_matching(list(adjacency), 2)
+            self.assertEqual(sum(owner is not None for owner in owners), 2)
+            self.assertEqual(len(set(owners)), 2)
+            for right, left in enumerate(owners):
+                self.assertIn(right, adjacency[left])
 
     def test_oracle_gets_ceiling(self):
         for name, expected in (("S01", 1.0), ("S02", 1.0)):

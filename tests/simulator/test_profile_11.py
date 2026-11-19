@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 
 from auditlab.generator import generate_episode
+from auditlab.environment import open_session
 from auditlab.generator.core import Company
 from test_policies import run_public_policy
 
@@ -19,6 +20,53 @@ def load(path):
 
 
 class Profile11Tests(unittest.TestCase):
+    def test_period_and_policy_versions_are_explicit_without_changing_rule_values(self):
+        with TemporaryDirectory() as temporary:
+            for profile in ("1.0", "1.1"):
+                root = Path(temporary) / profile
+                generate_episode(14, {"config_version": profile}, root)
+                manifest = load(root / "public" / "manifest.json")
+                policy = load(root / "public" / "policy.json")
+                session = open_session(root / "public")
+                def inspect(action, **args):
+                    return session.inspect({"action": action, "args": args})["result"]
+                rows = inspect("list_records", table="policy", cursor=None, limit=50)["records"]
+                if profile == "1.1":
+                    self.assertIs(manifest["period_end_exclusive"], True)
+                    versions = inspect("get_record", table="policy", id="rule_versions")
+                    self.assertEqual(set(versions["rules"]), set(policy) - {"rule_versions"})
+                    for row in rows:
+                        declared = versions["version"] if row["id"] == "rule_versions" else versions["rules"][row["id"]]
+                        self.assertEqual(row["version"], declared)
+                else:
+                    self.assertNotIn("period_end_exclusive", manifest)
+                    self.assertNotIn("rule_versions", policy)
+                    self.assertTrue(all(set(row) == {"id", "value"} for row in rows))
+                for row in rows:
+                    self.assertEqual(inspect("get_record", table="policy", id=row["id"]), row["value"])
+                self.assertEqual(inspect("get_record", table="policy", id="rounding"), "ROUND_HALF_UP")
+                self.assertIsInstance(inspect("get_record", table="policy", id="fx_date"), str)
+
+    def test_clean_refund_has_source_cash_return_and_no_audit_discrepancy(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary) / "clean-refund"
+            generate_episode(14, {"config_version": "1.1", "issue_counts": {},
+                "currencies": ["KZT"], "clean_distractors": ["refund"]}, root)
+            self.assertEqual(load(root / "private" / "truth.json")["issues"], [])
+            session = open_session(root / "public")
+            def records(table):
+                return session.inspect({"action": "list_records", "args": {
+                    "table": table, "cursor": None, "limit": 50}})["result"]["records"]
+            [deposit] = [row for row in records("payments") if not row["invoice_refs"]]
+            rows = [row for row in records("ledger") if row["payment_id"] == deposit["payment_id"]]
+            [receipt] = [row for row in rows if row["account"] == "CASH" and row["debit_minor"]]
+            [returned] = [row for row in rows if row["account"] == "CASH" and row["credit_minor"]]
+            self.assertEqual(receipt["debit_minor"], deposit["amount_minor"])
+            self.assertEqual(returned["credit_minor"], deposit["amount_minor"])
+            self.assertGreater(datetime.fromisoformat(returned["timestamp"]), datetime.fromisoformat(receipt["timestamp"]))
+            self.assertEqual(sum(row["credit_minor"] - row["debit_minor"] for row in rows if row["account"] == "UNAPPLIED"), 0)
+            self.assertEqual(self.assert_reconcile(root)[-1]["args"]["findings"], [])
+
     def assert_reconcile(self, root):
         actions = run_public_policy("reconcile", 17, root / "public")
         self.assertLessEqual(len(actions), 100)
@@ -44,7 +92,7 @@ class Profile11Tests(unittest.TestCase):
             self.assertEqual((manifest["ledger_rows"], manifest["document_count"]), (2000, 200))
             self.assert_reconcile(root)
             provenance = load(root / "private" / "provenance.json")
-            self.assertEqual(provenance["generator_version"], "1.2")
+            self.assertEqual(provenance["generator_version"], "1.3")
             transfers = [e for e in provenance["events"] if e["kind"] == "treasury_transfer"]
             self.assertTrue(transfers)
             with (root / "public" / "ledger.csv").open(encoding="utf-8", newline="") as stream:
