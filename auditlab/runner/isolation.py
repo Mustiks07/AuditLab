@@ -14,6 +14,8 @@ import tempfile
 import threading
 import time
 import uuid
+import re
+from fractions import Fraction
 from pathlib import Path
 
 from auditlab.contracts import Action, Observation
@@ -24,16 +26,20 @@ MAX_OBSERVATION_BYTES = 1024 * 1024
 # Run in the existing policy container. No fallback to memory.current/docker stats:
 # those are current usage, not the kernel's recorded peak.
 _CGROUP_PROBE = """
-import json
+import json, os
 from pathlib import Path
 root = Path('/sys/fs/cgroup')
 values, unavailable = {}, {}
-for name in ('memory.peak', 'memory.max', 'cpu.stat', 'cpu.max', 'cpuset.cpus.effective'):
+for name in ('memory.peak', 'memory.max', 'memory.swap.max', 'cpu.stat', 'cpu.max', 'cpuset.cpus.effective', 'pids.max'):
     try:
         values[name] = (root / name).read_text().strip()
     except OSError as error:
         unavailable[name] = type(error).__name__
-print(json.dumps({'values': values, 'unavailable': unavailable}))
+try: cgroup = Path('/proc/self/cgroup').read_text().strip()
+except OSError: cgroup = None
+try: affinity = sorted(os.sched_getaffinity(0))
+except (AttributeError, OSError): affinity = None
+print(json.dumps({'values': values, 'unavailable': unavailable, 'cgroup': cgroup, 'affinity': affinity}))
 """
 
 
@@ -75,6 +81,70 @@ def _parse_cgroup_measurements(payload: dict) -> dict:
             "cpu_quota_usec": quota, "cpu_period_usec": period,
             "cpuset_cpus": values.get("cpuset.cpus.effective"), "unavailable": unavailable,
             "reason": None if status == "measured" else "cgroup_v2_counters_unavailable_or_invalid"}
+
+
+def _cpu_set(value):
+    if value is None:
+        return None
+    result = set()
+    for item in str(value).split(','):
+        parts = item.split('-')
+        if len(parts) == 1:
+            result.add(int(parts[0]))
+        elif len(parts) == 2 and 0 <= int(parts[0]) <= int(parts[1]) < 65536:
+            result.update(range(int(parts[0]), int(parts[1]) + 1))
+        else:
+            raise ValueError('invalid CPU set')
+    return result
+
+
+def _memory_bytes(value):
+    match = re.fullmatch(r'(\d+)([bkmgte]?)(?:b)?', str(value).lower())
+    if not match:
+        raise ValueError('unsupported requested memory size')
+    return int(match[1]) * 1024 ** ('bkmgte'.index(match[2]) if match[2] else 0)
+
+
+def _verify_cgroup_scope(parsed: dict, payload: dict, requested: dict) -> dict:
+    """Never attribute a visible parent cgroup's counters to the requested container.
+
+    Matching HostConfig alone is insufficient: the kernel limits and process
+    affinity must match the request. A mismatch invalidates resource attribution.
+    """
+    result = dict(parsed)
+    result['raw_observed'] = {**parsed, 'cgroup': payload.get('cgroup'),
+                              'affinity': payload.get('affinity'), 'files': payload.get('values', {})}
+    mismatches = []
+    try:
+        if parsed.get('memory_limit_bytes') != _memory_bytes(requested['memory']):
+            mismatches.append('memory.max does not match requested memory')
+        if str(payload.get('values', {}).get('memory.swap.max')) != '0':
+            mismatches.append('memory.swap.max is unavailable or does not disable swap')
+        quota, period = parsed.get('cpu_quota_usec'), parsed.get('cpu_period_usec')
+        if quota is None or not period or Fraction(quota, period) != Fraction(str(requested['cpus'])):
+            mismatches.append('cpu.max does not match requested CPU quota')
+        expected = _cpu_set(requested.get('cpuset'))
+        if expected is not None:
+            if _cpu_set(parsed.get('cpuset_cpus')) != expected:
+                mismatches.append('cpuset.cpus.effective does not match requested CPUs')
+            affinity = payload.get('affinity')
+            if affinity is None or set(affinity) != expected:
+                mismatches.append('process affinity does not match requested CPUs')
+        if requested.get('pids') is not None:
+            if str(payload.get('values', {}).get('pids.max')) != str(requested['pids']):
+                mismatches.append('pids.max does not match requested limit')
+    except (ValueError, TypeError, KeyError, ZeroDivisionError):
+        mismatches.append('requested or observed limits unavailable/invalid')
+    result['resource_limits_verified'] = not mismatches
+    result['scope'] = 'container_limits_verified' if not mismatches else 'unverified_visible_cgroup'
+    result['limit_mismatches'] = mismatches
+    result['cpu_usage_seconds'] = (parsed['cpu_usage_usec'] / 1_000_000
+                                   if parsed.get('cpu_usage_usec') is not None and not mismatches else None)
+    if mismatches:
+        result.update(status='not_checked', peak_memory_bytes=None, cpu_usage_usec=None,
+                      cpu_user_usec=None, cpu_system_usec=None,
+                      reason='visible_cgroup_not_container_or_requested_limits_not_applied')
+    return result
 
 
 class PolicyFailure(RuntimeError):
@@ -283,13 +353,16 @@ class DockerPolicy(SubprocessPolicy):
         self.measurements = {
             "status": "not_checked", "source": "cgroup_v2_via_docker_exec",
             "peak_memory_bytes": None, "cpu_usage_usec": None, "cpu_user_usec": None,
+            "cpu_usage_seconds": None, "resource_limits_verified": False,
+            "scope": "unverified_visible_cgroup", "raw_observed": None,
             "cpu_system_usec": None, "memory_limit_bytes": None,
             "cpu_quota_usec": None, "cpu_period_usec": None, "cpuset_cpus": None,
-            "requested_limits": {"cpus": cpus, "memory": memory, "cpuset": cpuset},
+            "requested_limits": {"cpus": cpus, "memory": memory, "cpuset": cpuset, "pids": 128},
             "image_ref": image, "image_id": None, "image_repo_digests": [],
             "reason": "not_collected", "unavailable": {},
-            "note": "Policy-container cgroup only; includes the short measurement process. "
-                    "Does not measure trusted runtime or combined simultaneous peak.",
+            "note": "Visible cgroup counters are attributed to the policy only after kernel limits "
+                    "and requested affinity match. Raw counters may belong to a parent cgroup. "
+                    "Includes the measurement helper; excludes the trusted runtime and combined peak.",
         }
         # Docker client configuration is trusted host configuration, not passed into the container.
         self._docker_env = scrubbed_env({key: os.environ[key] for key in
@@ -357,7 +430,10 @@ class DockerPolicy(SubprocessPolicy):
             if measured.returncode:
                 self.measurements["reason"] = "container_unavailable_or_cgroup_probe_failed"
                 return
-            self.measurements.update(_parse_cgroup_measurements(json.loads(measured.stdout)))
+            payload = json.loads(measured.stdout)
+            parsed = _parse_cgroup_measurements(payload)
+            self.measurements.update(_verify_cgroup_scope(parsed, payload,
+                                     self.measurements.get('requested_limits', {})))
         except Exception as error:
             # A stopped container, old kernel or unavailable daemon must not prevent cleanup.
             self.measurements["reason"] = "measurement_failed:" + type(error).__name__

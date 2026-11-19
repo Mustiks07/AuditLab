@@ -107,7 +107,7 @@ JSON/stdin; ему не требуется том каталога controller.
 ```sh
 AUDITLAB_RUNTIME_IMAGE=$(python -c "import json; print(json.load(open('manifest.json'))['images']['runtime']['id'])")
 mkdir -p demo-results
-docker run --rm --pull never --read-only --cap-drop ALL \
+docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop ALL \
   --security-opt no-new-privileges --cpus 2 --memory 2g \
   --tmpfs /tmp:rw,nosuid,size=1g -p 127.0.0.1:8765:8765 \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" \
@@ -118,7 +118,7 @@ docker run --rm --pull never --read-only --cap-drop ALL \
 повтора выбранного открытого run ID после остановки сервера:
 
 ```sh
-docker run --rm --pull never --network none --read-only \
+docker run --rm --pull never --user "$(id -u):$(id -g)" --network none --read-only \
   --cap-drop ALL --security-opt no-new-privileges \
   --tmpfs /tmp:rw,nosuid,size=1g \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" \
@@ -133,3 +133,19 @@ release-candidate необходимо приложить его manifest/hash, 
 время, пиковую память и размер. До измерения соответствующая строка остаётся
 «не проверено». Исходная авторская оценка и результаты отдельного ноутбука не
 подменяют проверку именно передаваемого комплекта.
+
+
+### Проверка реальных ограничений ядра
+
+Параметры Docker и `HostConfig` сами по себе не доказывают применение лимитов.
+Некоторые rootless-окружения имеют `CgroupDriver=none`: тогда ограничения CPU,
+памяти и процессов не действуют, а видимые cgroup-счётчики могут принадлежать
+всей машине. Такой прогон подтверждает только функциональность. Его пиковая
+память контейнера и соответствие целевым ресурсам остаются «не проверено».
+Rootless Docker с корректным делегированием cgroup допустим; проверяется
+фактическая поддержка контроллеров, а затем их значения внутри контейнеров.
+
+Job `Internal offline rehearsal` в GitHub Actions собирает комплект из чистого
+commit, запускает 80 опытов и 20 пар, проверяет фактические лимиты и публикует
+bundle вместе с отчётами. Успех этого job не означает прохождение всех 24 групп
+SPEC, независимую проверку новым пользователем или результат скрытых тестов жюри.

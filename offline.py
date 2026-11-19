@@ -103,6 +103,19 @@ def runtime_command(manifest, output, cpu_set, suite, docker_gid=None):
     return command
 
 
+def resource_preflight(daemon):
+    fields = ("MemoryLimit", "SwapLimit", "CpuCfsPeriod", "CpuCfsQuota", "CPUSet", "PidsLimit")
+    missing = [name for name in fields if daemon.get(name) is not True]
+    if daemon.get("CgroupDriver") in (None, "", "none"):
+        missing.append("CgroupDriver")
+    if daemon.get("CgroupVersion") != "2":
+        missing.append("CgroupVersion2")
+    return {"status": "not_checked" if missing else "available",
+            "reason": "daemon_resource_controls_unavailable" if missing else "actual_container_limits_still_require_verification",
+            "missing": missing, "driver": daemon.get("CgroupDriver"), "version": daemon.get("CgroupVersion"),
+            "capabilities": {name: daemon.get(name) for name in fields}}
+
+
 def write_report(path, report):
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -127,6 +140,8 @@ def main(argv=None):
         print(f"Bundle hashes verified; source {manifest['source_revision']}", flush=True)
         if args.command == "check":
             return 0
+        if not sys.platform.startswith("linux"):
+            raise ValueError("offline verification requires Linux or WSL with a local Linux Docker daemon")
         cpu_set = select_cpus(args.cpu_set)
         output = new_output_dir(args.output_root or args.bundle / "results")
         report_path = output / "launch.json"
@@ -141,6 +156,9 @@ def main(argv=None):
         daemon = json.loads(info.stdout)
         if daemon.get("OSType") != "linux":
             raise ValueError("a local Linux Docker daemon is required")
+        report["resource_controls"] = resource_preflight(daemon)
+        if report["resource_controls"]["status"] != "available":
+            print("Resource limits are not supported by this daemon; functional checks continue, resource acceptance remains not_checked.", flush=True)
         # Ignore Docker contexts/DOCKER_HOST: this launcher deliberately uses the local socket.
         report.update(phase="loading_images", docker_server_version=daemon.get("ServerVersion"))
         write_report(report_path, report)
@@ -160,9 +178,19 @@ def main(argv=None):
         verification_started = time.monotonic()
         result = subprocess.run(command, env=environment)
         report["verification_container_seconds"] = time.monotonic() - verification_started
-        report.update(status="completed" if result.returncode == 0 else "incomplete" if result.returncode == 2 else "failed",
-                      exit_code=result.returncode)
-        return result.returncode
+        code = result.returncode
+        report["child_exit_code"] = code
+        controller_path = output / "controller-resources.json"
+        controller = json.loads(controller_path.read_text()) if controller_path.is_file() else {}
+        verified_resources = (report["resource_controls"]["status"] == "available"
+                              and controller.get("status") == "measured"
+                              and controller.get("resource_limits_verified") is True)
+        report["controller_resource_status"] = "passed" if verified_resources else "not_checked"
+        if code == 0 and not verified_resources:
+            code = 2
+        report.update(status="completed" if code == 0 else "incomplete" if code == 2 else "failed",
+                      exit_code=code)
+        return code
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         print(f"Offline launch failed: {error}", file=sys.stderr)
         if report is not None:
