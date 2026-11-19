@@ -90,12 +90,42 @@ class RehearsalTests(unittest.TestCase):
             trajectory[0]["observation"]["remaining_steps"] = 73
             tampered = output / "tampered.jsonl"
             tampered.write_text("\n".join(json.dumps(row) for row in trajectory), encoding="utf-8")
-            replay = replay_actions(FIXTURE, tampered, output / "bad-replay", selection)
+            replay = replay_actions(FIXTURE, tampered, output / "bad-replay", selection,
+                                    source_report=source.with_name("report.json"))
             self.assertEqual(replay["status"], "failed")
             self.assertEqual(replay["mismatches"], [1])
             self.assertEqual((FIXTURE / "public" / "ledger.csv").read_bytes(), before)
             with self.assertRaises(FileExistsError):
                 run_attempt(FIXTURE, output / "oracle", selection, "oracle", 0, None, None)
+
+    def test_closed_replay_detects_changed_trusted_reward_without_public_change(self):
+        from auditlab.runner.env import AuditEnvironment, InProcessEvaluator
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            selection = {"id": "internal-01", "category": "single_or_mixed", "seed": 931}
+            original = run_attempt(FIXTURE, output / "oracle", selection, "oracle", 0, None, None)
+            self.assertEqual(original["true_reward"], 1)
+            source = output / "oracle/trusted/attempt/trajectory.jsonl"
+            def defective_evaluator(private, submission, steps):
+                result = InProcessEvaluator()(private, submission, steps)
+                result["score"]["reward"] = -1
+                return result
+            def defective_environment(mode, **options):
+                return AuditEnvironment(mode, evaluator=defective_evaluator, **options)
+            with patch("auditlab.runner.make_env", side_effect=defective_environment):
+                replay = replay_actions(FIXTURE, source, output / "replay", selection)
+            self.assertEqual(replay["status"], "failed")
+            self.assertEqual(replay["mismatches"], ["trusted_report"])
+            self.assertEqual(set(replay["trusted_mismatches"]), {"evaluation", "true_reward"})
+            self.assertEqual(read_json(output / "replay/replay/report.json")["true_reward"], -1)
+            public = [json.loads(line) for line in (output / "replay/replay/trajectory.jsonl").read_text().splitlines()]
+            self.assertTrue(all(row["reward"] == 0 for row in public))
+
+    def test_closed_replay_without_original_trusted_report_is_not_certified(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            result = replay_actions(FIXTURE, output / "trajectory.jsonl", output / "replay", {"seed": 931})
+            self.assertEqual(result["status"], "not_checked")
 
     def test_bad_snapshot_preserves_failed_row_without_score(self):
         with tempfile.TemporaryDirectory() as temporary:

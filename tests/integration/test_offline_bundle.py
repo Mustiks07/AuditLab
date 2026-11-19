@@ -49,7 +49,9 @@ class OfflineBundleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             manifest = manifest_for(root)
-            command = offline.runtime_command(manifest, root, "2,4", "rehearsal")
+            command = offline.runtime_command(manifest, root, "2,4", "rehearsal", docker_gid=1234)
+            self.assertEqual(command[command.index("--group-add") + 1], "1234")
+            self.assertEqual(command[command.index("--user") + 1], f"{offline.os.getuid()}:{offline.os.getgid()}")
             for option, expected in (("--pull", "never"), ("--network", "none"), ("--cpus", "2"),
                                      ("--cpuset-cpus", "2,4"), ("--memory", "2g"),
                                      ("--memory-swap", "2g"), ("--cpu-set", "2,4")):

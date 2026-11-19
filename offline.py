@@ -80,10 +80,12 @@ def new_output_dir(root):
     return output
 
 
-def runtime_command(manifest, output, cpu_set, suite):
+def runtime_command(manifest, output, cpu_set, suite, docker_gid=None):
     images = {role: item["id"] for role, item in manifest["images"].items()}
     command = ["docker", "run", "--rm", "--pull", "never", "--network", "none",
                "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+               "--user", f"{os.getuid()}:{os.getgid()}",
+               "--group-add", str(os.getgid() if docker_gid is None else docker_gid),
                "--cpus", "2", "--cpuset-cpus", cpu_set, "--memory", "2g", "--memory-swap", "2g", "--pids-limit", "256",
                "--tmpfs", "/tmp:rw,nosuid,size=1g",
                "--mount", "type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
@@ -151,7 +153,7 @@ def main(argv=None):
             actual = json.loads(inspected.stdout)
             if actual.get("Id") != image["id"] or actual.get("Os") != "linux":
                 raise ValueError(f"loaded image identity differs for {role}")
-        command = runtime_command(manifest, output, cpu_set, args.suite)
+        command = runtime_command(manifest, output, cpu_set, args.suite, Path("/var/run/docker.sock").stat().st_gid)
         report.update(phase="verification", command=command)
         write_report(report_path, report)
         print(f"Running offline verification on CPUs {cpu_set}; results: {output}", flush=True)

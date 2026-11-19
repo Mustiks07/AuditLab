@@ -27,6 +27,7 @@ COPY docs /app/docs
 COPY run.py offline.py README.md LICENSE .python-version /app/
 COPY tools /app/tools
 COPY docker/release/notices /app/notices
+RUN chmod -R a+rX /app
 ARG SOURCE_REVISION=uncommitted
 LABEL org.opencontainers.image.title="AuditLab trusted offline runtime" org.opencontainers.image.revision=$SOURCE_REVISION
 ENV AUDITLAB_SOURCE_REVISION=$SOURCE_REVISION
