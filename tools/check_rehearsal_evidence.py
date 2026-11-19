@@ -90,6 +90,17 @@ def check(root, bundle=None, expected_revision=None):
     general = read("verify/report.json")
     rehearsal = read("verify/rehearsal/report.json")
     controller = read("controller-resources.json")
+    if "loaded_images" in launch:
+        loaded, original = launch["loaded_images"], launch.get("images", {})
+        require(set(loaded) == set(original) == {"runtime", "verifier", "policy"}, "loaded image roles differ")
+        for role, image in loaded.items():
+            source = original.get(role, {})
+            require(image.get("source_id") == source.get("id") and image.get("id") is not None and
+                    image.get("id") in (source.get("id"), source.get("oci_manifest_digest")),
+                    f"{role}: loaded image is not an immutable bundle identity")
+        for role in ("policy", "verifier"):
+            require(rehearsal.get(role + "_image") == loaded.get(role, {}).get("id"),
+                    f"{role}: rehearsal image differs from loaded image")
     revision = launch.get("source_revision")
     summary["source_revision"] = revision
     for label, value in (("launch", revision), ("test report", general.get("commit"))):

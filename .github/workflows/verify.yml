@@ -137,6 +137,18 @@ jobs:
         run: python build/ci-release/offline.py verify --suite rehearsal --output-root artifacts/offline-ci
       - name: Require complete internal measurements and actual resource limits
         run: python tools/check_rehearsal_evidence.py --results artifacts/offline-ci --bundle build/ci-release --expected-revision "$GITHUB_SHA" --output artifacts/offline-ci/evidence-summary.json
+      - name: Verify the receiver command for resolving demo and replay image IDs
+        run: |
+          python - <<'PYIMAGES'
+          import json, subprocess, sys
+          from pathlib import Path
+          launches = list(Path('artifacts/offline-ci').glob('verify-*/launch.json'))
+          assert len(launches) == 1
+          launch = json.loads(launches[0].read_text())
+          resolved = {role: subprocess.check_output([sys.executable, 'build/ci-release/offline.py', 'image', '--role', role], text=True).strip() for role in ('runtime', 'policy', 'verifier')}
+          assert resolved == {role: image['id'] for role, image in launch['loaded_images'].items()}
+          Path('artifacts/offline-ci/resolved-images.json').write_text(json.dumps(resolved, indent=2))
+          PYIMAGES
       - uses: actions/upload-artifact@v4
         if: always()
         with:

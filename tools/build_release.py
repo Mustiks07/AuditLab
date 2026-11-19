@@ -54,9 +54,9 @@ def validate_image_archive(path, images):
             if len(matches) != 1 or Path(matches[0]["Config"]).stem != image["id"].split(":", 1)[1]:
                 raise ValueError(f"saved Docker catalog lost the tagged {role} identity")
         if "index.json" not in archive.getnames():
-            return  # Older Docker-only archives have no competing OCI index.
+            return {}  # Older Docker-only archives have no competing OCI index.
         index = json.load(archive.extractfile("index.json"))
-        configs = set()
+        configs = {}
         for descriptor in index["manifests"]:
             digest = descriptor["digest"]
             if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
@@ -64,9 +64,10 @@ def validate_image_archive(path, images):
             data = archive.extractfile("blobs/sha256/" + digest.split(":", 1)[1]).read()
             if "sha256:" + hashlib.sha256(data).hexdigest() != digest:
                 raise ValueError("saved OCI manifest checksum differs")
-            configs.add(json.loads(data)["config"]["digest"])
-        if configs != expected:
+            configs[json.loads(data)["config"]["digest"]] = digest
+        if set(configs) != expected:
             raise ValueError("saved OCI index does not cover all three image configurations")
+        return configs
 
 
 def excluded(name):
@@ -169,7 +170,10 @@ def main(argv=None):
             # One archive still deduplicates shared layers.
             run(["docker", "save", "--output", str(output / "images.tar"),
                  *(images[role]["tag"] for role in ROLES)])
-            validate_image_archive(output / "images.tar", images)
+            oci_identities = validate_image_archive(output / "images.tar", images)
+            for image in images.values():
+                if image["id"] in oci_identities:
+                    image["oci_manifest_digest"] = oci_identities[image["id"]]
             license_report = {"images": inventories,
                               "scope": "Installed Python distributions, available license texts and Debian copyright files. "
                                        "Docker CLI source license/notice files are included from v29.0.1, verified against Git blob hashes.",

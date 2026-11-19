@@ -50,6 +50,18 @@ class EvidenceTests(unittest.TestCase):
         self.general["commit"] = "b" * 40
         self.assertEqual(self.run_check()["exit_code"], 1)
 
+    def test_containerd_identity_is_bound_to_bundle_and_rehearsal(self):
+        source, actual = "sha256:" + "a" * 64, "sha256:" + "b" * 64
+        self.launch["images"] = {r: dict(id=source, oci_manifest_digest=actual) for r in ("runtime", "policy", "verifier")}
+        self.launch["loaded_images"] = {r: dict(id=actual, source_id=source) for r in self.launch["images"]}
+        self.rehearsal.update(policy_image=actual, verifier_image=actual)
+        self.assertEqual(self.run_check()["exit_code"], 0)
+        self.rehearsal["policy_image"] = source
+        self.assertEqual(self.run_check()["exit_code"], 1)
+        self.rehearsal["policy_image"] = actual
+        self.launch["loaded_images"]["runtime"]["id"] = "sha256:" + "c" * 64
+        self.assertEqual(self.run_check()["exit_code"], 1)
+
     def test_bundle_hash_and_image_identity_are_checked(self):
         bundle = self.root / "bundle"
         bundle.mkdir()
