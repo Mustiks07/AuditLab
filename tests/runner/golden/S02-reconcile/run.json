@@ -1,0 +1,9 @@
+{
+  "episode_id": "S02",
+  "inspection_steps": 5,
+  "mode": "train",
+  "outcome": "submitted",
+  "policy": "reconcile",
+  "run_id": "S02-reconcile",
+  "status": "completed"
+}

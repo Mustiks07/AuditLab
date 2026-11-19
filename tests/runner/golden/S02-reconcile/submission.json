@@ -1,0 +1,21 @@
+{
+  "episode_id": "S02",
+  "findings": [
+    {
+      "affected_ids": [
+        "payment/P9",
+        "invoice/I4"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+        "payments/D9",
+        "ledger/R4",
+        "ledger/R5",
+        "policy/allocation"
+      ],
+      "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+      "type": "payment_allocation"
+    }
+  ]
+}
