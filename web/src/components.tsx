@@ -65,7 +65,7 @@ function operandValue(op: Operand): string {
 }
 
 /** Operands → result. Every operand links to the exact file line it was read from. */
-export function DerivationView({ calc, onOpen, cited, activeKey }: { calc: Derivation; onOpen: (k: string) => void; cited?: string[]; activeKey?: string | null }) {
+export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { exponents: Record<string, number>; calc: Derivation; onOpen: (k: string) => void; cited?: string[]; activeKey?: string | null }) {
   const citedSet = new Set(cited ?? []);
   const rule = calc.rule;
   return (
@@ -110,7 +110,7 @@ export function DerivationView({ calc, onOpen, cited, activeKey }: { calc: Deriv
         <div className="warn">Опубликованный индекс {calc.index_check.published.join(", ")} не совпадает с группировкой книги {calc.index_check.grouped.join(", ")}</div>
       )}
       <div className="derivation-result">
-        Итог: <b>{money(calc.result_minor, calc.currency)}</b> <span className="muted mono">({minor(calc.result_minor)} мин. ед.)</span>
+        Итог: <b>{money(calc.result_minor, calc.currency, exponents)}</b> <span className="muted mono">({minor(calc.result_minor)} мин. ед.)</span>
       </div>
     </div>
   );

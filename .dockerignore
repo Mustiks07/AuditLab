@@ -1,0 +1,14 @@
+.git
+**/.git
+**/__pycache__
+**/*.pyc
+**/.venv
+**/node_modules
+artifacts
+runs
+build
+*.bundle
+*.zip
+*.tar
+*.tar.gz
+docs/release/LICENSE.proposed.txt

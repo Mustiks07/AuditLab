@@ -323,7 +323,64 @@ def _validate_timestamp(value: object) -> str:
     return moment.isoformat()
 
 
-def apply_change(src_public: Path, change: dict, out_public: Path, episode_id: str) -> dict[str, object]:
+def _financial_signature(issue: dict) -> tuple:
+    return (issue.get("type"), tuple(sorted(issue.get("affected_ids") or [])),
+            issue.get("expected_amount_minor"), issue.get("currency"))
+
+
+def validate_change_scope(snapshot: Snapshot, record, new_ts: str, source_truth: dict | None) -> None:
+    """Only the two documented counterfactual rules, never a general truth generator.
+
+    Trusted source truth checks complete type coverage. It is not sent to the web.
+    Source IDs/names do not select eligibility; financial structure does.
+    """
+    def reject(message):
+        raise ChangeRejected("unsupported_counterfactual", message)
+
+    if not isinstance(source_truth, dict) or not isinstance(source_truth.get("issues"), list):
+        reject("A verified source with trusted training truth is required for a fact change.")
+    if source_truth.get("episode_id") != snapshot.manifest.get("episode_id"):
+        reject("Source truth does not belong to this public snapshot.")
+    allowed = {"payment_allocation", "fx_conversion"}
+    if any(issue.get("type") not in allowed for issue in source_truth["issues"]):
+        reject("This fact-change adapter supports only allocation and FX cases; other source errors must be preserved by a full generator.")
+    current = truth_from_public(snapshot, str(snapshot.manifest.get("episode_id")))
+    if sorted(map(_financial_signature, current["issues"])) != sorted(map(_financial_signature, source_truth["issues"])):
+        reject("The supported public calculations do not reproduce the complete trusted source answer.")
+    # Only direct positive designated payments with a complete UNAPPLIED index.
+    for payment in snapshot.by_table("payments"):
+        fields = payment.fields
+        if (len(fields.get("invoice_refs") or []) != 1 or int(fields.get("amount_minor") or 0) <= 0
+                or not fields.get("settlement_index")):
+            reject("Fact changes require positive single-invoice payments and complete settlement indexes.")
+        calc = derive.allocation(snapshot, payment)
+        if not calc["index_check"]["complete"]:
+            reject("The public settlement index is incomplete.")
+        rows = [r.fields for r in snapshot.by_table("ledger")
+                if r.fields.get("payment_id") == fields.get("payment_id") and r.fields.get("account") == "UNAPPLIED"]
+        if any(r.get("currency") != fields.get("currency") for r in rows):
+            reject("Mixed-currency settlement postings are outside the supported fact-change rules.")
+    if record.table == "payments":
+        start, end = (datetime.fromisoformat(str(snapshot.manifest[k])) for k in ("period_start", "period_end"))
+        before, after = datetime.fromisoformat(str(record.fields["timestamp"])), datetime.fromisoformat(new_ts)
+        if not (start <= before < end and start <= after < end):
+            reject("Payment-date changes must stay inside the same target period; period changes need the full generator.")
+    else:
+        journal = record.fields.get("journal_id")
+        rows = [r.fields for r in snapshot.by_table("ledger") if journal and r.fields.get("journal_id") == journal]
+        if len(rows) != 2 or {r.get("account") for r in rows} != {"UNAPPLIED", "AR"}:
+            reject("Only the date of a complete UNAPPLIED-to-AR settlement journal can be changed.")
+        unapplied = next(r for r in rows if r["account"] == "UNAPPLIED")
+        ar = next(r for r in rows if r["account"] == "AR")
+        if (not unapplied.get("payment_id") or not unapplied.get("invoice_id")
+                or any(unapplied.get(k) != ar.get(k) for k in ("currency", "payment_id", "invoice_id", "entity_id", "timestamp"))
+                or unapplied.get("debit_minor", 0) <= 0 or unapplied.get("credit_minor") != 0
+                or ar.get("debit_minor") != 0 or ar.get("credit_minor") != unapplied["debit_minor"]):
+            reject("The selected journal is not a balanced positive designated settlement.")
+
+
+def apply_change(src_public: Path, change: dict, out_public: Path, episode_id: str,
+                 *, source_truth: dict | None = None) -> dict[str, object]:
     """Copy a public snapshot, apply one fact change consistently, return the training truth."""
     snap = Snapshot(src_public)
     target, field = change.get("target"), change.get("field")
@@ -336,6 +393,8 @@ def apply_change(src_public: Path, change: dict, out_public: Path, episode_id: s
     old_ts = str(record.fields.get("timestamp"))
     if datetime.fromisoformat(old_ts) == datetime.fromisoformat(new_ts):
         raise ChangeRejected("no_change", "The new value equals the current one.")
+
+    validate_change_scope(snap, record, new_ts, source_truth)
 
     ledger = [dict(r.fields) for r in snap.by_table("ledger")]
     header = list(ledger[0].keys()) if ledger else []

@@ -92,7 +92,9 @@ def _verifier_line(verifier: dict | None, finding: dict) -> dict:
         if item.get("type") == finding.get("type") and sorted(item.get("affected_ids") or []) == sorted(finding.get("affected_ids") or []):
             return {"connected": True, "engine": verifier.get("engine"), "amount_minor": item.get("claimed_amount_minor"),
                     "currency": item.get("currency"), "evidence_ids": item.get("evidence_ids"),
-                    "agrees": item.get("claimed_amount_minor") == finding.get("claimed_amount_minor")}
+                    "agrees": item.get("claimed_amount_minor") == finding.get("claimed_amount_minor")
+                              and item.get("currency") == finding.get("currency"),
+                    "currency_matches": item.get("currency") == finding.get("currency")}
     return {"connected": True, "engine": verifier.get("engine"), "amount_minor": None, "agrees": False,
             "text": "Сверка не нашла такого расхождения"}
 
@@ -140,7 +142,11 @@ def findings_view(snapshot: Snapshot, submission: dict | None, score: dict | Non
         out.append({
             "index": index, "finding": finding, "type_name": TYPE_NAMES.get(str(finding.get("type")), finding.get("type")),
             "evidence": evidence, "affected": affected, "derivation": calc, "uncited_operands": uncited,
-            "console_agrees": bool(calc) and calc.get("result_minor") is not None and abs(int(calc["result_minor"])) == finding.get("claimed_amount_minor"),
+            "console_agrees": bool(calc) and calc.get("result_minor") is not None
+                and abs(int(calc["result_minor"])) == finding.get("claimed_amount_minor")
+                and calc.get("currency") == finding.get("currency")
+                and calc.get("type") == finding.get("type")
+                and sorted(calc.get("affected_ids") or []) == sorted(finding.get("affected_ids") or []),
             "verdict": verdicts.get(index), "verifier": _verifier_line(verifier, finding),
         })
     return out
@@ -171,7 +177,8 @@ def run_detail(store: ExportStore, run_id: str) -> dict:
         "empty_submission": submission is not None and not submission.get("findings"),
         "findings": findings_view(snapshot, submission, score, verifier, step_list),
         "score": score,
-        "verifier": {"connected": verifier is not None, "engine": (verifier or {}).get("engine")},
+        "verifier": {"connected": verifier is not None, "engine": (verifier or {}).get("engine"),
+                     "findings": (verifier or {}).get("findings") or []},
         "console_scan": console,
         "children": children,
         "keys": snapshot.order,
@@ -188,6 +195,7 @@ def record_view(store: ExportStore, run_id: str, key: str) -> dict | None:
     hi = min(len(lines), record.line + 12)
     keys_by_line = {r.line: r.key for r in snapshot.records.values() if r.file == record.file}
     return {**record.to_json(),
+            "currency_exponents": snapshot.manifest.get("currency_exponents") or {},
             "context": [{"line": n + 1, "text": lines[n], "key": keys_by_line.get(n + 1)} for n in range(lo, hi)],
             "header": lines[0] if record.file.endswith(".csv") and lines else None,
             "total_lines": len(lines)}
@@ -237,8 +245,10 @@ def compare(store: ExportStore, left_id: str, right_id: str) -> dict:
                           "difference_minor": (b.get("result_minor") or 0) - (a.get("result_minor") or 0)})
     calcs.sort(key=lambda c: not (c["difference_minor"] or c["left"].get("result_minor") or c["right"].get("result_minor")))
     return {
-        "left": {"run": left["run"], "claims": _claims(left), "score": left["score"], "empty": left["empty_submission"]},
-        "right": {"run": right["run"], "claims": _claims(right), "score": right["score"], "empty": right["empty_submission"]},
+        "left": {"run": left["run"], "claims": _claims(left), "score": left["score"], "empty": left["empty_submission"],
+                 "currency_exponents": ls.manifest.get("currency_exponents") or {}},
+        "right": {"run": right["run"], "claims": _claims(right), "score": right["score"], "empty": right["empty_submission"],
+                  "currency_exponents": rs.manifest.get("currency_exponents") or {}},
         "changes": changes,
         "calculations": calcs,
         "change_request": right["run"].get("change"),

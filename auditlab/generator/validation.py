@@ -114,6 +114,8 @@ def _fx_findings(company, invoices, payments):
 
 
 def validate_accounting(company):
+    if company.config_version == "1.1":
+        _validate_treasury(company)
     invoices = defaultdict(list)
     by_invoice = defaultdict(list)
     by_payment = defaultdict(list)
@@ -132,3 +134,30 @@ def validate_accounting(company):
                     for issue in company.issues)
     if calculated != truth:
         raise RuntimeError("accounting_disagrees_with_truth")
+
+
+def _validate_treasury(company):
+    """Internal transfers have no external source document, so validate their event explicitly."""
+    journals = defaultdict(list)
+    for row in company.ledger:
+        journals[row["journal_id"]].append(row)
+    events = {e["journal_id"]: e for e in company.events if e["kind"] == "treasury_transfer"}
+    reserve_journals = {row["journal_id"] for row in company.ledger if row["account"] == "CASH_RESERVE"}
+    if reserve_journals != events.keys():
+        raise RuntimeError("unrecorded_treasury_transfer")
+    for journal, event in events.items():
+        rows = journals[journal]
+        if (len(rows) != 2 or {row["account"] for row in rows} != {"CASH", "CASH_RESERVE"}
+                or any(row["currency"] != company.base_currency or row["invoice_id"] is not None
+                       or row["payment_id"] is not None or row["timestamp"] != event["timestamp"] for row in rows)
+                or sum(row["debit_minor"] for row in rows) != event["amount_minor"]
+                or sum(row["credit_minor"] for row in rows) != event["amount_minor"]
+                or any(row["account"] != event["to_account"] for row in rows if row["debit_minor"])
+                or any(row["account"] != event["from_account"] for row in rows if row["credit_minor"])):
+            raise RuntimeError("inconsistent_treasury_transfer")
+    balances = defaultdict(int)
+    for row in sorted(company.ledger, key=lambda r: (_instant(r), r["journal_id"])):
+        if row["account"] in {"CASH", "CASH_RESERVE"} and row["currency"] == company.base_currency:
+            balances[row["account"]] += row["debit_minor"] - row["credit_minor"]
+            if balances[row["account"]] < 0:
+                raise RuntimeError("treasury_cash_overdraft")

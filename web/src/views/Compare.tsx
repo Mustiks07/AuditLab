@@ -66,7 +66,7 @@ export function Compare({ left, right }: { left: string; right: string }) {
           <div className="cs-block cs-effect">
             <div className="cs-label">Фактический эффект по открытым данным</div>
             {(shown.length ? shown : [...deltas.entries()].slice(0, 1)).map(([cur, d]) => (
-              <div key={cur} className="cs-main">Δ = <b>{money(d, cur)}</b> <span className="muted mono">({minor(d)} мин. ед. {cur})</span></div>
+              <div key={cur} className="cs-main">Δ = <b>{money(d, cur, view.right.currency_exponents)}</b> <span className="muted mono">({minor(d)} мин. ед. {cur})</span></div>
             ))}
           </div>
         )}
@@ -81,12 +81,12 @@ export function Compare({ left, right }: { left: string; right: string }) {
         <Panel title="Обе суммы: расчёт по исходным документам">
           {view.calculations.map((c) => (
             <div key={c.type + c.subject} className="calc-pair">
-              <CalcCell calc={c.left} runId={view.left.run.run_id} />
+              <CalcCell calc={c.left} runId={view.left.run.run_id} exponents={view.left.currency_exponents} />
               <div className="calc-diff">
                 <div className="small muted">разница</div>
-                <div className="strong">{money(c.difference_minor, c.right.currency)}</div>
+                <div className="strong">{money(c.difference_minor, c.right.currency, view.right.currency_exponents)}</div>
               </div>
-              <CalcCell calc={c.right} runId={view.right.run.run_id} />
+              <CalcCell calc={c.right} runId={view.right.run.run_id} exponents={view.right.currency_exponents} />
             </div>
           ))}
         </Panel>
@@ -128,7 +128,7 @@ function Side({ side, title }: { side: CompareSide; title: string }) {
         {side.empty && <div className="no-findings-inline">Ошибок не заявлено</div>}
         {side.claims.map((c, i) => (
           <div key={i} className="claim">
-            <div><b>{money(c.amount_minor, c.currency)}</b> · {c.type} · <span className="mono small">{c.affected_ids.join(", ")}</span></div>
+            <div><b>{money(c.amount_minor, c.currency, side.currency_exponents)}</b> · {c.type} · <span className="mono small">{c.affected_ids.join(", ")}</span></div>
             <div className="mono small muted">{c.evidence_ids.join("  ")}</div>
             {c.verdict && (
               <div className={c.verdict.matched ? "ok-text" : "bad-text"}>
@@ -154,7 +154,7 @@ function Side({ side, title }: { side: CompareSide; title: string }) {
   );
 }
 
-function CalcCell({ calc, runId }: { calc: Derivation; runId: string }) {
+function CalcCell({ calc, runId, exponents }: { calc: Derivation; runId: string; exponents: Record<string, number> }) {
   return (
     <div className="calc-cell">
       <div className="small">{calc.title}</div>
@@ -170,7 +170,7 @@ function CalcCell({ calc, runId }: { calc: Derivation; runId: string }) {
         </div>
       ))}
       <div className="mono small formula">{calc.formula}</div>
-      <div className="strong">{money(calc.result_minor, calc.currency)}</div>
+      <div className="strong">{money(calc.result_minor, calc.currency, exponents)}</div>
     </div>
   );
 }

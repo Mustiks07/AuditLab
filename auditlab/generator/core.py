@@ -26,14 +26,17 @@ def random_stream(seed, domain):
 
 
 class Company:
-    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents):
+    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents, *, config_version="1.0"):
         self.period_start = period_start
         self.period_end = period_end
         self.zone = zone
         self.base_currency = base_currency
         self.exponents = exponents
+        self.config_version = config_version
         self.money_currency = next((c for c in exponents if c != base_currency), base_currency)
         self.events_rng = random_stream(seed, "events")
+        self._scenario_seed = seed
+        self._case_counts = Counter()
         self.noise_rng = random_stream(seed, "distractors")
         self.order_rng = random_stream(seed, "order")
         self._id_streams = {kind: random_stream(seed, "ids/" + kind) for kind in PREFIXES}
@@ -44,6 +47,15 @@ class Company:
         self.issues = []
         self.events = []
         self.mutations = []
+
+    def case_parameters(self, kind, units, *, day=6, hour=10, minute=0):
+        """Independent event stream: toggling another defect does not change this case."""
+        if self.config_version == "1.0":
+            return units, day, hour, minute
+        rng = random_stream(self._scenario_seed, f"case/{kind}/{self._case_counts[kind]}")
+        self._case_counts[kind] += 1
+        return (rng.randrange(max(1, units // 3), units * 3 + 1),
+                rng.randrange(2, 21), rng.randrange(8, 18), rng.randrange(60))
 
     def id(self, kind):
         return f"{PREFIXES[kind]}{self._id_streams[kind].getrandbits(96):024X}"
@@ -128,7 +140,8 @@ class Company:
         )
 
     def allocation_issue(self):
-        receipt_at = self.period_start + timedelta(days=11, hours=10)
+        _, day, hour, minute = self.case_parameters("allocation", 50_000, day=11, hour=10)
+        receipt_at = self.period_start + timedelta(days=day, hours=hour, minutes=minute)
         scale = 10 ** self.exponents[self.base_currency]
         amount = self.events_rng.randrange(350, 900) * 100 * scale
         self.allocation(

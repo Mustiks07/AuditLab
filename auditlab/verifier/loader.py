@@ -8,11 +8,14 @@ from __future__ import annotations
 
 import csv
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import hashlib
+from importlib.metadata import version
+from importlib.resources import files
 import json
 from pathlib import Path
 import re
+from zoneinfo import ZoneInfo
 
 NULL_MARKER = "null"
 RATE_PATTERN = re.compile(r"^[0-9]+(\.[0-9]+)?$")
@@ -32,6 +35,8 @@ class Snapshot:
     period_end: str
     deadline: str
     offset: timedelta
+    timezone_name: str
+    timezone_database: str
     exponents: dict[str, int]
     rounding: str
     input_sha256: dict[str, str]
@@ -47,6 +52,22 @@ def _instant(text: str, what: str) -> datetime:
     if value.tzinfo is None:
         raise SnapshotError(f"{what}: timestamp without UTC offset {text!r}")
     return value
+
+
+def _company_timezone(name: object) -> tuple[ZoneInfo, str]:
+    """Use the bundled IANA database on every OS; never infer a zone from one offset."""
+    if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_+-]+(?:/[A-Za-z0-9_+-]+)*", name):
+        raise SnapshotError("manifest.timezone: expected an IANA timezone name")
+    try:
+        database = files("tzdata.zoneinfo")
+    except ModuleNotFoundError as error:
+        raise SnapshotError("timezone database unavailable: install the pinned tzdata dependency") from error
+    try:
+        with database.joinpath(*name.split("/")).open("rb") as stream:
+            zone = ZoneInfo.from_file(stream, key=name)
+    except (OSError, ValueError) as error:
+        raise SnapshotError(f"manifest.timezone: unknown IANA timezone {name!r}") from error
+    return zone, "tzdata:" + version("tzdata")
 
 
 def _nullable(value):
@@ -93,17 +114,13 @@ def load_snapshot(public_dir: Path | str) -> Snapshot:
     deadline = _instant(deadline_text, "policy.allocation.deadline")
     notes = []
     offset = start.utcoffset()
-    if end.utcoffset() != offset:
-        notes.append({"kind": "ambiguity", "subject": "manifest/timezone",
-                      "detail": "period_start and period_end carry different UTC offsets; "
-                                "local dates use the period_start offset"})
+    company, timezone_database = _company_timezone(manifest.get("timezone"))
     if deadline != end:
         notes.append({"kind": "ambiguity", "subject": "policy/allocation",
                       "detail": f"allocation deadline {deadline_text} differs from period_end "
                                 f"{manifest['period_end']}; deadline is used"})
     exponents = {str(k): _int(v, "currency_exponents") for k, v in
                  manifest.get("currency_exponents", {}).items()}
-    company = timezone(offset)
 
     def stamp(text: str, what: str) -> tuple[int, str]:
         value = _instant(text, what)
@@ -112,7 +129,8 @@ def load_snapshot(public_dir: Path | str) -> Snapshot:
     snapshot = Snapshot(
         episode_id=str(manifest["episode_id"]), base_currency=str(manifest["base_currency"]),
         period_start=manifest["period_start"], period_end=manifest["period_end"],
-        deadline=deadline_text, offset=offset, exponents=exponents,
+        deadline=deadline_text, offset=offset, timezone_name=company.key,
+        timezone_database=timezone_database, exponents=exponents,
         rounding=str(policy.get("rounding", manifest.get("rounding", ""))),
         input_sha256=hashes, notes=notes)
     if snapshot.rounding != "ROUND_HALF_UP":
