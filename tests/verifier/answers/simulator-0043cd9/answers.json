@@ -1,0 +1,717 @@
+{
+ "source": "origin/feature/simulator 0043cd9 datasets/open/*/*/public (copied without private/)",
+ "recorded_before_truth": true,
+ "engines_compared": [
+  "duckdb 1.1.3",
+  "sqlite 3.50.4"
+ ],
+ "engines_agree": true,
+ "episodes": [
+  {
+   "split": "dev",
+   "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+   "report_sha256": "3048ef471f4a4f655c70daa75f730798dec1b185bc16181bb4ccdf9a59e09c77",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "fd4d0d62ca4ae20d42250baa1d76e2e1852db2a8cedb4b9f07c39dd465d7bf33",
+    "ledger.csv": "28ade01d0ec57d58e26b7596fa9b60cebf57aa32ea11dae23b6fbb965919d8e5",
+    "manifest.json": "03c17ee767210e857ecb1d960b09b4e94b1b25846e2f13a18625da36cd884926",
+    "payments.jsonl": "a34ca1ecda19ed7b099b4997bf5bf523de408761954cc3dc2951b757ac19ff38",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/ICA4B438C94568592F283A53F"
+     ],
+     "claimed_amount_minor": 2400000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D52EA9AAE0A71C7E9FF91B7E3",
+      "policy/period",
+      "ledger/RCEDF4527146E60E75AD607E5"
+     ],
+     "explanation": "policy/period: invoice ICA4B438C94568592F283A53F: event in period 0, posted in period 1 (0 = target period ending 2027-01-01T00:00:00+05:00 exclusive); nominal 2400000 KZT minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+   "report_sha256": "048fc915e6d9c63f169b404f99ce8145f52d05263ba76ac569dd47296574f51e",
+   "input_sha256": {
+    "fx.csv": "73379f54b2581d4f463c89d380c5537600bc929a5bc2860ba2b61fe170dd7be8",
+    "invoices.jsonl": "d4f66b13c267b6622f8bb18cb512242cd45dd8c8e7d78dc9c70e5c7405d4bfe5",
+    "ledger.csv": "2d49c455e24e1a186c22a2583285a80944dfed0d0902bf3b641a70351e602d32",
+    "manifest.json": "193cd3a1050c630664483cff0ceb30493c07d4b14c48e7de6deba82103b49840",
+    "payments.jsonl": "6664ebdad86b6b26da77c4ec91f16706d0b7f63a8f01ba2a19c3ba708e6c0c4a",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E2C25779161020D87EF54FE3600D099E4",
+   "report_sha256": "60f19b7ca6e92a33c51ad27a0307b777ad7e2b901751d130e6ca4895961304b7",
+   "input_sha256": {
+    "fx.csv": "69dd583522cc393ca1d1f89410b75c0e03a7338d9249925c0f672b42841c6421",
+    "invoices.jsonl": "1432ad5ebe62d415b4d7e5ee85bd3ec91ba287003ca2fa933b398ce2f7ed2460",
+    "ledger.csv": "58944d8b99fb60ebfadcef6ec86cd708478b95a9475dfc1a692a8df1126befd7",
+    "manifest.json": "8758d5c3acc7db0cf93f7cfb37170660888fd0d31b44683179f4f0654de532c7",
+    "payments.jsonl": "13926bcb9fc8d435632536f5723b256aa7d41f2a4ee66b2505139d2411618904",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/PDBCA7B95825C3CBBDB8C89B6"
+     ],
+     "claimed_amount_minor": 1010,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D4712EAF8B8FC2A02ACFF51D2",
+      "fx/2026-12-14/JPY/KZT",
+      "policy/fx_date",
+      "ledger/R2738E67E03177F999FB65D25"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(101 JPY minor / 10^0 * 2.505 * 10^2) = 25301; recorded 26311; |difference| = 1010 KZT minor units; rate date 2026-12-14",
+     "type": "fx_conversion"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E406D4C3A8F0D3286AC70149C9F0E1CF9",
+   "report_sha256": "b848c8add0a0e61be9ecc701b76273ec9d1f27d5c1a6cba38ac26671bbb62b90",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "318e0c4b0fb1f0bcc795619853225b2a9d1cf5b1cd16d319dd8d886a1f365951",
+    "ledger.csv": "a645bbedd9363e82bf8f585351192273c37390e997590c2628395dbdc351dfd8",
+    "manifest.json": "5422af64b928f24d16503929e5eb9a8129db39fe76d6107f41ab52547538627d",
+    "payments.jsonl": "8043a4743a12eab1ca406d8ffa56c69c767b928ea8f4bb298c5a1644e1cb65ed",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/ID3556EAE8D4F17F64B167C62",
+      "payment/P27959452879500B45B268F01"
+     ],
+     "claimed_amount_minor": 1704000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D57E9895A3F3F03CE8DDB5575",
+      "policy/allocation",
+      "ledger/R8591F4047F2110588716D47B",
+      "ledger/R49800F2261D9EE342CBA8449"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED P27959452879500B45B268F01: credits 4260000 - debits 2556000 = 1704000 KZT minor units on rows before 2027-01-01T00:00:00+05:00 (exclusive); designated amount 4260000",
+     "type": "payment_allocation"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E4C30409A2F4E6DFE858E8FF06B8C4436",
+   "report_sha256": "423d358e58d09743bacd03b8fb0b76c1ffa44c4372d0e72b4317e802ad0643dc",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "67c22a99469f2af983236cd380c68acc365b07cdcc4c303b0795870375ee8a88",
+    "ledger.csv": "3947e83fda96d6f962d077f9ebfc0388a19526b068fb84c2357a1127a0f6e596",
+    "manifest.json": "c51588f468344c39905379f59efdf44a6119ec59fdaf9b20c8fc91ec3c98a03f",
+    "payments.jsonl": "10aa54f226b12ead1f863acfac815447786a865ff6802516abcee3f0e6dc9203",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I5AAEBD9EAF62D2547A677062",
+      "payment/P4E91910D2DE9D485504219FC"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/DDCA0450C334DC54A9511B86F",
+      "policy/allocation",
+      "ledger/RA9D7F2FC68075C804173CC77",
+      "ledger/RA0D1E191D983C621814DAF59"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED P4E91910D2DE9D485504219FC: credits 5000000 - debits 3000000 = 2000000 KZT minor units on rows before 2027-01-01T00:00:00+05:00 (exclusive); designated amount 5000000",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "invoice/I7464C74237F658EB079AED71"
+     ],
+     "claimed_amount_minor": 2400000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D87507162564E502F9D2B6551",
+      "policy/period",
+      "ledger/R38070514A6C29E4BC53D174D"
+     ],
+     "explanation": "policy/period: invoice I7464C74237F658EB079AED71: event in period 0, posted in period 1 (0 = target period ending 2027-01-01T00:00:00+05:00 exclusive); nominal 2400000 KZT minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E509506A67D640282D2FD1D8B154EF4EC",
+   "report_sha256": "0834fa39e79dbe325df9aa2b8322dc031f19acd4d47589185e24e4782612f190",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "67c22a99469f2af983236cd380c68acc365b07cdcc4c303b0795870375ee8a88",
+    "ledger.csv": "6b052bbf5f3e3dc8254bb13144bb0ec07076b86be9e794933863c1fc3ab7c5ef",
+    "manifest.json": "ca98f7002bcf6333ebfaa77d789a414cc456dbd49df797ddb784b5b1d53c05be",
+    "payments.jsonl": "c00abfd8c3f523115d0bdca227d240164c35568a1d563d74bb57fc636c74477b",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I7464C74237F658EB079AED71"
+     ],
+     "claimed_amount_minor": 2400000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D87507162564E502F9D2B6551",
+      "policy/period",
+      "ledger/R38070514A6C29E4BC53D174D"
+     ],
+     "explanation": "policy/period: invoice I7464C74237F658EB079AED71: event in period 0, posted in period 1 (0 = target period ending 2027-01-01T00:00:00+05:00 exclusive); nominal 2400000 KZT minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "E7C2CB988BDE6605CEFB48E231F21DFD7",
+   "report_sha256": "b929b0f0fece3d306bf4d7aa788d89c3af2d1c9aeda4053a3fffd8e7dde7770f",
+   "input_sha256": {
+    "fx.csv": "5da8ba1abb543bace34c672d31710f33b297a49c16a2d5ad664b5db431ddece8",
+    "invoices.jsonl": "431f17762219303065c1b99eff75e53ba1899c1f26185eed5d12e93bfd2f8442",
+    "ledger.csv": "ca8b869cfbcccc061aa0b61096a02bc051642b16e23ba11b6eb2d2ce6f005bb6",
+    "manifest.json": "8d3e565080942a894bdbcc534c3d883a9d97aa684891aa88a5d27eab0c573ab9",
+    "payments.jsonl": "53b626a259c594bd76755a7ac90d36d7dbe9ef6350e23df0377848e44f7790ae",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I1C16DDA8C73E8CA8007B2B9B"
+     ],
+     "claimed_amount_minor": 1000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D7F8453E3224C93B27C5745D0",
+      "fx/2026-12-31/JPY/KZT",
+      "policy/fx_date",
+      "ledger/RF5D8BBA67553D3608565F8CA"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(100 JPY minor / 10^0 * 2.505 * 10^2) = 25050; recorded 26050; |difference| = 1000 KZT minor units; rate date 2026-12-31",
+     "type": "fx_conversion"
+    },
+    {
+     "affected_ids": [
+      "invoice/I1C16DDA8C73E8CA8007B2B9B"
+     ],
+     "claimed_amount_minor": 100,
+     "currency": "JPY",
+     "evidence_ids": [
+      "invoices/D7F8453E3224C93B27C5745D0",
+      "policy/period",
+      "ledger/R7A2E2820F3DA90AF8DDB562A"
+     ],
+     "explanation": "policy/period: invoice I1C16DDA8C73E8CA8007B2B9B: event in period 0, posted in period 1 (0 = target period ending 2027-01-01T00:00:00+05:00 exclusive); nominal 100 JPY minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "EAA9D228EE94081E1C02F82DEDCCA190B",
+   "report_sha256": "0ad899897aabe8e07f20164e1ac5e8bec47bbc837cb2899a466657639e9c8258",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "c99ac290e33a30ddec65ab080a2a58cbeaf7e90137295c0bf0f2a22eee5b953a",
+    "ledger.csv": "814aec3604c44bfeb1a16effd7fff5681ab8ed4953f1f6020c8f1bf327f61baf",
+    "manifest.json": "e54d9732634703f83d324d927fabf5e04ce55642cdf3f4dcb74adfdec214ee7d",
+    "payments.jsonl": "8111b4342f7884c1841afc026e3ce9b7887886e77ca3bc315ce7d2c684adfce0",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/IEF351A08D1C262436BC8316F"
+     ],
+     "claimed_amount_minor": 12000,
+     "currency": "JPY",
+     "evidence_ids": [
+      "invoices/D189879BEA4FE3DFE5C4E679D",
+      "invoices/DD774D66E5D0EB1A941AC3D00",
+      "ledger/R141A1192854B2E79708DF8A4",
+      "ledger/RA4C314722442D916CEFC0AD9"
+     ],
+     "explanation": "invoice canonical key: one recognition per commercial invoice: 2 documents of IEF351A08D1C262436BC8316F (CD02F2A912F0338F810940F35), 2 recognitions: 24000 - 12000 = 12000 JPY minor units recognised in excess",
+     "type": "duplicate_invoice"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "EC3F05E92121031C312CBEFA265787AC6",
+   "report_sha256": "c87139769732b07047772ca7aed3e5f0faf4aa688c6c53ae603207f5bde7bd79",
+   "input_sha256": {
+    "fx.csv": "f3812d549800eb4142c76d0d4755b28d06ff3be117e9a1b6624ea7a083fe5865",
+    "invoices.jsonl": "6cd0f981b2bbf923bc77ab24192b0b0107eadbbf59970fa06d5b994752472063",
+    "ledger.csv": "3eec036c71beac2aaad3661af1f1b17e35f962384d83708fa249390170725845",
+    "manifest.json": "372053972065ec4bce909fbe29773e848220d6cb6c8329eab3d3ad44cfb8be7e",
+    "payments.jsonl": "65d8419ff8417052fd4f52e1a80a90d6eb1e890e586815a282455f4772b84dd5",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P49901E8533CDA9F05C8C1BCE"
+     ],
+     "claimed_amount_minor": 50000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D26865EF3E8FD945C338254EE",
+      "fx/2026-12-14/KWD/KZT",
+      "policy/fx_date",
+      "ledger/R01AA1D1167AF3A99AA2EBDA2"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(50000 KWD minor / 10^3 * 1600.5 * 10^2) = 8002500; recorded 8052500; |difference| = 50000 KZT minor units; rate date 2026-12-14",
+     "type": "fx_conversion"
+    },
+    {
+     "affected_ids": [
+      "invoice/IB1A3D243BCCE43C9FEBED947",
+      "payment/P49901E8533CDA9F05C8C1BCE"
+     ],
+     "claimed_amount_minor": 20000,
+     "currency": "KWD",
+     "evidence_ids": [
+      "payments/D26865EF3E8FD945C338254EE",
+      "policy/allocation",
+      "ledger/R5DBAC2E13601C2DBE01DB43D",
+      "ledger/R0752724E29B16ABD602BEBF3"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED P49901E8533CDA9F05C8C1BCE: credits 50000 - debits 30000 = 20000 KWD minor units on rows before 2027-01-01T00:00:00+05:00 (exclusive); designated amount 50000",
+     "type": "payment_allocation"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "dev",
+   "episode_id": "EDA0C3DF206AB95B8490EEFD58F3B292F",
+   "report_sha256": "01cf8d1bed1898a7d6d952428c94e3537e9c539f3992a6a6f28be218c0af3ecd",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "10884581bacf1064e35279b7568bc68869c3a90b8d7ef8b4b1980062b02543bd",
+    "ledger.csv": "6e35ac10df798b377e89d9c25713432f4070468654eb0570f95f24621c090db4",
+    "manifest.json": "7f94aa2b9d87ca2466ee10d42abdd1a9936a950c063840e72ea00c315bc7b4a3",
+    "payments.jsonl": "f4584c72db9fae23bb308160c377f2c4f75471d652e2d83e02b354731ba4a8d8",
+    "policy.json": "514b8840860799673c50c32f1dcc32a1c8c2f90ff4212a8f7768cfb632caa3c8"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+   "report_sha256": "664afe4483a211e9e7406f041f9c0db39b2c2e407c80f2976bb8a49d7d25c1c7",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "bd5e46850f3f5f6632aa5e60046f34c8f200cac78d3489afc28b451b72a5e7ae",
+    "ledger.csv": "ccee2cbb0790baf19dfb9655b750760843521b00bb5dd8701ca5e2892ae921e7",
+    "manifest.json": "99bfe95fb07d59da8cf13b237f770ca9c23cdbc95d18f2184bb63eed7a25aae3",
+    "payments.jsonl": "3c4f9ff51b4ae83fcaae3763ce153048dc0203a280d86d927aec572180b20762",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E077255A43F950625D099C4A3E1D26109",
+   "report_sha256": "44ea3bb4cf8d59ecb76d7640e1cb1a61eff3fc0b6997229e4f52f90099b9c535",
+   "input_sha256": {
+    "fx.csv": "23fcb519b1a5531e1bc8253b9190d8c1b983abc9aee7a1506aeb9c670ab85d71",
+    "invoices.jsonl": "71880a2a0c4266b44c2506e83115f4efd8677e878da849992e3d1abbfc9143a8",
+    "ledger.csv": "75bb4471fcbf84c27a08aa900a0e8359abd386c7c3491056ee5d3c13a2375f95",
+    "manifest.json": "bf0f6115d55687d126535c9f269cb1ba1b706c2817da42c02b5d5933c30809b9",
+    "payments.jsonl": "a2c503b22dafcab115f9f9f75e4a78041c548c2d2cdaec01f6ec5be7775f11c5",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I0555B87A2D28587E928BB9DC"
+     ],
+     "claimed_amount_minor": 100000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D5EEBF820E0E03DD78A012B4A",
+      "fx/2026-11-30/USD/KZT",
+      "policy/fx_date",
+      "ledger/R018A7ADB265B794DFC02BE1C"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(10000 USD minor / 10^2 * 500 * 10^2) = 5000000; recorded 5100000; |difference| = 100000 KZT minor units; rate date 2026-11-30",
+     "type": "fx_conversion"
+    },
+    {
+     "affected_ids": [
+      "invoice/I0555B87A2D28587E928BB9DC"
+     ],
+     "claimed_amount_minor": 10000,
+     "currency": "USD",
+     "evidence_ids": [
+      "invoices/D5EEBF820E0E03DD78A012B4A",
+      "policy/period",
+      "ledger/R5BA1BB55813BD1643EBB6A64"
+     ],
+     "explanation": "policy/period: invoice I0555B87A2D28587E928BB9DC: event in period 0, posted in period 1 (0 = target period ending 2026-12-01T00:00:00+05:00 exclusive); nominal 10000 USD minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E39A14EA0FB98F9BC3E42C3738182D142",
+   "report_sha256": "268be3c3babf56719a624132434cf455a3009605a37711aebc50f4a04ad69250",
+   "input_sha256": {
+    "fx.csv": "82b3462bd881221cec25afca287c26d65b820ae7749d02186c9697a2d6b587d5",
+    "invoices.jsonl": "c22ce6a2c2edd3449bb697c4cdedc4d234a53ccaa24be8bbf74e934696e7f83c",
+    "ledger.csv": "6c91bf546cfd5fc1b69fc2147145ed9cbbc5bac4d499c7dbc1b5196e7ce18f5b",
+    "manifest.json": "3dddf7ca3844cf3fb124db27a14961c229e8be311816ff1f548b35a14b9dc892",
+    "payments.jsonl": "f4af842cba51a9204f2df981d780f62afbbb6c158c6c2dcc54eeda3e68530fa0",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P96A1B85844AC58B4A3FFE303"
+     ],
+     "claimed_amount_minor": 50000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D61607F06DDCB27AE2B336871",
+      "fx/2026-11-14/USD/KZT",
+      "policy/fx_date",
+      "ledger/RA86CF8C02EAC4C69B64A4822"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(5000 USD minor / 10^2 * 500 * 10^2) = 2500000; recorded 2550000; |difference| = 50000 KZT minor units; rate date 2026-11-14",
+     "type": "fx_conversion"
+    },
+    {
+     "affected_ids": [
+      "invoice/I29AB36E1E93E6BD7ED4FF574",
+      "payment/P96A1B85844AC58B4A3FFE303"
+     ],
+     "claimed_amount_minor": 2000,
+     "currency": "USD",
+     "evidence_ids": [
+      "payments/D61607F06DDCB27AE2B336871",
+      "policy/allocation",
+      "ledger/R1736F63CA7ECDA537425D652",
+      "ledger/R67E102E91216CD61CA315E3D"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED P96A1B85844AC58B4A3FFE303: credits 5000 - debits 3000 = 2000 USD minor units on rows before 2026-12-01T00:00:00+05:00 (exclusive); designated amount 5000",
+     "type": "payment_allocation"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E3C1B04E2DCF07E6D4883BB9CEB56A932",
+   "report_sha256": "fee33967ac3cd8277cb7a05c5209e7e4a8b50709d6f699815e9a860f276b76d0",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "d6f14cce2bd22a39de2a9568a56fd314b6c8bb7c7b3884e320d539e8a7cfabe6",
+    "ledger.csv": "953a97a1e1c043df202188f22cf067061479dc47908a4ad4aa376df82ffa3bbe",
+    "manifest.json": "ba2709a968627b6851819a06f4f93a84ddb7b073175c6c5e5b0172504268a89b",
+    "payments.jsonl": "f701e05078f881b94bf3f92ed2412fd287cadff9c59278aff7df569f9535154f",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I7367FB244F0B787B2005FEC2",
+      "payment/PC90B595F5350F8CC9C769EB7"
+     ],
+     "claimed_amount_minor": 3252000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/DB3B2B86F1614110709592E5F",
+      "policy/allocation",
+      "ledger/REEB8ADCD13AC79D859DEC97B",
+      "ledger/RE935DB07A8CA43BEDEF20738"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED PC90B595F5350F8CC9C769EB7: credits 8130000 - debits 4878000 = 3252000 KZT minor units on rows before 2026-12-01T00:00:00+05:00 (exclusive); designated amount 8130000",
+     "type": "payment_allocation"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+   "report_sha256": "ddf339c49a1c0c7c7a75aa29833f2e893ce2bcd0957fd1ec43be7c4aad65df25",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "e1560eec9748e3e75a02a57683825dc3af5becddb5a645c69f94333986ae39fd",
+    "ledger.csv": "89137c94224eab3c175d666e8a779da64574c8af4e702222991840892b3dc152",
+    "manifest.json": "b5d2338f9b6697ee5fbda04f3911c0504394e40c2ed75dded8308c024fd3aaec",
+    "payments.jsonl": "291a7a11c320b953a3aab6a5ae37ff9f9d9a4c05226888dd4e83ce10446cf3ce",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/IE1AA509B3457554062C97F19"
+     ],
+     "claimed_amount_minor": 1200000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D3DA6071040B70FA2D90C18D0",
+      "invoices/D7534210C633A07D8851B8F7E",
+      "ledger/R765F277C72A53DF193243B58",
+      "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+     ],
+     "explanation": "invoice canonical key: one recognition per commercial invoice: 2 documents of IE1AA509B3457554062C97F19 (C5958843CDD2186B3FB872E9C), 2 recognitions: 2400000 - 1200000 = 1200000 KZT minor units recognised in excess",
+     "type": "duplicate_invoice"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E651B6A63DDA2448A91DC825714D7732E",
+   "report_sha256": "04c04ba718950899093526e2ec4daf1d3d4b279ad757547adf95d804cb4fa3c9",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "e1560eec9748e3e75a02a57683825dc3af5becddb5a645c69f94333986ae39fd",
+    "ledger.csv": "625ff89d0281bba9ad5bf1ab9440f6de50aa87fc7f6482a64396050d785114c4",
+    "manifest.json": "8d279eaa057ef158a6e5e1c61008b78332a2e5539bb9a7185b31f0a11a869a3c",
+    "payments.jsonl": "31ca5e3243ff6689fe89adf0d9b078d6e93fb13a0494122837da78c0ff91418f",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/IE1AA509B3457554062C97F19"
+     ],
+     "claimed_amount_minor": 1200000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D3DA6071040B70FA2D90C18D0",
+      "invoices/D7534210C633A07D8851B8F7E",
+      "ledger/R765F277C72A53DF193243B58",
+      "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+     ],
+     "explanation": "invoice canonical key: one recognition per commercial invoice: 2 documents of IE1AA509B3457554062C97F19 (C5958843CDD2186B3FB872E9C), 2 recognitions: 2400000 - 1200000 = 1200000 KZT minor units recognised in excess",
+     "type": "duplicate_invoice"
+    },
+    {
+     "affected_ids": [
+      "invoice/IFB7EC04001E37EA268207EFC",
+      "payment/P308C7000EC7515B02EEB3610"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/DBD292EDAEA4FDA14AEF2A4FA",
+      "policy/allocation",
+      "ledger/R53432EC1D005F5311538DE28",
+      "ledger/RB74667B32C20460A9F0BCE8C"
+     ],
+     "explanation": "policy/allocation: UNAPPLIED P308C7000EC7515B02EEB3610: credits 5000000 - debits 3000000 = 2000000 KZT minor units on rows before 2026-12-01T00:00:00+05:00 (exclusive); designated amount 5000000",
+     "type": "payment_allocation"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E73A2954018B6B96D20AD0E9CFD9B9B18",
+   "report_sha256": "0c3c96b304cf5bd9ea585298648abfc8167c33bf0ad6471cdb238e02683731e5",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "3a491eef8320edb5707626b0e1a3687eca5172b5545763a98d2170065fd90f4c",
+    "ledger.csv": "a2752e1b7cb71af3f572aba9ceca64e7885807a0d9d206c7050834a03429e436",
+    "manifest.json": "3a2546157db49f68467fbbaf542e72d11d3b05cc92d6ca63946cc4e1462d8bd3",
+    "payments.jsonl": "b0861535461051e019674b538117471eba2e468ae492b113d4367b7d26a026d2",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/IDDAB63308571A4112294AFE9"
+     ],
+     "claimed_amount_minor": 1200000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D16AA30A61C93926DC97EAC27",
+      "invoices/D460F3642FFB4B43FB24E617A",
+      "ledger/R9FB9E51A4D77633D9EA0C5E5",
+      "ledger/RCACC86C3015B5E0F1B9C4952"
+     ],
+     "explanation": "invoice canonical key: one recognition per commercial invoice: 2 documents of IDDAB63308571A4112294AFE9 (C7E20A489156F19ED1542F509), 2 recognitions: 2400000 - 1200000 = 1200000 KZT minor units recognised in excess",
+     "type": "duplicate_invoice"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
+   "report_sha256": "f0f9e1f82105b70be3713cdca1737e7a3cc889742ef1165ba40cd30eaf3b2ff5",
+   "input_sha256": {
+    "fx.csv": "261fef230a97424d729cca1153b77d72e4a1dd670b2e6c79960aa25482c8d9be",
+    "invoices.jsonl": "a91bf4b7414e2021c41eabd8d388a9bb55191c1ad434d3ea2111687971be7e41",
+    "ledger.csv": "4667655f6979b5fbce0113719ded213c05fd0dcea593f7092fe1e10d2fbab5fb",
+    "manifest.json": "d8c2991716854578c383d0f909446d4f32af3da885518417111dbc18ff5bcc6d",
+    "payments.jsonl": "91b9fad21f434ae6c8da2299a579df75fbc53c6720079596527308215895d250",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P836088121FA3B3FFA333D372"
+     ],
+     "claimed_amount_minor": 100000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9252D571AAE9E4D772B9C927",
+      "fx/2026-11-14/USD/KZT",
+      "policy/fx_date",
+      "ledger/R2EE92FB176D4E5573330D43D"
+     ],
+     "explanation": "policy/fx_date: ROUND_HALF_UP(10000 USD minor / 10^2 * 500 * 10^2) = 5000000; recorded 5100000; |difference| = 100000 KZT minor units; rate date 2026-11-14",
+     "type": "fx_conversion"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "EE66DC47098559362CDB36A9B4107782C",
+   "report_sha256": "a8518399e1b6965f729db12fb6723742f34563f0ef587a7cb7942b2eec7b1a7e",
+   "input_sha256": {
+    "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+    "invoices.jsonl": "21238e4ac17bfbb4ad5a4c5de82ee585e9733f2ea35fbefbb5e1e7ade65e9d14",
+    "ledger.csv": "a78b1bae255680830f41536c5eff4008a91f175dd10a4d1f2b7c31b769f76160",
+    "manifest.json": "ce72644b6ae2e1b03e863133416c41cdbf730e6ca6f41e7a9246c887e43635b7",
+    "payments.jsonl": "6d60fcb5bf369ddeeb688a1726db1877365ccc388a06143c661ba677dd0a56b3",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [
+    {
+     "affected_ids": [
+      "invoice/I8C49EF399C02A6C0BCDD5F23"
+     ],
+     "claimed_amount_minor": 2400000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/DB0E51891C01E4E1427A043C4",
+      "policy/period",
+      "ledger/RD2A8827FF7FFD9BDA0E6B0F3"
+     ],
+     "explanation": "policy/period: invoice I8C49EF399C02A6C0BCDD5F23: event in period 0, posted in period 1 (0 = target period ending 2026-12-01T00:00:00+05:00 exclusive); nominal 2400000 KZT minor units",
+     "type": "period_cutoff"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "split": "train",
+   "episode_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+   "report_sha256": "1d1290ebac7d18ccb5e550a261caedac5ad1a74b7b77c7a06f1ecff3753f254d",
+   "input_sha256": {
+    "fx.csv": "23fcb519b1a5531e1bc8253b9190d8c1b983abc9aee7a1506aeb9c670ab85d71",
+    "invoices.jsonl": "8eb3eadff3a9603a7549f446617c2dbcfef56b9151daf02dc977f06a446e8f50",
+    "ledger.csv": "22ebc77b4de03f0f4a5ec0b0e14c167aa4c159f34d6363f527217bb3a4e5088f",
+    "manifest.json": "cbd5996560a908b21e3ed18e27670277d06d773b290b15768c11039105dda22b",
+    "payments.jsonl": "89133098819344854180a0e576a21b4fb8bac236b31fd9fdcddf81b2d476496e",
+    "policy.json": "ae0ac23903465c2b6fbe32d5dce6a790974dadd32fe0735a191dca8007ba2bcd"
+   },
+   "engine": "duckdb",
+   "engine_version": "1.1.3",
+   "rules_version": "verifier-rules-1.0",
+   "findings": [],
+   "notes": []
+  }
+ ]
+}
