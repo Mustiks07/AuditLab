@@ -68,7 +68,12 @@ def steps(snapshot: Snapshot, trajectory: list[dict]) -> list[dict]:
         if action.get("action") == "list_records" and obs.get("ok"):
             table = (action.get("args") or {}).get("table")
             for rec in (obs.get("result") or {}).get("records") or []:
-                lid = rec.get("row_id") or rec.get("doc_id")
+                if table == "fx":
+                    lid = f"{rec.get('date')}/{rec.get('source_currency')}/{rec.get('target_currency')}"
+                elif table == "policy":
+                    lid = rec.get("id")  # public contract: policy pages are id/value pairs
+                else:
+                    lid = rec.get("row_id") or rec.get("doc_id")
                 if lid and snapshot.get(f"{table}/{lid}"):
                     listed.append(f"{table}/{lid}")
         out.append({
@@ -97,9 +102,12 @@ def findings_view(snapshot: Snapshot, submission: dict | None, score: dict | Non
     if not submission:
         return []
     opened_at: dict[str, int] = {}
+    listed_at: dict[str, int] = {}
     for st in step_list:
         if st["opened_key"] and st["opened_key"] not in opened_at:
             opened_at[st["opened_key"]] = st["step"]
+        for key in st["listed_keys"]:
+            listed_at.setdefault(key, st["step"])
     verdicts = {int(v["index"]): v for v in (score or {}).get("per_finding") or [] if "index" in v}
     out = []
     for index, finding in enumerate(submission.get("findings") or []):
@@ -107,7 +115,8 @@ def findings_view(snapshot: Snapshot, submission: dict | None, score: dict | Non
         for key in finding.get("evidence_ids") or []:
             rec = snapshot.get(key)
             evidence.append({"key": key, "exists": rec is not None, "file": rec.file if rec else None,
-                             "line": rec.line if rec else None, "opened_at_step": opened_at.get(key)})
+                             "line": rec.line if rec else None, "opened_at_step": opened_at.get(key),
+                             "listed_at_step": listed_at.get(key)})
         affected = []
         for aid in finding.get("affected_ids") or []:
             rec = snapshot.resolve_affected(aid)
@@ -194,24 +203,27 @@ def compare(store: ExportStore, left_id: str, right_id: str) -> dict:
     left, right = run_detail(store, left_id), run_detail(store, right_id)
     ls, rs = Snapshot(store.public_dir(left_id)), Snapshot(store.public_dir(right_id))
     changes = diff_snapshots(ls, rs)
-    # Side-by-side arithmetic for every payment touched by the change (or all payments).
+    # Side-by-side arithmetic for documents touched by the change; zero-on-both-sides rows go last.
     touched = {c["key"] for c in changes}
+    touched_payments = {rs.get(k).fields.get("payment_id") for k in touched if k.startswith("ledger/") and rs.get(k)}
     calcs = []
-    for pay in rs.by_table("payments"):
-        lp = ls.get(pay.key)
-        related = pay.key in touched or any(
-            k.startswith("ledger/") and rs.get(k) and rs.get(k).fields.get("payment_id") == pay.fields.get("payment_id")
-            for k in touched)
-        if lp is None or not related:
+    for doc in rs.by_table("payments") + rs.by_table("invoices"):
+        before = ls.get(doc.key)
+        if before is None:
             continue
-        for fn in (derive.allocation, derive.fx_valuation):
-            a, b = fn(ls, lp), fn(rs, pay)
+        related = doc.key in touched or (doc.table == "payments" and doc.fields.get("payment_id") in touched_payments)
+        if not related:
+            continue
+        fns = [derive.fx_valuation]
+        if doc.table == "payments" and doc.fields.get("settlement_index"):
+            fns.insert(0, derive.allocation)
+        for fn in fns:
+            a, b = fn(ls, before), fn(rs, doc)
             if a is None or b is None:
                 continue
-            if fn is derive.allocation and not pay.fields.get("settlement_index"):
-                continue
-            calcs.append({"type": a["type"], "subject": pay.key, "left": a, "right": b,
+            calcs.append({"type": a["type"], "subject": doc.key, "left": a, "right": b,
                           "difference_minor": (b.get("result_minor") or 0) - (a.get("result_minor") or 0)})
+    calcs.sort(key=lambda c: not (c["difference_minor"] or c["left"].get("result_minor") or c["right"].get("result_minor")))
     return {
         "left": {"run": left["run"], "claims": _claims(left), "score": left["score"], "empty": left["empty_submission"]},
         "right": {"run": right["run"], "claims": _claims(right), "score": right["score"], "empty": right["empty_submission"]},

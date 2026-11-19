@@ -78,69 +78,85 @@ def allocation(snapshot: Snapshot, payment: Record) -> dict[str, object]:
     }
 
 
-def fx_valuation(snapshot: Snapshot, payment: Record) -> dict[str, object] | None:
-    f = payment.fields
+def _valuation_row(snapshot: Snapshot, source: Record) -> Record | None:
+    """FX_VALUATION memorandum row for a source document (policy/fx_date)."""
+    base = snapshot.manifest.get("base_currency")
+    for row in snapshot.by_table("ledger"):
+        f = row.fields
+        if f.get("account") != "FX_VALUATION" or f.get("currency") != base:
+            continue
+        if source.table == "payments" and f.get("payment_id") == source.fields.get("payment_id"):
+            return row
+        if source.table == "invoices" and f.get("payment_id") is None and f.get("invoice_id") == source.fields.get("invoice_id"):
+            return row
+    return None
+
+
+def fx_valuation(snapshot: Snapshot, source: Record) -> dict[str, object] | None:
+    """Reporting valuation of a foreign payment or invoice against its FX_VALUATION posting."""
+    f = source.fields
     base = str(snapshot.manifest.get("base_currency") or "KZT")
     src = str(f.get("currency"))
     if src == base:
         return None
+    valuation = _valuation_row(snapshot, source)
+    if valuation is None:
+        return None
+    is_payment = source.table == "payments"
+    amount_field, time_field = ("amount_minor", "timestamp") if is_payment else ("total_minor", "issued_at")
+    local_id = f.get("payment_id") if is_payment else f.get("invoice_id")
+    affected = f"{'payment' if is_payment else 'invoice'}/{local_id}"
     exps = snapshot.manifest.get("currency_exponents") or {}
     src_exp, dst_exp = int(exps.get(src, 2)), int(exps.get(base, 2))
-    date = local_date(str(f.get("timestamp")), snapshot.manifest.get("timezone"))
+    date = local_date(str(f.get(time_field)), snapshot.manifest.get("timezone"))
     rate_rec = snapshot.get(f"fx/{date}/{src}/{base}")
-    cash = next((r for r in snapshot.by_table("ledger")
-                 if r.fields.get("payment_id") == f.get("payment_id") and r.fields.get("account") == "CASH"
-                 and r.fields.get("currency") == base), None)
-    amount = int(f.get("amount_minor") or 0)
+    amount = abs(int(f.get(amount_field) or 0))
+    noun = "платежа" if is_payment else "счёта"
     out: dict[str, object] = {
         "type": "fx_conversion",
-        "title": f"Оценка платежа {f.get('payment_id')} в {base} по курсу даты платежа",
-        "subject": payment.key,
+        "title": f"Оценка {noun} {local_id} в {base} по курсу местной даты события",
+        "subject": source.key,
         "currency": base,
-        "affected_ids": [f"payment/{f.get('payment_id')}"],
+        "affected_ids": [affected],
         "rule": {"key": "policy/fx_date", "text": snapshot.policy.get("fx_date"),
                  "local_date": date, "timezone": snapshot.manifest.get("timezone"),
                  "rounding_key": "policy/rounding", "rounding": snapshot.policy.get("rounding", "ROUND_HALF_UP")},
     }
-    if rate_rec is None or cash is None:
-        out.update({"operands": [], "formula": "нет курса или проводки", "result_minor": None,
-                    "evidence": [payment.key]})
+    recorded = int(valuation.fields.get("debit_minor") or 0)
+    if rate_rec is None:
+        out.update({"operands": [], "formula": f"нет опубликованного курса {src}/{base} на {date}",
+                    "result_minor": None, "evidence": [source.key, valuation.key, "policy/fx_date"]})
         return out
     rate = Decimal(str(rate_rec.fields["rate"]))
     expected = int((Decimal(amount) / (Decimal(10) ** src_exp) * rate * (Decimal(10) ** dst_exp))
                    .quantize(Decimal(1), rounding=ROUND_HALF_UP))
-    recorded = int(cash.fields.get("debit_minor") or 0)
     out.update({
         "operands": [
-            {"key": payment.key, "file": payment.file, "line": payment.line, "field": "amount_minor",
-             "value_minor": amount, "sign": 1, "label": f"сумма платежа, {src} (10^{src_exp})"},
+            {"key": source.key, "file": source.file, "line": source.line, "field": amount_field,
+             "value_minor": amount, "sign": 1, "label": f"сумма {noun}, {src} (10^{src_exp})"},
             {"key": rate_rec.key, "file": rate_rec.file, "line": rate_rec.line, "field": "rate",
-             "value": str(rate), "sign": 1, "label": f"курс {src}/{base} на {date}"},
-            {"key": cash.key, "file": cash.file, "line": cash.line, "field": "debit_minor",
-             "value_minor": recorded, "sign": -1, "label": f"записано в книге, {base}"},
+             "value": str(rate), "sign": 1, "label": f"курс {src}/{base} на местную дату {date}"},
+            {"key": valuation.key, "file": valuation.file, "line": valuation.line, "field": "debit_minor",
+             "value_minor": recorded, "sign": -1, "label": f"записанная оценка FX_VALUATION, {base}"},
         ],
         "expected_minor": expected,
         "recorded_minor": recorded,
-        "formula": f"{amount}/10^{src_exp} × {rate} × 10^{dst_exp} = {expected}; {expected} − {recorded} = {expected - recorded}",
-        "result_minor": expected - recorded,
-        "evidence": [payment.key, cash.key, rate_rec.key, "policy/fx_date"],
+        "formula": f"{amount}/10^{src_exp} × {rate} × 10^{dst_exp} = {expected}; |{expected} − {recorded}| = {abs(expected - recorded)}",
+        "result_minor": abs(expected - recorded),
+        "evidence": [source.key, rate_rec.key, valuation.key, "policy/fx_date"],
     })
     return out
 
 
 def derive_for(snapshot: Snapshot, finding: dict[str, object]) -> dict[str, object] | None:
-    """Derivation matching a submitted finding's type and affected payment."""
-    payment = None
-    for affected in finding.get("affected_ids") or []:
-        if str(affected).startswith("payment/"):
-            payment = snapshot.resolve_affected(str(affected))
-            break
-    if payment is None:
-        return None
+    """Derivation matching a submitted finding's type and affected payment or invoice."""
+    affected = [str(a) for a in finding.get("affected_ids") or []]
+    payment = next((snapshot.resolve_affected(a) for a in affected if a.startswith("payment/")), None)
     if finding.get("type") == "payment_allocation":
-        return allocation(snapshot, payment)
+        return allocation(snapshot, payment) if payment else None
     if finding.get("type") == "fx_conversion":
-        return fx_valuation(snapshot, payment)
+        source = payment or next((snapshot.resolve_affected(a) for a in affected if a.startswith("invoice/")), None)
+        return fx_valuation(snapshot, source) if source else None
     return None
 
 
@@ -148,9 +164,11 @@ def scan(snapshot: Snapshot) -> list[dict[str, object]]:
     """All non-zero discrepancies the console arithmetic sees in public data."""
     found = []
     for payment in snapshot.by_table("payments"):
-        for calc in (allocation(snapshot, payment), fx_valuation(snapshot, payment)):
-            if calc and calc.get("result_minor"):
-                found.append(calc)
+        calc = allocation(snapshot, payment)
+        if payment.fields.get("settlement_index") and calc.get("result_minor"):
+            found.append(calc)
+    for source in snapshot.by_table("payments") + snapshot.by_table("invoices"):
+        calc = fx_valuation(snapshot, source)
+        if calc and calc.get("result_minor"):
+            found.append(calc)
     return found
-
-

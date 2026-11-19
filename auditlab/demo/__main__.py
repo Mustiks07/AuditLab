@@ -51,7 +51,8 @@ def _print_run(detail: dict, replay: bool = False) -> None:
         mark = "ok " if st["ok"] else "ERR"
         extra = f" → {st['opened_key']}" if st["opened_key"] else ""
         if st["action"].get("action") == "calculator" and st["ok"]:
-            extra = f" = {st['observation']['result']['value']}"
+            result = st["observation"]["result"]
+            extra = f" = {result.get('value') if isinstance(result, dict) else result}"
         print(f"  {st['step']:>3}. {mark} {st['text']}{extra}  (осталось {st['remaining_steps']})")
     print()
     if detail["submission"] is None:
@@ -64,7 +65,9 @@ def _print_run(detail: dict, replay: bool = False) -> None:
         print(f"  Агент:    {money(fd['claimed_amount_minor'], fd['currency'])}")
         for ev in f["evidence"]:
             where = f"{ev['file']}:{ev['line']}" if ev["exists"] else "нет такой записи в снимке"
-            print(f"    доказательство {ev['key']:<28} {where}")
+            seen = (f"открыт на шаге {ev['opened_at_step']}" if ev["opened_at_step"] else
+                    f"на странице шага {ev['listed_at_step']}" if ev.get("listed_at_step") else "аудитор не получал")
+            print(f"    доказательство {ev['key']:<28} {where:<26} {seen}")
         calc = f["derivation"]
         if calc:
             print(f"  Консоль:  {calc['formula']}  → {money(calc['result_minor'], calc['currency'])}")
