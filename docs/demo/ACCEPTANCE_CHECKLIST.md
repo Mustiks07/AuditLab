@@ -4,6 +4,12 @@
 Следуйте [offline.md](../release/offline.md) без помощи авторов. Зависимости проекта не устанавливайте, комплект
 исходным checkout не подменяйте. Каждое затруднение записывайте дословно: команду, вывод, время.
 
+**Версия для этой приёмки:** следующий кандидат, включающий изменения PR #17.
+Его имя, source SHA и checksum передаёт интегратор вместе с архивом. До публикации
+такого кандидата пункты нового интерфейса ниже имеют статус «не проверено».
+Не скачивайте RC1 для подтверждения этих исправлений: его кнопки, подписи и порядок пары
+отличаются. Фактическая проверка прежнего RC1 сохранена отдельно в [RC1_AGENT_CHECK.md](RC1_AGENT_CHECK.md).
+
 ## 0. Запишите окружение
 
 - [ ] ОС и ядро (`uname -srm`, `/etc/os-release`), `python3.11 --version`, `docker version`.
@@ -15,7 +21,7 @@
 
 ## 1. Комплект
 
-- [ ] Скачать `AuditLab-v0.1.0-rc.1-offline.zip` и `…-SHA256SUMS.txt`; `sha256sum -c … --ignore-missing` → `OK`.
+- [ ] Скачать указанный интегратором `AuditLab-VERSION-offline.zip` и `…-SHA256SUMS.txt`; записать VERSION и SHA, `sha256sum -c … --ignore-missing` → `OK` именно для скачанного ZIP.
 - [ ] Распаковать; `python3.11 offline.py check` → `Bundle hashes verified; source <SHA>`, exit 0. Записать SHA.
 - [ ] `python3.11 offline.py verify --suite rehearsal --output-root ./results` → строки наборов, затем
   `status=incomplete`, **exit 2**. Это ожидаемо и не скрывается. Записать длительность и три загруженных image ID;
