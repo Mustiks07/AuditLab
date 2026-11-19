@@ -1,3 +1,4 @@
+import csv
 import json
 import re
 import shutil
@@ -39,13 +40,35 @@ class DatasetTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 build_datasets(replay)
 
+    def test_full_size_records_match_a_common_public_size(self):
+        dimensions = load_recipe()["public_dimensions"]
+        for episode in sorted(SHIPPED.glob("*/*")):
+            with self.subTest(episode=episode.name):
+                public = episode / "public"
+                with (public / "ledger.csv").open(encoding="utf-8", newline="") as stream:
+                    ledger_rows = sum(1 for _ in csv.DictReader(stream))
+                document_count = 0
+                for filename in ("invoices.jsonl", "payments.jsonl"):
+                    with (public / filename).open(encoding="utf-8") as stream:
+                        document_count += sum(bool(line.strip()) for line in stream)
+                self.assertTrue(200 <= ledger_rows <= 2_000, ledger_rows)
+                self.assertTrue(20 <= document_count <= 200, document_count)
+                manifest = load_json(public / "manifest.json")
+                actual = {"ledger_rows": ledger_rows, "document_count": document_count}
+                self.assertEqual({key: manifest[key] for key in actual}, actual)
+                self.assertEqual(actual, dimensions)
+
     def test_matrix_and_public_metadata(self):
         recipe = load_recipe()
         families = {}
         seeds = {}
         episode_ids = set()
+        seed_labels = {s for entries in recipe["splits"].values() for entry in entries
+                       for s in (entry["seed_hex"], entry["family"])}
         for split in ("train", "dev"):
             entries = recipe["splits"][split]
+            expected = {(int(entry["seed_hex"], 16), entry["config"].get("snapshot_nonce")): entry for entry in entries}
+            seen = set()
             families[split] = {entry["family"] for entry in entries}
             seeds[split] = {entry["seed_hex"] for entry in entries}
             self.assertEqual(len(families[split]), 9)
@@ -53,7 +76,6 @@ class DatasetTests(unittest.TestCase):
             self.assertTrue(all(re.fullmatch(r"[0-9a-f]{32}", seed) for seed in seeds[split]))
             self.assertEqual(Counter(entry["category"] for entry in entries),
                              {"clean": 2, "single": 4, "interaction": 2, "boundary": 2})
-            seed_labels = {s for entry in entries for s in (entry["seed_hex"], entry["family"])}
             counts = Counter()
             issues_by_type = Counter()
             episodes = list((SHIPPED / split).iterdir())
@@ -68,14 +90,24 @@ class DatasetTests(unittest.TestCase):
                     self.assertRegex(episode.name, r"^E[0-9A-F]{32}$")
                     self.assertNotIn(episode.name, episode_ids)
                     episode_ids.add(episode.name)
-                    self.assertEqual((manifest["ledger_rows"], manifest["document_count"]), (28, 9))
                     corpus = "\n".join(path.read_text(encoding="utf-8") for path in public.iterdir())
                     for marker in seed_labels | ISSUE_TYPES | {"seed", "interaction", "issue_counts", "expected_amount_minor",
                                                                "evidence_sets", "provenance", "clean_distractors"}:
                         self.assertNotIn(marker, corpus)
                     issues = load_json(episode / "private" / "truth.json")["issues"]
+                    provenance = load_json(episode / "private" / "provenance.json")
+                    config = provenance["config"]
+                    identity = provenance["seed"], config.get("snapshot_nonce")
+                    self.assertNotIn(identity, seen)
+                    seen.add(identity)
+                    self.assertEqual(config, expected[identity]["config"])
+                    expected_issues = Counter(config.get("issue_counts", {}))
+                    if config.get("settlement_timing") in {"at", "after"}:
+                        expected_issues.setdefault("payment_allocation", 1)
+                    self.assertEqual(Counter(issue["type"] for issue in issues), expected_issues)
                     counts[len(issues)] += 1
                     issues_by_type.update(issue["type"] for issue in issues)
+            self.assertEqual(seen, expected.keys())
             self.assertEqual(counts, {0: 2, 1: 5, 2: 3})
             self.assertEqual(issues_by_type.keys(), ISSUE_TYPES)
             self.assertEqual(issues_by_type["fx_conversion"], 3)

@@ -1,0 +1,21 @@
+{
+  "episode_id": "E509506A67D640282D2FD1D8B154EF4EC",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/I7464C74237F658EB079AED71"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/D87507162564E502F9D2B6551",
+          "ledger/R38070514A6C29E4BC53D174D",
+          "policy/period"
+        ]
+      ],
+      "expected_amount_minor": 2400000,
+      "issue_id": "XE9FE481B68221B2DDFE3C460",
+      "type": "period_cutoff"
+    }
+  ]
+}

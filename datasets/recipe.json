@@ -1,10 +1,10 @@
 {
-  "dataset_version": "1.0",
-  "generator_version": "1.0",
+  "dataset_version": "1.1",
+  "generator_version": "1.1",
   "schema_version": "1.0",
   "public_dimensions": {
-    "ledger_rows": 28,
-    "document_count": 9
+    "ledger_rows": 240,
+    "document_count": 76
   },
   "splits": {
     "train": [
@@ -15,8 +15,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -31,8 +31,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -47,8 +47,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -66,8 +66,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -85,8 +85,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier",
@@ -105,8 +105,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -125,8 +125,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier",
@@ -147,8 +147,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -167,8 +167,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier",
@@ -188,8 +188,8 @@
         "config": {
           "target_period": "2026-11",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier",
@@ -211,8 +211,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -231,8 +231,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -252,8 +252,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "refund"
@@ -275,8 +275,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -297,8 +297,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "archive_copy"
@@ -319,8 +319,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier",
@@ -342,8 +342,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "split_payment",
@@ -367,8 +367,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -391,8 +391,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"
@@ -415,8 +415,8 @@
         "config": {
           "target_period": "2026-12",
           "company_size": {
-            "ledger_rows_target": 28,
-            "documents_target": 9
+            "ledger_rows_target": 240,
+            "documents_target": 76
           },
           "clean_distractors": [
             "equal_amount_different_supplier"

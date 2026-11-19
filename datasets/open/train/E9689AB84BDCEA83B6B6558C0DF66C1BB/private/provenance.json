@@ -1,0 +1,240 @@
+{
+  "config": {
+    "clean_distractors": [
+      "equal_amount_different_supplier",
+      "refund",
+      "archive_copy"
+    ],
+    "company_size": {
+      "documents_target": 76,
+      "ledger_rows_target": 240
+    },
+    "issue_counts": {
+      "fx_conversion": 1
+    },
+    "target_period": "2026-11"
+  },
+  "episode_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I02E75761AE56A844829A4007",
+        "payment/P836088121FA3B3FFA333D372"
+      ],
+      "amount_minor": 10000,
+      "currency": "USD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-13T19:01:00+00:00",
+      "scheduled_tranches_minor": [
+        6000,
+        4000
+      ],
+      "settled_at": "2026-11-13T19:03:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P836088121FA3B3FFA333D372"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-11-14",
+      "source": "payments/D9252D571AAE9E4D772B9C927",
+      "source_currency": "USD",
+      "source_minor": 10000
+    },
+    {
+      "amount_minor": 5300000,
+      "invoice_id": "IEAFD97B7FFE094F64A7F8075",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5300000,
+      "invoice_id": "I563CCCC9CD1B5EC2321A8B66",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 200000,
+      "kind": "refund",
+      "payment_id": "P1EEE895A2A27225A8C3E4999",
+      "returned_at": "2026-11-10T08:00:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/IE92D3736017EB58C90B0B095"
+      ],
+      "documents": [
+        "invoices/D5701688D6C2B62A292F2351A",
+        "invoices/D979398AD6797C9D1C2C03D1B"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "amount_minor": 1100000,
+      "invoice_id": "I924F22D1F2D273D4659295F9",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 14300000,
+      "invoice_id": "I09FDF0E14AE58398F7A544D2",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5100000,
+      "invoice_id": "I9AD48C0CF62B0773EE0D946F",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 14500000,
+      "invoice_id": "IDB9026E911EA47BE64CC41EB",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 1800000,
+      "invoice_id": "I296147D7118F6DE8413FEBDD",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 10400000,
+      "invoice_id": "I137FA9BC7A0C2BCEF39C1E67",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12200000,
+      "invoice_id": "IA805B19366AAEE32FCF36E2E",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6700000,
+      "invoice_id": "I295B86D25B7DC0ED6F48EF78",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4500000,
+      "invoice_id": "I746776D7432D8A12BC41525A",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4400000,
+      "invoice_id": "IAEBDCA59130C03DE7E84BC7F",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 3500000,
+      "invoice_id": "I05A01FD5ABBAF9EC8AB4318D",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 13600000,
+      "invoice_id": "I518F5124510ED7E99F282EB3",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7900000,
+      "invoice_id": "IF8717A92C0C1D6CD3973C7F7",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 14200000,
+      "invoice_id": "IE20A2C835FEAF8ED2003E040",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 11900000,
+      "invoice_id": "I174041EE222E4A091BDB32AD",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12400000,
+      "invoice_id": "I024D5AB870123CA346E7A4A0",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4300000,
+      "invoice_id": "ID825200B178F499A3F651A73",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 13200000,
+      "invoice_id": "I739323D9C829996908AF187D",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 9500000,
+      "invoice_id": "I7C28D07A6B20C6106773FFCB",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 2700000,
+      "invoice_id": "IB3CAF6AE9BB02736179EDE47",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 10300000,
+      "invoice_id": "ID6F65FEDD50C1850FC479001",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12500000,
+      "invoice_id": "I15257DEB63821A5ECFDCAF00",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5700000,
+      "invoice_id": "IFECF2E82FA9EB79D31BB6ADF",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6400000,
+      "invoice_id": "IF7347B3E00B4DE2C558CC2CB",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8100000,
+      "invoice_id": "I3837FF0752AA562DFEC76A8D",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 9100000,
+      "invoice_id": "IA1CD938C217F57971DED6032",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5600000,
+      "invoice_id": "I2F017188346BCDE7FCD990A4",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7400000,
+      "invoice_id": "I43F93062252D0F59927985E7",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.1",
+  "mutations": [
+    {
+      "affected_ids": [
+        "payment/P836088121FA3B3FFA333D372"
+      ],
+      "after": {
+        "amount_minor": 5100000,
+        "quote_date": "2026-11-15",
+        "rate": "510"
+      },
+      "before": {
+        "amount_minor": 5000000,
+        "quote_date": "2026-11-14",
+        "rate": "500"
+      },
+      "effect": "The reporting valuation used the following day's exchange rate.",
+      "evidence_ids": [
+        "payments/D9252D571AAE9E4D772B9C927",
+        "fx/2026-11-14/USD/KZT",
+        "ledger/R2EE92FB176D4E5573330D43D",
+        "policy/fx_date"
+      ],
+      "type": "fx_conversion"
+    }
+  ],
+  "seed": 307960947591651318478051962772515524894
+}

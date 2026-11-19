@@ -15,7 +15,7 @@ RECIPE_PATH = Path(__file__).with_name("recipe.json")
 def load_recipe():
     """Read the checked-in recipe for use by trusted tooling."""
     recipe = json.loads(RECIPE_PATH.read_text(encoding="utf-8"))
-    if recipe["dataset_version"] != "1.0":
+    if recipe["dataset_version"] != "1.1":
         raise ValueError("unsupported_dataset_version")
     if recipe["generator_version"] != GENERATOR_VERSION or recipe["schema_version"] != SCHEMA_VERSION:
         raise ValueError("incompatible_dataset_recipe")
