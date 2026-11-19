@@ -69,6 +69,8 @@ jobs:
           python-version: '3.11.14'
       - name: Build from a clean committed tree
         run: python tools/build_release.py --output build/ci-release
+      - name: Check the built archive lists every image with its tag for both Docker stores
+        run: python build/ci-release/offline.py check --bundle build/ci-release
       - uses: actions/upload-artifact@v4
         with:
           name: offline-bundle-${{ github.sha }}
@@ -89,15 +91,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11.14'
-      - name: Stop the default daemon before the isolated Docker 29 check
+      - name: Stop the default daemon before the isolated Docker 29.10 check
         if: matrix.image-store == 'containerd'
         run: sudo systemctl stop docker.service docker.socket
-      - name: Install pinned Docker 29 with containerd image storage
+      - name: Install pinned Docker 29.10 with containerd image storage
         if: matrix.image-store == 'containerd'
         id: modern-docker
         uses: docker/setup-docker-action@3f1ab1ab0e29231562e4db4ca600c1a49653bac6 # v5
         with:
-          version: v29.0.1
+          version: v29.10.0
           set-host: 'true'
           daemon-config: '{"features":{"containerd-snapshotter":true}}'
       - name: Expose the isolated daemon at the trusted controller socket
@@ -120,6 +122,8 @@ jobs:
         with:
           name: offline-bundle-${{ github.sha }}
           path: build/ci-release
+      - name: Re-check the downloaded archive before loading it on this store
+        run: python build/ci-release/offline.py check
       - name: Record that project images are absent on this host
         run: |
           mkdir -p artifacts/offline-ci
@@ -147,6 +151,9 @@ jobs:
           launch = json.loads(launches[0].read_text())
           resolved = {role: subprocess.check_output([sys.executable, 'build/ci-release/offline.py', 'image', '--role', role], text=True).strip() for role in ('runtime', 'policy', 'verifier')}
           assert resolved == {role: image['id'] for role, image in launch['loaded_images'].items()}
+          # The containerd store names images only from OCI index annotations; both stores must keep every tag.
+          tagged = {role: subprocess.check_output(['docker', 'image', 'inspect', image['tag'], '--format', '{{.Id}}'], text=True).strip() for role, image in launch['loaded_images'].items()}
+          assert tagged == resolved, (tagged, resolved)
           Path('artifacts/offline-ci/resolved-images.json').write_text(json.dumps(resolved, indent=2))
           PYIMAGES
       - uses: actions/upload-artifact@v4

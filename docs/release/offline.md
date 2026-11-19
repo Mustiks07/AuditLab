@@ -53,31 +53,45 @@ hardlink в дереве исходников отвергаются. Генер
 
 ### Перед запуском: хранилище образов и cgroup
 
-Сборщик сохраняет все три образа **по тегам**, проверяет соответствие тегов image IDs
-в Docker-каталоге и полноту OCI-индекса. CI испытывает один и тот же комплект на
-двух свежих хостах: классическое хранилище и Docker 29.0.1 с containerd image store.
-Артефакты `offline-evidence-classic-SHA` и `offline-evidence-containerd-SHA` разделены;
-успех одного хранилища не подтверждает другое. Во время исполнения pulls запрещены,
-каждый контейнер запускается по проверенной неизменяемой идентичности образа.
+Комплект работает на обоих хранилищах образов Docker: классическом (`overlay2`) и
+containerd image store (по умолчанию в новых установках Docker Engine 29). Переключать
+демон не нужно. Классическое хранилище читает из `images.tar` каталог `manifest.json`
+(`Config` + `RepoTags`), containerd — только OCI `index.json` и берёт имя образа из
+аннотации `io.containerd.image.name`. Поэтому сборщик сохраняет три образа **по тегам**,
+а `offline.py check` и `offline.py verify` **до первой команды Docker** требуют, чтобы
+в обоих каталогах было ровно по одной записи на каждую роль с её тегом и config ID,
+а OCI manifest digest совпадал с записанным в `manifest.json`. Архив, который на
+containerd загрузит не все образы, отвергается сразу:
+`Offline launch failed: saved Docker catalog lost the tagged runtime identity` (или
+`saved OCI index ...`), а не после `docker load`.
+
 Манифест хранит исходный config ID и OCI manifest digest: классическое хранилище
-использует первый, containerd — второй. Launcher принимает только эти проверенные
+адресует образ первым, containerd — вторым. Launcher принимает только эти проверенные
 идентификаторы, не mutable tag; выбранные значения записываются в `launch.json.loaded_images`.
+Во время исполнения pulls запрещены. CI испытывает один и тот же комплект на двух свежих
+хостах: классическое хранилище и Docker 29.10.0 с containerd image store, и после
+загрузки сверяет, что каждый тег указывает на проверенный ID. Артефакты
+`offline-evidence-classic-SHA` и `offline-evidence-containerd-SHA` разделены;
+успех одного хранилища не подтверждает другое. Какое хранилище у вас, видно так:
+
+```sh
+docker info --format '{{.Driver}} {{.DriverStatus}} cgroup={{.CgroupVersion}}'
+```
+
+`io.containerd.snapshotter.v1` в выводе означает containerd image store. `cgroup=1`
+на любом хранилище даёт только функциональную проверку: launcher пишет
+`Resource limits are not supported by this daemon`, ресурсные строки остаются
+`not_checked`, а `verify` и evidence checker законно возвращают 2.
 
 **Ограничение старого `v0.1.0-rc.1`:** он проверен на классическом хранилище Docker (`overlay2`).
 Новые установки Docker Engine 29 по умолчанию используют containerd image store. На нём RC1 `docker load` из
 `images.tar` загружает **один безымянный образ из трёх** (в OCI `index.json` комплекта
 `v0.1.0-rc.1` один манифест, в `manifest.json` три образа без `RepoTags`), и `verify` завершается
 `Offline launch failed: ... docker image inspect sha256:9cad68... returned non-zero exit status 1`.
-Проверьте до запуска:
-
-```sh
-docker info --format '{{.Driver}} {{.DriverStatus}} cgroup={{.CgroupVersion}}'
-```
-
-Для повторения именно RC1 `overlay2 ... cgroup=2` — подходящая конфигурация. Если в выводе есть
-`io.containerd.snapshotter.v1`, временный обход для RC1 — на отдельной проверочной машине
-переключить демон на классическое хранилище и перезапустить его. Уже
-загруженные образы при этом не видны:
+Комплекты `v0.1.0-rc.2` и новее загружают все три образа на обоих хранилищах. Чтобы
+повторить именно RC1 на машине с `io.containerd.snapshotter.v1`, временный обход —
+на отдельной проверочной машине переключить демон на классическое хранилище и
+перезапустить его. Уже загруженные образы при этом не видны:
 
 ```json
 {"features": {"containerd-snapshotter": false}}
@@ -85,10 +99,8 @@ docker info --format '{{.Driver}} {{.DriverStatus}} cgroup={{.CgroupVersion}}'
 
 Это настройка `features` в `/etc/docker/daemon.json` с сохранением остальных параметров,
 затем перезапуск Docker; не меняйте рабочий демон с чужими контейнерами ради проверки RC1.
-Для нового комплекта проверяйте свидетельства своей версии на нужном хранилище.
-`cgroup=1` даёт только функциональную
-проверку: launcher пишет `Resource limits are not supported by this daemon`, ресурсные строки
-остаются `not_checked`, а `verify` и evidence checker законно возвращают 2.
+Новый `offline.py check` (из этого исходного дерева, с `--bundle` на каталог RC1)
+отвергает архив RC1 до загрузки: `saved Docker catalog lost the tagged runtime identity`.
 
 ### Команды
 
