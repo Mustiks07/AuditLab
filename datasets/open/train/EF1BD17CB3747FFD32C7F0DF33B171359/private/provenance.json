@@ -1,0 +1,76 @@
+{
+  "config": {
+    "clean_distractors": [
+      "split_payment",
+      "refund"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "issue_counts": {
+      "duplicate_invoice": 1
+    },
+    "target_period": "2026-11"
+  },
+  "episode_id": "EF1BD17CB3747FFD32C7F0DF33B171359",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/IDDAB63308571A4112294AFE9"
+      ],
+      "documents": [
+        "invoices/D16AA30A61C93926DC97EAC27",
+        "invoices/D460F3642FFB4B43FB24E617A"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "amount_minor": 2700000,
+      "invoice_id": "IC7B8E79FC7EFECA01B80F8F1",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 400000,
+      "kind": "refund",
+      "payment_id": "P430A4515023F8F7E8F645FBC",
+      "returned_at": "2026-11-10T11:00:00+05:00"
+    },
+    {
+      "amount_minor": 14100000,
+      "invoice_id": "I8D46B36075441FEDD676BDB6",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/IDDAB63308571A4112294AFE9"
+      ],
+      "after": {
+        "journals": [
+          "J8CEDCC81F1402204D8393EF9",
+          "J39A6B1E89F430B7E9CA06878"
+        ],
+        "recognized_minor": 2400000
+      },
+      "before": {
+        "journals": [
+          "J8CEDCC81F1402204D8393EF9"
+        ],
+        "recognized_minor": 1200000
+      },
+      "effect": "The archive copy created a second recognition of one receivable.",
+      "evidence_ids": [
+        "invoices/D16AA30A61C93926DC97EAC27",
+        "invoices/D460F3642FFB4B43FB24E617A",
+        "ledger/RCACC86C3015B5E0F1B9C4952",
+        "ledger/R9FB9E51A4D77633D9EA0C5E5"
+      ],
+      "type": "duplicate_invoice"
+    }
+  ],
+  "seed": 206809761779058455043553639359681240272
+}

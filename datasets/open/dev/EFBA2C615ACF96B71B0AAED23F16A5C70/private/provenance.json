@@ -1,0 +1,112 @@
+{
+  "config": {
+    "clean_distractors": [
+      "equal_amount_different_supplier"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "currencies": [
+      "KZT",
+      "JPY"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+      "fx_conversion": 1,
+      "period_cutoff": 1
+    },
+    "target_period": "2026-12"
+  },
+  "episode_id": "EFBA2C615ACF96B71B0AAED23F16A5C70",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I1C16DDA8C73E8CA8007B2B9B"
+      ],
+      "currency": "JPY",
+      "issued_at": "2026-12-31T23:59:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/D7F8453E3224C93B27C5745D0",
+      "total_minor": 100
+    },
+    {
+      "affected_ids": [
+        "invoice/I1C16DDA8C73E8CA8007B2B9B"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-12-31",
+      "source": "invoices/D7F8453E3224C93B27C5745D0",
+      "source_currency": "JPY",
+      "source_minor": 100
+    },
+    {
+      "amount_minor": 6800000,
+      "invoice_id": "IA81DBAFF1D2F4A9CEB4C6F45",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6800000,
+      "invoice_id": "I7CBED309B917209AA3BA1941",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6800000,
+      "invoice_id": "IBB63E64A607C05675478C6CF",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7300000,
+      "invoice_id": "IFE01D17F9D244F69A60DBF10",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/I1C16DDA8C73E8CA8007B2B9B"
+      ],
+      "after": {
+        "journal_id": "JC0E696D04FF74273786C584A",
+        "timestamp": "2027-01-01T00:01:00+05:00"
+      },
+      "before": {
+        "timestamp": "2026-12-31T23:59:00+05:00"
+      },
+      "effect": "The invoice was recognized in the following reporting period.",
+      "evidence_ids": [
+        "invoices/D7F8453E3224C93B27C5745D0",
+        "ledger/R7A2E2820F3DA90AF8DDB562A",
+        "policy/period"
+      ],
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "invoice/I1C16DDA8C73E8CA8007B2B9B"
+      ],
+      "after": {
+        "amount_minor": 26050,
+        "quote_date": "2027-01-01",
+        "rate": "2.605"
+      },
+      "before": {
+        "amount_minor": 25050,
+        "quote_date": "2026-12-31",
+        "rate": "2.505"
+      },
+      "effect": "The reporting valuation used the following day's exchange rate.",
+      "evidence_ids": [
+        "invoices/D7F8453E3224C93B27C5745D0",
+        "fx/2026-12-31/JPY/KZT",
+        "ledger/RF5D8BBA67553D3608565F8CA",
+        "policy/fx_date"
+      ],
+      "type": "fx_conversion"
+    }
+  ],
+  "seed": 261339385677818072127521479472369496446
+}

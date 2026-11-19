@@ -1,0 +1,38 @@
+{
+  "episode_id": "EE8BB1BA146C903DD92D36F8A4E6C7757",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "invoices/D5EEBF820E0E03DD78A012B4A",
+          "ledger/R5BA1BB55813BD1643EBB6A64",
+          "policy/period"
+        ]
+      ],
+      "expected_amount_minor": 10000,
+      "issue_id": "X0D486D23D8C31270D48C17B6",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/D5EEBF820E0E03DD78A012B4A",
+          "fx/2026-11-30/USD/KZT",
+          "ledger/R018A7ADB265B794DFC02BE1C",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 100000,
+      "issue_id": "X57FF0DD3B2C2861C9AD42645",
+      "type": "fx_conversion"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "config": {
+    "clean_distractors": [
+      "split_payment",
+      "archive_copy"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "currencies": [
+      "KZT",
+      "KWD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+      "fx_conversion": 1,
+      "payment_allocation": 1
+    },
+    "target_period": "2026-12"
+  },
+  "episode_id": "EA0139250C50CFD8241DB27A24D3695C2",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/IB1A3D243BCCE43C9FEBED947",
+        "payment/P49901E8533CDA9F05C8C1BCE"
+      ],
+      "amount_minor": 50000,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-12-14T16:00:00+05:00",
+      "scheduled_tranches_minor": [
+        30000,
+        20000
+      ],
+      "settled_at": "2027-01-01T00:01:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P49901E8533CDA9F05C8C1BCE"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-12-14",
+      "source": "payments/D26865EF3E8FD945C338254EE",
+      "source_currency": "KWD",
+      "source_minor": 50000
+    },
+    {
+      "amount_minor": 2200000,
+      "invoice_id": "I7F803C8E5806BAB4E941256E",
+      "kind": "paid_invoice"
+    },
+    {
+      "affected_ids": [
+        "invoice/I567011AFD8A4A9FDC7357DCE"
+      ],
+      "documents": [
+        "invoices/D82656D212B924632E45FB018",
+        "invoices/DC1EFC9CDB29BBA163C0E9D15"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "amount_minor": 7000000,
+      "invoice_id": "I6883C7D90C99E36BD46951F1",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/IB1A3D243BCCE43C9FEBED947",
+        "payment/P49901E8533CDA9F05C8C1BCE"
+      ],
+      "after": {
+        "remaining_minor": 20000,
+        "settled_at": "2027-01-01T00:01:00+05:00"
+      },
+      "before": {
+        "second_tranche_minor": 20000,
+        "settled_at": "2026-12-31T23:59:00+05:00"
+      },
+      "effect": "Part of the designated payment is outstanding at the reporting boundary.",
+      "type": "payment_allocation"
+    },
+    {
+      "affected_ids": [
+        "payment/P49901E8533CDA9F05C8C1BCE"
+      ],
+      "after": {
+        "amount_minor": 8052500,
+        "quote_date": "2026-12-15",
+        "rate": "1610.5"
+      },
+      "before": {
+        "amount_minor": 8002500,
+        "quote_date": "2026-12-14",
+        "rate": "1600.5"
+      },
+      "effect": "The reporting valuation used the following day's exchange rate.",
+      "evidence_ids": [
+        "payments/D26865EF3E8FD945C338254EE",
+        "fx/2026-12-14/KWD/KZT",
+        "ledger/R01AA1D1167AF3A99AA2EBDA2",
+        "policy/fx_date"
+      ],
+      "type": "fx_conversion"
+    }
+  ],
+  "seed": 268092319516319995742336861562575076106
+}

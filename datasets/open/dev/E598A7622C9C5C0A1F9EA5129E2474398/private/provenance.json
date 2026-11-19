@@ -1,0 +1,44 @@
+{
+  "config": {
+    "base_currency": "JPY",
+    "clean_distractors": [
+      "equal_amount_different_supplier"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "currencies": [
+      "JPY",
+      "KZT"
+    ],
+    "target_period": "2026-12"
+  },
+  "episode_id": "E598A7622C9C5C0A1F9EA5129E2474398",
+  "events": [
+    {
+      "amount_minor": 64000,
+      "invoice_id": "I3E7C0FC875F4C91398463225",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 64000,
+      "invoice_id": "IDCD25C1A1DD277B7EBEED864",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 77000,
+      "invoice_id": "I19DA027B8C375646E3036738",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 119000,
+      "invoice_id": "I9905DCCF14D6CF029CE0241C",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [],
+  "seed": 42186417008053506689510872117528239795
+}
