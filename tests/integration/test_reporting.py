@@ -23,18 +23,21 @@ class ReportingTests(unittest.TestCase):
             tests.mkdir(parents=True)
             (tests / "test_sample.py").write_text(
                 'import unittest\n'
+                'class PolicyExecutionError(RuntimeError): pass\n'
                 'class Example(unittest.TestCase):\n'
                 ' def test_failure(self): self.assertEqual(1, 2)\n'
                 ' @unittest.skip("component absent")\n'
                 ' def test_missing(self): pass\n'
-                ' def test_broken_dependency(self): import nonexistent_auditlab_dependency\n')
+                ' def test_broken_dependency(self): import nonexistent_auditlab_dependency\n'
+                ' def test_policy_crash(self):\n'
+                '  with self.subTest(episode=1): raise PolicyExecutionError("adapter crashed")\n')
             output = root / "report"
             output.mkdir()
             result = run.run_suite(root, "sample", output, 10)
             self.assertEqual(result["status"], "failed")
-            self.assertEqual(result["tests_run"], 3)
+            self.assertEqual(result["tests_run"], 4)
             self.assertEqual({r["kind"] for r in result["records"]},
-                             {"test_failure", "missing_component", "infrastructure_error"})
+                             {"test_failure", "missing_component", "infrastructure_error", "policy_error"})
             self.assertIn("AssertionError", (output / "sample.log").read_text())
 
     def test_empty_suite_cannot_pass(self):

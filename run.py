@@ -70,6 +70,8 @@ class RecordedResult(unittest.TextTestResult):
         super().addSubTest(test, subtest, err)
         if err:
             kind = "test_failure" if issubclass(err[0], test.failureException) else "infrastructure_error"
+            if err[0].__name__ == "PolicyExecutionError":
+                kind = "policy_error"
             self.record(subtest, "failed", kind, self._exc_info_to_string(err, test))
 
     def addExpectedFailure(self, test, err):
@@ -150,7 +152,7 @@ def exit_code(checks, require_complete=False):
 def render(report):
     rows = ["# Локальная проверка AuditLab", "", f"Commit: `{report['commit']}`",
             f"Python: {report['python']}", f"Рабочее дерево изменено: {report['dirty']}", "",
-            "| Проверка | Статус | Тестов выполнено |", "|---|---|---:|"]
+            "| Проверка | Статус | Учтено тестов (включая пропуски) |", "|---|---|---:|"]
     for check in report["checks"]:
         rows.append(f"| {check['id']} | {LABELS[check['status']]} | {check['tests_run']} |")
     rows += ["", "## Матрица SPEC §14", "", "| ID | Статус |", "|---|---|"]
