@@ -212,9 +212,16 @@ def main():
     command.add_argument("--require-complete", action="store_true")
     command.add_argument("--output", type=Path, default=ROOT / "artifacts" / ("verify-" + uuid.uuid4().hex))
     command.add_argument("--timeout", type=float, default=180)
-    commands.add_parser("demo", help="Reserved until the console is integrated")
-    replay = commands.add_parser("replay", help="Reserved until real run replay is integrated")
+    demo = commands.add_parser("demo", help="Serve the local judge console")
+    demo.add_argument("--host", default="127.0.0.1")
+    demo.add_argument("--port", type=int, default=8765)
+    demo.add_argument("--no-samples", action="store_true")
+    replay = commands.add_parser("replay", help="Replay a completed open run")
     replay.add_argument("--run", required=True)
+    replay.add_argument("--check", action="store_true", help="Re-execute actions and compare observations and score")
+    for command in (demo, replay):
+        command.add_argument("--root", type=Path)
+        command.add_argument("--exports", type=Path, action="append", default=[])
     worker = commands.add_parser("_tests", help=argparse.SUPPRESS)
     worker.add_argument("directory", type=Path)
     worker.add_argument("destination", type=Path)
@@ -223,8 +230,19 @@ def main():
         test_worker(args.directory, args.destination)
         return 0
     if args.command != "verify":
-        print(f"{args.command}: не проверено — компонент ещё не подключён.", file=sys.stderr)
-        return 2
+        from auditlab.demo.__main__ import main as console_main
+        forwarded = ["--root", str(args.root)] if args.root else []
+        for export in args.exports:
+            forwarded += ["--exports", str(export)]
+        if args.command == "demo":
+            forwarded += ["serve", "--host", args.host, "--port", str(args.port)]
+            if args.no_samples:
+                forwarded.append("--no-samples")
+        else:
+            forwarded += ["replay", "--run", args.run]
+            if args.check:
+                forwarded.append("--check")
+        return console_main(forwarded)
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
     try:
