@@ -1,5 +1,4 @@
 """Release evidence is green only with complete functional and actual resource proof."""
-import copy
 import json
 from pathlib import Path
 import tempfile
@@ -14,7 +13,8 @@ def resource(pids):
                 scope="container_limits_verified", limit_mismatches=[],
                 memory_limit_bytes=2 * 1024 ** 3, cpu_quota_usec=200000,
                 cpu_period_usec=100000, cpuset_cpus="0-1", peak_memory_bytes=1000,
-                cpu_usage_usec=100, requested_limits={"pids": pids})
+                cpu_usage_usec=100, requested_limits={"pids": str(pids)},
+                raw_observed={"files": {"pids.max": str(pids)}})
 
 
 class EvidenceTests(unittest.TestCase):
@@ -69,6 +69,23 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(self.run_check()["exit_code"], 2)
         self.rehearsal["datasets"][0]["independent"] = {"resources": resource(128)}
         self.rehearsal["pairs"][-1]["independent"]["resources"]["cpu_quota_usec"] = 400000
+        self.assertEqual(self.run_check()["exit_code"], 1)
+
+    def test_actual_pid_limits_accept_producer_metadata_shapes(self):
+        # Controller emits string requests; independent verifier has no request metadata.
+        self.assertEqual(self.controller["requested_limits"]["pids"], "256")
+        for row in self.rehearsal["datasets"] + self.rehearsal["pairs"]:
+            row["independent"]["resources"].pop("requested_limits")
+        result = self.run_check()
+        self.assertEqual(result["exit_code"], 0, result)
+
+    def test_actual_pid_limit_is_required_and_cannot_be_replaced_by_requested_value(self):
+        self.controller["raw_observed"]["files"].pop("pids.max")
+        self.assertEqual(self.run_check()["exit_code"], 2)
+        self.controller["raw_observed"]["files"]["pids.max"] = "512"
+        self.assertEqual(self.run_check()["exit_code"], 1)
+        self.controller = resource(256)
+        self.rehearsal["pairs"][-1]["independent"]["resources"]["raw_observed"]["files"]["pids.max"] = "max"
         self.assertEqual(self.run_check()["exit_code"], 1)
 
     def test_slow_attempt_fails(self):
