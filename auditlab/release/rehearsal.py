@@ -105,14 +105,17 @@ def inspect_image(image: str | None) -> dict:
         return {"status": "failed", "detail": f"Docker prerequisite: {type(error).__name__}: {error}"}
 
 
-_VERIFIER_SCRIPT = '''import json,sys,tempfile
+_VERIFIER_SCRIPT = '''import json,sys,tempfile,contextlib,io
 from pathlib import Path
 from auditlab.verifier import verify_report
 payload=json.load(sys.stdin)
 with tempfile.TemporaryDirectory() as temporary:
  public=Path(temporary)/"public"; public.mkdir()
  for name,contents in payload.items(): (public/name).write_text(contents,encoding="utf-8",newline="")
- print(json.dumps(verify_report(public,engine="duckdb"),ensure_ascii=True))
+ answer=verify_report(public,engine="duckdb")
+ counters=io.StringIO()
+ with contextlib.redirect_stdout(counters): exec(sys.argv[1], {})
+ print(json.dumps({"answer":answer,"resources":json.loads(counters.getvalue())},ensure_ascii=True))
 '''
 
 
@@ -121,7 +124,9 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
     destination.mkdir(parents=True, exist_ok=False)
     copied = destination / "public"
     shutil.copytree(public, copied)
+    resources = None
     if verifier_image:
+        from auditlab.runner.isolation import _CGROUP_PROBE, _parse_cgroup_measurements, _verify_cgroup_scope
         name = "auditlab-verifier-" + uuid.uuid4().hex
         command = ["docker", "run", "--rm", "-i", "--pull=never", "--name", name,
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
@@ -130,7 +135,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
                    "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m"]
         if cpuset:
             command += ["--cpuset-cpus", cpuset]
-        command += [verifier_image, "python", "-c", _VERIFIER_SCRIPT]
+        command += [verifier_image, "python", "-c", _VERIFIER_SCRIPT, _CGROUP_PROBE]
         payload = json.dumps({name: (copied / name).read_text(encoding="utf-8") for name in PUBLIC_FILES})
         if len(payload.encode()) > 8 * 1024 * 1024:
             raise ValueError("public snapshot exceeds verifier transport limit")
@@ -140,7 +145,10 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
                 raise RuntimeError(f"isolated verifier exit {process.returncode}: {process.stderr[-2000:]}")
             if len(process.stdout.encode()) > 4 * 1024 * 1024:
                 raise ValueError("verifier report exceeds transport limit")
-            answer = json.loads(process.stdout)
+            reply = json.loads(process.stdout)
+            answer = reply["answer"]
+            resources = _verify_cgroup_scope(_parse_cgroup_measurements(reply["resources"]), reply["resources"],
+                {"memory": "2g", "cpus": "2", "cpuset": cpuset, "pids": 128})
         finally:
             subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=20)
         isolation = "docker_public_input_only"
@@ -150,7 +158,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
         isolation = "host_public_copy_not_os_isolated"
     write_json(destination / "answer.json", answer)
     return answer, {"answer_sha256": _hash(destination / "answer.json"), "backend": isolation,
-                    "input_sha256": file_hashes(copied)}
+                    "input_sha256": file_hashes(copied), "resources": resources}
 
 
 def _by_class(final, truth):

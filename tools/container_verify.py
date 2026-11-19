@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -12,20 +13,47 @@ CGROUP = Path("/sys/fs/cgroup")
 
 
 def controller_resources():
-    result = {"source": "cgroup_v2", "scope": "trusted controller and its in-container subprocesses; sibling policy/verifier containers excluded"}
-    for name in ("memory.peak", "memory.max", "memory.swap.max", "cpu.max", "cpuset.cpus.effective", "pids.max"):
+    # Shared strict parser prevents policy/controller reports using different scope rules.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from auditlab.runner.isolation import _parse_cgroup_measurements, _verify_cgroup_scope
+    values, unavailable = {}, {}
+    for name in ("memory.peak", "memory.max", "memory.swap.max", "cpu.max",
+                 "cpuset.cpus.effective", "pids.max", "cpu.stat", "memory.events"):
         try:
-            value = (CGROUP / name).read_text().strip()
-            result[name] = int(value) if value.isdigit() else value
-        except OSError:
-            result[name] = None
-    for name in ("cpu.stat", "memory.events"):
-        try:
-            result[name] = {key: int(value) for key, value in
-                            (line.split() for line in (CGROUP / name).read_text().splitlines())}
-        except (OSError, ValueError):
-            result[name] = None
-    result["status"] = "measured" if result["memory.peak"] is not None and result["cpu.stat"] is not None else "not_checked"
+            values[name] = (CGROUP / name).read_text().strip()
+        except OSError as error:
+            unavailable[name] = type(error).__name__
+    try:
+        affinity = sorted(os.sched_getaffinity(0))
+    except (AttributeError, OSError):
+        affinity = None
+    try:
+        cgroup = Path('/proc/self/cgroup').read_text().strip()
+    except OSError:
+        cgroup = None
+    requested = {"memory": os.environ.get("AUDITLAB_CONTROLLER_MEMORY", "2g"),
+                 "cpus": os.environ.get("AUDITLAB_CONTROLLER_CPUS", "2"),
+                 "cpuset": os.environ.get("AUDITLAB_CPUSET"),
+                 "pids": os.environ.get("AUDITLAB_CONTROLLER_PIDS", "256")}
+    payload = {"values": values, "unavailable": unavailable, "affinity": affinity, "cgroup": cgroup}
+    parsed = _parse_cgroup_measurements(payload)
+    # An explicitly selected CPU set is part of the combined controller+policy profile.
+    if requested['cpuset'] is None:
+        requested['cpuset'] = 'unknown'
+    result = _verify_cgroup_scope(parsed, payload, requested)
+    result.update(source="cgroup_v2", requested_limits=requested,
+                  note="Counters belong to the visible cgroup only after kernel limits/affinity validation; "
+                       "sibling policy/verifier containers excluded. Raw parent counters are diagnostic only.")
+    # Preserve old report field names, but never publish parent counters as controller usage.
+    verified = result['resource_limits_verified']
+    result['memory.peak'] = result['peak_memory_bytes']
+    result['memory.max'] = result['memory_limit_bytes']
+    result['cpu.max'] = values.get('cpu.max')
+    result['cpuset.cpus.effective'] = values.get('cpuset.cpus.effective')
+    result['pids.max'] = values.get('pids.max')
+    result['cpu.stat'] = ({key: int(value) for key, value in
+                           (line.split() for line in values.get('cpu.stat', '').splitlines())}
+                          if verified else None)
     return result
 
 
