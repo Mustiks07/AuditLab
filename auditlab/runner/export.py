@@ -13,7 +13,9 @@ from pathlib import Path
 
 
 def _dump(path: Path, value: object) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=True, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    # newline="\n": identical bytes on every OS (REP-01 hashes), no CRLF on Windows.
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(value, ensure_ascii=True, indent=2, sort_keys=True) + "\n")
 
 
 def _trajectory(path: Path, rows: list[dict]) -> None:
