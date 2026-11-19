@@ -17,7 +17,8 @@ CI сохраняет в `verification-<checkout SHA>`:
 Перед слиянием получить **текущие** head и base через GitHub, например:
 
 ```bash
-gh pr view NUMBER --repo Mustiks07/AuditLab --json headRefOid,baseRefOid,url
+gh api repos/Mustiks07/AuditLab/pulls/NUMBER --jq '{head: .head.sha, base: .base.sha, url: .html_url}'
+gh api repos/Mustiks07/AuditLab/git/ref/heads/main --jq '.object.sha'
 ```
 
 Скачать артефакт успешного PR workflow именно для рассматриваемой версии.
