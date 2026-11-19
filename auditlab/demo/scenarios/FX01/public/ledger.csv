@@ -1,0 +1,5 @@
+row_id,timestamp,account,debit_minor,credit_minor,currency,entity_id,invoice_id,payment_id,journal_id
+R1,2026-11-01T10:00:00+05:00,AR,5000000,0,KZT,C7,I4,null,J1
+R2,2026-11-01T10:00:00+05:00,REVENUE,0,5000000,KZT,C7,I4,null,J1
+R3,2026-11-14T23:59:00+05:00,CASH,5000000,0,KZT,C7,I4,P9,J2
+R4,2026-11-14T23:59:00+05:00,AR,0,5000000,KZT,C7,I4,P9,J2

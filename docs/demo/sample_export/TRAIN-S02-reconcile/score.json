@@ -1,0 +1,17 @@
+{
+  "tp": 1,
+  "fp": 0,
+  "fn": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "reward": 0.988,
+  "inspection_steps": 6,
+  "per_finding": [
+    {
+      "index": 0,
+      "matched": true,
+      "reason": "matched"
+    }
+  ]
+}
