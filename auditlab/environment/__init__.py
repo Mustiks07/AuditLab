@@ -1,4 +1,10 @@
-"""Public inspection tools for an immutable AuditLab snapshot."""
+"""Public inspection tools for an immutable AuditLab snapshot.
+
+Pages contain ``records`` and ``next_cursor``, ordered by the table's lookup key.
+Use row_id for ledger, doc_id for invoices and payments, date/SOURCE/TARGET for
+FX, and a top-level rule name for policy. Policy pages expose id/value pairs.
+The calculator returns a decimal string.
+"""
 
 import csv
 import json
@@ -30,7 +36,7 @@ _ERRORS = {
     "division_by_zero": "Division by zero.",
     "arithmetic_limit": "Decimal arithmetic exceeded the calculator limits.",
 }
-_CURSOR = re.compile(r"([1-9a-f][0-9a-f]{0,15})\.([0-9a-f]{32})")
+_CURSOR = re.compile(r"([1-9a-f][0-9a-f]{0,15})\.[0-9a-f]{32}")
 
 
 def _error(code: str) -> ToolReply:
@@ -85,14 +91,14 @@ class _Session:
     def __init__(self, public_dir: Path):
         root = public_dir.resolve(strict=True)
         self._episode_id = _read_json(root, "manifest.json")["episode_id"]
-        ledger = [_ledger_row(row) for row in _read_csv(root, "ledger.csv")]
+        ledger = _read_csv(root, "ledger.csv")
         invoices = _read_jsonl(root, "invoices.jsonl")
         payments = _read_jsonl(root, "payments.jsonl")
         fx = _read_csv(root, "fx.csv")
         policy = _read_json(root, "policy.json")
 
         self._by_id = {
-            "ledger": _index((row["row_id"], row) for row in ledger),
+            "ledger": _index((row["row_id"], _ledger_row(row)) for row in ledger),
             "invoices": _index((doc["doc_id"], doc) for doc in invoices),
             "payments": _index((doc["doc_id"], doc) for doc in payments),
             "fx": _index(

@@ -5,6 +5,7 @@ import json
 import os
 import re
 from datetime import datetime, timedelta, timezone
+from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -86,15 +87,17 @@ def _configuration(seed, config):
         raise ValueError("invalid_clean_distractors")
     size = config.get("company_size", {})
     if (not isinstance(size, dict) or size.keys() - {"ledger_rows_target", "documents_target"}
-            or any(not _bounded_int(value, 0, 10_000) for value in size.values())):
-        raise ValueError("invalid_company_size: each target must be an integer from 0 to 10000")
+            or not _bounded_int(size.get("ledger_rows_target", 0), 0, 2_000)
+            or not _bounded_int(size.get("documents_target", 0), 0, 600)):
+        raise ValueError("invalid_company_size: use integer targets 0–2000 ledger rows and 0–600 documents")
     nonce = config.get("snapshot_nonce", "")
     if not isinstance(nonce, str) or not re.fullmatch(r"[A-Za-z0-9_-]{0,64}", nonce):
         raise ValueError("invalid_snapshot_nonce")
     zone_name = config.get("timezone", "Asia/Almaty")
     period_start, period_end = _period(config.get("target_period", "2026-11"), zone_name)
     exponents = {code: CURRENCY_EXPONENTS[code] for code in currencies}
-    return Company(seed, period_start, period_end, period_start.tzinfo, base, exponents, nonce), counts, timing, interaction, distractors, size
+    company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents)
+    return company, counts, timing, interaction, distractors, size, nonce
 
 
 def _add_paid_invoices(company, amount, issued_at, *, split=False):
@@ -194,6 +197,18 @@ def _write_json(path, record):
     path.write_bytes((json.dumps(record, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode("utf-8"))
 
 
+def _episode_id(company, manifest, policy, nonce):
+    canonical = {
+        "manifest": manifest, "policy": policy, "nonce": nonce,
+        "ledger": sorted(company.ledger, key=lambda row: row["row_id"]),
+        "invoices": sorted(company.invoices, key=lambda doc: doc["doc_id"]),
+        "payments": sorted(company.payments, key=lambda doc: doc["doc_id"]),
+        "fx": sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
+    }
+    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return "E" + sha256(serialized.encode("utf-8")).hexdigest()[:32].upper()
+
+
 def _write_records(directory, name, records, rng, fields=None):
     records = list(records)
     rng.shuffle(records)
@@ -214,9 +229,9 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
     output = Path(output_dir).absolute()
     if os.path.lexists(output):
         raise FileExistsError(output)
-    company, counts, timing, interaction, distractors, size = _configuration(seed, config)
-    _add_clean_history(company, distractors, size)
+    company, counts, timing, interaction, distractors, size, nonce = _configuration(seed, config)
     _add_audit_cases(company, counts, timing, interaction)
+    _add_clean_history(company, distractors, size)
     if not company.invoices and not company.payments:
         _add_paid_invoices(company, 10_000 * 10 ** company.exponents[company.base_currency],
                            company.period_start + timedelta(days=3))
@@ -230,12 +245,14 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         public.mkdir(parents=True)
         private.mkdir()
         manifest = {
-            "schema_version": SCHEMA_VERSION, "episode_id": company.episode_id,
+            "schema_version": SCHEMA_VERSION,
             "base_currency": company.base_currency, "period_start": company.period_start.isoformat(),
             "period_end": company.period_end.isoformat(), "timezone": config.get("timezone", "Asia/Almaty"),
             "ledger_rows": len(company.ledger), "document_count": len(company.invoices) + len(company.payments),
             "currency_exponents": company.exponents, "rounding": "ROUND_HALF_UP",
         }
+        episode_id = _episode_id(company, manifest, policy, nonce)
+        manifest["episode_id"] = episode_id
         _write_json(public / "manifest.json", manifest)
         _write_json(public / "policy.json", policy)
         _write_records(public, "ledger", company.ledger, company.order_rng, LEDGER_FIELDS)
@@ -243,9 +260,9 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         _write_records(public, "payments", company.payments, company.order_rng)
         _write_records(public, "fx", sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
                        company.order_rng, FX_FIELDS)
-        _write_json(private / "truth.json", {"episode_id": company.episode_id, "issues": company.issues})
+        _write_json(private / "truth.json", {"episode_id": episode_id, "issues": company.issues})
         _write_json(private / "provenance.json", {
-            "episode_id": company.episode_id, "generator_version": GENERATOR_VERSION,
+            "episode_id": episode_id, "generator_version": GENERATOR_VERSION,
             "seed": seed, "config": config, "events": company.events, "mutations": company.mutations,
             "generation_attempts": 1,
         })

@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 from hashlib import sha256
 from random import Random
 
+from auditlab.contracts import MAX_EVIDENCE
+
+from .validation import validate_accounting
 
 LEDGER_FIELDS = (
     "row_id", "timestamp", "account", "debit_minor", "credit_minor", "currency",
@@ -12,7 +15,7 @@ LEDGER_FIELDS = (
 )
 FX_FIELDS = ("date", "source_currency", "target_currency", "rate")
 PREFIXES = {
-    "episode": "E", "entity": "C", "invoice": "I", "payment": "P",
+    "entity": "C", "invoice": "I", "payment": "P",
     "document": "D", "journal": "J", "row": "R", "issue": "X",
 }
 
@@ -23,7 +26,7 @@ def random_stream(seed, domain):
 
 
 class Company:
-    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents, nonce):
+    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents):
         self.period_start = period_start
         self.period_end = period_end
         self.zone = zone
@@ -34,9 +37,6 @@ class Company:
         self.noise_rng = random_stream(seed, "distractors")
         self.order_rng = random_stream(seed, "order")
         self._id_streams = {kind: random_stream(seed, "ids/" + kind) for kind in PREFIXES}
-        self.episode_id = PREFIXES["episode"] + sha256(
-            f"AuditLab/v1/episode/{seed}/{nonce}".encode("ascii")
-        ).hexdigest()[:32].upper()
         self.invoices = []
         self.payments = []
         self.ledger = []
@@ -111,8 +111,10 @@ class Company:
         if leave_remainder or last_at >= self.period_end:
             self.mutations.append({
                 "type": "payment_allocation", "affected_ids": affected,
-                "before": {"second_tranche_minor": amount - first_amount, "settled_before_deadline": True},
-                "after": {"settled_at": last_at.isoformat() if last else None},
+                "before": {"second_tranche_minor": amount - first_amount,
+                           "settled_at": min(last_at, self.period_end - timedelta(minutes=1)).isoformat()},
+                "after": {"settled_at": last_at.isoformat() if last else None,
+                          "remaining_minor": amount - first_amount},
                 "effect": "Part of the designated payment is outstanding at the reporting boundary.",
             })
         return invoice, payment, receipt, first, last
@@ -192,7 +194,8 @@ class Company:
             if issue["expected_amount_minor"] <= 0 or issue["currency"] not in self.exponents:
                 raise RuntimeError("invalid_truth_amount")
             for group in issue["evidence_sets"]:
-                if not 0 < len(group) <= 10 or len(group) != len(set(group)) or not evidence.issuperset(group):
+                if not 0 < len(group) <= MAX_EVIDENCE or len(group) != len(set(group)) or not evidence.issuperset(group):
                     raise RuntimeError("invalid_evidence_set")
         if Counter(issue["type"] for issue in self.issues) != Counter(expected_counts):
             raise RuntimeError("unintended_issue_counts")
+        validate_accounting(self)

@@ -44,7 +44,7 @@ class PublicSessionTests(unittest.TestCase):
                 self.assertEqual(rule["result"]["deadline"], payment["result"]["settlement_index"]["before"])
                 self.assertEqual(
                     {call.args[0] for call in opened.call_args_list},
-                    {public / name for name in (
+                    {public.resolve() / name for name in (
                         "manifest.json", "ledger.csv", "invoices.jsonl", "payments.jsonl", "fx.csv", "policy.json",
                     )},
                 )
@@ -154,10 +154,10 @@ class PublicSessionTests(unittest.TestCase):
             ("1.2.3", "invalid_expression"),
             ("2(3)", "invalid_expression"),
             ("(1", "invalid_expression"),
-            ("".join(["("] * 25 + ["1"] + [")"] * 25), "invalid_expression"),
+            ("(" * 25 + "1" + ")" * 25, "invalid_expression"),
             (" " * 256 + "1", "invalid_expression"),
             ("9" * 64 + "*10", "arithmetic_limit"),
-            ("1/" + "9" * 64 + "/" + "9" * 64, "arithmetic_limit"),
+            ("." + "0" * 62 + "1/" + "9" * 64, "arithmetic_limit"),
         ):
             with self.subTest(expression=expression):
                 reply = inspect(self.session, "calculator", expression=expression)
