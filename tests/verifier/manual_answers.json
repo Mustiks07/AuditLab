@@ -1,0 +1,40 @@
+{
+  "note": "Hand calculation from public/ only, committed before private/truth.json was opened. Amounts in minor units (tiyn, KZT exponent 2).",
+  "rule": "policy/allocation: UNAPPLIED is credit-normal; balance = credits - debits over rows for the payment with timestamp < period_end (2026-12-01T00:00:00+05:00, exclusive).",
+  "episodes": {
+    "S01": {
+      "payment": "payments/D9 (P9, 5000000 KZT, invoice_refs [I4])",
+      "rows_before_boundary": [
+        {"ref": "ledger/R4", "timestamp": "2026-11-14T16:00:00+05:00", "credit_minor": 5000000, "debit_minor": 0},
+        {"ref": "ledger/R5", "timestamp": "2026-11-14T16:01:00+05:00", "credit_minor": 0, "debit_minor": 3000000},
+        {"ref": "ledger/R7", "timestamp": "2026-11-30T23:59:00+05:00", "credit_minor": 0, "debit_minor": 2000000}
+      ],
+      "rows_at_or_after_boundary": [],
+      "arithmetic": "5000000 - 3000000 - 2000000 = 0",
+      "unapplied_balance_minor": 0,
+      "currency": "KZT",
+      "expected_findings": []
+    },
+    "S02": {
+      "payment": "payments/D9 (P9, 5000000 KZT, invoice_refs [I4])",
+      "rows_before_boundary": [
+        {"ref": "ledger/R4", "timestamp": "2026-11-14T16:00:00+05:00", "credit_minor": 5000000, "debit_minor": 0},
+        {"ref": "ledger/R5", "timestamp": "2026-11-14T16:01:00+05:00", "credit_minor": 0, "debit_minor": 3000000}
+      ],
+      "rows_at_or_after_boundary": [
+        {"ref": "ledger/R7", "timestamp": "2026-12-01T00:01:00+05:00", "credit_minor": 0, "debit_minor": 2000000, "why_excluded": "00:01 local on 1 Dec is >= period_end"}
+      ],
+      "arithmetic": "5000000 - 3000000 = 2000000",
+      "unapplied_balance_minor": 2000000,
+      "currency": "KZT",
+      "expected_findings": [
+        {"type": "payment_allocation", "affected_ids": ["payment/P9"], "claimed_amount_minor": 2000000, "currency": "KZT",
+         "evidence_ids": ["payments/D9", "ledger/R4", "ledger/R5"]}
+      ],
+      "ambiguities": [
+        "affected_ids: SPEC §6 passport says 'payment and target invoice' (would add invoice/I4), SPEC §5 example uses only payment/P9. Verifier emits payment/P9 and records invoice/I4 as target.",
+        "evidence: the settlement index (inside payments/D9) proves completeness of the UNAPPLIED group; ledger/R7 is context showing the late settlement, not part of the minimal set."
+      ]
+    }
+  }
+}
