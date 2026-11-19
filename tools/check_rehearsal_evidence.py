@@ -4,7 +4,11 @@ import argparse
 import json
 import math
 from pathlib import Path
+import re
 import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from offline import verify_bundle
 
 SUITES = {"foundation", "integration", "simulator", "evaluator", "runner", "verifier", "metamorphic", "demo"}
 POLICIES = {"random", "reconcile", "flag_all", "oracle"}
@@ -21,7 +25,7 @@ def cpus(value):
     return result
 
 
-def check(root, bundle=None):
+def check(root, bundle=None, expected_revision=None):
     failures, missing = [], []
     summary = {"scope": "Internal functional rehearsal and resource evidence only; 24 acceptance groups and official score not certified"}
     root = Path(root).resolve()
@@ -86,6 +90,20 @@ def check(root, bundle=None):
     general = read("verify/report.json")
     rehearsal = read("verify/rehearsal/report.json")
     controller = read("controller-resources.json")
+    revision = launch.get("source_revision")
+    summary["source_revision"] = revision
+    for label, value in (("launch", revision), ("test report", general.get("commit"))):
+        if value is None:
+            missing.append(f"{label}: source revision unavailable")
+        else:
+            require(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value) is not None,
+                    f"{label}: invalid source revision")
+    if revision is not None and general.get("commit") is not None:
+        require(general["commit"] == revision, "test report/launch revision differs")
+    if expected_revision is not None:
+        require(isinstance(expected_revision, str) and re.fullmatch(r"[0-9a-f]{40}", expected_revision) is not None,
+                "invalid expected revision")
+        require(revision == expected_revision, "evidence belongs to another source revision")
     if launch.get("resource_controls", {}).get("status") != "available":
         missing.append("Docker daemon resource-control preflight unavailable")
     if launch.get("child_exit_code", launch.get("exit_code")) is None:
@@ -135,14 +153,17 @@ def check(root, bundle=None):
     if bundle is not None:
         bundle = Path(bundle)
         try:
-            manifest = json.loads((bundle / "manifest.json").read_text())
+            manifest = verify_bundle(bundle)
             total = sum((bundle / name).stat().st_size for name in manifest["files"])
             summary["payload_size_bytes"] = total
             require(total == manifest.get("payload_size_bytes"), "bundle payload size differs from manifest")
             require(total < 1_000_000_000, "bundle payload exceeds decimal 1 GB")
             require(manifest.get("source_revision") == launch.get("source_revision"), "bundle/report revision differs")
-        except (OSError, ValueError, KeyError) as error:
+            require(manifest["images"] == launch.get("images"), "bundle/launch images differ")
+        except OSError as error:
             missing.append(f"bundle evidence unavailable: {error}")
+        except (ValueError, KeyError, TypeError, AttributeError) as error:
+            failures.append(f"invalid bundle evidence: {error}")
     summary.update(datasets=len(datasets), attempts=len(attempts), pairs=len(pairs), ordinary_resource_runs=len(ordinary), verifier_resource_runs=len(datasets) + len(pairs),
                    failures=failures, missing=missing)
     code = 1 if failures else 2 if missing else 0
@@ -155,12 +176,13 @@ def main(argv=None):
     parser.add_argument("result_root", type=Path, nargs="?")
     parser.add_argument("--results", type=Path)
     parser.add_argument("--bundle", type=Path)
+    parser.add_argument("--expected-revision", help="full Git SHA obtained independently of the evidence")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     result_root = args.results or args.result_root
     if result_root is None:
         parser.error("provide --results DIR or a positional result directory")
-    summary = check(result_root, args.bundle)
+    summary = check(result_root, args.bundle, args.expected_revision)
     text = json.dumps(summary, ensure_ascii=False, indent=2) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
