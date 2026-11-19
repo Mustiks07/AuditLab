@@ -1,0 +1,108 @@
+{
+  "config": {
+    "clean_distractors": [
+      "equal_amount_different_supplier"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+      "fx_conversion": 1,
+      "period_cutoff": 1
+    },
+    "target_period": "2026-11"
+  },
+  "episode_id": "EE8BB1BA146C903DD92D36F8A4E6C7757",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "currency": "USD",
+      "issued_at": "2026-11-30T23:59:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/D5EEBF820E0E03DD78A012B4A",
+      "total_minor": 10000
+    },
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-11-30",
+      "source": "invoices/D5EEBF820E0E03DD78A012B4A",
+      "source_currency": "USD",
+      "source_minor": 10000
+    },
+    {
+      "amount_minor": 6200000,
+      "invoice_id": "ICE67A7FF851392662128A482",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6200000,
+      "invoice_id": "IAAD77451710A179918300F60",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 3200000,
+      "invoice_id": "I7FEC03528963F5B3C7378B7D",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 14000000,
+      "invoice_id": "I704BB45A7618CB65E7718078",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "after": {
+        "journal_id": "J88061A8AF0C446217B5B12B8",
+        "timestamp": "2026-12-01T00:01:00+05:00"
+      },
+      "before": {
+        "timestamp": "2026-11-30T23:59:00+05:00"
+      },
+      "effect": "The invoice was recognized in the following reporting period.",
+      "evidence_ids": [
+        "invoices/D5EEBF820E0E03DD78A012B4A",
+        "ledger/R5BA1BB55813BD1643EBB6A64",
+        "policy/period"
+      ],
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "invoice/I0555B87A2D28587E928BB9DC"
+      ],
+      "after": {
+        "amount_minor": 5100000,
+        "quote_date": "2026-12-01",
+        "rate": "510"
+      },
+      "before": {
+        "amount_minor": 5000000,
+        "quote_date": "2026-11-30",
+        "rate": "500"
+      },
+      "effect": "The reporting valuation used the following day's exchange rate.",
+      "evidence_ids": [
+        "invoices/D5EEBF820E0E03DD78A012B4A",
+        "fx/2026-11-30/USD/KZT",
+        "ledger/R018A7ADB265B794DFC02BE1C",
+        "policy/fx_date"
+      ],
+      "type": "fx_conversion"
+    }
+  ],
+  "seed": 220422179595510519419086649045212920278
+}

@@ -1,0 +1,40 @@
+{
+  "episode_id": "E225AE81AF0814CFD70A6DB4C35F0F11C",
+  "issues": [
+    {
+      "affected_ids": [
+        "payment/P96A1B85844AC58B4A3FFE303"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/D61607F06DDCB27AE2B336871",
+          "fx/2026-11-14/USD/KZT",
+          "ledger/RA86CF8C02EAC4C69B64A4822",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 50000,
+      "issue_id": "X5541CB65D76A620A43FE28DB",
+      "type": "fx_conversion"
+    },
+    {
+      "affected_ids": [
+        "invoice/I29AB36E1E93E6BD7ED4FF574",
+        "payment/P96A1B85844AC58B4A3FFE303"
+      ],
+      "currency": "USD",
+      "evidence_sets": [
+        [
+          "payments/D61607F06DDCB27AE2B336871",
+          "ledger/R1736F63CA7ECDA537425D652",
+          "ledger/R67E102E91216CD61CA315E3D",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 2000,
+      "issue_id": "X44446C98834753C6BCA57923",
+      "type": "payment_allocation"
+    }
+  ]
+}

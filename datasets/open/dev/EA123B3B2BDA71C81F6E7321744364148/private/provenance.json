@@ -1,0 +1,96 @@
+{
+  "config": {
+    "clean_distractors": [
+      "archive_copy"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "currencies": [
+      "KZT",
+      "JPY"
+    ],
+    "issue_counts": {
+      "fx_conversion": 1
+    },
+    "target_period": "2026-12"
+  },
+  "episode_id": "EA123B3B2BDA71C81F6E7321744364148",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I6FC62B1D876ECEB1DE060416",
+        "payment/PDBCA7B95825C3CBBDB8C89B6"
+      ],
+      "amount_minor": 101,
+      "currency": "JPY",
+      "kind": "designated_payment",
+      "receipt_at": "2026-12-13T19:01:00+00:00",
+      "scheduled_tranches_minor": [
+        60,
+        41
+      ],
+      "settled_at": "2026-12-13T19:03:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/PDBCA7B95825C3CBBDB8C89B6"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-12-14",
+      "source": "payments/D4712EAF8B8FC2A02ACFF51D2",
+      "source_currency": "JPY",
+      "source_minor": 101
+    },
+    {
+      "affected_ids": [
+        "invoice/I22DF5F85224586B5B64B3DCE"
+      ],
+      "documents": [
+        "invoices/DCD04413B9BB38ED0EAE2B5B2",
+        "invoices/DE9D1CF4DBF3EB85FF8FB5C59"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "amount_minor": 10900000,
+      "invoice_id": "I210F8BB555EB932B3931F4C6",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7600000,
+      "invoice_id": "I5DC50F556E963198FC893BF4",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "payment/PDBCA7B95825C3CBBDB8C89B6"
+      ],
+      "after": {
+        "amount_minor": 26311,
+        "quote_date": "2026-12-15",
+        "rate": "2.605"
+      },
+      "before": {
+        "amount_minor": 25301,
+        "quote_date": "2026-12-14",
+        "rate": "2.505"
+      },
+      "effect": "The reporting valuation used the following day's exchange rate.",
+      "evidence_ids": [
+        "payments/D4712EAF8B8FC2A02ACFF51D2",
+        "fx/2026-12-14/JPY/KZT",
+        "ledger/R2738E67E03177F999FB65D25",
+        "policy/fx_date"
+      ],
+      "type": "fx_conversion"
+    }
+  ],
+  "seed": 104028247842642962814798141430876868995
+}

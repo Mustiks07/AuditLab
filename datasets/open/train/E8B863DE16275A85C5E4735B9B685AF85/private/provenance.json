@@ -1,0 +1,75 @@
+{
+  "config": {
+    "clean_distractors": [
+      "split_payment",
+      "equal_amount_different_supplier",
+      "refund"
+    ],
+    "company_size": {
+      "documents_target": 9,
+      "ledger_rows_target": 28
+    },
+    "issue_counts": {
+      "period_cutoff": 1
+    },
+    "target_period": "2026-11"
+  },
+  "episode_id": "E8B863DE16275A85C5E4735B9B685AF85",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I8C49EF399C02A6C0BCDD5F23"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-11-30T23:59:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/DB0E51891C01E4E1427A043C4",
+      "total_minor": 2400000
+    },
+    {
+      "amount_minor": 5700000,
+      "invoice_id": "IB65E5D992BCBC5B4EC4FBD67",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5700000,
+      "invoice_id": "I17182EE932BB2B2B2F34B6EC",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5700000,
+      "invoice_id": "I1F98BF656DFADCC126CCB946",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 900000,
+      "kind": "refund",
+      "payment_id": "PD86966E076C029A971B6D6B4",
+      "returned_at": "2026-11-11T10:00:00+05:00"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.0",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/I8C49EF399C02A6C0BCDD5F23"
+      ],
+      "after": {
+        "journal_id": "J118892272AF27C7CE1DA2615",
+        "timestamp": "2026-12-01T00:01:00+05:00"
+      },
+      "before": {
+        "timestamp": "2026-11-30T23:59:00+05:00"
+      },
+      "effect": "The invoice was recognized in the following reporting period.",
+      "evidence_ids": [
+        "invoices/DB0E51891C01E4E1427A043C4",
+        "ledger/RD2A8827FF7FFD9BDA0E6B0F3",
+        "policy/period"
+      ],
+      "type": "period_cutoff"
+    }
+  ],
+  "seed": 184327470279622655327189047852931774091
+}
