@@ -1,0 +1,4 @@
+# Integration bootstrap: Python 3.11.14 standard library only.
+# No third-party runtime dependencies are currently required.
+# Add exact transitive pins and hashes when accepting component dependencies.
+# This is not the dependency lock of the final offline release.
