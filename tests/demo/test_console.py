@@ -141,6 +141,23 @@ class ScoreTable(unittest.TestCase):
         self.assertEqual(verdict["reason"], "evidence_incomplete")
 
 
+class AggregateVerdict(unittest.TestCase):
+    """score.json without per_finding: a per-finding verdict only where TP/FP/FN make it unambiguous."""
+
+    def verdicts(self, n, tp):
+        snap = Snapshot(FIX / "S02" / "public")
+        finding = dict(ScoreTable.good)
+        views = service.findings_view(snap, {"episode_id": "S02", "findings": [finding] * n},
+                                      {"tp": tp, "fp": n - tp, "fn": 1 - tp if tp <= 1 else 0, "reward": 0}, None, [])
+        return [v["verdict"] for v in views]
+
+    def test_derivation_rules(self):
+        self.assertEqual([v["matched"] for v in self.verdicts(1, 1)], [True])
+        self.assertEqual({v["source"] for v in self.verdicts(1, 1)}, {"aggregate"})
+        self.assertEqual([(v["matched"], v["reason"]) for v in self.verdicts(2, 0)], [(False, "not_published")] * 2)
+        self.assertEqual(self.verdicts(2, 1), [None, None], "mixed TP: no invented per-finding verdict")
+
+
 class LabEndToEnd(Workspace):
     def test_samples_live_change_rescore_replay(self):
         built = lab.build_samples(self.paths)
@@ -151,6 +168,8 @@ class LabEndToEnd(Workspace):
         self.assertEqual(s02["run"]["label"], "training_sample")
         self.assertEqual(s02["findings"][0]["finding"]["claimed_amount_minor"], 2000000)
         self.assertTrue(s02["findings"][0]["verdict"]["matched"])
+        self.assertEqual(s02["score"]["inspection_steps"], s02["run"]["inspection_steps"])
+        self.assertIsInstance(s02["score"]["inspection_steps"], int)
         self.assertTrue(service.run_detail(store, ids["S01"])["empty_submission"])
         # An unfinished attempt stays on disk but is not published in the console.
         cut = self.paths.exports / "CUT-1"
@@ -189,7 +208,9 @@ class LabEndToEnd(Workspace):
         copy = lab.rescore(self.paths, op["run_id"], 0, "fx/2026-11-15/USD/KZT", "fx/2026-11-14/USD/KZT", "op-test-copy-1")
         copied = service.run_detail(store, copy["run_id"])
         self.assertEqual(copied["score"]["tp"], 0)
-        self.assertEqual(copied["findings"][0]["verdict"]["reason"], "evidence_incomplete")
+        self.assertFalse(copied["findings"][0]["verdict"]["matched"])
+        if copied["findings"][0]["verdict"]["source"] == "per_finding":
+            self.assertEqual(copied["findings"][0]["verdict"]["reason"], "evidence_incomplete")
         self.assertIn("fx/2026-11-15/USD/KZT", copied["findings"][0]["uncited_operands"])
         self.assertEqual(service.run_detail(store, op["run_id"])["score"]["tp"], 1, "source score unchanged")
 

@@ -6,9 +6,9 @@ import { money, when } from "../format";
 
 const MONEY_FIELDS = new Set(["debit_minor", "credit_minor", "amount_minor", "total_minor"]);
 
-export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt, cited, canChange }: {
+export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt, listedAt = null, cited, canChange }: {
   runId: string; recordKey: string; onOpen: (k: string) => void; highlightFields: string[];
-  openedAt: number | null; cited: boolean; canChange: boolean;
+  openedAt: number | null; listedAt?: number | null; cited: boolean; canChange: boolean;
 }) {
   const [rec, setRec] = useState<RecordView | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -37,7 +37,7 @@ export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt
         <KeyChip k={rec.key} active />
         <span className="mono file-ref">{rec.file} · строка {rec.line}</span>
         <span className={`small ${cited ? "ok-text" : "muted"}`}>{cited ? "процитирована в выводе" : "не процитирована"}</span>
-        <span className="small muted">{openedAt ? `аудитор открыл на шаге ${openedAt}` : "аудитор не открывал отдельно"}</span>
+        <span className="small muted">{openedAt ? `аудитор открыл на шаге ${openedAt}` : listedAt ? `аудитор получил на странице шага ${listedAt}` : "аудитор не получал"}</span>
       </div>
 
       <div className="file" aria-label={`Фрагмент файла ${rec.file}`}>

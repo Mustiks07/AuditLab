@@ -91,7 +91,7 @@ export interface FindingView {
   derivation: Derivation | null;
   uncited_operands: string[];
   console_agrees: boolean;
-  verdict: { index: number; matched: boolean; reason: string } | null;
+  verdict: { index: number; matched: boolean; reason: string; source?: "per_finding" | "aggregate" } | null;
   verifier: { connected: boolean; text?: string; engine?: string; amount_minor?: number | null; currency?: string; agrees?: boolean };
 }
 

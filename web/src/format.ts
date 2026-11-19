@@ -33,6 +33,7 @@ export const REASONS: Record<string, string> = {
   amount_or_currency: "сумма или валюта не совпадает с эталоном",
   no_such_issue: "такой ошибки нет в эталоне",
   duplicate: "повтор уже засчитанного вывода",
+  not_published: "причина не опубликована оценщиком (TP = 0)",
 };
 
 export const STATUS: Record<string, string> = {

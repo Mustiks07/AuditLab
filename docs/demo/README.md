@@ -60,13 +60,13 @@ python -m auditlab.demo replay --run TRAIN-S02-reconcile --check
 
 У каждой попытки на экране и в `show` есть строка «движок». Учебные примеры (`УЧЕБНЫЙ ЭКСПОРТ`, данные `fixtures/foundation` и `auditlab/demo/scenarios/FX01`) и живые опыты прогоняются теми модулями, которые есть в checkout; `auditlab/demo/engines.py` берёт настоящие и на учебную замену (`auditlab/demo/standin.py`, «учебная замена») переходит только при их отсутствии. Ошибка подключённого модуля возвращается кодом `infrastructure_error`, без отката на замену.
 
-| Часть | Настоящий модуль | Сейчас в main | На совместной сборке main + #8 |
+| Часть | Настоящий модуль | Сейчас в main | main + #8 + #9 (проверено 19.11) |
 |---|---|---|---|
-| Публичная среда | `auditlab.environment.open_session` | учебная замена | настоящая |
+| Публичная среда | `auditlab.environment.open_session` | учебная замена | настоящая (открывает раннер) |
 | Аудитор `reconcile` | `auditlab.policies.make_policy` | учебная замена | настоящий |
-| Раннер | `auditlab.runner.make_env("train")` по дополнению INTERFACES (`snapshot_dir`, `export_dir`, `policy_name`) | учебная замена | учебная замена (#9 не слит) |
-| Оценщик | `auditlab.evaluator.score_submission` | учебная замена | учебная замена (#9 не слит) |
-| Сверка | `auditlab.verifier.verify_snapshot`, отдельная копия `public/` | не подключена | не подключена |
+| Раннер | `auditlab.runner.make_env("train")` по дополнению INTERFACES (`snapshot_dir`, `export_dir`, `policy_name`) | учебная замена | настоящий, `run_id` назначает он |
+| Оценщик | `auditlab.evaluator.score_submission` | учебная замена | настоящий; публикует только TP/FP/FN, вердикт по выводу консоль выводит лишь когда он однозначен (`tp = число выводов` или `tp = 0`) и помечает «выведено из итога» |
+| Сверка | `auditlab.verifier.verify_snapshot`, отдельная копия `public/` | не подключена | не подключена (#3 не слит) |
 | Генератор изменённой компании | точка «изменить один факт» отсутствует | учебная замена `apply_change` | учебная замена `apply_change` |
 
 Учебная сессия обязана отвечать в формате настоящей среды (страницы `policy` — пары `id/value`, `get_record policy` — значение правила, калькулятор — десятичная строка); тест `PublicInterface` сравнивает их ответ в ответ, когда среда есть в checkout.
