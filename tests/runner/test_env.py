@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 from auditlab.evaluator import oracle_submission
-from auditlab.runner import make_env
+from auditlab.runner import RunnerError, make_env
 from auditlab.runner.testing import FixturePublicSession
 
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures" / "foundation"
@@ -31,7 +31,7 @@ def truth_of(name):
 
 def make(mode="train", name="S02", **options):
     env = make_env(mode, session_opener=FixturePublicSession, evaluator="inprocess", **options)
-    obs, info = env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / name), "policy": "test"}})
+    obs, info = env.reset(0, {"snapshot_dir": str(FIXTURES / name), "policy_name": "test"})
     return env, obs, info
 
 
@@ -65,24 +65,57 @@ class Lifecycle(unittest.TestCase):
             a.step(INSPECT)
         self.assertEqual(b.step(INSPECT)[0]["remaining_steps"], 99)
         a.step(empty())
-        obs, _ = a.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02")}})
+        obs, _ = a.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
         self.assertEqual(obs["remaining_steps"], 100)
         self.assertEqual(a.step(INSPECT)[0]["remaining_steps"], 99)
         self.assertEqual(a.step(INSPECT)[3:], (False, {"inspection_steps": 2}))
+
+    def test_flat_interfaces_11_config_is_honoured(self):
+        calls = []
+
+        def generator(seed, config, output_dir):
+            calls.append(output_dir)
+
+        env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", generator=generator)
+        obs, info = env.reset(19, {"snapshot_dir": str(FIXTURES / "S01"), "export_dir": None,
+                                   "policy_name": "integration-manual"})
+        self.assertEqual((calls, obs["manifest"]["episode_id"]), ([], "S01"), "snapshot_dir must not regenerate")
+        blob = json.dumps([obs, info])
+        for secret in ("integration-manual", "snapshot_dir", "export_dir", "policy_name", str(FIXTURES)):
+            self.assertNotIn(secret, blob)
+        self.assertEqual(env._policy_name, "integration-manual")
+
+    def test_generator_gets_a_new_directory_and_only_its_config(self):
+        seen = {}
+
+        def generator(seed, config, output_dir):
+            seen.update(seed=seed, config=config, existed=output_dir.exists(), parent=output_dir.parent.is_dir())
+            shutil.copytree(FIXTURES / "S02", output_dir)  # behaves like the real one: refuses existing dirs
+
+        env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", generator=generator)
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir = Path(tmp) / "run"
+            obs, _ = env.reset(7, {"issue_counts": {"payment_allocation": 1}, "policy_name": "p",
+                                   "export_dir": str(run_dir), "time_limit_s": 30})
+            self.assertEqual(seen, {"seed": 7, "config": {"issue_counts": {"payment_allocation": 1}},
+                                    "existed": False, "parent": True})
+            self.assertAlmostEqual(env.step(good())[1], 1.0, places=12)
+            self.assertEqual(json.loads((run_dir / "run.json").read_text(encoding="utf-8"))["status"], "completed")
+            env.close()
 
     def test_failed_reset_leaves_no_steppable_episode(self):
         env, _, _ = make()
         env.step(INSPECT)
         with self.assertRaises(FileNotFoundError):
-            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "MISSING")}})
+            env.reset(0, {"snapshot_dir": str(FIXTURES / "MISSING")})
         self.assertEqual(env.step(INSPECT)[0]["error"]["code"], "no_active_episode")
 
     def test_reset_mid_episode_records_abandoned_attempt(self):
         with tempfile.TemporaryDirectory() as trusted:
             env = make_env("closed", session_opener=FixturePublicSession, evaluator="inprocess", trusted_dir=trusted)
-            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "first"}})
+            env.reset(0, {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "first"})
             env.step(INSPECT)
-            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "second"}})
+            env.reset(0, {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "second"})
             env.step(empty())
             first = json.loads((Path(trusted) / "first" / "report.json").read_text(encoding="utf-8"))
             second = json.loads((Path(trusted) / "second" / "report.json").read_text(encoding="utf-8"))
@@ -231,7 +264,7 @@ class Timeout(unittest.TestCase):
     def test_time_exactly_at_limit_and_custom_limit(self):
         clock = Clock()
         env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", clock=clock)
-        env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "time_limit_s": 5}})
+        env.reset(0, {"snapshot_dir": str(FIXTURES / "S02"), "time_limit_s": 5})
         clock.now += 4.99
         self.assertFalse(env.step(INSPECT)[3])
         clock.now += 0.01
@@ -247,7 +280,10 @@ class Timeout(unittest.TestCase):
 class ClosedMode(unittest.TestCase):
     def test_closed_channel_is_neutral_and_truth_stays_trusted(self):
         with tempfile.TemporaryDirectory() as trusted, tempfile.TemporaryDirectory() as exports:
-            env, _, _ = make("closed", trusted_dir=trusted, export_dir=exports)
+            env = make_env("closed", session_opener=FixturePublicSession, evaluator="inprocess", trusted_dir=trusted)
+            with self.assertRaises(RunnerError):  # closed runs are never exported publicly
+                env.reset(0, {"snapshot_dir": str(FIXTURES / "S02"), "export_dir": str(Path(exports) / "run")})
+            env.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
             for _ in range(4):
                 self.assertEqual(env.step(INSPECT)[1], 0.0)
             obs, reward, term, trunc, info = env.step(good())
@@ -282,9 +318,12 @@ class Leaks(unittest.TestCase):
         (snap / "private" / "provenance.json").write_text('{"secret": "SENTINEL-PROVENANCE-7c1d"}', encoding="utf-8")
         return snap
 
-    def run_flow(self, env, snap, submission):
+    def run_flow(self, env, snap, submission, export_dir=None):
         out = []
-        obs, info = env.reset(0, {"runner": {"snapshot_dir": str(snap), "policy": "t"}})
+        config = {"snapshot_dir": str(snap), "policy_name": "t"}
+        if export_dir is not None:
+            config["export_dir"] = str(export_dir)
+        obs, info = env.reset(0, config)
         out += [obs, info]
         for action in (INSPECT, BAD_INSPECT, {"action": "nope", "args": {}},
                        {"action": "get_record", "args": {"table": "ledger", "id": "R7"}}, submission):
@@ -296,16 +335,19 @@ class Leaks(unittest.TestCase):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
                 snap = self.sentinel_snapshot(tmp)
                 exports = Path(tmp) / "exports"
-                env = make_env(mode, session_opener=FixturePublicSession, evaluator="inprocess",
-                               export_dir=exports)
+                env = make_env(mode, session_opener=FixturePublicSession, evaluator="inprocess")
                 sub = oracle_submission(truth_of("S02"))  # a policy never sees the sentinel set
-                for bad in (sub, {"episode_id": "S02", "findings": []}, {"episode_id": "S02"}):
-                    blob = json.dumps(self.run_flow(env, snap, {"action": "submit", "args": bad}))
+                for i, bad in enumerate((sub, {"episode_id": "S02", "findings": []}, {"episode_id": "S02"})):
+                    run_dir = exports / f"run-{i}" if mode == "train" else None
+                    blob = json.dumps(self.run_flow(env, snap, {"action": "submit", "args": bad}, run_dir))
                     self.assertNotIn("SENTINEL", blob)
+                if mode == "train":
+                    self.assertEqual(len(list(exports.iterdir())), 3)
                 blob = "".join(p.read_text(encoding="utf-8") for p in exports.rglob("*")
                                if p.is_file()) if exports.exists() else ""
                 self.assertNotIn("SENTINEL", blob)
                 self.assertNotIn("private", blob)
+                self.assertFalse(any(p.name == "private" for p in exports.rglob("*")))
 
     def test_iso03_same_public_snapshot_different_truth_same_messages(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -336,7 +378,7 @@ class Leaks(unittest.TestCase):
                 return {"ok": True, "result": 1, "debug": "/etc/passwd", "remaining_steps": 5000}
 
         env = make_env("closed", session_opener=Evil, evaluator="inprocess")
-        env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02")}})
+        env.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
         first = env.step(INSPECT)[0]
         second = env.step(INSPECT)[0]
         self.assertEqual(first, {"ok": False, "error": {"code": "internal_error", "message": "Internal error."},
@@ -348,7 +390,7 @@ class Leaks(unittest.TestCase):
 class SubprocessEvaluatorTest(unittest.TestCase):
     def test_real_separate_process_gives_same_reward(self):
         env = make_env("train", session_opener=FixturePublicSession, evaluator="subprocess")
-        env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02")}})
+        env.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
         for _ in range(4):
             env.step(INSPECT)
         obs, reward, term, trunc, info = env.step(good())
@@ -360,7 +402,7 @@ class SubprocessEvaluatorTest(unittest.TestCase):
             raise OSError("disk gone")
 
         env = make_env("train", session_opener=FixturePublicSession, evaluator=broken)
-        env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02")}})
+        env.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
         obs, reward, term, trunc, info = env.step(good())
         self.assertEqual((reward, trunc, info), (0.0, True, {"status": "infra_error"}))
         self.assertEqual(env.final["status"], "infra_error")

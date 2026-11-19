@@ -6,13 +6,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from auditlab.runner import make_env
+from auditlab.runner import RunnerError, make_env
 from auditlab.runner.episode import OraclePolicy, run_episode
 from auditlab.runner.isolation import SubprocessPolicy, child_env, docker_command
 from auditlab.runner.testing import FixturePublicSession
 
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures" / "foundation"
-SNAP = {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "policy": "scripted"}}
+SNAP = {"snapshot_dir": str(FIXTURES / "S02"), "policy_name": "scripted"}
 
 # A child that tries to find secrets: reports env, cwd listing and attempts to read the closed truth.
 PROBE = r"""
@@ -52,13 +52,14 @@ class Isolation(unittest.TestCase):
 
     def test_crash_is_policy_failure_not_a_score(self):
         with tempfile.TemporaryDirectory() as trusted, tempfile.TemporaryDirectory() as exports:
-            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess",
-                           trusted_dir=trusted, export_dir=exports)
+            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", trusted_dir=trusted)
             policy = SubprocessPolicy([sys.executable, "-c", "import sys; sys.exit(3)"])
-            result = run_episode(env, policy, 0, SNAP)
+            run_dir = Path(exports) / "crash"
+            result = run_episode(env, policy, 0, {**SNAP, "export_dir": str(run_dir)})
             self.assertEqual((result[2], result[3], result[4]), (False, True, {"status": "policy_failure"}))
             self.assertEqual(env.final["status"], "policy_failure")
-            self.assertEqual(list(Path(exports).iterdir()), [])
+            run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+            self.assertEqual((run["status"], run["outcome"]), ("failed", "policy_failure"))  # never "completed"
             report = json.loads(next(Path(trusted).iterdir()).joinpath("report.json").read_text(encoding="utf-8"))
             self.assertEqual(report["status"], "policy_failure")
             self.assertIn("abort", [e["event"] for e in report["events"]])
@@ -66,7 +67,7 @@ class Isolation(unittest.TestCase):
     def test_hung_policy_is_killed_at_deadline(self):
         env = make_env("closed", session_opener=FixturePublicSession, evaluator="inprocess")
         policy = SubprocessPolicy([sys.executable, "-c", "import time; time.sleep(30)"])
-        cfg = {"runner": {**SNAP["runner"], "time_limit_s": 0.5}}
+        cfg = {**SNAP, "time_limit_s": 0.5}
         result = run_episode(env, policy, 0, cfg)
         self.assertTrue(result[3])
         self.assertEqual(env.final["status"], "truncated_timeout")  # SPEC §8, not a crash
@@ -83,7 +84,7 @@ class Isolation(unittest.TestCase):
             "    sys.stdout.flush()"])
         env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
         policy = SubprocessPolicy([sys.executable, "-c", script])
-        result = run_episode(env, policy, 0, {"runner": {"snapshot_dir": str(FIXTURES / "S01"), "time_limit_s": 1.5}})
+        result = run_episode(env, policy, 0, {"snapshot_dir": str(FIXTURES / "S01"), "time_limit_s": 1.5})
         self.assertEqual((result[3], env.final["status"], env.final["inspection_steps"]),
                          (True, "truncated_timeout", 3))
         self.assertAlmostEqual(result[1], 1 - 0.006, places=12)
@@ -93,7 +94,7 @@ class Isolation(unittest.TestCase):
         cmd = [sys.executable, "-m", "auditlab.runner.policy_host", "--factory", "auditlab_test_policy:make", "0"]
         policy = SubprocessPolicy(cmd, env=child_env({"PYTHONPATH": child_env()["PYTHONPATH"] + os.pathsep
                                                       + str(Path(__file__).parent)}))
-        result = run_episode(env, policy, 0, {"runner": {"snapshot_dir": str(FIXTURES / "S01")}})
+        result = run_episode(env, policy, 0, {"snapshot_dir": str(FIXTURES / "S01")})
         self.assertEqual((result[2], env.final["status"], env.final["inspection_steps"]), (True, "submitted", 2))
         self.assertAlmostEqual(result[1], 0.996, places=12)
 
@@ -127,15 +128,15 @@ class Isolation(unittest.TestCase):
 class Export(unittest.TestCase):
     def test_public_export_layout_and_write_once(self):
         with tempfile.TemporaryDirectory() as exports:
-            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", export_dir=exports)
-            cfg = {"runner": {**SNAP["runner"], "run_id": "run-1", "policy": "oracle"}}
+            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+            run = Path(exports) / "nested" / "S02-oracle"  # parent may not exist yet
+            cfg = {**SNAP, "run_id": "run-1", "policy_name": "oracle", "export_dir": str(run)}
             run_episode(env, OraclePolicy(FIXTURES / "S02", inspections=4), 0, cfg)
-            run = Path(exports) / "run-1"
             self.assertEqual(sorted(p.name for p in run.iterdir()),
                              ["public", "run.json", "score.json", "submission.json", "trajectories.jsonl"])
             self.assertEqual(json.loads((run / "run.json").read_text(encoding="utf-8")),
                              {"run_id": "run-1", "episode_id": "S02", "policy": "oracle", "mode": "train",
-                              "status": "submitted"})
+                              "status": "completed", "outcome": "submitted", "inspection_steps": 4})
             score = json.loads((run / "score.json").read_text(encoding="utf-8"))
             self.assertAlmostEqual(score["reward"], 0.992, places=12)
             self.assertEqual(sorted(p.name for p in (run / "public").iterdir()),
@@ -146,27 +147,63 @@ class Export(unittest.TestCase):
                              set(rows[0]))
             self.assertAlmostEqual(rows[-1]["reward"], 0.992, places=12)
             self.assertTrue(rows[-1]["terminated"])
-            before = (run / "score.json").read_text(encoding="utf-8")
-            # Re-recording a finished run id never overwrites it.
-            env2 = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", export_dir=exports)
-            run_episode(env2, OraclePolicy(FIXTURES / "S02", inspections=0), 0, cfg)
-            self.assertEqual((run / "score.json").read_text(encoding="utf-8"), before)
-            self.assertEqual([p.name for p in Path(exports).iterdir()], ["run-1"], "no staging leftovers")
+            before = {p.name: p.read_bytes() for p in run.iterdir() if p.is_file()}
+            # An existing export directory is refused up front and never overwritten.
+            env2 = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+            with self.assertRaises(RunnerError):
+                env2.reset(0, cfg)
+            self.assertEqual({p.name: p.read_bytes() for p in run.iterdir() if p.is_file()}, before)
+            self.assertEqual([p.name for p in run.parent.iterdir()], ["S02-oracle"], "no staging leftovers")
 
-    def test_timeout_and_budget_runs_are_exported_as_completed(self):
+    def test_export_files_are_ascii_and_roundtrip(self):
         with tempfile.TemporaryDirectory() as exports:
-            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess", export_dir=exports)
+            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+            run = Path(exports) / "r"
+            env.reset(0, {**SNAP, "export_dir": str(run)})
+            submission = {"episode_id": "S02", "findings": [{
+                "type": "payment_allocation", "affected_ids": ["payment/P9", "invoice/I4"],
+                "claimed_amount_minor": 2_000_000, "currency": "KZT",
+                "evidence_ids": ["payments/D9", "ledger/R4", "ledger/R5", "policy/allocation"],
+                "explanation": "50 000 − 30 000 = 20 000 ₸ на исключающей границе."}]}
+            env.step({"action": "submit", "args": submission})
+            for path in run.glob("*.json*"):
+                path.read_bytes().decode("ascii")  # readable with any default encoding
+            self.assertEqual(json.loads((run / "submission.json").read_text(encoding="ascii")), submission)
+
+    def test_truncated_runs_are_exported_but_never_completed(self):
+        with tempfile.TemporaryDirectory() as exports:
+            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
 
             class Spin:
                 def act(self, obs):
                     return {"action": "get_document", "args": {"doc_id": "D9"}}
 
-            run_episode(env, Spin(), 0, {"runner": {**SNAP["runner"], "run_id": "spin"}})
-            run = json.loads((Path(exports) / "spin" / "run.json").read_text(encoding="utf-8"))
-            self.assertEqual(run["status"], "truncated_budget")
-            rows = (Path(exports) / "spin" / "trajectories.jsonl").read_text(encoding="utf-8").splitlines()
+            run_dir = Path(exports) / "spin"
+            run_episode(env, Spin(), 0, {**SNAP, "run_id": "spin", "export_dir": str(run_dir)})
+            run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+            self.assertEqual((run["status"], run["outcome"]), ("truncated", "truncated_budget"))
+            rows = (run_dir / "trajectories.jsonl").read_text(encoding="utf-8").splitlines()
             self.assertEqual(len(rows), 100)
             self.assertTrue(json.loads(rows[-1])["truncated"])
+
+    def test_trajectory_is_exactly_what_step_returned(self):
+        with tempfile.TemporaryDirectory() as exports:
+            env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+            run_dir = Path(exports) / "exact"
+            obs, _ = env.reset(3, {**SNAP, "export_dir": str(run_dir)})
+            returned = []
+            actions = [{"action": "get_document", "args": {"doc_id": "D9"}},
+                       {"action": "nope", "args": {}},
+                       {"action": "submit", "args": {"episode_id": "S02", "findings": []}}]
+            for step, action in enumerate(actions, start=1):
+                obs, reward, term, trunc, _ = env.step(action)
+                returned.append({"episode_id": "S02", "step": step, "action": action, "observation": obs,
+                                 "reward": reward, "terminated": term, "truncated": trunc})
+                action["args"]["mutated_after"] = True  # must not leak into the record
+            for row in returned:
+                row["action"]["args"].pop("mutated_after")
+            rows = [json.loads(l) for l in (run_dir / "trajectories.jsonl").read_text(encoding="utf-8").splitlines()]
+            self.assertEqual(rows, returned)
 
 
 if __name__ == "__main__":
