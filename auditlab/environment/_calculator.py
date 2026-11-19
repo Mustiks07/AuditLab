@@ -1,7 +1,13 @@
-"""Bounded decimal expressions for the public calculator tool."""
+"""Decimal expressions bounded to 256 characters and 24 levels of nesting.
+
+Arithmetic uses 64 significant digits with ROUND_HALF_UP. Nonzero values
+require an adjusted exponent between -63 and 63, inclusive.
+"""
 
 import re
-from decimal import ROUND_HALF_UP, Context, Decimal, InvalidOperation, Overflow, Subnormal, localcontext
+from decimal import (
+    ROUND_HALF_UP, Context, Decimal, InvalidOperation, Overflow, Subnormal, localcontext,
+)
 
 
 MAX_EXPRESSION_LENGTH = 256

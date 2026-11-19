@@ -9,6 +9,20 @@ from auditlab.generator import generate_episode
 
 
 class GeneratedPairTests(unittest.TestCase):
+    def test_same_seed_snapshots_bind_cursors_to_public_content(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            for label, timing in (("before", "before"), ("replay", "before"), ("after", "after")):
+                generate_episode(817, {"settlement_timing": timing, "clean_distractors": []}, root / label)
+            for path in (root / "before").glob("*/*"):
+                self.assertEqual(path.read_bytes(), (root / "replay" / path.parent.name / path.name).read_bytes())
+            first = open_session(root / "before" / "public")
+            args = {"table": "ledger", "limit": 1, "cursor": None}
+            cursor = first.inspect({"action": "list_records", "args": args})["result"]["next_cursor"]
+            next_page = {"action": "list_records", "args": {**args, "cursor": cursor}}
+            self.assertTrue(open_session(root / "replay" / "public").inspect(next_page)["ok"])
+            self.assertFalse(open_session(root / "after" / "public").inspect(next_page)["ok"])
+
     def test_boundary_from_public_tools(self):
         with TemporaryDirectory() as directory:
             root = Path(directory)
