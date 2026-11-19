@@ -1,0 +1,1 @@
+{"doc_id":"D9","payment_id":"P9","timestamp":"2026-11-14T23:59:00+05:00","currency":"USD","amount_minor":10000,"invoice_refs":["I4"],"settlement_index":{"before":"2026-12-01T00:00:00+05:00","unapplied_row_ids":["R4","R5"]}}

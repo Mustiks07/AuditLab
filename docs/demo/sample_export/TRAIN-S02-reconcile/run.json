@@ -1,0 +1,7 @@
+{
+  "run_id": "TRAIN-S02-reconcile",
+  "episode_id": "S02",
+  "policy": "reconcile",
+  "mode": "train",
+  "status": "completed"
+}

@@ -1,0 +1,23 @@
+{
+  "allocation": {
+    "version": "1.0",
+    "deadline": "2026-12-01T00:00:00+05:00",
+    "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its balance is credits minus debits. The settlement index lists every UNAPPLIED movement for the payment strictly before period_end."
+  },
+  "period": {
+    "version": "1.0",
+    "end_exclusive": true,
+    "recognition": "Invoice issue date for invoices; transaction date for cash receipts and settlements."
+  },
+  "fx_date": "Local date of the source event. FX_VALUATION is a separate base-currency memorandum posting. When it has payment_id, look up the payment timestamp and amount; otherwise look up the invoice issue timestamp and total. Quotes are target units per source unit.",
+  "rounding": "ROUND_HALF_UP",
+  "accounts": {
+    "version": "1.0",
+    "AR": "Invoice receivables in the invoice currency",
+    "REVENUE": "Source-currency revenue",
+    "CASH": "Cash received or refunded",
+    "UNAPPLIED": "Payment amounts held for settlement or refund",
+    "FX_VALUATION": "Base-currency reporting valuation of a foreign source event",
+    "FX_OFFSET": "Offset to the reporting valuation memorandum account"
+  }
+}

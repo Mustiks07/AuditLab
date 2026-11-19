@@ -1,0 +1,167 @@
+"""Local judge console: FastAPI over completed open exports + the built React app.
+
+Handlers read only through ExportStore. New experiments are executed by the
+trusted lab in a separate process (``python -m auditlab.demo.lab``); this
+process never opens training truth. Not used by the official test run.
+"""
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+import sys
+import threading
+from pathlib import Path
+
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, JSONResponse
+from pydantic import BaseModel, Field
+
+from . import service
+from .paths import PACKAGE, REPO, DemoPaths
+from .store import OP_KEY_RE, ExportStore, NotFound, Refused
+
+STATIC = PACKAGE / "static"
+
+
+class ChangeBody(BaseModel):
+    target: str = Field(max_length=100)
+    field: str = Field(default="timestamp", max_length=40)
+    value: str = Field(max_length=64)
+
+
+class PairRequest(BaseModel):
+    source_run_id: str = Field(max_length=96)
+    change: ChangeBody
+    prediction: str | None = Field(default=None, max_length=500)
+    operation_key: str = Field(max_length=64)
+
+
+class RescoreRequest(BaseModel):
+    finding_index: int = Field(ge=0, le=29)
+    replace: str = Field(max_length=100)
+    with_key: str = Field(alias="with", max_length=100)
+    operation_key: str = Field(max_length=64)
+
+
+def _lab_command(paths: DemoPaths, extra: list[Path], *args: str) -> list[str]:
+    cmd = [sys.executable, "-m", "auditlab.demo.lab", "--root", str(paths.root)]
+    for root in extra:
+        cmd += ["--exports", str(root)]
+    return cmd + list(args)
+
+
+def _run_lab(paths: DemoPaths, extra: list[Path], *args: str, timeout: int = 60) -> dict:
+    env = {**os.environ, "PYTHONPATH": str(REPO) + os.pathsep + os.environ.get("PYTHONPATH", "")}
+    proc = subprocess.run(_lab_command(paths, extra, *args), cwd=str(REPO), env=env, capture_output=True,
+                          text=True, timeout=timeout)
+    lines = [line for line in proc.stdout.splitlines() if line.strip()]
+    if not lines:
+        return {"ok": False, "error": {"code": "infrastructure_error", "message": f"lab exited with code {proc.returncode}"}}
+    return json.loads(lines[-1])
+
+
+def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = None, build_samples: bool = True) -> FastAPI:
+    paths = (paths or DemoPaths.default()).ensure()
+    extra = [Path(p).resolve() for p in (extra_roots or [])]
+    store = ExportStore([paths.exports, *extra], paths.ops)
+    app = FastAPI(title="AuditLab judge console", docs_url=None, redoc_url=None, openapi_url=None)
+    jobs: dict[str, threading.Thread] = {}
+    lock = threading.Lock()
+    if build_samples and not any(paths.exports.iterdir()):
+        _run_lab(paths, extra, "samples")
+
+    def _guard(fn, *args):
+        try:
+            return fn(*args)
+        except NotFound:
+            raise HTTPException(404, {"code": "not_found", "message": "No open completed run with this id."})
+        except Refused as exc:
+            raise HTTPException(403, {"code": "refused", "message": str(exc)})
+
+    def _start(op_key: str, *args: str) -> JSONResponse:
+        if not OP_KEY_RE.match(op_key):
+            raise HTTPException(422, {"code": "bad_operation_key", "message": "6-64 characters [A-Za-z0-9_-]."})
+        status = store.op_status(op_key)
+        if status and status.get("status") == "completed":
+            return JSONResponse(status, status_code=200)
+        with lock:
+            thread = jobs.get(op_key)
+            if thread is None or not thread.is_alive():
+                if status and status.get("status") == "failed":  # explicit retry of a failed key
+                    (paths.ops / f"{op_key}.json").unlink(missing_ok=True)
+                thread = threading.Thread(target=_run_lab, args=(paths, extra, *args), daemon=True)
+                jobs[op_key] = thread
+                thread.start()
+        return JSONResponse({"op_key": op_key, "status": "pending"}, status_code=202)
+
+    @app.get("/demo/health")
+    def health():
+        return {"ok": True, "runs": len(store.list_runs()), "static": (STATIC / "index.html").exists()}
+
+    @app.get("/demo/runs")
+    def runs():
+        return {"runs": service.list_runs(store)}
+
+    @app.get("/demo/runs/{run_id}")
+    def run(run_id: str):
+        return _guard(service.run_detail, store, run_id)
+
+    @app.get("/demo/runs/{run_id}/records/{key:path}")
+    def record(run_id: str, key: str):
+        view = _guard(service.record_view, store, run_id, key)
+        if view is None:
+            raise HTTPException(404, {"code": "unknown_key", "message": "No public record with this key in the run."})
+        return view
+
+    @app.get("/demo/compare")
+    def compare(left: str, right: str):
+        return _guard(service.compare, store, left, right)
+
+    @app.post("/demo/pairs")
+    def pairs(body: PairRequest):
+        _guard(store.run_dir, body.source_run_id)
+        args = ["change", "--source", body.source_run_id, "--target", body.change.target, "--field", body.change.field,
+                "--value", body.change.value, "--op", body.operation_key]
+        if body.prediction:
+            args += ["--prediction", body.prediction]
+        return _start(body.operation_key, *args)
+
+    @app.post("/demo/runs/{run_id}/rescore")
+    def rescore(run_id: str, body: RescoreRequest):
+        _guard(store.run_dir, run_id)
+        return _start(body.operation_key, "rescore", "--source", run_id, "--finding", str(body.finding_index),
+                      "--replace", body.replace, "--with", body.with_key, "--op", body.operation_key)
+
+    @app.post("/demo/runs/{run_id}/replay")
+    def replay(run_id: str):
+        _guard(store.run_dir, run_id)
+        reply = _run_lab(paths, extra, "replay-check", "--run", run_id)
+        if not reply.get("ok"):
+            raise HTTPException(409, reply.get("error"))
+        return reply["result"]
+
+    @app.get("/demo/ops/{op_key}")
+    def op(op_key: str):
+        status = store.op_status(op_key)
+        if status is None:
+            with lock:
+                running = op_key in jobs and jobs[op_key].is_alive()
+            if not running:
+                raise HTTPException(404, {"code": "unknown_operation", "message": "No such operation."})
+            return {"op_key": op_key, "status": "pending"}
+        return status
+
+    @app.get("/{path:path}")
+    def static(path: str):
+        if path.startswith("demo/"):
+            raise HTTPException(404, {"code": "not_found", "message": "Unknown API path."})
+        candidate = (STATIC / path).resolve()
+        if path and candidate.is_file() and STATIC.resolve() in candidate.parents:
+            return FileResponse(candidate)
+        index = STATIC / "index.html"
+        if not index.exists():
+            return JSONResponse({"error": "frontend not built; run `npm --prefix web run build`"}, status_code=503)
+        return FileResponse(index)
+
+    return app
