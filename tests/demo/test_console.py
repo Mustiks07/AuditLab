@@ -141,9 +141,14 @@ class LabEndToEnd(Workspace):
         self.assertEqual(s02["findings"][0]["finding"]["claimed_amount_minor"], 2000000)
         self.assertTrue(s02["findings"][0]["verdict"]["matched"])
         self.assertTrue(service.run_detail(store, "TRAIN-S01-reconcile")["empty_submission"])
-        aborted = service.run_detail(store, "TRAIN-S02-aborted")
-        self.assertIsNone(aborted["submission"])
-        self.assertEqual(aborted["run"]["status"], "aborted")
+        # An unfinished attempt stays on disk but is not published in the console.
+        cut = self.paths.exports / "CUT-1"
+        shutil.copytree(self.paths.exports / "TRAIN-S02-reconcile", cut)
+        (cut / "run.json").write_text(json.dumps({"run_id": "CUT-1", "episode_id": "S02", "policy": "reconcile",
+                                                  "mode": "train", "status": "truncated"}))
+        self.assertNotIn("CUT-1", [r["run_id"] for r in service.list_runs(store)])
+        with self.assertRaises(Exception):
+            service.run_detail(store, "CUT-1")
 
         parent = self.paths.exports / "TRAIN-FX01-reconcile"
         before = tree_hash(parent)
@@ -191,11 +196,13 @@ class Isolation(Workspace):
         shutil.copytree(self.paths.exports / "TRAIN-S02-reconcile", bad)
         meta = json.loads((bad / "run.json").read_text())
         (bad / "run.json").write_text(json.dumps({**meta, "run_id": "BAD-private"}))
+        (bad / "console.json").unlink()
         (bad / "private").mkdir()
         (bad / "private" / "truth.json").write_text(json.dumps({"canary": self.CANARY}))
         closed = self.paths.exports / "CLOSED-1"
         shutil.copytree(self.paths.exports / "TRAIN-S01-reconcile", closed)
         (closed / "run.json").write_text(json.dumps({**meta, "run_id": "CLOSED-1", "mode": "closed", "note": self.CANARY}))
+        (closed / "console.json").unlink()
 
         store = self.store()
         ids = [r["run_id"] for r in service.list_runs(store)]
@@ -273,6 +280,64 @@ class Api(Workspace):
         self.assertEqual(cmp["right"]["claims"][0]["amount_minor"], 2000000)
         replay = client.post("/demo/runs/TRAIN-S02-reconcile/replay").json()
         self.assertTrue(replay["observations_match"] and replay["score_match"])
+
+
+class RealRunnerPath(Workspace):
+    """The lab drives auditlab.runner exactly as docs/INTERFACES.md describes, once it exists."""
+
+    def test_lab_uses_make_env_and_keeps_runner_export(self):
+        import types
+        calls = {}
+
+        class FakeEnv:
+            def reset(self, seed, config):
+                calls["config"] = config
+                public = Path(config["snapshot_dir"]) / "public"
+                self.truth = json.loads((Path(config["snapshot_dir"]) / "private" / "truth.json").read_text())
+                self.session = standin.StandinSession(public)
+                self.manifest = self.session.snapshot.manifest
+                self.export, self.lines, self.left, self.inspections = Path(config["export_dir"]), [], 100, 0
+                return {"manifest": self.manifest, "remaining_steps": 100}, {}
+
+            def step(self, action):
+                self.left -= 1
+                if action["action"] == "submit":
+                    score = standin.score(action["args"], self.truth, self.inspections)
+                    obs = {"ok": True, "result": {"accepted": True}, "remaining_steps": self.left}
+                    self.lines.append({"episode_id": self.manifest["episode_id"], "step": 100 - self.left, "action": action,
+                                       "observation": obs, "reward": score["reward"], "terminated": True, "truncated": False})
+                    tmp = self.export.with_name(".runner-tmp")
+                    shutil.copytree(Path(calls["config"]["snapshot_dir"]) / "public", tmp / "public")
+                    (tmp / "trajectories.jsonl").write_text("".join(json.dumps(l) + "\n" for l in self.lines))
+                    (tmp / "submission.json").write_text(json.dumps(action["args"]))
+                    (tmp / "score.json").write_text(json.dumps(score))
+                    (tmp / "run.json").write_text(json.dumps({"run_id": "runner-0001", "episode_id": self.manifest["episode_id"],
+                                                              "policy": calls["config"]["policy_name"], "mode": "train", "status": "completed"}))
+                    tmp.rename(self.export)
+                    return obs, score["reward"], True, False, {}
+                self.inspections += 1
+                obs = {**self.session.inspect(action), "remaining_steps": self.left}
+                self.lines.append({"episode_id": self.manifest["episode_id"], "step": 100 - self.left, "action": action,
+                                   "observation": obs, "reward": 0, "terminated": False, "truncated": False})
+                return obs, 0, False, False, {}
+
+        fake = types.ModuleType("auditlab.runner")
+        fake.make_env = lambda mode: FakeEnv() if mode == "train" else None
+        sys.modules["auditlab.runner"] = fake
+        try:
+            run = lab.execute(self.paths, FIX / "S02" / "public", json.loads((FIX / "S02" / "private" / "truth.json").read_text()),
+                              {"key": "sample:fake", "run_id": "ignored", "label": "training_sample"})
+        finally:
+            del sys.modules["auditlab.runner"]
+        self.assertEqual(run["run_id"], "runner-0001")
+        self.assertEqual(set(calls["config"]), {"snapshot_dir", "export_dir", "policy_name"})
+        self.assertFalse(Path(calls["config"]["export_dir"]).exists(), "staging export moved into exports/")
+        exported = self.paths.exports / "runner-0001"
+        self.assertEqual(json.loads((exported / "run.json").read_text())["policy"], "reconcile")
+        self.assertEqual(json.loads((exported / "console.json").read_text())["engine"]["runner"], "auditlab.runner")
+        detail = service.run_detail(self.store(), "runner-0001")
+        self.assertEqual(detail["findings"][0]["finding"]["claimed_amount_minor"], 2000000)
+        self.assertFalse((exported / "private").exists())
 
 
 @unittest.skipUnless(STANDIN_ONLY, "golden file describes the stand-in engines")

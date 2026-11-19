@@ -11,9 +11,9 @@ pip install -r web/requirements-demo.txt      # fastapi, uvicorn (один ра�
 python -m auditlab.demo serve                  # http://127.0.0.1:8765/
 ```
 
-При первом старте строятся четыре **учебных экспорта** (метка «УЧЕБНЫЙ ЭКСПОРТ») из открытой пары `fixtures/foundation/S01`, `S02` и ручного примера `auditlab/demo/scenarios/FX01`. Рабочий каталог — `runs/demo/` (в .gitignore), переопределяется `--root` или `AUDITLAB_DEMO_ROOT`.
+При первом старте строятся три **учебных экспорта** (метка «УЧЕБНЫЙ ЭКСПОРТ») из открытой пары `fixtures/foundation/S01`, `S02` и ручного примера `auditlab/demo/scenarios/FX01`. Рабочий каталог — `runs/demo/` (в .gitignore), переопределяется `--root` или `AUDITLAB_DEMO_ROOT`.
 
-Подключить настоящий экспорт раннера (только для чтения, принимаются только `mode: "train"` без `private/`):
+Подключить настоящий экспорт раннера (только для чтения; принимаются только `mode: "train"`, `status: "completed"`, с `submission.json`, `score.json`, `trajectories.jsonl` и без `private/` — закрытые и незавершённые попытки в список не попадают):
 
 ```sh
 python -m auditlab.demo --exports runs/exports serve
@@ -38,7 +38,7 @@ python -m auditlab.demo replay --run TRAIN-S02-reconcile --check
 
 | Экран | Что видно |
 |---|---|
-| Запуски `#/` | Компания, период, политика, статус, метка, награда, связи «исходная → опыт/копия». Оборванная попытка: причина и доступность журнала. Пустое состояние с командой запуска. |
+| Запуски `#/` | Компания, период, политика, статус, метка, награда, связи «исходная → опыт/копия». Только завершённые открытые попытки. Пустое состояние с командой запуска. |
 | Расследование `#/runs/{id}` | Слева шаги, в центре конкретная строка файла (`public/ledger.csv · строка 6`) с подсветкой поля-операнда, справа вывод: сумма агента → операнды → правило; строки «Агент», «Оценщик», «Консоль», «SQL» подписаны раздельно. Пустая сдача: «Ошибок не заявлено». |
 | Сравнение `#/compare/{a}/{b}` | Изменённый факт, прогноз судьи, фактическая разница, обе суммы с операндами, оба ответа и оценки, построчные различия документов. Для копии сдачи — какой операнд больше не подтверждён. |
 | Повтор `#/runs/{id}/replay` | «ПОВТОР ЗАПИСИ»: пошаговое воспроизведение журнала; кнопка повторяет действия на снимке и пересчитывает оценку. |
@@ -58,7 +58,13 @@ python -m auditlab.demo replay --run TRAIN-S02-reconcile --check
 
 ## Что дал какой модуль
 
-На строке «движок» каждой попытки указано, кто дал результат. Пока ветки других участников не слиты, среда, политика `reconcile`, оценщик и генератор изменённой компании — **учебные замены** из `auditlab/demo/standin.py` (метка «учебная замена»). `auditlab/demo/engines.py` автоматически берёт `auditlab.environment.open_session`, `auditlab.policies.make_policy`, `auditlab.evaluator.score_submission`, `auditlab.verifier.verify_snapshot`, как только они появятся в main. Строка «SQL» до слияния сверки показывает «не подключена».
+На строке «движок» каждой попытки указано, кто дал результат. Пока ветки других участников не слиты, раннер, среда, политика `reconcile`, оценщик и генератор изменённой компании — **учебные замены** из `auditlab/demo/standin.py` (метка «учебная замена»). `auditlab/demo/engines.py` автоматически переходит на настоящие модули, как только они появятся в main:
+
+- `auditlab.runner.make_env("train")` — ровно по дополнению INTERFACES.md: лаборатория собирает доверенный `snapshot_dir` (`public/` + `private/truth.json`), передаёт `reset(seed, {"snapshot_dir", "export_dir", "policy_name"})`, гоняет `policy.act` → `step` до завершения, затем добавляет рядом `console.json` и атомарно переносит готовый экспорт раннера в `runs/demo/exports/<run_id>`. `run.json` раннера не меняется (путь покрыт тестом с подменным раннером);
+- `auditlab.policies.make_policy`, `auditlab.environment.open_session`, `auditlab.evaluator.score_submission`;
+- `auditlab.verifier.verify_snapshot` получает отдельную копию только `public/`; строка «SQL» до слияния сверки показывает «не подключена».
+
+Учебная замена генератора (`apply_change`) остаётся, пока у генератора нет точки «изменить один факт»; см. раздел «Запрос к интерфейсам» в PR.
 
 ## Граница доступа
 
@@ -68,7 +74,7 @@ python -m auditlab.demo replay --run TRAIN-S02-reconcile --check
 
 ## Формат экспорта
 
-Образец: [sample_export/TRAIN-S02-reconcile](sample_export/TRAIN-S02-reconcile). Обязательные файлы — по INTERFACES.md: `run.json` (run_id, episode_id, policy, mode, status), `public/`, `trajectories.jsonl` (§11), `submission.json`, `score.json`. Необязательные, которые консоль использует при наличии: `run.json.label/company/period/engine/parent_run_id/change/derived_from/reason/journal_available`, `score.json.per_finding[{index, matched, reason}]`, `verifier.json`.
+Образец: [sample_export/TRAIN-S02-reconcile](sample_export/TRAIN-S02-reconcile). Обязательные файлы — по INTERFACES.md: `run.json` (run_id, episode_id, policy, mode, status), `public/`, `trajectories.jsonl` (§11), `submission.json`, `score.json`. Необязательные, которые консоль использует при наличии: `console.json` (метка, компания, период, движки, `parent_run_id`, `change`, `prediction`, `derived_from`; ключи ядра `run.json` не переопределяет), `score.json.per_finding[{index, matched, reason}]`, `verifier.json`.
 
 ## Разработка фронтенда
 

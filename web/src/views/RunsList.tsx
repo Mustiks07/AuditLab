@@ -69,9 +69,11 @@ export function RunsList() {
                 {r.parent_run_id && <div>от <a href={`#/runs/${r.parent_run_id}`}>{r.parent_run_id}</a> · <a href={`#/compare/${r.parent_run_id}/${r.run_id}`}>сравнить</a></div>}
                 {(r.children ?? []).map((c) => <div key={c}>→ <a href={`#/runs/${c}`}>{c}</a></div>)}
               </td>
-              <td className="actions">
-                <a className="btn btn-small" href={`#/runs/${r.run_id}`}>Расследование</a>
-                {r.journal_available !== false && <a className="btn btn-small btn-ghost" href={`#/runs/${r.run_id}/replay`}>Повтор</a>}
+              <td>
+                <div className="actions">
+                  <a className="btn btn-small" href={`#/runs/${r.run_id}`}>Расследование</a>
+                  {r.journal_available !== false && <a className="btn btn-small btn-ghost" href={`#/runs/${r.run_id}/replay`}>Повтор</a>}
+                </div>
               </td>
             </tr>
           ))}
