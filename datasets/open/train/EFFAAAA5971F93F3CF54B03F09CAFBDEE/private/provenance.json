@@ -1,0 +1,201 @@
+{
+  "config": {
+    "clean_distractors": [
+      "equal_amount_different_supplier"
+    ],
+    "company_size": {
+      "documents_target": 76,
+      "ledger_rows_target": 240
+    },
+    "interaction": "cutoff_fx_same_invoice",
+    "target_period": "2026-11"
+  },
+  "episode_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/IFA09D5C692EE7FAD64CB25E7"
+      ],
+      "currency": "USD",
+      "issued_at": "2026-11-30T23:59:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/DBF33A7B05F35B41C2791C118",
+      "total_minor": 10000
+    },
+    {
+      "affected_ids": [
+        "invoice/IFA09D5C692EE7FAD64CB25E7"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-11-30",
+      "source": "invoices/DBF33A7B05F35B41C2791C118",
+      "source_currency": "USD",
+      "source_minor": 10000
+    },
+    {
+      "amount_minor": 4300000,
+      "invoice_id": "I20FB7371BD3FD12FE64F6395",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4300000,
+      "invoice_id": "I50FE92624AD5997BC3335884",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8800000,
+      "invoice_id": "IF27426DC2AB11F3159645C14",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6600000,
+      "invoice_id": "I274C79BF0E5C2C09892E9922",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12600000,
+      "invoice_id": "I0D2FEC257E3ECBDB56D207FF",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8200000,
+      "invoice_id": "I2E6BFA46E0DB9443D355E5B3",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12200000,
+      "invoice_id": "I3B414A95FC06386A4B9878AF",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4300000,
+      "invoice_id": "I79E32122A845861B5880852B",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7900000,
+      "invoice_id": "IACE4E2510FC78917A355DB41",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4300000,
+      "invoice_id": "I7A49B0CEDE183416C8355058",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 2200000,
+      "invoice_id": "I59F238230D96F54026DD5A3E",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 3300000,
+      "invoice_id": "I67CC77A66254248A34FA381C",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8700000,
+      "invoice_id": "I2530BDD67A41F72A2603650B",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 2000000,
+      "invoice_id": "I452602A959D0B4BC8BB516ED",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 14600000,
+      "invoice_id": "I44189ADE80BF3613E8114073",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 9600000,
+      "invoice_id": "I37E700720BCCE1F127E20FAA",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6900000,
+      "invoice_id": "ID812F02B18AE85FD7180AD6A",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 4500000,
+      "invoice_id": "IDAA5A31E26028DCC07FD7050",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8700000,
+      "invoice_id": "ICD5FE9BB96CF295E0BEF3383",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12700000,
+      "invoice_id": "I3E703CC8C04BE7297E034A27",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7800000,
+      "invoice_id": "I45C7F788B209E83C89093DE2",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 6500000,
+      "invoice_id": "IFAE9FC35D76D5DA99566C544",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 12900000,
+      "invoice_id": "IAEB46F164525EB423A88D0FA",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 13400000,
+      "invoice_id": "I86F41773AABA5C614C585AAD",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8800000,
+      "invoice_id": "IA940F8C81CFA071F94A99123",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5700000,
+      "invoice_id": "I59E282DFDD30D87DEC734E5F",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 9600000,
+      "invoice_id": "I9D81789E89F904B8355534FB",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 13900000,
+      "invoice_id": "I7D8A683D2B3F591CCE2562F8",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 1700000,
+      "invoice_id": "I5F6FC07A86E8D7FD571EE6F6",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 8200000,
+      "invoice_id": "I22EE03C3CF20525E9F088B32",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 5900000,
+      "invoice_id": "I5F113631F4FFC16ECDB3B558",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 11600000,
+      "invoice_id": "I5A2D987B7148F77F3C33BCEA",
+      "kind": "paid_invoice"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.1",
+  "mutations": [],
+  "seed": 288624375001769892593265885704112046536
+}

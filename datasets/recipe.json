@@ -1,0 +1,437 @@
+{
+  "dataset_version": "1.1",
+  "generator_version": "1.1",
+  "schema_version": "1.0",
+  "public_dimensions": {
+    "ledger_rows": 240,
+    "document_count": 76
+  },
+  "splits": {
+    "train": [
+      {
+        "family": "41e633dc3622c0a8276f7a57",
+        "category": "clean",
+        "seed_hex": "6b851f8ed4502cb7c78616978ce94b26",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "equal_amount_different_supplier"
+          ]
+        }
+      },
+      {
+        "family": "4f4d1bffa954f016ffa1d8d7",
+        "category": "clean",
+        "seed_hex": "d923085bb952c9b0fda0c3cf5d9801c8",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "interaction": "cutoff_fx_same_invoice"
+        }
+      },
+      {
+        "family": "71a46d2e4dd1954cb849109d",
+        "category": "single",
+        "seed_hex": "9b961c7e2b4b4da6a5ac0ceaf5a59cd0",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "refund"
+          ],
+          "issue_counts": {
+            "duplicate_invoice": 1
+          }
+        }
+      },
+      {
+        "family": "bdde14e403dc625afffeefa4",
+        "category": "single",
+        "seed_hex": "9211e1cc6c19794176a5d050c4a37616",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "equal_amount_different_supplier"
+          ],
+          "issue_counts": {
+            "payment_allocation": 1
+          }
+        }
+      },
+      {
+        "family": "c457e22e82cee74167ee8add",
+        "category": "single",
+        "seed_hex": "e7af1efe3ce8fd91df6007399fcd111e",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier",
+            "refund",
+            "archive_copy"
+          ],
+          "issue_counts": {
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "ac2b4a4b8bd2054b8ce771c0",
+        "category": "single",
+        "seed_hex": "8aac2df0fd78457ed060b3da39a8768b",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "equal_amount_different_supplier",
+            "refund"
+          ],
+          "issue_counts": {
+            "period_cutoff": 1
+          }
+        }
+      },
+      {
+        "family": "6ac2554ebc8b37d8a8b4c0bb",
+        "category": "interaction",
+        "seed_hex": "9204131c4b680cf06acc985d8a401103",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier",
+            "refund",
+            "archive_copy"
+          ],
+          "interaction": "allocation_fx_same_payment",
+          "issue_counts": {
+            "payment_allocation": 1,
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "097598499cedf7e5f5a2b69e",
+        "category": "interaction",
+        "seed_hex": "a5d3c4820627de8f82ef9906fd16f9d6",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "interaction": "cutoff_fx_same_invoice",
+          "issue_counts": {
+            "period_cutoff": 1,
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "b8d036368788e1cf1d254eb2",
+        "category": "boundary",
+        "seed_hex": "1e5872b6eb9a387250eba18a7e837eeb",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier",
+            "refund"
+          ],
+          "issue_counts": {
+            "duplicate_invoice": 1
+          },
+          "settlement_timing": "before",
+          "snapshot_nonce": "8e73a15343eec954bd4f57de18448ac4"
+        }
+      },
+      {
+        "family": "b8d036368788e1cf1d254eb2",
+        "category": "boundary",
+        "seed_hex": "1e5872b6eb9a387250eba18a7e837eeb",
+        "config": {
+          "target_period": "2026-11",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier",
+            "refund"
+          ],
+          "issue_counts": {
+            "duplicate_invoice": 1
+          },
+          "settlement_timing": "after",
+          "snapshot_nonce": "9ee9fb333420c89578f41487a9abf128"
+        }
+      }
+    ],
+    "dev": [
+      {
+        "family": "06732f50ae2752eb1b448e46",
+        "category": "clean",
+        "seed_hex": "1fbccef1be7b2a29dd3465ab54501eb3",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "base_currency": "JPY",
+          "currencies": [
+            "JPY",
+            "KZT"
+          ]
+        }
+      },
+      {
+        "family": "0124f2ca6f36ad6b11dc398c",
+        "category": "clean",
+        "seed_hex": "5c9e3be43ba81fd5425c7461cfe536f8",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "archive_copy"
+          ],
+          "currencies": [
+            "KZT",
+            "KWD"
+          ],
+          "interaction": "allocation_fx_same_payment"
+        }
+      },
+      {
+        "family": "ddc6582e322ec54e0c6fbb41",
+        "category": "single",
+        "seed_hex": "4ef996262d3c714fa766f632ff379f84",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "refund"
+          ],
+          "base_currency": "JPY",
+          "currencies": [
+            "JPY",
+            "KZT"
+          ],
+          "issue_counts": {
+            "duplicate_invoice": 1
+          }
+        }
+      },
+      {
+        "family": "ea519550c4adb72ff59cbfc8",
+        "category": "single",
+        "seed_hex": "7b42da2f52771ffa7836693dc3349d51",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "currencies": [
+            "KZT",
+            "KWD"
+          ],
+          "issue_counts": {
+            "payment_allocation": 1
+          }
+        }
+      },
+      {
+        "family": "2ab5edea80ba2f9c106ddf70",
+        "category": "single",
+        "seed_hex": "4e431c9c2fef95f0b28b57107b281183",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "archive_copy"
+          ],
+          "currencies": [
+            "KZT",
+            "JPY"
+          ],
+          "issue_counts": {
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "b14ccd32125056db70367cef",
+        "category": "single",
+        "seed_hex": "840bfc4afe25984d1dc3187c9348f3bf",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier",
+            "refund"
+          ],
+          "currencies": [
+            "KZT",
+            "JPY"
+          ],
+          "issue_counts": {
+            "period_cutoff": 1
+          }
+        }
+      },
+      {
+        "family": "5ed7ff9e060a115704102447",
+        "category": "interaction",
+        "seed_hex": "c9b0b3ddb3ff9715f82c44b2e27d3b0a",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "split_payment",
+            "archive_copy"
+          ],
+          "currencies": [
+            "KZT",
+            "KWD"
+          ],
+          "interaction": "allocation_fx_same_payment",
+          "issue_counts": {
+            "payment_allocation": 1,
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "f2c4c81279a1ad909a2047f5",
+        "category": "interaction",
+        "seed_hex": "c49c2285b0f98023719ca4ce15d9f17e",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "currencies": [
+            "KZT",
+            "JPY"
+          ],
+          "interaction": "cutoff_fx_same_invoice",
+          "issue_counts": {
+            "period_cutoff": 1,
+            "fx_conversion": 1
+          }
+        }
+      },
+      {
+        "family": "5a4a2bae56d9dce8340702da",
+        "category": "boundary",
+        "seed_hex": "2d7116ae76664e2aff47514a6e852f1d",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "currencies": [
+            "KZT",
+            "JPY"
+          ],
+          "issue_counts": {
+            "period_cutoff": 1
+          },
+          "settlement_timing": "before",
+          "snapshot_nonce": "60e3ae3830d9d892d23d505aac9b5fdc"
+        }
+      },
+      {
+        "family": "5a4a2bae56d9dce8340702da",
+        "category": "boundary",
+        "seed_hex": "2d7116ae76664e2aff47514a6e852f1d",
+        "config": {
+          "target_period": "2026-12",
+          "company_size": {
+            "ledger_rows_target": 240,
+            "documents_target": 76
+          },
+          "clean_distractors": [
+            "equal_amount_different_supplier"
+          ],
+          "currencies": [
+            "KZT",
+            "JPY"
+          ],
+          "issue_counts": {
+            "period_cutoff": 1
+          },
+          "settlement_timing": "at",
+          "snapshot_nonce": "19b1c34f1758d075d678ced36f765cc6"
+        }
+      }
+    ]
+  }
+}
