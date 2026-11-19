@@ -70,6 +70,38 @@ class Lifecycle(unittest.TestCase):
         self.assertEqual(a.step(INSPECT)[0]["remaining_steps"], 99)
         self.assertEqual(a.step(INSPECT)[3:], (False, {"inspection_steps": 2}))
 
+    def test_failed_reset_leaves_no_steppable_episode(self):
+        env, _, _ = make()
+        env.step(INSPECT)
+        with self.assertRaises(FileNotFoundError):
+            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "MISSING")}})
+        self.assertEqual(env.step(INSPECT)[0]["error"]["code"], "no_active_episode")
+
+    def test_reset_mid_episode_records_abandoned_attempt(self):
+        with tempfile.TemporaryDirectory() as trusted:
+            env = make_env("closed", session_opener=FixturePublicSession, evaluator="inprocess", trusted_dir=trusted)
+            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "first"}})
+            env.step(INSPECT)
+            env.reset(0, {"runner": {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "second"}})
+            env.step(empty())
+            first = json.loads((Path(trusted) / "first" / "report.json").read_text(encoding="utf-8"))
+            second = json.loads((Path(trusted) / "second" / "report.json").read_text(encoding="utf-8"))
+            self.assertEqual((first["status"], first["completed"], first["evaluation"]), ("abandoned", False, None))
+            self.assertEqual((second["status"], second["completed"]), ("submitted", True))
+
+    def test_rep01_same_actions_same_trajectory(self):
+        actions = [INSPECT, BAD_INSPECT, {"action": "calculator", "args": {"expression": "50000-30000"}},
+                   {"action": "list_records", "args": {"table": "ledger", "cursor": None, "limit": 3}}, good()]
+        dumps = []
+        for _ in range(2):
+            env, obs, info = make()
+            for action in actions:
+                env.step(action)
+            dumps.append(json.dumps([obs, info, env._trajectory], sort_keys=True))
+            other, _, _ = make(name="S01")  # an unrelated episode in between must not matter
+            other.step(empty("S01"))
+        self.assertEqual(dumps[0], dumps[1])
+
     def test_remaining_steps_counts_every_inspection_once(self):
         env, _, _ = make()
         seen = [env.step(a)[0]["remaining_steps"] for a in (INSPECT, BAD_INSPECT, {"action": "nope", "args": {}},
@@ -149,11 +181,30 @@ class Termination(unittest.TestCase):
 
     def test_malformed_envelope_costs_nothing_and_does_not_end(self):
         env, _, _ = make()
-        for bad in (None, "x", {}, {"action": 5, "args": {}}, {"action": "get_document"}, {"action": "x", "args": []}):
+        for bad in (None, "x", [], {}, {"args": {}}, {"action": 5, "args": {}}, {"action": None}):
             obs, reward, term, trunc, info = env.step(bad)
             self.assertEqual((obs["error"]["code"], obs["remaining_steps"], term, trunc),
                              ("malformed_action", 100, False, False))
         self.assertEqual(env.step(INSPECT)[0]["remaining_steps"], 99)
+
+    def test_recognised_submit_with_broken_body_terminates_minus_one(self):
+        for bad in ({"action": "submit"}, {"action": "submit", "args": None}, {"action": "submit", "args": []},
+                    {"action": "submit", "args": "S02"}):
+            env, _, _ = make()
+            obs, reward, term, trunc, _ = env.step(bad)
+            self.assertEqual((obs["error"]["code"], reward, term, trunc), ("invalid_submission", -1.0, True, False), bad)
+
+    def test_extra_envelope_field_is_transport_damage(self):
+        env, _, _ = make()
+        obs = env.step({"action": "get_document", "args": {"doc_id": "D9"}, "debug": True})[0]
+        self.assertEqual((obs["error"]["code"], obs["remaining_steps"]), ("malformed_action", 100))
+
+    def test_tool_with_bad_args_costs_a_step(self):
+        env, _, _ = make()
+        for i, bad in enumerate(({"action": "get_document"}, {"action": "get_document", "args": [1]}), start=1):
+            obs, reward, term, trunc, _ = env.step(bad)
+            self.assertEqual((obs["error"]["code"], obs["remaining_steps"], term, trunc),
+                             ("invalid_request", 100 - i, False, False))
 
     def test_unknown_tool_costs_one_step_with_bounded_error(self):
         env, _, _ = make()

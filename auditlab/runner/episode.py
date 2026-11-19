@@ -6,6 +6,7 @@ from pathlib import Path
 
 from auditlab.contracts import Policy, StepResult
 from auditlab.evaluator.oracle import oracle_submission
+from auditlab.runner.isolation import PolicyTimeout
 
 
 def run_episode(env, policy: Policy, seed: int, config: dict) -> StepResult:
@@ -20,7 +21,9 @@ def run_episode(env, policy: Policy, seed: int, config: dict) -> StepResult:
             observation, reward, terminated, truncated, info = result = env.step(action)
             if terminated or truncated:
                 return result
-    except Exception as error:  # includes PolicyFailure
+    except PolicyTimeout:
+        return env.expire()  # SPEC §8: time limit -> truncated, empty answer, accepted inspections count
+    except Exception as error:  # crash, broken channel, policy bug
         return env.abort(f"{type(error).__name__}: {error}")
     finally:
         close = getattr(policy, "close", None)

@@ -18,7 +18,11 @@ from auditlab.contracts import Action, Observation
 
 
 class PolicyFailure(RuntimeError):
-    """The policy crashed, timed out, or broke the channel. Reported apart from the financial result."""
+    """The policy crashed or broke the channel. Reported apart from the financial result."""
+
+
+class PolicyTimeout(PolicyFailure):
+    """No action before the episode deadline: handled by the time-limit rule, not as a crash."""
 
 
 def scrubbed_env(extra: dict[str, str] | None = None) -> dict[str, str]:
@@ -66,7 +70,7 @@ class SubprocessPolicy:
             line = self._lines.get(timeout=max(self.timeout_s, 0.001))
         except queue.Empty:
             self.close()
-            raise PolicyFailure("policy timed out") from None
+            raise PolicyTimeout("policy timed out") from None
         if line is None:
             raise PolicyFailure(f"policy exited ({self._proc.poll()})")
         try:
@@ -87,10 +91,10 @@ class SubprocessPolicy:
         self._scratch.cleanup()
 
 
-def policy_command(factory: str, seed: int, python: str | None = None) -> list[str]:
-    """Command that runs auditlab.runner.policy_host for `factory` ("module:callable")."""
+def policy_command(name: str, seed: int, python: str | None = None) -> list[str]:
+    """Command that runs auditlab.runner.policy_host for auditlab.policies.make_policy(name, seed)."""
     import sys
-    return [python or sys.executable, "-m", "auditlab.runner.policy_host", factory, str(seed)]
+    return [python or sys.executable, "-m", "auditlab.runner.policy_host", name, str(seed)]
 
 
 def child_env(extra: dict[str, str] | None = None) -> dict[str, str]:
