@@ -22,6 +22,11 @@ from .paths import DemoPaths
 from .store import ExportStore, NotFound, Refused
 
 
+REASONS = {"evidence_incomplete": "доказательства неполные", "amount_or_currency": "сумма или валюта не совпадает",
+           "no_such_issue": "такой ошибки нет в эталоне", "duplicate": "повтор засчитанного вывода",
+           "not_published": "причина не опубликована оценщиком (TP = 0)"}
+
+
 def money(minor, currency: str | None = "KZT") -> str:
     if minor is None:
         return "—"
@@ -78,7 +83,10 @@ def _print_run(detail: dict, replay: bool = False) -> None:
             print(f"  Не подкреплено ссылкой: {', '.join(f['uncited_operands'])}")
         v = f["verdict"]
         if v:
-            print(f"  Оценщик:  {'засчитан (TP)' if v['matched'] else 'не засчитан: ' + v['reason']}")
+            src = " (выведено из итога TP/FP/FN)" if v.get("source") == "aggregate" else ""
+            print(f"  Оценщик:  {'засчитан (TP)' if v['matched'] else 'не засчитан: ' + REASONS.get(v['reason'], v['reason'])}{src}")
+        elif detail["score"]:
+            print("  Оценщик:  опубликован только итог TP/FP/FN, вердикт по выводу неоднозначен")
         vr = f["verifier"]
         print("  SQL:      " + (vr.get("text") or f"{money(vr.get('amount_minor'), vr.get('currency'))} ({vr.get('engine')})"))
     score = detail["score"]

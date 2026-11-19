@@ -36,6 +36,7 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
   const selectedKey = selection?.kind === "record" ? selection.key : null;
   const selectedStep = selection?.kind === "step" ? detail.steps.find((s) => s.step === selection.step) ?? null : null;
   const openedAt = (key: string) => detail.steps.find((s) => s.opened_key === key)?.step ?? null;
+  const listedAt = (key: string) => detail.steps.find((s) => s.listed_keys.includes(key))?.step ?? null;
 
   return (
     <div className="investigation">
@@ -91,7 +92,7 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
         <Panel title={selectedKey ? "Запись документа" : selectedStep ? `Шаг ${selectedStep.step}` : "Документ"} className="col-record">
           {selectedKey ? (
             <RecordPane runId={run.run_id} recordKey={selectedKey} onOpen={openKey} highlightFields={highlightFields[selectedKey] ?? []}
-              openedAt={openedAt(selectedKey)} cited={evidenceKeys.has(selectedKey)} canChange={run.status === "completed"} />
+              openedAt={openedAt(selectedKey)} listedAt={listedAt(selectedKey)} cited={evidenceKeys.has(selectedKey)} canChange={run.status === "completed"} />
           ) : selectedStep ? (
             <StepView step={selectedStep} onOpen={openKey} />
           ) : (
@@ -229,8 +230,9 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
           {view.verdict ? (
             <span className={view.verdict.matched ? "ok-text" : "bad-text"}>
               {view.verdict.matched ? "✓ засчитан (TP)" : `✗ не засчитан — ${REASONS[view.verdict.reason] ?? view.verdict.reason}`}
+              {view.verdict.source === "aggregate" && <span className="muted small"> · выведено из итога TP/FP/FN</span>}
             </span>
-          ) : <span className="muted">нет пофакторного вердикта в экспорте</span>}
+          ) : <span className="muted">оценщик опубликовал только итог TP/FP/FN; вердикт по этому выводу неоднозначен</span>}
         </div>
         <div className="line">
           <span className="line-label">Консоль</span>

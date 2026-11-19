@@ -108,7 +108,17 @@ def findings_view(snapshot: Snapshot, submission: dict | None, score: dict | Non
             opened_at[st["opened_key"]] = st["step"]
         for key in st["listed_keys"]:
             listed_at.setdefault(key, st["step"])
-    verdicts = {int(v["index"]): v for v in (score or {}).get("per_finding") or [] if "index" in v}
+    verdicts = {int(v["index"]): {**v, "source": "per_finding"}
+                for v in (score or {}).get("per_finding") or [] if "index" in v}
+    findings_list = submission.get("findings") or []
+    if score and not verdicts and findings_list and "tp" in score:
+        # The evaluator published only TP/FP/FN. A per-finding verdict follows only when it is unambiguous.
+        if score["tp"] == len(findings_list):
+            verdicts = {i: {"index": i, "matched": True, "reason": "matched", "source": "aggregate"}
+                        for i in range(len(findings_list))}
+        elif score["tp"] == 0:
+            verdicts = {i: {"index": i, "matched": False, "reason": "not_published", "source": "aggregate"}
+                        for i in range(len(findings_list))}
     out = []
     for index, finding in enumerate(submission.get("findings") or []):
         evidence = []
@@ -142,6 +152,8 @@ def run_detail(store: ExportStore, run_id: str) -> dict:
     trajectory = store.read(run_id, "trajectories.jsonl")
     submission = store.read(run_id, "submission.json")
     score = store.read(run_id, "score.json")
+    if isinstance(score, dict) and "inspection_steps" not in score and isinstance(meta.get("inspection_steps"), int):
+        score = {**score, "inspection_steps": meta["inspection_steps"]}  # the runner keeps it in run.json
     verifier = store.read(run_id, "verifier.json")
     step_list = steps(snapshot, trajectory or [])
     all_runs = store.list_runs()
