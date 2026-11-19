@@ -118,7 +118,7 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
           {detail.findings.map((f) => (
             <FindingCard key={f.index} runId={run.run_id} view={f} focused={focus === f.index} selectedKey={selectedKey}
               onFocus={() => setFocus(focus === f.index ? null : f.index)} onOpen={openKey} keys={detail.keys}
-              canRescore={run.status === "completed"} />
+              canRescore={run.status === "completed"} exponents={detail.snapshot.manifest.currency_exponents ?? {}} />
           ))}
           {detail.findings.length > 0 && <ScoreBlock detail={detail} />}
         </Panel>
@@ -176,9 +176,9 @@ export function StepView({ step, onOpen }: { step: Step; onOpen: (k: string) => 
   );
 }
 
-function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys, canRescore }: {
+function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys, canRescore, exponents }: {
   runId: string; view: FindingView; focused: boolean; selectedKey: string | null; onFocus: () => void;
-  onOpen: (k: string) => void; keys: string[]; canRescore: boolean;
+  onOpen: (k: string) => void; keys: string[]; canRescore: boolean; exponents: Record<string, number>;
 }) {
   const f = view.finding;
   const calc = view.derivation;
@@ -199,7 +199,7 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
       <div className="line line-agent">
         <span className="line-label">Агент</span>
         <button type="button" className="amount" onClick={onFocus} title="Откуда сумма? Показать операнды">
-          {money(f.claimed_amount_minor, f.currency)}
+          {money(f.claimed_amount_minor, f.currency, exponents)}
         </button>
         <span className="small muted">{focused ? "скрыть расчёт" : "откуда сумма?"}</span>
       </div>
@@ -216,7 +216,7 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
       <p className="explanation">{f.explanation}</p>
 
       {focused && calc && (
-        <DerivationView calc={calc} onOpen={onOpen} cited={f.evidence_ids} activeKey={selectedKey} />
+        <DerivationView calc={calc} exponents={exponents} onOpen={onOpen} cited={f.evidence_ids} activeKey={selectedKey} />
       )}
       {focused && view.uncited_operands.length > 0 && (
         <div className="warn">
@@ -238,17 +238,18 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
           <span className="line-label">Консоль</span>
           {calc ? (
             <span className={view.console_agrees ? "ok-text" : "bad-text"}>
-              {money(calc.result_minor === null ? null : Math.abs(calc.result_minor), calc.currency)} по открытым данным {view.console_agrees ? "— совпадает" : "— не совпадает"}
+              {money(calc.result_minor === null ? null : Math.abs(calc.result_minor), calc.currency, exponents)} по открытым данным {view.console_agrees ? "— совпадает" : "— не совпадает"}
             </span>
           ) : <span className="muted">нет расчёта для этого типа</span>}
         </div>
         <div className="line">
           <span className="line-label">SQL</span>
           {view.verifier.connected
-            ? <span className={view.verifier.agrees ? "ok-text" : "bad-text"}>{view.verifier.text ?? `${money(view.verifier.amount_minor ?? null, view.verifier.currency)} (${view.verifier.engine})`}</span>
+            ? <span className={view.verifier.agrees ? "ok-text" : "bad-text"}>{view.verifier.text ?? `${money(view.verifier.amount_minor ?? null, view.verifier.currency ?? "", exponents)} (${view.verifier.engine})`}{view.verifier.currency_matches === false && " — валюта не совпадает"}</span>
             : <span className="muted">{view.verifier.text}</span>}
         </div>
       </div>
+      <div className="small muted">Совпадение суммы и валюты не заменяет зачёт доказательств оценщиком.</div>
       {canRescore && (
         <div className="finding-actions">
           {!rescoring ? (
@@ -286,15 +287,27 @@ function ConsoleScan({ detail, onOpen }: { detail: RunDetail; onOpen: (k: string
     <div className="console-scan">
       <div className="line"><span className="line-label">Консоль</span>
         {detail.console_scan.length === 0
-          ? <span className="ok-text">по открытым данным расхождений не найдено</span>
+          ? <span className="ok-text">распределение и FX: расхождений не найдено; другие типы здесь не проверяются</span>
           : <span className="bad-text">по открытым данным есть расхождения, которых нет в сдаче:</span>}
       </div>
       {detail.console_scan.map((c) => (
         <div key={c.type + c.subject} className="small">
-          <KeyChip k={c.subject} onOpen={onOpen} /> {c.type}: {money(Math.abs(c.result_minor), c.currency)}
+          <KeyChip k={c.subject} onOpen={onOpen} /> {c.type}: {money(Math.abs(c.result_minor), c.currency, detail.snapshot.manifest.currency_exponents ?? {})}
         </div>
       ))}
-      <div className="line"><span className="line-label">SQL</span><span className="muted">{detail.verifier.connected ? detail.verifier.engine : "SQL-сверка не подключена в этой сборке"}</span></div>
+      <div className="line"><span className="line-label">SQL</span>
+        {detail.verifier.connected
+          ? <span className={detail.verifier.findings.length ? "bad-text" : "ok-text"}>
+              {detail.verifier.engine}: найдено расхождений {detail.verifier.findings.length}
+            </span>
+          : <span className="muted">SQL-сверка не подключена в этой сборке</span>}
+      </div>
+      {detail.verifier.findings.map((finding, index) => (
+        <div key={index} className="small">
+          {finding.type}: {money(finding.claimed_amount_minor, finding.currency, detail.snapshot.manifest.currency_exponents ?? {})}
+          {finding.evidence_ids.map((key) => <KeyChip key={key} k={key} onOpen={onOpen} />)}
+        </div>
+      ))}
     </div>
   );
 }

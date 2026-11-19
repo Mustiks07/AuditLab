@@ -11,7 +11,7 @@ from .loader import load_snapshot
 
 CLASSES = ("payment_allocation", "fx_conversion", "period_cutoff", "duplicate_invoice")
 REPORT_VERSION = "1.0"
-RULES_VERSION = "verifier-rules-1.0"
+RULES_VERSION = "verifier-rules-1.1"
 
 
 def _natural(text: str):
@@ -76,6 +76,7 @@ def verify_report(public_dir: Path | str, engine: str | None = None) -> dict:
         "sql_files": [path.name for path in sql_files()],
         "input_sha256": snapshot.input_sha256, "period_end": snapshot.period_end,
         "allocation_deadline": snapshot.deadline, "findings": findings, "derivations": details,
+        "timezone": snapshot.timezone_name, "timezone_database": snapshot.timezone_database,
         "notes": notes,
     }
 

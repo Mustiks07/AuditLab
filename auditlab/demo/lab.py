@@ -252,10 +252,12 @@ def live_change(paths: DemoPaths, source_run_id: str, change: dict, prediction: 
         except (NotFound, Refused) as exc:
             raise LabError("unknown_run", f"Run {source_run_id} is not an open completed export.") from exc
         source_meta = store.meta(source_run_id)
+        source_truth = _load_truth(paths, str(source_meta["episode_id"]))
         h = _short(op_key)
         episode = f"{str(source_meta['episode_id'])[:40]}-L{h[:4]}"
         with tempfile.TemporaryDirectory(dir=paths.root) as scratch:
-            built = standin.apply_change(source_dir / "public", change, Path(scratch) / "public", episode)
+            built = standin.apply_change(source_dir / "public", change, Path(scratch) / "public", episode,
+                                         source_truth=source_truth)
             pid = source_meta.get("pair_id") or f"PAIR-{source_run_id}"
             run = execute(paths, Path(scratch) / "public", built["truth"], {
                 "key": f"op:{op_key}", "run_id": f"LIVE-{h}", "label": "live_experiment", "generator": engines.STANDIN,

@@ -11,10 +11,12 @@ from auditlab.runner.isolation import PolicyTimeout
 
 def run_episode(env, policy: Policy, seed: int, config: dict) -> StepResult:
     """Run to the terminal step. A crashing or hanging policy is aborted, never scored as an auditor error."""
-    observation, _ = env.reset(seed, config)
     result: StepResult | None = None
     try:
+        observation, _ = env.reset(seed, config)
         while True:
+            if env.seconds_left() <= 0:
+                return env.expire()
             if hasattr(policy, "set_timeout"):
                 policy.set_timeout(env.seconds_left())
             action = policy.act(observation)
@@ -24,6 +26,8 @@ def run_episode(env, policy: Policy, seed: int, config: dict) -> StepResult:
     except PolicyTimeout:
         return env.expire()  # SPEC §8: time limit -> truncated, empty answer, accepted inspections count
     except Exception as error:  # crash, broken channel, policy bug
+        if env._phase is None:
+            raise  # reset/configuration failure is an infrastructure error, not policy performance
         return env.abort(f"{type(error).__name__}: {error}")
     finally:
         close = getattr(policy, "close", None)

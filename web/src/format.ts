@@ -1,8 +1,11 @@
 const SYMBOL: Record<string, string> = { KZT: "₸", USD: "$", EUR: "€" };
 
 /** 2000000 KZT -> "20 000,00 ₸". Amounts are integers in minor units. */
-export function money(minor: number | null | undefined, currency = "KZT", exp = 2): string {
+export function money(minor: number | null | undefined, currency: string, exponents: Record<string, number>): string {
   if (minor === null || minor === undefined) return "—";
+  const exp = exponents[currency];
+  if (!Number.isInteger(exp) || exp < 0 || exp > 9) return `${minor} мин. ед. ${currency} (разрядность не указана)`;
+  if (!Number.isSafeInteger(minor)) return `неточное число: см. исходную запись (${currency})`;
   const sign = minor < 0 ? "−" : "";
   const abs = Math.abs(minor);
   const div = 10 ** exp;

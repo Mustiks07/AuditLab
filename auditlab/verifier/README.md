@@ -7,7 +7,7 @@
 
 ```sh
 python -m auditlab.verifier path/to/public --out artifacts/verifier/S02.json
-python -m auditlab.verifier path/to/public --engine sqlite      # без DuckDB, только stdlib
+python -m auditlab.verifier path/to/public --engine sqlite      # без DuckDB; tzdata всё равно требуется
 ```
 
 Отчёт содержит `findings` (формат `Finding`), `derivations` (правило, ход арифметики,
@@ -40,7 +40,7 @@ python -m auditlab.verifier.crosscheck --public EP/public --truth EP/private/tru
 * Модули verifier не импортируют генератор, оценщик, runner, политики и `crosscheck`
   (проверяется тестом по AST и аудит-хуком открытия файлов).
 
-## Правила (версия `verifier-rules-1.0`)
+## Правила (версия `verifier-rules-1.1`)
 
 | Класс | Что считает SQL | affected_ids | Доказательства |
 |---|---|---|---|
@@ -57,7 +57,7 @@ python -m auditlab.verifier.crosscheck --public EP/public --truth EP/private/tru
 |---|---|---|---|
 | A1 | S02, `affected_ids` | только `payment/P9` (пример ссылки в SPEC §5) или `payment/P9` + `invoice/I4` (паспорт §6 «платёж и целевой счёт») | Ручной ответ (коммит 2fe15c3) записал `payment/P9` и пометил I4 как спорный. Verifier выдаёт оба по паспорту §6; truth подтвердил это после фиксации ответа. |
 | A2 | S02, доказательства | включать ли `ledger/R7` (зачёт после границы) | Не включает: строка после границы — контекст, полноту группы доказывает `settlement_index`. |
-| A3 | Местная дата | Asia/Almaty по базе tz или фиксированный сдвиг | Сдвиг берётся из `manifest.period_start` (+05:00); в офлайн stdlib Windows базы tz нет. Разные сдвиги начала и конца периода → note. |
+| A3 | Местная дата | IANA timezone или сдвиг, записанный у отдельного момента | Используется `manifest.timezone` и база из закреплённого пакета `tzdata`. Переходы DST учитываются для каждого события. Перезапись timestamps и границ периода в UTC сохраняет результат. Неизвестная зона или отсутствующая база дают `SnapshotError`, без подмены фиксированным сдвигом. |
 | A4 | Структура проводок (нужно согласовать с GPT Pro 1) | — | Признание: строки с invoice_id, без payment_id, в валюте счёта. Оценка: строки в базовой валюте, ссылающиеся на иностранный документ. Денежная проводка платежа: счёт `CASH`. |
 | A5 | Дубликат | общий `invoice_id` или новый ID с тем же номером поставщика | Публичное расширение `invoices[].canonical_key` (по умолчанию `invoice_id`). Без общего ключа равные суммы — чистый случай. |
 | A6 | Несколько `invoice_refs` без `allocation_instructions` | целевой счёт не определён | Вывод только с `payment/P` + note. |
@@ -76,6 +76,9 @@ python -m auditlab.verifier.crosscheck --public EP/public --truth EP/private/tru
   слишком большой набор); редукция контрпримера.
 * `tests/metamorphic/test_transforms.py` — перестановка строк + взаимно однозначная замена
   ID (обращающая строковый порядок), запись тех же моментов в UTC.
+* `tests/verifier/test_timezones.py` — ручные FX-примеры весеннего и осеннего DST
+  America/New_York, валюты с 0/2/3 знаками, чистая и ошибочная оценка, полная запись
+  времён в UTC, SQLite/DuckDB и явный отказ при неизвестной зоне/отсутствующей базе.
 
 * `tests/verifier/test_generated_datasets.py` — открытые эпизоды симулятора `datasets/open/*/*`:
   копия только public/ → ответ записан → только потом truth. До поставки данных — «не проверено».
@@ -88,7 +91,13 @@ python -m auditlab.verifier.crosscheck --public EP/public --truth EP/private/tru
 `Requires-Python >=3.7`. Для офлайн-поставки — колесо целевой платформы, например
 `duckdb-1.1.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl`
 sha256 `9d0767ada9f06faa5afcf63eb7ba1befaccfbcfdac5ff86f0168c673dd1f47aa`.
-Без DuckDB тот же SQL исполняется на stdlib `sqlite3` (отчёт: `engine: "sqlite"`).
+`tzdata==2026.6` требуется на всех ОС. Verifier читает TZif непосредственно из пакета,
+а не из системной базы IANA: Windows и Linux используют одинаковые правила. Пакет
+должен входить в общий lock и офлайн-поставку. Отчёт сохраняет `timezone` и
+`timezone_database` (например `tzdata:2026.6`).
+
+Без DuckDB тот же SQL исполняется на stdlib `sqlite3` (отчёт: `engine: "sqlite"`),
+но закреплённый `tzdata` остаётся обязательным.
 
 Не покрыто здесь: двойной зачёт в тестовой версии оценщика (тест награды — зона оценщика),
 сгенерированные эпизоды (генератор ещё не поставлен).

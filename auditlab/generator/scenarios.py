@@ -1,6 +1,6 @@
 """Source documents, balanced postings and recorded mutations for audit cases."""
 
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from decimal import ROUND_HALF_UP, Context, Decimal, localcontext
 
 
@@ -15,9 +15,10 @@ def _recognize(b, invoice, posted_at):
 def add_duplicate(b, *, enabled=True):
     """Archive two copies of one commercial invoice and optionally post both."""
     entity_id = b.id("entity")
-    issued_at = b.period_start + timedelta(days=6, hours=10)
+    units, day, hour, minute = b.case_parameters("duplicate", 12_000)
+    issued_at = b.period_start + timedelta(days=day, hours=hour, minutes=minute)
     currency = b.base_currency
-    total_minor = 12_000 * 10 ** b.exponents[currency]
+    total_minor = units * 10 ** b.exponents[currency]
     original = b.invoice(entity_id, issued_at, currency, total_minor)
     archive_copy = b.invoice(
         entity_id, issued_at, currency, total_minor, invoice_id=original["invoice_id"],
@@ -43,8 +44,10 @@ def add_duplicate(b, *, enabled=True):
 
 
 def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
-    issued_at = b.period_end - timedelta(minutes=1)
-    posted_at = b.period_end + timedelta(minutes=1) if cutoff_enabled else issued_at
+    _, _, hour, minute = b.case_parameters("boundary", 100)
+    distance = 1 if b.config_version == "1.0" else hour * 60 + minute + 1
+    issued_at = b.period_end - timedelta(minutes=distance)
+    posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else issued_at
     invoice = b.invoice(b.id("entity"), issued_at, currency, total_minor)
     debit = _recognize(b, invoice, posted_at)
     affected = [f"invoice/{invoice['invoice_id']}"]
@@ -68,7 +71,8 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
 
 def add_cutoff(b, *, enabled=True):
     """Recognize a base-currency invoice on either side of period_end."""
-    amount = 24_000 * 10 ** b.exponents[b.base_currency]
+    units, *_ = b.case_parameters("cutoff", 24_000)
+    amount = units * 10 ** b.exponents[b.base_currency]
     _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled)
 
 
@@ -92,6 +96,13 @@ def _rates(b, currency, expected_date):
         previous_rate, expected_rate, alternate_rate = "1.15", "1.05", "1.25"
     previous_date = expected_date - timedelta(days=1)
     alternate_date = expected_date + timedelta(days=1)
+    if b.config_version == "1.1":
+        # A single rate for a currency/day, even when independently varied events overlap dates.
+        step = Decimal({"USD": ".25", "JPY": ".005", "KWD": ".5"}.get(currency, ".01"))
+        base = Decimal(expected_rate)
+        def daily(day):
+            return format(base + ((day - date(2000, 1, 1)).days % 31) * step, "f")
+        previous_rate, expected_rate, alternate_rate = map(daily, (previous_date, expected_date, alternate_date))
     for day, rate in ((previous_date, previous_rate), (expected_date, expected_rate),
                       (alternate_date, alternate_rate)):
         record = {
@@ -155,12 +166,13 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
 def add_fx(b, *, enabled=True):
     """Value a fully settled foreign payment using its company-local date."""
     currency = _foreign_currency(b)
-    amount = 100 * 10 ** b.exponents[currency]
+    units, day, hour, minute = b.case_parameters("fx", 100, day=13, hour=0, minute=1)
+    amount = units * 10 ** b.exponents[currency]
     if currency == "JPY":
         amount += 1
     elif currency == "KWD":
         amount += 10
-    received_at = (b.period_start + timedelta(days=13, minutes=1)).astimezone(UTC)
+    received_at = (b.period_start + timedelta(days=day, hours=hour, minutes=minute)).astimezone(UTC)
     invoice, payment, *_ = b.allocation(
         b.id("entity"), currency, amount, amount * 3 // 5, received_at,
         received_at + timedelta(minutes=1), received_at + timedelta(minutes=2),
@@ -172,10 +184,11 @@ def add_allocation_fx(b, *, allocation_enabled, fx_enabled):
     """Use one payment for independent allocation and FX controls."""
     currency = _foreign_currency(b, prefer_usd=True)
     exponent = b.exponents[currency]
-    received_at = b.period_start + timedelta(days=13, hours=16)
+    units, day, hour, minute = b.case_parameters("allocation_fx", 50, day=13, hour=16)
+    received_at = b.period_start + timedelta(days=day, hours=hour, minutes=minute)
     last_at = b.period_end + timedelta(minutes=1 if allocation_enabled else -1)
     invoice, payment, *_ = b.allocation(
-        b.id("entity"), currency, 50 * 10 ** exponent, 30 * 10 ** exponent,
+        b.id("entity"), currency, units * 10 ** exponent, units * 10 ** exponent * 3 // 5,
         received_at, received_at + timedelta(minutes=1), last_at,
     )
     _value(b, invoice, received_at, payment=payment, fx_enabled=fx_enabled)
@@ -184,7 +197,8 @@ def add_allocation_fx(b, *, allocation_enabled, fx_enabled):
 def add_cutoff_fx(b, *, cutoff_enabled, fx_enabled):
     """Use one invoice for independent period and FX controls."""
     currency = _foreign_currency(b, prefer_usd=True)
+    units, *_ = b.case_parameters("cutoff_fx", 100)
     invoice, posted_at = _boundary_invoice(
-        b, currency, 100 * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled,
+        b, currency, units * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled,
     )
     _value(b, invoice, posted_at, fx_enabled=fx_enabled)

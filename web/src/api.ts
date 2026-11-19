@@ -92,7 +92,7 @@ export interface FindingView {
   uncited_operands: string[];
   console_agrees: boolean;
   verdict: { index: number; matched: boolean; reason: string; source?: "per_finding" | "aggregate" } | null;
-  verifier: { connected: boolean; text?: string; engine?: string; amount_minor?: number | null; currency?: string; agrees?: boolean };
+  verifier: { connected: boolean; text?: string; engine?: string; amount_minor?: number | null; currency?: string; agrees?: boolean; currency_matches?: boolean };
 }
 
 export interface Score {
@@ -103,14 +103,14 @@ export interface Score {
 
 export interface RunDetail {
   run: RunMeta;
-  snapshot: { manifest: Record<string, unknown>; tables: Record<string, number> };
+  snapshot: { manifest: Record<string, unknown> & { currency_exponents?: Record<string, number> }; tables: Record<string, number> };
   journal: { available: boolean; lines: number };
   steps: Step[];
   submission: { episode_id: string; findings: Finding[] } | null;
   empty_submission: boolean;
   findings: FindingView[];
   score: Score | null;
-  verifier: { connected: boolean; engine?: string };
+  verifier: { connected: boolean; engine?: string; findings: Finding[] };
   console_scan: { type: string; subject: string; result_minor: number; currency: string; affected_ids: string[] }[];
   children: string[];
   keys: string[];
@@ -119,6 +119,7 @@ export interface RunDetail {
 export interface RecordView {
   key: string;
   table: string;
+  currency_exponents: Record<string, number>;
   local_id: string;
   file: string;
   line: number;
@@ -132,6 +133,7 @@ export interface RecordView {
 export interface Change { key: string; field: string | null; before: unknown; after: unknown; line_before?: number; line_after?: number }
 
 export interface CompareSide {
+  currency_exponents: Record<string, number>;
   run: RunMeta;
   claims: { type: string; affected_ids: string[]; amount_minor: number; currency: string; evidence_ids: string[]; verdict: FindingView["verdict"]; unconfirmed: { key: string; label: string }[] }[];
   score: Score | null;

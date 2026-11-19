@@ -9,7 +9,7 @@ from auditlab.contracts import MAX_FINDINGS, PAGE_LIMIT, Action, Finding, Observ
 
 from ._reconcile import Record, reconcile
 
-POLICY_VERSION = "1.0"
+POLICY_VERSION = "1.1"
 
 __all__ = ["POLICY_VERSION", "make_policy"]
 

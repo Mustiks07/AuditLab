@@ -3,8 +3,9 @@
 from collections import defaultdict
 from datetime import datetime
 from fractions import Fraction
+from importlib import resources
 from typing import Any, Iterator
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+from zoneinfo import ZoneInfo
 
 from auditlab.contracts import MAX_EVIDENCE, Finding
 
@@ -90,10 +91,14 @@ def _invoice_findings(
 def _fx_findings(manifest: Record, records: dict[str, list[Record]], start: datetime) -> Iterator[Finding]:
     timezone = start.tzinfo
     if manifest["timezone"] != "Asia/Almaty" or (start.year, start.month) < (2024, 4):
+        parts = manifest["timezone"].split("/")
+        if any(part in {"", ".", ".."} for part in parts):
+            raise ValueError("invalid_timezone")
         try:
-            timezone = ZoneInfo(manifest["timezone"])
-        except ZoneInfoNotFoundError:
-            pass
+            with resources.files("tzdata.zoneinfo").joinpath(*parts).open("rb") as source:
+                timezone = ZoneInfo.from_file(source, key=manifest["timezone"])
+        except (ModuleNotFoundError, OSError, ValueError):
+            raise ValueError("timezone_data_unavailable: install pinned tzdata and use a supported IANA zone") from None
 
     exponents = manifest["currency_exponents"]
     rates = {(row["date"], row["source_currency"], row["target_currency"]): row["rate"]
