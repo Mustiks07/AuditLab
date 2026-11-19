@@ -16,7 +16,7 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.2"
+GENERATOR_VERSION = "1.3"
 SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
@@ -277,10 +277,16 @@ def _policy(company):
         },
     }
     if company.config_version == "1.1":
+        policy["accounts"]["version"] = "1.1"
         policy["accounts"]["CASH_RESERVE"] = (
             "Treasury reserve cash in the base currency. A CASH/CASH_RESERVE journal is an internal "
             "transfer, not a receipt, expense, invoice recognition or customer settlement. It has null "
             "invoice_id/payment_id and preserves total cash; no external primary document is required.")
+        policy["rule_versions"] = {
+            "version": "1.0",
+            "rules": {key: value.get("version", "1.0") if isinstance(value, dict) else "1.0"
+                      for key, value in policy.items()},
+        }
     return policy
 
 
@@ -342,6 +348,8 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
             "ledger_rows": len(company.ledger), "document_count": len(company.invoices) + len(company.payments),
             "currency_exponents": company.exponents, "rounding": "ROUND_HALF_UP",
         }
+        if company.config_version == "1.1":
+            manifest["period_end_exclusive"] = True
         episode_id = _episode_id(company, manifest, policy, nonce)
         manifest["episode_id"] = episode_id
         _write_json(public / "manifest.json", manifest)

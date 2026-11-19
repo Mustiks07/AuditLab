@@ -1,0 +1,174 @@
+{
+  "sealed_sha256": "33fcd7cffa08921a5599e57a0a0c68d0612fb6713e91b1a1873c8ff338b03657",
+  "dataset_commit": "0043cd9b2af937d49c64ccd207411c1d4e748717",
+  "main_commit": "ed004ca94d77b6423ddf6230d3835ac468a3f9d7",
+  "cases": [
+    {
+      "case": 1,
+      "episode_id": "E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "split": "train",
+      "findings": [
+        {
+          "type": "duplicate_invoice",
+          "amount_minor": 1200000,
+          "currency": "KZT",
+          "affected_ids": [
+            "invoice/IDDAB63308571A4112294AFE9"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        }
+      ],
+      "unmatched_truth_issues_in_episode": []
+    },
+    {
+      "case": 2,
+      "episode_id": "E406D4C3A8F0D3286AC70149C9F0E1CF9",
+      "split": "dev",
+      "findings": [
+        {
+          "type": "payment_allocation",
+          "amount_minor": 1704000,
+          "currency": "KZT",
+          "affected_ids": [
+            "payment/P27959452879500B45B268F01",
+            "invoice/ID3556EAE8D4F17F64B167C62"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        }
+      ],
+      "unmatched_truth_issues_in_episode": []
+    },
+    {
+      "case": 3,
+      "episode_id": "E2C25779161020D87EF54FE3600D099E4",
+      "split": "dev",
+      "findings": [
+        {
+          "type": "fx_conversion",
+          "amount_minor": 1010,
+          "currency": "KZT",
+          "affected_ids": [
+            "payment/PDBCA7B95825C3CBBDB8C89B6"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        }
+      ],
+      "unmatched_truth_issues_in_episode": []
+    },
+    {
+      "case": 4,
+      "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+      "split": "dev",
+      "findings": [
+        {
+          "type": "period_cutoff",
+          "amount_minor": 2400000,
+          "currency": "KZT",
+          "affected_ids": [
+            "invoice/ICA4B438C94568592F283A53F"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        }
+      ],
+      "unmatched_truth_issues_in_episode": []
+    },
+    {
+      "case": 5,
+      "episode_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "split": "train",
+      "findings": [],
+      "clean_event": {
+        "subject": "payment/P1EEE895A2A27225A8C3E4999",
+        "balance_minor": 0,
+        "currency": "KZT",
+        "truth_issue_for_event": false,
+        "manual_ref_errors": [],
+        "other_truth_issues": [
+          "fx_conversion"
+        ]
+      }
+    },
+    {
+      "case": 6,
+      "episode_id": "E39A14EA0FB98F9BC3E42C3738182D142",
+      "split": "train",
+      "findings": [
+        {
+          "type": "payment_allocation",
+          "amount_minor": 2000,
+          "currency": "USD",
+          "affected_ids": [
+            "payment/P96A1B85844AC58B4A3FFE303",
+            "invoice/I29AB36E1E93E6BD7ED4FF574"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        },
+        {
+          "type": "fx_conversion",
+          "amount_minor": 50000,
+          "currency": "KZT",
+          "affected_ids": [
+            "payment/P96A1B85844AC58B4A3FFE303"
+          ],
+          "truth_match": true,
+          "complete_truth_evidence_set": true,
+          "manual_ref_errors": [],
+          "manual_refs_not_discoverable": []
+        }
+      ],
+      "unmatched_truth_issues_in_episode": []
+    }
+  ],
+  "full_corpus": {
+    "episodes": 20,
+    "issues": 22,
+    "evidence_sets": 22,
+    "unique_episode_evidence_refs": 78,
+    "min_discovery_reads": 9,
+    "max_discovery_reads": 9
+  },
+  "unaddressable_truth_evidence": [],
+  "undiscoverable_truth_evidence": [],
+  "clean_episodes": [
+    {
+      "split": "dev",
+      "episode_id": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+      "cash_credit_rows": 0
+    },
+    {
+      "split": "dev",
+      "episode_id": "EDA0C3DF206AB95B8490EEFD58F3B292F",
+      "cash_credit_rows": 0
+    },
+    {
+      "split": "train",
+      "episode_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+      "cash_credit_rows": 0
+    },
+    {
+      "split": "train",
+      "episode_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "cash_credit_rows": 0
+    }
+  ],
+  "contract_observations": {
+    "exclusive_boundary_supplied_in_policy_only": 20,
+    "unversioned_policy_fx_date": 20,
+    "unversioned_policy_rounding": 20
+  }
+}
