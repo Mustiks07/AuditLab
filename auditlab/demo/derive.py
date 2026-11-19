@@ -37,7 +37,7 @@ def local_date(ts: str, tz_name: str | None) -> str:
 def _operand(record: Record, field: str, sign: int, label: str) -> dict[str, object]:
     value = int(record.fields.get(field) or 0)
     return {"key": record.key, "file": record.file, "line": record.line, "field": field,
-            "value_minor": value, "sign": sign, "label": label}
+            "value_minor": value, "currency": record.fields.get("currency"), "sign": sign, "label": label}
 
 
 def allocation(snapshot: Snapshot, payment: Record) -> dict[str, object]:
@@ -139,11 +139,11 @@ def fx_valuation(snapshot: Snapshot, source: Record) -> dict[str, object] | None
     out.update({
         "operands": [
             {"key": source.key, "file": source.file, "line": source.line, "field": amount_field,
-             "value_minor": amount, "sign": 1, "label": f"сумма {noun}, {src} (10^{src_exp})"},
+             "value_minor": amount, "currency": src, "sign": 1, "label": f"сумма {noun}, {src} (10^{src_exp})"},
             {"key": rate_rec.key, "file": rate_rec.file, "line": rate_rec.line, "field": "rate",
              "value": str(rate), "sign": 1, "label": f"курс {src}/{base} на местную дату {date}"},
             {"key": valuation.key, "file": valuation.file, "line": valuation.line, "field": "debit_minor",
-             "value_minor": recorded, "sign": -1, "label": f"записанная оценка FX_VALUATION, {base}"},
+             "value_minor": recorded, "currency": base, "sign": -1, "label": f"записанная оценка FX_VALUATION, {base}"},
         ],
         "expected_minor": expected,
         "recorded_minor": recorded,

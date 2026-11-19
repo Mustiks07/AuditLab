@@ -16,3 +16,11 @@ test('manifest exponents govern all displayed currency units', () => {
   assert.match(money(12000, 'JPY', {}), /разрядность не указана/);
   assert.match(money(9007199254740992, 'JPY', exps), /неточное число/);
 });
+
+test('minor units keep the same minus sign and grouping as money()', async () => {
+  const { minor, opError } = await import('data:text/javascript;base64,' + Buffer.from(emitted).toString('base64'));
+  assert.equal(minor(-2000000), '−2 000 000');
+  assert.equal(minor(3000000), '3 000 000');
+  assert.match(opError('unsupported_counterfactual', 'Payment-date changes must stay inside the same target period'), /другой отчётный период.*\[unsupported_counterfactual: Payment-date/);
+  assert.match(opError('something_new', undefined), /операция не выполнена \[something_new\]/);
+});

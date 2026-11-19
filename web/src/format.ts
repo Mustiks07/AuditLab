@@ -16,7 +16,33 @@ export function money(minor: number | null | undefined, currency: string, expone
 
 export function minor(n: number | null | undefined): string {
   if (n === null || n === undefined) return "—";
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const digits = Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
+  return (n < 0 ? "−" : "") + digits;  // same minus sign as money()
+}
+
+/** Russian explanation for trusted-lab operation errors; the original code and message stay visible. */
+export const OP_ERRORS: Record<string, string> = {
+  unsupported_counterfactual: "учебный адаптер не поддерживает такое изменение (например, перенос платежа в другой отчётный период или компания с ошибками вне распределения и FX)",
+  invalid_value: "значение не распознано: нужна дата-время ISO 8601 со смещением, например 2026-11-15T00:01:00+05:00",
+  out_of_range: "дата вне поддерживаемых синтетических лет",
+  unsupported_field: "менять можно только дату (timestamp)",
+  unknown_target: "запись нельзя изменить: нужна строка книги или документ платежа этого прогона",
+  no_change: "новое значение совпадает с текущим",
+  no_rate_for_date: "на новую местную дату нет опубликованного курса",
+  truth_unavailable: "у доверенной стороны нет учебного эталона этого прогона: просмотр доступен, пересчёт и изменение — нет",
+  unknown_run: "прогон не найден среди завершённых открытых экспортов",
+  no_submission: "у исходной попытки нет сдачи",
+  bad_finding: "нет вывода с таким номером",
+  bad_evidence: "доказательство должно быть публичным ключом вида ledger/R6 и входить в выбранный вывод",
+  bad_operation_key: "некорректный ключ операции",
+  infrastructure_error: "сбой подключённого модуля; результат не засчитан и не подменён учебной заменой",
+  timeout: "опыт не завершился за 60 с",
+  offline: "сервер консоли недоступен",
+};
+
+export function opError(code: string | undefined, message: string | undefined): string {
+  const text = (code && OP_ERRORS[code]) || "операция не выполнена";
+  return `${text} [${code ?? "без кода"}${message ? `: ${message}` : ""}]`;
 }
 
 export function when(ts: string | undefined): string {

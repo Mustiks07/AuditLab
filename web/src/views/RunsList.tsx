@@ -35,12 +35,23 @@ export function RunsList() {
           Каждая попытка показана отдельно. Живые опыты и копии сдачи хранятся рядом с исходной попыткой, исходная не меняется.
         </p>
       </div>
-      {[...pairs.entries()].filter(([, rs]) => rs.length === 2).map(([pid, rs]) => (
-        <div className="pair-hint" key={pid}>
-          Открытая пара <b>{pid}</b>: {rs[0].episode_id} и {rs[1].episode_id} отличаются одним фактом.
-          <a className="btn btn-small" href={`#/compare/${rs[0].run_id}/${rs[1].run_id}`}>Сравнить пару</a>
-        </div>
-      ))}
+      <div className="banner banner-sample measure-note" role="note">
+        <b>Это учебная демонстрация, а не измерение.</b> Здесь показаны отдельные показательные прогоны на открытых
+        учебных данных; их награда объясняет механику оценки и не является конкурсным баллом или средним по набору.
+        Измеренные результаты внутренней репетиции (20 снимков, 80 запусков, 20 пар, ресурсы) находятся в отчёте{" "}
+        <code>results/verify-…/verify/report.json</code> и в <code>evidence-summary.json</code> проверяющего — см.{" "}
+        <code>docs/release/VALIDATION.md</code>.
+      </div>
+      {[...pairs.entries()].filter(([, rs]) => rs.length === 2).map(([pid, unordered]) => {
+        // run_id comes from the runner and is random: order the pair by episode so A/B is stable.
+        const rs = [...unordered].sort((a, b) => a.episode_id.localeCompare(b.episode_id) || a.run_id.localeCompare(b.run_id));
+        return (
+          <div className="pair-hint" key={pid}>
+            Контрольная пара <b>{pid}</b>: A = {rs[0].episode_id}, B = {rs[1].episode_id}; компании отличаются одним фактом.
+            <a className="btn btn-small" href={`#/compare/${rs[0].run_id}/${rs[1].run_id}`}>Сравнить пару (B − A)</a>
+          </div>
+        );
+      })}
       <table className="runs-table">
         <thead>
           <tr>

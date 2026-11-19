@@ -64,7 +64,7 @@ export function Compare({ left, right }: { left: string; right: string }) {
         </div>
         {view.calculations.length > 0 && (
           <div className="cs-block cs-effect">
-            <div className="cs-label">Фактический эффект по открытым данным</div>
+            <div className="cs-label">Фактический эффект по открытым данным ({view.derived_from || ch ? "новая − исходная" : "B − A"})</div>
             {(shown.length ? shown : [...deltas.entries()].slice(0, 1)).map(([cur, d]) => (
               <div key={cur} className="cs-main">Δ = <b>{money(d, cur, view.right.currency_exponents)}</b> <span className="muted mono">({minor(d)} мин. ед. {cur})</span></div>
             ))}
@@ -73,8 +73,8 @@ export function Compare({ left, right }: { left: string; right: string }) {
       </div>
 
       <div className="two">
-        <Side side={view.left} title="Исходная" />
-        <Side side={view.right} title={view.derived_from ? "Копия" : ch ? "Новый опыт" : "Вторая"} />
+        <Side side={view.left} title={view.derived_from || ch ? "Исходная" : "Компания A"} />
+        <Side side={view.right} title={view.derived_from ? "Копия" : ch ? "Новый опыт" : "Компания B"} />
       </div>
 
       {view.calculations.length > 0 && (
@@ -138,7 +138,14 @@ function Side({ side, title }: { side: CompareSide; title: string }) {
             {c.unconfirmed.length > 0 && (
               <div className="warn">
                 Больше не подтверждено ссылкой:{" "}
-                {c.unconfirmed.map((u) => <div key={u.key}><a className="mono" href={`#/runs/${r.run_id}/record/${u.key}`}>{u.key}</a> — {u.label}</div>)}
+                {c.unconfirmed.map((u) => (
+                  <div key={u.key}>
+                    <a className="mono" href={`#/runs/${r.run_id}/record/${u.key}`}>{u.key}</a> — {u.label}
+                    {u.value_minor !== undefined && u.currency
+                      ? <>: <b>{money(u.value_minor, u.currency, side.currency_exponents)}</b> <span className="muted mono small">({minor(u.value_minor)} мин. ед. {u.currency})</span></>
+                      : u.value !== undefined ? <>: <b className="mono">{u.value}</b></> : null}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -169,7 +176,7 @@ function CalcCell({ calc, runId, exponents }: { calc: Derivation; runId: string;
           <a href={`#/runs/${runId}/record/${op.key}`}>{op.key}</a> после границы · {when(op.timestamp)}
         </div>
       ))}
-      <div className="mono small formula">{calc.formula}</div>
+      <div className="mono small formula">{calc.formula} <span className="muted">· мин. ед.</span></div>
       <div className="strong">{money(calc.result_minor, calc.currency, exponents)}</div>
     </div>
   );

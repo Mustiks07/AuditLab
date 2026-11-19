@@ -27,6 +27,12 @@ REASONS = {"evidence_incomplete": "доказательства неполные
            "not_published": "причина не опубликована оценщиком (TP = 0)"}
 
 
+def browser_url(host: str, port: int) -> str:
+    """0.0.0.0 / :: are bind addresses (e.g. inside the demo container), not URLs a browser can open."""
+    shown = "127.0.0.1" if host in ("0.0.0.0", "::", "") else host
+    return f"http://{shown}:{port}/"
+
+
 def money(minor, currency: str | None, exponents: dict) -> str:
     if minor is None:
         return "—"
@@ -154,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
                   "Fallback without a browser: python -m auditlab.demo show --run TRAIN-S02-reconcile", file=sys.stderr)
             return 3
         app = create_app(paths, extra, build_samples=not args.no_samples)
-        print(f"AuditLab judge console: http://{args.host}:{args.port}/  (exports: {paths.exports})")
+        print(f"AuditLab judge console: откройте {browser_url(args.host, args.port)}  (слушает {args.host}; exports: {paths.exports})")
         uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
         return 0
     if args.cmd in ("samples", "change", "rescore"):
