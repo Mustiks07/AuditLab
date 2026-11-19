@@ -1,35 +1,84 @@
-# Runtime образ политики (для упаковщика)
+# Runtime обычной политики
 
-Контейнер получает **только код политики и стандартные потоки**. Эталон, снимки, оценщик и отчёты в образ не входят.
+Политика получает только код и JSON Lines в stdin/stdout. Снимки, seed компании,
+эталон, оценщик и отчёты остаются в доверенном контуре. Seed политики — отдельный
+публичный параметр; он не должен совпадать с секретным seed генератора по умолчанию.
 
-## Профиль запуска (ISO-01)
+## Сборка и офлайн-загрузка
 
-Источник истины — `auditlab.runner.isolation.docker_command(image)`; тест `test_docker_profile_has_no_network_volumes_or_caps` фиксирует его:
+Python базового образа закреплён на 3.11.14 / Debian bookworm и digest в Dockerfile.
+Выпускающий фиксирует SHA-256 экспортированного архива; Dockerfile сам по
+себе не является автономной поставкой. Образ политики не содержит внешних Python
+зависимостей. Сборка из корня (на подготовительной машине с локальной базой):
 
+```sh
+docker build --network=none -f docker/runtime/Dockerfile -t auditlab-policy:release .
+docker save -o auditlab-policy.tar auditlab-policy:release
 ```
-docker run --rm -i --network none --read-only --cap-drop ALL \
-  --security-opt no-new-privileges --pids-limit 128 --cpus 2 --memory 4g \
-  --user 65534:65534 --tmpfs /tmp:rw,noexec,nosuid,size=64m  IMAGE [NAME SEED]
+
+На офлайн-хосте после проверки контрольной суммы:
+
+```sh
+docker load -i auditlab-policy.tar
+python -m auditlab.runner policy --snapshot fixtures/foundation/S02 --name reconcile --mode closed --image auditlab-policy:release --trusted-dir runs/trusted
+AUDITLAB_POLICY_IMAGE=auditlab-policy:release python -m unittest discover -s tests/runner -p test_docker_boundary.py -v
 ```
 
-* нет сети, нет `-v`/`--volume`, нет сокета Docker, нет привилегий;
-* корневая ФС только для чтения, непривилегированный пользователь;
-* канал: JSON Lines — строка наблюдения в stdin, строка действия в stdout; stderr не читается.
+В PowerShell переменная задаётся отдельно:
+`$env:AUDITLAB_POLICY_IMAGE = "auditlab-policy:release"`.
+Для открытого экспорта добавьте `--mode train --export-dir runs/new-run`.
+Существующий каталог экспорта не перезаписывается. Финансовые итоги CLI предназначены
+доверенному запускающему; они не возвращаются в stdin политики.
 
-## Как хост использует образ
+## Программный интерфейс
 
 ```python
-from auditlab.runner.isolation import SubprocessPolicy, docker_command
-policy = SubprocessPolicy(docker_command("auditlab-policy:dev") + ["reconcile", "7"])
-run_episode(env, policy, seed, config)   # auditlab.runner.episode
+from auditlab.runner import make_env
+from auditlab.runner.episode import run_episode
+from auditlab.runner.isolation import DockerPolicy
+
+env = make_env("closed", trusted_dir="runs/trusted")
+policy = DockerPolicy("auditlab-policy:release", name="reconcile", seed=7)
+try:
+    run_episode(env, policy, company_seed, {"snapshot_dir": snapshot,
+                "policy_name": "reconcile", "time_limit_s": 60})
+finally:
+    env.close()
 ```
 
-`NAME SEED` → `auditlab.policies.make_policy(NAME, SEED)` (random, reconcile, flag_all). Внешний адаптер: `--factory module:fn SEED` → `fn(SEED)`. Объект обязан иметь `act(public_observation)`. Новый процесс на каждый эпизод. Oracle в этот образ не входит: он исполняется доверенным адаптером `auditlab.runner.episode.OraclePolicy`.
+`run_episode` закрывает политику также при отказе reset. `DockerPolicy` сначала
+создаёт контейнер с уникальным именем, затем присоединяет stdio; cleanup явно
+удаляет этот контейнер. Отсутствующий локальный образ — ошибка, загрузка из реестра
+и переход к незащищённому subprocess запрещены. Для внешней политики образ должен
+содержать её модуль; `DockerPolicy(..., factory="module:fn", seed=7)` вызывает
+`fn(7)`, возвращающий объект с `act(public_observation)`.
 
-Зависание политики до дедлайна эпизода — это тайм-аут по §8 (`truncated_timeout`, пустой ответ), падение или мусор в канале — `policy_failure` (не финансовый результат, в публичный экспорт не попадает).
+Обычный профиль: `--pull=never --network none --read-only --cap-drop ALL
+--security-opt no-new-privileges --pids-limit 128 --cpus 2 --memory 4g
+--memory-swap 4g --user 65534:65534 --tmpfs /tmp:rw,noexec,nosuid,size=64m
+--log-driver none`, без GPU, host mounts и сокета Docker. `docker_command()` —
+источник параметров; реальные права дополнительно проверяет `test_docker_boundary`.
 
-## Статус
+## Защита канала
 
-* Dockerfile **не собирался** в среде разработки (Docker недоступен); профиль запуска и протокол проверены без Docker через `SubprocessPolicy` с обычным процессом.
-* `auditlab.policies` принадлежит GPT Pro 1: пока модуль не слит в main, `COPY auditlab/policies` не соберётся.
-* ISO-01 в части реальных томов и окружения контейнера проверяется только после сборки образа.
+Максимум 256 KiB на JSON-строку действия, 1 MiB на строку observation, один ответ
+на запрос и максимум один буферизованный ответ. Незатребованный/повторный ответ,
+слишком длинная строка, неверный UTF-8/JSON — отказ политики. Общий deadline
+охватывает запись observation и чтение action; блокировка stdin не отключает таймер.
+Убийство subprocess и удаление контейнера не подменяются ожиданием EOF.
+
+`SubprocessPolicy` сам по себе **не является sandbox**: файл/сеть доступны с правами
+пользователя хоста. CLI позволяет его только явно:
+`--mode train --unsafe-dev-subprocess`. Такой запуск не доказывает изоляцию.
+Oracle остаётся доверенным адаптером и не попадает в образ обычной политики.
+
+## Статус проверки
+
+Транспортные регрессии и фактическая контейнерная граница — разные проверки.
+Без `AUDITLAB_POLICY_IMAGE` Docker-тест честно пропущен. Итоговый релиз должен
+приложить успешный прогон именно поставленного образа, а также отдельные замеры
+CPU, памяти, размера архива и полного офлайн-цикла. Лимиты этого контейнера
+ограничивают политику, не суммарные ресурсы хостового оценщика/генератора.
+Для общего профиля 2 CPU / 4 GB доверенный runtime и политика могут получить по
+2 GB памяти и один и тот же набор двух ядер (`DockerPolicy(..., memory="2g", cpuset="0,1")`).
+Подходящие номера ядер выбираются на хосте; они не передаются из недоверенного ввода.

@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from auditlab.generator import GENERATOR_VERSION, SCHEMA_VERSION, generate_episode
+from auditlab.generator import SUPPORTED_GENERATOR_VERSIONS, SCHEMA_VERSION, generate_episode
 
 
 RECIPE_PATH = Path(__file__).with_name("recipe.json")
@@ -17,7 +17,7 @@ def load_recipe():
     recipe = json.loads(RECIPE_PATH.read_text(encoding="utf-8"))
     if recipe["dataset_version"] != "1.1":
         raise ValueError("unsupported_dataset_version")
-    if recipe["generator_version"] != GENERATOR_VERSION or recipe["schema_version"] != SCHEMA_VERSION:
+    if recipe["generator_version"] not in SUPPORTED_GENERATOR_VERSIONS or recipe["schema_version"] != SCHEMA_VERSION:
         raise ValueError("incompatible_dataset_recipe")
     return recipe
 

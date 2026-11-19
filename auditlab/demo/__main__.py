@@ -27,17 +27,22 @@ REASONS = {"evidence_incomplete": "доказательства неполные
            "not_published": "причина не опубликована оценщиком (TP = 0)"}
 
 
-def money(minor, currency: str | None = "KZT") -> str:
+def money(minor, currency: str | None, exponents: dict) -> str:
     if minor is None:
         return "—"
     sign = "−" if minor < 0 else ""
-    whole, frac = divmod(abs(int(minor)), 100)
+    exp = exponents.get(currency)
+    if type(exp) is not int or not 0 <= exp <= 9:
+        return f"{minor} мин. ед. {currency} (разрядность не указана)"
+    whole, frac = divmod(abs(int(minor)), 10 ** exp)
     symbol = {"KZT": "₸", "USD": "$"}.get(str(currency), str(currency))
-    return f"{sign}{whole:,}".replace(",", " ") + f",{frac:02d} {symbol} ({minor} мин. ед.)"
+    decimal = f",{frac:0{exp}d}" if exp else ""
+    return f"{sign}{whole:,}".replace(",", " ") + f"{decimal} {symbol} ({minor} мин. ед.)"
 
 
 def _print_run(detail: dict, replay: bool = False) -> None:
     run = detail["run"]
+    exponents = detail["snapshot"]["manifest"].get("currency_exponents") or {}
     print(f"[{run['label_text']}] {run['run_id']}  {run.get('company', '')}")
     print(f"  эпизод {run['episode_id']} · политика {run['policy']} · режим {run['mode']} · статус {run['status']}")
     engine = run.get("engine") or {}
@@ -64,10 +69,17 @@ def _print_run(detail: dict, replay: bool = False) -> None:
         print("Сдачи нет: попытка не завершена, итог не засчитан.")
     elif detail["empty_submission"]:
         print("Ошибок не заявлено (пустая сдача).")
+        independent = detail["verifier"]
+        if independent["connected"]:
+            print(f"SQL ({independent.get('engine')}): найдено расхождений {len(independent['findings'])}")
+            for finding in independent["findings"]:
+                print(f"  {finding['type']}: {money(finding['claimed_amount_minor'], finding['currency'], exponents)}")
+        else:
+            print("SQL-сверка не подключена.")
     for f in detail["findings"]:
         fd = f["finding"]
         print(f"Вывод #{f['index']}: {f['type_name']} · {', '.join(fd['affected_ids'])}")
-        print(f"  Агент:    {money(fd['claimed_amount_minor'], fd['currency'])}")
+        print(f"  Агент:    {money(fd['claimed_amount_minor'], fd['currency'], exponents)}")
         for ev in f["evidence"]:
             where = f"{ev['file']}:{ev['line']}" if ev["exists"] else "нет такой записи в снимке"
             seen = (f"открыт на шаге {ev['opened_at_step']}" if ev["opened_at_step"] else
@@ -75,7 +87,7 @@ def _print_run(detail: dict, replay: bool = False) -> None:
             print(f"    доказательство {ev['key']:<28} {where:<26} {seen}")
         calc = f["derivation"]
         if calc:
-            print(f"  Консоль:  {calc['formula']}  → {money(calc['result_minor'], calc['currency'])}")
+            print(f"  Консоль:  {calc['formula']}  → {money(calc['result_minor'], calc['currency'], exponents)}")
             for op in calc.get("operands") or []:
                 value = op.get("value_minor", op.get("value"))
                 print(f"    операнд {op['key']:<26} {op['file']}:{op['line']} {op['field']}={value}  ({op['label']})")
@@ -88,7 +100,7 @@ def _print_run(detail: dict, replay: bool = False) -> None:
         elif detail["score"]:
             print("  Оценщик:  опубликован только итог TP/FP/FN, вердикт по выводу неоднозначен")
         vr = f["verifier"]
-        print("  SQL:      " + (vr.get("text") or f"{money(vr.get('amount_minor'), vr.get('currency'))} ({vr.get('engine')})"))
+        print("  SQL:      " + (vr.get("text") or f"{money(vr.get('amount_minor'), vr.get('currency'), exponents)} ({vr.get('engine')})"))
     score = detail["score"]
     if score:
         print()

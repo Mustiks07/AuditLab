@@ -107,7 +107,7 @@ export function Replay({ runId }: { runId: string }) {
           {finished && detail.empty_submission && <div className="no-findings-title">Ошибок не заявлено</div>}
           {finished && detail.findings.map((f) => (
             <div key={f.index} className="claim">
-              <div><b>{money(f.finding.claimed_amount_minor, f.finding.currency)}</b> · {f.type_name}</div>
+              <div><b>{money(f.finding.claimed_amount_minor, f.finding.currency, detail.snapshot.manifest.currency_exponents ?? {})}</b> · {f.type_name}</div>
               <div className="mono small muted">{f.finding.evidence_ids.join("  ")}</div>
               {f.verdict && <div className={f.verdict.matched ? "ok-text" : "bad-text"}>{f.verdict.matched ? "✓ засчитан" : "✗ не засчитан"}</div>}
             </div>

@@ -2,7 +2,9 @@
 
 Pages contain ``records`` and ``next_cursor``, ordered by the table's lookup key.
 Use row_id for ledger, doc_id for invoices and payments, date/SOURCE/TARGET for
-FX, and a top-level rule name for policy. Policy pages expose id/value pairs.
+FX, and a top-level rule name for policy. Policy pages expose id/value pairs,
+plus version when the snapshot declares a rule_versions index. get_record
+continues to return the rule value; its version is available in rule_versions.
 The calculator returns a decimal string.
 """
 
@@ -87,6 +89,19 @@ def _index(entries) -> dict[str, dict]:
     return result
 
 
+def _policy_rows(policy):
+    index = policy.get("rule_versions", {})
+    versions = index.get("rules", {}) if isinstance(index, dict) else {}
+    result = {}
+    for key, value in policy.items():
+        row = {"id": key, "value": value}
+        declared = index.get("version") if key == "rule_versions" else versions.get(key)
+        if declared is not None:
+            row["version"] = declared
+        result[key] = row
+    return result
+
+
 class _Session:
     def __init__(self, public_dir: Path):
         root = public_dir.resolve(strict=True)
@@ -105,7 +120,7 @@ class _Session:
                 ("/".join((row["date"], row["source_currency"], row["target_currency"])), row)
                 for row in fx
             ),
-            "policy": {key: {"id": key, "value": value} for key, value in policy.items()},
+            "policy": _policy_rows(policy),
         }
         self._documents = _index((doc["doc_id"], doc) for doc in invoices + payments)
         self._ordered = {

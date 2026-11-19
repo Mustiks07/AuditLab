@@ -38,7 +38,7 @@ def git_value(*args):
         return subprocess.check_output(["git", *args], cwd=ROOT, text=True,
                                        stderr=subprocess.DEVNULL, timeout=10).strip()
     except (OSError, subprocess.SubprocessError):
-        return None
+        return os.environ.get("AUDITLAB_SOURCE_REVISION") if args == ("rev-parse", "HEAD") else None
 
 
 class RecordedResult(unittest.TextTestResult):
@@ -130,15 +130,8 @@ def acceptance_plan():
 
 
 def rehearsal_plan():
-    reason = "Внутренний набор и доверенные адаптеры ещё не приняты; запуск не выполнялся."
-    return {
-        "episodes": [{"id": f"{policy}/internal-{episode:02d}", "policy": policy,
-                      "status": "not_checked", "detail": reason}
-                     for policy in ("random", "reconcile", "flag_all", "oracle")
-                     for episode in range(1, 21)],
-        "pairs": [{"id": f"pair-{pair:02d}", "status": "not_checked", "detail": reason}
-                  for pair in range(1, 21)],
-    }
+    from auditlab.release.rehearsal import pending_plan
+    return pending_plan()
 
 
 def exit_code(checks, require_complete=False):
@@ -160,8 +153,19 @@ def render(report):
     rows += ["", "## Пять критериев (без пересчёта в баллы жюри)", ""]
     rows += [f"- {name}: не проверено; полная приёмка не выполнена." for name in GROUPS]
     if report["rehearsal"]:
-        rows += ["", "Внутренняя репетиция: выполнено 0/80 опытов и 0/20 пар; не проверено."]
-    rows += ["", "Офлайн-релиз, изоляция, пиковая память и целевые лимиты: не проверено.",
+        rehearsal = report["rehearsal"]
+        measured = sum(row.get("metrics") is not None for row in rehearsal["episodes"])
+        pairs = sum(row["status"] == "passed" for row in rehearsal["pairs"])
+        rows += ["", f"Внутренняя репетиция: измерено {measured}/80 опытов; пройдено {pairs}/20 пар.",
+                 "Это внутренний набор, а не закрытая оценка организаторов.", "",
+                 "| Политика | Измерено / план | Ошибки / не проверено | micro F1 | macro F1 | Средняя награда |",
+                 "|---|---:|---:|---:|---:|---:|"]
+        for name, summary in rehearsal.get("summary", {}).items():
+            rows.append(f"| {name} | {summary['measured']} / {summary['planned']} | "
+                        f"{summary['failed']} / {summary['not_checked']} | {summary['micro']['f1']} | "
+                        f"{summary['macro_f1']} | {summary['mean_reward']} |")
+        rows += ["", "Полные данные, конфигурации, хеши, траектории и сверки: rehearsal/report.json."]
+    rows += ["", "Свидетельства офлайн-запуска и памяти: launch.json, controller-resources.json и rehearsal/report.json при запуске через offline.py. Их отсутствие означает «не проверено».",
              "Это проверка разработки, а не сертификат готовности релиза."]
     return "\n".join(rows) + "\n"
 
@@ -191,7 +195,16 @@ def verify(args):
                 print(f"  {row['id']}: {row['kind']}", flush=True)
     all_checks = report["checks"] + report["acceptance"]
     if report["rehearsal"]:
-        all_checks += report["rehearsal"]["episodes"] + report["rehearsal"]["pairs"]
+        if not any(check["status"] == "failed" for check in report["checks"]):
+            from auditlab.release.rehearsal import execute
+            def progress(value):
+                report["rehearsal"] = value
+                write_json(output / "report.json", report)
+            report["rehearsal"] = execute(output / "rehearsal", getattr(args, "policy_image", None),
+                getattr(args, "verifier_image", None), getattr(args, "cpu_set", None), progress)
+        rehearsal = report["rehearsal"]
+        all_checks += (rehearsal["episodes"] + rehearsal["pairs"] + rehearsal.get("datasets", [])
+                       + rehearsal.get("prerequisites", []))
     strict = args.require_complete or args.suite == "rehearsal"
     code = exit_code(all_checks, strict)
     report.update(status="failed" if code == 1 else "incomplete" if any(
@@ -212,6 +225,12 @@ def main():
     command.add_argument("--require-complete", action="store_true")
     command.add_argument("--output", type=Path, default=ROOT / "artifacts" / ("verify-" + uuid.uuid4().hex))
     command.add_argument("--timeout", type=float, default=180)
+    command.add_argument("--policy-image", default=os.environ.get("AUDITLAB_POLICY_IMAGE"),
+                         help="Existing local Docker policy image for the internal rehearsal; never pulled")
+    command.add_argument("--verifier-image", default=os.environ.get("AUDITLAB_VERIFIER_IMAGE"),
+                         help="Existing public-input-only verifier image; otherwise OS isolation is not checked")
+    command.add_argument("--cpu-set", default=os.environ.get("AUDITLAB_CPUSET"),
+                         help="CPU set shared by policy/verifier containers, e.g. 0,1")
     demo = commands.add_parser("demo", help="Serve the local judge console")
     demo.add_argument("--host", default="127.0.0.1")
     demo.add_argument("--port", type=int, default=8765)

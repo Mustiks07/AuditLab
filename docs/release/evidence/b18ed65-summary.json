@@ -1,0 +1,119 @@
+{
+  "source_revision": "b18ed6583fc21bc7b4928635ba0ee77a2ad25dfc",
+  "workflow_run": "https://github.com/Mustiks07/AuditLab/actions/runs/44574291810",
+  "scope": "Internal rehearsal, not organizer hidden evaluation",
+  "tests": 235,
+  "datasets": 20,
+  "attempts": 80,
+  "pairs": 20,
+  "controller_peak_bytes": 177836032,
+  "policy_peak_bytes": 24911872,
+  "verifier_peak_bytes": 144998400,
+  "max_episode_elapsed_seconds": 0.7531186779999928,
+  "image_load_seconds": 9.305184448999995,
+  "verification_container_seconds": 142.56853729,
+  "payload_size_bytes": 301803024,
+  "manifest_sha256": "c25f8267921e1c7fb8cc7419e864884ad0ff6d8afba71f47f1b5c01cd6fc0745",
+  "images": {
+    "runtime": {
+      "id": "sha256:c45edde7c6bb28d4e2aae0cb149ebf5474b7e7197592d9123e0ac47b66f7608b",
+      "tag": "auditlab-runtime:b18ed6583fc2",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 282971267
+    },
+    "verifier": {
+      "id": "sha256:0c6b5b0ad99507aeeda9c9bb9c1fb5e6e550b62a36ea0741416afa1bf1f96745",
+      "tag": "auditlab-verifier:b18ed6583fc2",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 234795137
+    },
+    "policy": {
+      "id": "sha256:d974eaa33fb26dac77c451d9837e91604436f98945806a5d8f86208fc0a3e0b9",
+      "tag": "auditlab-policy:b18ed6583fc2",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 130520096
+    }
+  },
+  "policies": {
+    "random": {
+      "micro": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 38,
+        "precision": 0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "mean_reward": -0.5035000000000001,
+      "clean": {
+        "planned": 5,
+        "measured": 5,
+        "false_accusation_episodes": 0,
+        "rate_over_measured": 0.0
+      }
+    },
+    "reconcile": {
+      "micro": {
+        "tp": 38,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "mean_reward": 0.9511999999999999,
+      "clean": {
+        "planned": 5,
+        "measured": 5,
+        "false_accusation_episodes": 0,
+        "rate_over_measured": 0.0
+      }
+    },
+    "flag_all": {
+      "micro": {
+        "tp": 0,
+        "fp": 600,
+        "fn": 38,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "mean_reward": -1.0,
+      "clean": {
+        "planned": 5,
+        "measured": 5,
+        "false_accusation_episodes": 5,
+        "rate_over_measured": 1.0
+      }
+    },
+    "oracle": {
+      "micro": {
+        "tp": 38,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "mean_reward": 1.0,
+      "clean": {
+        "planned": 5,
+        "measured": 5,
+        "false_accusation_episodes": 0,
+        "rate_over_measured": 0.0
+      }
+    }
+  },
+  "resources": {
+    "cpu_set": "0,1",
+    "per_container_memory_bytes": 2147483648,
+    "controller": true,
+    "ordinary_runs": 60,
+    "verifier_runs": 40,
+    "all_containers_network": "none"
+  },
+  "verification_note": "Original CI checker falsely rejected requested PID metadata. Corrected checker validates actual pids.max; replay over these immutable artifacts passes with no failures/missing evidence. A fresh final CI is required for the corrected commit."
+}

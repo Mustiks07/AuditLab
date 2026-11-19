@@ -1,28 +1,158 @@
-"""Policy isolation: the policy lives in another process and sees only JSON Lines on stdin/stdout.
+"""Bounded JSON Lines transport and the Docker boundary for untrusted policies.
 
-`SubprocessPolicy` is the host-side proxy. It starts the child with an empty environment, a fresh
-empty working directory and no inherited handles. This is process-level isolation; filesystem and
-network isolation are provided by the container profile in docker/runtime (see its README).
+SubprocessPolicy alone is a development transport, NOT a filesystem/network sandbox.
+Production callers use DockerPolicy, which never falls back to a host subprocess.
 """
 from __future__ import annotations
 
 import json
 import os
 import queue
+import signal
 import subprocess
 import tempfile
 import threading
+import time
+import uuid
+import re
+from fractions import Fraction
 from pathlib import Path
 
 from auditlab.contracts import Action, Observation
 
+MAX_ACTION_BYTES = 256 * 1024
+MAX_OBSERVATION_BYTES = 1024 * 1024
+
+# Run in the existing policy container. No fallback to memory.current/docker stats:
+# those are current usage, not the kernel's recorded peak.
+_CGROUP_PROBE = """
+import json, os
+from pathlib import Path
+root = Path('/sys/fs/cgroup')
+values, unavailable = {}, {}
+for name in ('memory.peak', 'memory.max', 'memory.swap.max', 'cpu.stat', 'cpu.max', 'cpuset.cpus.effective', 'pids.max'):
+    try:
+        values[name] = (root / name).read_text().strip()
+    except OSError as error:
+        unavailable[name] = type(error).__name__
+try: cgroup = Path('/proc/self/cgroup').read_text().strip()
+except OSError: cgroup = None
+try: affinity = sorted(os.sched_getaffinity(0))
+except (AttributeError, OSError): affinity = None
+print(json.dumps({'values': values, 'unavailable': unavailable, 'cgroup': cgroup, 'affinity': affinity}))
+"""
+
+
+def _parse_cgroup_measurements(payload: dict) -> dict:
+    """Parse cgroup v2 counters; unsupported/missing counters stay explicitly unknown."""
+    values = payload.get("values", {})
+    unavailable = dict(payload.get("unavailable", {}))
+
+    def integer(value, name):
+        if value is None:
+            unavailable.setdefault(name, "missing")
+            return None
+        try:
+            result = int(value)
+            if result < 0:
+                raise ValueError
+            return result
+        except (ValueError, TypeError):
+            unavailable[name] = "not_a_nonnegative_integer"
+            return None
+
+    peak = integer(values.get("memory.peak"), "memory.peak")
+    memory = integer(values.get("memory.max"), "memory.max")
+    stats = {}
+    for line in str(values.get("cpu.stat", "")).splitlines():
+        columns = line.split()
+        if len(columns) == 2:
+            stats[columns[0]] = columns[1]
+    usage = integer(stats.get("usage_usec"), "cpu.stat/usage_usec")
+    user = integer(stats.get("user_usec"), "cpu.stat/user_usec")
+    system = integer(stats.get("system_usec"), "cpu.stat/system_usec")
+    quota_parts = str(values.get("cpu.max", "")).split()
+    quota = integer(quota_parts[0] if len(quota_parts) == 2 else None, "cpu.max/quota")
+    period = integer(quota_parts[1] if len(quota_parts) == 2 else None, "cpu.max/period")
+    status = "measured" if peak is not None and usage is not None else (
+        "partial" if peak is not None or usage is not None else "not_checked")
+    return {"status": status, "peak_memory_bytes": peak, "cpu_usage_usec": usage,
+            "cpu_user_usec": user, "cpu_system_usec": system, "memory_limit_bytes": memory,
+            "cpu_quota_usec": quota, "cpu_period_usec": period,
+            "cpuset_cpus": values.get("cpuset.cpus.effective"), "unavailable": unavailable,
+            "reason": None if status == "measured" else "cgroup_v2_counters_unavailable_or_invalid"}
+
+
+def _cpu_set(value):
+    if value is None:
+        return None
+    result = set()
+    for item in str(value).split(','):
+        parts = item.split('-')
+        if len(parts) == 1:
+            result.add(int(parts[0]))
+        elif len(parts) == 2 and 0 <= int(parts[0]) <= int(parts[1]) < 65536:
+            result.update(range(int(parts[0]), int(parts[1]) + 1))
+        else:
+            raise ValueError('invalid CPU set')
+    return result
+
+
+def _memory_bytes(value):
+    match = re.fullmatch(r'(\d+)([bkmgte]?)(?:b)?', str(value).lower())
+    if not match:
+        raise ValueError('unsupported requested memory size')
+    return int(match[1]) * 1024 ** ('bkmgte'.index(match[2]) if match[2] else 0)
+
+
+def _verify_cgroup_scope(parsed: dict, payload: dict, requested: dict) -> dict:
+    """Never attribute a visible parent cgroup's counters to the requested container.
+
+    Matching HostConfig alone is insufficient: the kernel limits and process
+    affinity must match the request. A mismatch invalidates resource attribution.
+    """
+    result = dict(parsed)
+    result['raw_observed'] = {**parsed, 'cgroup': payload.get('cgroup'),
+                              'affinity': payload.get('affinity'), 'files': payload.get('values', {})}
+    mismatches = []
+    try:
+        if parsed.get('memory_limit_bytes') != _memory_bytes(requested['memory']):
+            mismatches.append('memory.max does not match requested memory')
+        if str(payload.get('values', {}).get('memory.swap.max')) != '0':
+            mismatches.append('memory.swap.max is unavailable or does not disable swap')
+        quota, period = parsed.get('cpu_quota_usec'), parsed.get('cpu_period_usec')
+        if quota is None or not period or Fraction(quota, period) != Fraction(str(requested['cpus'])):
+            mismatches.append('cpu.max does not match requested CPU quota')
+        expected = _cpu_set(requested.get('cpuset'))
+        if expected is not None:
+            if _cpu_set(parsed.get('cpuset_cpus')) != expected:
+                mismatches.append('cpuset.cpus.effective does not match requested CPUs')
+            affinity = payload.get('affinity')
+            if affinity is None or set(affinity) != expected:
+                mismatches.append('process affinity does not match requested CPUs')
+        if requested.get('pids') is not None:
+            if str(payload.get('values', {}).get('pids.max')) != str(requested['pids']):
+                mismatches.append('pids.max does not match requested limit')
+    except (ValueError, TypeError, KeyError, ZeroDivisionError):
+        mismatches.append('requested or observed limits unavailable/invalid')
+    result['resource_limits_verified'] = not mismatches
+    result['scope'] = 'container_limits_verified' if not mismatches else 'unverified_visible_cgroup'
+    result['limit_mismatches'] = mismatches
+    result['cpu_usage_seconds'] = (parsed['cpu_usage_usec'] / 1_000_000
+                                   if parsed.get('cpu_usage_usec') is not None and not mismatches else None)
+    if mismatches:
+        result.update(status='not_checked', peak_memory_bytes=None, cpu_usage_usec=None,
+                      cpu_user_usec=None, cpu_system_usec=None,
+                      reason='visible_cgroup_not_container_or_requested_limits_not_applied')
+    return result
+
 
 class PolicyFailure(RuntimeError):
-    """The policy crashed or broke the channel. Reported apart from the financial result."""
+    """The policy crashed or broke the channel; separate from financial performance."""
 
 
 class PolicyTimeout(PolicyFailure):
-    """No action before the episode deadline: handled by the time-limit rule, not as a crash."""
+    """No complete exchange before the episode deadline."""
 
 
 def scrubbed_env(extra: dict[str, str] | None = None) -> dict[str, str]:
@@ -32,72 +162,289 @@ def scrubbed_env(extra: dict[str, str] | None = None) -> dict[str, str]:
     return env
 
 
-def docker_command(image: str, *, cpus: str = "2", memory: str = "4g", pids: int = 128) -> list[str]:
-    """Container profile for an untrusted policy: no network, no volumes, read-only rootfs, no caps."""
-    return ["docker", "run", "--rm", "-i", "--network", "none", "--read-only", "--cap-drop", "ALL",
-            "--security-opt", "no-new-privileges", "--pids-limit", str(pids), "--cpus", cpus,
-            "--memory", memory, "--user", "65534:65534", "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m", image]
+def docker_command(image: str, *, cpus: str = "2", memory: str = "4g", pids: int = 128,
+                   container_name: str | None = None, cpuset: str | None = None) -> list[str]:
+    """No registry access, network, host mounts, writable rootfs, GPU or capabilities."""
+    command = ["docker", "run", "--rm", "-i", "--pull=never", "--network", "none", "--read-only",
+               "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--pids-limit", str(pids),
+               "--cpus", cpus, "--memory", memory, "--memory-swap", memory, "--user", "65534:65534",
+               "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m", "--log-driver", "none"]
+    if container_name:
+        command += ["--name", container_name]
+    if cpuset is not None:
+        command += ["--cpuset-cpus", cpuset]
+    return command + [image]
 
 
 class SubprocessPolicy:
-    """Implements contracts.Policy over a child process. One instance per episode."""
+    """Development stdio transport. The child retains host filesystem permissions.
+
+    Both input and output have a byte ceiling, only one reply may be pending, and
+    the same deadline covers writing the observation and reading the action.
+    """
 
     def __init__(self, command: list[str], *, env: dict[str, str] | None = None, timeout_s: float = 60.0):
         self._scratch = tempfile.TemporaryDirectory(prefix="auditlab-policy-")
         self.timeout_s = timeout_s
-        self._proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                      stderr=subprocess.DEVNULL, text=True, encoding="utf-8",
-                                      cwd=self._scratch.name, env=env if env is not None else scrubbed_env(),
-                                      close_fds=True)
-        self._lines: queue.Queue = queue.Queue()
-        threading.Thread(target=self._pump, daemon=True).start()
+        self._closed = False
+        self._lock = threading.Lock()
+        self._awaiting = False
+        self._failure: str | None = None
+        self._lines: queue.Queue = queue.Queue(maxsize=1)
+        self._writers: list[threading.Thread] = []
+        options = {"start_new_session": True} if os.name != "nt" else {
+            "creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+        try:
+            self._proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                          stderr=subprocess.DEVNULL, bufsize=0,
+                                          cwd=self._scratch.name,
+                                          env=env if env is not None else scrubbed_env(),
+                                          close_fds=True, **options)
+        except BaseException:
+            self._scratch.cleanup()
+            raise
+        self._reader = threading.Thread(target=self._pump, daemon=True)
+        self._reader.start()
+
+    def _kill_process(self) -> None:
+        if os.name != "nt":
+            # Also reap descendants retaining a copy of either pipe.
+            try:
+                os.killpg(self._proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+        elif self._proc.poll() is None:
+            # This backend is development-only. DockerPolicy also removes its container.
+            try:
+                subprocess.run(["taskkill", "/PID", str(self._proc.pid), "/T", "/F"],
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=3)
+            except (OSError, subprocess.TimeoutExpired):
+                self._proc.kill()
+
+    def _fail(self, reason: str) -> None:
+        with self._lock:
+            if self._failure is None:
+                self._failure = reason
+        self._kill_process()
+        try:
+            self._lines.put_nowait(None)
+        except queue.Full:
+            pass
 
     def _pump(self) -> None:
-        for line in self._proc.stdout:  # type: ignore[union-attr]
-            self._lines.put(line)
-        self._lines.put(None)
+        try:
+            while not self._closed:
+                # Raw binary IO keeps the cap in bytes, including invalid UTF-8.
+                line = self._proc.stdout.readline(MAX_ACTION_BYTES + 1)
+                if not line:
+                    try:
+                        self._lines.put_nowait(None)
+                    except queue.Full:
+                        pass
+                    return
+                if len(line) > MAX_ACTION_BYTES or not line.endswith(b"\n"):
+                    self._fail("policy message exceeds byte limit or is not newline terminated")
+                    return
+                with self._lock:
+                    permitted = self._awaiting
+                    self._awaiting = False
+                if not permitted:
+                    self._fail("policy sent an unsolicited or duplicate reply")
+                    return
+                try:
+                    self._lines.put_nowait(line)
+                except queue.Full:
+                    self._fail("policy reply buffer is full")
+                    return
+        except (OSError, ValueError):
+            if not self._closed:
+                self._fail("policy output channel failed")
 
     def set_timeout(self, seconds: float) -> None:
         self.timeout_s = seconds
 
     def act(self, public_observation: Observation) -> Action:
+        deadline = time.monotonic() + max(self.timeout_s, 0)
+        if self._closed:
+            raise PolicyFailure("policy is closed")
+        payload = (json.dumps(public_observation, allow_nan=False) + "\n").encode("utf-8")
+        if len(payload) > MAX_OBSERVATION_BYTES:
+            raise PolicyFailure("observation exceeds transport byte limit")
+        with self._lock:
+            if self._failure:
+                raise PolicyFailure(self._failure)
+            if self._awaiting or not self._lines.empty():
+                raise PolicyFailure("policy exchange is not synchronized")
+            self._awaiting = True
+        written = threading.Event()
+        errors: list[Exception] = []
+
+        def write() -> None:
+            try:
+                pending = memoryview(payload)
+                while pending:
+                    count = self._proc.stdin.write(pending)
+                    if not count:
+                        raise OSError("closed input")
+                    pending = pending[count:]
+            except (OSError, ValueError) as error:
+                errors.append(error)
+            finally:
+                written.set()
+
+        writer = threading.Thread(target=write, daemon=True)
+        self._writers = [thread for thread in self._writers if thread.is_alive()]
+        self._writers.append(writer)
+        writer.start()
         try:
-            self._proc.stdin.write(json.dumps(public_observation) + "\n")  # type: ignore[union-attr]
-            self._proc.stdin.flush()  # type: ignore[union-attr]
-        except OSError as error:
-            raise PolicyFailure("policy closed its input") from error
-        try:
-            line = self._lines.get(timeout=max(self.timeout_s, 0.001))
-        except queue.Empty:
+            if not written.wait(max(0, deadline - time.monotonic())):
+                raise PolicyTimeout("policy input timed out")
+            if errors:
+                raise PolicyFailure("policy closed its input")
+            try:
+                line = self._lines.get(timeout=max(0, deadline - time.monotonic()))
+            except queue.Empty:
+                raise PolicyTimeout("policy output timed out") from None
+            with self._lock:
+                failure = self._failure
+            if failure:
+                raise PolicyFailure(failure)
+            if line is None:
+                raise PolicyFailure("policy exited before replying")
+            if time.monotonic() >= deadline:
+                raise PolicyTimeout("policy exchange exceeded deadline")
+            try:
+                return json.loads(line.decode("utf-8"), parse_constant=lambda _: (_ for _ in ()).throw(
+                    ValueError("nonfinite JSON")))
+            except (UnicodeError, ValueError, RecursionError) as error:
+                raise PolicyFailure("policy sent invalid JSON") from error
+        except PolicyFailure:
             self.close()
-            raise PolicyTimeout("policy timed out") from None
-        if line is None:
-            raise PolicyFailure(f"policy exited ({self._proc.poll()})")
-        try:
-            action = json.loads(line)
-        except ValueError as error:
-            raise PolicyFailure("policy sent non-JSON") from error
-        return action  # shape is judged by the environment, not here
+            raise
 
     def close(self) -> None:
-        if self._proc.poll() is None:
+        if self._closed:
+            return
+        self._closed = True
+        self._kill_process()
+        try:
+            self._proc.wait(timeout=3)
+        except subprocess.TimeoutExpired:
             self._proc.kill()
-        self._proc.wait()
+            self._proc.wait(timeout=3)
+        self._reader.join(timeout=1)
+        for thread in self._writers:
+            thread.join(timeout=1)
         for pipe in (self._proc.stdin, self._proc.stdout):
             try:
-                pipe.close()  # type: ignore[union-attr]
+                pipe.close()
             except OSError:
                 pass
         self._scratch.cleanup()
 
 
+class DockerPolicy(SubprocessPolicy):
+    """One isolated container per episode; local image only, explicit container cleanup."""
+
+    def __init__(self, image: str, name: str = "reconcile", seed: int = 0, *,
+                 factory: str | None = None, timeout_s: float = 60.0,
+                 cpus: str = "2", memory: str = "4g", cpuset: str | None = None):
+        self.container_name = "auditlab-policy-" + uuid.uuid4().hex
+        self.measurements = {
+            "status": "not_checked", "source": "cgroup_v2_via_docker_exec",
+            "peak_memory_bytes": None, "cpu_usage_usec": None, "cpu_user_usec": None,
+            "cpu_usage_seconds": None, "resource_limits_verified": False,
+            "scope": "unverified_visible_cgroup", "raw_observed": None,
+            "cpu_system_usec": None, "memory_limit_bytes": None,
+            "cpu_quota_usec": None, "cpu_period_usec": None, "cpuset_cpus": None,
+            "requested_limits": {"cpus": cpus, "memory": memory, "cpuset": cpuset, "pids": 128},
+            "image_ref": image, "image_id": None, "image_repo_digests": [],
+            "reason": "not_collected", "unavailable": {},
+            "note": "Visible cgroup counters are attributed to the policy only after kernel limits "
+                    "and requested affinity match. Raw counters may belong to a parent cgroup. "
+                    "Includes the measurement helper; excludes the trusted runtime and combined peak.",
+        }
+        # Docker client configuration is trusted host configuration, not passed into the container.
+        self._docker_env = scrubbed_env({key: os.environ[key] for key in
+            ("DOCKER_HOST", "DOCKER_CONTEXT", "DOCKER_CONFIG", "DOCKER_CERT_PATH", "DOCKER_TLS_VERIFY", "HOME")
+            if key in os.environ})
+        checked = subprocess.run(["docker", "image", "inspect", image],
+                                 stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                 env=self._docker_env, timeout=10)
+        if checked.returncode:
+            raise PolicyFailure("local policy image is unavailable; load the release image first")
+        try:
+            metadata = json.loads(checked.stdout)[0]
+            self.measurements["image_id"] = metadata.get("Id")
+            self.measurements["image_repo_digests"] = metadata.get("RepoDigests") or []
+        except (ValueError, TypeError, KeyError, IndexError, AttributeError):
+            # Optional provenance must not change an otherwise usable backend.
+            self.measurements["image_metadata_reason"] = "image_inspect_metadata_unavailable"
+        arguments = ["--factory", factory, str(seed)] if factory else [name, str(seed)]
+        command = docker_command(image, cpus=cpus, memory=memory,
+                                 container_name=self.container_name, cpuset=cpuset) + arguments
+        # Create first so cleanup cannot race a daemon still creating a container after
+        # its `docker run` client was killed. Starting attaches only to an existing ID.
+        created = subprocess.run(["docker", "create", *command[2:]],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                 env=self._docker_env, timeout=10)
+        if created.returncode:
+            raise PolicyFailure("policy container could not be created")
+        try:
+            super().__init__(["docker", "start", "--attach", "--interactive", self.container_name],
+                             env=self._docker_env, timeout_s=timeout_s)
+        except BaseException:
+            self._remove_container()
+            raise
+
+    def _remove_container(self) -> None:
+        removed = subprocess.run(["docker", "rm", "--force", self.container_name],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                 env=self._docker_env, timeout=5)
+        if removed.returncode:
+            # --rm may already have deleted a normally exited container.
+            present = subprocess.run(["docker", "ps", "--all", "--filter",
+                                      "name=^/" + self.container_name + "$", "--format", "{{.ID}}"],
+                                     stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                     env=self._docker_env, timeout=5)
+            if present.returncode or present.stdout.strip():
+                raise PolicyFailure("policy container cleanup failed or could not be verified")
+
+    def close(self) -> None:
+        if self._closed:
+            return
+        # Killing only `docker run` leaves the daemon's container alive. Remove by unique name.
+        try:
+            self._collect_measurements()
+            self._remove_container()
+        finally:
+            super().close()
+
+    def _collect_measurements(self) -> None:
+        """Capture real kernel counters before container deletion; telemetry is best effort."""
+        try:
+            measured = subprocess.run(["docker", "exec", self.container_name,
+                                       "python", "-c", _CGROUP_PROBE],
+                                      stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                      env=self._docker_env, timeout=2)
+            if measured.returncode:
+                self.measurements["reason"] = "container_unavailable_or_cgroup_probe_failed"
+                return
+            payload = json.loads(measured.stdout)
+            parsed = _parse_cgroup_measurements(payload)
+            self.measurements.update(_verify_cgroup_scope(parsed, payload,
+                                     self.measurements.get('requested_limits', {})))
+        except Exception as error:
+            # A stopped container, old kernel or unavailable daemon must not prevent cleanup.
+            self.measurements["reason"] = "measurement_failed:" + type(error).__name__
+
+
 def policy_command(name: str, seed: int, python: str | None = None) -> list[str]:
-    """Command that runs auditlab.runner.policy_host for auditlab.policies.make_policy(name, seed)."""
     import sys
     return [python or sys.executable, "-m", "auditlab.runner.policy_host", name, str(seed)]
 
 
 def child_env(extra: dict[str, str] | None = None) -> dict[str, str]:
-    """Environment letting the child import auditlab while still hiding everything else."""
+    """Unsafe development imports; never use this as the production isolation boundary."""
     package_parent = str(Path(__file__).resolve().parents[2])
     return scrubbed_env({"PYTHONPATH": package_parent, **(extra or {})})

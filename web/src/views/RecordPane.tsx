@@ -65,7 +65,7 @@ export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt
                 <th className="mono">{name}</th>
                 <td className="mono">
                   {value === null ? <span className="muted">null</span> : typeof value === "object" ? <ObjectValue value={value} onOpen={onOpen} table={rec.table} /> : String(value)}
-                  {isMoney && <span className="muted"> = {money(value as number, currency)}</span>}
+                  {isMoney && <span className="muted"> = {money(value as number, currency, rec.currency_exponents)}</span>}
                   {name === "timestamp" && <span className="muted"> · {when(String(value))}</span>}
                 </td>
                 <td className="small">{hot && <span className="hot-tag">операнд суммы</span>}</td>

@@ -81,7 +81,7 @@ class FactChange(Workspace):
     def test_moving_settlement_after_boundary_reproduces_s02(self):
         out = self.tmp / "new"
         built = standin.apply_change(FIX / "S01" / "public", {"target": "ledger/R7", "field": "timestamp",
-                                     "value": "2026-12-01T00:01:00+05:00"}, out, "S02")
+                                     "value": "2026-12-01T00:01:00+05:00"}, out, "S02", source_truth=json.loads((FIX / "S01" / "private" / "truth.json").read_text()))
         for name in ("ledger.csv", "payments.jsonl", "invoices.jsonl", "fx.csv", "policy.json"):
             self.assertEqual((out / name).read_text(), (FIX / "S02" / "public" / name).read_text(), name)
         self.assertEqual(sorted(built["moved"]), ["ledger/R7", "ledger/R8"])
@@ -94,7 +94,7 @@ class FactChange(Workspace):
 
     def test_fx_payment_shift_gives_1000_tenge(self):
         built = standin.apply_change(FX01 / "public", {"target": "payments/D9", "field": "timestamp",
-                                     "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02")
+                                     "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02", source_truth=json.loads((FX01 / "private" / "truth.json").read_text()))
         [issue] = built["truth"]["issues"]
         self.assertEqual((issue["type"], issue["expected_amount_minor"], issue["currency"]), ("fx_conversion", 100000, "KZT"))
         self.assertEqual(sorted(issue["evidence_sets"][0]),
@@ -111,7 +111,7 @@ class FactChange(Workspace):
                  ({"target": "payments/D9", "field": "timestamp", "value": "15 Nov"}, "invalid_value")]
         for change, code in cases:
             with self.subTest(code=code), self.assertRaises(standin.ChangeRejected) as ctx:
-                standin.apply_change(FX01 / "public", change, self.tmp / code, "FXX")
+                standin.apply_change(FX01 / "public", change, self.tmp / code, "FXX", source_truth=json.loads((FX01 / "private" / "truth.json").read_text()))
             self.assertEqual(ctx.exception.code, code)
 
 
@@ -364,7 +364,7 @@ class PublicInterface(Workspace):
     def test_fx01_shift_found_by_the_reconcile_in_use(self):
         """FX01 moved to 15.11 00:01: the reconcile in use (real when merged) claims exactly the truth."""
         built = standin.apply_change(FX01 / "public", {"target": "payments/D9", "field": "timestamp",
-                                     "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02")
+                                     "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02", source_truth=json.loads((FX01 / "private" / "truth.json").read_text()))
         session, _ = engines.session(self.tmp / "fx")
         policy, policy_engine = engines.policy("reconcile", 0)
         manifest = json.loads((self.tmp / "fx" / "manifest.json").read_text())

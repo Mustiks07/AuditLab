@@ -22,7 +22,7 @@ from auditlab.contracts import MAX_STEPS, Action, Observation, StepResult, ToolR
 from auditlab.evaluator.matcher import validate_truth
 from auditlab.runner import export as export_mod
 
-VERSIONS = {"runner": "1.0", "evaluator": "1.0", "public_schema": "1.0"}
+VERSIONS = {"runner": "1.1", "evaluator": "1.1", "public_schema": "1.0"}
 TOOLS = ("list_records", "get_record", "get_document", "calculator")
 TOOL_DOC = {
     "list_records": {"args": {"table": "str", "cursor": "str|null", "limit": "1..50"}},
@@ -207,13 +207,13 @@ class AuditEnvironment:
     def step(self, action: Action) -> StepResult:
         if self._phase != "active":
             return self._already_finished()
+        if self._clock() >= self._deadline:
+            return self._finish("truncated_timeout", action, _error("time_limit", "Time limit exceeded."))
         if not self._well_formed(action):
             # Damaged transport packet: not an accepted action, so no budget and no trajectory line.
             self._events.append({"event": "malformed_action"})
             return self._protocol("malformed_action", "Action must be an object with 'action' and 'args'.",
                                   False, False, remaining=True)
-        if self._clock() >= self._deadline:
-            return self._finish("truncated_timeout", action, _error("time_limit", "Time limit exceeded."))
         name, args = action["action"], action.get("args")
         if name == "submit":
             return self._submit(action, args)  # a recognised submit with a broken body is judged, not dropped

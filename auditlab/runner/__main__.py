@@ -25,17 +25,32 @@ def main(argv: list[str]) -> int:
     oracle.add_argument("--inspections", type=int, default=0)
     oracle.add_argument("--run-id")
     oracle.add_argument("--stub-session", action="store_true", help="use the PublicSession test double")
-    public = sub.add_parser("policy", help="run a public policy (auditlab.policies) in its own process")
+    public = sub.add_parser("policy", help="run a public policy in an isolated local Docker image")
     public.add_argument("--snapshot", required=True, help="directory with public/ and private/")
     public.add_argument("--name", required=True, help="random | reconcile | flag_all")
-    public.add_argument("--seed", type=int, default=0)
+    public.add_argument("--seed", type=int, default=0, help="public policy RNG seed (not the company seed)")
+    public.add_argument("--mode", choices=("train", "closed"), default="closed")
+    public.add_argument("--image", default="auditlab-policy:release", help="preloaded local image; never pulled")
+    public.add_argument("--time-limit", type=float, default=60.0)
+    public.add_argument("--unsafe-dev-subprocess", action="store_true",
+                        help="train-only development mode: NO filesystem/network isolation")
     public.add_argument("--export-dir", help="new run directory for the open export")
     public.add_argument("--trusted-dir")
     public.add_argument("--run-id")
     args = parser.parse_args(argv)
 
     if args.command == "policy":
-        return _run_public_policy(args)
+        if args.unsafe_dev_subprocess and args.mode != "train":
+            parser.error("--unsafe-dev-subprocess is allowed only with --mode train")
+        if args.mode == "closed" and args.export_dir:
+            parser.error("closed runs use --trusted-dir, never --export-dir")
+        if not args.time_limit > 0 or args.time_limit > 60:
+            parser.error("--time-limit must be greater than 0 and at most 60 seconds")
+        try:
+            return _run_public_policy(args)
+        except (OSError, RuntimeError) as error:
+            print(json.dumps({"status": "infrastructure_error", "error": str(error)}), file=sys.stderr)
+            return 2
     options = {"trusted_dir": args.trusted_dir}
     if args.stub_session:
         from auditlab.runner.testing import FixturePublicSession
@@ -54,16 +69,23 @@ def main(argv: list[str]) -> int:
 
 
 def _run_public_policy(args) -> int:
-    from auditlab.runner.isolation import SubprocessPolicy, child_env, policy_command
-    env = make_env("train", trusted_dir=args.trusted_dir)
-    config = {"snapshot_dir": args.snapshot, "policy_name": args.name}
+    from auditlab.runner.isolation import DockerPolicy, SubprocessPolicy, child_env, policy_command
+    env = make_env(args.mode, trusted_dir=args.trusted_dir)
+    config = {"snapshot_dir": args.snapshot, "policy_name": args.name, "time_limit_s": args.time_limit}
     if args.export_dir:
         config["export_dir"] = args.export_dir
     if args.run_id:
         config["run_id"] = args.run_id
-    policy = SubprocessPolicy(policy_command(args.name, args.seed), env=child_env())
-    run_episode(env, policy, args.seed, config)
-    env.close()
+    if args.unsafe_dev_subprocess:
+        print("UNSAFE DEVELOPMENT MODE: policy can read/write host files and use the network.", file=sys.stderr)
+        policy = SubprocessPolicy(policy_command(args.name, args.seed), env=child_env())
+    else:
+        policy = DockerPolicy(args.image, args.name, args.seed)
+    try:
+        # The company is already fixed by snapshot; policy RNG seed is independent.
+        run_episode(env, policy, 0, config)
+    finally:
+        env.close()
     graded = env.final["graded"]
     print(json.dumps({"status": env.final["status"], "reward": env.final["reward"],
                       "inspection_steps": env.final["inspection_steps"],

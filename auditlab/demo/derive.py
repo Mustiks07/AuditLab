@@ -7,7 +7,8 @@ SQL verifier (auditlab.verifier) is merged; it is always labelled as such.
 """
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
+import re
 from decimal import ROUND_HALF_UP, Decimal
 
 from .snapshot import Record, Snapshot
@@ -19,13 +20,18 @@ def _parse(ts: str) -> datetime:
 
 def local_date(ts: str, tz_name: str | None) -> str:
     moment = _parse(ts)
-    if tz_name:
-        try:
-            from zoneinfo import ZoneInfo
-            return moment.astimezone(ZoneInfo(tz_name)).date().isoformat()
-        except Exception:  # tz database missing: fall back to the published offset
-            pass
-    return moment.date().isoformat()
+    if not tz_name:
+        return moment.date().isoformat()
+    fixed = re.fullmatch(r"UTC([+-])(\d{2}):(\d{2})", tz_name)
+    if fixed:
+        hours, minutes = int(fixed[2]), int(fixed[3])
+        if hours > 23 or minutes > 59:
+            raise ValueError("Invalid published timezone offset")
+        offset = timedelta(hours=hours, minutes=minutes)
+        return moment.astimezone(timezone(-offset if fixed[1] == "-" else offset)).date().isoformat()
+    from zoneinfo import ZoneInfo
+    # Never silently use the source timestamp's offset as the company timezone.
+    return moment.astimezone(ZoneInfo(tz_name)).date().isoformat()
 
 
 def _operand(record: Record, field: str, sign: int, label: str) -> dict[str, object]:

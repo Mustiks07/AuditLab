@@ -4,12 +4,13 @@ on:
     branches: [main, integration/release]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,10 +18,84 @@ jobs:
           python-version: '3.11.14'
       - name: Install accepted component dependencies
         run: python -m pip install --require-hashes -r requirements.lock
+      - name: Prepare verified offline wheels
+        run: |
+          python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels -r requirements.lock
+      - name: Build the real policy sandbox without package network access
+        run: docker build --network=none -f docker/runtime/Dockerfile -t auditlab-policy:ci .
       - name: Run available checks (incomplete release is reported explicitly)
+        env:
+          AUDITLAB_POLICY_IMAGE: auditlab-policy:ci
         run: python run.py verify --output artifacts/ci
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: verification-${{ github.sha }}
           path: artifacts/ci/
+  frontend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm --prefix web ci
+      - run: npm --prefix web test
+      - run: npm --prefix web run build
+  offline-bundle:
+    name: Build offline bundle
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/integration/release')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.14'
+      - name: Build from a clean committed tree
+        run: python tools/build_release.py --output build/ci-release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: offline-bundle-${{ github.sha }}
+          path: build/ci-release/
+          compression-level: 0
+          retention-days: 14
+  offline-rehearsal:
+    name: Internal offline rehearsal on a fresh host
+    needs: offline-bundle
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.14'
+      - uses: actions/download-artifact@v4
+        with:
+          name: offline-bundle-${{ github.sha }}
+          path: build/ci-release
+      - name: Record that project images are absent on this host
+        run: |
+          mkdir -p artifacts/offline-ci
+          python - <<'PYPROBE'
+          import json, subprocess
+          from pathlib import Path
+          manifest = json.loads(Path('build/ci-release/manifest.json').read_text())
+          present = {role: subprocess.run(['docker', 'image', 'inspect', image['id']], capture_output=True).returncode == 0 for role, image in manifest['images'].items()}
+          Path('artifacts/offline-ci/preload.json').write_text(json.dumps({'images_present_before_load': present}, indent=2))
+          assert not any(present.values()), 'Fresh-host claim requires project images to be absent'
+          PYPROBE
+      - name: Execute with all container networks disabled
+        id: exercise
+        continue-on-error: true
+        run: python build/ci-release/offline.py verify --suite rehearsal --output-root artifacts/offline-ci
+      - name: Require complete internal measurements and actual resource limits
+        run: python tools/check_rehearsal_evidence.py --results artifacts/offline-ci --bundle build/ci-release --output artifacts/offline-ci/evidence-summary.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-evidence-${{ github.sha }}
+          path: artifacts/offline-ci/

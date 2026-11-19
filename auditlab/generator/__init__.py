@@ -6,6 +6,8 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 from hashlib import sha256
+from importlib import resources
+from importlib.metadata import version
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -14,7 +16,8 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.1"
+GENERATOR_VERSION = "1.3"
+SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
@@ -31,14 +34,25 @@ def _bounded_int(value, low, high):
     return type(value) is int and low <= value <= high
 
 
-def _period(value, zone_name):
+def _period(value, zone_name, config_version="1.0"):
     if not isinstance(value, str) or not re.fullmatch(r"20[0-9]{2}-(0[1-9]|1[0-2])", value):
         raise ValueError("invalid_target_period: expected YYYY-MM between 2000 and 2099")
     year, month = map(int, value.split("-"))
     if not isinstance(zone_name, str) or not zone_name:
         raise ValueError("invalid_timezone: expected an IANA zone name")
-    # Fixed rules cover the default experiment on systems without an IANA database.
-    if zone_name == "Asia/Almaty" and (year, month) >= (2024, 4):
+    if config_version == "1.1":
+        parts = zone_name.split("/")
+        if any(part in {"", ".", ".."} for part in parts):
+            raise ValueError("invalid_timezone: expected an IANA zone name")
+        try:
+            with resources.files("tzdata.zoneinfo").joinpath(*parts).open("rb") as source:
+                zone = ZoneInfo.from_file(source, key=zone_name)
+        except ModuleNotFoundError:
+            raise ValueError("timezone_data_required: install the pinned tzdata package") from None
+        except (OSError, ValueError):
+            raise ValueError("invalid_timezone: IANA zone unavailable") from None
+    # Legacy snapshots retain their exact original timezone representation.
+    elif zone_name == "Asia/Almaty" and (year, month) >= (2024, 4):
         zone = timezone(timedelta(hours=5), name=zone_name)
     elif zone_name == "UTC":
         zone = timezone.utc
@@ -55,7 +69,8 @@ def _configuration(seed, config):
         raise ValueError("invalid_seed: expected an integer")
     if not isinstance(config, dict) or config.keys() - CONFIG_FIELDS:
         raise ValueError("invalid_config: unsupported configuration fields")
-    if config.get("config_version", "1.0") != "1.0":
+    config_version = config.get("config_version", "1.0")
+    if not isinstance(config_version, str) or config_version not in {"1.0", "1.1"}:
         raise ValueError("unsupported_config_version")
     base = config.get("base_currency", "KZT")
     currencies = config.get("currencies", [base, *(["USD"] if base != "USD" else ["KZT"])])
@@ -81,6 +96,8 @@ def _configuration(seed, config):
             counts["payment_allocation"] = int(timing != "before")
         elif timing != "before" and counts["payment_allocation"] < 1:
             raise ValueError("contradictory_settlement_timing")
+    if config_version == "1.1" and sum(counts.values()) > 12:
+        raise ValueError("invalid_issue_counts: profile 1.1 supports at most 12 issues")
     distractors = config.get("clean_distractors", list(DISTRACTORS))
     if (not isinstance(distractors, list) or any(item not in DISTRACTORS for item in distractors)
             or len(distractors) != len(set(distractors))):
@@ -88,15 +105,16 @@ def _configuration(seed, config):
     size = config.get("company_size", {})
     if (not isinstance(size, dict) or size.keys() - {"ledger_rows_target", "documents_target"}
             or not _bounded_int(size.get("ledger_rows_target", 0), 0, 2_000)
-            or not _bounded_int(size.get("documents_target", 0), 0, 600)):
+            or not _bounded_int(size.get("documents_target", 0), 0, 200 if config_version == "1.1" else 600)):
         raise ValueError("invalid_company_size: use integer targets 0–2000 ledger rows and 0–600 documents")
     nonce = config.get("snapshot_nonce", "")
     if not isinstance(nonce, str) or not re.fullmatch(r"[A-Za-z0-9_-]{0,64}", nonce):
         raise ValueError("invalid_snapshot_nonce")
     zone_name = config.get("timezone", "Asia/Almaty")
-    period_start, period_end = _period(config.get("target_period", "2026-11"), zone_name)
+    period_start, period_end = _period(config.get("target_period", "2026-11"), zone_name, config_version)
     exponents = {code: CURRENCY_EXPONENTS[code] for code in currencies}
-    company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents)
+    company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents,
+                      config_version=config_version)
     return company, counts, timing, interaction, distractors, size, nonce
 
 
@@ -137,7 +155,57 @@ def _add_clean_history(company, distractors, size):
                                "amount_minor": deposit, "returned_at": returned.isoformat()})
     if "archive_copy" in distractors:
         add_duplicate(company, enabled=False)
-    _add_filler(company, size, rng, scale)
+    if company.config_version == "1.1":
+        # Clean counterparts prevent archive copies, boundary dates and FX rows from being labels.
+        if distractors:
+            add_cutoff(company, enabled=False)
+            if len(company.exponents) > 1:
+                add_fx(company, enabled=False)
+        _add_bounded_filler(company, size, rng, scale)
+    else:
+        _add_filler(company, size, rng, scale)
+
+
+def _add_bounded_filler(company, size, rng, scale):
+    """Keep primary documents bounded while allowing larger accounting books."""
+    docs_target = size.get("documents_target", 0)
+    rows_target = size.get("ledger_rows_target", 0)
+    while len(company.invoices) + len(company.payments) < docs_target:
+        remaining = docs_target - len(company.invoices) - len(company.payments)
+        at = company.period_start + timedelta(days=rng.randrange(2, 20), hours=rng.randrange(8, 18))
+        amount = rng.randrange(5, 150) * 1_000 * scale
+        if remaining == 1:
+            entity = company.id("entity")
+            payment, _ = company.payment(entity, at, company.base_currency, amount)
+            company.post(at + timedelta(minutes=1), company.base_currency, amount, "UNAPPLIED", "CASH",
+                         entity, payment_id=payment["payment_id"])
+            company.events.append({"kind": "refund", "payment_id": payment["payment_id"],
+                                   "amount_minor": amount, "returned_at": (at + timedelta(minutes=1)).isoformat()})
+        else:
+            _add_paid_invoices(company, amount, at, split=remaining >= 3 and bool(rng.getrandbits(1)))
+    # Treasury cash transfers are real balanced internal events, without extra external invoices.
+    # They do not change designated-payment settlement indexes or financial issue evidence.
+    available_cash = sum(row["debit_minor"] - row["credit_minor"] for row in company.ledger
+                         if row["account"] == "CASH" and row["currency"] == company.base_currency)
+    if len(company.ledger) < rows_target and available_cash <= 0:
+        available_cash = 10_000 * scale
+        _add_paid_invoices(company, available_cash, company.period_start + timedelta(days=3))
+    treasury_entity = None
+    balance = 0
+    while len(company.ledger) < rows_target:
+        if treasury_entity is None:
+            treasury_entity = company.id("entity")
+        at = company.period_end - timedelta(hours=3) + timedelta(seconds=len(company.ledger))
+        amount = balance if balance else min(available_cash, rng.randrange(1, 100) * scale)
+        debit, credit = ("CASH", "CASH_RESERVE") if balance else ("CASH_RESERVE", "CASH")
+        row, _ = company.post(at, company.base_currency, amount, debit, credit, treasury_entity)
+        company.events.append({"kind": "treasury_transfer", "journal_id": row["journal_id"],
+                               "from_account": credit, "to_account": debit,
+                               "amount_minor": amount, "currency": company.base_currency,
+                               "timestamp": at.isoformat()})
+        balance = 0 if balance else amount
+    if len(company.ledger) > 2_000 or len(company.invoices) + len(company.payments) > 200:
+        raise ValueError("company_size_exceeds_profile: use fewer source events")
 
 
 def _add_filler(company, size, rng, scale):
@@ -184,7 +252,7 @@ def _add_audit_cases(company, counts, timing, interaction):
 
 
 def _policy(company):
-    return {
+    policy = {
         "allocation": {
             "version": "1.0", "deadline": company.period_end.isoformat(),
             "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is "
@@ -208,6 +276,18 @@ def _policy(company):
             "FX_OFFSET": "Offset to the reporting valuation memorandum account",
         },
     }
+    if company.config_version == "1.1":
+        policy["accounts"]["version"] = "1.1"
+        policy["accounts"]["CASH_RESERVE"] = (
+            "Treasury reserve cash in the base currency. A CASH/CASH_RESERVE journal is an internal "
+            "transfer, not a receipt, expense, invoice recognition or customer settlement. It has null "
+            "invoice_id/payment_id and preserves total cash; no external primary document is required.")
+        policy["rule_versions"] = {
+            "version": "1.0",
+            "rules": {key: value.get("version", "1.0") if isinstance(value, dict) else "1.0"
+                      for key, value in policy.items()},
+        }
+    return policy
 
 
 def _write_json(path, record):
@@ -268,6 +348,8 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
             "ledger_rows": len(company.ledger), "document_count": len(company.invoices) + len(company.payments),
             "currency_exponents": company.exponents, "rounding": "ROUND_HALF_UP",
         }
+        if company.config_version == "1.1":
+            manifest["period_end_exclusive"] = True
         episode_id = _episode_id(company, manifest, policy, nonce)
         manifest["episode_id"] = episode_id
         _write_json(public / "manifest.json", manifest)
@@ -278,11 +360,15 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         _write_records(public, "fx", sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
                        company.order_rng, FX_FIELDS)
         _write_json(private / "truth.json", {"episode_id": episode_id, "issues": company.issues})
-        _write_json(private / "provenance.json", {
-            "episode_id": episode_id, "generator_version": GENERATOR_VERSION,
+        provenance = {
+            "episode_id": episode_id, "generator_version": (
+                GENERATOR_VERSION if company.config_version == "1.1" else "1.1"),
             "seed": seed, "config": config, "events": company.events, "mutations": company.mutations,
             "generation_attempts": 1,
-        })
+        }
+        if company.config_version == "1.1":
+            provenance["timezone_database"] = {"package": "tzdata", "version": version("tzdata")}
+        _write_json(private / "provenance.json", provenance)
         staged.rename(output)
 
 
