@@ -132,9 +132,16 @@ class AuditEnvironment:
 
     # ---------------------------------------------------------------- lifecycle
     def reset(self, seed: int, config: dict) -> tuple[Observation, dict]:
+        if self._phase == "active":  # an unfinished attempt is recorded as such, never as a result
+            self._events.append({"event": "abandoned_by_reset"})
+            self._persist_trusted("abandoned", None, None)
+        self._phase = None  # if anything below fails, no stale episode stays steppable
         self.close()
         config = dict(config)
         options = dict(config.pop("runner", {}) or {})
+        time_limit = float(options.get("time_limit_s", DEFAULT_TIME_LIMIT_S))
+        if not time_limit > 0:
+            raise RunnerError("time_limit_s must be positive")
         if self.mode == "train" and self.export_dir is None and options.get("export_dir"):
             self.export_dir = Path(options["export_dir"])
         snapshot = options.get("snapshot_dir")
@@ -156,7 +163,7 @@ class AuditEnvironment:
         self._run_id = options.get("run_id") or uuid.uuid4().hex[:12]
         self._policy_name = str(options.get("policy", "unknown"))
         self._seed = seed
-        self._time_limit = float(options.get("time_limit_s", DEFAULT_TIME_LIMIT_S))
+        self._time_limit = time_limit
         self._started = self._clock()
         self._deadline = self._started + self._time_limit
         self._inspections = 0
@@ -178,22 +185,22 @@ class AuditEnvironment:
 
     # ---------------------------------------------------------------- stepping
     def step(self, action: Action) -> StepResult:
-        if self._phase is None:
-            return self._protocol("no_active_episode", "Call reset first.", False, False)
-        if self._phase == "done":
-            return self._protocol("episode_finished", "The episode is already finished.",
-                                  self.final["terminated"], self.final["truncated"])
+        if self._phase != "active":
+            return self._already_finished()
         if not self._well_formed(action):
+            # Damaged transport packet: not an accepted action, so no budget and no trajectory line.
             self._events.append({"event": "malformed_action"})
             return self._protocol("malformed_action", "Action must be an object with 'action' and 'args'.",
                                   False, False, remaining=True)
         if self._clock() >= self._deadline:
             return self._finish("truncated_timeout", action, _error("time_limit", "Time limit exceeded."))
-        name, args = action["action"], action["args"]
+        name, args = action["action"], action.get("args")
         if name == "submit":
-            return self._submit(action, args)
+            return self._submit(action, args)  # a recognised submit with a broken body is judged, not dropped
         self._inspections += 1  # the single budget counter
-        if name in TOOLS:
+        if name in TOOLS and not isinstance(args, dict):
+            reply = _error("invalid_request", "Invalid request.")
+        elif name in TOOLS:
             try:
                 reply = _clean_reply(self._session.inspect({"action": name, "args": args}))
             except Exception as error:  # session defect: generic public error, details stay trusted
@@ -208,21 +215,38 @@ class AuditEnvironment:
         return self._emit(action, observation, 0.0, False, False, {"inspection_steps": self._inspections})
 
     def abort(self, reason: str) -> StepResult:
-        """Trusted driver hook: the policy crashed, hung or violated the channel. Not a financial result."""
+        """Trusted driver hook: the policy crashed or broke the channel. Not a financial result.
+
+        If the deadline has already passed, the published time-limit rule applies instead (SPEC §8):
+        a policy that hangs until the deadline is a timeout, not a crash.
+        """
         if self._phase != "active":
-            return self._protocol("episode_finished", "The episode is already finished.",
-                                  bool(self.final and self.final["terminated"]), bool(self.final and self.final["truncated"]))
+            return self._already_finished()
+        if self._clock() >= self._deadline:
+            return self.expire()
         self._events.append({"event": "abort", "reason": reason})
         return self._finish("policy_failure", None, _error("aborted", "Episode aborted."))
 
+    def expire(self) -> StepResult:
+        """Trusted driver hook: the deadline passed while waiting for the policy. Truncate with an empty answer."""
+        if self._phase != "active":
+            return self._already_finished()
+        return self._finish("truncated_timeout", None, _error("time_limit", "Time limit exceeded."))
+
     def seconds_left(self) -> float:
-        return max(0.0, self._deadline - self._clock())
+        return max(0.0, self._deadline - self._clock()) if self._phase == "active" else 0.0
 
     # ---------------------------------------------------------------- internals
     @staticmethod
     def _well_formed(action: object) -> bool:
         return isinstance(action, dict) and isinstance(action.get("action"), str) \
-            and isinstance(action.get("args"), dict)
+            and set(action) <= {"action", "args"}
+
+    def _already_finished(self) -> StepResult:
+        if self._phase is None:
+            return self._protocol("no_active_episode", "Call reset first.", False, False)
+        return self._protocol("episode_finished", "The episode is already finished.",
+                              self.final["terminated"], self.final["truncated"])
 
     def _protocol(self, code: str, message: str, terminated: bool, truncated: bool, remaining: bool = False) -> StepResult:
         observation: Observation = dict(_error(code, message))
@@ -261,7 +285,7 @@ class AuditEnvironment:
         truncated = not submitted
         public_reward = true_reward if self.mode == "train" else 0.0
         info: dict[str, object] = {"status": status}
-        if self.mode == "train" and graded and status != "infra_error":
+        if self.mode == "train" and graded and status in COMPLETED:
             info["score"] = graded["score"]
         self._phase = "done"
         step = self._emit(action, observation, public_reward, terminated, truncated, info)
@@ -278,14 +302,22 @@ class AuditEnvironment:
                                  "terminated": terminated, "truncated": truncated})
         return observation, reward, terminated, truncated, info
 
+    def _run_record(self, status: str) -> dict:
+        return {"run_id": self._run_id, "episode_id": self._episode_id, "policy": self._policy_name,
+                "mode": self.mode, "status": status}
+
+    def _persist_trusted(self, status: str, graded: dict | None, true_reward: float | None) -> None:
+        if self.trusted_dir is None:
+            return
+        report = {**self._run_record(status), "versions": VERSIONS, "seed": self._seed,
+                  "inspection_steps": self._inspections, "elapsed_s": self._clock() - self._started,
+                  "evaluation": graded, "events": self._events, "infra": self._infra,
+                  "true_reward": true_reward, "completed": status in COMPLETED and not self._infra}
+        export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
+
     def _persist(self, status: str, graded: dict | None) -> None:
-        run = {"run_id": self._run_id, "episode_id": self._episode_id, "policy": self._policy_name,
-               "mode": self.mode, "status": status}
-        if self.trusted_dir is not None:
-            report = {**run, "versions": VERSIONS, "seed": self._seed, "inspection_steps": self._inspections,
-                      "elapsed_s": self._clock() - self._started, "evaluation": graded,
-                      "events": self._events, "infra": self._infra, "true_reward": self.final["reward"]}
-            export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
+        run = self._run_record(status)
+        self._persist_trusted(status, graded, self.final["reward"])
         if self.mode == "train" and self.export_dir is not None and status in COMPLETED and not self._infra:
             export_mod.write_public_run(self.export_dir, run, self._public_dir, self._trajectory,
                                         self.final["submission"], graded["score"])

@@ -9,7 +9,7 @@
 ```
 docker run --rm -i --network none --read-only --cap-drop ALL \
   --security-opt no-new-privileges --pids-limit 128 --cpus 2 --memory 4g \
-  --user 65534:65534 --tmpfs /tmp:rw,noexec,nosuid,size=64m  IMAGE [factory SEED]
+  --user 65534:65534 --tmpfs /tmp:rw,noexec,nosuid,size=64m  IMAGE [NAME SEED]
 ```
 
 * нет сети, нет `-v`/`--volume`, нет сокета Docker, нет привилегий;
@@ -20,14 +20,16 @@ docker run --rm -i --network none --read-only --cap-drop ALL \
 
 ```python
 from auditlab.runner.isolation import SubprocessPolicy, docker_command
-policy = SubprocessPolicy(docker_command("auditlab-policy:dev") + ["auditlab.policies:make_policy_by_seed", "7"])
+policy = SubprocessPolicy(docker_command("auditlab-policy:dev") + ["reconcile", "7"])
 run_episode(env, policy, seed, config)   # auditlab.runner.episode
 ```
 
-`factory` — `module:callable`, вызывается как `factory(seed)` и возвращает объект с `act(public_observation)`. Новый процесс на каждый эпизод.
+`NAME SEED` → `auditlab.policies.make_policy(NAME, SEED)` (random, reconcile, flag_all). Внешний адаптер: `--factory module:fn SEED` → `fn(SEED)`. Объект обязан иметь `act(public_observation)`. Новый процесс на каждый эпизод. Oracle в этот образ не входит: он исполняется доверенным адаптером `auditlab.runner.episode.OraclePolicy`.
+
+Зависание политики до дедлайна эпизода — это тайм-аут по §8 (`truncated_timeout`, пустой ответ), падение или мусор в канале — `policy_failure` (не финансовый результат, в публичный экспорт не попадает).
 
 ## Статус
 
 * Dockerfile **не собирался** в среде разработки (Docker недоступен); профиль запуска и протокол проверены без Docker через `SubprocessPolicy` с обычным процессом.
-* `auditlab.policies` принадлежит GPT Pro 1: пока его нет, `COPY auditlab/policies` не соберётся, а имя фабрики по умолчанию в `CMD` — заглушка, упаковщику нужно подставить реальное.
+* `auditlab.policies` принадлежит GPT Pro 1: пока модуль не слит в main, `COPY auditlab/policies` не соберётся.
 * ISO-01 в части реальных томов и окружения контейнера проверяется только после сборки образа.

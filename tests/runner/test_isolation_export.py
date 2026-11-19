@@ -8,7 +8,7 @@ from pathlib import Path
 
 from auditlab.runner import make_env
 from auditlab.runner.episode import OraclePolicy, run_episode
-from auditlab.runner.isolation import PolicyFailure, SubprocessPolicy, docker_command
+from auditlab.runner.isolation import SubprocessPolicy, child_env, docker_command
 from auditlab.runner.testing import FixturePublicSession
 
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures" / "foundation"
@@ -56,8 +56,7 @@ class Isolation(unittest.TestCase):
                            trusted_dir=trusted, export_dir=exports)
             policy = SubprocessPolicy([sys.executable, "-c", "import sys; sys.exit(3)"])
             result = run_episode(env, policy, 0, SNAP)
-            self.assertEqual((result[2], result[3], result[4]), (False, True, {"status": "policy_failure",
-                                                                              "score": env.final["graded"]["score"]}))
+            self.assertEqual((result[2], result[3], result[4]), (False, True, {"status": "policy_failure"}))
             self.assertEqual(env.final["status"], "policy_failure")
             self.assertEqual(list(Path(exports).iterdir()), [])
             report = json.loads(next(Path(trusted).iterdir()).joinpath("report.json").read_text(encoding="utf-8"))
@@ -70,8 +69,33 @@ class Isolation(unittest.TestCase):
         cfg = {"runner": {**SNAP["runner"], "time_limit_s": 0.5}}
         result = run_episode(env, policy, 0, cfg)
         self.assertTrue(result[3])
-        self.assertEqual(env.final["status"], "policy_failure")
+        self.assertEqual(env.final["status"], "truncated_timeout")  # SPEC §8, not a crash
+        self.assertEqual(env.final["inspection_steps"], 0)
+        self.assertEqual(env.final["reward"], -1.0)  # S02 has an error, empty answer
         self.assertIsNotNone(policy._proc.poll())
+
+    def test_hang_after_some_inspections_counts_accepted_ones(self):
+        script = chr(10).join([
+            "import sys, json, time",
+            "for i, l in enumerate(sys.stdin):",
+            "    if i == 3: time.sleep(30)",
+            "    print(json.dumps({'action': 'get_document', 'args': {'doc_id': 'NOPE' if i else 'D9'}}))",
+            "    sys.stdout.flush()"])
+        env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+        policy = SubprocessPolicy([sys.executable, "-c", script])
+        result = run_episode(env, policy, 0, {"runner": {"snapshot_dir": str(FIXTURES / "S01"), "time_limit_s": 1.5}})
+        self.assertEqual((result[3], env.final["status"], env.final["inspection_steps"]),
+                         (True, "truncated_timeout", 3))
+        self.assertAlmostEqual(result[1], 1 - 0.006, places=12)
+
+    def test_policy_host_runs_a_factory_over_stdio(self):
+        env = make_env("train", session_opener=FixturePublicSession, evaluator="inprocess")
+        cmd = [sys.executable, "-m", "auditlab.runner.policy_host", "--factory", "auditlab_test_policy:make", "0"]
+        policy = SubprocessPolicy(cmd, env=child_env({"PYTHONPATH": child_env()["PYTHONPATH"] + os.pathsep
+                                                      + str(Path(__file__).parent)}))
+        result = run_episode(env, policy, 0, {"runner": {"snapshot_dir": str(FIXTURES / "S01")}})
+        self.assertEqual((result[2], env.final["status"], env.final["inspection_steps"]), (True, "submitted", 2))
+        self.assertAlmostEqual(result[1], 0.996, places=12)
 
     def test_garbage_output_is_policy_failure(self):
         env = make_env("closed", session_opener=FixturePublicSession, evaluator="inprocess")
