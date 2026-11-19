@@ -236,9 +236,13 @@ def _score_tuple(row):
     return tuple(score.get(key) for key in ("tp", "fp", "fn", "precision", "recall", "f1", "reward"))
 
 
-def replay_actions(snapshot, source, destination, selection):
-    """Replay recorded public actions in a fresh facade; time-based failures are not fabricated."""
+def replay_actions(snapshot, source, destination, selection, source_report=None):
+    """Compare public transitions and trusted grading; clocks are measured separately."""
     from auditlab.runner import make_env
+    source_report = Path(source_report) if source_report is not None else Path(source).with_name("report.json")
+    if not source_report.is_file():
+        return {"status": "not_checked", "detail": "Original trusted report is required to verify closed-mode reward."}
+    original_report = read_json(source_report)
     expected = [json.loads(line) for line in Path(source).read_text(encoding="utf-8").splitlines()]
     env = make_env("closed", trusted_dir=destination)
     try:
@@ -255,8 +259,21 @@ def replay_actions(snapshot, source, destination, selection):
                 mismatches.append(row["step"])
         if env.final is None:
             mismatches.append("not_finalized")
+        trusted_mismatches = []
+        if env.final is not None:
+            actual_report = read_json(Path(destination) / "replay" / "report.json")
+            # Closed public rewards are always zero: public replay alone cannot certify grades.
+            # Run IDs, policy names and elapsed time intentionally differ in a fresh replay.
+            for key in ("episode_id", "mode", "status", "versions", "seed", "inspection_steps",
+                        "evaluation", "infra", "true_reward", "completed"):
+                if key not in original_report or original_report[key] != actual_report.get(key):
+                    trusted_mismatches.append(key)
+            if trusted_mismatches:
+                mismatches.append("trusted_report")
         return {"status": "failed" if mismatches else "passed", "steps": len(expected),
-                "mismatches": mismatches, "source_sha256": _hash(source)}
+                "mismatches": mismatches, "trusted_mismatches": trusted_mismatches,
+                "source_sha256": _hash(source), "source_report_sha256": _hash(source_report),
+                "scope": "Public transitions and deterministic trusted report fields; elapsed time excluded."}
     finally:
         env.close()
 

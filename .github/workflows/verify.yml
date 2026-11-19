@@ -19,7 +19,8 @@ jobs:
       - name: Install accepted component dependencies
         run: python -m pip install --require-hashes -r requirements.lock
       - name: Prepare verified offline wheels
-        run: python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels -r requirements.lock
+        run: |
+          python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels -r requirements.lock
       - name: Build the real policy sandbox without package network access
         run: docker build --network=none -f docker/runtime/Dockerfile -t auditlab-policy:ci .
       - name: Run available checks (incomplete release is reported explicitly)

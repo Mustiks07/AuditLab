@@ -78,6 +78,8 @@ python offline.py verify --suite rehearsal --cpu-set 0,1
 ```
 
 Один и тот же набор CPU передаётся controller и harness дочерних контейнеров.
+Controller использует UID/GID пользователя launcher и дополнительную группу
+локального Docker socket; каталог результатов не требует world-writable прав.
 Controller работает с `--network none --cpus 2 --memory 2g --memory-swap 2g`, read-only rootfs,
 `cap-drop ALL`, `no-new-privileges`, временным `/tmp` до 1 ГБ. Только доверенному
 controller доступны Docker socket и каталог результатов. Обычная политика не
