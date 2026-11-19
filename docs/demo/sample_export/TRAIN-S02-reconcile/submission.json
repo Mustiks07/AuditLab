@@ -1,0 +1,21 @@
+{
+  "episode_id": "S02",
+  "findings": [
+    {
+      "type": "payment_allocation",
+      "affected_ids": [
+        "invoice/I4",
+        "payment/P9"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+        "payments/D9",
+        "ledger/R4",
+        "ledger/R5",
+        "policy/allocation"
+      ],
+      "explanation": "По перечню движений до границы 2026-12-01T00:00:00+05:00 платёж P9 имеет нераспределённый остаток 2000000 минимальных единиц KZT."
+    }
+  ]
+}
