@@ -13,6 +13,7 @@ import io
 import json
 import platform
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,35 @@ def checksum(path):
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             result.update(chunk)
     return result.hexdigest()
+
+
+def validate_image_archive(path, images):
+    """Both Docker's legacy catalog and the OCI index must retain all three images.
+
+    Saving multiple anonymous image IDs can produce three Docker entries but only
+    one OCI descriptor. Classic storage masks that defect; containerd uses the index.
+    """
+    expected = {image["id"] for image in images.values()}
+    with tarfile.open(path) as archive:
+        catalog = json.load(archive.extractfile("manifest.json"))
+        for role, image in images.items():
+            matches = [row for row in catalog if image["tag"] in (row.get("RepoTags") or [])]
+            if len(matches) != 1 or Path(matches[0]["Config"]).stem != image["id"].split(":", 1)[1]:
+                raise ValueError(f"saved Docker catalog lost the tagged {role} identity")
+        if "index.json" not in archive.getnames():
+            return  # Older Docker-only archives have no competing OCI index.
+        index = json.load(archive.extractfile("index.json"))
+        configs = set()
+        for descriptor in index["manifests"]:
+            digest = descriptor["digest"]
+            if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+                raise ValueError("invalid saved OCI manifest digest")
+            data = archive.extractfile("blobs/sha256/" + digest.split(":", 1)[1]).read()
+            if "sha256:" + hashlib.sha256(data).hexdigest() != digest:
+                raise ValueError("saved OCI manifest checksum differs")
+            configs.add(json.loads(data)["config"]["digest"])
+        if configs != expected:
+            raise ValueError("saved OCI index does not cover all three image configurations")
 
 
 def excluded(name):
@@ -135,9 +165,11 @@ def main(argv=None):
                     ["docker", "run", "--rm", "--pull", "never", "--network", "none", "--read-only",
                      "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
                      "--entrypoint", "python", inspected["Id"], "-c", LICENSE_SCRIPT]))
-            # One docker save deduplicates layers shared by all three image identities.
+            # Tags keep every OCI index entry; saving anonymous IDs can silently keep only one.
+            # One archive still deduplicates shared layers.
             run(["docker", "save", "--output", str(output / "images.tar"),
-                 *(images[role]["id"] for role in ROLES)])
+                 *(images[role]["tag"] for role in ROLES)])
+            validate_image_archive(output / "images.tar", images)
             license_report = {"images": inventories,
                               "scope": "Installed Python distributions, available license texts and Debian copyright files. "
                                        "Docker CLI source license/notice files are included from v29.0.1, verified against Git blob hashes.",
