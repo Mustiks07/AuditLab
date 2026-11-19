@@ -51,6 +51,7 @@ export interface Operand {
   field: string;
   value_minor?: number;
   value?: string;
+  currency?: string;
   sign: number;
   label: string;
   timestamp?: string;
@@ -135,7 +136,7 @@ export interface Change { key: string; field: string | null; before: unknown; af
 export interface CompareSide {
   currency_exponents: Record<string, number>;
   run: RunMeta;
-  claims: { type: string; affected_ids: string[]; amount_minor: number; currency: string; evidence_ids: string[]; verdict: FindingView["verdict"]; unconfirmed: { key: string; label: string }[] }[];
+  claims: { type: string; affected_ids: string[]; amount_minor: number; currency: string; evidence_ids: string[]; verdict: FindingView["verdict"]; unconfirmed: { key: string; label: string; field?: string; value_minor?: number; currency?: string; value?: string }[] }[];
   score: Score | null;
   empty: boolean;
 }

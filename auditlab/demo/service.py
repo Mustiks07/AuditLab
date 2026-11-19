@@ -204,12 +204,21 @@ def record_view(store: ExportStore, run_id: str, key: str) -> dict | None:
 def _unconfirmed(f: dict) -> list[dict]:
     """Operands of the amount that the finding no longer cites, with their financial meaning."""
     calc = f.get("derivation") or {}
-    labels = {o["key"]: f"{o['label']}: {o.get('value_minor', o.get('value'))}" for o in calc.get("operands") or []}
+    # Money operands keep their minor-unit value and currency so the UI formats them with the
+    # manifest exponent instead of printing a bare integer; non-money operands (rates) keep "value".
+    entries = {}
+    for o in calc.get("operands") or []:
+        entry = {"key": o["key"], "label": o["label"], "field": o.get("field")}
+        if "value_minor" in o:
+            entry.update(value_minor=o["value_minor"], currency=o.get("currency"))
+        else:
+            entry["value"] = o.get("value")
+        entries.setdefault(o["key"], entry)
     if calc.get("rule"):
-        labels.setdefault(calc["rule"]["key"], "правило расчёта")
+        entries.setdefault(calc["rule"]["key"], {"key": calc["rule"]["key"], "label": "правило расчёта"})
     if calc.get("subject"):
-        labels.setdefault(calc["subject"], "исходный документ")
-    return [{"key": k, "label": labels.get(k, "")} for k in f.get("uncited_operands") or []]
+        entries.setdefault(calc["subject"], {"key": calc["subject"], "label": "исходный документ"})
+    return [entries.get(k, {"key": k, "label": ""}) for k in f.get("uncited_operands") or []]
 
 
 def _claims(detail: dict) -> list[dict]:

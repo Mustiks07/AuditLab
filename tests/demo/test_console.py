@@ -213,6 +213,14 @@ class LabEndToEnd(Workspace):
             self.assertEqual(copied["findings"][0]["verdict"]["reason"], "evidence_incomplete")
         self.assertIn("fx/2026-11-15/USD/KZT", copied["findings"][0]["uncited_operands"])
         self.assertEqual(service.run_detail(store, op["run_id"])["score"]["tp"], 1, "source score unchanged")
+        # The comparison names the no-longer-cited fact with its unit, never a bare integer.
+        claim = service.compare(store, op["run_id"], copy["run_id"])["right"]["claims"][0]
+        rate = next(u for u in claim["unconfirmed"] if u["key"] == "fx/2026-11-15/USD/KZT")
+        self.assertEqual((rate["value"], rate.get("value_minor")), ("510", None), "a rate is not a money amount")
+        detail = service.run_detail(store, op["run_id"])
+        for operand in detail["findings"][0]["derivation"]["operands"]:
+            if "value_minor" in operand:
+                self.assertIn(operand["currency"], ("USD", "KZT"), operand)
 
         check = lab.replay_check(self.paths, ids["S02"])
         self.assertTrue(check["observations_match"])

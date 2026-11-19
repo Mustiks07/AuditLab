@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api, ApiError, newOpKey, OpStatus, RecordView, waitForOp } from "../api";
 import { go } from "../App";
 import { ErrorBox, KeyChip } from "../components";
-import { money, when } from "../format";
+import { money, opError, when } from "../format";
 
 const MONEY_FIELDS = new Set(["debit_minor", "credit_minor", "amount_minor", "total_minor"]);
 
@@ -167,7 +167,7 @@ export function OpLine({ status }: { status: OpStatus }) {
     pending: "ожидание запуска доверенного сервиса…",
     running: "генерация компании, прогон аудитора и оценка…",
     completed: `готово: ${status.run_id}`,
-    failed: `ошибка запуска: ${status.error?.code} — ${status.error?.message}`,
+    failed: `ошибка запуска: ${opError(status.error?.code, status.error?.message)}`,
   };
   return <div className={`op op-${status.status}`} role="status">{text[status.status]} <span className="muted mono small">{status.op_key}</span></div>;
 }

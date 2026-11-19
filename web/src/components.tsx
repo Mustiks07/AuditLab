@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import type { Derivation, Operand, RunMeta } from "./api";
-import { minor, money, STATUS, when } from "./format";
+import { minor, money, OP_ERRORS, opError, STATUS, when } from "./format";
 
 export function LabelBadge({ run }: { run: RunMeta }) {
   return <span className={`badge badge-${run.label ?? "export"}`}>{run.label_text}</span>;
@@ -55,7 +55,9 @@ export function Empty({ title, children }: { title: string; children?: ReactNode
 }
 
 export function ErrorBox({ error }: { error: unknown }) {
-  const msg = error instanceof Error ? error.message : String(error);
+  const code = typeof error === "object" && error !== null && "code" in error ? String((error as { code: unknown }).code) : undefined;
+  const raw = error instanceof Error ? error.message : String(error);
+  const msg = code && OP_ERRORS[code] ? opError(code, raw) : raw;
   return <div className="error-box" role="alert"><b>Ошибка.</b> {msg}</div>;
 }
 
@@ -73,13 +75,13 @@ export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { 
       <div className="derivation-title">{calc.title}</div>
       <table className="operands">
         <thead>
-          <tr><th></th><th>значение</th><th>источник</th><th>строка</th><th>смысл</th></tr>
+          <tr><th></th><th title="Числа в файлах — целые минимальные единицы валюты (тиын, цент); под ними — сумма по разрядности из манифеста">значение, мин. ед.</th><th>источник</th><th>строка</th><th>смысл</th></tr>
         </thead>
         <tbody>
           {calc.operands.map((op) => (
             <tr key={op.key + op.field} className={activeKey === op.key ? "row-active" : ""}>
               <td className="sign">{calc.type === "fx_conversion" ? (op.sign < 0 ? "−" : op.field === "rate" ? "×" : "") : op.sign < 0 ? "−" : "+"}</td>
-              <td className="num">{operandValue(op)}</td>
+              <td className="num">{operandValue(op)}{op.value_minor !== undefined && op.currency && <div className="small muted">{money(op.value_minor, op.currency, exponents)}</div>}</td>
               <td>
                 <KeyChip k={op.key} onOpen={onOpen} active={activeKey === op.key} missing={cited !== undefined && !citedSet.has(op.key)}
                   hint={cited !== undefined && !citedSet.has(op.key) ? "Этот операнд не процитирован в выводе" : `${op.file}:${op.line}`} />
@@ -91,7 +93,7 @@ export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { 
           {(calc.context ?? []).map((op) => (
             <tr key={"ctx" + op.key} className="row-context">
               <td className="sign">·</td>
-              <td className="num">{operandValue(op)}</td>
+              <td className="num">{operandValue(op)}{op.value_minor !== undefined && op.currency && <div className="small muted">{money(op.value_minor, op.currency, exponents)}</div>}</td>
               <td><KeyChip k={op.key} onOpen={onOpen} active={activeKey === op.key} /></td>
               <td className="mono small">{op.file.replace("public/", "")}:{op.line}</td>
               <td className="small">{op.label}{op.timestamp ? ` · ${when(op.timestamp)}` : ""}</td>
@@ -99,7 +101,7 @@ export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { 
           ))}
         </tbody>
       </table>
-      <div className="formula mono">{calc.formula}</div>
+      <div className="formula mono">{calc.formula} <span className="muted small">· в мин. ед.; итог в {calc.currency}</span></div>
       <div className="rule">
         <KeyChip k={rule.key} onOpen={onOpen} active={activeKey === rule.key}
           missing={cited !== undefined && !citedSet.has(rule.key)} />

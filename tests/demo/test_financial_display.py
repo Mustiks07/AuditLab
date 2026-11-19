@@ -175,3 +175,25 @@ class CounterfactualScope(unittest.TestCase):
                 standin.apply_change(FIX / 'S02/public', {'target': 'ledger/R7', 'field': 'timestamp',
                                      'value': '2026-11-30T23:59:00+05:00'}, Path(temp)/'new', 'NEW', source_truth=truth)
             self.assertEqual(caught.exception.code, 'unsupported_counterfactual')
+
+
+class UnconfirmedOperandUnits(unittest.TestCase):
+    """A copy that drops a ledger row shows that row as money in its currency (RC walkthrough finding)."""
+
+    def test_dropped_ledger_operand_carries_minor_value_and_currency(self):
+        snap = Snapshot(FIX / 'S02' / 'public')
+        finding = {'type': 'payment_allocation', 'affected_ids': ['invoice/I4', 'payment/P9'],
+                   'claimed_amount_minor': 2000000, 'currency': 'KZT', 'explanation': 'x',
+                   'evidence_ids': ['payments/D9', 'ledger/R4', 'ledger/R6', 'policy/allocation']}
+        [view] = service.findings_view(snap, {'episode_id': 'S02', 'findings': [finding]},
+                                       {'tp': 0, 'fp': 1, 'fn': 1, 'reward': -1.0}, None, [])
+        [entry] = service._unconfirmed(view)
+        self.assertEqual((entry['key'], entry['value_minor'], entry['currency']), ('ledger/R5', 3000000, 'KZT'))
+
+
+class ServeAddress(unittest.TestCase):
+    def test_bind_all_prints_a_browser_address(self):
+        from auditlab.demo.__main__ import browser_url
+        self.assertEqual(browser_url('0.0.0.0', 8765), 'http://127.0.0.1:8765/')
+        self.assertEqual(browser_url('::', 8765), 'http://127.0.0.1:8765/')
+        self.assertEqual(browser_url('127.0.0.1', 9000), 'http://127.0.0.1:9000/')

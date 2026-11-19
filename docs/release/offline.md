@@ -51,6 +51,33 @@ hardlink в дереве исходников отвергаются. Генер
 
 ## Проверка полученного комплекта
 
+### Перед запуском: хранилище образов и cgroup
+
+Комплект проверен на классическом хранилище образов Docker (`overlay2`). Новые установки
+Docker Engine 29 по умолчанию используют containerd image store. На нём `docker load` из
+`images.tar` загружает **один безымянный образ из трёх** (в OCI `index.json` комплекта
+`v0.1.0-rc.1` один манифест, в `manifest.json` три образа без `RepoTags`), и `verify` завершается
+`Offline launch failed: ... docker image inspect sha256:9cad68... returned non-zero exit status 1`.
+Проверьте до запуска:
+
+```sh
+docker info --format '{{.Driver}} {{.DriverStatus}} cgroup={{.CgroupVersion}}'
+```
+
+`overlay2 ... cgroup=2` — подходящая конфигурация. Если в выводе есть `io.containerd.snapshotter.v1`,
+на проверочной машине переключите демон на классическое хранилище и перезапустите его. Уже
+загруженные образы при этом не видны:
+
+```json
+{"features": {"containerd-snapshotter": false}}
+```
+
+(`/etc/docker/daemon.json`, затем перезапуск Docker). `cgroup=1` даёт только функциональную
+проверку: launcher пишет `Resource limits are not supported by this daemon`, ресурсные строки
+остаются `not_checked`, а `verify` и evidence checker законно возвращают 2.
+
+### Команды
+
 Перед передачей отдельно публикуется checksum manifest/комплекта. Внутренние
 SHA-256 выявляют повреждение файлов, но не удостоверяют источник изменённого
 manifest. Из каталога комплекта:
@@ -60,6 +87,18 @@ python offline.py check
 python offline.py verify --output-root ./results
 python offline.py verify --suite rehearsal --output-root ./results
 ```
+
+Внутреннее доказательство репетиции проверяет checker из приложенного `source.tar.gz` (та же
+команда, что в CI); `RESULTS` — каталог `results/verify-…` последнего `--suite rehearsal`:
+
+```sh
+mkdir -p source && tar -xzf source.tar.gz -C source
+python3.11 -I source/tools/check_rehearsal_evidence.py RESULTS --bundle . --output evidence-summary.json
+```
+
+Ожидаемо `"status": "internal_rehearsal_passed"`, exit 0, `failures: []` при полных 20/80/20 и
+подтверждённых лимитах; без cgroup v2 — `not_checked`, exit 2, `failures` пуст, а `missing`
+перечисляет ресурсные строки.
 
 `check` проверяет весь комплект без Docker. `verify` сначала проверяет размеры
 и хеши **всех** payload-файлов и только затем вызывает `docker load`. После
@@ -114,7 +153,9 @@ docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop A
   "$AUDITLAB_RUNTIME_IMAGE" python run.py demo --host 0.0.0.0 --root /results/demo
 ```
 
-Откройте `http://127.0.0.1:8765/`. Этот запуск не получает Docker socket. Для
+Откройте `http://127.0.0.1:8765/`: сервер в контейнере слушает `0.0.0.0`; образ `v0.1.0-rc.1` печатает
+адрес `http://0.0.0.0:8765/`, его в браузере не открывайте. Сценарий защиты на 3 минуты:
+[docs/demo/DEFENSE.md](../demo/DEFENSE.md). Этот запуск не получает Docker socket. Для
 повтора выбранного открытого run ID после остановки сервера:
 
 ```sh
