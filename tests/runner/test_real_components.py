@@ -4,6 +4,7 @@ Skipped with "не проверено" while those modules are absent; a broken 
 Covers the three integrator blockers on PR #9: flat reset config, generator output directory,
 export published directly in export_dir with status=completed.
 """
+import copy
 import hashlib
 import importlib
 import importlib.util
@@ -99,14 +100,25 @@ class RealSimulator(unittest.TestCase):
         obs, _ = env.reset(19, {"snapshot_dir": str(episode), "export_dir": str(run_dir),
                                 "policy_name": "reconcile"})
         policy = make_policy("reconcile", 19)
-        for _ in range(100):
-            obs, reward, term, trunc, info = env.step(policy.act(obs))
+        episode_id = obs["manifest"]["episode_id"]
+        actual = []
+        for step in range(1, 101):
+            action = policy.act(copy.deepcopy(obs))
+            sent = copy.deepcopy(action)
+            obs, reward, term, trunc, info = env.step(action)
+            actual.append({"episode_id": episode_id, "step": step, "action": sent,
+                           "observation": copy.deepcopy(obs), "reward": reward,
+                           "terminated": term, "truncated": trunc})
             if term or trunc:
                 break
         self.assertEqual((term, trunc), (True, False))
         self.assertEqual(info["score"]["tp"], 1)
         self.assertEqual(load(run_dir / "run.json")["status"], "completed")
         self.assertEqual(load(run_dir / "score.json"), info["score"])
+        self.assertEqual(load(run_dir / "submission.json"), actual[-1]["action"]["args"])
+        rows = [json.loads(line) for line in (run_dir / "trajectories.jsonl").read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(rows, actual, "every exported row is exactly what step returned")
+        self.assertNotIn(b"\r\n", (run_dir / "run.json").read_bytes())
         self.assertEqual(before, hashes(episode), "runner must not change the snapshot")
 
     def test_reconcile_policy_in_separate_process(self):
