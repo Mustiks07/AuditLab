@@ -1,0 +1,23 @@
+{
+  "episode_id": "S02",
+  "issues": [
+    {
+      "issue_id": "X1",
+      "type": "payment_allocation",
+      "affected_ids": [
+        "invoice/I4",
+        "payment/P9"
+      ],
+      "expected_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/D9",
+          "ledger/R4",
+          "ledger/R5",
+          "policy/allocation"
+        ]
+      ]
+    }
+  ]
+}
