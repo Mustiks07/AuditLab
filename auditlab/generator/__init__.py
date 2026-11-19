@@ -14,7 +14,7 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.0"
+GENERATOR_VERSION = "1.1"
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
@@ -137,10 +137,27 @@ def _add_clean_history(company, distractors, size):
                                "amount_minor": deposit, "returned_at": returned.isoformat()})
     if "archive_copy" in distractors:
         add_duplicate(company, enabled=False)
-    while (len(company.ledger) < size.get("ledger_rows_target", 0)
-           or len(company.invoices) + len(company.payments) < size.get("documents_target", 0)):
+    _add_filler(company, size, rng, scale)
+
+
+def _add_filler(company, size, rng, scale):
+    rows_target = size.get("ledger_rows_target", 0)
+    docs_target = size.get("documents_target", 0)
+    rows_needed = rows_target - len(company.ledger)
+    docs_needed = docs_target - len(company.invoices) - len(company.payments)
+    # A paid invoice adds 6 rows and 2 documents, or 10 rows and 3 documents with split payment.
+    split_count = rows_needed - 3 * docs_needed
+    single_count, remainder = divmod(docs_needed - 3 * split_count, 2)
+    if split_count >= 0 and single_count >= 0 and remainder == 0:
+        payments_split = [True] * split_count + [False] * single_count
+        rng.shuffle(payments_split)
+    else:
+        payments_split = []
+    while len(company.ledger) < rows_target or len(company.invoices) + len(company.payments) < docs_target:
         at = company.period_start + timedelta(days=rng.randrange(1, 21), hours=rng.randrange(8, 18))
-        _add_paid_invoices(company, rng.randrange(5, 150) * 1_000 * scale, at, split=bool(rng.getrandbits(1)))
+        amount = rng.randrange(5, 150) * 1_000 * scale
+        split = payments_split.pop() if payments_split else bool(rng.getrandbits(1))
+        _add_paid_invoices(company, amount, at, split=split)
 
 
 def _add_audit_cases(company, counts, timing, interaction):
