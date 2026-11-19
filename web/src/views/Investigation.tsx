@@ -126,6 +126,13 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
   );
 }
 
+function calcValue(result: unknown): string {
+  // Public contract: the calculator returns a decimal string.
+  if (typeof result === "string") return result;
+  if (result && typeof result === "object" && "value" in result) return String((result as { value: unknown }).value);
+  return String(result);
+}
+
 function StepsList({ steps, selection, evidence, onSelect }: { steps: Step[]; selection: Selection; evidence: Set<string>; onSelect: (s: Step) => void }) {
   return (
     <ol className="steps">
@@ -136,8 +143,9 @@ function StepsList({ steps, selection, evidence, onSelect }: { steps: Step[]; se
             <button type="button" className={`step ${active ? "step-active" : ""} ${s.ok ? "" : "step-error"}`} onClick={() => onSelect(s)}>
               <span className="step-n">{s.step}</span>
               <span className="step-text mono">{s.text}</span>
-              {s.opened_key && evidence.has(s.opened_key) && <span className="step-tag" title="Эта запись процитирована в выбранном выводе">док.</span>}
-              {s.action.action === "calculator" && s.ok && <span className="step-tag step-tag-calc">= {String((s.observation.result as { value?: string })?.value)}</span>}
+              {((s.opened_key && evidence.has(s.opened_key)) || s.listed_keys.some((k) => evidence.has(k))) &&
+                <span className="step-tag" title="Шаг вернул запись, процитированную в выбранном выводе">док.</span>}
+              {s.action.action === "calculator" && s.ok && <span className="step-tag step-tag-calc">= {calcValue(s.observation.result)}</span>}
               {s.terminated && <span className="step-tag step-tag-end">сдача</span>}
               {s.truncated && <span className="step-tag step-tag-end">усечение</span>}
               <span className="step-rest">{s.remaining_steps}</span>
@@ -200,7 +208,7 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
           <div key={e.key} className={`evidence-row ${selectedKey === e.key ? "evidence-active" : ""}`}>
             <KeyChip k={e.key} onOpen={e.exists ? onOpen : undefined} active={selectedKey === e.key} missing={!e.exists} />
             <span className="mono small">{e.exists ? `${e.file?.replace("public/", "")}:${e.line}` : "нет такой записи в снимке"}</span>
-            <span className="small muted">{e.opened_at_step ? `открыт на шаге ${e.opened_at_step}` : "не открывался"}</span>
+            <span className="small muted">{e.opened_at_step ? `открыт на шаге ${e.opened_at_step}` : e.listed_at_step ? `получен на странице шага ${e.listed_at_step}` : "аудитор не получал"}</span>
           </div>
         ))}
       </div>

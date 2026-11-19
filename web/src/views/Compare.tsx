@@ -20,8 +20,10 @@ export function Compare({ left, right }: { left: string; right: string }) {
   if (error) return <ErrorBox error={error} />;
   if (!view) return <div className="loading">Сравниваю {left} и {right}…</div>;
   const ch = view.change_request;
-  const delta = view.calculations.reduce((acc, c) => acc + c.difference_minor, 0);
-  const currency = view.calculations[0]?.right.currency ?? "KZT";
+  // Never add amounts of different currencies: one Δ per currency.
+  const deltas = new Map<string, number>();
+  view.calculations.forEach((c) => deltas.set(c.right.currency, (deltas.get(c.right.currency) ?? 0) + c.difference_minor));
+  const shown = [...deltas.entries()].filter(([, d]) => d !== 0);
 
   return (
     <div className="compare">
@@ -63,7 +65,9 @@ export function Compare({ left, right }: { left: string; right: string }) {
         {view.calculations.length > 0 && (
           <div className="cs-block cs-effect">
             <div className="cs-label">Фактический эффект по открытым данным</div>
-            <div className="cs-main">Δ = <b>{money(delta, currency)}</b> <span className="muted mono">({minor(delta)} мин. ед.)</span></div>
+            {(shown.length ? shown : [...deltas.entries()].slice(0, 1)).map(([cur, d]) => (
+              <div key={cur} className="cs-main">Δ = <b>{money(d, cur)}</b> <span className="muted mono">({minor(d)} мин. ед. {cur})</span></div>
+            ))}
           </div>
         )}
       </div>

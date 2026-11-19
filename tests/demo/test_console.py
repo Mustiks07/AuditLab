@@ -38,6 +38,11 @@ def tree_hash(path: Path) -> str:
     return h.hexdigest()
 
 
+def sample_ids(built):
+    """Actual run_ids of the labelled samples, in SAMPLES order (the real runner assigns its own ids)."""
+    return dict(zip(("S01", "S02", "FX01"), built))
+
+
 class Workspace(unittest.TestCase):
     def setUp(self):
         self.tmp = Path(tempfile.mkdtemp())
@@ -61,7 +66,8 @@ class EvidenceLines(unittest.TestCase):
         self.assertEqual(snap.resolve_affected("payment/P9").key, "payments/D9")
         self.assertIsNotNone(snap.get("policy/allocation"))
         self.assertIsNone(snap.get("ledger/R99"))
-        self.assertEqual(Snapshot(FX01 / "public").get("fx/2026-11-15/USD/KZT").line, 4)
+        self.assertEqual(Snapshot(FX01 / "public").get("fx/2026-11-15/USD/KZT").line, 3)
+        self.assertEqual(Snapshot(FX01 / "public").get("ledger/R7").fields["account"], "FX_VALUATION")
 
     def test_allocation_derivation_matches_foundation_amounts(self):
         for ep, expected in (("S01", 0), ("S02", 2_000_000)):
@@ -91,8 +97,12 @@ class FactChange(Workspace):
                                      "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02")
         [issue] = built["truth"]["issues"]
         self.assertEqual((issue["type"], issue["expected_amount_minor"], issue["currency"]), ("fx_conversion", 100000, "KZT"))
-        self.assertIn("fx/2026-11-15/USD/KZT", issue["evidence_sets"][0])
-        self.assertEqual(Snapshot(self.tmp / "fx").get("ledger/R3").fields["debit_minor"], 5000000)
+        self.assertEqual(sorted(issue["evidence_sets"][0]),
+                         sorted(["payments/D9", "fx/2026-11-15/USD/KZT", "ledger/R7", "policy/fx_date"]))
+        moved = Snapshot(self.tmp / "fx")
+        self.assertEqual(moved.get("ledger/R7").fields["debit_minor"], 5000000, "recorded valuation is kept")
+        self.assertEqual({moved.get(f"ledger/R{n}").fields["timestamp"] for n in range(3, 9)}, {"2026-11-15T00:01:00+05:00"})
+        self.assertEqual(moved.get("payments/D9").fields["settlement_index"]["unapplied_row_ids"], ["R4", "R5"])
 
     def test_rejected_changes_have_codes(self):
         cases = [({"target": "payments/D9", "field": "timestamp", "value": "2026-11-20T10:00:00+05:00"}, "no_rate_for_date"),
@@ -134,39 +144,45 @@ class ScoreTable(unittest.TestCase):
 class LabEndToEnd(Workspace):
     def test_samples_live_change_rescore_replay(self):
         built = lab.build_samples(self.paths)
-        self.assertIn("TRAIN-S02-reconcile", built)
+        ids = sample_ids(built)
+        self.assertEqual(len(set(built)), 3)
         store = self.store()
-        s02 = service.run_detail(store, "TRAIN-S02-reconcile")
+        s02 = service.run_detail(store, ids["S02"])
         self.assertEqual(s02["run"]["label"], "training_sample")
         self.assertEqual(s02["findings"][0]["finding"]["claimed_amount_minor"], 2000000)
         self.assertTrue(s02["findings"][0]["verdict"]["matched"])
-        self.assertTrue(service.run_detail(store, "TRAIN-S01-reconcile")["empty_submission"])
+        self.assertTrue(service.run_detail(store, ids["S01"])["empty_submission"])
         # An unfinished attempt stays on disk but is not published in the console.
         cut = self.paths.exports / "CUT-1"
-        shutil.copytree(self.paths.exports / "TRAIN-S02-reconcile", cut)
+        shutil.copytree(self.paths.exports / ids["S02"], cut)
         (cut / "run.json").write_text(json.dumps({"run_id": "CUT-1", "episode_id": "S02", "policy": "reconcile",
                                                   "mode": "train", "status": "truncated"}))
         self.assertNotIn("CUT-1", [r["run_id"] for r in service.list_runs(store)])
         with self.assertRaises(Exception):
             service.run_detail(store, "CUT-1")
 
-        parent = self.paths.exports / "TRAIN-FX01-reconcile"
+        parent = self.paths.exports / ids["FX01"]
         before = tree_hash(parent)
         change = {"target": "payments/D9", "field": "timestamp", "value": "2026-11-15T00:01:00+05:00"}
-        op = lab.live_change(self.paths, "TRAIN-FX01-reconcile", change, "1 000 тенге", "op-test-fx-1")
+        op = lab.live_change(self.paths, ids["FX01"], change, "1 000 тенге", "op-test-fx-1")
         self.assertEqual(op["status"], "completed")
-        again = lab.live_change(self.paths, "TRAIN-FX01-reconcile", change, None, "op-test-fx-1")
+        again = lab.live_change(self.paths, ids["FX01"], change, None, "op-test-fx-1")
         self.assertEqual(again["run_id"], op["run_id"], "same operation key returns the same experiment")
         self.assertEqual(tree_hash(parent), before, "original attempt is preserved")
         live = service.run_detail(store, op["run_id"])
         self.assertNotEqual(live["run"]["episode_id"], "FX01")
+        self.assertNotEqual(op["run_id"], ids["FX01"])
+        for ev in live["findings"][0]["evidence"]:
+            self.assertTrue(ev["exists"] and (ev["opened_at_step"] or ev["listed_at_step"]), ev)
         self.assertEqual(live["findings"][0]["finding"]["claimed_amount_minor"], 100000)
-        cmp = service.compare(store, "TRAIN-FX01-reconcile", op["run_id"])
-        self.assertEqual(cmp["calculations"][0]["difference_minor"], 100000)
+        cmp = service.compare(store, ids["FX01"], op["run_id"])
+        fx = [c for c in cmp["calculations"] if c["type"] == "fx_conversion"]
+        self.assertEqual([c["difference_minor"] for c in fx], [100000])
+        self.assertEqual(cmp["calculations"][0]["type"], "fx_conversion", "the changed amount is shown first")
         self.assertTrue(cmp["left"]["empty"])
 
         with self.assertRaises(lab.LabError) as ctx:
-            lab.live_change(self.paths, "TRAIN-FX01-reconcile", {**change, "value": "2026-11-21T00:01:00+05:00"}, None, "op-test-fx-bad")
+            lab.live_change(self.paths, ids["FX01"], {**change, "value": "2026-11-21T00:01:00+05:00"}, None, "op-test-fx-bad")
         self.assertEqual(ctx.exception.code, "no_rate_for_date")
         self.assertEqual(store.op_status("op-test-fx-bad")["status"], "failed")
 
@@ -177,7 +193,7 @@ class LabEndToEnd(Workspace):
         self.assertIn("fx/2026-11-15/USD/KZT", copied["findings"][0]["uncited_operands"])
         self.assertEqual(service.run_detail(store, op["run_id"])["score"]["tp"], 1, "source score unchanged")
 
-        check = lab.replay_check(self.paths, "TRAIN-S02-reconcile")
+        check = lab.replay_check(self.paths, ids["S02"])
         self.assertTrue(check["observations_match"])
         self.assertTrue(check["score_match"])
 
@@ -186,21 +202,21 @@ class Isolation(Workspace):
     CANARY = "LEAK-CANARY-91c4e2"
 
     def test_web_side_never_returns_truth_or_closed_runs(self):
-        lab.build_samples(self.paths)
+        ids = sample_ids(lab.build_samples(self.paths))
         # Plant canaries in every place the web must not read.
         for truth in self.paths.trusted.rglob("truth.json"):
             data = json.loads(truth.read_text())
             data["canary"] = self.CANARY
             truth.write_text(json.dumps(data))
         bad = self.paths.exports / "BAD-private"
-        shutil.copytree(self.paths.exports / "TRAIN-S02-reconcile", bad)
+        shutil.copytree(self.paths.exports / ids["S02"], bad)
         meta = json.loads((bad / "run.json").read_text())
         (bad / "run.json").write_text(json.dumps({**meta, "run_id": "BAD-private"}))
         (bad / "console.json").unlink()
         (bad / "private").mkdir()
         (bad / "private" / "truth.json").write_text(json.dumps({"canary": self.CANARY}))
         closed = self.paths.exports / "CLOSED-1"
-        shutil.copytree(self.paths.exports / "TRAIN-S01-reconcile", closed)
+        shutil.copytree(self.paths.exports / ids["S01"], closed)
         (closed / "run.json").write_text(json.dumps({**meta, "run_id": "CLOSED-1", "mode": "closed", "note": self.CANARY}))
         (closed / "console.json").unlink()
 
@@ -247,22 +263,26 @@ class Api(Workspace):
     def test_empty_state(self):
         client = self.client(samples=False)
         self.assertEqual(client.get("/demo/runs").json(), {"runs": []})
-        self.assertEqual(client.get("/demo/runs/TRAIN-S02-reconcile").status_code, 404)
+        self.assertEqual(client.get("/demo/runs/no-such-run").status_code, 404)
         self.assertEqual(client.get("/demo/runs/..%2F..%2Fetc").status_code, 404)
         self.assertEqual(client.get("/").status_code, 200)
 
     def test_api_equals_cli_and_pair_flow(self):
         client = self.client()
-        api_detail = client.get("/demo/runs/TRAIN-S02-reconcile").json()
+        listed = client.get("/demo/runs").json()["runs"]
+        ids = {r["episode_id"]: r["run_id"] for r in listed if r.get("label") == "training_sample"}
+        self.assertEqual(set(ids), {"S01", "S02", "FX01"})
+        s02 = ids["S02"]
+        api_detail = client.get(f"/demo/runs/{s02}").json()
         env = {**os.environ, "PYTHONPATH": str(ROOT)}
         out = subprocess.run([sys.executable, "-m", "auditlab.demo", "--root", str(self.paths.root), "show",
-                              "--run", "TRAIN-S02-reconcile", "--json"], capture_output=True, text=True, env=env, cwd=ROOT, check=True)
+                              "--run", s02, "--json"], capture_output=True, text=True, env=env, cwd=ROOT, check=True)
         self.assertEqual(api_detail, json.loads(out.stdout), "console shows exactly what the CLI prints")
-        rec = client.get("/demo/runs/TRAIN-S02-reconcile/records/ledger/R5").json()
+        rec = client.get(f"/demo/runs/{s02}/records/ledger/R5").json()
         self.assertEqual((rec["line"], rec["fields"]["debit_minor"]), (6, 3000000))
-        self.assertEqual(client.get("/demo/runs/TRAIN-S02-reconcile/records/private/truth").status_code, 404)
+        self.assertEqual(client.get(f"/demo/runs/{s02}/records/private/truth").status_code, 404)
 
-        body = {"source_run_id": "TRAIN-S01-reconcile", "operation_key": "api-pair-0001",
+        body = {"source_run_id": ids["S01"], "operation_key": "api-pair-0001",
                 "change": {"target": "ledger/R7", "field": "timestamp", "value": "2026-12-01T00:01:00+05:00"}}
         self.assertIn(client.post("/demo/pairs", json=body).status_code, (200, 202))
         status = None
@@ -275,11 +295,64 @@ class Api(Workspace):
         self.assertEqual(status["status"], "completed", status)
         again = client.post("/demo/pairs", json=body)
         self.assertEqual((again.status_code, again.json()["run_id"]), (200, status["run_id"]))
-        cmp = client.get(f"/demo/compare?left=TRAIN-S01-reconcile&right={status['run_id']}").json()
+        cmp = client.get(f"/demo/compare?left={ids['S01']}&right={status['run_id']}").json()
         self.assertEqual(cmp["calculations"][0]["difference_minor"], 2000000)
         self.assertEqual(cmp["right"]["claims"][0]["amount_minor"], 2000000)
-        replay = client.post("/demo/runs/TRAIN-S02-reconcile/replay").json()
+        replay = client.post(f"/demo/runs/{s02}/replay").json()
         self.assertTrue(replay["observations_match"] and replay["score_match"])
+
+
+REAL_ENV = engines.session(FIX / "S01" / "public")[1] == "auditlab.environment"
+REAL_POLICY = engines.policy("reconcile", 0)[1] == "auditlab.policies"
+
+
+class PublicInterface(Workspace):
+    """The stand-in must speak the agreed public interface, never the other way round."""
+
+    ACTIONS = [
+        {"action": "get_record", "args": {"table": "policy", "id": "allocation"}},
+        {"action": "get_record", "args": {"table": "policy", "id": "fx_date"}},
+        {"action": "get_record", "args": {"table": "ledger", "id": "R7"}},
+        {"action": "get_record", "args": {"table": "fx", "id": "2026-11-15/USD/KZT"}},
+        {"action": "get_record", "args": {"table": "ledger", "id": "R404"}},
+        {"action": "get_document", "args": {"doc_id": "D9"}},
+        {"action": "calculator", "args": {"expression": "10000/100*510*100-5000000"}},
+        {"action": "list_records", "args": {"table": "policy", "cursor": None, "limit": 50}},
+        {"action": "list_records", "args": {"table": "ledger", "cursor": None, "limit": 50}},
+        {"action": "list_records", "args": {"table": "fx", "cursor": None, "limit": 50}},
+    ]
+
+    @unittest.skipUnless(REAL_ENV, "auditlab.environment is not merged in this checkout: parity cannot be measured")
+    def test_standin_session_matches_public_environment(self):
+        from auditlab.environment import open_session
+        public = FX01 / "public"
+        real, fake = open_session(public), standin.StandinSession(public)
+        for action in self.ACTIONS:
+            with self.subTest(action=action):
+                a, b = real.inspect(action), fake.inspect(action)
+                self.assertEqual(a["ok"], b["ok"])
+                if not a["ok"]:
+                    self.assertEqual(a["error"]["code"], "not_found")
+                    continue
+                if action["action"] == "list_records":
+                    self.assertEqual(a["result"]["records"], b["result"]["records"])
+                    self.assertEqual(set(a["result"]), set(b["result"]))
+                else:
+                    self.assertEqual(a["result"], b["result"])
+
+    def test_fx01_shift_found_by_the_reconcile_in_use(self):
+        """FX01 moved to 15.11 00:01: the reconcile in use (real when merged) claims exactly the truth."""
+        built = standin.apply_change(FX01 / "public", {"target": "payments/D9", "field": "timestamp",
+                                     "value": "2026-11-15T00:01:00+05:00"}, self.tmp / "fx", "FX02")
+        session, _ = engines.session(self.tmp / "fx")
+        policy, policy_engine = engines.policy("reconcile", 0)
+        manifest = json.loads((self.tmp / "fx" / "manifest.json").read_text())
+        result = standin.run_episode(session, policy, built["truth"], manifest)
+        [finding] = result["submission"]["findings"]
+        [issue] = built["truth"]["issues"]
+        self.assertEqual((finding["type"], finding["claimed_amount_minor"], finding["currency"]), ("fx_conversion", 100000, "KZT"))
+        self.assertEqual(sorted(finding["evidence_ids"]), sorted(issue["evidence_sets"][0]), policy_engine)
+        self.assertEqual(result["score"]["tp"], 1)
 
 
 class RealRunnerPath(Workspace):
@@ -290,19 +363,22 @@ class RealRunnerPath(Workspace):
         calls = {}
 
         class FakeEnv:
+            """Only the runner is faked; session, policy and evaluator are the agreed public modules."""
+
             def reset(self, seed, config):
                 calls["config"] = config
                 public = Path(config["snapshot_dir"]) / "public"
                 self.truth = json.loads((Path(config["snapshot_dir"]) / "private" / "truth.json").read_text())
-                self.session = standin.StandinSession(public)
-                self.manifest = self.session.snapshot.manifest
+                self.session, calls["session"] = engines.session(public)
+                self.score, calls["evaluator"] = engines.scorer()
+                self.manifest = json.loads((public / "manifest.json").read_text())
                 self.export, self.lines, self.left, self.inspections = Path(config["export_dir"]), [], 100, 0
                 return {"manifest": self.manifest, "remaining_steps": 100}, {}
 
             def step(self, action):
                 self.left -= 1
                 if action["action"] == "submit":
-                    score = standin.score(action["args"], self.truth, self.inspections)
+                    score = self.score(action["args"], self.truth, self.inspections)
                     obs = {"ok": True, "result": {"accepted": True}, "remaining_steps": self.left}
                     self.lines.append({"episode_id": self.manifest["episode_id"], "step": 100 - self.left, "action": action,
                                        "observation": obs, "reward": score["reward"], "terminated": True, "truncated": False})
@@ -335,21 +411,32 @@ class RealRunnerPath(Workspace):
         exported = self.paths.exports / "runner-0001"
         self.assertEqual(json.loads((exported / "run.json").read_text())["policy"], "reconcile")
         self.assertEqual(json.loads((exported / "console.json").read_text())["engine"]["runner"], "auditlab.runner")
+        self.assertEqual(calls["session"], "auditlab.environment" if REAL_ENV else engines.STANDIN)
         detail = service.run_detail(self.store(), "runner-0001")
         self.assertEqual(detail["findings"][0]["finding"]["claimed_amount_minor"], 2000000)
         self.assertFalse((exported / "private").exists())
 
 
-@unittest.skipUnless(STANDIN_ONLY, "golden file describes the stand-in engines")
 class GoldenSample(Workspace):
     def test_committed_sample_export_is_reproduced(self):
-        lab.build_samples(self.paths)
+        """Snapshot and run.json core always match; trajectory bytes match when the stand-in engines produced them."""
+        ids = sample_ids(lab.build_samples(self.paths))
         golden = ROOT / "docs" / "demo" / "sample_export" / "TRAIN-S02-reconcile"
-        made = self.paths.exports / "TRAIN-S02-reconcile"
-        files = sorted(p.relative_to(golden) for p in golden.rglob("*") if p.is_file())
-        self.assertEqual(files, sorted(p.relative_to(made) for p in made.rglob("*") if p.is_file()))
-        for rel in files:
+        made = self.paths.exports / ids["S02"]
+        for rel in sorted(p.relative_to(golden) for p in (golden / "public").rglob("*") if p.is_file()):
             self.assertEqual((golden / rel).read_bytes(), (made / rel).read_bytes(), str(rel))
+        core = ("episode_id", "policy", "mode", "status")  # run_id is assigned by the runner in use
+        self.assertEqual({k: json.loads((golden / "run.json").read_text())[k] for k in core},
+                         {k: json.loads((made / "run.json").read_text())[k] for k in core})
+        made_sub = json.loads((made / "submission.json").read_text())
+        gold_sub = json.loads((golden / "submission.json").read_text())
+        def norm(sub):
+            return [{k: sorted(v) if k in ("affected_ids", "evidence_ids") else v
+                     for k, v in f.items() if k != "explanation"} for f in sub["findings"]]
+        self.assertEqual(norm(made_sub), norm(gold_sub), "same finding regardless of engine")
+        if STANDIN_ONLY and engines.policy("reconcile", 0)[1] == engines.STANDIN:
+            for name in ("trajectories.jsonl", "submission.json", "score.json", "console.json"):
+                self.assertEqual((golden / name).read_bytes(), (made / name).read_bytes(), name)
 
 
 if __name__ == "__main__":

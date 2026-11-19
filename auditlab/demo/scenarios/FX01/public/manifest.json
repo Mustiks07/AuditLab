@@ -5,7 +5,7 @@
   "period_start": "2026-11-01T00:00:00+05:00",
   "period_end": "2026-12-01T00:00:00+05:00",
   "timezone": "Asia/Almaty",
-  "ledger_rows": 4,
+  "ledger_rows": 8,
   "document_count": 2,
   "currency_exponents": {
     "KZT": 2,

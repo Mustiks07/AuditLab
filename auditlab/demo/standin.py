@@ -101,15 +101,21 @@ class StandinSession:
                 if not isinstance(cursor, str) or not cursor.startswith(prefix) or not cursor[len(prefix):].isdigit():
                     return _err("invalid_cursor", "Invalid cursor.")
                 start = int(cursor[len(prefix):])
-            rows = [r.fields for r in self.snapshot.by_table(str(table))]
+            records = sorted(self.snapshot.by_table(str(table)), key=lambda r: r.local_id)
+            if table == "policy":  # public contract: policy pages expose id/value pairs
+                rows = [{"id": r.local_id, "value": self.snapshot.policy[r.local_id]} for r in records]
+            else:
+                rows = [r.fields for r in records]
             page = rows[start:start + limit]
             nxt = start + limit
-            return {"ok": True, "result": {"table": table, "records": page,
+            return {"ok": True, "result": {"records": page,
                                            "next_cursor": f"{self.episode_id}:{table}:{nxt}" if nxt < len(rows) else None}}
         if name == "get_record":
             record = self.snapshot.get(f"{args.get('table')}/{args.get('id')}")
-            if record is None or record.table not in ("ledger", "fx", "policy"):
+            if record is None:
                 return _err("not_found", "Record not found.")
+            if record.table == "policy":  # get_record returns the rule value itself
+                return {"ok": True, "result": self.snapshot.policy[record.local_id]}
             return {"ok": True, "result": record.fields}
         if name == "get_document":
             for table in ("payments", "invoices"):
@@ -119,7 +125,7 @@ class StandinSession:
             return _err("not_found", "Document not found.")
         if name == "calculator":
             try:
-                return {"ok": True, "result": {"value": calculate(args.get("expression"))}}
+                return {"ok": True, "result": calculate(args.get("expression"))}  # decimal string
             except (ValueError, SyntaxError, InvalidOperation):
                 return _err("calculator_error", "Expression rejected.")
         return _err("unknown_action", "Unknown action.")
@@ -226,7 +232,7 @@ class ReconcilePolicy:
                         r = rec["result"]
                         terms.append(f"+{r['credit_minor']}" if r["credit_minor"] else f"-{r['debit_minor']}")
                 calc = yield {"action": "calculator", "args": {"expression": "".join(terms).lstrip("+") or "0"}}
-                balance = Decimal(calc["result"]["value"]) if calc.get("ok") else Decimal(0)
+                balance = Decimal(calc["result"]) if calc.get("ok") else Decimal(0)
                 if balance != 0:
                     findings.append({
                         "type": "payment_allocation",
@@ -251,18 +257,19 @@ class ReconcilePolicy:
                         lcur = page["result"]["next_cursor"]
                         if lcur is None:
                             break
-                cash = next((r for r in ledger_cache if r.get("payment_id") == pid and r.get("account") == "CASH"), None)
-                if rate.get("ok") and cash is not None:
+                memo = next((r for r in ledger_cache if r.get("payment_id") == pid and r.get("account") == "FX_VALUATION"
+                             and r.get("currency") == base), None)
+                if rate.get("ok") and memo is not None:
                     src_exp, dst_exp = exps.get(payment["currency"], 2), exps.get(base, 2)
-                    expr = f"{payment['amount_minor']}/{10 ** src_exp}*{rate['result']['rate']}*{10 ** dst_exp}-{cash['debit_minor']}"
+                    expr = f"{payment['amount_minor']}/{10 ** src_exp}*{rate['result']['rate']}*{10 ** dst_exp}-{memo['debit_minor']}"
                     calc = yield {"action": "calculator", "args": {"expression": expr}}
-                    diff = Decimal(calc["result"]["value"]) if calc.get("ok") else Decimal(0)
+                    diff = Decimal(calc["result"]) if calc.get("ok") else Decimal(0)
                     if diff != 0:
                         findings.append({
                             "type": "fx_conversion", "affected_ids": [f"payment/{pid}"],
                             "claimed_amount_minor": int(abs(diff).to_integral_value()), "currency": base,
-                            "evidence_ids": [f"payments/{payment['doc_id']}", f"ledger/{cash['row_id']}", f"fx/{fx_id}", "policy/fx_date"],
-                            "explanation": f"Платёж {pid} по курсу {rate['result']['rate']} на {date} даёт иную сумму в {base}, чем проводка {cash['row_id']}; разница {int(abs(diff))}."})
+                            "evidence_ids": [f"payments/{payment['doc_id']}", f"fx/{fx_id}", f"ledger/{memo['row_id']}", "policy/fx_date"],
+                            "explanation": f"Платёж {pid} по курсу {rate['result']['rate']} на {date} даёт иную оценку в {base}, чем FX_VALUATION {memo['row_id']}; разница {int(abs(diff))}."})
         yield {"action": "submit", "args": {"episode_id": manifest.get("episode_id"), "findings": findings}}
 
 
@@ -374,7 +381,7 @@ def apply_change(src_public: Path, change: dict, out_public: Path, episode_id: s
         "".join(json.dumps(d, ensure_ascii=False, separators=(",", ":")) + "\n" for d in payments), encoding="utf-8")
 
     new_snap = Snapshot(out_public)
-    for doc in new_snap.by_table("payments"):
+    for doc in new_snap.by_table("payments") + new_snap.by_table("invoices"):
         if doc.fields.get("currency") != manifest.get("base_currency"):
             calc = derive.fx_valuation(new_snap, doc)
             if calc is not None and calc.get("result_minor") is None:

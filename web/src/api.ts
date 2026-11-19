@@ -86,7 +86,7 @@ export interface FindingView {
   index: number;
   finding: Finding;
   type_name: string;
-  evidence: { key: string; exists: boolean; file: string | null; line: number | null; opened_at_step: number | null }[];
+  evidence: { key: string; exists: boolean; file: string | null; line: number | null; opened_at_step: number | null; listed_at_step: number | null }[];
   affected: { id: string; key: string | null }[];
   derivation: Derivation | null;
   uncited_operands: string[];

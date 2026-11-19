@@ -18,6 +18,7 @@ import shutil
 import sys
 import tempfile
 import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -419,6 +420,13 @@ def main(argv: list[str] | None = None) -> int:
     except LabError as exc:
         print(json.dumps({"ok": False, "error": {"code": exc.code, "message": str(exc)}}, ensure_ascii=False))
         return 2
+    except Exception as exc:  # a merged component failed: report it, never fall back to a stand-in
+        traceback.print_exc()
+        where = traceback.extract_tb(exc.__traceback__)[-1]
+        print(json.dumps({"ok": False, "error": {"code": "infrastructure_error",
+                          "message": f"{type(exc).__name__} in {Path(where.filename).name}:{where.lineno}"}},
+                         ensure_ascii=False))
+        return 1
     print(json.dumps({"ok": True, "result": result}, ensure_ascii=False))
     return 0
 
