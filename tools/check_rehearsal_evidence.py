@@ -76,7 +76,11 @@ def check(root, bundle=None):
         require(isinstance(usage, (int, float)) and not isinstance(usage, bool)
                 and math.isfinite(usage) and usage >= 0, f"{label}: CPU usage unavailable")
         # Shared measurement validates swap and affinity as well.
-        require(data.get("requested_limits", {}).get("pids") == pids, f"{label}: PID profile differs")
+        actual_pids = (data.get("raw_observed") or {}).get("files", {}).get("pids.max")
+        if actual_pids is None:
+            missing.append(f"{label}: actual kernel PID limit unavailable")
+        else:
+            require(str(actual_pids).strip() == str(pids), f"{label}: actual PID limit differs")
 
     launch = read("launch.json")
     general = read("verify/report.json")

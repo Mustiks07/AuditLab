@@ -74,6 +74,7 @@ python build/release-candidate/offline.py verify --suite rehearsal
 [внутренняя репетиция](docs/REHEARSAL.md), [граница изоляции](docker/runtime/README.md).
 Исходники распространяются по [MIT](LICENSE).
 
+- [Измерения и оставшаяся приёмка](docs/release/VALIDATION.md)
 - [Дизайн и границы доверия](docs/DESIGN.md)
 - [Техническое задание](docs/SPEC.md)
 - [Код и форматы на границах модулей](docs/INTERFACES.md)
