@@ -1,0 +1,8 @@
+{
+  "fx_date": "Value a foreign-currency payment at the rate of the local date (company timezone) of the payment event. Rate = KZT per 1 unit of source currency.",
+  "rounding": "ROUND_HALF_UP",
+  "period": {
+    "end_exclusive": true,
+    "recognition": "invoice issue date for invoice; transaction date for cash and settlement"
+  }
+}
