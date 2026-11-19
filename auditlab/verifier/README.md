@@ -77,5 +77,18 @@ python -m auditlab.verifier.crosscheck --public EP/public --truth EP/private/tru
 * `tests/metamorphic/test_transforms.py` — перестановка строк + взаимно однозначная замена
   ID (обращающая строковый порядок), запись тех же моментов в UTC.
 
+* `tests/verifier/test_generated_datasets.py` — открытые эпизоды симулятора `datasets/open/*/*`:
+  копия только public/ → ответ записан → только потом truth. До поставки данных — «не проверено».
+  Ответы для 20 эпизодов коммита симулятора `0043cd9` зафиксированы до сверки в
+  `tests/verifier/answers/simulator-0043cd9/answers.json`; сверка: 20/20 совпали с truth.
+
+## Зависимости
+
+`duckdb==1.1.3` (PyPI, 2024-11-04), без транзитивных зависимостей (`Requires-Dist` пуст),
+`Requires-Python >=3.7`. Для офлайн-поставки — колесо целевой платформы, например
+`duckdb-1.1.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl`
+sha256 `9d0767ada9f06faa5afcf63eb7ba1befaccfbcfdac5ff86f0168c673dd1f47aa`.
+Без DuckDB тот же SQL исполняется на stdlib `sqlite3` (отчёт: `engine: "sqlite"`).
+
 Не покрыто здесь: двойной зачёт в тестовой версии оценщика (тест награды — зона оценщика),
 сгенерированные эпизоды (генератор ещё не поставлен).

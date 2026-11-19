@@ -214,6 +214,22 @@ class ArithmeticPrimitiveTests(unittest.TestCase):
                         f"SELECT convert_half_up({args[0]}, '{args[1]}', {args[2]}, {args[3]})")
                     self.assertEqual(value, expected)
 
+    def test_literals_are_exact_and_escaped(self):
+        from auditlab.verifier.engine import _literal
+        self.assertEqual(_literal(None), "NULL")
+        self.assertEqual(_literal(-9_223_372_036_854_775_807), "-9223372036854775807")
+        self.assertEqual(_literal("O'Neil; DROP"), "'O''Neil; DROP'")
+        for bad in (True, 1.5):
+            with self.assertRaises(TypeError):
+                _literal(bad)
+        for engine in ENGINES:
+            database = Database(engine)
+            self.addCleanup(database.close)
+            database.load({"ledger": [("R1", "t", 1, "2026-11-01", "AR", 9_007_199_254_740_993, 0, "KZT",
+                                       "O'Neil", None, None, "J1", 0)]})
+            self.assertEqual(database.query("SELECT entity_id, debit_minor, invoice_id FROM ledger"),
+                             [("O'Neil", 9_007_199_254_740_993, None)])
+
     def test_sql_has_no_division_or_float(self):
         for path in (ROOT / "sql" / "verifier").glob("*.sql"):
             code = "\n".join(l.split("--")[0] for l in path.read_text(encoding="utf-8").splitlines())

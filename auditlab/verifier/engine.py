@@ -39,6 +39,19 @@ def _sqlite_convert_half_up(src, rate, src_exp, dst_exp):
     return (numerator + denominator) // (2 * denominator)
 
 
+def _literal(value) -> str:
+    """SQL literal for the loader's value types only: None, int (not bool), str."""
+    if value is None:
+        return "NULL"
+    if isinstance(value, bool):
+        raise TypeError("boolean values are not part of the public schema")
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, str):
+        return "'" + value.replace("'", "''") + "'"
+    raise TypeError(f"unexpected value type {type(value).__name__}")
+
+
 def default_engine() -> str:
     requested = os.environ.get("AUDITLAB_VERIFIER_ENGINE")
     if requested:
@@ -93,9 +106,17 @@ class Database:
         for name, columns in TABLE_DDL.items():
             self.connection.execute(f"CREATE TABLE {name} ({columns})")
             rows = tables.get(name, [])
-            if rows:
-                marks = ", ".join("?" for _ in rows[0])
-                self.connection.executemany(f"INSERT INTO {name} VALUES ({marks})", rows)
+            if not rows:
+                continue
+            if self.engine == "sqlite":
+                marks = "(" + ", ".join("?" for _ in rows[0]) + ")"
+                self.connection.executemany(f"INSERT INTO {name} VALUES {marks}", rows)
+                continue
+            # Parameter binding in DuckDB 1.1.3 costs ~10 ms per row; typed literals are exact and fast.
+            for start in range(0, len(rows), 500):
+                values = ", ".join("(" + ", ".join(_literal(v) for v in row) + ")"
+                                   for row in rows[start:start + 500])
+                self.connection.execute(f"INSERT INTO {name} VALUES {values}")
 
     def run_rules(self):
         for path in sql_files():
