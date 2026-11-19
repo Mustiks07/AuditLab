@@ -25,8 +25,17 @@ def main(argv: list[str]) -> int:
     oracle.add_argument("--inspections", type=int, default=0)
     oracle.add_argument("--run-id")
     oracle.add_argument("--stub-session", action="store_true", help="use the PublicSession test double")
+    public = sub.add_parser("policy", help="run a public policy (auditlab.policies) in its own process")
+    public.add_argument("--snapshot", required=True, help="directory with public/ and private/")
+    public.add_argument("--name", required=True, help="random | reconcile | flag_all")
+    public.add_argument("--seed", type=int, default=0)
+    public.add_argument("--export-dir", help="new run directory for the open export")
+    public.add_argument("--trusted-dir")
+    public.add_argument("--run-id")
     args = parser.parse_args(argv)
 
+    if args.command == "policy":
+        return _run_public_policy(args)
     options = {"trusted_dir": args.trusted_dir}
     if args.stub_session:
         from auditlab.runner.testing import FixturePublicSession
@@ -42,6 +51,24 @@ def main(argv: list[str]) -> int:
     print(json.dumps({"status": env.final["status"], "reward": env.final["reward"],
                       "score": env.final["graded"]["score"] if env.final["graded"] else None}))
     return 0 if result[2] else 1
+
+
+def _run_public_policy(args) -> int:
+    from auditlab.runner.isolation import SubprocessPolicy, child_env, policy_command
+    env = make_env("train", trusted_dir=args.trusted_dir)
+    config = {"snapshot_dir": args.snapshot, "policy_name": args.name}
+    if args.export_dir:
+        config["export_dir"] = args.export_dir
+    if args.run_id:
+        config["run_id"] = args.run_id
+    policy = SubprocessPolicy(policy_command(args.name, args.seed), env=child_env())
+    run_episode(env, policy, args.seed, config)
+    env.close()
+    graded = env.final["graded"]
+    print(json.dumps({"status": env.final["status"], "reward": env.final["reward"],
+                      "inspection_steps": env.final["inspection_steps"],
+                      "score": graded["score"] if graded else None}))
+    return 0 if env.final["status"] in ("submitted", "invalid_submission") else 1
 
 
 if __name__ == "__main__":
