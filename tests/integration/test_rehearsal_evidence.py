@@ -1,5 +1,6 @@
 """Release evidence is green only with complete functional and actual resource proof."""
 import json
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
@@ -22,8 +23,8 @@ class EvidenceTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.launch = dict(cpu_set="0,1", child_exit_code=2, resource_controls={"status": "available"})
-        self.general = dict(checks=[dict(id=name, status="passed", tests_run=1,
+        self.launch = dict(source_revision="a" * 40, cpu_set="0,1", child_exit_code=2, resource_controls={"status": "available"})
+        self.general = dict(commit="a" * 40, checks=[dict(id=name, status="passed", tests_run=1,
                             records=[dict(id=name, status="passed")]) for name in SUITES],
                             acceptance={"status": "not_checked"})
         self.rehearsal = dict(
@@ -34,14 +35,41 @@ class EvidenceTests(unittest.TestCase):
                       for p in POLICIES for i in range(1,21)])
         self.controller = resource(256)
 
-    def run_check(self):
+    def run_check(self, **kwargs):
         for path, data in [("launch.json", self.launch), ("verify/report.json", self.general),
                            ("verify/rehearsal/report.json", self.rehearsal),
                            ("controller-resources.json", self.controller)]:
             target = self.root / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps(data))
-        return check(self.root)
+        return check(self.root, **kwargs)
+
+    def test_unrelated_revision_cannot_pass(self):
+        self.assertEqual(self.run_check(expected_revision="a" * 40)["exit_code"], 0)
+        self.assertEqual(self.run_check(expected_revision="b" * 40)["exit_code"], 1)
+        self.general["commit"] = "b" * 40
+        self.assertEqual(self.run_check()["exit_code"], 1)
+
+    def test_bundle_hash_and_image_identity_are_checked(self):
+        bundle = self.root / "bundle"
+        bundle.mkdir()
+        data = b"fixture"
+        files = {}
+        for name in offline.FILES:
+            (bundle / name).write_bytes(data)
+            files[name] = dict(size_bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
+        images = {role: dict(id="sha256:" + "a" * 64, os="linux")
+                  for role in ("runtime", "verifier", "policy")}
+        manifest = dict(format_version="1.0", files=files, images=images,
+                        source_revision="a" * 40, payload_size_bytes=4 * len(data))
+        (bundle / "manifest.json").write_text(json.dumps(manifest))
+        self.launch["images"] = images
+        self.assertEqual(self.run_check(bundle=bundle)["exit_code"], 0)
+        (bundle / "images.tar").write_bytes(b"changed")  # Same size, different digest.
+        self.assertEqual(self.run_check(bundle=bundle)["exit_code"], 1)
+        (bundle / "images.tar").write_bytes(data)
+        self.launch["images"] = {}
+        self.assertEqual(self.run_check(bundle=bundle)["exit_code"], 1)
 
     def test_complete_internal_rehearsal_does_not_claim_full_acceptance(self):
         result = self.run_check()

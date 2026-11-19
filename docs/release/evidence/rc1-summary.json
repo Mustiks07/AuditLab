@@ -1,0 +1,120 @@
+{
+  "source_revision": "b16456cab15d65c75dac5fc9d249af2d2ee8c055",
+  "workflow_run": "https://github.com/Mustiks07/AuditLab/actions/runs/44577035303",
+  "release": "https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.1",
+  "scope": "Internal rehearsal, not organizer hidden evaluation",
+  "tests": 237,
+  "datasets": 20,
+  "attempts": 80,
+  "pairs": 20,
+  "controller_peak_bytes": 188805120,
+  "policy_peak_bytes": 24797184,
+  "verifier_peak_bytes": 149139456,
+  "max_episode_elapsed_seconds": 1.3821375199999864,
+  "image_load_seconds": 8.541053587,
+  "verification_container_seconds": 165.112114308,
+  "payload_size_bytes": 309646082,
+  "manifest_sha256": "2ae1dcfa6fac74d0183d4b92814fcc25b5825e9186cca3c427ba2594ab399e2c",
+  "images": {
+    "runtime": {
+      "id": "sha256:9cad681d146d22e7bcd29a08d1d547eec806be46414321ef874d39c572c1f88f",
+      "tag": "auditlab-runtime:b16456cab15d",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 290152116
+    },
+    "verifier": {
+      "id": "sha256:e1133a7dc6365ad7b01c6144cff4b29c0ecf3d34524dccfc7af19b634860723e",
+      "tag": "auditlab-verifier:b16456cab15d",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 234908032
+    },
+    "policy": {
+      "id": "sha256:f6edc2353ee07585dda94661396b154361230239b1e0289a5ea610a183dcf486",
+      "tag": "auditlab-policy:b16456cab15d",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 130557825
+    }
+  },
+  "policies": {
+    "flag_all": {
+      "micro": {
+        "f1": 0.0,
+        "fn": 38,
+        "fp": 600,
+        "precision": 0.0,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "mean_reward": -1.0,
+      "clean": {
+        "false_accusation_episodes": 5,
+        "measured": 5,
+        "planned": 5,
+        "rate_over_measured": 1.0
+      }
+    },
+    "oracle": {
+      "micro": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 38
+      },
+      "mean_reward": 1.0,
+      "clean": {
+        "false_accusation_episodes": 0,
+        "measured": 5,
+        "planned": 5,
+        "rate_over_measured": 0.0
+      }
+    },
+    "random": {
+      "micro": {
+        "f1": 0.0,
+        "fn": 38,
+        "fp": 0,
+        "precision": 0,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "mean_reward": -0.5035000000000001,
+      "clean": {
+        "false_accusation_episodes": 0,
+        "measured": 5,
+        "planned": 5,
+        "rate_over_measured": 0.0
+      }
+    },
+    "reconcile": {
+      "micro": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 38
+      },
+      "mean_reward": 0.9511999999999999,
+      "clean": {
+        "false_accusation_episodes": 0,
+        "measured": 5,
+        "planned": 5,
+        "rate_over_measured": 0.0
+      }
+    }
+  },
+  "resources": {
+    "cpu_set": "0,1",
+    "per_container_memory_bytes": 2147483648,
+    "controller": true,
+    "ordinary_runs": 60,
+    "verifier_runs": 40,
+    "all_containers_network": "none"
+  },
+  "verification_note": "Final canonical RC1: all CI jobs passed. Strict acceptance remains incomplete (exit 2); internal rehearsal checker passes (exit 0)."
+}
