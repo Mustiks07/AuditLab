@@ -1,4 +1,8 @@
-"""Atomic, write-once run directories (SPEC §11, INTERFACES "Завершённый публичный экспорт")."""
+"""Atomic, write-once run directories (SPEC §11, INTERFACES 1.1 "Завершённый публичный экспорт").
+
+Files are written as ASCII JSON (non-ASCII escaped), so readers get identical values whatever
+text encoding they open them with.
+"""
 from __future__ import annotations
 
 import json
@@ -9,47 +13,54 @@ from pathlib import Path
 
 
 def _dump(path: Path, value: object) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, ensure_ascii=True, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _publish(root: Path, run_id: str, build) -> Path | None:
-    """Build in a temp directory next to the target, then rename. Never overwrites a finished run."""
-    root.mkdir(parents=True, exist_ok=True)
-    target = root / run_id
-    if target.exists():
+def _trajectory(path: Path, rows: list[dict]) -> None:
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=True) + "\n")
+
+
+def publish_directory(target: Path, build) -> Path | None:
+    """Build next to `target` in a hidden staging directory, then rename into place.
+
+    The target must not exist; an existing export is never overwritten (returns None).
+    """
+    target = Path(target)
+    if os.path.lexists(target):
         return None
-    staging = Path(tempfile.mkdtemp(prefix=f".{run_id}.", dir=root))
+    target.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(prefix=f".{target.name}.staging-", dir=target.parent))
     try:
         build(staging)
-        os.replace(staging, target)  # atomic on one filesystem; fails if a non-empty target appeared meanwhile
+        os.rename(staging, target)  # atomic on one filesystem; fails if target appeared meanwhile
     except OSError:
         shutil.rmtree(staging, ignore_errors=True)
-        if not target.exists():
-            raise
-        return None
+        if os.path.lexists(target):
+            return None
+        raise
     except BaseException:
         shutil.rmtree(staging, ignore_errors=True)
         raise
     return target
 
 
-def _trajectory(path: Path, rows: list[dict]) -> None:
-    with path.open("w", encoding="utf-8", newline="\n") as handle:
-        for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+def write_public_run(run_dir: Path, run: dict, public_dir: Path, trajectory: list[dict],
+                     submission: object, score: dict | None) -> Path | None:
+    """run.json, public/, trajectories.jsonl, submission.json, score.json directly in `run_dir`.
 
-
-def write_public_run(export_dir: Path, run: dict, public_dir: Path, trajectory: list[dict],
-                     submission: object, score: dict) -> Path | None:
-    """run.json, public/, trajectories.jsonl, submission.json, score.json. Open mode only; no truth inside."""
+    Open (train) mode only. Nothing from private/ is copied. `score` is None only for a failed attempt.
+    """
     def build(staging: Path) -> None:
-        _dump(staging / "run.json", run)
         shutil.copytree(public_dir, staging / "public")
         _trajectory(staging / "trajectories.jsonl", trajectory)
         _dump(staging / "submission.json", submission)
-        _dump(staging / "score.json", score)
+        if score is not None:
+            _dump(staging / "score.json", score)
+        _dump(staging / "run.json", run)
 
-    return _publish(Path(export_dir), run["run_id"], build)
+    return publish_directory(Path(run_dir), build)
 
 
 def write_trusted_report(trusted_dir: Path, run_id: str, report: dict, trajectory: list[dict]) -> Path | None:
@@ -58,4 +69,4 @@ def write_trusted_report(trusted_dir: Path, run_id: str, report: dict, trajector
         _dump(staging / "report.json", report)
         _trajectory(staging / "trajectory.jsonl", trajectory)
 
-    return _publish(Path(trusted_dir), run_id, build)
+    return publish_directory(Path(trusted_dir) / run_id, build)

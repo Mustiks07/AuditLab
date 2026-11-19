@@ -6,6 +6,7 @@ steps, trajectory step numbers, truncation at the 100th inspection) is derived a
 """
 from __future__ import annotations
 
+import copy
 import json
 import os
 import shutil
@@ -30,6 +31,12 @@ TOOL_DOC = {
     "calculator": {"args": {"expression": "str"}},
     "submit": {"args": {"episode_id": "str", "findings": "list (<=30)"}},
 }
+RUNNER_KEYS = ("snapshot_dir", "export_dir", "policy_name", "run_id", "time_limit_s")
+# Detailed outcome -> run.json status (INTERFACES 1.1). Only a submitted episode is "completed";
+# truncation and crashes are exported for the record but the console never lists them.
+EXPORT_STATUS = {"submitted": "completed", "invalid_submission": "completed",
+                 "truncated_budget": "truncated", "truncated_timeout": "truncated",
+                 "policy_failure": "failed", "infra_error": "failed"}
 COMPLETED = {"submitted", "invalid_submission", "truncated_budget", "truncated_timeout"}
 DEFAULT_TIME_LIMIT_S = 60.0
 _PACKAGE_PARENT = str(Path(__file__).resolve().parents[2])
@@ -111,7 +118,7 @@ class AuditEnvironment:
     def __init__(self, mode: str, *, session_opener: Callable[[Path], object] | None = None,
                  generator: Callable[[int, dict, Path], None] | None = None,
                  clock: Callable[[], float] = time.monotonic, evaluator: object = "subprocess",
-                 export_dir: str | Path | None = None, trusted_dir: str | Path | None = None):
+                 trusted_dir: str | Path | None = None):
         if mode not in ("train", "closed"):
             raise ValueError("mode must be 'train' or 'closed'")
         self.mode = mode
@@ -124,7 +131,7 @@ class AuditEnvironment:
                 raise ValueError("unknown evaluator backend")
             evaluator = backends[evaluator]()
         self._evaluate = evaluator
-        self.export_dir = Path(export_dir) if export_dir else None
+        self._export_dir: Path | None = None
         self.trusted_dir = Path(trusted_dir) if trusted_dir else None
         self._tmp: tempfile.TemporaryDirectory | None = None
         self._phase: str | None = None  # None -> "active" -> "done"
@@ -132,36 +139,49 @@ class AuditEnvironment:
 
     # ---------------------------------------------------------------- lifecycle
     def reset(self, seed: int, config: dict) -> tuple[Observation, dict]:
+        """reset(seed, {snapshot_dir, export_dir, policy_name}) per INTERFACES 1.1.
+
+        Trusted keys (never echoed to the policy): snapshot_dir, export_dir, policy_name, run_id,
+        time_limit_s. Every other key is generator configuration, used only without snapshot_dir.
+        """
         if self._phase == "active":  # an unfinished attempt is recorded as such, never as a result
             self._events.append({"event": "abandoned_by_reset"})
             self._persist_trusted("abandoned", None, None)
         self._phase = None  # if anything below fails, no stale episode stays steppable
         self.close()
+        if not isinstance(config, dict):
+            raise RunnerError("config must be an object")
         config = dict(config)
-        options = dict(config.pop("runner", {}) or {})
+        options = {key: config.pop(key) for key in RUNNER_KEYS if key in config}
         time_limit = float(options.get("time_limit_s", DEFAULT_TIME_LIMIT_S))
         if not time_limit > 0:
             raise RunnerError("time_limit_s must be positive")
-        if self.mode == "train" and self.export_dir is None and options.get("export_dir"):
-            self.export_dir = Path(options["export_dir"])
+        export_dir = options.get("export_dir")
+        if export_dir is not None:
+            if self.mode != "train":
+                raise RunnerError("closed runs are never exported publicly; use trusted_dir")
+            if os.path.lexists(export_dir):
+                raise RunnerError("export_dir must be a new, not yet existing directory")
+        self._export_dir = Path(export_dir) if export_dir is not None else None
         snapshot = options.get("snapshot_dir")
         if snapshot is None:
+            # The generator publishes only into a NEW directory: give it a fresh path, do not create it.
             self._tmp = tempfile.TemporaryDirectory(prefix="auditlab-")
             snapshot = Path(self._tmp.name) / "snapshot"
-            snapshot.mkdir()
             self._generator(seed, config, snapshot)
         self._public_dir = Path(snapshot) / "public"
         self._private_dir = Path(snapshot) / "private"
         truth = json.loads((self._private_dir / "truth.json").read_text(encoding="utf-8"))
         validate_truth(truth)  # a malformed reference is a generator defect: fail before the policy sees anything
         manifest = json.loads((self._public_dir / "manifest.json").read_text(encoding="utf-8"))
-        policy = json.loads((self._public_dir / "policy.json").read_text(encoding="utf-8"))
+        policy_file = self._public_dir / "policy.json"
+        policy = json.loads(policy_file.read_text(encoding="utf-8")) if policy_file.is_file() else None
         self._episode_id = manifest["episode_id"]
         if truth["episode_id"] != self._episode_id:
             raise RunnerError("truth and manifest episode ids differ")
         self._session = self._opener(self._public_dir)
         self._run_id = options.get("run_id") or uuid.uuid4().hex[:12]
-        self._policy_name = str(options.get("policy", "unknown"))
+        self._policy_name = str(options.get("policy_name", "unknown"))
         self._seed = seed
         self._time_limit = time_limit
         self._started = self._clock()
@@ -291,15 +311,17 @@ class AuditEnvironment:
         step = self._emit(action, observation, public_reward, terminated, truncated, info)
         self.final = {"status": status, "terminated": terminated, "truncated": truncated,
                       "inspection_steps": self._inspections, "graded": graded, "reward": true_reward,
-                      "submission": (action or {}).get("args") if submitted else {"episode_id": self._episode_id, "findings": []}}
+                      "submission": copy.deepcopy(action.get("args")) if submitted and action
+                      else {"episode_id": self._episode_id, "findings": []}}
         self._persist(status, graded)
         return step
 
     def _emit(self, action: object, observation: Observation, reward: float, terminated: bool,
               truncated: bool, info: dict) -> StepResult:
+        # Deep copies: a policy mutating its action or observation later cannot rewrite the record.
         self._trajectory.append({"episode_id": self._episode_id, "step": len(self._trajectory) + 1,
-                                 "action": action, "observation": observation, "reward": reward,
-                                 "terminated": terminated, "truncated": truncated})
+                                 "action": copy.deepcopy(action), "observation": copy.deepcopy(observation),
+                                 "reward": reward, "terminated": terminated, "truncated": truncated})
         return observation, reward, terminated, truncated, info
 
     def _run_record(self, status: str) -> dict:
@@ -316,8 +338,13 @@ class AuditEnvironment:
         export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
 
     def _persist(self, status: str, graded: dict | None) -> None:
-        run = self._run_record(status)
         self._persist_trusted(status, graded, self.final["reward"])
-        if self.mode == "train" and self.export_dir is not None and status in COMPLETED and not self._infra:
-            export_mod.write_public_run(self.export_dir, run, self._public_dir, self._trajectory,
-                                        self.final["submission"], graded["score"])
+        if self.mode != "train" or self._export_dir is None:
+            return
+        export_status = "failed" if self._infra else EXPORT_STATUS[status]
+        run = {**self._run_record(export_status), "outcome": status,
+               "inspection_steps": self._inspections}
+        written = export_mod.write_public_run(self._export_dir, run, self._public_dir, self._trajectory,
+                                              self.final["submission"], graded["score"] if graded else None)
+        if written is None:
+            self._events.append({"event": "export_exists_not_overwritten"})
