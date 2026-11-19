@@ -1,0 +1,243 @@
+{
+  "source_revision": "0791995d2d8ff3d15d5043197fc6079be01e6a6f",
+  "workflow_run": "https://github.com/Mustiks07/AuditLab/actions/runs/44606305454",
+  "release": "https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.2",
+  "scope": "Internal rehearsal on two Docker stores; official scoring and full human acceptance remain open",
+  "payload_size_bytes": 314973218,
+  "stores": {
+    "classic": {
+      "tests": 256,
+      "docker_version": "28.0.4",
+      "datasets": 20,
+      "attempts": 80,
+      "pairs": 20,
+      "ordinary_resource_runs": 60,
+      "verifier_resource_runs": 40,
+      "controller_peak_bytes": 181178368,
+      "policy_peak_bytes": 24956928,
+      "verifier_peak_bytes": 148758528,
+      "max_episode_seconds": 0.5676057129999208,
+      "image_load_seconds": 11.721622377999893,
+      "verification_container_seconds": 127.95932164400006,
+      "cpu_set": "0,1",
+      "loaded_images": {
+        "runtime": {
+          "id": "sha256:13acda7016b26082c1957189da05f30e6400ec81d349fa40450f5e5a55c211b9",
+          "tag": "auditlab-runtime:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 293843786,
+          "oci_manifest_digest": "sha256:a7679e5c26dc339046d1099342156e09740dec510aa82409376451306e6bbfd2",
+          "source_id": "sha256:13acda7016b26082c1957189da05f30e6400ec81d349fa40450f5e5a55c211b9"
+        },
+        "verifier": {
+          "id": "sha256:b69b192846f3a689fbc45794d2684b617302f42a6dc4670a6dcc36e11f1f90c6",
+          "tag": "auditlab-verifier:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 234908032,
+          "oci_manifest_digest": "sha256:07944ca79f767a7e7457ed55953c72e49fbaef7cc34c431fb1b2d78b9bb600b2",
+          "source_id": "sha256:b69b192846f3a689fbc45794d2684b617302f42a6dc4670a6dcc36e11f1f90c6"
+        },
+        "policy": {
+          "id": "sha256:08632c77eac388b55b44336b5773a6c6d8b10fd95ffc39682c0167dfcb15d470",
+          "tag": "auditlab-policy:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 130557825,
+          "oci_manifest_digest": "sha256:e59730978fd85ff117950dc1bdfc9c5b0a1c0e1e39c863586dedb8c3856cf0a5",
+          "source_id": "sha256:08632c77eac388b55b44336b5773a6c6d8b10fd95ffc39682c0167dfcb15d470"
+        }
+      },
+      "policies": {
+        "flag_all": {
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 600,
+            "precision": 0.0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "mean_reward": -1.0,
+          "clean": {
+            "false_accusation_episodes": 5,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 1.0
+          }
+        },
+        "oracle": {
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "mean_reward": 1.0,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        },
+        "random": {
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 0,
+            "precision": 0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "mean_reward": -0.5035000000000001,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        },
+        "reconcile": {
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "mean_reward": 0.9511999999999999,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        }
+      },
+      "strict_exit_code": 2,
+      "internal_checker_exit_code": 0
+    },
+    "containerd": {
+      "tests": 256,
+      "docker_version": "29.0.1",
+      "datasets": 20,
+      "attempts": 80,
+      "pairs": 20,
+      "ordinary_resource_runs": 60,
+      "verifier_resource_runs": 40,
+      "controller_peak_bytes": 180424704,
+      "policy_peak_bytes": 25272320,
+      "verifier_peak_bytes": 143982592,
+      "max_episode_seconds": 0.6019740280000008,
+      "image_load_seconds": 2.4733033320000004,
+      "verification_container_seconds": 143.36900905800002,
+      "cpu_set": "0,1",
+      "loaded_images": {
+        "runtime": {
+          "id": "sha256:a7679e5c26dc339046d1099342156e09740dec510aa82409376451306e6bbfd2",
+          "tag": "auditlab-runtime:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 293843786,
+          "oci_manifest_digest": "sha256:a7679e5c26dc339046d1099342156e09740dec510aa82409376451306e6bbfd2",
+          "source_id": "sha256:13acda7016b26082c1957189da05f30e6400ec81d349fa40450f5e5a55c211b9"
+        },
+        "verifier": {
+          "id": "sha256:07944ca79f767a7e7457ed55953c72e49fbaef7cc34c431fb1b2d78b9bb600b2",
+          "tag": "auditlab-verifier:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 234908032,
+          "oci_manifest_digest": "sha256:07944ca79f767a7e7457ed55953c72e49fbaef7cc34c431fb1b2d78b9bb600b2",
+          "source_id": "sha256:b69b192846f3a689fbc45794d2684b617302f42a6dc4670a6dcc36e11f1f90c6"
+        },
+        "policy": {
+          "id": "sha256:e59730978fd85ff117950dc1bdfc9c5b0a1c0e1e39c863586dedb8c3856cf0a5",
+          "tag": "auditlab-policy:0791995d2d8f",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 130557825,
+          "oci_manifest_digest": "sha256:e59730978fd85ff117950dc1bdfc9c5b0a1c0e1e39c863586dedb8c3856cf0a5",
+          "source_id": "sha256:08632c77eac388b55b44336b5773a6c6d8b10fd95ffc39682c0167dfcb15d470"
+        }
+      },
+      "policies": {
+        "flag_all": {
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 600,
+            "precision": 0.0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "mean_reward": -1.0,
+          "clean": {
+            "false_accusation_episodes": 5,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 1.0
+          }
+        },
+        "oracle": {
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "mean_reward": 1.0,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        },
+        "random": {
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 0,
+            "precision": 0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "mean_reward": -0.5035000000000001,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        },
+        "reconcile": {
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "mean_reward": 0.9511999999999999,
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          }
+        }
+      },
+      "strict_exit_code": 2,
+      "internal_checker_exit_code": 0
+    }
+  }
+}
