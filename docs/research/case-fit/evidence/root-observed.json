@@ -1,0 +1,116 @@
+{
+  "python": "3.12.14",
+  "public_seal_sha256": "de5d8a0f358e32c90f607a8ead664a9361adb9ed9adda1a33e45d09147eef518",
+  "runner_issue_23": {
+    "train": {
+      "shallow_reward": -1.0,
+      "raised": "RecursionError",
+      "phase": "done",
+      "final": null,
+      "trajectory_lines": 0
+    },
+    "closed": {
+      "shallow_reward": 0.0,
+      "raised": "RecursionError",
+      "phase": "done",
+      "final": null,
+      "trajectory_lines": 0
+    }
+  },
+  "fx_quantization": {
+    "seed": 0,
+    "clean_truth_count": 0,
+    "failure": "unintended_issue_counts",
+    "partial_snapshot": false
+  },
+  "settlement_and_evidence": {
+    "before": {
+      "reward": 0.99,
+      "findings": [],
+      "tp_fp_fn": [
+        0,
+        0,
+        0
+      ],
+      "inspections": 5,
+      "actions": [
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "submit"
+      ]
+    },
+    "after": {
+      "reward": 0.99,
+      "findings": [
+        {
+          "type": "payment_allocation",
+          "affected_ids": [
+            "payment/P9",
+            "invoice/I4"
+          ],
+          "claimed_amount_minor": 2000000,
+          "currency": "KZT",
+          "evidence_ids": [
+            "payments/D9",
+            "ledger/R4",
+            "ledger/R5",
+            "policy/allocation"
+          ],
+          "explanation": "Credits minus debits in the complete settlement index leave a positive balance."
+        }
+      ],
+      "tp_fp_fn": [
+        1,
+        0,
+        0
+      ],
+      "inspections": 5,
+      "actions": [
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "submit"
+      ]
+    },
+    "wrong_evidence": {
+      "reward": -1.0,
+      "findings": [
+        {
+          "type": "payment_allocation",
+          "affected_ids": [
+            "payment/P9",
+            "invoice/I4"
+          ],
+          "claimed_amount_minor": 2000000,
+          "currency": "KZT",
+          "evidence_ids": [
+            "payments/D9",
+            "ledger/R4",
+            "ledger/R6",
+            "policy/allocation"
+          ],
+          "explanation": "Credits minus debits in the complete settlement index leave a positive balance."
+        }
+      ],
+      "tp_fp_fn": [
+        0,
+        1,
+        1
+      ],
+      "inspections": 5,
+      "actions": [
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "list_records",
+        "submit"
+      ]
+    }
+  }
+}
