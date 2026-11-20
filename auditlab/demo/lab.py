@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import csv
 import hashlib
 import json
 import os
@@ -28,13 +29,26 @@ from .snapshot import PUBLIC_FILES, Snapshot
 from .store import OP_KEY_RE, ExportStore, NotFound, Refused
 
 SAMPLE_CREATED = "2026-11-19T12:00:00+05:00"
-SAMPLE_NOTE = "Учебный экспорт: открытые разработческие данные, прогон учебной сборки консоли. Не результат конкурсного раннера."
+SAMPLE_NOTE = ("Открытые учебные данные, не закрытые эпизоды жюри. Какие модули выполнили прогон, указано в строке "
+               "«движок». Награда относится к одной попытке и не является конкурсным баллом.")
 SAMPLES = [
     # run_id, source dir, company, pair_id
     ("TRAIN-S01-reconcile", REPO / "fixtures" / "foundation" / "S01", "Компания S01 · зачёт до границы", "foundation-allocation"),
     ("TRAIN-S02-reconcile", REPO / "fixtures" / "foundation" / "S02", "Компания S02 · зачёт после границы", "foundation-allocation"),
     ("TRAIN-FX01-reconcile", PACKAGE / "scenarios" / "FX01", "Компания FX01 · платёж 100 USD", None),
 ]
+# Companies of the published open training set (datasets/open/train, 240 ledger rows, 76 documents each),
+# built by auditlab.generator from datasets/recipe.json. The boundary pair is one family whose last
+# settlement is one minute before / after the exclusive period end; the third company is clean.
+OPEN_TRAIN = REPO / "datasets" / "open" / "train"
+OPEN_SAMPLES = [
+    # episode, company, pair_id, pair_role
+    ("E6476455CA5F6F7CF4A34F78E68AD54C0", "Сгенерированная компания · последний зачёт 30.11 23:59", "train-boundary", "A"),
+    ("E651B6A63DDA2448A91DC825714D7732E", "Сгенерированная компания · последний зачёт 01.12 00:01", "train-boundary", "B"),
+    ("E04F4ED6D6765D816DF94C62477B6EC4C", "Сгенерированная чистая компания", None, None),
+]
+TIMINGS = ("before", "at", "after")
+TIMING_TEXT = {"before": "до границы", "at": "ровно на границе", "after": "после границы"}
 KEY_RE = re.compile(r"^[a-z]+/[A-Za-z0-9_./-]{1,80}$")
 
 
@@ -74,6 +88,11 @@ def _save_truth(paths: DemoPaths, truth: dict, provenance: dict) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     _atomic_json(target, truth)
     _atomic_json(target.parent / "provenance.json", provenance)
+
+
+def _load_provenance(paths: DemoPaths, episode_id: str) -> dict:
+    path = _truth_path(paths, episode_id).parent / "provenance.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
 def _load_truth(paths: DemoPaths, episode_id: str) -> dict:
@@ -182,12 +201,16 @@ def execute(paths: DemoPaths, public_src: Path, truth: dict, meta: dict, *, poli
             "findings": len(submission.get("findings") or []),
             "elapsed_s": None if meta.get("created_at") else elapsed,
         }
-        for field in ("pair_id", "parent_run_id", "change", "prediction", "note", "derived_from", "op_key"):
+        for field in ("pair_id", "pair_role", "source", "parent_run_id", "change", "prediction", "note",
+                      "derived_from", "op_key"):
             if meta.get(field) is not None:
                 console[field] = meta[field]
         _dump(staged / "console.json", console)
-        _save_truth(paths, truth, {"run_id": run["run_id"], "source": str(meta.get("generator", "fixture")),
-                                   "parent_run_id": meta.get("parent_run_id"), "change": meta.get("change")})
+        provenance = {"run_id": run["run_id"], "source": str(meta.get("generator", "fixture")),
+                      "parent_run_id": meta.get("parent_run_id"), "change": meta.get("change")}
+        if meta.get("generator_input"):  # seed/config stay on the trusted side, never in console.json
+            provenance["generator"] = meta["generator_input"]
+        _save_truth(paths, truth, provenance)
         final = paths.exports / str(run["run_id"])
         if final.exists():
             raise LabError("run_exists", "An export with this run_id already exists; it is never overwritten.")
@@ -206,7 +229,80 @@ def build_samples(paths: DemoPaths) -> list[str]:
             "key": f"sample:{run_id}", "run_id": run_id, "label": "training_sample", "company": company,
             "pair_id": pair_id, "created_at": SAMPLE_CREATED, "note": SAMPLE_NOTE})
         made.append(run["run_id"])
+    for episode, company, pair_id, role in OPEN_SAMPLES:
+        source = OPEN_TRAIN / episode
+        truth = json.loads((source / "private" / "truth.json").read_text(encoding="utf-8"))
+        provenance = json.loads((source / "private" / "provenance.json").read_text(encoding="utf-8"))
+        run = execute(paths, source / "public", truth, {
+            "key": f"open:{episode}", "run_id": f"OPEN-{episode[:9]}", "label": "training_sample",
+            "company": company, "pair_id": pair_id, "pair_role": role, "created_at": SAMPLE_CREATED,
+            "note": SAMPLE_NOTE, "source": f"datasets/open/train/{episode}",
+            "generator": f"auditlab.generator {provenance['generator_version']}",
+            "generator_input": {"seed": provenance["seed"], "config": provenance["config"],
+                                "version": provenance["generator_version"]}})
+        made.append(run["run_id"])
     return made
+
+
+# ------------------------------------------------- fact change by the real generator
+def _ledger_by_id(public: Path) -> dict[str, dict]:
+    with (public / "ledger.csv").open(encoding="utf-8", newline="") as handle:
+        return {row["row_id"]: row for row in csv.DictReader(handle)}
+
+
+def generator_change(src_public: Path, generator_input: dict, change: dict, scratch: Path) -> dict:
+    """Rebuild a generated company with the real auditlab.generator, changing one documented fact.
+
+    The fact is the time of the last settlement relative to the exclusive period end
+    (config ``settlement_timing``: before / at / after). The source company must be reproduced
+    byte for byte from its trusted seed and config first; the new company uses the same seed and
+    nonce, so every other record keeps its identity. Truth comes from the generator, not the console.
+    """
+    from auditlab.generator import generate_episode
+
+    if change.get("field", "timestamp") != "timestamp":
+        raise standin.ChangeRejected("unsupported_field", "Менять можно только timestamp последнего зачёта.")
+    new_ts = standin._validate_timestamp(change.get("value"))
+    target = str(change.get("target") or "")
+    seed, config = generator_input.get("seed"), dict(generator_input.get("config") or {})
+    current = config.get("settlement_timing")
+    if current not in TIMINGS:
+        raise standin.ChangeRejected("generator_unsupported",
+                                     "В конфигурации этой компании нет пограничного зачёта (settlement_timing); "
+                                     "менять здесь нечего.")
+    generate_episode(seed, config, scratch / "source")
+    for name in PUBLIC_FILES:
+        a, b = src_public / name, scratch / "source" / "public" / name
+        if a.exists() != b.exists() or (a.exists() and a.read_bytes() != b.read_bytes()):
+            raise LabError("generator_mismatch", f"Генератор не воспроизводит {name} исходной компании побайтно.")
+    source_rows = _ledger_by_id(src_public)
+    options = {}
+    for timing in TIMINGS:
+        if timing == current:
+            continue
+        out = scratch / timing
+        generate_episode(seed, {**config, "settlement_timing": timing}, out)
+        rows = _ledger_by_id(out / "public")
+        moved = sorted(r for r in rows if r in source_rows and rows[r]["timestamp"] != source_rows[r]["timestamp"])
+        options[timing] = (out, moved, rows)
+    controlled = sorted({r for _, moved, _ in options.values() for r in moved})
+    row_id = target.split("/", 1)[1] if target.startswith("ledger/") else None
+    if row_id not in controlled:
+        raise standin.ChangeRejected(
+            "generator_unsupported",
+            "Генератор меняет в этой компании только журнал последнего зачёта: "
+            + ", ".join(f"ledger/{r}" for r in controlled) + ".")
+    wanted = datetime.fromisoformat(new_ts)
+    for timing, (out, moved, rows) in options.items():
+        if row_id in moved and datetime.fromisoformat(rows[row_id]["timestamp"]) == wanted:
+            return {"public": out / "public",
+                    "truth": json.loads((out / "private" / "truth.json").read_text(encoding="utf-8")),
+                    "moved": [f"ledger/{r}" for r in moved],
+                    "generator_input": {**generator_input, "config": {**config, "settlement_timing": timing}},
+                    "timing": {"from": current, "to": timing}}
+    allowed = "; ".join(f"{rows[row_id]['timestamp']} ({TIMING_TEXT[t]})" for t, (_, moved, rows) in options.items()
+                        if row_id in moved)
+    raise standin.ChangeRejected("generator_unsupported", f"Генератор ставит этот зачёт только на: {allowed}.")
 
 
 # ------------------------------------------------------------------ operations
@@ -254,6 +350,21 @@ def live_change(paths: DemoPaths, source_run_id: str, change: dict, prediction: 
         source_meta = store.meta(source_run_id)
         source_truth = _load_truth(paths, str(source_meta["episode_id"]))
         h = _short(op_key)
+        generated = _load_provenance(paths, str(source_meta["episode_id"])).get("generator")
+        if generated:  # a generated company changes only through the real generator, never the stand-in
+            with tempfile.TemporaryDirectory(dir=paths.root) as scratch:
+                built = generator_change(source_dir / "public", generated, change, Path(scratch))
+                pid = source_meta.get("pair_id") or f"PAIR-{source_run_id}"
+                run = execute(paths, built["public"], built["truth"], {
+                    "key": f"op:{op_key}", "run_id": f"LIVE-{h}", "label": "live_experiment",
+                    "generator": f"auditlab.generator {generated.get('version')}",
+                    "generator_input": built["generator_input"], "source": source_meta.get("source"),
+                    "company": f"{source_meta.get('company') or source_meta['episode_id']} · изменён факт",
+                    "parent_run_id": source_run_id, "pair_id": pid, "op_key": op_key,
+                    "change": {**change, "moved": built["moved"], "generator_parameter": "settlement_timing",
+                               "timing": built["timing"]},
+                    "prediction": (prediction or "")[:500] or None})
+            return op.write("completed", run_id=run["run_id"])
         episode = f"{str(source_meta['episode_id'])[:40]}-L{h[:4]}"
         with tempfile.TemporaryDirectory(dir=paths.root) as scratch:
             built = standin.apply_change(source_dir / "public", change, Path(scratch) / "public", episode,
@@ -418,7 +529,9 @@ def main(argv: list[str] | None = None) -> int:
         elif args.cmd == "rescore":
             result = rescore(paths, args.source, args.finding, args.replace, args.replacement, args.op, args.exports)
         else:
+            started_at, t0 = _now(), time.monotonic()
             result = replay_check(paths, args.run, args.exports)
+            result.update(executed_at=started_at, elapsed_ms=round((time.monotonic() - t0) * 1000, 1))
     except LabError as exc:
         print(json.dumps({"ok": False, "error": {"code": exc.code, "message": str(exc)}}, ensure_ascii=False))
         return 2

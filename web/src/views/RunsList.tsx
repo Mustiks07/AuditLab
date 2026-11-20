@@ -43,11 +43,13 @@ export function RunsList() {
         <code>docs/release/VALIDATION.md</code>.
       </div>
       {[...pairs.entries()].filter(([, rs]) => rs.length === 2).map(([pid, unordered]) => {
-        // run_id comes from the runner and is random: order the pair by episode so A/B is stable.
-        const rs = [...unordered].sort((a, b) => a.episode_id.localeCompare(b.episode_id) || a.run_id.localeCompare(b.run_id));
+        // run_id comes from the runner and is random: the lab records the role; old exports fall back to the episode.
+        const rank = (r: RunMeta) => r.pair_role ?? r.episode_id;
+        const rs = [...unordered].sort((a, b) => rank(a).localeCompare(rank(b)) || a.run_id.localeCompare(b.run_id));
         return (
           <div className="pair-hint" key={pid}>
-            Контрольная пара <b>{pid}</b>: A = {rs[0].episode_id}, B = {rs[1].episode_id}; компании отличаются одним фактом.
+            Контрольная пара <b>{pid}</b>: A = {rs[0].company ?? rs[0].episode_id}, B = {rs[1].company ?? rs[1].episode_id};
+            компании отличаются одним фактом.
             <a className="btn btn-small" href={`#/compare/${rs[0].run_id}/${rs[1].run_id}`}>Сравнить пару (B − A)</a>
           </div>
         );
@@ -66,6 +68,7 @@ export function RunsList() {
               <td>
                 <div className="strong">{r.company ?? r.episode_id}</div>
                 <div className="mono small muted">{r.run_id} · эпизод {r.episode_id}</div>
+                {r.source && <div className="mono small muted">{r.source}</div>}
               </td>
               <td className="small">{when(r.period?.start).slice(0, 10)} – {when(r.period?.end).slice(0, 10)}<div className="muted">конец искл.</div></td>
               <td className="mono">{r.policy}</td>

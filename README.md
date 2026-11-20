@@ -55,9 +55,12 @@ python run.py verify --suite rehearsal
 Условие загрузки снимка и экспорта определено в [INTERFACES.md](docs/INTERFACES.md).
 Успешные импорты сами по себе не засчитываются как проверка.
 
-`python run.py demo` запускает консоль на http://127.0.0.1:8765/ с учебными
-экспортами. `python -m auditlab.demo list` показывает фактические ID;
-`python run.py replay --run <id> --check` повторяет действия и сравнивает оценку.
+`python run.py demo` запускает консоль на http://127.0.0.1:8765/ с прогонами настоящего
+раннера на трёх сгенерированных компаниях `datasets/open/train` и трёх ручных примерах.
+`python -m auditlab.demo list` показывает фактические ID;
+`python run.py replay --run <id> --check` повторяет действия и сравнивает оценку;
+`python -m auditlab.demo crosscheck --live` сверяет экран консоли с файлами экспорта.
+Передача офлайн-комплекта получателю — [HANDOFF.md](docs/demo/HANDOFF.md).
 Обе команды принимают `--root <каталог>` и повторяемый `--exports <каталог>`.
 Подробности — [консоль жюри](docs/demo/README.md).
 Полный комплект собирается из чистого commit командой:
