@@ -207,6 +207,18 @@ class InputValues(unittest.TestCase):
                 report = self.assert_rejected(rows, reason="непустыми строками split, episode, policy")
                 self.assertEqual(report["policies"]["train/random"]["missing"], [self.base[0]["episode"]])
 
+    def test_findings_over_the_submit_limit(self):
+        rows = copy.deepcopy(self.base)
+        rows[0]["result"]["score"].update(tp=20, fp=11)
+        self.assert_rejected(rows, reason="больше лимита сдачи 30")
+
+    def test_parse_error_must_be_null_for_a_measured_attempt(self):
+        for value in ("", [], {}, False):
+            with self.subTest(value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0]["parse_error"] = value
+                self.assert_rejected(rows, reason="некорректное поле parse_error")
+
     def test_row_that_is_not_an_object(self):
         raw = [json.dumps(r) for r in self.base]
         raw[0] = json.dumps(["train", self.base[0]["episode"], "random"])
@@ -226,6 +238,81 @@ class InputValues(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("НЕ ПРОВЕРЕНО: mean_reward null", out.getvalue())
         self.assertIn("непустыми строками", out.getvalue())
+
+
+class UnreadableInput(unittest.TestCase):
+    """Bad files and lines give a diagnostic report and exit 1, never a traceback."""
+
+    def run_cli(self, *args):
+        out = io.StringIO()
+        with redirect_stdout(out):
+            code = open_sets.main(["summarize", *map(str, args)])
+        return code, out.getvalue()
+
+    def test_deeply_nested_line(self):
+        report = open_sets.summarize(["[" * 200000], open_sets.expected_episodes(DATASETS))
+        self.assertEqual(report["exit_code"], 1)
+        self.assertTrue(any("RecursionError" in p for p in report["problems"]))
+
+    def test_deeply_nested_child_output_is_a_parse_error(self):
+        row = open_sets.record("train", "E", "random", 0, "[" * 200000, "")
+        self.assertIsNone(row["result"])
+        self.assertIn("RecursionError", row["parse_error"])
+
+    def test_non_utf8_line_missing_file_directory_and_datasets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            (tmp / "bad.jsonl").write_bytes(b'\xff\xfe{"split": 1}\n')
+            code, out = self.run_cli(tmp / "bad.jsonl", "--datasets", DATASETS)
+            self.assertEqual(code, 1)
+            self.assertIn("не в кодировке UTF-8", out)
+            code, out = self.run_cli(tmp / "missing.jsonl")
+            self.assertEqual(code, 1)
+            self.assertIn("не найден", out)
+            (tmp / "dir.jsonl").mkdir()
+            code, out = self.run_cli(tmp / "dir.jsonl")
+            self.assertEqual(code, 1)
+            self.assertIn("не прочитан", out)
+            (tmp / "one.jsonl").write_text("{}\n", encoding="utf-8")
+            code, out = self.run_cli(tmp / "one.jsonl", "--datasets", tmp / "no-datasets")
+            self.assertEqual(code, 1)
+            self.assertIn("не прочитаны", out)
+
+
+class OddValues(unittest.TestCase):
+    """Every field of a row replaced by odd JSON values: no exception, and never counted as measured."""
+
+    ODD = [None, [], {}, "", "x", True, False, -1, 1.5, float("nan"), float("inf"), -float("inf"), 10 ** 30,
+           [[[]]], {"tp": 1}]
+    # Odd but legitimate: no parse error, the lowest reward, and a large miss count (SPEC bounds only findings).
+    VALID = [(("parse_error",), None), (("result", "reward"), -1), (("result", "score", "fn"), 10 ** 30)]
+
+    def legitimate(self, path, value):
+        return any(path == p and type(value) is type(v) and value == v for p, v in self.VALID)
+
+    def test_no_exception_and_no_false_measurement(self):
+        episodes = open_sets.expected_episodes(DATASETS)
+        base = [open_sets.record(s, e, p, 0, json.dumps(
+            {"status": "submitted", "reward": 1, "score": {"tp": 1, "fp": 0, "fn": 0}}), "")
+            for s in open_sets.SPLITS for e in episodes[s] for p in open_sets.POLICIES]
+        paths = [("returncode",), ("parse_error",), ("result",), ("result", "status"), ("result", "reward"),
+                 ("result", "score"), ("result", "score", "tp"), ("result", "score", "fp"),
+                 ("result", "score", "fn"), ("split",), ("episode",), ("policy",)]
+        for path in paths:
+            for value in self.ODD:
+                rows = copy.deepcopy(base)
+                target = rows[0]
+                for part in path[:-1]:
+                    target = target[part]
+                target[path[-1]] = value
+                with self.subTest(path=path, value=value):
+                    report = open_sets.summarize([json.dumps(r) for r in rows], episodes)  # must not raise
+                    if self.legitimate(path, value):
+                        self.assertEqual((report["status"], report["exit_code"]), ("complete", 0))
+                        continue
+                    self.assertEqual(report["status"], "не проверено")
+                    self.assertNotEqual(report["exit_code"], 0)
+                    self.assertIsNone(report["policies"]["train/random"]["mean_reward"])
 
 class HandoffCopy(unittest.TestCase):
     def test_handoff_embeds_the_shipped_tool_byte_for_byte(self):

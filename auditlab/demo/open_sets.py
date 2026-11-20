@@ -32,6 +32,7 @@ SPLITS = ("train", "dev")
 POLICIES = ("random", "reconcile", "flag_all", "oracle")
 EPISODES_PER_SPLIT = 10
 TAIL = 2000
+MAX_FINDINGS = 30  # SPEC, submit: at most 30 findings, so tp + fp <= 30
 
 
 # ----------------------------------------------------------------------------- run
@@ -54,8 +55,8 @@ def record(split: str, episode: str, policy: str, returncode: int, stdout: str, 
     else:
         try:
             result = json.loads(lines[-1])
-        except ValueError as error:
-            parse_error = f"last stdout line is not JSON: {error}"
+        except (ValueError, RecursionError) as error:
+            parse_error = f"last stdout line is not JSON: {type(error).__name__}"
         else:
             if not isinstance(result, dict):
                 result, parse_error = None, "last stdout line is not a JSON object"
@@ -66,7 +67,12 @@ def record(split: str, episode: str, policy: str, returncode: int, stdout: str, 
 def run(image: str, results: str, root: Path) -> int:
     failed = 0
     for split in SPLITS:
-        for episode in sorted(os.listdir(root / split)):
+        try:
+            episodes = sorted(os.listdir(root / split))
+        except OSError as error:
+            print(f"open_sets run: cannot list {root / split}: {type(error).__name__}", file=sys.stderr)
+            return 1
+        for episode in episodes:
             for policy in POLICIES:
                 try:
                     done = subprocess.run(attempt_command(split, episode, policy, image, results),
@@ -87,8 +93,11 @@ def attempt_problem(row: dict) -> str | None:
         return f"нет целого кода возврата: {returncode!r}"
     if returncode != 0:
         return f"процесс завершился с кодом {returncode}"
-    if row.get("parse_error"):
-        return f"ответ не разобран: {row['parse_error']}"
+    parse_error = row.get("parse_error")
+    if parse_error is not None:
+        if isinstance(parse_error, str) and parse_error:
+            return f"ответ не разобран: {parse_error}"
+        return f"некорректное поле parse_error: {parse_error!r}"
     result = row.get("result")
     if not isinstance(result, dict):
         return "нет результата"
@@ -103,6 +112,8 @@ def attempt_problem(row: dict) -> str | None:
             return f"score.{name} не целое число: {value!r}"
         if value < 0:
             return f"score.{name} отрицательное: {value}"
+    if score["tp"] + score["fp"] > MAX_FINDINGS:
+        return f"tp + fp = {score['tp'] + score['fp']} больше лимита сдачи {MAX_FINDINGS} выводов"
     reward = result.get("reward")
     if type(reward) not in (int, float):
         return f"нет числового reward: {reward!r}"
@@ -129,12 +140,14 @@ def expected_episodes(datasets: Path | None) -> dict[str, list[str]] | None:
     return {split: sorted(p.name for p in (datasets / split).iterdir() if p.is_dir()) for split in SPLITS}
 
 
-def summarize(lines: list[str], expected: dict[str, list[str]] | None = None) -> dict:
-    problems: list[str] = []
-    malformed = False  # unreadable, empty, duplicated or unexpected rows: an error, not just a gap
+def summarize(lines: list[str], expected: dict[str, list[str]] | None = None,
+              input_problems: list[str] | tuple = ()) -> dict:
+    """Strict report; never raises on bad input. ``input_problems`` are file/dataset read errors."""
+    problems: list[str] = list(input_problems)
+    malformed = bool(problems)  # unreadable, empty, duplicated or unexpected rows: an error, not just a gap
     rows: dict[tuple, dict] = {}
     duplicated: set[tuple] = set()
-    if not any(line.strip() for line in lines):
+    if not any(line.strip() for line in lines) and not problems:
         problems.append("файл результатов пуст")
         malformed = True
     for number, line in enumerate(lines, start=1):
@@ -142,7 +155,7 @@ def summarize(lines: list[str], expected: dict[str, list[str]] | None = None) ->
             continue
         try:
             row = json.loads(line)
-        except ValueError as error:
+        except (ValueError, RecursionError) as error:
             problems.append(f"строка {number} не разобрана: {type(error).__name__}")
             malformed = True
             continue
@@ -213,6 +226,24 @@ def summarize(lines: list[str], expected: dict[str, list[str]] | None = None) ->
             "scope": "Internal diagnostics on the open train/dev sets; not a contest score."}
 
 
+def read_lines(path: Path) -> tuple[list[str], list[str]]:
+    """Lines of the JSONL file; unreadable files and non-UTF-8 lines become problems, not exceptions."""
+    try:
+        data = path.read_bytes()
+    except FileNotFoundError:
+        return [], [f"файл результатов {path} не найден"]
+    except OSError as error:
+        return [], [f"файл результатов {path} не прочитан: {type(error).__name__}"]
+    lines, problems = [], []
+    for number, raw in enumerate(data.split(b"\n"), start=1):
+        try:
+            lines.append(raw.decode("utf-8"))
+        except UnicodeDecodeError:
+            problems.append(f"строка {number} не в кодировке UTF-8")
+            lines.append("")
+    return lines, problems
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="open_sets.py", description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -228,8 +259,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "run":
         return run(args.policy_image, args.results, args.datasets)
-    lines = args.file.read_text(encoding="utf-8").splitlines() if args.file.exists() else []
-    report = summarize(lines, expected_episodes(args.datasets))
+    lines, input_problems = read_lines(args.file)
+    expected = None
+    try:
+        expected = expected_episodes(args.datasets)
+    except OSError as error:
+        input_problems.append(f"наборы данных {args.datasets} не прочитаны: {type(error).__name__}")
+    report = summarize(lines, expected, input_problems)
     if args.output:
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     for name, row in report["policies"].items():
