@@ -1486,6 +1486,264 @@
   "pointer": "#/$defs/errorObservation"
  },
  {
+  "instance": {
+   "action": "calculator",
+   "args": {
+    "expression": "1+1",
+    "seed": 123
+   }
+  },
+  "name": "S01.train.policy_input_calculator.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 29
+   }
+  ],
+  "name": "S01.train.policy_input_calculator.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 71
+  },
+  "name": "S01.train.policy_input_calculator.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_document",
+   "args": {
+    "doc_id": "D9",
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.train.policy_input_get_document.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 30
+   }
+  ],
+  "name": "S01.train.policy_input_get_document.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 70
+  },
+  "name": "S01.train.policy_input_get_document.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_record",
+   "args": {
+    "id": "R4",
+    "table": "ledger",
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.train.policy_input_get_record.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 31
+   }
+  ],
+  "name": "S01.train.policy_input_get_record.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 69
+  },
+  "name": "S01.train.policy_input_get_record.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "list_records",
+   "args": {
+    "cursor": null,
+    "limit": 5,
+    "score": 1,
+    "table": "ledger"
+   }
+  },
+  "name": "S01.train.policy_input_list_records.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 32
+   }
+  ],
+  "name": "S01.train.policy_input_list_records.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 68
+  },
+  "name": "S01.train.policy_input_list_records.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "read_truth",
+   "args": {
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.train.policy_input_unknown_action.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 33
+   }
+  ],
+  "name": "S01.train.policy_input_unknown_action.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "unknown_action",
+    "message": "Unknown action."
+   },
+   "ok": false,
+   "remaining_steps": 67
+  },
+  "name": "S01.train.policy_input_unknown_action.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
   "instance": [
    {
     "error": {
@@ -1493,7 +1751,7 @@
      "message": "Action must be an object with 'action' and 'args'."
     },
     "ok": false,
-    "remaining_steps": 72
+    "remaining_steps": 67
    },
    0.0,
    false,
@@ -1512,7 +1770,7 @@
     "message": "Action must be an object with 'action' and 'args'."
    },
    "ok": false,
-   "remaining_steps": 72
+   "remaining_steps": 67
   },
   "name": "S01.train.malformed_action.observation",
   "pointer": "#/$defs/errorObservation"
@@ -1521,12 +1779,12 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   0.944,
+   0.934,
    true,
    false,
    {
@@ -1536,7 +1794,7 @@
      "fp": 0,
      "precision": 0.0,
      "recall": 0.0,
-     "reward": 0.944,
+     "reward": 0.934,
      "tp": 0
     },
     "status": "submitted"
@@ -1548,7 +1806,7 @@
  {
   "instance": {
    "ok": true,
-   "remaining_steps": 71,
+   "remaining_steps": 66,
    "result": {
     "status": "submitted"
    }
@@ -2530,6 +2788,179 @@
  {
   "instance": {
    "action": {
+    "action": "calculator",
+    "args": {
+     "expression": "1+1",
+     "seed": 123
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   "reward": 0.0,
+   "step": 29,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.train.trajectory.29",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "doc_id": "D9",
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   "reward": 0.0,
+   "step": 30,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.train.trajectory.30",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_record",
+    "args": {
+     "id": "R4",
+     "table": "ledger",
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   "reward": 0.0,
+   "step": 31,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.train.trajectory.31",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "list_records",
+    "args": {
+     "cursor": null,
+     "limit": 5,
+     "score": 1,
+     "table": "ledger"
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   "reward": 0.0,
+   "step": 32,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.train.trajectory.32",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "read_truth",
+    "args": {
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   "reward": 0.0,
+   "step": 33,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.train.trajectory.33",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
     "action": "submit",
     "args": {
      "episode_id": "S01",
@@ -2539,17 +2970,17 @@
    "episode_id": "S01",
    "observation": {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   "reward": 0.944,
-   "step": 29,
+   "reward": 0.934,
+   "step": 34,
    "terminated": true,
    "truncated": false
   },
-  "name": "S01.train.trajectory.29",
+  "name": "S01.train.trajectory.34",
   "pointer": "#/$defs/trajectoryLineTrain"
  },
  {
@@ -4039,6 +4470,264 @@
   "pointer": "#/$defs/errorObservation"
  },
  {
+  "instance": {
+   "action": "calculator",
+   "args": {
+    "expression": "1+1",
+    "seed": 123
+   }
+  },
+  "name": "S01.closed.policy_input_calculator.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 29
+   }
+  ],
+  "name": "S01.closed.policy_input_calculator.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 71
+  },
+  "name": "S01.closed.policy_input_calculator.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_document",
+   "args": {
+    "doc_id": "D9",
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.closed.policy_input_get_document.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 30
+   }
+  ],
+  "name": "S01.closed.policy_input_get_document.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 70
+  },
+  "name": "S01.closed.policy_input_get_document.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_record",
+   "args": {
+    "id": "R4",
+    "table": "ledger",
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.closed.policy_input_get_record.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 31
+   }
+  ],
+  "name": "S01.closed.policy_input_get_record.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 69
+  },
+  "name": "S01.closed.policy_input_get_record.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "list_records",
+   "args": {
+    "cursor": null,
+    "limit": 5,
+    "score": 1,
+    "table": "ledger"
+   }
+  },
+  "name": "S01.closed.policy_input_list_records.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 32
+   }
+  ],
+  "name": "S01.closed.policy_input_list_records.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 68
+  },
+  "name": "S01.closed.policy_input_list_records.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "read_truth",
+   "args": {
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S01.closed.policy_input_unknown_action.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 33
+   }
+  ],
+  "name": "S01.closed.policy_input_unknown_action.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "unknown_action",
+    "message": "Unknown action."
+   },
+   "ok": false,
+   "remaining_steps": 67
+  },
+  "name": "S01.closed.policy_input_unknown_action.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
   "instance": [
    {
     "error": {
@@ -4046,7 +4735,7 @@
      "message": "Action must be an object with 'action' and 'args'."
     },
     "ok": false,
-    "remaining_steps": 72
+    "remaining_steps": 67
    },
    0.0,
    false,
@@ -4065,7 +4754,7 @@
     "message": "Action must be an object with 'action' and 'args'."
    },
    "ok": false,
-   "remaining_steps": 72
+   "remaining_steps": 67
   },
   "name": "S01.closed.malformed_action.observation",
   "pointer": "#/$defs/errorObservation"
@@ -4074,7 +4763,7 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
@@ -4092,7 +4781,7 @@
  {
   "instance": {
    "ok": true,
-   "remaining_steps": 71,
+   "remaining_steps": 66,
    "result": {
     "status": "submitted"
    }
@@ -5074,6 +5763,179 @@
  {
   "instance": {
    "action": {
+    "action": "calculator",
+    "args": {
+     "expression": "1+1",
+     "seed": 123
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   "reward": 0.0,
+   "step": 29,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.closed.trajectory.29",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "doc_id": "D9",
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   "reward": 0.0,
+   "step": 30,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.closed.trajectory.30",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_record",
+    "args": {
+     "id": "R4",
+     "table": "ledger",
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   "reward": 0.0,
+   "step": 31,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.closed.trajectory.31",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "list_records",
+    "args": {
+     "cursor": null,
+     "limit": 5,
+     "score": 1,
+     "table": "ledger"
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   "reward": 0.0,
+   "step": 32,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.closed.trajectory.32",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "read_truth",
+    "args": {
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S01",
+   "observation": {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   "reward": 0.0,
+   "step": 33,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S01.closed.trajectory.33",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
     "action": "submit",
     "args": {
      "episode_id": "S01",
@@ -5083,17 +5945,17 @@
    "episode_id": "S01",
    "observation": {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
    "reward": 0.0,
-   "step": 29,
+   "step": 34,
    "terminated": true,
    "truncated": false
   },
-  "name": "S01.closed.trajectory.29",
+  "name": "S01.closed.trajectory.34",
   "pointer": "#/$defs/trajectoryLineClosed"
  },
  {
@@ -6577,6 +7439,264 @@
   "pointer": "#/$defs/errorObservation"
  },
  {
+  "instance": {
+   "action": "calculator",
+   "args": {
+    "expression": "1+1",
+    "seed": 123
+   }
+  },
+  "name": "S02.train.policy_input_calculator.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 29
+   }
+  ],
+  "name": "S02.train.policy_input_calculator.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 71
+  },
+  "name": "S02.train.policy_input_calculator.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_document",
+   "args": {
+    "doc_id": "D9",
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.train.policy_input_get_document.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 30
+   }
+  ],
+  "name": "S02.train.policy_input_get_document.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 70
+  },
+  "name": "S02.train.policy_input_get_document.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_record",
+   "args": {
+    "id": "R4",
+    "table": "ledger",
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.train.policy_input_get_record.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 31
+   }
+  ],
+  "name": "S02.train.policy_input_get_record.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 69
+  },
+  "name": "S02.train.policy_input_get_record.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "list_records",
+   "args": {
+    "cursor": null,
+    "limit": 5,
+    "score": 1,
+    "table": "ledger"
+   }
+  },
+  "name": "S02.train.policy_input_list_records.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 32
+   }
+  ],
+  "name": "S02.train.policy_input_list_records.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 68
+  },
+  "name": "S02.train.policy_input_list_records.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "read_truth",
+   "args": {
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.train.policy_input_unknown_action.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 33
+   }
+  ],
+  "name": "S02.train.policy_input_unknown_action.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "unknown_action",
+    "message": "Unknown action."
+   },
+   "ok": false,
+   "remaining_steps": 67
+  },
+  "name": "S02.train.policy_input_unknown_action.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
   "instance": [
    {
     "error": {
@@ -6584,7 +7704,7 @@
      "message": "Action must be an object with 'action' and 'args'."
     },
     "ok": false,
-    "remaining_steps": 72
+    "remaining_steps": 67
    },
    0.0,
    false,
@@ -6603,7 +7723,7 @@
     "message": "Action must be an object with 'action' and 'args'."
    },
    "ok": false,
-   "remaining_steps": 72
+   "remaining_steps": 67
   },
   "name": "S02.train.malformed_action.observation",
   "pointer": "#/$defs/errorObservation"
@@ -6612,12 +7732,12 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   0.944,
+   0.934,
    true,
    false,
    {
@@ -6627,7 +7747,7 @@
      "fp": 0,
      "precision": 1.0,
      "recall": 1.0,
-     "reward": 0.944,
+     "reward": 0.934,
      "tp": 1
     },
     "status": "submitted"
@@ -6639,7 +7759,7 @@
  {
   "instance": {
    "ok": true,
-   "remaining_steps": 71,
+   "remaining_steps": 66,
    "result": {
     "status": "submitted"
    }
@@ -7635,6 +8755,179 @@
  {
   "instance": {
    "action": {
+    "action": "calculator",
+    "args": {
+     "expression": "1+1",
+     "seed": 123
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   "reward": 0.0,
+   "step": 29,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.trajectory.29",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "doc_id": "D9",
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   "reward": 0.0,
+   "step": 30,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.trajectory.30",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_record",
+    "args": {
+     "id": "R4",
+     "table": "ledger",
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   "reward": 0.0,
+   "step": 31,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.trajectory.31",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "list_records",
+    "args": {
+     "cursor": null,
+     "limit": 5,
+     "score": 1,
+     "table": "ledger"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   "reward": 0.0,
+   "step": 32,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.trajectory.32",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "read_truth",
+    "args": {
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   "reward": 0.0,
+   "step": 33,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.trajectory.33",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": {
     "action": "submit",
     "args": {
      "episode_id": "S02",
@@ -7661,17 +8954,17 @@
    "episode_id": "S02",
    "observation": {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   "reward": 0.944,
-   "step": 29,
+   "reward": 0.934,
+   "step": 34,
    "terminated": true,
    "truncated": false
   },
-  "name": "S02.train.trajectory.29",
+  "name": "S02.train.trajectory.34",
   "pointer": "#/$defs/trajectoryLineTrain"
  },
  {
@@ -9155,6 +10448,264 @@
   "pointer": "#/$defs/errorObservation"
  },
  {
+  "instance": {
+   "action": "calculator",
+   "args": {
+    "expression": "1+1",
+    "seed": 123
+   }
+  },
+  "name": "S02.closed.policy_input_calculator.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 29
+   }
+  ],
+  "name": "S02.closed.policy_input_calculator.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 71
+  },
+  "name": "S02.closed.policy_input_calculator.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_document",
+   "args": {
+    "doc_id": "D9",
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.closed.policy_input_get_document.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 30
+   }
+  ],
+  "name": "S02.closed.policy_input_get_document.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 70
+  },
+  "name": "S02.closed.policy_input_get_document.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "get_record",
+   "args": {
+    "id": "R4",
+    "table": "ledger",
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.closed.policy_input_get_record.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 31
+   }
+  ],
+  "name": "S02.closed.policy_input_get_record.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 69
+  },
+  "name": "S02.closed.policy_input_get_record.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "list_records",
+   "args": {
+    "cursor": null,
+    "limit": 5,
+    "score": 1,
+    "table": "ledger"
+   }
+  },
+  "name": "S02.closed.policy_input_list_records.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 32
+   }
+  ],
+  "name": "S02.closed.policy_input_list_records.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 68
+  },
+  "name": "S02.closed.policy_input_list_records.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "read_truth",
+   "args": {
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.closed.policy_input_unknown_action.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 33
+   }
+  ],
+  "name": "S02.closed.policy_input_unknown_action.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "unknown_action",
+    "message": "Unknown action."
+   },
+   "ok": false,
+   "remaining_steps": 67
+  },
+  "name": "S02.closed.policy_input_unknown_action.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
   "instance": [
    {
     "error": {
@@ -9162,7 +10713,7 @@
      "message": "Action must be an object with 'action' and 'args'."
     },
     "ok": false,
-    "remaining_steps": 72
+    "remaining_steps": 67
    },
    0.0,
    false,
@@ -9181,7 +10732,7 @@
     "message": "Action must be an object with 'action' and 'args'."
    },
    "ok": false,
-   "remaining_steps": 72
+   "remaining_steps": 67
   },
   "name": "S02.closed.malformed_action.observation",
   "pointer": "#/$defs/errorObservation"
@@ -9190,7 +10741,7 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
@@ -9208,7 +10759,7 @@
  {
   "instance": {
    "ok": true,
-   "remaining_steps": 71,
+   "remaining_steps": 66,
    "result": {
     "status": "submitted"
    }
@@ -10204,6 +11755,179 @@
  {
   "instance": {
    "action": {
+    "action": "calculator",
+    "args": {
+     "expression": "1+1",
+     "seed": 123
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 71
+   },
+   "reward": 0.0,
+   "step": 29,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.trajectory.29",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "doc_id": "D9",
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 70
+   },
+   "reward": 0.0,
+   "step": 30,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.trajectory.30",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_record",
+    "args": {
+     "id": "R4",
+     "table": "ledger",
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 69
+   },
+   "reward": 0.0,
+   "step": 31,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.trajectory.31",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "list_records",
+    "args": {
+     "cursor": null,
+     "limit": 5,
+     "score": 1,
+     "table": "ledger"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_args",
+     "message": "Invalid arguments for this action."
+    },
+    "ok": false,
+    "remaining_steps": 68
+   },
+   "reward": 0.0,
+   "step": 32,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.trajectory.32",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "read_truth",
+    "args": {
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    },
+    "ok": false,
+    "remaining_steps": 67
+   },
+   "reward": 0.0,
+   "step": 33,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.trajectory.33",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": {
     "action": "submit",
     "args": {
      "episode_id": "S02",
@@ -10230,17 +11954,17 @@
    "episode_id": "S02",
    "observation": {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
    "reward": 0.0,
-   "step": 29,
+   "step": 34,
    "terminated": true,
    "truncated": false
   },
-  "name": "S02.closed.trajectory.29",
+  "name": "S02.closed.trajectory.34",
   "pointer": "#/$defs/trajectoryLineClosed"
  },
  {
@@ -10282,6 +12006,703 @@
    "remaining_steps": 99
   },
   "name": "S02.train.invalid_submission.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "submit",
+   "args": {
+    "episode_id": "S02",
+    "findings": [],
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.train.invalid_submission_extra_keys.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   -1.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.train.invalid_submission_extra_keys.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.invalid_submission_extra_keys.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [],
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.train.invalid_submission_extra_keys.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": {
+   "action": "submit",
+   "args": {
+    "episode_id": "S02",
+    "findings": [
+     {
+      "affected_ids": [
+       "payment/P9",
+       "invoice/I4"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D9",
+       "ledger/R4",
+       "ledger/R5",
+       "policy/allocation"
+      ],
+      "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+      "seed": 7,
+      "truth": {
+       "expected_amount_minor": 2000000
+      },
+      "type": "payment_allocation"
+     }
+    ]
+   }
+  },
+  "name": "S02.train.invalid_submission_finding_extra_keys.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   -1.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.train.invalid_submission_finding_extra_keys.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.invalid_submission_finding_extra_keys.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [
+      {
+       "affected_ids": [
+        "payment/P9",
+        "invoice/I4"
+       ],
+       "claimed_amount_minor": 2000000,
+       "currency": "KZT",
+       "evidence_ids": [
+        "payments/D9",
+        "ledger/R4",
+        "ledger/R5",
+        "policy/allocation"
+       ],
+       "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+       "seed": 7,
+       "truth": {
+        "expected_amount_minor": 2000000
+       },
+       "type": "payment_allocation"
+      }
+     ]
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.train.invalid_submission_finding_extra_keys.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   -1.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.train.submit_depth_602.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.submit_depth_602.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.train.submit_depth_602.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.train.submit_depth_602.after",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   -1.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.train.submit_depth_64.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.submit_depth_64.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [
+      [
+       [
+        [
+         [
+          [
+           [
+            [
+             [
+              [
+               [
+                [
+                 [
+                  [
+                   [
+                    [
+                     [
+                      [
+                       [
+                        [
+                         [
+                          [
+                           [
+                            [
+                             [
+                              [
+                               [
+                                [
+                                 [
+                                  [
+                                   [
+                                    [
+                                     [
+                                      [
+                                       [
+                                        [
+                                         [
+                                          [
+                                           [
+                                            [
+                                             [
+                                              [
+                                               [
+                                                [
+                                                 [
+                                                  [
+                                                   [
+                                                    [
+                                                     [
+                                                      [
+                                                       [
+                                                        [
+                                                         [
+                                                          [
+                                                           [
+                                                            [
+                                                             [
+                                                              [
+                                                               [
+                                                                [
+                                                                 [
+                                                                  0
+                                                                 ]
+                                                                ]
+                                                               ]
+                                                              ]
+                                                             ]
+                                                            ]
+                                                           ]
+                                                          ]
+                                                         ]
+                                                        ]
+                                                       ]
+                                                      ]
+                                                     ]
+                                                    ]
+                                                   ]
+                                                  ]
+                                                 ]
+                                                ]
+                                               ]
+                                              ]
+                                             ]
+                                            ]
+                                           ]
+                                          ]
+                                         ]
+                                        ]
+                                       ]
+                                      ]
+                                     ]
+                                    ]
+                                   ]
+                                  ]
+                                 ]
+                                ]
+                               ]
+                              ]
+                             ]
+                            ]
+                           ]
+                          ]
+                         ]
+                        ]
+                       ]
+                      ]
+                     ]
+                    ]
+                   ]
+                  ]
+                 ]
+                ]
+               ]
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.train.submit_depth_64.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.train.submit_depth_64.after",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   -1.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.train.submit_depth_65.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.submit_depth_65.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.train.submit_depth_65.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.train.submit_depth_65.after",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_request",
+     "message": "Invalid request."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 1
+   }
+  ],
+  "name": "S02.train.tool_depth_65.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_request",
+    "message": "Invalid request."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.tool_depth_65.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_request",
+     "message": "Invalid request."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.train.tool_depth_65.trajectory",
+  "pointer": "#/$defs/trajectoryLineTrain"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "malformed_action",
+     "message": "Action must be an object with 'action' and 'args'."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   false,
+   false,
+   {
+    "protocol_error": "malformed_action"
+   }
+  ],
+  "name": "S02.train.non_json_value.step",
+  "pointer": "#/$defs/stepTrain"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "malformed_action",
+    "message": "Action must be an object with 'action' and 'args'."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.train.non_json_value.observation",
   "pointer": "#/$defs/errorObservation"
  },
  {
@@ -10558,6 +12979,658 @@
    "remaining_steps": 99
   },
   "name": "S02.closed.invalid_submission.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": "submit",
+   "args": {
+    "episode_id": "S02",
+    "findings": [],
+    "score": {
+     "reward": 1.0
+    },
+    "seed": 123,
+    "truth": {
+     "issues": [
+      {
+       "evidence_sets": [
+        [
+         "ledger/R4"
+        ]
+       ],
+       "issue_id": "X1"
+      }
+     ]
+    }
+   }
+  },
+  "name": "S02.closed.invalid_submission_extra_keys.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.closed.invalid_submission_extra_keys.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.invalid_submission_extra_keys.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [],
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.closed.invalid_submission_extra_keys.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": {
+   "action": "submit",
+   "args": {
+    "episode_id": "S02",
+    "findings": [
+     {
+      "affected_ids": [
+       "payment/P9",
+       "invoice/I4"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D9",
+       "ledger/R4",
+       "ledger/R5",
+       "policy/allocation"
+      ],
+      "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+      "seed": 7,
+      "truth": {
+       "expected_amount_minor": 2000000
+      },
+      "type": "payment_allocation"
+     }
+    ]
+   }
+  },
+  "name": "S02.closed.invalid_submission_finding_extra_keys.action",
+  "pointer": "#/$defs/actionEnvelope"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.closed.invalid_submission_finding_extra_keys.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.invalid_submission_finding_extra_keys.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [
+      {
+       "affected_ids": [
+        "payment/P9",
+        "invoice/I4"
+       ],
+       "claimed_amount_minor": 2000000,
+       "currency": "KZT",
+       "evidence_ids": [
+        "payments/D9",
+        "ledger/R4",
+        "ledger/R5",
+        "policy/allocation"
+       ],
+       "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+       "seed": 7,
+       "truth": {
+        "expected_amount_minor": 2000000
+       },
+       "type": "payment_allocation"
+      }
+     ]
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.closed.invalid_submission_finding_extra_keys.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.closed.submit_depth_602.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.submit_depth_602.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.closed.submit_depth_602.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.closed.submit_depth_602.after",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.closed.submit_depth_64.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.submit_depth_64.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [
+      [
+       [
+        [
+         [
+          [
+           [
+            [
+             [
+              [
+               [
+                [
+                 [
+                  [
+                   [
+                    [
+                     [
+                      [
+                       [
+                        [
+                         [
+                          [
+                           [
+                            [
+                             [
+                              [
+                               [
+                                [
+                                 [
+                                  [
+                                   [
+                                    [
+                                     [
+                                      [
+                                       [
+                                        [
+                                         [
+                                          [
+                                           [
+                                            [
+                                             [
+                                              [
+                                               [
+                                                [
+                                                 [
+                                                  [
+                                                   [
+                                                    [
+                                                     [
+                                                      [
+                                                       [
+                                                        [
+                                                         [
+                                                          [
+                                                           [
+                                                            [
+                                                             [
+                                                              [
+                                                               [
+                                                                [
+                                                                 [
+                                                                  0
+                                                                 ]
+                                                                ]
+                                                               ]
+                                                              ]
+                                                             ]
+                                                            ]
+                                                           ]
+                                                          ]
+                                                         ]
+                                                        ]
+                                                       ]
+                                                      ]
+                                                     ]
+                                                    ]
+                                                   ]
+                                                  ]
+                                                 ]
+                                                ]
+                                               ]
+                                              ]
+                                             ]
+                                            ]
+                                           ]
+                                          ]
+                                         ]
+                                        ]
+                                       ]
+                                      ]
+                                     ]
+                                    ]
+                                   ]
+                                  ]
+                                 ]
+                                ]
+                               ]
+                              ]
+                             ]
+                            ]
+                           ]
+                          ]
+                         ]
+                        ]
+                       ]
+                      ]
+                     ]
+                    ]
+                   ]
+                  ]
+                 ]
+                ]
+               ]
+              ]
+             ]
+            ]
+           ]
+          ]
+         ]
+        ]
+       ]
+      ]
+     ]
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.closed.submit_depth_64.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.closed.submit_depth_64.after",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "S02.closed.submit_depth_65.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_submission",
+    "message": "Submission failed schema validation."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.submit_depth_65.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "S02.closed.submit_depth_65.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.0,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "S02.closed.submit_depth_65.after",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_request",
+     "message": "Invalid request."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   false,
+   false,
+   {
+    "inspection_steps": 1
+   }
+  ],
+  "name": "S02.closed.tool_depth_65.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "invalid_request",
+    "message": "Invalid request."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.tool_depth_65.observation",
+  "pointer": "#/$defs/errorObservation"
+ },
+ {
+  "instance": {
+   "action": {
+    "action": "get_document",
+    "args": {
+     "$unrepresentable": "depth_limit"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_request",
+     "message": "Invalid request."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   "reward": 0.0,
+   "step": 1,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "S02.closed.tool_depth_65.trajectory",
+  "pointer": "#/$defs/trajectoryLineClosed"
+ },
+ {
+  "instance": [
+   {
+    "error": {
+     "code": "malformed_action",
+     "message": "Action must be an object with 'action' and 'args'."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   false,
+   false,
+   {
+    "protocol_error": "malformed_action"
+   }
+  ],
+  "name": "S02.closed.non_json_value.step",
+  "pointer": "#/$defs/stepClosed"
+ },
+ {
+  "instance": {
+   "error": {
+    "code": "malformed_action",
+    "message": "Action must be an object with 'action' and 'args'."
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "S02.closed.non_json_value.observation",
   "pointer": "#/$defs/errorObservation"
  },
  {

@@ -28,7 +28,9 @@ import re
 import sys
 from pathlib import Path
 
-MAX_DEPTH = 64
+# Validation safety cap, above the runner's 64-level action limit so that a trajectory line
+# (line -> action -> ...) wrapping a maximal accepted action still validates.
+MAX_DEPTH = 80
 KEYWORDS = frozenset({
     "$schema", "$id", "$comment", "title", "description", "$defs", "$ref", "type", "enum", "const",
     "properties", "required", "additionalProperties", "propertyNames", "items", "prefixItems",

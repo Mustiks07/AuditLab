@@ -31,6 +31,25 @@ GOOD_S02 = {"type": "payment_allocation", "affected_ids": ["payment/P9", "invoic
             "evidence_ids": ["payments/D9", "ledger/R4", "ledger/R5", "policy/allocation"],
             "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary."}
 D9 = {"action": "get_document", "args": {"doc_id": "D9"}}
+# Keys an auditor may put into its OWN request. They are policy input, not disclosure (PR #22 review).
+FOREIGN = {"seed": 123, "truth": {"issues": [{"issue_id": "X1", "evidence_sets": [["ledger/R4"]]}]},
+           "score": {"reward": 1.0}}
+
+
+def _nest(depth):
+    value = 0
+    for _ in range(depth - 1):
+        value = [value]
+    return value
+
+
+def _deep_submit(total_depth):
+    """submit whose whole action object is exactly total_depth levels deep (Issue #23)."""
+    return {"action": "submit", "args": {"episode_id": "S02", "findings": _nest(total_depth - 2)}}
+
+
+def _trajectory_pointer(mode):
+    return "#/$defs/trajectoryLineTrain" if mode == "train" else "#/$defs/trajectoryLineClosed"
 
 
 class Clock:
@@ -53,7 +72,7 @@ class Recorder:
         self.entries.append({"name": name, "pointer": pointer, "instance": copy.deepcopy(instance)})
 
     def step(self, env, name: str, mode: str, action, reply_pointer: str | None):
-        result = env.step(copy.deepcopy(action))
+        result = env.step(action)  # the runner keeps its own bounded copy (#23)
         self.add(f"{name}.step", _step_pointer(mode), list(result))
         if reply_pointer:
             self.add(f"{name}.observation", reply_pointer, result[0])
@@ -113,6 +132,16 @@ def _transcript(rec: Recorder, label: str, mode: str) -> None:
         ]
         for name, action in errors:
             rec.step(env, f"{prefix}.error_{name}", mode, action, "#/$defs/errorObservation")
+        policy_inputs = [
+            ("calculator", {"action": "calculator", "args": {"expression": "1+1", "seed": 123}}),
+            ("get_document", {"action": "get_document", "args": {"doc_id": "D9", **FOREIGN}}),
+            ("get_record", {"action": "get_record", "args": {"table": "ledger", "id": "R4", "truth": FOREIGN["truth"]}}),
+            ("list_records", {"action": "list_records", "args": {"table": "ledger", "cursor": None, "limit": 5, "score": 1}}),
+            ("unknown_action", {"action": "read_truth", "args": FOREIGN}),
+        ]
+        for name, action in policy_inputs:
+            rec.add(f"{prefix}.policy_input_{name}.action", "#/$defs/actionEnvelope", action)
+            rec.step(env, f"{prefix}.policy_input_{name}", mode, action, "#/$defs/errorObservation")
         rec.step(env, f"{prefix}.malformed_action", mode, {"args": {}}, "#/$defs/errorObservation")
         answer = {"episode_id": label, "findings": [] if label == "S01" else [GOOD_S02]}
         rec.step(env, f"{prefix}.submit", mode, {"action": "submit", "args": answer}, "#/$defs/replySubmitAccepted")
@@ -130,6 +159,29 @@ def _endings(rec: Recorder, mode: str) -> None:
     env = make_env(mode)
     env.reset(0, snapshot)
     rec.step(env, f"{prefix}.invalid_submission", mode, {"action": "submit", "args": {"episode_id": "S02", "findings": "x"}},
+             "#/$defs/errorObservation")
+    for name, body in (
+            ("invalid_submission_extra_keys", {"episode_id": "S02", "findings": [], **FOREIGN}),
+            ("invalid_submission_finding_extra_keys",
+             {"episode_id": "S02", "findings": [dict(GOOD_S02, truth={"expected_amount_minor": 2000000}, seed=7)]})):
+        env = make_env(mode)
+        env.reset(0, snapshot)
+        rec.add(f"{prefix}.{name}.action", "#/$defs/actionEnvelope", {"action": "submit", "args": body})
+        rec.step(env, f"{prefix}.{name}", mode, {"action": "submit", "args": body}, "#/$defs/errorObservation")
+        rec.add(f"{prefix}.{name}.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
+    # Issue #23: depth 64 reaches the evaluator, deeper is refused by the runner; both end with -1.
+    for name, depth in (("depth_602", 602), ("depth_64", 64), ("depth_65", 65)):
+        env = make_env(mode)
+        env.reset(0, snapshot)
+        rec.step(env, f"{prefix}.submit_{name}", mode, _deep_submit(depth), "#/$defs/errorObservation")
+        rec.add(f"{prefix}.submit_{name}.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
+        rec.add(f"{prefix}.submit_{name}.after", _step_pointer(mode), list(env.step(D9)))
+    env = make_env(mode)
+    env.reset(0, snapshot)
+    rec.step(env, f"{prefix}.tool_depth_65", mode, {"action": "get_document", "args": {"doc_id": _nest(63)}},
+             "#/$defs/errorObservation")
+    rec.add(f"{prefix}.tool_depth_65.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
+    rec.step(env, f"{prefix}.non_json_value", mode, {"action": "submit", "args": {"episode_id": "S02", "findings": [{1, 2}]}},
              "#/$defs/errorObservation")
     env = make_env(mode)
     env.reset(0, snapshot)
@@ -319,6 +371,17 @@ def build_invalid(valid: list[dict]) -> list[dict]:
         "terminated and truncated together", lambda o: o.__setitem__(3, True))
     bad("export_status_submitted", "export.S02-reconcile.run", "#/$defs/exportRun",
         "console reads only completed/truncated/failed", lambda o: o.__setitem__("status", "submitted"))
+    # Policy input may carry any key; what the environment sends back may not (PR #22 review).
+    bad("action_args_with_seed", "action.calculator", "#/$defs/action", "extra argument is not a valid action",
+        lambda o: o["args"].__setitem__("seed", 123))
+    bad("trajectory_observation_with_seed", "S02.train.invalid_submission_extra_keys.trajectory",
+        "#/$defs/trajectoryLineTrain", "seed echoed in an observation", lambda o: o["observation"].__setitem__("seed", 123))
+    bad("closed_trajectory_observation_with_truth", "S02.closed.policy_input_get_document.observation",
+        "#/$defs/errorObservation", "truth echoed in an error", lambda o: o.__setitem__("truth", {"issues": []}))
+    bad("closed_info_with_seed", "S02.closed.invalid_submission_extra_keys.step", "#/$defs/stepClosed",
+        "seed in closed info", lambda o: o[4].__setitem__("seed", 123))
+    bad("train_info_score_after_rejected_submit", "S02.train.submit_depth_602.step", "#/$defs/stepTrain",
+        "positive reward for a refused submission", lambda o: o.__setitem__(1, 0.992))
     return out
 
 

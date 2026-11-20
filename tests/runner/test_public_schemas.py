@@ -260,6 +260,102 @@ class ClosedMode(unittest.TestCase):
         self.assertGreater(injected, 2000)  # 2675 locations x keys in the current golden S02 messages
 
 
+FOREIGN_KEYS = ("seed", "truth", "score", "issue_id", "evidence_sets")
+FOREIGN = {"seed": 123, "truth": {"issues": [{"issue_id": "X1", "evidence_sets": [["ledger/R4"]]}]},
+           "score": {"reward": 1.0}}
+
+
+def keys_anywhere(value, found=None):
+    found = set() if found is None else found
+    if isinstance(value, dict):
+        found.update(value)
+        for child in value.values():
+            keys_anywhere(child, found)
+    elif isinstance(value, list):
+        for child in value:
+            keys_anywhere(child, found)
+    return found
+
+
+class PolicyInput(unittest.TestCase):
+    """PR #22 review: arbitrary keys in the POLICY's own request are valid input, never echoed back."""
+
+    def test_integrator_example_both_modes(self):
+        for mode in ("closed", "train"):
+            with self.subTest(mode=mode):
+                env = make_env(mode, evaluator="inprocess")
+                env.reset(0, {"snapshot_dir": str((FIXTURES / "S02").resolve())})
+                action = {"action": "calculator", "args": {"expression": "1+1", "seed": 123}}
+                result = env.step(action)
+                self.assertEqual((result[0]["error"]["code"], result[0]["remaining_steps"]), ("invalid_args", 99))
+                self.assertEqual(V.errors(action, "#/$defs/actionEnvelope"), [])
+                self.assertNotEqual(V.errors(action, "#/$defs/action"), [])
+                self.assertEqual(V.errors(env._trajectory[-1], f"#/$defs/trajectoryLine{mode.title()}"), [])
+                self.assertEqual(V.errors(list(result), step_pointer(mode)), [])
+                env.close()
+
+    def test_closed_looking_keys_in_requests_and_submissions_are_kept_but_not_echoed(self):
+        requests = [{"action": "calculator", "args": {"expression": "1+1", "seed": 123}},
+                    {"action": "get_document", "args": {"doc_id": "D9", **FOREIGN}},
+                    {"action": "get_record", "args": {"table": "ledger", "id": "R4", "truth": FOREIGN["truth"]}},
+                    {"action": "list_records", "args": {"table": "ledger", "cursor": None, "limit": 5, "score": 1}},
+                    {"action": "read_truth", "args": FOREIGN}]
+        submissions = [{"episode_id": "S02", "findings": [], **FOREIGN},
+                       {"episode_id": "S02", "findings": [{"type": "payment_allocation", "affected_ids": ["payment/P9"],
+                                                           "claimed_amount_minor": 1, "currency": "KZT", "evidence_ids": [],
+                                                           "explanation": "", "truth": {"issues": []}, "seed": 7}]}]
+        for mode in ("train", "closed"):
+            for index, body in enumerate(submissions):
+                with self.subTest(mode=mode, submission=index), tempfile.TemporaryDirectory() as tmp:
+                    env = make_env(mode, trusted_dir=Path(tmp) / "trusted")  # evaluator in its own process
+                    config = {"snapshot_dir": str(FIXTURES / "S02"), "run_id": "keys"}
+                    if mode == "train":
+                        config["export_dir"] = str(Path(tmp) / "run")
+                    observation, info = env.reset(0, config)
+                    for action in requests + [{"action": "submit", "args": body}]:
+                        self.assertEqual(V.errors(action, "#/$defs/actionEnvelope"), [])
+                        result = list(env.step(copy.deepcopy(action)))
+                        self.assertEqual(V.errors(result, step_pointer(mode)), [], action)
+                        echoed = keys_anywhere(result[0]) & set(FOREIGN_KEYS)
+                        self.assertEqual(echoed, set(), f"observation echoed {echoed}")
+                        if mode == "closed":
+                            self.assertEqual(keys_anywhere(result[4]) & set(FOREIGN_KEYS), set())
+                    self.assertEqual(result[0]["error"]["code"], "invalid_submission")
+                    self.assertEqual((result[1], env.final["reward"]), (-1.0 if mode == "train" else 0.0, -1.0))
+                    line_pointer = f"#/$defs/trajectoryLine{mode.title()}"
+                    files = [Path(tmp) / "trusted" / "keys" / "trajectory.jsonl"]
+                    if mode == "train":
+                        files.append(Path(tmp) / "run" / "trajectories.jsonl")
+                    for path in files:
+                        lines = [VALIDATE.load_json(line) for line in path.read_text(encoding="utf-8").splitlines()]
+                        self.assertEqual(len(lines), len(requests) + 1)
+                        self.assertEqual(lines[-1]["action"], {"action": "submit", "args": body})  # kept verbatim
+                        for line in lines:
+                            self.assertEqual(V.errors(line, line_pointer), [], path.name)
+                            self.assertEqual(keys_anywhere(line["observation"]) & set(FOREIGN_KEYS), set())
+                    env.close()
+
+    def test_issue_23_boundary_messages_validate(self):
+        for mode in ("train", "closed"):
+            for depth, kept in ((64, True), (65, False), (602, False)):
+                with self.subTest(mode=mode, depth=depth):
+                    env = make_env(mode, evaluator="inprocess")
+                    env.reset(0, {"snapshot_dir": str(FIXTURES / "S02")})
+                    nested = 0
+                    for _ in range(depth - 3):
+                        nested = [nested]
+                    action = {"action": "submit", "args": {"episode_id": "S02", "findings": nested}}
+                    result = list(env.step(action))
+                    self.assertEqual(V.errors(result, step_pointer(mode)), [])
+                    line = env._trajectory[-1]
+                    self.assertEqual(V.errors(line, f"#/$defs/trajectoryLine{mode.title()}"), [])
+                    if kept:
+                        self.assertEqual(line["action"], action)
+                    else:
+                        self.assertEqual(V.errors(line["action"]["args"], "#/$defs/unrepresentableArgs"), [])
+                    env.close()
+
+
 class Exports(unittest.TestCase):
     def test_fresh_train_export_and_closed_trusted_trajectory(self):
         from auditlab.policies import make_policy

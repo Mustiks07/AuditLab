@@ -392,12 +392,12 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   0.944,
+   0.934,
    1,
    false,
    {
@@ -407,7 +407,7 @@
      "fp": 0,
      "precision": 1.0,
      "recall": 1.0,
-     "reward": 0.944,
+     "reward": 0.934,
      "tp": 1
     },
     "status": "submitted"
@@ -1465,7 +1465,7 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
@@ -1495,7 +1495,7 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
@@ -1543,12 +1543,12 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   0.944,
+   0.934,
    true,
    false,
    {
@@ -1558,7 +1558,7 @@
      "fp": 0,
      "precision": 1.0,
      "recall": 1.0,
-     "reward": 0.944,
+     "reward": 0.934,
      "tp": 1
     },
     "status": "submitted",
@@ -1696,12 +1696,12 @@
   "instance": [
    {
     "ok": true,
-    "remaining_steps": 71,
+    "remaining_steps": 66,
     "result": {
      "status": "submitted"
     }
    },
-   0.944,
+   0.934,
    true,
    true,
    {
@@ -1711,7 +1711,7 @@
      "fp": 0,
      "precision": 1.0,
      "recall": 1.0,
-     "reward": 0.944,
+     "reward": 0.934,
      "tp": 1
     },
     "status": "submitted"
@@ -1735,5 +1735,134 @@
   "name": "export_status_submitted",
   "pointer": "#/$defs/exportRun",
   "why": "console reads only completed/truncated/failed"
+ },
+ {
+  "base": "action.calculator",
+  "instance": {
+   "action": "calculator",
+   "args": {
+    "expression": "-2.5 * (4 + 1)",
+    "seed": 123
+   }
+  },
+  "name": "action_args_with_seed",
+  "pointer": "#/$defs/action",
+  "why": "extra argument is not a valid action"
+ },
+ {
+  "base": "S02.train.invalid_submission_extra_keys.trajectory",
+  "instance": {
+   "action": {
+    "action": "submit",
+    "args": {
+     "episode_id": "S02",
+     "findings": [],
+     "score": {
+      "reward": 1.0
+     },
+     "seed": 123,
+     "truth": {
+      "issues": [
+       {
+        "evidence_sets": [
+         [
+          "ledger/R4"
+         ]
+        ],
+        "issue_id": "X1"
+       }
+      ]
+     }
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99,
+    "seed": 123
+   },
+   "reward": -1.0,
+   "step": 1,
+   "terminated": true,
+   "truncated": false
+  },
+  "name": "trajectory_observation_with_seed",
+  "pointer": "#/$defs/trajectoryLineTrain",
+  "why": "seed echoed in an observation"
+ },
+ {
+  "base": "S02.closed.policy_input_get_document.observation",
+  "instance": {
+   "error": {
+    "code": "invalid_args",
+    "message": "Invalid arguments for this action."
+   },
+   "ok": false,
+   "remaining_steps": 70,
+   "truth": {
+    "issues": []
+   }
+  },
+  "name": "closed_trajectory_observation_with_truth",
+  "pointer": "#/$defs/errorObservation",
+  "why": "truth echoed in an error"
+ },
+ {
+  "base": "S02.closed.invalid_submission_extra_keys.step",
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.0,
+   true,
+   false,
+   {
+    "seed": 123,
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "closed_info_with_seed",
+  "pointer": "#/$defs/stepClosed",
+  "why": "seed in closed info"
+ },
+ {
+  "base": "S02.train.submit_depth_602.step",
+  "instance": [
+   {
+    "error": {
+     "code": "invalid_submission",
+     "message": "Submission failed schema validation."
+    },
+    "ok": false,
+    "remaining_steps": 99
+   },
+   0.992,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 0.0,
+     "fn": 1,
+     "fp": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "reward": -1.0,
+     "tp": 0
+    },
+    "status": "invalid_submission"
+   }
+  ],
+  "name": "train_info_score_after_rejected_submit",
+  "pointer": "#/$defs/stepTrain",
+  "why": "positive reward for a refused submission"
  }
 ]

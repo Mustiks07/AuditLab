@@ -108,6 +108,11 @@ limit = call({"action": "list_records", "args": {"table": "ledger", "cursor": No
              "#/$defs/errorObservation", strict=False)
 if limit["error"]["code"] != "invalid_args":
     fail(f"expected invalid_args, got {limit['error']}")
+# Policy input may carry any key (PR #22 review); the reply must not echo it (closed_keys() checks).
+seeded = call({"action": "calculator", "args": {"expression": "1+1", "seed": 123}}, "#/$defs/errorObservation",
+              strict=False)
+if seeded["error"]["code"] != "invalid_args":
+    fail(f"expected invalid_args for an extra argument, got {seeded['error']}")
 findings = []
 if amount > 0:
     findings = [{"type": "payment_allocation",

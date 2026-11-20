@@ -23,8 +23,22 @@
                "mutation", "mutations", "intervention", "interventions", "seed", "private",
                "true_reward", "score", "tp", "fp", "fn", "matches", "unmatched"]
     },
+    "jsonValue": {
+      "description": "Any JSON value. Used for what the POLICY sends (action envelopes and the action field of trajectory lines): an auditor may put any key, including seed/truth/score, into its own request; that is not disclosure by the environment.",
+      "anyOf": [
+        {"type": ["null", "boolean", "number", "string"]},
+        {"type": "array", "items": {"$ref": "#/$defs/jsonValue"}},
+        {"type": "object", "additionalProperties": {"$ref": "#/$defs/jsonValue"}}
+      ]
+    },
+    "unrepresentableArgs": {
+      "description": "Recorded in place of an argument value the runner refused to keep (Issue #23): valid JSON deeper than 64 levels (depth_limit) or larger than 1 MiB of nodes plus characters (size_limit); for a non-JSON value at a timeout, not_json.",
+      "type": "object", "required": ["$unrepresentable"],
+      "properties": {"$unrepresentable": {"enum": ["depth_limit", "size_limit", "not_json"]}},
+      "additionalProperties": false
+    },
     "publicValue": {
-      "description": "Any JSON value whose objects, at any depth, contain no closed key.",
+      "description": "Any JSON value whose objects, at any depth, contain no closed key. Used for everything the ENVIRONMENT sends (observations, info, policy rules).",
       "anyOf": [
         {"type": ["null", "boolean", "number", "string"]},
         {"type": "array", "items": {"$ref": "#/$defs/publicValue"}},
@@ -246,9 +260,9 @@
       "additionalProperties": false
     },
     "actionEnvelope": {
-      "description": "What the runner accepts as a transport-valid action (anything else is malformed_action, no step spent). An envelope that is not a well-formed #/$defs/action still spends a step and gets a bounded error.",
+      "description": "What the runner accepts as a transport-valid action (anything else is malformed_action, no step spent). args is arbitrary policy input: an envelope that is not a well-formed #/$defs/action still spends a step and gets a bounded error, never an echo of its arguments. Values nested deeper than 64 levels (the action object is level 1) or larger than 1 MiB are refused by the runner: invalid_submission for submit, invalid_request for a tool.",
       "type": "object", "required": ["action"],
-      "properties": {"action": {"type": "string"}, "args": {"$ref": "#/$defs/publicValue"}},
+      "properties": {"action": {"type": "string"}, "args": {"$ref": "#/$defs/jsonValue"}},
       "additionalProperties": false
     },
 
@@ -376,9 +390,20 @@
       "oneOf": [
         {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
                                                   {"const": 0}, {"const": false}, {"const": false}, {"$ref": "#/$defs/inspectionInfo"}]},
-        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/replySubmitAccepted"}, {"$ref": "#/$defs/errorObservation"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"$ref": "#/$defs/replySubmitAccepted"},
                                                   {"type": "number", "minimum": -1, "maximum": 1}, {"const": true}, {"const": false},
-                                                  {"$ref": "#/$defs/terminalInfoTrain"}]},
+                                                  {"type": "object", "required": ["status", "score"],
+                                                   "properties": {"status": {"const": "submitted"}, "score": {"$ref": "#/$defs/score"}},
+                                                   "additionalProperties": false}]},
+        {"$comment": "SPEC §8 / case §05: a recognised submit with an invalid structure ends with exactly -1.",
+         "$ref": "#/$defs/_step", "items": false, "prefixItems": [{"allOf": [{"$ref": "#/$defs/errorObservation"},
+                                                                    {"properties": {"error": {"properties": {"code": {"const": "invalid_submission"}}}}}]},
+                                                  {"const": -1}, {"const": true}, {"const": false},
+                                                  {"type": "object", "required": ["status", "score"],
+                                                   "properties": {"status": {"const": "invalid_submission"},
+                                                                  "score": {"allOf": [{"$ref": "#/$defs/score"},
+                                                                                      {"properties": {"reward": {"const": -1}}}]}},
+                                                   "additionalProperties": false}]},
         {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
                                                   {"type": "number", "minimum": -1, "maximum": 1}, {"const": false}, {"const": true},
                                                   {"$ref": "#/$defs/terminalInfoTrain"}]},
@@ -410,13 +435,13 @@
       "properties": {"reward": {"const": 0}}
     },
     "_trajectoryLine": {
-      "description": "One line of trajectories.jsonl (SPEC §11): exactly what step returned for an accepted action. action is null when the trusted driver ended the episode (timeout while waiting, policy failure).",
+      "description": "One line of trajectories.jsonl (SPEC §11): exactly what step returned for an accepted action. action is the policy's own input (any JSON, see jsonValue); arguments the runner refused are kept as #/$defs/unrepresentableArgs; action is null when the trusted driver ended the episode (timeout while waiting, policy failure). The observation stays protected (publicValue).",
       "type": "object",
       "required": ["episode_id", "step", "action", "observation", "reward", "terminated", "truncated"],
       "properties": {
         "episode_id": {"$ref": "#/$defs/nonEmptyText"},
         "step": {"type": "integer", "minimum": 1, "maximum": 100},
-        "action": {"$ref": "#/$defs/publicValue"},
+        "action": {"$ref": "#/$defs/jsonValue"},
         "observation": {"anyOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"},
                                   {"$ref": "#/$defs/replySubmitAccepted"}]},
         "reward": {"type": "number"},
