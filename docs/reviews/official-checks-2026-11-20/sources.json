@@ -1,0 +1,21 @@
+{
+  "retrieved": "2026-11-20",
+  "base_sha": "6f4f7e0cdf6b03d824c835112ee8c010ea9231e1",
+  "sources": [
+    {
+      "source": "https://genesis-exe.com/fintech-checks.html",
+      "sha256": "0703233d3c02c51b38e6e828ab9f8cbdf705c061a27b62ec44219751605a3fe5",
+      "bytes": 62966
+    },
+    {
+      "source": "https://genesis-exe.com/docs/fintech-checks.txt",
+      "sha256": "2a597ebfb94daec700ba9b1b09d62c032366e788c6e992486d444e063be8d870",
+      "bytes": 53434
+    },
+    {
+      "source": "User-uploaded Genesis_Hackathon_Положение_2026.pdf",
+      "sha256": "cfc6155a1e3d5143bbf2cf1cae50092a6caf9a4b2ba68ee758863629dc9d3b71",
+      "bytes": 65846
+    }
+  ]
+}
