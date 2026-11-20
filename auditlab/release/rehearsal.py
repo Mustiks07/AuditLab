@@ -20,7 +20,7 @@ import uuid
 
 from .transforms import comparable, read_json, transform_public, transform_truth, write_json
 
-VERSION = "internal-rehearsal-1.0"
+VERSION = "internal-rehearsal-1.1"
 POLICIES = ("random", "reconcile", "flag_all", "oracle")
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
 PUBLIC_FILES = ("manifest.json", "policy.json", "ledger.csv", "invoices.jsonl", "payments.jsonl", "fx.csv")
@@ -204,12 +204,16 @@ def run_attempt(snapshot: Path, output: Path, selection: dict, policy_name: str,
             raise RuntimeError("runner produced no final record")
         final = copy.deepcopy(env.final)
         write_json(output / "final.json", final)
+        row.update(outcome=final["status"], persistence=final.get("persistence", []), infra=final.get("infra", []))
+        if final.get("persistence") or final.get("infra"):
+            raise RuntimeError("runner final record reports infrastructure or persistence failure")
         trusted = read_json(output / "trusted" / "attempt" / "report.json")
         trajectory_path = output / "trusted" / "attempt" / "trajectory.jsonl"
         trajectory = [json.loads(line) for line in trajectory_path.read_text(encoding="utf-8").splitlines()]
         if any(line["reward"] != 0 for line in trajectory):
             raise RuntimeError("closed trajectory leaked a non-neutral reward")
-        good_execution = final["status"] in {"submitted", "invalid_submission", "truncated_budget", "truncated_timeout"} and not trusted["infra"]
+        good_execution = (final["status"] in {"submitted", "invalid_submission", "truncated_budget", "truncated_timeout"}
+                          and not trusted["infra"] and trusted["completed"] is True)
         truth = read_json(snapshot / "private" / "truth.json")
         row.update(status="passed" if good_execution else "failed", kind="measured_attempt" if good_execution else
                    "policy_error" if final["status"] == "policy_failure" else "infrastructure_error",
@@ -340,7 +344,12 @@ def run_pair(snapshot, original_answer, original_oracle, destination, selection,
 
 
 def summarize(attempts):
-    """Missing/failed rows stay in denominators; no synthetic score assigned to a failure."""
+    """Full-plan headline scores require complete evidence; partial scores are labelled explicitly.
+
+    Failed policies retain their diagnostic empty-answer grade in the attempt record, but do not
+    receive an invented performance score. Measured-only aggregates must not masquerade as a
+    complete-plan result. Coverage and failure kinds always use all planned attempts.
+    """
     summary = {}
     for policy in POLICIES:
         rows = [row for row in attempts if row["policy"] == policy]
@@ -353,15 +362,25 @@ def summarize(attempts):
                          for key in ("tp", "fp", "fn")} for kind in ISSUE_TYPES}
         for total in totals.values():
             total["recall"] = total["tp"] / (total["tp"] + total["fn"]) if total["tp"] + total["fn"] else None
+        complete = bool(rows) and len(measured) == len(rows)
+        measured_micro = {**counts, "precision": tp / (tp + fp) if tp + fp else 0,
+                          "recall": tp / (tp + fn) if tp + fn else 0,
+                          "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else (1 if measured else None)}
+        measured_macro = statistics.mean(row["metrics"]["f1"] for row in measured) if measured else None
+        measured_reward = statistics.mean(row["metrics"]["reward"] for row in measured) if measured else None
         summary[policy] = {"planned": len(rows), "measured": len(measured),
+                           "score_status": "complete" if complete else "incomplete",
+                           "measurement_coverage": len(measured) / len(rows) if rows else None,
+                           "failure_kinds": dict(Counter(row.get("kind", "unspecified") for row in rows if row["status"] == "failed")),
+                           "measured_only": {"denominator": len(measured), "micro": measured_micro,
+                                             "macro_f1": measured_macro, "mean_reward": measured_reward,
+                                             "by_class": totals},
                            "failed": sum(row["status"] == "failed" for row in rows),
                            "not_checked": sum(row["status"] == "not_checked" for row in rows),
                            "outcomes": dict(Counter(row.get("outcome", row["status"]) for row in rows)),
-                           "micro": {**counts, "precision": tp / (tp + fp) if tp + fp else 0,
-                                     "recall": tp / (tp + fn) if tp + fn else 0,
-                                     "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else (1 if measured else None)},
-                           "macro_f1": statistics.mean(row["metrics"]["f1"] for row in measured) if measured else None,
-                           "mean_reward": statistics.mean(row["metrics"]["reward"] for row in measured) if measured else None,
+                           "micro": measured_micro if complete else None,
+                           "macro_f1": measured_macro if complete else None,
+                           "mean_reward": measured_reward if complete else None,
                            "mean_inspection_steps": statistics.mean(row["inspection_steps"] for row in measured) if measured else None,
                            "inspection_steps": [row["inspection_steps"] for row in measured],
                            "elapsed_seconds": [row.get("elapsed_seconds") for row in rows],
@@ -370,7 +389,7 @@ def summarize(attempts):
                            "clean": {"planned": len(clean), "measured": len(clean_measured),
                                      "false_accusation_episodes": sum(row["metrics"]["fp"] > 0 for row in clean_measured),
                                      "rate_over_measured": sum(row["metrics"]["fp"] > 0 for row in clean_measured) / len(clean_measured) if clean_measured else None},
-                           "by_class": totals}
+                           "by_class": totals if complete else None}
     return summary
 
 

@@ -39,8 +39,48 @@ class RehearsalTests(unittest.TestCase):
         b.update(status="failed", kind="infrastructure_error")
         s = summarize(rows)["reconcile"]
         self.assertEqual((s["planned"], s["measured"], s["failed"], s["not_checked"]), (20, 1, 1, 18))
-        self.assertEqual(s["mean_reward"], -1)
+        self.assertIsNone(s["mean_reward"])
+        self.assertIsNone(s["micro"])
+        self.assertEqual(s["measured_only"]["mean_reward"], -1)
+        self.assertEqual(s["measured_only"]["denominator"], 1)
+        self.assertEqual(s["measurement_coverage"], 1 / 20)
+        self.assertEqual(s["failure_kinds"], {"infrastructure_error": 1})
         self.assertEqual(s["clean"], {"planned": 5, "measured": 1, "false_accusation_episodes": 1, "rate_over_measured": 1})
+
+    def test_policy_crash_cannot_raise_a_complete_plan_headline(self):
+        rows = [{"policy": "reconcile", "status": "passed", "category": "clean", "inspection_steps": 0,
+                 "metrics": {"tp": 0, "fp": 0, "fn": 0, "f1": 1, "reward": 1}},
+                {"policy": "reconcile", "status": "failed", "kind": "policy_error", "outcome": "policy_failure",
+                 "metrics": {"tp": 0, "fp": 0, "fn": 0, "f1": 1, "reward": 1}}]
+        summary = summarize(rows)["reconcile"]
+        self.assertEqual(summary["score_status"], "incomplete")
+        self.assertEqual(summary["measurement_coverage"], .5)
+        self.assertIsNone(summary["mean_reward"])
+        self.assertIsNone(summary["macro_f1"])
+        self.assertEqual(summary["measured_only"]["mean_reward"], 1)
+        self.assertEqual(summary["failure_kinds"], {"policy_error": 1})
+        complete = summarize(rows[:1])["reconcile"]
+        self.assertEqual((complete["score_status"], complete["mean_reward"], complete["measurement_coverage"]),
+                         ("complete", 1, 1))
+
+    def test_failed_trusted_write_keeps_diagnostic_final_but_never_counts_as_measured(self):
+        from auditlab.runner import export
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            selection = {"id": "internal-01", "category": "single_or_mixed", "seed": 931}
+            with patch.object(export, "write_trusted_report", side_effect=OSError("disk full")):
+                row = run_attempt(FIXTURE, output / "oracle", selection, "oracle", 0, None, None)
+            self.assertEqual((row["status"], row["kind"]), ("failed", "infrastructure_error"))
+            self.assertIsNone(row["metrics"])
+            self.assertIn("persistence", row["detail"])
+            final = read_json(output / "oracle/final.json")
+            self.assertEqual(final["status"], "submitted")
+            self.assertEqual(final["graded"]["score"]["reward"], 1)
+            self.assertFalse(final["completed"])
+            self.assertEqual(final["infra"], ["trusted_report_failure"])
+            summary = summarize([row])["oracle"]
+            self.assertEqual((summary["measured"], summary["failed"]), (0, 1))
+            self.assertIsNone(summary["mean_reward"])
 
     def test_missing_image_never_pulls(self):
         self.assertEqual(inspect_image(None)["status"], "not_checked")

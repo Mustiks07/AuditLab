@@ -219,6 +219,9 @@ class Persistence(unittest.TestCase):
             self.assertFalse(run_dir.exists(), "a failed export is not presented as a completed run")
             report = json.loads((trusted / "w" / "report.json").read_text(encoding="utf-8"))
             self.assertIn("export_failure", [event["event"] for event in report["events"]])
+            self.assertFalse(report["completed"])
+            self.assertEqual(report["infra"], ["export_failure"])
+            self.assertFalse(env.final["completed"])
             env = make_env("closed", evaluator="inprocess", trusted_dir=trusted)
             env.reset(0, {"snapshot_dir": S02, "run_id": "w2"})
             with mock.patch.object(env_module.export_mod, "write_trusted_report", side_effect=OSError("ro")):
@@ -227,6 +230,42 @@ class Persistence(unittest.TestCase):
             self.assertEqual((result[2], env.final["status"], env.final["persistence"]),
                              (True, "submitted", ["trusted_report: OSError: ro"]))
             self.assertEqual(env.step(D9)[0]["error"]["code"], "episode_finished")
+            self.assertFalse(env.final["completed"])
+            self.assertEqual(env.final["infra"], ["trusted_report_failure"])
+            self.assertFalse((trusted / "w2" / "report.json").exists())
+
+    def test_public_collision_preserves_existing_export_and_rejects_new_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_dir, trusted = Path(tmp) / "run", Path(tmp) / "trusted"
+            env = make_env("train", evaluator="inprocess", trusted_dir=trusted)
+            env.reset(0, {"snapshot_dir": S02, "export_dir": str(run_dir), "run_id": "collision"})
+            # Another publisher wins after reset's existence check.
+            run_dir.mkdir()
+            (run_dir / "sentinel").write_text("original")
+            env.step(deep_submit(602))
+            self.assertEqual((run_dir / "sentinel").read_text(), "original")
+            self.assertEqual(list(run_dir.iterdir()), [run_dir / "sentinel"])
+            report = json.loads((trusted / "collision" / "report.json").read_text())
+            self.assertFalse(report["completed"])
+            self.assertEqual(report["infra"], ["export_failure"])
+            self.assertIn("already exists", env.final["persistence"][0])
+            env.close()
+
+    def test_trusted_collision_cannot_pass_off_an_old_report_as_current(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            trusted = Path(tmp)
+            env = make_env("closed", evaluator="inprocess", trusted_dir=trusted)
+            config = {"snapshot_dir": S02, "run_id": "same"}
+            env.reset(0, config)
+            env.step({"action": "submit", "args": {"episode_id": "S02", "findings": []}})
+            original = (trusted / "same" / "report.json").read_bytes()
+            env.reset(0, config)
+            env.step(deep_submit(602))
+            self.assertFalse(env.final["completed"])
+            self.assertEqual(env.final["infra"], ["trusted_report_failure"])
+            self.assertIn("already exists", env.final["persistence"][0])
+            self.assertEqual((trusted / "same" / "report.json").read_bytes(), original)
+            env.close()
 
 
 class ExternalJsonl(unittest.TestCase):
