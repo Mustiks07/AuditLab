@@ -89,15 +89,32 @@
 
 ## Воспроизведение
 
+Инструменты проверки и код генератора находятся в разных зафиксированных
+коммитах. Используйте два checkout: код 1.5 и материалы этого исследования.
+Следующие команды рассчитаны на запуск из пустого рабочего каталога; `v5-run`
+не должен существовать. Для повторного запуска выберите новое имя каталога.
+
 ```sh
-git clone https://github.com/Mustiks07/AuditLab.git && cd AuditLab && git checkout daf1fc64df37651e14801e0286b9741b30820d35
-uv venv --python 3.11.14 .venv && uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
-git show 871b479:docs/reviews/manual-finance-v5/answer_before_truth.json > /tmp/answer.json   # ответ до truth
-V=docs/reviews/manual-finance-v5   # из ветки review/independent-finance-v5
-.venv/bin/python $V/generate_v5.py . ../v5                     # 24 компании (сверить с episodes.sha256)
-.venv/bin/python $V/fixtures.py ../v5/public/G05-boundary-before/public/policy.json ../v5
-.venv/bin/python $V/freeze_answer.py ../v5 ../v5/answer.json     # должен совпасть с answer_before_truth.json
-.venv/bin/python $V/compare_v5.py . ../v5 ../v5/comparison.json  # truth, ссылки, reconcile, verifier, контроль, DAT-01
-.venv/bin/python $V/check_transitions.py ../v5
-.venv/bin/python $V/check_overlap.py . ../v5 ../v5/overlap.json
+git clone https://github.com/Mustiks07/AuditLab.git AuditLab-v5-code
+git -C AuditLab-v5-code checkout --detach daf1fc64df37651e14801e0286b9741b30820d35
+git -C AuditLab-v5-code worktree add --detach ../AuditLab-v5-review 99c2f975178702f32f24b27362b78a0c832056bb
+uv venv --python 3.11.14 AuditLab-v5-code/.venv
+uv pip install --python AuditLab-v5-code/.venv/bin/python --require-hashes -r AuditLab-v5-code/requirements.lock
+V=AuditLab-v5-review/docs/reviews/manual-finance-v5
+PYTHON=AuditLab-v5-code/.venv/bin/python
+"$PYTHON" "$V/generate_v5.py" AuditLab-v5-code v5-run
+"$PYTHON" "$V/fixtures.py" v5-run/public/G05-boundary-before/public/policy.json v5-run
+"$PYTHON" "$V/freeze_answer.py" v5-run v5-run/answer.json
+cmp "$V/answer_before_truth.json" v5-run/answer.json
+(cd v5-run && sha256sum -c "../$V/episodes.sha256")
+"$PYTHON" "$V/compare_v5.py" AuditLab-v5-code v5-run v5-run/comparison.json
+"$PYTHON" "$V/check_transitions.py" v5-run
+"$PYTHON" "$V/check_overlap.py" AuditLab-v5-code v5-run v5-run/overlap.json
 ```
+
+Интегратор воспроизвёл эти этапы на Python 3.11.14: **374/374 хеша файлов**,
+побайтное совпадение ответа и семантическое совпадение полного JSON сравнения;
+72 находки, 24 чистые исходные книги и 5 находок ручных fixtures подтвердились.
+Это повтор ранее опубликованного опыта, не новая слепая выборка.
+Исторический `answer_before_truth.sha256` сохранён без изменения, включая
+оговорённый выше CRLF-хеш `halves-scan.json`.
