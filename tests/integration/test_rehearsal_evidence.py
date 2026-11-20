@@ -12,7 +12,7 @@ from tools.check_rehearsal_evidence import check, POLICIES, SUITES
 def resource(pids):
     return dict(status="measured", resource_limits_verified=True,
                 scope="container_limits_verified", limit_mismatches=[],
-                memory_limit_bytes=2 * 1024 ** 3, cpu_quota_usec=200000,
+                memory_limit_bytes=1536 * 1024 ** 2, cpu_quota_usec=200000,
                 cpu_period_usec=100000, cpuset_cpus="0-1", peak_memory_bytes=1000,
                 cpu_usage_usec=100, requested_limits={"pids": str(pids)},
                 raw_observed={"files": {"pids.max": str(pids)}})
@@ -23,11 +23,11 @@ class EvidenceTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.launch = dict(source_revision="a" * 40, cpu_set="0,1", child_exit_code=2, resource_controls={"status": "available"})
+        self.launch = dict(source_revision="a" * 40, cpu_set="0,1", child_exit_code=2, controller_memory_limit="1536m", resource_controls={"status": "available"})
         self.general = dict(commit="a" * 40, checks=[dict(id=name, status="passed", tests_run=1,
                             records=[dict(id=name, status="passed")]) for name in SUITES],
                             acceptance={"status": "not_checked"})
-        self.rehearsal = dict(
+        self.rehearsal = dict(policy_memory_limit_bytes=1536 * 1024 ** 2,
             datasets=[dict(id=f"internal-{i:02d}", status="passed", independent={"resources": resource(128)}) for i in range(1,21)],
             pairs=[dict(id=f"pair-{i:02d}", status="passed", independent={"resources": resource(128)}) for i in range(1,21)],
             episodes=[dict(id=f"{p}/internal-{i:02d}", policy=p, status="passed",
@@ -87,6 +87,14 @@ class EvidenceTests(unittest.TestCase):
         result = self.run_check()
         self.assertEqual(result["exit_code"], 0, result)
         self.assertIn("not certified", result["scope"])
+
+    def test_container_budget_fits_decimal_four_gb_without_certifying_host_ram(self):
+        result = self.run_check()
+        self.assertEqual(result['memory_budget']['combined_container_limit_bytes'], 3 * 1024 ** 3)
+        self.assertGreater(result['memory_budget']['decimal_4gb_headroom_bytes'], 0)
+        self.assertEqual(result['memory_budget']['whole_host_status'], 'not_checked')
+        self.controller['memory_limit_bytes'] = 2 * 1024 ** 3
+        self.assertEqual(self.run_check()['exit_code'], 1)
 
     def test_skip_or_missing_evidence_cannot_pass(self):
         self.general["checks"][0]["records"][0]["status"] = "not_checked"

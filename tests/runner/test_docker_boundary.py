@@ -19,7 +19,7 @@ SNAPSHOT = Path(__file__).resolve().parents[2] / "fixtures" / "foundation" / "S0
 @unittest.skipUnless(IMAGE, "не проверено: set AUDITLAB_POLICY_IMAGE to the preloaded release image")
 class RealDockerBoundary(unittest.TestCase):
     def test_canary_files_network_and_trusted_code_are_unavailable(self):
-        policy = DockerPolicy(IMAGE, "random", 7, memory="2g", cpuset=os.environ.get("AUDITLAB_CPUSET"))
+        policy = DockerPolicy(IMAGE, "random", 7, memory="1536m", cpuset=os.environ.get("AUDITLAB_CPUSET"))
         self.addCleanup(policy.close)
         env = make_env("closed", evaluator="inprocess")
         self.addCleanup(env.close)
@@ -63,7 +63,7 @@ print(json.dumps(result))
         self.assertTrue(host["ReadonlyRootfs"])
         self.assertFalse(host["Privileged"])
         self.assertFalse(container["Mounts"])
-        self.assertEqual(host["Memory"], 2 * 1024**3)
+        self.assertEqual(host["Memory"], 1536 * 1024**2)
         self.assertEqual(host["NanoCpus"], 2 * 10**9)
         policy.close()
         gone = subprocess.run(["docker", "inspect", policy.container_name], capture_output=True, timeout=5)

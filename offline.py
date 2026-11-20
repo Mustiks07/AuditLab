@@ -196,7 +196,7 @@ def runtime_command(manifest, output, cpu_set, suite, docker_gid=None, launch_id
                "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
                "--user", f"{os.getuid()}:{os.getgid()}",
                "--group-add", str(os.getgid() if docker_gid is None else docker_gid),
-               "--cpus", "2", "--cpuset-cpus", cpu_set, "--memory", "2g", "--memory-swap", "2g", "--pids-limit", "256",
+               "--cpus", "2", "--cpuset-cpus", cpu_set, "--memory", "1536m", "--memory-swap", "1536m", "--pids-limit", "256",
                "--tmpfs", "/tmp:rw,nosuid,size=1g",
                "--mount", "type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
                "--mount", f"type=bind,src={Path(output).resolve()},dst=/results",
@@ -320,7 +320,7 @@ def main(argv=None):
         output = new_output_dir(args.output_root or args.bundle / "results")
         report_path = output / "launch.json"
         report = {"status": "in_progress", "phase": "docker_preflight", "source_revision": manifest["source_revision"],
-                  "images": manifest["images"], "cpu_set": cpu_set, "controller_memory_limit": "2g",
+                  "images": manifest["images"], "cpu_set": cpu_set, "controller_memory_limit": "1536m",
                   "network": "none", "suite": args.suite, "started_at": datetime.now(timezone.utc).isoformat()}
         write_report(report_path, report)
         environment = local_docker_environment()

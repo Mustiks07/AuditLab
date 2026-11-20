@@ -133,6 +133,7 @@ def run(command, **kwargs):
     return real_run(command, **kwargs)
 def command(manifest, output, cpus, suite, gid, launch_id):
     return ['docker','run','--rm','--pull','never','--network','none',
+            '--memory','64m','--memory-swap','64m','--cpus','2',
             '--name','auditlab-controller-'+launch_id,'--label','org.auditlab.launch='+launch_id,
             '--entrypoint','python',image,'-c','import time; time.sleep(120)']
 with patch('offline.verify_bundle', return_value=manifest), patch('offline.validate_image_archive'), \
@@ -141,7 +142,7 @@ with patch('offline.verify_bundle', return_value=manifest), patch('offline.valid
     raise SystemExit(offline.main(['verify','--bundle',out,'--output-root',out]))
 '''
         foreign = 'auditlab-test-foreign-' + __import__('uuid').uuid4().hex
-        subprocess.run(['docker', 'run', '-d', '--rm', '--pull=never', '--name', foreign,
+        subprocess.run(['docker', 'run', '-d', '--rm', '--pull=never', '--memory=64m', '--memory-swap=64m', '--cpus=2', '--name', foreign,
                         '--label', 'org.auditlab.launch=' + 'f' * 32, '--entrypoint', 'python',
                         image, '-c', 'import time; time.sleep(120)'], check=True, capture_output=True)
         try:
@@ -168,7 +169,7 @@ with patch('offline.verify_bundle', return_value=manifest), patch('offline.valid
                             time.sleep(.05)
                         else:
                             self.fail('controller did not start')
-                        subprocess.run(['docker', 'run', '-d', '--rm', '--pull=never',
+                        subprocess.run(['docker', 'run', '-d', '--rm', '--pull=never', '--memory=64m', '--memory-swap=64m', '--cpus=2',
                             '--label', 'org.auditlab.launch=' + launch_id, '--entrypoint', 'python', image,
                             '-c', 'import time; time.sleep(120)'], capture_output=True, check=True)
                         os.kill(process.pid, signum)  # deliberately NOT killpg / terminal Ctrl+C

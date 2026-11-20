@@ -131,7 +131,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
         command = ["docker", "run", "--rm", "-i", "--pull=never", "--name", name,
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
                    "--security-opt", "no-new-privileges", "--pids-limit", "128",
-                   "--cpus", "2", "--memory", "2g", "--memory-swap", "2g", "--user", "65534:65534",
+                   "--cpus", "2", "--memory", "1536m", "--memory-swap", "1536m", "--user", "65534:65534",
                    "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m"]
         if cpuset:
             command += ["--cpuset-cpus", cpuset]
@@ -148,7 +148,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
             reply = json.loads(process.stdout)
             answer = reply["answer"]
             resources = _verify_cgroup_scope(_parse_cgroup_measurements(reply["resources"]), reply["resources"],
-                {"memory": "2g", "cpus": "2", "cpuset": cpuset, "pids": 128})
+                {"memory": "1536m", "cpus": "2", "cpuset": cpuset, "pids": 128})
         finally:
             subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=20)
         isolation = "docker_public_input_only"
@@ -194,7 +194,7 @@ def run_attempt(snapshot: Path, output: Path, selection: dict, policy_name: str,
             policy = OraclePolicy(snapshot)
         else:
             from auditlab.runner.isolation import DockerPolicy
-            kwargs = {"name": policy_name, "seed": policy_seed, "timeout_s": 60, "cpus": "2", "memory": "2g"}
+            kwargs = {"name": policy_name, "seed": policy_seed, "timeout_s": 60, "cpus": "2", "memory": "1536m"}
             if cpuset:
                 kwargs["cpuset"] = cpuset
             policy = DockerPolicy(policy_image, **kwargs)
@@ -404,7 +404,7 @@ def execute(output: Path, policy_image: str | None, verifier_image: str | None =
     result = pending_plan()
     result.update(selection_sha256=_hash(output / "selection.json"), generator_version=GENERATOR_VERSION,
                   started_at=datetime.now(timezone.utc).isoformat(), policy_image=policy_image,
-                  verifier_image=verifier_image, cpu_set=cpuset, policy_cpu_limit=2, policy_memory_limit_bytes=2 * 1024**3)
+                  verifier_image=verifier_image, cpu_set=cpuset, policy_cpu_limit=2, policy_memory_limit_bytes=1536 * 1024**2)
     def persist():
         result["summary"] = summarize(result["episodes"])
         write_json(output / "report.json", result)

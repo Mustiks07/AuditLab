@@ -155,11 +155,20 @@ python offline.py verify --suite rehearsal --cpu-set 0,1
 Один и тот же набор CPU передаётся controller и harness дочерних контейнеров.
 Controller использует UID/GID пользователя launcher и дополнительную группу
 локального Docker socket; каталог результатов не требует world-writable прав.
-Controller работает с `--network none --cpus 2 --memory 2g --memory-swap 2g`, read-only rootfs,
+Controller работает с `--network none --cpus 2 --memory 1536m --memory-swap 1536m`, read-only rootfs,
 `cap-drop ALL`, `no-new-privileges`, временным `/tmp` до 1 ГБ. Только доверенному
 controller доступны Docker socket и каталог результатов. Обычная политика не
 получает ни socket, ни host bind mounts. Verifier получает публичные файлы через
 JSON/stdin; ему не требуется том каталога controller.
+
+В текущем профиле репетиции каждый controller/policy/verifier ограничен
+1536 MiB (1 610 612 736 байт), swap запрещён. Одновременно работают controller
+и одна policy **либо** verifier: суммарный потолок контейнеров 3 GiB
+(3 221 225 472 байт), что оставляет 778 774 528 байт до десятичных 4 GB.
+Это запас бюджета контейнеров, а не измеренная полная память компьютера:
+Docker daemon, ОС и загрузка образов требуют отдельной проверки на машине
+с 4 GB RAM; её статус остаётся `not_checked`. Исторические RC1/RC2 отчёты
+содержат прежние лимиты 2 GiB на контейнер и не подтверждают этот новый профиль.
 
 Каждый вызов создаёт новый `results/verify-<UTC>-<случайный-id>/`. `launch.json`
 содержит версию, ресурсы, image IDs, статус, длительность загрузки образов и

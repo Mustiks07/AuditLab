@@ -123,8 +123,8 @@ class OfflineBundleTests(unittest.TestCase):
             self.assertEqual(command[command.index("--group-add") + 1], "1234")
             self.assertEqual(command[command.index("--user") + 1], f"{offline.os.getuid()}:{offline.os.getgid()}")
             for option, expected in (("--pull", "never"), ("--network", "none"), ("--cpus", "2"),
-                                     ("--cpuset-cpus", "2,4"), ("--memory", "2g"),
-                                     ("--memory-swap", "2g"), ("--cpu-set", "2,4")):
+                                     ("--cpuset-cpus", "2,4"), ("--memory", "1536m"),
+                                     ("--memory-swap", "1536m"), ("--cpu-set", "2,4")):
                 self.assertEqual(command[command.index(option) + 1], expected)
             mounts = [command[i + 1] for i, item in enumerate(command) if item == "--mount"]
             self.assertEqual(mounts, ["type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock",
