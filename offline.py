@@ -10,11 +10,14 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tarfile
 import time
 import uuid
 
 FILES = ("images.tar", "source.tar.gz", "licenses.json", "offline.py")
 IMAGE_ID = re.compile(r"sha256:[0-9a-f]{64}")
+CONTAINERD_NAME = "io.containerd.image.name"
+MAX_CATALOG_BYTES = 4 * 1024 * 1024
 
 
 def sha256(path):
@@ -54,6 +57,79 @@ def verify_bundle(bundle):
     return manifest
 
 
+def archive_image_name(descriptor):
+    """The tag the containerd image store gives an OCI index entry; Docker Hub prefixes are implicit."""
+    name = (descriptor.get("annotations") or {}).get(CONTAINERD_NAME)
+    if not isinstance(name, str):
+        return None
+    for prefix in ("docker.io/library/", "docker.io/"):
+        if name.startswith(prefix):
+            return name[len(prefix):]
+    return name
+
+
+def validate_image_archive(path, images):
+    """Every image must survive docker load on both Docker image stores.
+
+    The classic store reads manifest.json (Config + RepoTags). The containerd store
+    reads only the OCI index.json and names images from its annotations. Saving
+    anonymous IDs (v0.1.0-rc.1) kept three legacy entries but one untagged OCI
+    descriptor, so containerd silently imported one image of three. Returns
+    {config ID: OCI manifest digest} for the checked archive.
+    """
+    with tarfile.open(path) as archive:
+        members = {member.name: member for member in archive.getmembers() if member.isfile()}
+
+        def read(name):
+            if name not in members or members[name].size > MAX_CATALOG_BYTES:
+                raise ValueError(f"saved image archive lacks a valid {name}")
+            return archive.extractfile(members[name]).read()
+
+        catalog = json.loads(read("manifest.json"))
+        if not isinstance(catalog, list):
+            raise ValueError("invalid saved Docker catalog")
+        for role, image in images.items():
+            matches = [row for row in catalog if isinstance(row, dict) and image.get("tag")
+                       and image["tag"] in (row.get("RepoTags") or [])]
+            if len(matches) != 1 or Path(str(matches[0].get("Config"))).stem != image["id"].split(":", 1)[1]:
+                raise ValueError(f"saved Docker catalog lost the tagged {role} identity")
+        if "index.json" not in members:
+            if any(image.get("oci_manifest_digest") for image in images.values()):
+                raise ValueError("saved image archive lost the OCI index recorded in the bundle manifest")
+            return {}  # Docker before 25 writes no OCI index; the containerd store needs one.
+        index = json.loads(read("index.json"))
+        tags = {image["tag"] for image in images.values()}
+        entries = []
+        descriptors = index.get("manifests") if isinstance(index, dict) else None
+        if not isinstance(descriptors, list):
+            raise ValueError("invalid saved OCI index")
+        for descriptor in descriptors:
+            digest = descriptor.get("digest") if isinstance(descriptor, dict) else None
+            if not isinstance(digest, str) or not IMAGE_ID.fullmatch(digest):
+                raise ValueError("invalid saved OCI manifest digest")
+            data = read("blobs/sha256/" + digest.split(":", 1)[1])
+            if "sha256:" + hashlib.sha256(data).hexdigest() != digest:
+                raise ValueError("saved OCI manifest checksum differs")
+            config = (json.loads(data).get("config") or {}).get("digest")
+            if not isinstance(config, str):
+                raise ValueError("saved OCI index entry is not a single-platform image manifest")
+            name = archive_image_name(descriptor)
+            if name not in tags:
+                raise ValueError(f"saved OCI index entry {digest} is not tagged with a bundle image name")
+            entries.append((config, name, digest))
+        if {config for config, _, _ in entries} != {image["id"] for image in images.values()}:
+            raise ValueError("saved OCI index does not cover all three image configurations")
+        identities = {}
+        for role, image in images.items():
+            matches = [digest for config, name, digest in entries if (config, name) == (image["id"], image["tag"])]
+            if len(matches) != 1:
+                raise ValueError(f"saved OCI index does not reference the {role} image with its tag")
+            if image.get("oci_manifest_digest", matches[0]) != matches[0]:
+                raise ValueError(f"saved OCI manifest for {role} differs from the bundle manifest")
+            identities[image["id"]] = matches[0]
+        return identities
+
+
 def local_docker_environment():
     environment = {**os.environ, "DOCKER_HOST": "unix:///var/run/docker.sock"}
     environment.pop("DOCKER_CONTEXT", None)
@@ -75,10 +151,12 @@ def loaded_image(image, environment):
         if inspected.returncode:
             continue
         actual = json.loads(inspected.stdout)
-        if actual.get("Id") != identity or actual.get("Os") != "linux" or (
+        # A store may resolve the config ID to its manifest-addressed image; either
+        # returned identity must still be one recorded in the checked bundle.
+        if actual.get("Id") not in identities or actual.get("Os") != "linux" or (
                 image.get("architecture") and actual.get("Architecture") != image["architecture"]):
             raise ValueError("loaded image identity or platform differs from the bundle")
-        return {**image, "source_id": image["id"], "id": identity}
+        return {**image, "source_id": image["id"], "id": actual["Id"]}
     raise ValueError(f"bundle image is not loaded: {image['id']}; run offline.py verify first")
 
 
@@ -174,6 +252,8 @@ def main(argv=None):
             print(loaded_image(manifest["images"][args.role], local_docker_environment())["id"])
             return 0
         print(f"Bundle hashes verified; source {manifest['source_revision']}", flush=True)
+        validate_image_archive(args.bundle.resolve() / "images.tar", manifest["images"])
+        print("Image archive lists all three tagged images for classic and containerd Docker stores", flush=True)
         if args.command == "check":
             return 0
         if not sys.platform.startswith("linux"):

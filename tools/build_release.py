@@ -13,7 +13,6 @@ import io
 import json
 import platform
 from pathlib import Path
-import re
 import shutil
 import subprocess
 import sys
@@ -21,6 +20,9 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+# The shipped launcher re-checks the same archive contract before every docker load.
+from offline import validate_image_archive  # noqa: E402
 ROLES = ("runtime", "verifier", "policy")
 
 
@@ -40,34 +42,16 @@ def checksum(path):
     return result.hexdigest()
 
 
-def validate_image_archive(path, images):
-    """Both Docker's legacy catalog and the OCI index must retain all three images.
+def require_classic_build_store(driver_status):
+    """Bundle identities are config IDs from the classic store; receivers may use either store.
 
-    Saving multiple anonymous image IDs can produce three Docker entries but only
-    one OCI descriptor. Classic storage masks that defect; containerd uses the index.
+    On the containerd store BuildKit records attestation indexes, so `docker image
+    inspect` returns index digests instead of the config IDs the bundle records.
     """
-    expected = {image["id"] for image in images.values()}
-    with tarfile.open(path) as archive:
-        catalog = json.load(archive.extractfile("manifest.json"))
-        for role, image in images.items():
-            matches = [row for row in catalog if image["tag"] in (row.get("RepoTags") or [])]
-            if len(matches) != 1 or Path(matches[0]["Config"]).stem != image["id"].split(":", 1)[1]:
-                raise ValueError(f"saved Docker catalog lost the tagged {role} identity")
-        if "index.json" not in archive.getnames():
-            return {}  # Older Docker-only archives have no competing OCI index.
-        index = json.load(archive.extractfile("index.json"))
-        configs = {}
-        for descriptor in index["manifests"]:
-            digest = descriptor["digest"]
-            if not isinstance(digest, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
-                raise ValueError("invalid saved OCI manifest digest")
-            data = archive.extractfile("blobs/sha256/" + digest.split(":", 1)[1]).read()
-            if "sha256:" + hashlib.sha256(data).hexdigest() != digest:
-                raise ValueError("saved OCI manifest checksum differs")
-            configs[json.loads(data)["config"]["digest"]] = digest
-        if set(configs) != expected:
-            raise ValueError("saved OCI index does not cover all three image configurations")
-        return configs
+    if "io.containerd.snapshotter.v1" in str(driver_status):
+        raise ValueError("release builds need the classic Docker image store (as CI uses); "
+                         "set features.containerd-snapshotter=false on the build daemon. "
+                         "Built bundles load on both the classic and the containerd store.")
 
 
 def excluded(name):
@@ -131,6 +115,7 @@ def main(argv=None):
         if captured(["git", "status", "--porcelain", "--untracked-files=normal"], cwd=ROOT):
             raise ValueError("release build requires a clean committed checkout (including build scripts and license)")
         revision = captured(["git", "rev-parse", "HEAD"], cwd=ROOT)
+        require_classic_build_store(captured(["docker", "info", "--format", "{{json .DriverStatus}}"]))
         if output.exists():
             raise FileExistsError(f"bundle destination already exists: {output}")
         output.mkdir(parents=True)
@@ -166,8 +151,8 @@ def main(argv=None):
                     ["docker", "run", "--rm", "--pull", "never", "--network", "none", "--read-only",
                      "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
                      "--entrypoint", "python", inspected["Id"], "-c", LICENSE_SCRIPT]))
-            # Tags keep every OCI index entry; saving anonymous IDs can silently keep only one.
-            # One archive still deduplicates shared layers.
+            # Tags keep every OCI index entry and its io.containerd.image.name annotation;
+            # saving anonymous IDs kept only one untagged entry. One archive still dedupes layers.
             run(["docker", "save", "--output", str(output / "images.tar"),
                  *(images[role]["tag"] for role in ROLES)])
             oci_identities = validate_image_archive(output / "images.tar", images)
