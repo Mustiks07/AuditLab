@@ -1,0 +1,558 @@
+{
+  "A00": {
+    "input_sha256": {
+      "fx.csv": "2f41e90e08d5495008604c203ac1911b5718a1d93773bf13ebac0fd8efd8c4e4",
+      "invoices.jsonl": "9512ec63bbc8d8854d4c0059856dee2f136933c11b05f38dc60c58b8ab711f12",
+      "ledger.csv": "1885453af5ce3def3e8ba678b4f8a15ab01faa4644b29521c08bd3b4191f6f75",
+      "manifest.json": "df2e7dd1d118664cb901c3dfb00f7dd77272fdc51f30267a1b97fa5937ae5b32",
+      "payments.jsonl": "becacf26131cda24bc3826c7b399acb0e96cf5992839b50bb1fdcf0d9aee7128",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "f6e3dba671da3dc5ab8033b1e54b0405ad136223e653ea2d4c2234bceb5c325f",
+      "invoices.jsonl": "bbd4e30b762d7d7701fae820c551180e87f3a87c43c140a0ed4d49d963281c2b",
+      "ledger.csv": "cc7da51d4dc332d855244a6c580099c01b553060ef6a7a7b350c290f88656e34",
+      "manifest.json": "df2e7dd1d118664cb901c3dfb00f7dd77272fdc51f30267a1b97fa5937ae5b32",
+      "payments.jsonl": "14e2566d2d080efd55d4772de48ced9b0476d3a247f9d93c906925ef6e25f421",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "6,900 - 4,140 - 2,760 = 0 USD minor. Valuation is 6,900 x 506.25 = 3,493,125 KZT minor.",
+    "findings": []
+  },
+  "A01": {
+    "input_sha256": {
+      "fx.csv": "2f41e90e08d5495008604c203ac1911b5718a1d93773bf13ebac0fd8efd8c4e4",
+      "invoices.jsonl": "9512ec63bbc8d8854d4c0059856dee2f136933c11b05f38dc60c58b8ab711f12",
+      "ledger.csv": "f79f2ebce936a391c02db2fe5a4e18df94499f1d16a0c38794ca9c413f4ee4fd",
+      "manifest.json": "7a3c769f294d2e78020e6fcbb0a79bc569b446ac6e44c0d5cd5e2edab23f2dda",
+      "payments.jsonl": "becacf26131cda24bc3826c7b399acb0e96cf5992839b50bb1fdcf0d9aee7128",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "f6e3dba671da3dc5ab8033b1e54b0405ad136223e653ea2d4c2234bceb5c325f",
+      "invoices.jsonl": "bbd4e30b762d7d7701fae820c551180e87f3a87c43c140a0ed4d49d963281c2b",
+      "ledger.csv": "cc7da51d4dc332d855244a6c580099c01b553060ef6a7a7b350c290f88656e34",
+      "manifest.json": "7a3c769f294d2e78020e6fcbb0a79bc569b446ac6e44c0d5cd5e2edab23f2dda",
+      "payments.jsonl": "14e2566d2d080efd55d4772de48ced9b0476d3a247f9d93c906925ef6e25f421",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "The 2,760 USD minor last tranche is posted at November 30 23:59. Allocation balance is zero.",
+    "findings": [
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment/P94D703D1F91C2561A2B89003"
+        ],
+        "claimed_amount_minor": 1725,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D770DE6FDCA12570821D33DE3",
+          "fx/2026-11-21/USD/KZT",
+          "ledger/RA21527E7EB4486129B8250A3",
+          "policy/fx_date"
+        ],
+        "explanation": "6,900 USD minor x 506.25 = 3,493,125 KZT minor. Ledger 3,494,850 minus expected = 1,725 KZT minor."
+      }
+    ]
+  },
+  "A10": {
+    "input_sha256": {
+      "fx.csv": "2f41e90e08d5495008604c203ac1911b5718a1d93773bf13ebac0fd8efd8c4e4",
+      "invoices.jsonl": "9512ec63bbc8d8854d4c0059856dee2f136933c11b05f38dc60c58b8ab711f12",
+      "ledger.csv": "46079aeaded0f6b4fb0197219d562e72bd9b21f9dea8552f7128439059149f6e",
+      "manifest.json": "e8a0151a663735644943cbed25b227318af14b5660650c2574ff0029be8c164a",
+      "payments.jsonl": "9c01bc1ff50ab1ed843149f16c1dc200d44c4be1cd7823a7468c8aec10325aed",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "f6e3dba671da3dc5ab8033b1e54b0405ad136223e653ea2d4c2234bceb5c325f",
+      "invoices.jsonl": "bbd4e30b762d7d7701fae820c551180e87f3a87c43c140a0ed4d49d963281c2b",
+      "ledger.csv": "cc7da51d4dc332d855244a6c580099c01b553060ef6a7a7b350c290f88656e34",
+      "manifest.json": "e8a0151a663735644943cbed25b227318af14b5660650c2574ff0029be8c164a",
+      "payments.jsonl": "14e2566d2d080efd55d4772de48ced9b0476d3a247f9d93c906925ef6e25f421",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "November 21 valuation of 3,493,125 KZT minor agrees with the ledger.",
+    "findings": [
+      {
+        "type": "payment_allocation",
+        "affected_ids": [
+          "invoice/I65C10AD23251D7A781412B09",
+          "payment/P94D703D1F91C2561A2B89003"
+        ],
+        "claimed_amount_minor": 2760,
+        "currency": "USD",
+        "evidence_ids": [
+          "payments/D770DE6FDCA12570821D33DE3",
+          "ledger/R204AF314C8FADDD6E3615D88",
+          "ledger/R52F4BD424241A56B895A8D3F",
+          "policy/allocation"
+        ],
+        "explanation": "6,900 credit minus 4,140 debit = 2,760 USD minor at the exclusive December boundary. The debit of 2,760 posts at December 1 00:01."
+      }
+    ]
+  },
+  "A11": {
+    "input_sha256": {
+      "fx.csv": "2f41e90e08d5495008604c203ac1911b5718a1d93773bf13ebac0fd8efd8c4e4",
+      "invoices.jsonl": "9512ec63bbc8d8854d4c0059856dee2f136933c11b05f38dc60c58b8ab711f12",
+      "ledger.csv": "52ecd386bfeca341082817255b223913ad754ff6e4ff1afafe64cb2bb11b2d47",
+      "manifest.json": "006394c643e32f821675ea2d773653e0d59bf714f5091e76a26bfda9ee4355bb",
+      "payments.jsonl": "9c01bc1ff50ab1ed843149f16c1dc200d44c4be1cd7823a7468c8aec10325aed",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "f6e3dba671da3dc5ab8033b1e54b0405ad136223e653ea2d4c2234bceb5c325f",
+      "invoices.jsonl": "bbd4e30b762d7d7701fae820c551180e87f3a87c43c140a0ed4d49d963281c2b",
+      "ledger.csv": "cc7da51d4dc332d855244a6c580099c01b553060ef6a7a7b350c290f88656e34",
+      "manifest.json": "006394c643e32f821675ea2d773653e0d59bf714f5091e76a26bfda9ee4355bb",
+      "payments.jsonl": "14e2566d2d080efd55d4772de48ced9b0476d3a247f9d93c906925ef6e25f421",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "The late payment tranche and wrong FX amount affect the same payment independently.",
+    "findings": [
+      {
+        "type": "payment_allocation",
+        "affected_ids": [
+          "invoice/I65C10AD23251D7A781412B09",
+          "payment/P94D703D1F91C2561A2B89003"
+        ],
+        "claimed_amount_minor": 2760,
+        "currency": "USD",
+        "evidence_ids": [
+          "payments/D770DE6FDCA12570821D33DE3",
+          "ledger/R204AF314C8FADDD6E3615D88",
+          "ledger/R52F4BD424241A56B895A8D3F",
+          "policy/allocation"
+        ],
+        "explanation": "6,900 credit minus 4,140 debit = 2,760 USD minor at the exclusive December boundary. The debit of 2,760 posts at December 1 00:01."
+      },
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment/P94D703D1F91C2561A2B89003"
+        ],
+        "claimed_amount_minor": 1725,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D770DE6FDCA12570821D33DE3",
+          "fx/2026-11-21/USD/KZT",
+          "ledger/RA21527E7EB4486129B8250A3",
+          "policy/fx_date"
+        ],
+        "explanation": "6,900 USD minor x 506.25 = 3,493,125 KZT minor. Ledger 3,494,850 minus expected = 1,725 KZT minor."
+      }
+    ]
+  },
+  "B00": {
+    "input_sha256": {
+      "fx.csv": "70fac8c7c2c7ddd3cb0c76a50745a81c5741e306e11ea7e585d49103f3039347",
+      "invoices.jsonl": "c98a94695374665afaae13f2d83de6836d46e245c44ee87f6a2898c3f1c6d75f",
+      "ledger.csv": "596cbcd3bb2533b32417f4724fed2d4361552ef614361c0621e52c79bef0d797",
+      "manifest.json": "af95bba8f7b45ea2572f98a41f2159e13901ad42e484605df7738703f3d13b7b",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "5d93184f83e0616f2e85a301147163a45d776d24047d71df4dba08592fb2d360",
+      "invoices.jsonl": "a64600344d97f01b0e78faab84461dbd202096758b6d27d400208ac732d9d20f",
+      "ledger.csv": "61e2fe74994f63b1f5df95f202b6c20b86f6919a4551742d2734e75eba211019",
+      "manifest.json": "af95bba8f7b45ea2572f98a41f2159e13901ad42e484605df7738703f3d13b7b",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "Issued and recognized 2026-11-30 08:55 UTC. Valuation 25,200 x 500.75 = 12,618,900 KZT minor agrees.",
+    "findings": []
+  },
+  "B01": {
+    "input_sha256": {
+      "fx.csv": "70fac8c7c2c7ddd3cb0c76a50745a81c5741e306e11ea7e585d49103f3039347",
+      "invoices.jsonl": "c98a94695374665afaae13f2d83de6836d46e245c44ee87f6a2898c3f1c6d75f",
+      "ledger.csv": "d9589132461d6f22063d46b4766c8a32bff5be4f4fd29ffcdee88b2d488b84c8",
+      "manifest.json": "de889cf8d196157ee29c36be263d35dbd7db268c2f58c56826f0af29e0f4ed65",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "5d93184f83e0616f2e85a301147163a45d776d24047d71df4dba08592fb2d360",
+      "invoices.jsonl": "a64600344d97f01b0e78faab84461dbd202096758b6d27d400208ac732d9d20f",
+      "ledger.csv": "61e2fe74994f63b1f5df95f202b6c20b86f6919a4551742d2734e75eba211019",
+      "manifest.json": "de889cf8d196157ee29c36be263d35dbd7db268c2f58c56826f0af29e0f4ed65",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "The issue time equals the recognition time, both before the boundary.",
+    "findings": [
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "invoice/I960B58EC0C1B4E08AA9A8125"
+        ],
+        "claimed_amount_minor": 6300,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/DD8B684EE59ED2CBB298517A2",
+          "fx/2026-11-30/USD/KZT",
+          "ledger/R1D93616B57522C9B45B19F77",
+          "policy/fx_date"
+        ],
+        "explanation": "25,200 USD minor x 500.75 = 12,618,900 KZT minor. Ledger 12,625,200 minus expected = 6,300 KZT minor."
+      }
+    ]
+  },
+  "B10": {
+    "input_sha256": {
+      "fx.csv": "70fac8c7c2c7ddd3cb0c76a50745a81c5741e306e11ea7e585d49103f3039347",
+      "invoices.jsonl": "c98a94695374665afaae13f2d83de6836d46e245c44ee87f6a2898c3f1c6d75f",
+      "ledger.csv": "c0d40ef26df5ff2a5281cb41c9a7f35cd1282197836885680821b98cb2345003",
+      "manifest.json": "89e770925c264268071d3c6a74c1b82036735dd6bfed76e71ed2fa48ec10911b",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "5d93184f83e0616f2e85a301147163a45d776d24047d71df4dba08592fb2d360",
+      "invoices.jsonl": "a64600344d97f01b0e78faab84461dbd202096758b6d27d400208ac732d9d20f",
+      "ledger.csv": "61e2fe74994f63b1f5df95f202b6c20b86f6919a4551742d2734e75eba211019",
+      "manifest.json": "89e770925c264268071d3c6a74c1b82036735dd6bfed76e71ed2fa48ec10911b",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "The 12,618,900 KZT minor book value still agrees with the invoice issue date quote.",
+    "findings": [
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "invoice/I960B58EC0C1B4E08AA9A8125"
+        ],
+        "claimed_amount_minor": 25200,
+        "currency": "USD",
+        "evidence_ids": [
+          "invoices/DD8B684EE59ED2CBB298517A2",
+          "ledger/RDA1578B8433D52F728DE1EA5",
+          "policy/period"
+        ],
+        "explanation": "Issue 2026-11-30 08:55, recognition 2026-12-01 15:05, end 2026-12-01 00:00, all UTC. The full 25,200 USD minor belongs to November."
+      }
+    ]
+  },
+  "B11": {
+    "input_sha256": {
+      "fx.csv": "70fac8c7c2c7ddd3cb0c76a50745a81c5741e306e11ea7e585d49103f3039347",
+      "invoices.jsonl": "c98a94695374665afaae13f2d83de6836d46e245c44ee87f6a2898c3f1c6d75f",
+      "ledger.csv": "79275a6f485b9f9e57f7f25d581c449ea2dd8a967685499c7af1c9707d6ca6e5",
+      "manifest.json": "a33a9bfd9cc4e0693e73ad5b46126971037682c50e24c60596bda1e663f407cf",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "5d93184f83e0616f2e85a301147163a45d776d24047d71df4dba08592fb2d360",
+      "invoices.jsonl": "a64600344d97f01b0e78faab84461dbd202096758b6d27d400208ac732d9d20f",
+      "ledger.csv": "61e2fe74994f63b1f5df95f202b6c20b86f6919a4551742d2734e75eba211019",
+      "manifest.json": "a33a9bfd9cc4e0693e73ad5b46126971037682c50e24c60596bda1e663f407cf",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "Native recognition moves to December, and the valuation should still use the November issue date.",
+    "findings": [
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "invoice/I960B58EC0C1B4E08AA9A8125"
+        ],
+        "claimed_amount_minor": 25200,
+        "currency": "USD",
+        "evidence_ids": [
+          "invoices/DD8B684EE59ED2CBB298517A2",
+          "ledger/RDA1578B8433D52F728DE1EA5",
+          "policy/period"
+        ],
+        "explanation": "Issue 2026-11-30 08:55, recognition 2026-12-01 15:05, end 2026-12-01 00:00, all UTC. The full 25,200 USD minor belongs to November."
+      },
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "invoice/I960B58EC0C1B4E08AA9A8125"
+        ],
+        "claimed_amount_minor": 6300,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/DD8B684EE59ED2CBB298517A2",
+          "fx/2026-11-30/USD/KZT",
+          "ledger/R1D93616B57522C9B45B19F77",
+          "policy/fx_date"
+        ],
+        "explanation": "25,200 USD minor x 500.75 = 12,618,900 KZT minor. Ledger 12,625,200 minus expected = 6,300 KZT minor."
+      }
+    ]
+  },
+  "FOLD": {
+    "input_sha256": {
+      "fx.csv": "00bb666544ff0a25449e5197c2b6419f469aeb2eddb3fb8ced69b313b16ef82d",
+      "invoices.jsonl": "e27c20d22f6ccb2abe02a3201301f5d497dc122bfe44c23cf495a3141a5d8ccc",
+      "ledger.csv": "92537aa67536130d597a099c1b17cf3ed9320d29dea7111d1a9b52776739a739",
+      "manifest.json": "365550e1a3299bf41d23d0f5b515c35e1a0d099dc9d41a39491b2ecad6ba2c12",
+      "payments.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "policy.json": "03805e12535461aed5aec57d376bb14fe10b6b2e35b98b4c09004b72b03d802e"
+    },
+    "captured_source_sha256": null,
+    "notes": "The two UTC instants in the repeated New York hour are distinct. Only the second valuation differs by 1 KZT minor.",
+    "findings": [
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "invoice/I2"
+        ],
+        "claimed_amount_minor": 1,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D2",
+          "fx/2026-11-01/JPY/KZT",
+          "ledger/R7",
+          "policy/fx_date"
+        ],
+        "explanation": "05:30 UTC is 01:30 EDT, 06:30 UTC is 01:30 EST. Both select the November 1 rate of 2.505. 1 JPY x 2.505 x 100 = 250.5, half up to 251 KZT minor. I1 booked 251. I2 booked 250, difference 1."
+      }
+    ]
+  },
+  "JPY-TWIN": {
+    "input_sha256": {
+      "fx.csv": "c08bfb4f52a77b3f5e0bf8770b270932011c08df16406ef5f8db0657bfaab1a4",
+      "invoices.jsonl": "0038446a29c58691ff0a58898b4292c6c67cbe9fa13c5a12e3ad0601276b349a",
+      "ledger.csv": "e163bf020e600109c45d4011e932cc5a7f2032a4f882a86978a1daf9d2730627",
+      "manifest.json": "a49d6e1a7eaad964e9dbccdd4be2feb2c0c69665734416240a7c05fcecbc6bce",
+      "payments.jsonl": "bc4603fc8dc249371d7c5ad607c4ec198c1cfdf996bfe4ad4b32bbb50b482bae",
+      "policy.json": "c284a6830b2163493de4d93423e68577f3461d5771035ddbaccfae1a00863fec"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "043774ba6deafccf0762c4f0d191e2a6e7e621c9ecd5ae73df67648b9c8088f2",
+      "invoices.jsonl": "a9611a2563ada24aa45e3258968e90280aa1ade4dacf374221fa3c30a2c02088",
+      "ledger.csv": "bd9eac52601a61e8ea7d6aada9c6c1fb3db9adda5d22e5c8a328031f6fcad9a0",
+      "manifest.json": "a49d6e1a7eaad964e9dbccdd4be2feb2c0c69665734416240a7c05fcecbc6bce",
+      "payments.jsonl": "50c50a46e28bed7a39c0d392a5ff311cd65ff2f9e57b73e660abfcf16e5e1fd8",
+      "policy.json": "c284a6830b2163493de4d93423e68577f3461d5771035ddbaccfae1a00863fec"
+    },
+    "notes": "Unapplied 6,100 - 3,660 - 2,440 = 0 EUR minor. At the 2026-11-12 quote 61 EUR x 1.21 = 73.81 JPY, half up = 74. The next date quote 1.22 yields 74.42 JPY, also 74. No public difference would follow from this date substitution.",
+    "findings": []
+  },
+  "MAX": {
+    "input_sha256": {
+      "fx.csv": "9e1b9a40fd7805ca869479e477121557cf26223f56a422e69a763aa8563ab3ea",
+      "invoices.jsonl": "b61abd37442086c40a2e1ac7dbcd1d980eb1df0934b00f518328e485f85f63a1",
+      "ledger.csv": "21b5462eba270bfbcdf11f90ddc37a9282c2142c5f04fc6640137ecdee6d2e07",
+      "manifest.json": "a2e9b5576044903f06f1d8233ff33f26388a9dbdbcb49b8babd060ab3fc0bce1",
+      "payments.jsonl": "b9d1ccf54ce49520be1fc59837da10e2ccaa2bde39405b1ce186d94b52354f20",
+      "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "10aa52106615df7e359780728a23b0660071f59e98045b4fc36402c45e60fc54",
+      "invoices.jsonl": "489159495586d2ce24b496fd01afe0e6248ce70a5bb4932dd1407a3301d44c70",
+      "ledger.csv": "09fb1b2597497c1b2b74892ba56ec7da1badfb1769ab96375aa5a9860765444e",
+      "manifest.json": "4097e9f706e648a344cf334f3d077a1f28885e36ad4179ee04351387fa5c9fd2",
+      "payments.jsonl": "ecaf988ac900699c898f70f1214e5715fa68da27b595c2b02a587790e8a67b28",
+      "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+    },
+    "notes": "April 1 00:00 EDT is the exclusive boundary. There are 2,000 rows and 200 documents. Archive I4243CE5403C6F281C212DD60 has two copies and one recognition. Its 2,019,100 KZT minor are recorded once. Payment P946A5AB0C94CA1C44A232D01 values correctly at 245 x 2.640 x 100 = 64,680 KZT minor. Listing KWD in the manifest did not cause a KWD transaction in this case.",
+    "findings": [
+      {
+        "type": "duplicate_invoice",
+        "affected_ids": [
+          "invoice/I80B4B2EF07180AE96AC1C06C"
+        ],
+        "claimed_amount_minor": 3241800,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/DC9FC3FD0CB0978D749056CAC",
+          "invoices/D2B6B9D30144B3D8B6C1FCF0D",
+          "ledger/RA772D1CFD519249FB5AC31CB",
+          "ledger/RBD7FEA36BF4F919639DB2A91"
+        ],
+        "explanation": "3,241,800 + 3,241,800 recognized minus one invoice of 3,241,800 = 3,241,800 KZT minor."
+      },
+      {
+        "type": "duplicate_invoice",
+        "affected_ids": [
+          "invoice/I97CC445C3D8B5BB5C047210A"
+        ],
+        "claimed_amount_minor": 1195000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D2255790EFA259BAF4A189CEE",
+          "invoices/D07348A045450D1680F06BEE4",
+          "ledger/R8A453632413BC0208FB8001A",
+          "ledger/RB1F10036AF54D112E41068F4"
+        ],
+        "explanation": "1,195,000 + 1,195,000 recognized minus one invoice of 1,195,000 = 1,195,000 KZT minor."
+      },
+      {
+        "type": "duplicate_invoice",
+        "affected_ids": [
+          "invoice/IB60ED5071F892F71C344AE37"
+        ],
+        "claimed_amount_minor": 2135000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D82C86916D29174317E0AA30B",
+          "invoices/DD8089675DFB9739886C46BB4",
+          "ledger/R7C3BF9F658F2D5833AF6C353",
+          "ledger/R3D6AABCE4F661AAF501EDE2D"
+        ],
+        "explanation": "2,135,000 + 2,135,000 recognized minus one invoice of 2,135,000 = 2,135,000 KZT minor."
+      },
+      {
+        "type": "payment_allocation",
+        "affected_ids": [
+          "invoice/I89827724BD22087170FE516F",
+          "payment/PCD45FA679847FC96ADECE459"
+        ],
+        "claimed_amount_minor": 3592000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D65C3AD3D540A913E792489E3",
+          "ledger/R2A8E0665E5030EE9024DF95E",
+          "ledger/RC4274B846D4177C1C7BC07CA",
+          "policy/allocation"
+        ],
+        "explanation": "8,980,000 credit - 5,388,000 debit = 3,592,000 KZT minor."
+      },
+      {
+        "type": "payment_allocation",
+        "affected_ids": [
+          "invoice/ID9A5E3BAAE9B469C0650117C",
+          "payment/P59AD88413F3E01B7D8D98625"
+        ],
+        "claimed_amount_minor": 2696000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D7D381EFE0965665928C0D248",
+          "ledger/R5F7879550056B1D82983CEA6",
+          "ledger/RA0D4FDE4DDB9C304F17A0C9B",
+          "policy/allocation"
+        ],
+        "explanation": "6,740,000 credit - 4,044,000 debit = 2,696,000 KZT minor."
+      },
+      {
+        "type": "payment_allocation",
+        "affected_ids": [
+          "invoice/I9DCD02AA71E9E72F96C46FA2",
+          "payment/PD15C907269C3599B2EBE9DF5"
+        ],
+        "claimed_amount_minor": 38,
+        "currency": "JPY",
+        "evidence_ids": [
+          "payments/DC26F7180874CFD2A7049C3D4",
+          "ledger/R13DACC6D769DDA086E4DBD1F",
+          "ledger/R51D7AAEE9BAF289642070E76",
+          "policy/allocation"
+        ],
+        "explanation": "93 credit - 55 debit = 38 JPY. Currency exponent 0."
+      },
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "invoice/I500AF3F97D9FBE4CD0990DB8"
+        ],
+        "claimed_amount_minor": 4932300,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D555204FEC3EC1B26DDB73FE5",
+          "ledger/RC47014E9F862D1075C7C1EF0",
+          "policy/period"
+        ],
+        "explanation": "Invoice issued 2026-03-31 07:14 EDT, recognition 2026-04-01 16:46 EDT. Full 4,932,300 KZT minor belongs in March."
+      },
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "invoice/I23499563ADCD9C22B5354E7C"
+        ],
+        "claimed_amount_minor": 5601300,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/DAA39C375F13934F3138A07BA",
+          "ledger/R9A62B9EF5B1D5A9CA51F08AA",
+          "policy/period"
+        ],
+        "explanation": "Invoice issued 2026-03-31 07:47 EDT, recognition 2026-04-01 16:13 EDT. Full 5,601,300 KZT minor belongs in March."
+      },
+      {
+        "type": "period_cutoff",
+        "affected_ids": [
+          "invoice/I503BC4AE503F4E3D057AB074"
+        ],
+        "claimed_amount_minor": 1819800,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/DAB34E11A681EC22021A3DEDB",
+          "ledger/R2E3E2B3A55CB4235AED3F12E",
+          "policy/period"
+        ],
+        "explanation": "Invoice issued 2026-03-31 13:00 EDT, recognition 2026-04-01 11:00 EDT. Full 1,819,800 KZT minor belongs in March."
+      },
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment/PBB271420DDB850F46F5E37A3"
+        ],
+        "claimed_amount_minor": 97,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DCE3775BACAD43AD1D902C57A",
+          "fx/2026-03-04/JPY/KZT",
+          "ledger/R48929560A829B6CC6E07B0DB",
+          "policy/fx_date"
+        ],
+        "explanation": "March 4 at 16:29 UTC is 11:29 EST. 194 x 2.560 x 100 = 49,664 KZT minor. Ledger 49,761 minus expected = 97."
+      },
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment/PD15C907269C3599B2EBE9DF5"
+        ],
+        "claimed_amount_minor": 46,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DC26F7180874CFD2A7049C3D4",
+          "fx/2026-03-09/JPY/KZT",
+          "ledger/REC7D1AA116D3D00C9BD72614",
+          "policy/fx_date"
+        ],
+        "explanation": "93 x 2.585 x 100 = 24,040.5, half up to 24,041 KZT minor. Ledger 24,087 minus expected = 46."
+      },
+      {
+        "type": "fx_conversion",
+        "affected_ids": [
+          "payment/PA983B1DC686015F3BAD7B0AA"
+        ],
+        "claimed_amount_minor": 26,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D825030845BD2841682E19CA3",
+          "fx/2026-03-19/JPY/KZT",
+          "ledger/R91005AA92FC57DEAF805E01C",
+          "policy/fx_date"
+        ],
+        "explanation": "March 19 at 19:16 UTC is 15:16 EDT. 52 x 2.635 x 100 = 13,702 KZT minor. Ledger 13,728 minus expected = 26."
+      }
+    ]
+  },
+  "REFUND": {
+    "input_sha256": {
+      "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+      "invoices.jsonl": "4ed6d9006c86ebb64203cfd66bdcff773dec3eca2969a7ec3e3cb52dfe2230e6",
+      "ledger.csv": "b5206292755225e4709197f9070ee834d86de2a8645fd7627b6c0091cc2a8c06",
+      "manifest.json": "a35903ef0d00a524887518b74e79e56a59a3d02100809f475cab5127a9dd6d44",
+      "payments.jsonl": "39dbc44cd607a6ac24861491c6b88fd566532b534a105ffa0b4ae1ab448cb354",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "captured_source_sha256": {
+      "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+      "invoices.jsonl": "7b05ef82010c607b7d33429d8eaed737fea8c647aaf69bb74319e697b35ebef5",
+      "ledger.csv": "7b78f929a064419e5805482755dd15ba3cac6b8115fc2be6613eb56b143a5905",
+      "manifest.json": "a35903ef0d00a524887518b74e79e56a59a3d02100809f475cab5127a9dd6d44",
+      "payments.jsonl": "9420eaafd272dc2a5998ab5562a698c764e5bcd7335da2b7959a2e6910e8e89a",
+      "policy.json": "e170ce6a9614e6c4424f3856e2dfc78f3cd45c4358af6d52ce7086bd81df2df3"
+    },
+    "notes": "Unassigned deposit payments/DB707BC16E3D73B1A8CE77FCF for 800,000 KZT minor: ledger/R322E159741DF394BB930EEBF CASH debit and ledger/RE8BA4EA65327B330A09F6988 UNAPPLIED credit on November 2, then ledger/R125B7D133E1044DEEF41D9CD UNAPPLIED debit and ledger/R1E5F5C2DA3C780D2990CC742 CASH credit on November 5. Net cash and UNAPPLIED are both zero. The other source invoice was recognized once on its issue date.",
+    "findings": []
+  }
+}
