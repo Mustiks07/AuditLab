@@ -152,8 +152,7 @@ PY
 # ------------------------------------------------------------------ measurement + events
 "$PY" "$HERE/collect_host_memory.py" --out "$RUN/memory" --interval "$INTERVAL" &
 COLLECTOR=$!
-"${DOCKER[@]}" events --format '{{.Time}} {{.Type}} {{.Action}} {{.Actor.ID}} {{.Actor.Attributes.name}} {{.Actor.Attributes.image}}' \
-  > "$RUN/docker-events.log" 2>&1 &
+"${DOCKER[@]}" events --format '{{json .}}' > "$RUN/docker-events.log" 2>&1 &   # one JSON object per event
 EVENTS=$!
 DEMO_NAME="auditlab-ops01-demo-$$"
 finish() {

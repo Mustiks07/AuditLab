@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 EXPECTED_NOT_CHECKED = {"OPS-01", "OPS-02"}
@@ -39,6 +40,28 @@ def output(review: Path, name: str) -> str:
     path = review / "steps" / f"{name}.out"
     text = path.read_text(encoding="utf-8", errors="replace") if path.is_file() else ""
     return text.split("\n", 1)[1] if "\n" in text else ""
+
+
+def docker_events(text: str) -> list[tuple[str, str]]:
+    """(type, action) of each Docker event, for JSON lines and for the older text format.
+
+    In the text format an event starts with a Unix timestamp; any other line continues a multi-line
+    attribute (for example an exec command) and is not an event.
+    """
+    events = []
+    for line in text.splitlines():
+        line = line.strip()
+        if line.startswith("{"):
+            try:
+                item = json.loads(line)
+            except ValueError:
+                continue
+            events.append((str(item.get("Type", "")), str(item.get("Action", ""))))
+            continue
+        match = re.match(r"^\d{9,}(?:\.\d+)? (\w+) (\S+)", line)
+        if match:
+            events.append((match.group(1), match.group(2)))
+    return events
 
 
 def acceptance_statuses(report: dict) -> dict:
@@ -101,7 +124,11 @@ def judge(review: Path, source_sha: str | None) -> dict:
         failed.append(f"evidence checker: failures={evidence.get('failures')} missing={evidence.get('missing')}")
     events = review / "docker-events.log"
     if events.is_file():
-        pulls = [line for line in events.read_text(errors="replace").splitlines() if " image pull " in f" {line} "]
+        parsed = docker_events(events.read_text(errors="replace"))
+        facts["docker_events"] = len(parsed)
+        pulls = [event for event in parsed if event[0] == "image" and event[1].split(":")[0] == "pull"]
+        if not parsed:
+            not_checked.append("docker-events.log has no events")
         if pulls:
             failed.append(f"{len(pulls)} image pull event(s) during an offline run")
     else:

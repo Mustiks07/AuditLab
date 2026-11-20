@@ -57,17 +57,30 @@ class Summary(unittest.TestCase):
         self.assertEqual(result["host"]["sampled_peak_used_including_cache"]["bytes"], 3_600_000_000)
         self.assertEqual(result["host"]["sampled_min_mem_available"]["bytes"], 1_200_000_000)
         self.assertEqual(result["named_cgroups"]["docker.service"]["continuous_peak_bytes"], 900)
-        self.assertEqual(result["daemons"]["dockerd"]["continuous_peak_rss_hwm_bytes"], 120_000_000)
+        self.assertEqual(result["daemons"]["dockerd"]["max_single_process_hwm_bytes"], 120_000_000)
+        self.assertEqual(result["daemons"]["dockerd"]["sampled_peak_rss_sum_bytes"], 90_000_000)
         container = result["containers"]["aaaaaaaaaaaa"]
+        self.assertEqual(container["samples_without_limit"], 0)
         self.assertEqual((container["last_seen_continuous_peak_bytes"], container["limit_bytes"]), (1_400_000_000, 1610612736))
         self.assertEqual(result["phases"][0]["samples"], 1)
         self.assertEqual(result["phases"][0]["sampled_peak_used_excluding_reclaimable"]["bytes"], 2_700_000_000)
         self.assertEqual((result["mem_total_within_limit"], result["sampled_peak_within_limit"]), (True, True))
         self.assertEqual(result["gaps_s"], {"median": 0.5, "max": 0.5})
         blob = json.dumps(result)
-        self.assertNotIn("sum", json.dumps({k: v for k, v in result.items() if k != "limits_of_inference"}))
+        # No host or cgroup figure is a sum of separate peaks (container peaks are never added up).
+        self.assertFalse([key for key in result["host"] if "sum" in key])
+        self.assertFalse([key for row in result["named_cgroups"].values() for key in row if "sum" in key])
+        self.assertFalse([key for key in result if "sum" in key])
         self.assertIn("not a continuous maximum", blob)
         self.assertIn("| Показатель | Байт |", summarize_tool.markdown(result))
+
+    def test_limit_written_after_the_first_reading_is_not_reported_as_unlimited(self):
+        early = {"bbbbbbbbbbbb": {"current": 3_000_000, "peak": 3_000_000, "max": None, "events": {"oom_kill": 0}}}
+        later = {"bbbbbbbbbbbb": {"current": 20_000_000, "peak": 25_000_000, "max": 1610612736, "events": {"oom_kill": 0}}}
+        result = summarize_tool.summarize(META, [sample(0.0, 3e9, 3e9, containers=early),
+                                                 sample(0.5, 3e9, 3e9, containers=later)], [])
+        row = result["containers"]["bbbbbbbbbbbb"]
+        self.assertEqual((row["limit_bytes"], row["samples_without_limit"], row["samples"]), (1610612736, 1, 2))
 
     def test_oom_counters_and_monotonic_phases(self):
         samples = [sample(0.0, 3e9, 3e9, oom=4), sample(0.5, 3e9, 3e9, oom=5)]
@@ -112,7 +125,8 @@ def write_review(root: Path, *, qualified=True, codes=None, acceptance=None, evi
     (report / "report.json").write_text(json.dumps({"acceptance": rows}))
     (root / "evidence-summary.json").write_text(json.dumps(evidence or {"status": "internal_rehearsal_passed",
                                                                           "failures": [], "missing": []}))
-    (root / "docker-events.log").write_text("x image pull y\n" if pulls else "x container start y\n")
+    (root / "docker-events.log").write_text('{"Type":"image","Action":"pull"}\n' if pulls
+                                           else '{"Type":"container","Action":"start"}\n')
     (root / "memory").mkdir()
     summary = summarize_tool.summarize(META, [sample(0.0, 3e9, 3e9), sample(0.5, 2e9, 1e9, oom=oom)], [])
     (root / "memory" / "summary.json").write_text(json.dumps(summary))
@@ -148,6 +162,20 @@ class Verdict(unittest.TestCase):
         for name, options in cases.items():
             with self.subTest(case=name):
                 self.assertEqual(self.verdict(**options)["verdict"], "failed")
+
+    def test_docker_events_multiline_and_json(self):
+        text_format = ("1795000000 container exec_start: python3 -c \"import json\n"
+                       "print(' image pull ')\" abc controller img\n"
+                       "1795000001 network connect abc none\n")
+        self.assertEqual(judge_tool.docker_events(text_format), [("container", "exec_start:"), ("network", "connect")])
+        json_format = '{"Type":"image","Action":"pull","Actor":{"ID":"x"}}\n{"Type":"container","Action":"start"}\n'
+        self.assertEqual(judge_tool.docker_events(json_format), [("image", "pull"), ("container", "start")])
+        with tempfile.TemporaryDirectory() as tmp:
+            write_review(Path(tmp))
+            (Path(tmp) / "docker-events.log").write_text(text_format)  # continuation line mentions " image pull "
+            self.assertEqual(judge_tool.judge(Path(tmp), self.SHA)["verdict"], "confirmed")
+            (Path(tmp) / "docker-events.log").write_text(json_format)
+            self.assertEqual(judge_tool.judge(Path(tmp), self.SHA)["verdict"], "failed")
 
     def test_missing_step_is_not_checked(self):
         self.assertEqual(self.verdict(skip=("replay_check",))["verdict"], "not_checked")

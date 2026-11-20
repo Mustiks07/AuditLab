@@ -1,0 +1,22 @@
+$ python3.11 -I source/tools/check_rehearsal_evidence.py ./results/verify-20261120T154512Z-687f0e763bbc --bundle . --output /home/user/ops01/review-20261120T153901Z/evidence-summary.json
+{
+  "scope": "Internal functional rehearsal and resource evidence only; 24 acceptance groups and official score not certified",
+  "result_root": "/home/user/ops01/review-20261120T153901Z/bundle/results/verify-20261120T154512Z-687f0e763bbc",
+  "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f",
+  "memory_budget": {
+    "per_container_bytes": 1610612736,
+    "combined_container_limit_bytes": 3221225472,
+    "decimal_4gb_headroom_bytes": 778774528,
+    "whole_host_status": "not_checked"
+  },
+  "payload_size_bytes": 330611982,
+  "datasets": 20,
+  "attempts": 80,
+  "pairs": 20,
+  "ordinary_resource_runs": 60,
+  "verifier_resource_runs": 40,
+  "failures": [],
+  "missing": [],
+  "status": "internal_rehearsal_passed",
+  "exit_code": 0
+}

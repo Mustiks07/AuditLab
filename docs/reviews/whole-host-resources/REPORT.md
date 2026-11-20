@@ -1,123 +1,167 @@
 # OPS-01: память всей машины для опубликованного RC3
 
-**Статус: не проверено.** Подходящей машины (Linux x86_64, 2 CPU, не более 4 000 000 000 байт RAM, без swap, Python 3.11, локальный Docker Engine) в распоряжении проверяющего не было. Проверка не подменялась контейнером с memory limit на большом хосте. Подготовлены и испытаны сборщик измерений, сценарий проверки по HANDOFF и правило вердикта. Ниже — фактическое состояние доступной машины и точная инструкция для подходящей.
+**Вывод.**
+- **Подтверждено на WSL2 VM** (хост Windows 11; 2 vCPU; выделено 3800 MiB = 3 984 588 800 B; MemTotal гостя 3 803 185 152 B; swap 0). Полная проверка опубликованного RC3 по [HANDOFF](../../demo/HANDOFF.md) прошла с документированными кодами возврата. За всё время записи — 0 OOM kill, swap не использовался, давление памяти 0. Сэмплированный пик занятой памяти всей гостевой ОС — **848 486 400 B** (22,3 % MemTotal).
+- **Не проверено на отдельном Linux-хосте или VM вне Windows.** Подходит ли WSL2 как машина OPS-01, решает интегратор: HANDOFF не заявляет Windows-хосты, хотя внутри VM работают Linux и обычный Docker Engine, а не Docker Desktop.
 
 | Что | Значение |
 |---|---|
-| Проверяемый кандидат | [v0.1.0-rc.3](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.3), тег → `b7a1857a51bf47bb36e42699988b38b4d897fa1f` (сверено `git ls-remote`) |
-| Архив | `AuditLab-v0.1.0-rc.3-offline.zip`, 330 616 243 B, SHA-256 `a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81`. Тот же digest показывает страница ассетов релиза. Архив **не скачивался**: машина не прошла квалификацию до шага загрузки |
+| Кандидат | [v0.1.0-rc.3](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.3), тег → `b7a1857a51bf47bb36e42699988b38b4d897fa1f` |
+| Архив | `AuditLab-v0.1.0-rc.3-offline.zip`, скачан с релиза. `sha256sum` = `a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81`, `sha256sum -c` → OK |
 | База ветки | `main` `daf1fc64df37651e14801e0286b9741b30820d35`, ветка `review/whole-host-resources` |
-| Изменения кода RC3 | нет: добавлены только инструменты проверки, журналы и тесты инструментов |
+| Прогон | 2026-11-20, 15:39–15:55 UTC; [logs/2026-11-20-wsl2-rc3/](logs/2026-11-20-wsl2-rc3/) |
+| Код RC3 | не менялся; результаты относятся именно к архиву RC3 |
 
-## 1. Фактически доступная машина
+## 1. Машина
 
-Журнал: [logs/2026-11-20-wsl2-unqualified/](logs/2026-11-20-wsl2-unqualified/). `run_review.sh` записал окружение и квалификацию и завершился с **кодом 3** («машина не соответствует профилю») до скачивания архива.
+Хост — Windows 11 (10.0.26200.9974), 16 407 719 936 B RAM, 8 логических CPU, WSL 3.0.5.0.
+VM задана в `%USERPROFILE%\.wslconfig`: `processors=2`, `memory=3800MB`, `swap=0`. До проверки файла не было.
 
-| Требование | Факт | Итог |
-|---|---|---|
-| Linux x86_64 | WSL2 на Windows 11, Ubuntu 26.04.1 LTS, ядро `6.18.58.1-microsoft-standard-WSL2`, `systemd-detect-virt` = `wsl` | VM есть |
-| 2 CPU | 8 (affinity `0-7`) | **нет** |
-| ≤ 4 000 000 000 B RAM | MemTotal 7 945 748 480 B | **нет** |
-| swap отключён | SwapTotal 2 147 483 648 B | **нет** |
-| Python 3.11 | 3.14.4 (3.11 отсутствует) | **нет** |
-| Docker Engine, cgroup v2 | cgroup2fs есть, Docker не установлен | **нет** |
-| Установка пакетов | sudo требует пароль пользователя | вне полномочий проверяющего |
+Единица `3800MB` в WSL — MiB: гость видит MemTotal 3 803 185 152 B, это больше 3 800 000 000. Значит, выделено 3800 × 1 048 576 = **3 984 588 800 B ≤ 4 000 000 000 B**. Это не 4 GiB (4 294 967 296 B).
 
-Хост Windows: 16 407 719 936 B, 8 логических CPU; Docker Desktop нет. Изменять глобальную конфигурацию WSL пользователя и вводить пароль sudo проверяющий не стал.
+| Свойство | Факт ([environment/](logs/2026-11-20-wsl2-rc3/environment/), [qualification.json](logs/2026-11-20-wsl2-rc3/qualification.json)) |
+|---|---|
+| ОС | Ubuntu 26.04.1 LTS, ядро `6.18.58.1-microsoft-standard-WSL2`, x86_64, `systemd-detect-virt` = `wsl` |
+| CPU | 2 (affinity `0,1`; Docker NCPU 2) |
+| Память | MemTotal 3 803 185 152 B; SwapTotal 0 |
+| Python | 3.11.18 (`/usr/bin/python3.11`); внутри образа RC3 — 3.11.14 |
+| Docker | Engine 29.1.3 (`docker.io` Ubuntu), хранилище **containerd** (`overlayfs`, `io.containerd.snapshotter.v1`), cgroup v2, драйвер systemd |
+| Квалификация | 7 из 7 условий |
+| Образы проекта до загрузки | отсутствовали по config ID, OCI digest и тегу всех трёх ролей ([preload-images.json](logs/2026-11-20-wsl2-rc3/preload-images.json)); чужих образов и контейнеров не было |
 
-## 2. Что и как измеряется
+Prerequisites поставлены до проверки скриптом [`prepare_wsl2.sh`](prepare_wsl2.sh): Docker Engine, Python 3.11, `unzip`, `curl`. Пакеты проекта не устанавливались, образы не собирались, pull не было.
 
-Все скрипты используют только стандартную библиотеку Python 3.11 и не требуют root.
+## 2. Шаги HANDOFF и коды
+
+| Шаг | Команда | Код | Длительность, с | Ожидание |
+|---|---|---:|---:|---|
+| Простой | запись памяти без нагрузки | 0 | 30,0 | базовая линия |
+| 1 | `python3.11 offline.py check` | **0** | 0,5 | 0; «Bundle hashes verified; source b7a1857…» |
+| 3 | `python3.11 offline.py verify --suite rehearsal --output-root ./results` | **2** | 560,3 | 2 — строгая приёмка неполная |
+| 5 | `python3.11 offline.py image --role runtime` | **0** | 0,8 | 0; `sha256:bc52a5ec…` |
+| 4 | `python3.11 -I source/tools/check_rehearsal_evidence.py RESULTS --bundle . --output …` | **0** | 0,3 | 0, `internal_rehearsal_passed`, `failures: []`, `missing: []` |
+| §8 | `docker ps --all --filter label=org.auditlab.launch=<launch_id>` | 0, пусто | 0,2 | контейнеров запуска не осталось |
+| §6 | demo: `run.py demo` в контейнере, `curl /demo/health` | **0** | 6,1 | `{"ok":true,"runs":6,"static":true}` |
+| §6 | `python -m auditlab.demo … crosscheck --live` | **0** | 1,1 | «Проверено запусков: 6; расхождений: 0» |
+| §6 | `python -m auditlab.demo … replay --run <id> --check` | **0** | 1,0 | наблюдения и оценка совпали |
+
+**Код 2 репетиции разобран, а не принят на веру.**
+- `verify/report.json`: `status=incomplete`, commit `b7a1857…`, Python 3.11.14.
+- Наборы: 3 + 87 + 50 + 32 + 96 + 34 + 4 + 41 = **347 тестов**, все `passed`.
+- Матрица: **22 passed, 2 not_checked** — ровно OPS-01 и OPS-02.
+- `launch.json`: `status=incomplete`, `exit_code=2`, `cleanup.status=passed`, `remaining_containers=0`.
+- `controller-resources.json`: `status=measured`, лимит 1 610 612 736 B, пик контроллера 227 999 744 B.
+
+Сводка репетиции совпадает с опубликованной для RC3:
+
+| Политика | planned / measured | TP / FP / FN | Средняя награда |
+|---|---|---:|---:|
+| reconcile | 20 / 20, complete | 38 / 0 / 0 | 0,9512 |
+| random | 20 / 20, complete | 0 / 0 / 38 | −0,5035 |
+| flag_all | 20 / 20, complete | 0 / 600 / 38 | −1 |
+| oracle (доверенный) | 20 / 20, complete | 38 / 0 / 0 | 1 |
+
+**`docker events`** ([docker-events.log](logs/2026-11-20-wsl2-rc3/docker-events.log)): 1023 события.
+- `image load` — 3, **`image pull` — 0**.
+- 110 контейнеров создано и уничтожено.
+- `network connect` — 109 к `none` и 1 к `bridge` (контейнер demo с портом на `127.0.0.1`), как в HANDOFF.
+- Событий `oom` нет.
+
+## 3. Память всей гостевой ОС
+
+Метод: [`collect_host_memory.py`](collect_host_memory.py) внутри VM.
+- Интервал 0,5 с, **1215 сэмплов за 607,0 с**: от простоя до остановки demo, весь прогон, кроме скачивания и распаковки.
+- Максимальный разрыв между сэмплами — 0,505 с.
+- Источники: `/proc/meminfo`, `/proc/vmstat`, `/proc/pressure/memory`, cgroup v2 и `VmRSS`/`VmHWM` демонов.
+- Сводка: [memory/summary.json](logs/2026-11-20-wsl2-rc3/memory/summary.json), [memory/table.md](logs/2026-11-20-wsl2-rc3/memory/table.md); сырые данные: [memory/samples.jsonl](logs/2026-11-20-wsl2-rc3/memory/samples.jsonl).
+
+| Показатель всей гостевой ОС | Байт | Вид |
+|---|---:|---|
+| MemTotal | 3 803 185 152 | — |
+| Пик used = MemTotal − MemAvailable | **848 486 400** | sampled, t = 271 с (репетиция) |
+| Минимум MemAvailable | **2 954 698 752** | sampled, там же |
+| Пик used вместе с кешем = MemTotal − MemFree | 3 068 125 184 | sampled; рост в основном за счёт кеша страниц образов и данных, ядро освобождает его по требованию |
+| Пик swap used | 0 | SwapTotal 0 |
+| PSI memory some / full avg10 | 0,00 / 0,00 | sampled максимум |
+| OOM kill: `/proc/vmstat` | +0 | счётчик за всю запись |
+| OOM kill: `system.slice`, `user.slice`, `init.scope`, `docker.service`, `containerd.service`, все 110 контейнеров | +0 | `memory.events` |
+
+| Шаг | Пик used, sampled | Пик с кешем, sampled |
+|---|---:|---:|
+| Простой (30 с) | 501 436 416 | 2 015 608 832 |
+| Репетиция (560 с) | 848 486 400 | 3 068 125 184 |
+| demo, crosscheck, replay | до 725 995 520 | до 3 047 211 008 |
+
+**Демоны и cgroup — непрерывные пики, каждый только своего объекта:**
+
+| Объект | Байт | Примечание |
+|---|---:|---|
+| `system.slice` memory.peak | 1 475 297 280 | включает кеш страниц, отнесённый к этой cgroup |
+| `containerd.service` memory.peak | 808 677 376 | в том числе распаковка образов и её кеш |
+| `docker.service` memory.peak | 173 580 288 | |
+| `dockerd` VmHWM | 142 909 440 | один процесс |
+| `containerd` VmHWM | 72 925 184 | один процесс |
+| `containerd-shim*` VmHWM | 12 091 392 | максимум одного процесса из до 4; сумма RSS (sampled) 43 380 736 |
+
+**Контейнеры — отдельно, не складываются в память хоста:**
+- 110 контейнеров. Последний прочитанный `memory.peak`: контроллер — 227 999 744 B, demo — 157 409 280 B, verifier — до 128 090 112 B, медиана — 20 549 632 B.
+- Лимиты:
+  - 103 контейнера — 1 610 612 736 B;
+  - 5 тестовых контейнеров проверки изоляции — 64 MiB;
+  - demo — 2 GiB;
+  - один мой контейнер `crosscheck`/`replay`, запущенный с явным `--memory 1536m`, попал лишь в один сэмпл, до записи лимита.
+- OOM kill — 0.
+
+**Границы вывода:**
+1. Пик памяти всей ОС **сэмплированный** (0,5 с). Это не непрерывный максимум: всплеск короче интервала мог быть пропущен. Запас — минимум MemAvailable 2,95 GB.
+2. `memory.peak` и `VmHWM` — непрерывные пики отдельных cgroup и процессов. Разные объекты достигают пика в разное время, поэтому их сумма **не** равна памяти машины и не приводится.
+3. `memory.peak` контейнера пропадает вместе с его cgroup. Сохранено последнее прочитанное значение; у короткоживущих контейнеров оно может быть ниже финального пика.
+4. Измерена память **гостевой ОС** VM. Память, которую Windows-хост тратит на саму VM (`vmmem`), и сам хост не измерялись.
+5. Сборщик (Python, ≈ 15–20 MB) работал внутри VM, и его память входит в показатели всей ОС.
+6. Скачивание и распаковка архива шли до начала записи.
+
+## 4. Найденные дефекты
+
+**В RC3 дефектов не обнаружено.**
+
+В инструментах проверки найдены и исправлены два недочёта, оба с регрессиями в [`tests/runner/test_whole_host_tools.py`](../../../tests/runner/test_whole_host_tools.py):
+
+1. **Многострочные события.** `docker events` в текстовом формате переносит многострочные команды `exec` (замер ресурсов RC3) на следующие строки. Поиск `image pull` по строкам мог дать ложный провал, но не ложный успех. Теперь сценарий пишет `{{json .}}`, а судья разбирает и JSON, и старый формат по признаку «строка события начинается с отметки времени».
+2. **Лимит из первого сэмпла.** Сводка брала лимит контейнера из первого сэмпла. Сборщик успевал прочитать новую cgroup до записи `memory.max`: внутри был только `runc init`, около 3 МБ. Поэтому 9 контейнеров выглядели безлимитными, хотя у восьми со следующего сэмпла читался лимит 1 610 612 736 B, а девятый (`crosscheck`/`replay`) запускался с явным `--memory 1536m`. Теперь лимит — последнее наблюдённое значение, а число чтений без лимита выводится отдельно. Затронута только подпись в сводке; вердикт и показатели памяти не менялись.
+
+Сводка и вердикт пересчитаны исправленными инструментами по тем же сырым данным. Исходные файлы сохранены рядом (`*.original.json`). Вердикт в обоих случаях — `confirmed`.
+
+## 5. Инструменты
 
 | Файл | Назначение |
 |---|---|
-| [`collect_host_memory.py`](collect_host_memory.py) | Сэмплер внутри гостевой ОС: одна JSON-строка каждые `--interval` с (по умолчанию 0,5) |
-| [`summarize_host_memory.py`](summarize_host_memory.py) | Сводка: `summary.json` и `table.md`, пики по всей записи и по каждому шагу |
-| [`judge_review.py`](judge_review.py) | Вердикт `confirmed` / `failed` / `not_checked` только по сохранённым файлам; коды 0 / 1 / 2 |
-| [`run_review.sh`](run_review.sh) | Полная проверка по HANDOFF §§1–8 с квалификацией машины, хешем, журналами и вердиктом |
+| [`collect_host_memory.py`](collect_host_memory.py) | Сэмплер всей гостевой ОС; stdlib, без root |
+| [`summarize_host_memory.py`](summarize_host_memory.py) | Сводка с явными границами вывода |
+| [`judge_review.py`](judge_review.py) | Вердикт `confirmed` / `failed` / `not_checked` (коды 0 / 1 / 2) по сохранённым файлам |
+| [`run_review.sh`](run_review.sh) | Квалификация машины, хеш, образы до загрузки, шаги HANDOFF, `docker events`, запись памяти, вердикт |
+| [`prepare_wsl2.sh`](prepare_wsl2.sh) | Prerequisites в WSL2 (Docker Engine, Python 3.11); выполняется до проверки |
 
-Источники и их смысл:
+Вердикт `confirmed` требует одновременно:
+- машина прошла квалификацию, образы проекта отсутствовали до загрузки, хеш архива совпал;
+- `check` = 0; `rehearsal` = 2 при единственных непроверенных группах OPS-01 и OPS-02 и без проваленных;
+- `image` = 0; evidence checker без `failures` и `missing`;
+- контейнеров запуска не осталось;
+- demo `ok:true`, `crosscheck --live` = 0, `replay --check` = 0;
+- нет `image pull` и OOM kill, нет swap;
+- непрерывная запись памяти.
 
-| Показатель | Источник | Что означает |
-|---|---|---|
-| Память всей гостевой ОС | `/proc/meminfo` (MemTotal, MemFree, MemAvailable, Cached, Slab, Shmem, Swap…) | Ядро, кеш страниц, демоны, контейнеры. `used = MemTotal − MemAvailable`; отдельно `used с кешем = MemTotal − MemFree`. **Только сэмплы** |
-| Docker daemon и containerd | cgroup v2 `system.slice/docker.service`, `containerd.service`: `memory.current`, `memory.peak`; процессы `dockerd`, `containerd`, `containerd-shim*`: `VmRSS`, `VmHWM` | `memory.peak` и `VmHWM` — **непрерывные** пики ядра, но каждый только своей cgroup или процесса |
-| Контейнеры (отдельно) | `system.slice/docker-<id>.scope` или `/sys/fs/cgroup/docker/<id>`: `memory.current`, `memory.peak`, `memory.max`, `memory.events` | Пики контейнеров **не складываются** в память хоста |
-| OOM | `/proc/vmstat oom_kill` и `memory.events oom_kill` каждой cgroup | Любой прирост счётчика — OOM-событие |
-| Давление памяти | `/proc/pressure/memory` (PSI some/full avg10) | Признак нехватки до OOM |
-| Привязка к шагам | `phases.jsonl`: начало и конец каждого шага в `CLOCK_MONOTONIC`, общий для всех процессов | Пики по шагам: базовый простой 30 с, check, rehearsal, image, evidence checker, demo, crosscheck, replay |
-
-**Границы вывода** (они же записываются в каждую сводку):
-
-1. Пик памяти всей ОС **сэмплированный**: всплеск короче интервала может быть пропущен. Это не непрерывный максимум. Сводка указывает фактический интервал и максимальный разрыв между сэмплами; разрыв больше 10 интервалов переводит вердикт в «не проверено».
-2. `memory.peak` cgroup и `VmHWM` процесса — непрерывные максимумы, но разные cgroup достигают пика в разное время. Их **сумма не равна** памяти всего хоста и в отчёте не приводится.
-3. `memory.peak` контейнера пропадает вместе с его cgroup. Сохраняется последнее прочитанное значение, оно может быть ниже финального пика.
-4. MemTotal — взгляд гостевого ядра, он меньше RAM, выделенной гипервизором. Выделенный объём записывается из конфигурации гипервизора отдельно.
-5. Контейнерные лимиты RC3 (контроллер и sibling по 1536 MiB, суммарно 3 GiB) — ограничения, а не измерение машины.
-
-**Правило вердикта** `confirmed` требует одновременно:
-- машина прошла квалификацию (`qualification.json`);
-- образы проекта отсутствовали до загрузки;
-- хеш архива совпал;
-- `check` = 0, `rehearsal` = 2 и при этом единственные непроверенные группы — OPS-01 и OPS-02, без проваленных;
-- `image` = 0, evidence checker = 0 без `failures` и `missing`;
-- после запуска не осталось контейнеров с меткой этого запуска;
-- demo health `ok:true`, `crosscheck --live` = 0, `replay --check` = 0;
-- в событиях Docker нет `image pull`;
-- нет ни одного OOM kill, swap выключен, сэмплирование непрерывно.
-
-Любое отклонение кода — «провалено»; отсутствие шага или данных — «не проверено». Правило покрыто тестами `tests/runner/test_whole_host_tools.py`.
-
-## 3. Как выполнить проверку на подходящей машине
-
-**Машина:** отдельная VM или физический хост Linux x86_64.
-- 2 vCPU.
-- RAM не более 4 000 000 000 байт: это 3814 MiB или меньше, а не 4 GiB (4 294 967 296 B). Например, 3800 MiB = 3 984 588 800 B. Запишите выделенный объём из настроек гипервизора.
-- swap отключён: `sudo swapoff -a` и закомментированный swap в `/etc/fstab`; затем `swapon --show` должен быть пуст.
-- cgroup v2, Python 3.11, Docker Engine с доступом пользователя к `/var/run/docker.sock`.
-
-Всё это устанавливается **до** проверки, не во время неё. Чужие образы и контейнеры не удаляются.
+Повторить на любой подходящей машине (2 vCPU, RAM ≤ 4 000 000 000 B, swap off, Python 3.11, Docker Engine, cgroup v2):
 
 ```sh
 git clone https://github.com/Mustiks07/AuditLab && cd AuditLab && git switch review/whole-host-resources
 bash docs/reviews/whole-host-resources/run_review.sh --work ~/ops01 --download
-echo "exit=$?"     # 0 confirmed, 1 failed, 2 not_checked, 3 unqualified machine, 4 project images already present
+echo "exit=$?"   # 0 confirmed, 1 failed, 2 not_checked, 3 machine does not qualify, 4 project images already present
 ```
 
-Скрипт:
-1. записывает окружение и квалифицирует машину;
-2. скачивает ZIP и `SHA256SUMS`, проверяет оба хеша и распаковывает;
-3. проверяет отсутствие образов проекта по config ID, OCI digest и тегу;
-4. запускает сборщик и `docker events`;
-5. выполняет 30 с простоя, затем `check`, `verify --suite rehearsal`, `image --role runtime`, evidence checker, проверку контейнеров запуска, demo (`/demo/health`, `/demo/runs`), `crosscheck --live` и `replay --check`;
-6. останавливает только свой контейнер demo и выносит вердикт.
+Каталог [logs/2026-11-20-wsl2-unqualified/](logs/2026-11-20-wsl2-unqualified/) хранит первую попытку на той же машине до настройки VM (8 CPU, 7,9 GB, swap, без Docker и Python 3.11): `run_review.sh` вышел с кодом 3 до скачивания архива.
 
-Результаты: `~/ops01/review-<UTC>/`, в том числе `result.json`, `memory/summary.json`, `memory/table.md`, `steps/*.out`, `phases.jsonl`, `docker-events.log`. Каталоги верните в эту ветку как `logs/<дата>-<машина>/`, кроме архива и `bundle/images.tar`.
+## 6. Что остаётся
 
-**Вариант WSL2 на этой же машине** — допущение, которое должен принять интегратор:
-- В `%USERPROFILE%\.wslconfig` задаётся `[wsl2] processors=2, memory=3800MB, swap=0`, затем `wsl --shutdown`. Это меняет все дистрибутивы WSL пользователя.
-- Внутри Ubuntu нужно поставить Docker Engine и Python 3.11; для этого требуется пароль sudo.
-- WSL2 — VM Hyper-V со своим ядром, и лимит RAM применяется ко всей гостевой ОС. Но HANDOFF не заявляет Windows-хосты, а память WSL2 динамически возвращается Windows. Результат допустимо подписывать только как «WSL2 VM на Windows 11, 2 vCPU, N байт», не как «отдельный Linux-хост».
-
-## 4. Фактические результаты
-
-| Проверка | Результат |
-|---|---|
-| Квалификация доступной машины | 1 из 7 условий (x86_64); `run_review.sh` exit 3 |
-| Скачивание и хеш архива RC3 | не выполнялись (после неуспешной квалификации) |
-| check / rehearsal / evidence checker / demo / replay | не выполнялись |
-| Память всей гостевой ОС на RC3 | **не измерена** |
-| OOM-события на RC3 | **не измерены** |
-| Сборщик на реальном Linux (WSL2, без нагрузки RC3) | 14 сэмплов за 3,003 с при интервале 0,25 с, максимальный разрыв 0,251 с; MemTotal, пики cgroup `system.slice`/`user.slice` и счётчики OOM прочитаны; запись по шагу работает ([collector-smoke/](logs/2026-11-20-wsl2-unqualified/collector-smoke/)). Это проверка инструмента, не RC3 |
-| Тесты инструментов | `tests/runner/test_whole_host_tools.py`: 8/8 в Linux (WSL2, Python 3.14.4, включая живой сборщик); 7/7 + 1 «не проверено» на Windows |
-
-Дефектов RC3 не обнаружено, потому что RC3 не исполнялся. Утверждение «весь хост уложился в 4 GB» не делается.
-
-## 5. Воспроизведение проверки инструментов
-
-```sh
-python3 -m unittest discover -s tests/runner -p test_whole_host_tools.py -v
-python3 docs/reviews/whole-host-resources/collect_host_memory.py --out /tmp/m --interval 0.25 --max-seconds 3
-python3 docs/reviews/whole-host-resources/summarize_host_memory.py /tmp/m --markdown /tmp/m/table.md
-bash docs/reviews/whole-host-resources/run_review.sh --work /tmp/ops01-gate   # на неподходящей машине: exit 3
-```
+- **Отдельный Linux-хост или VM вне Windows:** не проверено. Сценарий готов, и результат на нём переводит OPS-01 без оговорки про WSL2.
+- **Память Windows-хоста, расходуемая на VM:** не измерена.
+- **OPS-02** (независимый человек по HANDOFF) и **официальный адаптер организаторов** этим отчётом не подтверждаются.

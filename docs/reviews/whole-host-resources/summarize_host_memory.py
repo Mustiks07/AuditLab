@@ -107,9 +107,15 @@ def summarize(meta: dict, samples: list[dict], phases: list[dict], limit: int = 
         for cid, figures in item.get("containers", {}).items():
             row = containers.setdefault(cid, {"first_t": item["t"], "last_t": item["t"], "samples": 0,
                                               "last_seen_continuous_peak_bytes": None,
-                                              "sampled_peak_current_bytes": None, "limit_bytes": figures.get("max"),
-                                              "oom_kill": 0})
+                                              "sampled_peak_current_bytes": None, "limit_bytes": None,
+                                              "samples_without_limit": 0, "oom_kill": 0})
             row["last_t"], row["samples"] = item["t"], row["samples"] + 1
+            # A new cgroup can be read before the runtime writes memory.max: keep the last limit seen and
+            # count unlimited readings instead of reporting the first reading as the container's limit.
+            if figures.get("max") is not None:
+                row["limit_bytes"] = figures["max"]
+            else:
+                row["samples_without_limit"] += 1
             if figures.get("peak") is not None:
                 row["last_seen_continuous_peak_bytes"] = max(row["last_seen_continuous_peak_bytes"] or 0, figures["peak"])
             if figures.get("current") is not None:
@@ -118,9 +124,13 @@ def summarize(meta: dict, samples: list[dict], phases: list[dict], limit: int = 
     daemons = {}
     for item in samples:
         for comm, row in item.get("processes", {}).items():
-            out = daemons.setdefault(comm, {"sampled_peak_rss_bytes": 0, "continuous_peak_rss_hwm_bytes": 0})
-            out["sampled_peak_rss_bytes"] = max(out["sampled_peak_rss_bytes"], row["rss"])
-            out["continuous_peak_rss_hwm_bytes"] = max(out["continuous_peak_rss_hwm_bytes"], row["hwm_max"])
+            out = daemons.setdefault(comm, {"max_processes": 0, "sampled_peak_rss_sum_bytes": 0,
+                                            "max_single_process_hwm_bytes": 0})
+            out["max_processes"] = max(out["max_processes"], row["count"])
+            # RSS summed over processes with that name at one sample (sampled);
+            out["sampled_peak_rss_sum_bytes"] = max(out["sampled_peak_rss_sum_bytes"], row["rss"])
+            # VmHWM is per process: the largest continuous peak of any ONE such process, never a group sum.
+            out["max_single_process_hwm_bytes"] = max(out["max_single_process_hwm_bytes"], row["hwm_max"])
     by_phase = []
     for phase in phases:
         inside = [s for s in samples if phase["start_t"] <= s["t"] <= phase["end_t"]]
@@ -172,7 +182,8 @@ def markdown(summary: dict) -> str:
             rows.append((f"{name}: memory.peak (непрерывный пик этой cgroup)", b(row["continuous_peak_bytes"]),
                          f"oom_kill +{row['oom_kill_delta']}"))
     for comm, row in sorted(summary["daemons"].items()):
-        rows.append((f"{comm}: VmHWM (непрерывный пик RSS процесса)", b(row["continuous_peak_rss_hwm_bytes"]), ""))
+        rows.append((f"{comm}: VmHWM (непрерывный пик RSS одного процесса)", b(row["max_single_process_hwm_bytes"]),
+                     f"процессов до {row['max_processes']}; сумма RSS sampled {b(row['sampled_peak_rss_sum_bytes'])}"))
     lines = ["| Показатель | Байт | Примечание |", "|---|---:|---|"]
     lines += [f"| {a} | {v} | {c} |" for a, v, c in rows]
     if summary["phases"]:
@@ -183,10 +194,11 @@ def markdown(summary: dict) -> str:
                          f"{b((phase['sampled_peak_used_including_cache'] or {}).get('bytes'))} |")
     if summary["containers"]:
         lines += ["", "Контейнеры (отдельно; их пики не складываются в память хоста):", "",
-                  "| Контейнер | Видим, с | Последний memory.peak | Лимит | oom_kill |", "|---|---:|---:|---:|---:|"]
+                  "| Контейнер | Видим, с | Последний memory.peak | Последний лимит | Сэмплов без лимита | oom_kill |",
+                  "|---|---:|---:|---:|---:|---:|"]
         for cid, row in sorted(summary["containers"].items(), key=lambda item: item[1]["first_t"]):
             lines.append(f"| {cid} | {row['first_t']}–{row['last_t']} | {b(row['last_seen_continuous_peak_bytes'])} | "
-                         f"{b(row['limit_bytes'])} | {row['oom_kill']} |")
+                         f"{b(row['limit_bytes'])} | {row['samples_without_limit']}/{row['samples']} | {row['oom_kill']} |")
     lines += ["", "Границы вывода:", ""] + [f"- {text}" for text in summary["limits_of_inference"]]
     return "\n".join(lines) + "\n"
 

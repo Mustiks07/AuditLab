@@ -1,0 +1,9 @@
+Windows host (outside the WSL2 VM)
+.wslconfig:
+[wsl2]
+processors=2
+memory=3800MB
+swap=0
+WSL 3.0.5.0; WSL kernel 6.18.58.1-1; Windows 10.0.26200.9974
+Host TotalPhysicalMemory: 16407719936 B; logical CPUs: 8
+Assigned to the VM by .wslconfig: memory=3800MB (3 984 588 800 B if MiB-based), processors=2, swap=0

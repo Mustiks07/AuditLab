@@ -1,0 +1,53 @@
+{
+  "format_version": "1.0",
+  "created_at": "2026-11-20T14:24:45.119010+00:00",
+  "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f",
+  "images": {
+    "runtime": {
+      "id": "sha256:48e53a677ee9162640aa88a6c56b1c916338ec31f71e7fb0f9002a81ffb9014f",
+      "tag": "auditlab-runtime:b7a1857a51bf",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 304961510,
+      "oci_manifest_digest": "sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b"
+    },
+    "verifier": {
+      "id": "sha256:0babfeed9363509c4fda28f17ee352794d46e4f337cb9ba726709816a5ec3ddd",
+      "tag": "auditlab-verifier:b7a1857a51bf",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 234908032,
+      "oci_manifest_digest": "sha256:1aa26e89b71861ec7358405165706ae3ad13b1d408d1b0ae0eb73d5b6bdea31f"
+    },
+    "policy": {
+      "id": "sha256:f7416647338f46390cc9a214551c1dfa812effac3ac8e2116bf1f5b7411cc830",
+      "tag": "auditlab-policy:b7a1857a51bf",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 130557825,
+      "oci_manifest_digest": "sha256:965008c64e516a07118cb526183e3e7e93f0e7cd457e006cb2bb21a2d24b68fe"
+    }
+  },
+  "files": {
+    "images.tar": {
+      "sha256": "8fbf579015212a34901c5bb44664cebc435f4531436bf180c4bd544042795cd3",
+      "size_bytes": 314739712
+    },
+    "source.tar.gz": {
+      "sha256": "c8c675d2d5b589df40a5784ef6191b1cbad1fdf6b012c9f58b31355e7c76ff4e",
+      "size_bytes": 9884405
+    },
+    "licenses.json": {
+      "sha256": "a9e5fb10aa851b3635be9bd658960c46b8347167167903428049ac2042b7ce4e",
+      "size_bytes": 5965685
+    },
+    "offline.py": {
+      "sha256": "471567dba32d55c431ff3b43faedfeb3ac46ea49e7080e01efdddb420ea8c803",
+      "size_bytes": 22180
+    }
+  },
+  "python_version": "3.11.14",
+  "requirements_lock_sha256": "0c8905f8f0c63070a979da1c5c5bdb7a9396d2d3aaa2305eaac1a4ab2a4a61e5",
+  "payload_size_bytes": 330611982,
+  "docker_version": "{\"Client\":{\"Platform\":{\"Name\":\"Docker Engine - Community\"},\"Version\":\"28.0.4\",\"ApiVersion\":\"1.48\",\"DefaultAPIVersion\":\"1.48\",\"GitCommit\":\"b8034c0\",\"GoVersion\":\"go1.23.7\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Mar 25 15:07:16 2025\",\"Context\":\"default\"},\"Server\":{\"Platform\":{\"Name\":\"Docker Engine - Community\"},\"Components\":[{\"Name\":\"Engine\",\"Version\":\"28.0.4\",\"Details\":{\"ApiVersion\":\"1.48\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Mar 25 15:07:16 2025\",\"Experimental\":\"false\",\"GitCommit\":\"6430e49\",\"GoVersion\":\"go1.23.7\",\"KernelVersion\":\"7.0.0-1014-aws\",\"MinAPIVersion\":\"1.24\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.4.2\",\"Details\":{\"GitCommit\":\"b7a25261e029d68978bbf290df0a62fc819b3c51\"}},{\"Name\":\"runc\",\"Version\":\"1.5.3\",\"Details\":{\"GitCommit\":\"v1.5.3-0-g46365c62\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"Version\":\"28.0.4\",\"ApiVersion\":\"1.48\",\"MinAPIVersion\":\"1.24\",\"GitCommit\":\"6430e49\",\"GoVersion\":\"go1.23.7\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"KernelVersion\":\"7.0.0-1014-aws\",\"BuildTime\":\"2025-03-25T15:07:16.000000000+00:00\"}}"
+}

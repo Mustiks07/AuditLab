@@ -1,0 +1,14 @@
+$ docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user 1000:1000 --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 1536m --memory-swap 1536m --pids-limit 256 --tmpfs /tmp:rw,size=64m --mount type=bind,src=/home/user/ops01/review-20261120T153901Z/bundle/demo-results,dst=/results sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b python -m auditlab.demo --root /results/demo crosscheck --live
+OK  0f03a9e32243   E651B6A63DDA2448A91DC825714D7732E  completed  шагов  10 выводов 2 ссылок  8 TP/FP/FN 2/0/0 награда 0.982  суммы: 20000.00 KZT; 12000.00 KZT
+    живой пересчёт 2026-11-20T15:54:42+00:00 (33.9 мс): 9 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+OK  8fa4c15a3cb0   S02                                completed  шагов   6 выводов 1 ссылок  4 TP/FP/FN 1/0/0 награда 0.99  суммы: 20000.00 KZT
+    живой пересчёт 2026-11-20T15:54:42+00:00 (2.7 мс): 5 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+OK  bcfeeebafd55   S01                                completed  шагов   6 выводов 0 ссылок  0 TP/FP/FN 0/0/0 награда 0.99
+    живой пересчёт 2026-11-20T15:54:42+00:00 (3.4 мс): 5 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+OK  bd0f37563e95   E04F4ED6D6765D816DF94C62477B6EC4C  completed  шагов  10 выводов 0 ссылок  0 TP/FP/FN 0/0/0 награда 0.982
+    живой пересчёт 2026-11-20T15:54:42+00:00 (8.6 мс): 9 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+OK  c13c3a138516   E6476455CA5F6F7CF4A34F78E68AD54C0  completed  шагов  10 выводов 1 ссылок  4 TP/FP/FN 1/0/0 награда 0.982  суммы: 12000.00 KZT
+    живой пересчёт 2026-11-20T15:54:42+00:00 (9.3 мс): 9 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+OK  d4ec4cbc80ac   FX01                               completed  шагов   6 выводов 0 ссылок  0 TP/FP/FN 0/0/0 награда 0.99
+    живой пересчёт 2026-11-20T15:54:42+00:00 (4.5 мс): 5 действий через auditlab.environment — наблюдения совпали; оценка auditlab.evaluator: совпала
+Проверено запусков: 6; расхождений: 0.
