@@ -173,14 +173,255 @@ PYCODE
 
 Критерий OPS-02 в SPEC §14 требует приложить результаты обязательных политик на открытых наборах
 `datasets/open/train` и `datasets/open/dev` (по 10 компаний). Репетиция §4 их не включает: в ней 20 внутренних
-снимков. Наборы лежат внутри runtime-образа. Команда ниже использует только поставленные образы. Каждая
-обычная политика запускается в отдельном контейнере без сети, как в `verify`. Выполняйте после шага 2 или 3,
-когда образы загружены.
+снимков. Наборы лежат внутри runtime-образа. Каждая обычная политика запускается в отдельном контейнере без
+сети, как в `verify`. Выполняйте после шага 2 или 3, когда образы загружены.
+
+Всё делает один инструмент `open_sets.py` на стандартной библиотеке. Он записывает по каждой попытке код
+возврата, разобранный ответ или ошибку разбора, а затем строго проверяет полноту результатов.
+
+**Где взять инструмент.** В комплектах, собранных после этого изменения, он лежит в исходниках:
+
+```sh
+mkdir -p source && tar -xzf source.tar.gz -C source
+cp source/auditlab/demo/open_sets.py open_sets.py
+```
+
+В опубликованном `v0.1.0-rc.3` его нет. Для RC3 создайте файл командой ниже: это тот же текст, байт в байт,
+что проверяет тест репозитория. Сам архив RC3 при этом не меняется.
+
+```sh
+cat > open_sets.py <<'OPEN_SETS_PY'
+"""Mandatory policies on the open train/dev sets for the receiver (OPS-02), with a strict summary.
+
+Standard library only. The same file works with an unchanged v0.1.0-rc.3 bundle (copy it from
+docs/demo/HANDOFF.md, section 5a) and with later bundles (``source/auditlab/demo/open_sets.py``).
+
+Inside the runtime image (policies run as sibling containers without network, like ``verify``)::
+
+    python - run --policy-image IMAGE --results /results < open_sets.py > summary.jsonl
+
+On the host::
+
+    python3.11 -I open_sets.py summarize summary.jsonl --datasets source/datasets/open --output open-sets.json
+
+``run`` records, for every attempt, the child return code, the parsed final JSON line or the parse
+error, and bounded stderr. It never invents a result. ``summarize`` accepts the run as complete only
+when every expected (split, episode, policy) appears exactly once, the child exited with 0, the
+status is ``submitted`` and score/reward are present. Otherwise the overall metrics of the affected
+policy are ``null`` ("не проверено"), the measured part is reported separately with its denominator,
+and the exit code is not 0: 1 for failed or malformed attempts, 2 for missing attempts only.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+SPLITS = ("train", "dev")
+POLICIES = ("random", "reconcile", "flag_all", "oracle")
+EPISODES_PER_SPLIT = 10
+TAIL = 2000
+
+
+# ----------------------------------------------------------------------------- run
+def attempt_command(split: str, episode: str, policy: str, image: str, results: str) -> list[str]:
+    snapshot = f"datasets/open/{split}/{episode}"
+    command = [sys.executable, "-m", "auditlab.runner"]
+    if policy == "oracle":
+        command += ["oracle", "--snapshot", snapshot]
+    else:
+        command += ["policy", "--snapshot", snapshot, "--name", policy, "--image", image]
+    return command + ["--mode", "closed", "--trusted-dir", f"{results}/attempts/{split}/{episode}/{policy}"]
+
+
+def record(split: str, episode: str, policy: str, returncode: int, stdout: str, stderr: str) -> dict:
+    """One attempt as observed: the result is the last JSON line of stdout, or null with the parse error."""
+    lines = [line for line in stdout.splitlines() if line.strip()]
+    result, parse_error = None, None
+    if not lines:
+        parse_error = "no output"
+    else:
+        try:
+            result = json.loads(lines[-1])
+        except ValueError as error:
+            parse_error = f"last stdout line is not JSON: {error}"
+        else:
+            if not isinstance(result, dict):
+                result, parse_error = None, "last stdout line is not a JSON object"
+    return {"split": split, "episode": episode, "policy": policy, "returncode": returncode,
+            "result": result, "parse_error": parse_error, "stderr_tail": stderr[-TAIL:]}
+
+
+def run(image: str, results: str, root: Path) -> int:
+    failed = 0
+    for split in SPLITS:
+        for episode in sorted(os.listdir(root / split)):
+            for policy in POLICIES:
+                try:
+                    done = subprocess.run(attempt_command(split, episode, policy, image, results),
+                                          capture_output=True, text=True, timeout=300)
+                    row = record(split, episode, policy, done.returncode, done.stdout, done.stderr)
+                except (OSError, subprocess.SubprocessError) as error:
+                    row = record(split, episode, policy, -1, "", f"{type(error).__name__}: {error}")
+                failed += row["returncode"] != 0 or row["result"] is None
+                print(json.dumps(row, ensure_ascii=False), flush=True)
+    return 1 if failed else 0
+
+
+# ----------------------------------------------------------------------- summarize
+def attempt_problem(row: dict) -> str | None:
+    if row.get("returncode") != 0:
+        return f"процесс завершился с кодом {row.get('returncode')}"
+    if row.get("parse_error"):
+        return f"ответ не разобран: {row['parse_error']}"
+    result = row.get("result")
+    if not isinstance(result, dict):
+        return "нет результата"
+    if result.get("status") != "submitted":
+        return f"статус {result.get('status')!r}, а не submitted"
+    score = result.get("score")
+    if not isinstance(score, dict) or any(type(score.get(k)) is not int for k in ("tp", "fp", "fn")):
+        return "нет score с целыми tp/fp/fn"
+    if type(result.get("reward")) not in (int, float):
+        return "нет reward"
+    return None
+
+
+def expected_episodes(datasets: Path | None) -> dict[str, list[str]] | None:
+    if datasets is None:
+        return None
+    return {split: sorted(p.name for p in (datasets / split).iterdir() if p.is_dir()) for split in SPLITS}
+
+
+def summarize(lines: list[str], expected: dict[str, list[str]] | None = None) -> dict:
+    problems: list[str] = []
+    malformed = False  # unreadable, empty, duplicated or unexpected rows: an error, not just a gap
+    rows: dict[tuple, dict] = {}
+    duplicated: set[tuple] = set()
+    if not any(line.strip() for line in lines):
+        problems.append("файл результатов пуст")
+        malformed = True
+    for number, line in enumerate(lines, start=1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+            key = (row["split"], row["episode"], row["policy"])
+        except (ValueError, TypeError, KeyError) as error:
+            problems.append(f"строка {number} не разобрана: {type(error).__name__}")
+            malformed = True
+            continue
+        if key in rows:
+            duplicated.add(key)
+            malformed = True
+            problems.append(f"повтор строки {'/'.join(key)}")
+            continue
+        rows[key] = row
+
+    seen = {split: sorted({k[1] for k in rows if k[0] == split}) for split in SPLITS}
+    episodes = expected or seen
+    for split in SPLITS:
+        if expected is None and len(seen[split]) != EPISODES_PER_SPLIT:
+            problems.append(f"{split}: компаний {len(seen[split])}, ожидается {EPISODES_PER_SPLIT}")
+        if expected is not None and len(expected[split]) != EPISODES_PER_SPLIT:
+            problems.append(f"{split}: в наборе данных {len(expected[split])} компаний, ожидается {EPISODES_PER_SPLIT}")
+            malformed = True
+    for key in sorted(rows):
+        if key[0] not in SPLITS or key[2] not in POLICIES or key[1] not in episodes.get(key[0], []):
+            problems.append(f"неожиданная строка {'/'.join(key)}")
+            malformed = True
+
+    policies, failed_any, missing_any = {}, False, False
+    for split in SPLITS:
+        for policy in POLICIES:
+            planned = len(episodes[split])
+            measured, failures, missing = [], [], []
+            for episode in episodes[split]:
+                key = (split, episode, policy)
+                if key in duplicated:
+                    failures.append({"episode": episode, "problem": "повтор строки: результат неоднозначен"})
+                elif key not in rows:
+                    missing.append(episode)
+                else:
+                    problem = attempt_problem(rows[key])
+                    if problem:
+                        failures.append({"episode": episode, "problem": problem})
+                    else:
+                        measured.append(rows[key]["result"])
+            failed_any |= bool(failures)
+            missing_any |= bool(missing)
+            part = None
+            if measured:
+                part = {"measured": len(measured), "planned": planned,
+                        "tp": sum(r["score"]["tp"] for r in measured),
+                        "fp": sum(r["score"]["fp"] for r in measured),
+                        "fn": sum(r["score"]["fn"] for r in measured),
+                        "mean_reward": round(sum(r["reward"] for r in measured) / len(measured), 6)}
+            complete = len(measured) == planned == EPISODES_PER_SPLIT and not failures and not missing
+            policies[f"{split}/{policy}"] = {
+                "planned": planned, "measured": len(measured), "failed": failures, "missing": missing,
+                "status": "complete" if complete else "не проверено",
+                "micro": {k: part[k] for k in ("tp", "fp", "fn")} if complete else None,
+                "mean_reward": part["mean_reward"] if complete else None,
+                "measured_only": None if complete else part,
+            }
+    ok = not problems and not failed_any and not missing_any
+    exit_code = 0 if ok else 1 if (failed_any or malformed) else 2
+    return {"status": "complete" if ok else "не проверено", "exit_code": exit_code,
+            "expected_attempts": sum(len(v) for v in episodes.values()) * len(POLICIES),
+            "rows": len(rows), "problems": problems, "policies": policies,
+            "scope": "Internal diagnostics on the open train/dev sets; not a contest score."}
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="open_sets.py", description=__doc__.split("\n")[0])
+    sub = parser.add_subparsers(dest="command", required=True)
+    r = sub.add_parser("run", help="inside the runtime image: run 4 policies on 10 train + 10 dev")
+    r.add_argument("--policy-image", required=True)
+    r.add_argument("--results", default="/results")
+    r.add_argument("--datasets", type=Path, default=Path("datasets/open"))
+    s = sub.add_parser("summarize", help="on the host: strict summary of the JSONL written by run")
+    s.add_argument("file", type=Path)
+    s.add_argument("--datasets", type=Path, default=None,
+                   help="datasets/open of the bundle sources: the exact expected episode IDs")
+    s.add_argument("--output", type=Path, default=None)
+    args = parser.parse_args(argv)
+    if args.command == "run":
+        return run(args.policy_image, args.results, args.datasets)
+    lines = args.file.read_text(encoding="utf-8").splitlines() if args.file.exists() else []
+    report = summarize(lines, expected_episodes(args.datasets))
+    if args.output:
+        args.output.write_text(json.dumps(report, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    for name, row in report["policies"].items():
+        if row["status"] == "complete":
+            print(f"{name:<18} {row['measured']}/{row['planned']} TP/FP/FN {row['micro']['tp']}/{row['micro']['fp']}/"
+                  f"{row['micro']['fn']} mean_reward {row['mean_reward']}")
+        else:
+            part = row["measured_only"]
+            measured = (f"измерено {part['measured']}/{part['planned']}: TP/FP/FN {part['tp']}/{part['fp']}/{part['fn']}, "
+                        f"среднее по измеренным {part['mean_reward']}") if part else "измерений нет"
+            print(f"{name:<18} НЕ ПРОВЕРЕНО: mean_reward null; {measured}; ошибок {len(row['failed'])}, "
+                  f"пропусков {len(row['missing'])}")
+    for problem in report["problems"]:
+        print(f"проблема: {problem}")
+    print(f"status: {report['status']}, exit {report['exit_code']}")
+    return report["exit_code"]
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+OPEN_SETS_PY
+```
+
+**Запуск** в поставленном runtime-образе, результаты в новом каталоге `open-results`:
 
 ```sh
 AUDITLAB_RUNTIME_IMAGE=$(python3.11 offline.py image --role runtime)
 AUDITLAB_POLICY_IMAGE=$(python3.11 offline.py image --role policy)
-mkdir -p open-results
+mkdir open-results
 ```
 
 ```sh
@@ -190,43 +431,36 @@ docker --host unix:///var/run/docker.sock run -i --rm --pull never --network non
   --tmpfs /tmp:rw,nosuid,size=1g \
   --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   --mount "type=bind,src=$(pwd)/open-results,dst=/results" \
-  "$AUDITLAB_RUNTIME_IMAGE" python - "$AUDITLAB_POLICY_IMAGE" > open-results/summary.jsonl <<'PYLOOP'
-import json, os, subprocess, sys
-image = sys.argv[1]
-for split in ("train", "dev"):
-    for episode in sorted(os.listdir(f"datasets/open/{split}")):
-        snapshot = f"datasets/open/{split}/{episode}"
-        for policy in ("random", "reconcile", "flag_all", "oracle"):
-            command = [sys.executable, "-m", "auditlab.runner"]
-            command += (["oracle", "--snapshot", snapshot] if policy == "oracle" else
-                        ["policy", "--snapshot", snapshot, "--name", policy, "--image", image])
-            command += ["--mode", "closed", "--trusted-dir", f"/results/{split}/{episode}/{policy}"]
-            done = subprocess.run(command, capture_output=True, text=True)
-            lines = done.stdout.strip().splitlines()
-            result = json.loads(lines[-1]) if lines else {"status": "no_output", "exit": done.returncode}
-            print(json.dumps({"split": split, "episode": episode, "policy": policy, "result": result}), flush=True)
-PYLOOP
+  "$AUDITLAB_RUNTIME_IMAGE" python - run --policy-image "$AUDITLAB_POLICY_IMAGE" --results /results \
+  < open_sets.py > open-results/summary.jsonl
+echo "run exit=$?"
 ```
 
-Сводка (стандартная библиотека Python на хосте):
+**Сводка** на хосте. Ожидаемые ID компаний берутся из исходников комплекта; распакуйте `source.tar.gz`, если
+ещё не сделали этого для evidence checker:
 
 ```sh
-python3.11 - open-results/summary.jsonl <<'PYCODE'
-import collections, json, sys
-total = collections.defaultdict(lambda: [0, 0, 0, 0, 0.0, collections.Counter()])
-for line in open(sys.argv[1], encoding="utf-8"):
-    row = json.loads(line); result = row["result"]; score = result.get("score") or {}
-    t = total[(row["split"], row["policy"])]
-    t[0] += 1; t[1] += score.get("tp", 0); t[2] += score.get("fp", 0); t[3] += score.get("fn", 0)
-    t[4] += result.get("reward") or 0; t[5][result.get("status")] += 1
-for (split, policy), (n, tp, fp, fn, reward, status) in sorted(total.items()):
-    print(split, policy, "n:", n, "status:", dict(status), "TP/FP/FN:", tp, fp, fn,
-          "mean_reward:", round(reward / n, 4))
-PYCODE
+mkdir -p source && tar -xzf source.tar.gz -C source
+python3.11 -I open_sets.py summarize open-results/summary.jsonl --datasets source/datasets/open \
+  --output open-results/open-sets.json
+echo "summarize exit=$?"
 ```
 
-Ожидается 80 строк, у каждой `status = submitted`. Агентская проверка RC3 получила следующее (TP / FP / FN
-и средняя награда; внутренняя диагностика открытых наборов, не конкурсный балл):
+Сводка принимает запуск, только если каждая из 2 × 10 × 4 = 80 ожидаемых попыток встречается ровно один
+раз. Для каждой попытки нужны: код возврата 0, статус `submitted`, целые `tp`/`fp`/`fn` и `reward`.
+
+**Коды `summarize`:**
+- **0** — всё полно.
+- **1** — есть упавшая или неразобранная попытка, отсутствующий score/reward, повторная или неожиданная
+  строка, пустой файл.
+- **2** — недостаёт попыток.
+
+При любом коде, кроме 0, `mean_reward` и `micro` затронутой политики равны `null` («не проверено»).
+Измеренная часть показывается отдельно в `measured_only` с числом измеренных и запланированных попыток.
+Это не замена полного результата.
+
+Ожидается `status: complete`, exit 0 у обеих команд. Агентская проверка RC3 получила следующее. Это
+TP / FP / FN и средняя награда; внутренняя диагностика открытых наборов, не конкурсный балл:
 
 | Набор | random | reconcile | flag_all | oracle |
 |---|---|---|---|---|

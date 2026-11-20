@@ -27,7 +27,7 @@
 | 5 | `python3.11 offline.py verify --suite rehearsal --output-root ./results` | | | снимков/попыток/пар = ? |
 | 6 | evidence checker | | | status = ?, failures = ?, missing = ? |
 | 7 | `python3.11 offline.py image --role runtime` | | | |
-| 8 | 10 train + 10 dev (HANDOFF §5а) | | | reconcile TP/FP/FN train = ?, dev = ? |
+| 8 | 10 train + 10 dev (HANDOFF §5а): `run`, затем `summarize` | | | status = ?, exit `summarize` = ?; reconcile TP/FP/FN train = ?, dev = ? |
 | 9 | Прерывание `verify` (каким сигналом?) | | | `launch.json`: status, cleanup |
 | 10 | Повторный `verify` после прерывания | | | новый каталог? |
 | 11 | Запуск демо и `/demo/health` | | | runs = ? |

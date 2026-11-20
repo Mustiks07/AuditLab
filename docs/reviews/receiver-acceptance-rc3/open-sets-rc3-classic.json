@@ -1,0 +1,122 @@
+{
+ "status": "complete",
+ "exit_code": 0,
+ "expected_attempts": 80,
+ "rows": 80,
+ "problems": [],
+ "policies": {
+  "train/random": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 0,
+    "fp": 10,
+    "fn": 11
+   },
+   "mean_reward": -1.0,
+   "measured_only": null
+  },
+  "train/reconcile": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 11,
+    "fp": 0,
+    "fn": 0
+   },
+   "mean_reward": 0.982,
+   "measured_only": null
+  },
+  "train/flag_all": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 0,
+    "fp": 300,
+    "fn": 11
+   },
+   "mean_reward": -1.0,
+   "measured_only": null
+  },
+  "train/oracle": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 11,
+    "fp": 0,
+    "fn": 0
+   },
+   "mean_reward": 1.0,
+   "measured_only": null
+  },
+  "dev/random": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 0,
+    "fp": 10,
+    "fn": 11
+   },
+   "mean_reward": -1.0,
+   "measured_only": null
+  },
+  "dev/reconcile": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 11,
+    "fp": 0,
+    "fn": 0
+   },
+   "mean_reward": 0.982,
+   "measured_only": null
+  },
+  "dev/flag_all": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 0,
+    "fp": 300,
+    "fn": 11
+   },
+   "mean_reward": -1.0,
+   "measured_only": null
+  },
+  "dev/oracle": {
+   "planned": 10,
+   "measured": 10,
+   "failed": [],
+   "missing": [],
+   "status": "complete",
+   "micro": {
+    "tp": 11,
+    "fp": 0,
+    "fn": 0
+   },
+   "mean_reward": 1.0,
+   "measured_only": null
+  }
+ },
+ "scope": "Internal diagnostics on the open train/dev sets; not a contest score."
+}
