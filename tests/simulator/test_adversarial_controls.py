@@ -80,12 +80,19 @@ class AdversarialControlTests(unittest.TestCase):
                                         and datetime.fromisoformat(row["timestamp"]) >= end]
                         self.assertTrue(any(datetime.fromisoformat(invoices[r["invoice_id"]]["issued_at"]) >= end
                                             for r in recognitions))
+                        self.assertTrue(any(r["timestamp"] != invoices[r["invoice_id"]]["issued_at"]
+                                            and datetime.fromisoformat(invoices[r["invoice_id"]]["issued_at"]) >= end
+                                            for r in recognitions))
                         self.assertEqual(sum(datetime.fromisoformat(invoices[r["invoice_id"]]["issued_at"]) < end
                                              for r in recognitions), faults)
                         foreign = [i for i in invoices.values() if i["currency"] != manifest["base_currency"]
                                    and end - timedelta(days=1) <= datetime.fromisoformat(i["issued_at"]) < end]
                         self.assertEqual(len(foreign), 2)
                         foreign_keys = {i["invoice_id"] for i in foreign}
+                        self.assertTrue(any(r["invoice_id"] in foreign_keys and r["account"] == "AR"
+                                            and r["debit_minor"] and datetime.fromisoformat(r["timestamp"]) < end
+                                            and r["timestamp"] != invoices[r["invoice_id"]]["issued_at"]
+                                            for r in ledger))
                         self.assertEqual(sum(r["invoice_id"] in foreign_keys for r in recognitions),
                                          faults if interaction else 0)
                         self.assert_findings(root, "period_cutoff", faults)
