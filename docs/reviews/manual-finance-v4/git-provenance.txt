@@ -1,0 +1,15 @@
+commit 2887887933582f1115c3bee14ab698f883c1ffe3
+Author:     jegrud <214578960+jegrud@users.noreply.github.com>
+AuthorDate: Fri Nov 20 17:41:33 2026 +0500
+Commit:     jegrud <214578960+jegrud@users.noreply.github.com>
+CommitDate: Fri Nov 20 17:41:33 2026 +0500
+
+    Review v4: comparison after truth, reconcile and verifier runs, episode hashes
+
+commit e2fca1ab4a0531906f6d5ca87a230744051be186
+Author:     jegrud <214578960+jegrud@users.noreply.github.com>
+AuthorDate: Fri Nov 20 17:39:37 2026 +0500
+Commit:     jegrud <214578960+jegrud@users.noreply.github.com>
+CommitDate: Fri Nov 20 17:39:37 2026 +0500
+
+    Review v4: public-only answer for 7 cases on generator 1.4 (a301b16), frozen before truth

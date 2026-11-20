@@ -20,6 +20,7 @@ FROM dependencies AS runtime
 COPY --from=docker_cli /usr/local/bin/docker /usr/local/bin/docker
 COPY auditlab /app/auditlab
 COPY sql /app/sql
+COPY schemas /app/schemas
 COPY tests /app/tests
 COPY fixtures /app/fixtures
 COPY datasets /app/datasets

@@ -1,0 +1,292 @@
+{
+ "note": "Manual calculation from public/ only (main 461a11e0dd28824eb1483930788447a1df33a835, generator 1.3, profile 1.1). Written before any private/truth.json was opened. No generator or verifier code used for the answers; Python only as a display/calculator. IDs abbreviated to unique prefixes here, expanded mechanically by expand.py from the same public files. Amounts in minor units.",
+ "cases": {
+  "C1-clean-refund": {
+   "findings": [],
+   "arithmetic": [
+    "KZT invoice 5400000 paid by 2160000 + 3240000 = 5400000; each UNAPPLIED balance 0",
+    "USD invoice 7400 paid 7400, applied 4440 + 2960; balance 0",
+    "payment valuation: local date 2026-11-21 (10:16Z = 15:16 +05), 74.00 x 506.25 = 37462.50 KZT = 3746250 = recorded",
+    "unassigned KZT deposit 600000 refunded (debit UNAPPLIED / credit CASH) 2026-11-06; balance 0",
+    "KZT invoice 1646900 issued and recognised 2026-11-30"
+   ]
+  },
+  "C2-partial-allocation": {
+   "findings": [
+    {
+     "type": "payment_allocation",
+     "affected_ids": [
+      "invoice/I5FCB76057475D8259860EB6B",
+      "payment/P4700E4C29FE57D0C3B409D50"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D8CC8339DB5AB78D03D7C1EB7",
+      "ledger/R383BC1B132DED1FD6D822DB6",
+      "ledger/R8ED06150B03018A429EADA55",
+      "policy/allocation"
+     ],
+     "arithmetic": "5000000 - 3000000 = 2000000; last 2000000 applied 2026-12-01T00:01+05 (after boundary)"
+    }
+   ]
+  },
+  "C3a-boundary-before": {
+   "findings": [],
+   "arithmetic": [
+    "5000000 - 3000000 - 2000000 (2026-11-30T23:59+05) = 0"
+   ]
+  },
+  "C3b-boundary-at": {
+   "findings": [
+    {
+     "type": "payment_allocation",
+     "affected_ids": [
+      "invoice/I616B3CE1915F22BD3ABFA507",
+      "payment/P9BCB58790CB3F82255710B71"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/DC3B075F85D5C96AC8B7B3963",
+      "ledger/R94047261EA323B89F2EDB3C2",
+      "ledger/RA033442996A3663724220E29",
+      "policy/allocation"
+     ],
+     "arithmetic": "settlement at exactly 2026-12-01T00:00:00+05 is outside [start, end): 5000000 - 3000000 = 2000000"
+    }
+   ]
+  },
+  "C4-interaction-a": {
+   "findings": [
+    {
+     "type": "payment_allocation",
+     "affected_ids": [
+      "invoice/IDD4FD588DB0125C32C495705",
+      "payment/P620E9924D78902ED0775FA9D"
+     ],
+     "claimed_amount_minor": 1480,
+     "currency": "USD",
+     "evidence_ids": [
+      "payments/D2CE360CDD7C427086F030CE3",
+      "ledger/R0C86090C53B981C9F4C11665",
+      "ledger/R0082D16BDB4A4D7B718B9EA8",
+      "policy/allocation"
+     ],
+     "arithmetic": "3700 - 2220 = 1480 USD cents; 1480 applied 2026-12-01T00:01+05"
+    },
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "payment/P620E9924D78902ED0775FA9D"
+     ],
+     "claimed_amount_minor": 925,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D2CE360CDD7C427086F030CE3",
+      "fx/2026-11-10/USD/KZT",
+      "policy/fx_date",
+      "ledger/R55955D3B3889C174948A8F53"
+     ],
+     "arithmetic": "local date 2026-11-10, 37.00 x 503.50 = 18629.50 KZT = 1862950; recorded 1863875 (= rate 503.75 of 2026-11-11); |diff| 925"
+    }
+   ]
+  },
+  "C5-interaction-b": {
+   "findings": [
+    {
+     "type": "period_cutoff",
+     "affected_ids": [
+      "invoice/IF949E00CD51B203E1D60EF1E"
+     ],
+     "claimed_amount_minor": 4600,
+     "currency": "USD",
+     "evidence_ids": [
+      "invoices/D1F56BA51ED559EE7A7D9F626",
+      "ledger/R33993D295B4812F5BD78FE6B",
+      "policy/period"
+     ],
+     "arithmetic": "issued 2026-11-30T10:27+05 (November), recognised 2026-12-01T13:33+05 (December); nominal 4600 USD cents"
+    },
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "invoice/IF949E00CD51B203E1D60EF1E"
+     ],
+     "claimed_amount_minor": 1150,
+     "currency": "KZT",
+     "evidence_ids": [
+      "invoices/D1F56BA51ED559EE7A7D9F626",
+      "fx/2026-11-30/USD/KZT",
+      "policy/fx_date",
+      "ledger/R2CCED4C3617FAE167426BFBE"
+     ],
+     "arithmetic": "invoice local date 2026-11-30, 46.00 x 500.75 = 23034.50 KZT = 2303450; recorded 2304600 (= 501.00 of 2026-12-01); |diff| 1150"
+    }
+   ]
+  },
+  "C6a-jpy-base-kwd": {
+   "findings": [
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "payment/P1B5686A54C708EAD43A70BD9"
+     ],
+     "claimed_amount_minor": 48,
+     "currency": "JPY",
+     "evidence_ids": [
+      "payments/D83712B3252893FAA27BCB414",
+      "fx/2026-11-11/KWD/JPY",
+      "policy/fx_date",
+      "ledger/R17B67D8604C650207E02DEBA"
+     ],
+     "arithmetic": "KWD exp 3, JPY exp 0: local date 2026-11-11 (08:33Z = 13:33 +05), 96.010 x 8.55 = 820.8855 -> 821 JPY; recorded 869 (= 9.05 of 2026-11-12: 868.8905 -> 869); |diff| 48"
+    },
+    {
+     "type": "duplicate_invoice",
+     "affected_ids": [
+      "invoice/I554D5494CD9F56034EAD8ED9"
+     ],
+     "claimed_amount_minor": 20375,
+     "currency": "JPY",
+     "evidence_ids": [
+      "invoices/D653F902FA3D8FE942389D9DD",
+      "invoices/D153C6EDE6976D0B9FCBC2734",
+      "ledger/R2D48E7AAAC6EAB8DFFE44035",
+      "ledger/R8A6F38FBC8A3CFBE9E38743D"
+     ],
+     "arithmetic": "two documents of one invoice I554D (same entity, total 20375, issue time) recognised twice (J9EE2, J04D8): 40750 - 20375 = 20375 JPY"
+    }
+   ],
+   "notes": [
+    "KWD payment 96010 applied 57606 + 38404 = 96010: clean"
+   ]
+  },
+  "C6b-kwd-base-jpy": {
+   "findings": [
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "payment/P72961AB062418D2C29CDFDCF"
+     ],
+     "claimed_amount_minor": 705,
+     "currency": "KWD",
+     "evidence_ids": [
+      "payments/D23D1B309770453ABE2D6EFD9",
+      "fx/2026-11-04/JPY/KWD",
+      "policy/fx_date",
+      "ledger/R5F635A1F741B92309D07BEF2"
+     ],
+     "arithmetic": "JPY exp 0, KWD exp 3: local date 2026-11-04, 141 x 1.090 = 153.690 KWD = 153690; recorded 154395 (= 1.095 of 2026-11-05); |diff| 705"
+    },
+    {
+     "type": "period_cutoff",
+     "affected_ids": [
+      "invoice/I31CCD49C04B6BA0FB3C580C3"
+     ],
+     "claimed_amount_minor": 69044000,
+     "currency": "KWD",
+     "evidence_ids": [
+      "invoices/DB9F4F75B3F9A1A54D5ABF67D",
+      "ledger/RB6D6F1088AFD0EEAEC91233E",
+      "policy/period"
+     ],
+     "arithmetic": "issued 2026-11-30T11:56+05, recognised 2026-12-01T12:04+05; nominal 69044000 fils"
+    }
+   ],
+   "notes": [
+    "JPY payment 141 applied 84 + 57 = 141: clean"
+   ]
+  },
+  "C7a-dst-berlin-oct": {
+   "findings": [
+    {
+     "type": "payment_allocation",
+     "affected_ids": [
+      "invoice/I9C603F82BCA7F47AA3AADFAF",
+      "payment/PA293796A0BBFCADEF5791764"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "EUR",
+     "evidence_ids": [
+      "payments/D8CFFD4E6A08A17F020F9CAD7",
+      "ledger/R61204DAAD45AAC5D90C0A235",
+      "ledger/RE19AA3C5E953099783DF60E0",
+      "policy/allocation"
+     ],
+     "arithmetic": "period [2026-10-01T00:00+02, 2026-11-01T00:00+01) across DST end 2026-10-25; settlement at exactly 2026-11-01T00:00+01 excluded: 5000000 - 3000000 = 2000000"
+    },
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "payment/P3F5B7FDE9F24C371FB1A7EF8"
+     ],
+     "claimed_amount_minor": 4000,
+     "currency": "EUR",
+     "evidence_ids": [
+      "payments/D1D93CD57398057CB271E8CE6",
+      "fx/2026-10-17/USD/EUR",
+      "policy/fx_date",
+      "ledger/R7DD23577F98E03E1C18A357B"
+     ],
+     "arithmetic": "12:58Z = 14:58 CEST, local date 2026-10-17, 160.00 x 6.30 = 1008.00 EUR = 100800; recorded 104800 (= 6.55 of 2026-10-18); |diff| 4000"
+    },
+    {
+     "type": "period_cutoff",
+     "affected_ids": [
+      "invoice/IF5C22537C8902321A256CB6B"
+     ],
+     "claimed_amount_minor": 6227500,
+     "currency": "EUR",
+     "evidence_ids": [
+      "invoices/DD84E526BC422788394C53D54",
+      "ledger/RC695057A9A222D563F5D8C21",
+      "policy/period"
+     ],
+     "arithmetic": "issued 2026-10-31T08:54+01 (CET, after DST end), recognised 2026-11-01T15:06+01; nominal 6227500"
+    }
+   ],
+   "notes": [
+    "USD invoice/payment 16000 applied 9600 + 6400: clean allocation"
+   ]
+  },
+  "C7b-dst-newyork-mar": {
+   "findings": [
+    {
+     "type": "fx_conversion",
+     "affected_ids": [
+      "payment/P84A39CAEF8F1D36EA5F2CDDE"
+     ],
+     "claimed_amount_minor": 156,
+     "currency": "USD",
+     "evidence_ids": [
+      "payments/D4742E18FEF6C9831DA57242D",
+      "fx/2026-03-17/EUR/USD",
+      "policy/fx_date",
+      "ledger/R66124ACE477DC488F2BD6613"
+     ],
+     "arithmetic": "period [2026-03-01T00:00-05, 2026-04-01T00:00-04) across DST start 2026-03-08; 20:54Z = 16:54 EDT, local date 2026-03-17, 156.00 x 1.29 = 201.24 USD = 20124; recorded 20280 (= 1.30 of 2026-03-18); |diff| 156"
+    },
+    {
+     "type": "period_cutoff",
+     "affected_ids": [
+      "invoice/I1943E6256EB1459B76DAA7F1"
+     ],
+     "claimed_amount_minor": 3168500,
+     "currency": "USD",
+     "evidence_ids": [
+      "invoices/DDBB8D3332B18DD52448A1A05",
+      "ledger/R03DA8A69E285A1D7A5D1EE97",
+      "policy/period"
+     ],
+     "arithmetic": "issued 2026-03-31T12:53-04, recognised 2026-04-01T11:07-04; nominal 3168500"
+    }
+   ],
+   "notes": [
+    "EUR payment 10800 valued at 1.15 (2026-03-03) = 12420 = recorded: clean",
+    "unassigned USD deposit 500000 refunded 2026-03-12: clean",
+    "USD invoice 5122600 issued and recognised 2026-03-31: clean"
+   ]
+  }
+ }
+}
