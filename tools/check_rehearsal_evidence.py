@@ -12,7 +12,7 @@ from offline import verify_bundle
 
 SUITES = {"foundation", "integration", "simulator", "evaluator", "runner", "verifier", "metamorphic", "demo"}
 POLICIES = {"random", "reconcile", "flag_all", "oracle"}
-GIB = 1024 ** 3
+MEMORY_LIMIT = 1536 * 1024 ** 2
 
 
 def cpus(value):
@@ -64,7 +64,7 @@ def check(root, bundle=None, expected_revision=None):
     def resources(data, label, expected_cpus, pids):
         if data.get("status") != "measured" or data.get("resource_limits_verified") is not True:
             missing.append(f"{label}: container resource limits not independently verified"); return
-        require(data.get("memory_limit_bytes") == 2 * GIB, f"{label}: memory limit differs from 2 GiB")
+        require(data.get("memory_limit_bytes") == MEMORY_LIMIT, f"{label}: memory limit differs from 1536 MiB")
         quota, period = data.get("cpu_quota_usec"), data.get("cpu_period_usec")
         require(isinstance(quota, (int, float)) and isinstance(period, (int, float)) and
                 period > 0 and quota == 2 * period, f"{label}: CPU quota differs from 2")
@@ -72,7 +72,7 @@ def check(root, bundle=None, expected_revision=None):
             require(cpus(data.get("cpuset_cpus")) == expected_cpus, f"{label}: cpuset differs")
         except (TypeError, ValueError): failures.append(f"{label}: invalid cpuset")
         peak = data.get("peak_memory_bytes")
-        require(isinstance(peak, int) and not isinstance(peak, bool) and 0 <= peak <= 2 * GIB,
+        require(isinstance(peak, int) and not isinstance(peak, bool) and 0 <= peak <= MEMORY_LIMIT,
                 f"{label}: missing or excessive memory peak")
         require(data.get("scope") == "container_limits_verified", f"{label}: unverified cgroup scope")
         require(not data.get("limit_mismatches"), f"{label}: resource limit mismatches")
@@ -103,6 +103,18 @@ def check(root, bundle=None, expected_revision=None):
                     f"{role}: rehearsal image differs from loaded image")
     revision = launch.get("source_revision")
     summary["source_revision"] = revision
+    # Rehearsal is sequential: controller plus one ordinary policy OR verifier.
+    # This is a container budget, not a measurement of host/daemon total RAM.
+    summary["memory_budget"] = {"per_container_bytes": MEMORY_LIMIT,
+                                "combined_container_limit_bytes": 2 * MEMORY_LIMIT,
+                                "decimal_4gb_headroom_bytes": 4_000_000_000 - 2 * MEMORY_LIMIT,
+                                "whole_host_status": "not_checked"}
+    for label, actual, expected in (("controller requested memory profile", launch.get("controller_memory_limit"), "1536m"),
+                                    ("policy memory profile", rehearsal.get("policy_memory_limit_bytes"), MEMORY_LIMIT)):
+        if actual is None:
+            missing.append(label + ": unavailable")
+        else:
+            require(actual == expected, label + " differs")
     for label, value in (("launch", revision), ("test report", general.get("commit"))):
         if value is None:
             missing.append(f"{label}: source revision unavailable")

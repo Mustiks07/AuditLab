@@ -27,7 +27,7 @@ export function EngineLine({ engine }: { engine?: Record<string, string> }) {
 export function KeyChip({ k, onOpen, active, missing, hint }: { k: string; onOpen?: (k: string) => void; active?: boolean; missing?: boolean; hint?: string }) {
   return (
     <button type="button" className={`chip ${active ? "chip-active" : ""} ${missing ? "chip-missing" : ""}`}
-      onClick={() => onOpen?.(k)} title={hint} disabled={!onOpen}>
+      onClick={() => onOpen?.(k)} title={hint ? `${k} · ${hint}` : k} disabled={!onOpen}>
       {k}
     </button>
   );
@@ -73,6 +73,8 @@ export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { 
   return (
     <div className="derivation">
       <div className="derivation-title">{calc.title}</div>
+      <div className="operands-hint small muted">← Таблица расчёта прокручивается по горизонтали →</div>
+      <div className="operands-scroll" role="region" aria-label={`Расчёт: ${calc.title}`} tabIndex={0}>
       <table className="operands">
         <thead>
           <tr><th></th><th title="Числа в файлах — целые минимальные единицы валюты (тиын, цент); под ними — сумма по разрядности из манифеста">значение, мин. ед.</th><th>источник</th><th>строка</th><th>смысл</th></tr>
@@ -101,6 +103,7 @@ export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { 
           ))}
         </tbody>
       </table>
+      </div>
       <div className="formula mono">{calc.formula} <span className="muted small">· в мин. ед.; итог в {calc.currency}</span></div>
       <div className="rule">
         <KeyChip k={rule.key} onOpen={onOpen} active={activeKey === rule.key}

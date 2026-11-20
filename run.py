@@ -16,14 +16,7 @@ from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent
 SUITES = ("foundation", "integration", "simulator", "evaluator", "runner",
           "verifier", "metamorphic", "demo")
-GROUPS = {
-    "contract_and_isolation": ["API-01", "API-02", "API-03", "API-04", "API-05",
-                               "ISO-01", "ISO-02", "ISO-03"],
-    "data_and_truth": ["DAT-01", "DAT-02", "DAT-03", "DAT-04", "DAT-05", "VER-01"],
-    "reward": ["MAT-01", "MAT-02", "MAT-03", "MAT-04"],
-    "reproducibility": ["REP-01", "REP-02", "REP-03"],
-    "engineering": ["OPS-01", "OPS-02", "UI-01"],
-}
+from auditlab.release.acceptance import GROUPS, matrix as acceptance_matrix
 LABELS = {"passed": "пройдено", "failed": "провалено", "not_checked": "не проверено"}
 
 
@@ -122,11 +115,8 @@ def run_suite(root, name, output, timeout):
     return entry
 
 
-def acceptance_plan():
-    # Component tests are evidence for parts of these groups, not certification of a whole group.
-    return [{"id": group, "criterion": criterion, "status": "not_checked",
-             "detail": "Полная группа SPEC §14 ещё не принята; частичные тесты приведены отдельно."}
-            for criterion, groups in GROUPS.items() for group in groups]
+def acceptance_plan(report=None, expected_revision=None):
+    return acceptance_matrix(report, expected_revision)
 
 
 def rehearsal_plan():
@@ -151,19 +141,28 @@ def render(report):
     rows += ["", "## Матрица SPEC §14", "", "| ID | Статус |", "|---|---|"]
     rows += [f"| {row['id']} | {LABELS[row['status']]} |" for row in report["acceptance"]]
     rows += ["", "## Пять критериев (без пересчёта в баллы жюри)", ""]
-    rows += [f"- {name}: не проверено; полная приёмка не выполнена." for name in GROUPS]
+    for name in GROUPS:
+        groups = [row for row in report["acceptance"] if row["criterion"] == name]
+        passed = sum(row["status"] == "passed" for row in groups)
+        failed = sum(row["status"] == "failed" for row in groups)
+        rows.append(f"- {name}: пройдено {passed}/{len(groups)}, провалено {failed}; это внутренняя матрица, не балл жюри.")
+    rows += ["", "Официальный адаптер организаторов: не проверено; опубликованного адаптера нет.",
+             "Точные выполненные тесты, недостающие свидетельства и причины: acceptance в report.json."]
     if report["rehearsal"]:
         rehearsal = report["rehearsal"]
-        measured = sum(row.get("metrics") is not None for row in rehearsal["episodes"])
+        measured = sum(row.get("status") == "passed" and row.get("metrics") is not None
+                       for row in rehearsal["episodes"])
         pairs = sum(row["status"] == "passed" for row in rehearsal["pairs"])
         rows += ["", f"Внутренняя репетиция: измерено {measured}/80 опытов; пройдено {pairs}/20 пар.",
                  "Это внутренний набор, а не закрытая оценка организаторов.", "",
                  "| Политика | Измерено / план | Ошибки / не проверено | micro F1 | macro F1 | Средняя награда |",
                  "|---|---:|---:|---:|---:|---:|"]
         for name, summary in rehearsal.get("summary", {}).items():
+            values = [(summary["micro"] or {}).get("f1"), summary["macro_f1"], summary["mean_reward"]]
+            f1, macro, reward = ["не проверено" if value is None else value for value in values]
             rows.append(f"| {name} | {summary['measured']} / {summary['planned']} | "
-                        f"{summary['failed']} / {summary['not_checked']} | {summary['micro']['f1']} | "
-                        f"{summary['macro_f1']} | {summary['mean_reward']} |")
+                        f"{summary['failed']} / {summary['not_checked']} | {f1} | "
+                        f"{macro} | {reward} |")
         rows += ["", "Полные данные, конфигурации, хеши, траектории и сверки: rehearsal/report.json."]
     rows += ["", "Свидетельства офлайн-запуска и памяти: launch.json, controller-resources.json и rehearsal/report.json при запуске через offline.py. Их отсутствие означает «не проверено».",
              "Это проверка разработки, а не сертификат готовности релиза."]
@@ -176,6 +175,9 @@ def verify(args):
     output.mkdir(parents=True, exist_ok=False)
     report = {"schema_version": "1.0", "status": "in_progress", "suite": args.suite,
               "started_at": datetime.now(timezone.utc).isoformat(), "commit": git_value("rev-parse", "HEAD"),
+              "run_id": uuid.uuid4().hex,
+              "external_acceptance": {"organizer_adapter": {"status": "not_checked",
+                  "detail": "Official adapter not supplied; internal stdlib adapter evidence is separate."}},
               "dirty": (None if git_value("status", "--porcelain") is None else
                         bool(git_value("status", "--porcelain"))),
               "python": platform.python_version(), "platform": platform.platform(),
@@ -187,17 +189,19 @@ def verify(args):
     started = time.monotonic()
     for name in SUITES:
         check = run_suite(ROOT, name, output, args.timeout)
+        check.update(evidence_revision=report["commit"], evidence_run_id=report["run_id"])
         report["checks"].append(check)
         write_json(output / "report.json", report)
         print(f"{name}: {LABELS[check['status']]} ({check['tests_run']} tests)", flush=True)
         for row in check["records"]:
             if row["status"] == "failed":
                 print(f"  {row['id']}: {row['kind']}", flush=True)
-    all_checks = report["checks"] + report["acceptance"]
+    all_checks = list(report["checks"])
     if report["rehearsal"]:
         if not any(check["status"] == "failed" for check in report["checks"]):
             from auditlab.release.rehearsal import execute
             def progress(value):
+                value.update(evidence_revision=report["commit"], evidence_run_id=report["run_id"])
                 report["rehearsal"] = value
                 write_json(output / "report.json", report)
             report["rehearsal"] = execute(output / "rehearsal", getattr(args, "policy_image", None),
@@ -205,6 +209,11 @@ def verify(args):
         rehearsal = report["rehearsal"]
         all_checks += (rehearsal["episodes"] + rehearsal["pairs"] + rehearsal.get("datasets", [])
                        + rehearsal.get("prerequisites", []))
+    report["end_commit"] = git_value("rev-parse", "HEAD")
+    final_status = git_value("status", "--porcelain")
+    report["end_dirty"] = None if final_status is None else bool(final_status)
+    report["acceptance"] = acceptance_plan(report, report["end_commit"])
+    all_checks += report["acceptance"]
     strict = args.require_complete or args.suite == "rehearsal"
     code = exit_code(all_checks, strict)
     report.update(status="failed" if code == 1 else "incomplete" if any(

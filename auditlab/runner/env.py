@@ -375,7 +375,9 @@ class AuditEnvironment:
                   "inspection_steps": self._inspections, "elapsed_s": self._clock() - self._started,
                   "evaluation": graded, "events": self._events, "infra": self._infra,
                   "true_reward": true_reward, "completed": status in COMPLETED and not self._infra}
-        export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
+        written = export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
+        if written is None:
+            raise RunnerError("trusted report already exists; current attempt was not persisted")
 
     def _persist(self, status: str, graded: dict | None) -> None:
         """Public export first, then the trusted report, so the report also records an export failure.
@@ -393,12 +395,19 @@ class AuditEnvironment:
                                                       self.final["submission"], graded["score"] if graded else None)
                 if written is None:
                     self._events.append({"event": "export_exists_not_overwritten"})
+                    raise RunnerError("public export already exists; current attempt was not persisted")
             except Exception as error:
                 problems.append(f"export: {type(error).__name__}: {error}")
                 self._events.append({"event": "export_failure", "detail": problems[-1]})
+                self._infra.append("export_failure")
         try:
             self._persist_trusted(status, graded, self.final["reward"])
         except Exception as error:
             problems.append(f"trusted_report: {type(error).__name__}: {error}")
+            self._events.append({"event": "trusted_report_failure", "detail": problems[-1]})
+            self._infra.append("trusted_report_failure")
         if problems:
             self.final["persistence"] = problems
+        # The financial outcome remains immutable; evidence completeness is a separate diagnostic.
+        self.final["infra"] = list(self._infra)
+        self.final["completed"] = status in COMPLETED and not self._infra

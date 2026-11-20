@@ -1,0 +1,105 @@
+{
+  "generator_version": "1.5",
+  "selection_version": "internal-selection-1.1",
+  "selection_sha256": "0429358f374f1b2e9cc4ccb597f0aa25b58b0822ece0482cc26a9e0d1607ce22",
+  "whole": {
+    "version": "1.0",
+    "counts": {
+      "train": 10,
+      "dev": 10,
+      "internal": 20
+    },
+    "compared": {
+      "train/dev": 100,
+      "train/internal": 200,
+      "dev/internal": 200
+    },
+    "within": {
+      "family": {
+        "train": [
+          [
+            "E6476455CA5F6F7CF4A34F78E68AD54C0",
+            "E651B6A63DDA2448A91DC825714D7732E"
+          ]
+        ],
+        "dev": [
+          [
+            "E4C30409A2F4E6DFE858E8FF06B8C4436",
+            "E509506A67D640282D2FD1D8B154EF4EC"
+          ]
+        ],
+        "internal": []
+      },
+      "book": {
+        "train": [],
+        "dev": [],
+        "internal": []
+      }
+    },
+    "cross": {
+      "family": {
+        "train/dev": [],
+        "train/internal": [],
+        "dev/internal": []
+      },
+      "book": {
+        "train/dev": [],
+        "train/internal": [],
+        "dev/internal": []
+      }
+    }
+  },
+  "partial": {
+    "version": "commercial-subhistories-1.0",
+    "scope": "Exact complete commercial chains; not arbitrary subgraphs or label leakage",
+    "counts": {
+      "train": 10,
+      "dev": 10,
+      "internal": 20
+    },
+    "views": {
+      "counterparty": {
+        "units_per_split": {
+          "train": 327,
+          "dev": 324,
+          "internal": 1162
+        },
+        "shared_families": 0,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": []
+        },
+        "matches": []
+      },
+      "invoice": {
+        "units_per_split": {
+          "train": 321,
+          "dev": 322,
+          "internal": 1135
+        },
+        "shared_families": 0,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": []
+        },
+        "matches": []
+      },
+      "posted_counterparty": {
+        "units_per_split": {
+          "train": 327,
+          "dev": 324,
+          "internal": 1162
+        },
+        "shared_families": 0,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": []
+        },
+        "matches": []
+      }
+    }
+  }
+}

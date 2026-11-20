@@ -89,7 +89,7 @@ def _foreign_currency(b, *, prefer_usd=False):
     return b.money_currency
 
 
-def _rates(b, currency, expected_date):
+def _rates(b, currency, expected_date, amount_minor):
     if b.base_currency == "KZT":
         quotes = {
             "USD": ("505", "500", "510"),
@@ -108,6 +108,17 @@ def _rates(b, currency, expected_date):
         def daily(day):
             return format(base + ((day - date(2000, 1, 1)).days % 31) * step, "f")
         previous_rate, expected_rate, alternate_rate = map(daily, (previous_date, expected_date, alternate_date))
+        # Different quotes can round to the same minor-unit amount (notably JPY).
+        # Choose a different valuation from the fixed daily schedule, irrespective
+        # of the defect toggle, so all interaction states retain the same source.
+        expected_minor = _convert(b, amount_minor, currency, expected_rate)
+        for distance in range(1, 32):
+            alternate_date = expected_date + timedelta(days=distance)
+            alternate_rate = daily(alternate_date)
+            if _convert(b, amount_minor, currency, alternate_rate) != expected_minor:
+                break
+        else:
+            raise RuntimeError("fx_schedule_has_no_observable_mutation")
     for day, rate in ((previous_date, previous_rate), (expected_date, expected_rate),
                       (alternate_date, alternate_rate)):
         record = {
@@ -142,7 +153,7 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
 
     source_at = datetime.fromisoformat(source_at)
     expected_date = source_at.astimezone(b.zone).date()
-    correct_rate, alternate_date, alternate_rate = _rates(b, currency, expected_date)
+    correct_rate, alternate_date, alternate_rate = _rates(b, currency, expected_date, amount)
     actual_date, actual_rate = (alternate_date, alternate_rate) if fx_enabled else (expected_date, correct_rate)
     expected = _convert(b, amount, currency, correct_rate)
     actual = _convert(b, amount, currency, actual_rate)
@@ -169,7 +180,9 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
             "type": "fx_conversion", "affected_ids": affected,
             "before": {"quote_date": expected_date.isoformat(), "rate": correct_rate, "amount_minor": expected},
             "after": {"quote_date": actual_date.isoformat(), "rate": actual_rate, "amount_minor": actual},
-            "effect": "The reporting valuation used the following day's exchange rate.",
+            "effect": ("The reporting valuation used the following day's exchange rate."
+                       if actual_date == expected_date + timedelta(days=1)
+                       else "The reporting valuation used a later date's exchange rate."),
             "evidence_ids": evidence,
         })
 

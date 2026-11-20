@@ -1,0 +1,44 @@
+[
+  {
+    "format_version": "financial-stress-1.0",
+    "generator_version": "1.5",
+    "revision": "26a267a81c98ec820c3e632d5eb0d63c1ea487fb",
+    "dirty": false,
+    "planned": 1000,
+    "passed": 1000,
+    "pairs_passed": 40,
+    "selection_sha256": "1dfe8a76abc7cefe64b499b318f6766524252b9deb449c993089b1204610809c",
+    "elapsed_seconds": 268.49996709900006,
+    "file": "baseline.json.gz",
+    "sha256": "9c34d9a38d548ee9041475fe29d6f3a1fcc7d336f48d8dc4519e9825cac42ce0",
+    "json_sha256": "96dfe31e0ce4ea9f9335d9b9059cc581584d44900f9362e1b2734abd212849f8",
+    "clean_cases": 260,
+    "total_issues": 2580,
+    "ordinary_totals": {
+      "tp": 2580,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  {
+    "format_version": "financial-stress-1.1",
+    "generator_version": "1.5",
+    "revision": "3f6bb954917c405e91e45324f8b8d9641ef3c89b",
+    "dirty": false,
+    "planned": 1000,
+    "passed": 1000,
+    "pairs_passed": 40,
+    "selection_sha256": "f6c2a1f89d3ec9555707ba346c3590fd00365a2eaab6b357031b1688c3957cac",
+    "elapsed_seconds": 278.1659027040005,
+    "file": "clean-counterexamples.json.gz",
+    "sha256": "bc2c245d08e8fe86b8f2868aa88830af9c3270cf77ee01aa45d6618b2b15e8e3",
+    "json_sha256": "07ff6a8dbedb97118e82660b3d2c74902f03b02b2d96e4409c7f85ba23872a0a",
+    "clean_cases": 260,
+    "total_issues": 2580,
+    "ordinary_totals": {
+      "tp": 2580,
+      "fp": 0,
+      "fn": 0
+    }
+  }
+]

@@ -135,7 +135,7 @@ class ResourceMeasurements(unittest.TestCase):
             self.assertIsNone(result["peak_memory_bytes"])
             self.assertIsNone(result["cpu.stat"])
             self.assertEqual(result["raw_observed"]["files"]["memory.peak"], "15032385536")
-            files.update({"memory.peak": "123456", "memory.max": "2147483648", "memory.swap.max": "0",
+            files.update({"memory.peak": "123456", "memory.max": "1610612736", "memory.swap.max": "0",
                           "cpu.max": "200000 100000", "cpuset.cpus.effective": "0-1", "pids.max": "256"})
             for name, value in files.items():
                 (root / name).write_text(value)

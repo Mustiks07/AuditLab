@@ -31,7 +31,7 @@ def controller_resources():
         cgroup = Path('/proc/self/cgroup').read_text().strip()
     except OSError:
         cgroup = None
-    requested = {"memory": os.environ.get("AUDITLAB_CONTROLLER_MEMORY", "2g"),
+    requested = {"memory": os.environ.get("AUDITLAB_CONTROLLER_MEMORY", "1536m"),
                  "cpus": os.environ.get("AUDITLAB_CONTROLLER_CPUS", "2"),
                  "cpuset": os.environ.get("AUDITLAB_CPUSET"),
                  "pids": os.environ.get("AUDITLAB_CONTROLLER_PIDS", "256")}

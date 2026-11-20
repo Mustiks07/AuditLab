@@ -1,0 +1,657 @@
+[
+  {
+    "viewport": 1440,
+    "bodyWidth": 1440,
+    "panel": {
+      "left": 951,
+      "right": 1419,
+      "width": 468,
+      "scroll": 468,
+      "client": 468
+    },
+    "rows": [
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "payments/DBD292EDAEA4FDA14AEF2A4FA",
+            "title": "payments/DBD292EDAEA4FDA14AEF2A4FA",
+            "left": 982,
+            "right": 1242.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "payments.jsonl:15",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 2",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "ledger/R53432EC1D005F5311538DE28",
+            "title": "ledger/R53432EC1D005F5311538DE28",
+            "left": 982,
+            "right": 1228.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:101",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 5",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "ledger/RB74667B32C20460A9F0BCE8C",
+            "title": "ledger/RB74667B32C20460A9F0BCE8C",
+            "left": 982,
+            "right": 1228.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:76",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 7",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "policy/allocation",
+            "title": "policy/allocation",
+            "left": 982,
+            "right": 1120.421875,
+            "width": 138.421875,
+            "scroll": 136,
+            "client": 136
+          },
+          {
+            "text": "policy.json:11",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 1",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "invoices/D3DA6071040B70FA2D90C18D0",
+            "title": "invoices/D3DA6071040B70FA2D90C18D0",
+            "left": 982,
+            "right": 1242.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "invoices.jsonl:27",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 3",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "invoices/D7534210C633A07D8851B8F7E",
+            "title": "invoices/D7534210C633A07D8851B8F7E",
+            "left": 982,
+            "right": 1242.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "invoices.jsonl:14",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 3",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "ledger/R765F277C72A53DF193243B58",
+            "title": "ledger/R765F277C72A53DF193243B58",
+            "left": 982,
+            "right": 1228.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:231",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 6",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 978,
+          "right": 1392,
+          "width": 414,
+          "scroll": 414,
+          "client": 414
+        },
+        "children": [
+          {
+            "text": "ledger/RBFFE41AEECFF5B82D6F4BF3C",
+            "title": "ledger/RBFFE41AEECFF5B82D6F4BF3C",
+            "left": 982,
+            "right": 1228.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:117",
+            "title": "",
+            "left": 982,
+            "right": 1180,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          },
+          {
+            "text": "получен на странице шага 7",
+            "title": "",
+            "left": 1190,
+            "right": 1388,
+            "width": 198,
+            "scroll": 198,
+            "client": 198
+          }
+        ]
+      }
+    ],
+    "table": {
+      "left": 988,
+      "right": 1382,
+      "width": 394,
+      "scroll": 640,
+      "client": 394
+    },
+    "recordText": "ЗАПИСЬ ДОКУМЕНТА\npayments/DBD292EDAEA4FDA14AEF2A4FA\npublic/payments.jsonl · строка 15\nпроцитирована в выводе\nаудитор получил на странице шага 2\n3\n{\"amount_minor\":5640000,\"currency\":\"KZT\",\"doc_id\":\"D593A41B81EF2C2E8E044347D\",\"invoice_refs\":[\"I3B5B3335CBDBB08054D888E7\"],\"payment_id\":\"PD9984472F93D2BC0AFBDC5FB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R42D4E9BCE6DDAFA46BAA7A47\",\"R9DF3B455C8541C003973DDCC\"]},\"timestamp\":\"2026-11-21T15:00:00+05:00\"}\n4\n{\"amount_minor\":720000,\"currency\":\"KZT\",\"doc_id\":\"DD68F5FDBE807852D136493E9\",\"invoice_refs\":[\"IBB943924B4A382EF6366FF15\"],\"payment_id\":\"PFB51FA39065D5FF3A8F5D06A\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RC5EF3FD349D83CBCA9AA4CCA\",\"RB7CD518DEA8DC35043ECD790\"]},\"timestamp\":\"2026-11-12T09:00:00+05:00\"}\n5\n{\"amount_minor\":5880000,\"currency\":\"KZT\",\"doc_id\":\"DEBEA54698BBDC31465613F0C\",\"invoice_refs\":[\"I88FC95B14469E9CAD9FB5DD9\"],\"payment_id\":\"PB7C8864C63BE672D2F9EF855\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RABCA060726DE8894D8048879\",\"R894C1C5430977441F94AEE9E\"]},\"timestamp\":\"2026-11-11T17:00:00+05:00\"}\n6\n{\"amount_minor\":11200000,\"currency\":\"KZT\",\"doc_id\":\"DA4EC842A17E6C31CBE6023C9\",\"invoice_refs\":[\"IBB965ECEF9A91C4576420A80\"],\"payment_id\":\"PE87B29C69F4940184F0AECA5\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R4A20AB4C5DEF5BF3D7C63C74\",\"RE6AE213E348EE7686D9833C4\"]},\"timestamp\":\"2026-11-12T13:00:00+05:00\"}\n7\n{\"amount_minor\":4880000,\"currency\":\"KZT\",\"doc_id\":\"DED16A87F42D4CEA810484346\",\"invoice_refs\":[\"IFCD03D4CC90D5CF6A53C6207\"],\"payment_id\":\"P38F5E793B5835EFCB82CC29B\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R536E7AC9158176C1CAD5031D\",\"RF736CF3ECDBE0A592F35B02A\"]},\"timestamp\":\"2026-11-04T15:00:00+05:00\"}\n8\n{\"amount_minor\":1300000,\"currency\":\"KZT\",\"doc_id\":\"DF41F8D4650899E06E389A1A1\",\"invoice_refs\":[\"IF49C842D02CD4CD298FE3960\"],\"payment_id\":\"P7BEF1DEB0DBDD0C0F5257025\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RED3C64DFA19637D1EB4A60A8\",\"REB7DD5B9B351BCEF51367A46\"]},\"timestamp\":\"2026-11-16T10:00:00+05:00\"}\n9\n{\"amount_minor\":600000,\"currency\":\"KZT\",\"doc_id\":\"DC919F830533DF84F79B88DD3\",\"invoice_refs\":[\"ID2631E168A80EACA9A3A5533\"],\"payment_id\":\"PB87C55DCAA1504AB5723A146\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R72797495A408A53FBD4971F6\",\"R3466A6E81BE387FA59D08444\"]},\"timestamp\":\"2026-11-15T12:00:00+05:00\"}\n10\n{\"amount_minor\":11100000,\"currency\":\"KZT\",\"doc_id\":\"DFBDEBBFB3657B8348C03ADF5\",\"invoice_refs\":[\"I15304B98E64E7C93BD5C2CC7\"],\"payment_id\":\"P251851F66D87BE8C75EF5F28\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RBF4086F544945D7A03D64DFD\",\"R331BFB2D2949288D441DFCEF\"]},\"timestamp\":\"2026-11-11T11:00:00+05:00\"}\n11\n{\"amount_minor\":14700000,\"currency\":\"KZT\",\"doc_id\":\"DA2632933BE453D8E4F313C3A\",\"invoice_refs\":[\"I35B54A5ACEC7D6F3254F1544\"],\"payment_id\":\"P8E3F20181081886DB84D44A8\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R872814565D75A43E43E1627B\",\"R2C661D61C4F13363CF007401\"]},\"timestamp\":\"2026-11-14T11:00:00+05:00\"}\n12\n{\"amount_minor\":12600000,\"currency\":\"KZT\",\"doc_id\":\"DD6D1458E1041244F89841126\",\"invoice_refs\":[\"ID333C20418D2DF297C4B390A\"],\"payment_id\":\"PDD2806BEE8C5BDCB9B134090\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R26E7780995D18FCD7D000CB8\",\"R5D7B1CEEC85F3ECCC3D3A6F6\"]},\"timestamp\":\"2026-11-17T15:00:00+05:00\"}\n13\n{\"amount_minor\":4300000,\"currency\":\"KZT\",\"doc_id\":\"DA1D9998D37884D97B2D4AE3F\",\"invoice_refs\":[\"IB9657625B88EA74135C3EF80\"],\"payment_id\":\"PCE30CE642B19EFE71BCF04C2\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R668736D8E483E8E828E3A36E\",\"RE7856DA6F9FB58F70FE050B5\"]},\"timestamp\":\"2026-11-20T08:00:00+05:00\"}\n14\n{\"amount_minor\":3160000,\"currency\":\"KZT\",\"doc_id\":\"DA148EDFB4AFD9225C2A6665E\",\"invoice_refs\":[\"I439C59C8A6808F41E6329104\"],\"payment_id\":\"P0E485BA54958D842B0290DAC\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RADEC0F5FDE4F1D701CF67457\",\"REAEF29994920F83AB612CB44\"]},\"timestamp\":\"2026-11-18T13:00:00+05:00\"}\n15\n{\"amount_minor\":5000000,\"currency\":\"KZT\",\"doc_id\":\"DBD292EDAEA4FDA14AEF2A4FA\",\"invoice_refs\":[\"IFB7EC04001E37EA268207EFC\"],\"payment_id\":\"P308C7000EC7515B02EEB3610\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R53432EC1D005F5311538DE28\",\"RB74667B32C20460A9F0BCE8C\"]},\"timestamp\":\"2026-11-14T16:00:00+05:00\"}\n16\n{\"amount_minor\":9100000,\"currency\":\"KZT\",\"doc_id\":\"D16A469ADA6D92EB398B1DB2D\",\"invoice_refs\":[\"I6B399B5E147FB02C3AB2613A\"],\"payment_id\":\"P0BC89BEFD61BE04F712CC0D6\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R213F4E417676D6C92751BA77\",\"R548EAEBDEB93CA03C4A66C69\"]},\"timestamp\":\"2026-11-22T16:00:00+05:00\"}\n17\n{\"amount_minor\":1000000,\"currency\":\"KZT\",\"doc_id\":\"D9B424EB651AE39F72FC21990\",\"invoice_refs\":[\"I69277BA00B17B5E40A56E2A3\"],\"payment_id\":\"P589B61C7E5266435E0179475\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R927C1DF207C0BDB13B7171BB\",\"R0BA3318A371BA25CDD9EA4E7\"]},\"timestamp\":\"2026-11-15T11:00:00+05:00\"}\n18\n{\"amount_minor\":5460000,\"currency\":\"KZT\",\"doc_id\":\"D9162420C00EB83C84246CDBA\",\"invoice_refs\":[\"I2AB533C7CF656683D7613BCD\"],\"payment_id\":\"PE0057D628A7015920E2C375B\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R7BC0591327547C2F76D249AD\",\"R7EA7094A6A36BE4D161F4C38\"]},\"timestamp\":\"2026-11-05T17:00:00+05:00\"}\n19\n{\"amount_minor\":3880000,\"currency\":\"KZT\",\"doc_id\":\"DFC969D84759D37A6474F8217\",\"invoice_refs\":[\"IC01FB1C961E116BB2A6E07DA\"],\"payment_id\":\"P2FF00908FE0C74639687A8C3\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R2E0026F69F27F3425CEA12A9\",\"RC0986880DD3111E28EA97AA9\"]},\"timestamp\":\"2026-11-15T17:00:00+05:00\"}\n20\n{\"amount_minor\":5880000,\"currency\":\"KZT\",\"doc_id\":\"DB6048DAB315CA4D8F8CA7FC1\",\"invoice_refs\":[\"IF3E83FEAA31F77816C73B0B1\"],\"payment_id\":\"P97DD66F0A8BFF9912CE5499E\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R7F2570AD1E88EB7D1D81C9BE\",\"R5CCC971B6DF954E26EAFAC4E\"]},\"timestamp\":\"2026-11-08T15:00:00+05:00\"}\n21\n{\"amount_minor\":8800000,\"currency\":\"KZT\",\"doc_id\":\"D63A653707579E11302186456\",\"invoice_refs\":[\"IF3A71F8059309C48AFA32E92\"],\"payment_id\":\"P49DDE5C9CA0F0F7F8A1082EB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R4C44BD6E1BCA51893DFBB96C\",\"REAEA8EB99828905DCA5FCC6E\"]},\"timestamp\":\"2026-11-11T14:00:00+05:00\"}\n22\n{\"amount_minor\":5820000,\"currency\":\"KZT\",\"doc_id\":\"D670AE2A62D45B5E464D1B400\",\"invoice_refs\":[\"IC01FB1C961E116BB2A6E07DA\"],\"payment_id\":\"PF0390355B657A1017A02A537\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R2640197D4AF35B826B97CBDA\",\"RCBD21227E72722B8890D1F78\"]},\"timestamp\":\"2026-11-16T17:00:00+05:00\"}\n23\n{\"amount_minor\":8800000,\"currency\":\"KZT\",\"doc_id\":\"DBB915864A7E92D0FC01F2D50\",\"invoice_refs\":[\"I418D5F1CEF11CF5AAC87B270\"],\"payment_id\":\"P924BC23ED6814784642A17D8\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RC9838002D213CAFE3FAB80C2\",\"R18BB7C200980F6F0274EDE1D\"]},\"timestamp\":\"2026-11-12T14:00:00+05:00\"}\n24\n{\"amount_minor\":3120000,\"currency\":\"KZT\",\"doc_id\":\"DD8E4EA91B38F55221E2130BD\",\"invoice_refs\":[\"I1B4A07FA782DEC21C570106F\"],\"payment_id\":\"P958D27C030481747B8D117AE\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RD5DE320D098EE132316B7C02\",\"R9F3370406D42F392C817DC03\"]},\"timestamp\":\"2026-11-06T15:00:00+05:00\"}\n25\n{\"amount_minor\":5800000,\"currency\":\"KZT\",\"doc_id\":\"D38712E8B1525393DBDF80444\",\"invoice_refs\":[\"I4BE57CB3D879F54CA650BD11\"],\"payment_id\":\"PA4A5762217834929103D41EB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R21548BCA239BBA4FADDAADCB\",\"R9CB7227D4FE2229CC3C724E4\"]},\"timestamp\":\"2026-11-12T16:00:00+05:00\"}\n26\n{\"amount_minor\":2080000,\"currency\":\"KZT\",\"doc_id\":\"D789A86BEE4C82FCAA3B521E7\",\"invoice_refs\":[\"I79501A89362370239ECD4A02\"],\"payment_id\":\"PBB2B7FC9DDA7DF0F1A9AA8BC\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R816F4DCDA7DA10B0F1F05D37\",\"R1DE864A2C71ECFC882EAD7D8\"]},\"timestamp\":\"2026-11-19T17:00:00+05:00\"}\n27\n{\"amount_minor\":6900000,\"currency\":\"KZT\",\"doc_id\":\"DFD6AC6159E899DA6CAD58410\",\"invoice_refs\":[\"I2276A0116A096DD0EEBE77C3\"],\"payment_id\":\"PA55062EE040BCB1E41E70AEA\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R65BC323C3EE63ECD37CE6072\",\"R6E84BC79E72BCE9A53CDA5FA\"]},\"timestamp\":\"2026-11-16T11:00:00+05:00\"}\nвсего строк в файле: 43\namount_minor\t5000000 = 50 000,00 ₸\t\ncurrency\tKZT\t\ndoc_id\tDBD292EDAEA4FDA14AEF2A4FA\t\ninvoice_refs\t[\"IFB7EC04001E37EA268207EFC\"]\t\npayment_id\tP308C7000EC7515B02EEB3610\t\nsettlement_index\tдо 01.12.2026 00:00 (искл.): ledger/R53432EC1D005F5311538DE28ledger/RB74667B32C20460A9F0BCE8C\t\ntimestamp\t2026-11-14T16:00:00+05:00 · 14.11.2026 16:00\t\nИзменить факт и запустить новый опыт…",
+    "errors": [],
+    "key": "payments/DBD292EDAEA4FDA14AEF2A4FA",
+    "scrollLeft": 40
+  },
+  {
+    "viewport": 1024,
+    "bodyWidth": 1024,
+    "panel": {
+      "left": 21,
+      "right": 1003,
+      "width": 982,
+      "scroll": 982,
+      "client": 982
+    },
+    "rows": [
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "payments/DBD292EDAEA4FDA14AEF2A4FA",
+            "title": "payments/DBD292EDAEA4FDA14AEF2A4FA",
+            "left": 52,
+            "right": 312.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "payments.jsonl:15",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 2",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "ledger/R53432EC1D005F5311538DE28",
+            "title": "ledger/R53432EC1D005F5311538DE28",
+            "left": 52,
+            "right": 298.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:101",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 5",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "ledger/RB74667B32C20460A9F0BCE8C",
+            "title": "ledger/RB74667B32C20460A9F0BCE8C",
+            "left": 52,
+            "right": 298.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:76",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 7",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "policy/allocation",
+            "title": "policy/allocation",
+            "left": 52,
+            "right": 190.421875,
+            "width": 138.421875,
+            "scroll": 136,
+            "client": 136
+          },
+          {
+            "text": "policy.json:11",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 1",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "invoices/D3DA6071040B70FA2D90C18D0",
+            "title": "invoices/D3DA6071040B70FA2D90C18D0",
+            "left": 52,
+            "right": 312.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "invoices.jsonl:27",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 3",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "invoices/D7534210C633A07D8851B8F7E",
+            "title": "invoices/D7534210C633A07D8851B8F7E",
+            "left": 52,
+            "right": 312.84375,
+            "width": 260.84375,
+            "scroll": 259,
+            "client": 259
+          },
+          {
+            "text": "invoices.jsonl:14",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 3",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "ledger/R765F277C72A53DF193243B58",
+            "title": "ledger/R765F277C72A53DF193243B58",
+            "left": 52,
+            "right": 298.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:231",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 6",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      },
+      {
+        "row": {
+          "left": 48,
+          "right": 976,
+          "width": 928,
+          "scroll": 928,
+          "client": 928
+        },
+        "children": [
+          {
+            "text": "ledger/RBFFE41AEECFF5B82D6F4BF3C",
+            "title": "ledger/RBFFE41AEECFF5B82D6F4BF3C",
+            "left": 52,
+            "right": 298.4375,
+            "width": 246.4375,
+            "scroll": 244,
+            "client": 244
+          },
+          {
+            "text": "ledger.csv:117",
+            "title": "",
+            "left": 52,
+            "right": 507,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          },
+          {
+            "text": "получен на странице шага 7",
+            "title": "",
+            "left": 517,
+            "right": 972,
+            "width": 455,
+            "scroll": 455,
+            "client": 455
+          }
+        ]
+      }
+    ],
+    "table": {
+      "left": 58,
+      "right": 966,
+      "width": 908,
+      "scroll": 908,
+      "client": 908
+    },
+    "recordText": "ЗАПИСЬ ДОКУМЕНТА\npayments/DBD292EDAEA4FDA14AEF2A4FA\npublic/payments.jsonl · строка 15\nпроцитирована в выводе\nаудитор получил на странице шага 2\n3\n{\"amount_minor\":5640000,\"currency\":\"KZT\",\"doc_id\":\"D593A41B81EF2C2E8E044347D\",\"invoice_refs\":[\"I3B5B3335CBDBB08054D888E7\"],\"payment_id\":\"PD9984472F93D2BC0AFBDC5FB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R42D4E9BCE6DDAFA46BAA7A47\",\"R9DF3B455C8541C003973DDCC\"]},\"timestamp\":\"2026-11-21T15:00:00+05:00\"}\n4\n{\"amount_minor\":720000,\"currency\":\"KZT\",\"doc_id\":\"DD68F5FDBE807852D136493E9\",\"invoice_refs\":[\"IBB943924B4A382EF6366FF15\"],\"payment_id\":\"PFB51FA39065D5FF3A8F5D06A\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RC5EF3FD349D83CBCA9AA4CCA\",\"RB7CD518DEA8DC35043ECD790\"]},\"timestamp\":\"2026-11-12T09:00:00+05:00\"}\n5\n{\"amount_minor\":5880000,\"currency\":\"KZT\",\"doc_id\":\"DEBEA54698BBDC31465613F0C\",\"invoice_refs\":[\"I88FC95B14469E9CAD9FB5DD9\"],\"payment_id\":\"PB7C8864C63BE672D2F9EF855\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RABCA060726DE8894D8048879\",\"R894C1C5430977441F94AEE9E\"]},\"timestamp\":\"2026-11-11T17:00:00+05:00\"}\n6\n{\"amount_minor\":11200000,\"currency\":\"KZT\",\"doc_id\":\"DA4EC842A17E6C31CBE6023C9\",\"invoice_refs\":[\"IBB965ECEF9A91C4576420A80\"],\"payment_id\":\"PE87B29C69F4940184F0AECA5\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R4A20AB4C5DEF5BF3D7C63C74\",\"RE6AE213E348EE7686D9833C4\"]},\"timestamp\":\"2026-11-12T13:00:00+05:00\"}\n7\n{\"amount_minor\":4880000,\"currency\":\"KZT\",\"doc_id\":\"DED16A87F42D4CEA810484346\",\"invoice_refs\":[\"IFCD03D4CC90D5CF6A53C6207\"],\"payment_id\":\"P38F5E793B5835EFCB82CC29B\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R536E7AC9158176C1CAD5031D\",\"RF736CF3ECDBE0A592F35B02A\"]},\"timestamp\":\"2026-11-04T15:00:00+05:00\"}\n8\n{\"amount_minor\":1300000,\"currency\":\"KZT\",\"doc_id\":\"DF41F8D4650899E06E389A1A1\",\"invoice_refs\":[\"IF49C842D02CD4CD298FE3960\"],\"payment_id\":\"P7BEF1DEB0DBDD0C0F5257025\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RED3C64DFA19637D1EB4A60A8\",\"REB7DD5B9B351BCEF51367A46\"]},\"timestamp\":\"2026-11-16T10:00:00+05:00\"}\n9\n{\"amount_minor\":600000,\"currency\":\"KZT\",\"doc_id\":\"DC919F830533DF84F79B88DD3\",\"invoice_refs\":[\"ID2631E168A80EACA9A3A5533\"],\"payment_id\":\"PB87C55DCAA1504AB5723A146\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R72797495A408A53FBD4971F6\",\"R3466A6E81BE387FA59D08444\"]},\"timestamp\":\"2026-11-15T12:00:00+05:00\"}\n10\n{\"amount_minor\":11100000,\"currency\":\"KZT\",\"doc_id\":\"DFBDEBBFB3657B8348C03ADF5\",\"invoice_refs\":[\"I15304B98E64E7C93BD5C2CC7\"],\"payment_id\":\"P251851F66D87BE8C75EF5F28\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RBF4086F544945D7A03D64DFD\",\"R331BFB2D2949288D441DFCEF\"]},\"timestamp\":\"2026-11-11T11:00:00+05:00\"}\n11\n{\"amount_minor\":14700000,\"currency\":\"KZT\",\"doc_id\":\"DA2632933BE453D8E4F313C3A\",\"invoice_refs\":[\"I35B54A5ACEC7D6F3254F1544\"],\"payment_id\":\"P8E3F20181081886DB84D44A8\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R872814565D75A43E43E1627B\",\"R2C661D61C4F13363CF007401\"]},\"timestamp\":\"2026-11-14T11:00:00+05:00\"}\n12\n{\"amount_minor\":12600000,\"currency\":\"KZT\",\"doc_id\":\"DD6D1458E1041244F89841126\",\"invoice_refs\":[\"ID333C20418D2DF297C4B390A\"],\"payment_id\":\"PDD2806BEE8C5BDCB9B134090\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R26E7780995D18FCD7D000CB8\",\"R5D7B1CEEC85F3ECCC3D3A6F6\"]},\"timestamp\":\"2026-11-17T15:00:00+05:00\"}\n13\n{\"amount_minor\":4300000,\"currency\":\"KZT\",\"doc_id\":\"DA1D9998D37884D97B2D4AE3F\",\"invoice_refs\":[\"IB9657625B88EA74135C3EF80\"],\"payment_id\":\"PCE30CE642B19EFE71BCF04C2\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R668736D8E483E8E828E3A36E\",\"RE7856DA6F9FB58F70FE050B5\"]},\"timestamp\":\"2026-11-20T08:00:00+05:00\"}\n14\n{\"amount_minor\":3160000,\"currency\":\"KZT\",\"doc_id\":\"DA148EDFB4AFD9225C2A6665E\",\"invoice_refs\":[\"I439C59C8A6808F41E6329104\"],\"payment_id\":\"P0E485BA54958D842B0290DAC\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RADEC0F5FDE4F1D701CF67457\",\"REAEF29994920F83AB612CB44\"]},\"timestamp\":\"2026-11-18T13:00:00+05:00\"}\n15\n{\"amount_minor\":5000000,\"currency\":\"KZT\",\"doc_id\":\"DBD292EDAEA4FDA14AEF2A4FA\",\"invoice_refs\":[\"IFB7EC04001E37EA268207EFC\"],\"payment_id\":\"P308C7000EC7515B02EEB3610\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R53432EC1D005F5311538DE28\",\"RB74667B32C20460A9F0BCE8C\"]},\"timestamp\":\"2026-11-14T16:00:00+05:00\"}\n16\n{\"amount_minor\":9100000,\"currency\":\"KZT\",\"doc_id\":\"D16A469ADA6D92EB398B1DB2D\",\"invoice_refs\":[\"I6B399B5E147FB02C3AB2613A\"],\"payment_id\":\"P0BC89BEFD61BE04F712CC0D6\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R213F4E417676D6C92751BA77\",\"R548EAEBDEB93CA03C4A66C69\"]},\"timestamp\":\"2026-11-22T16:00:00+05:00\"}\n17\n{\"amount_minor\":1000000,\"currency\":\"KZT\",\"doc_id\":\"D9B424EB651AE39F72FC21990\",\"invoice_refs\":[\"I69277BA00B17B5E40A56E2A3\"],\"payment_id\":\"P589B61C7E5266435E0179475\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R927C1DF207C0BDB13B7171BB\",\"R0BA3318A371BA25CDD9EA4E7\"]},\"timestamp\":\"2026-11-15T11:00:00+05:00\"}\n18\n{\"amount_minor\":5460000,\"currency\":\"KZT\",\"doc_id\":\"D9162420C00EB83C84246CDBA\",\"invoice_refs\":[\"I2AB533C7CF656683D7613BCD\"],\"payment_id\":\"PE0057D628A7015920E2C375B\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R7BC0591327547C2F76D249AD\",\"R7EA7094A6A36BE4D161F4C38\"]},\"timestamp\":\"2026-11-05T17:00:00+05:00\"}\n19\n{\"amount_minor\":3880000,\"currency\":\"KZT\",\"doc_id\":\"DFC969D84759D37A6474F8217\",\"invoice_refs\":[\"IC01FB1C961E116BB2A6E07DA\"],\"payment_id\":\"P2FF00908FE0C74639687A8C3\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R2E0026F69F27F3425CEA12A9\",\"RC0986880DD3111E28EA97AA9\"]},\"timestamp\":\"2026-11-15T17:00:00+05:00\"}\n20\n{\"amount_minor\":5880000,\"currency\":\"KZT\",\"doc_id\":\"DB6048DAB315CA4D8F8CA7FC1\",\"invoice_refs\":[\"IF3E83FEAA31F77816C73B0B1\"],\"payment_id\":\"P97DD66F0A8BFF9912CE5499E\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R7F2570AD1E88EB7D1D81C9BE\",\"R5CCC971B6DF954E26EAFAC4E\"]},\"timestamp\":\"2026-11-08T15:00:00+05:00\"}\n21\n{\"amount_minor\":8800000,\"currency\":\"KZT\",\"doc_id\":\"D63A653707579E11302186456\",\"invoice_refs\":[\"IF3A71F8059309C48AFA32E92\"],\"payment_id\":\"P49DDE5C9CA0F0F7F8A1082EB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R4C44BD6E1BCA51893DFBB96C\",\"REAEA8EB99828905DCA5FCC6E\"]},\"timestamp\":\"2026-11-11T14:00:00+05:00\"}\n22\n{\"amount_minor\":5820000,\"currency\":\"KZT\",\"doc_id\":\"D670AE2A62D45B5E464D1B400\",\"invoice_refs\":[\"IC01FB1C961E116BB2A6E07DA\"],\"payment_id\":\"PF0390355B657A1017A02A537\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R2640197D4AF35B826B97CBDA\",\"RCBD21227E72722B8890D1F78\"]},\"timestamp\":\"2026-11-16T17:00:00+05:00\"}\n23\n{\"amount_minor\":8800000,\"currency\":\"KZT\",\"doc_id\":\"DBB915864A7E92D0FC01F2D50\",\"invoice_refs\":[\"I418D5F1CEF11CF5AAC87B270\"],\"payment_id\":\"P924BC23ED6814784642A17D8\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RC9838002D213CAFE3FAB80C2\",\"R18BB7C200980F6F0274EDE1D\"]},\"timestamp\":\"2026-11-12T14:00:00+05:00\"}\n24\n{\"amount_minor\":3120000,\"currency\":\"KZT\",\"doc_id\":\"DD8E4EA91B38F55221E2130BD\",\"invoice_refs\":[\"I1B4A07FA782DEC21C570106F\"],\"payment_id\":\"P958D27C030481747B8D117AE\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"RD5DE320D098EE132316B7C02\",\"R9F3370406D42F392C817DC03\"]},\"timestamp\":\"2026-11-06T15:00:00+05:00\"}\n25\n{\"amount_minor\":5800000,\"currency\":\"KZT\",\"doc_id\":\"D38712E8B1525393DBDF80444\",\"invoice_refs\":[\"I4BE57CB3D879F54CA650BD11\"],\"payment_id\":\"PA4A5762217834929103D41EB\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R21548BCA239BBA4FADDAADCB\",\"R9CB7227D4FE2229CC3C724E4\"]},\"timestamp\":\"2026-11-12T16:00:00+05:00\"}\n26\n{\"amount_minor\":2080000,\"currency\":\"KZT\",\"doc_id\":\"D789A86BEE4C82FCAA3B521E7\",\"invoice_refs\":[\"I79501A89362370239ECD4A02\"],\"payment_id\":\"PBB2B7FC9DDA7DF0F1A9AA8BC\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R816F4DCDA7DA10B0F1F05D37\",\"R1DE864A2C71ECFC882EAD7D8\"]},\"timestamp\":\"2026-11-19T17:00:00+05:00\"}\n27\n{\"amount_minor\":6900000,\"currency\":\"KZT\",\"doc_id\":\"DFD6AC6159E899DA6CAD58410\",\"invoice_refs\":[\"I2276A0116A096DD0EEBE77C3\"],\"payment_id\":\"PA55062EE040BCB1E41E70AEA\",\"settlement_index\":{\"before\":\"2026-12-01T00:00:00+05:00\",\"unapplied_row_ids\":[\"R65BC323C3EE63ECD37CE6072\",\"R6E84BC79E72BCE9A53CDA5FA\"]},\"timestamp\":\"2026-11-16T11:00:00+05:00\"}\nвсего строк в файле: 43\namount_minor\t5000000 = 50 000,00 ₸\t\ncurrency\tKZT\t\ndoc_id\tDBD292EDAEA4FDA14AEF2A4FA\t\ninvoice_refs\t[\"IFB7EC04001E37EA268207EFC\"]\t\npayment_id\tP308C7000EC7515B02EEB3610\t\nsettlement_index\tдо 01.12.2026 00:00 (искл.): ledger/R53432EC1D005F5311538DE28ledger/RB74667B32C20460A9F0BCE8C\t\ntimestamp\t2026-11-14T16:00:00+05:00 · 14.11.2026 16:00\t\nИзменить факт и запустить новый опыт…",
+    "errors": [],
+    "key": "payments/DBD292EDAEA4FDA14AEF2A4FA"
+  }
+]

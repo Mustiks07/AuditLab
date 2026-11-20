@@ -9,6 +9,7 @@ from hashlib import sha256
 from importlib import resources
 from importlib.metadata import version
 from pathlib import Path
+from random import Random
 from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -16,7 +17,7 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.4"
+GENERATOR_VERSION = "1.5"
 SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
@@ -99,7 +100,8 @@ def _configuration(seed, config):
     if config_version == "1.1" and sum(counts.values()) > 12:
         raise ValueError("invalid_issue_counts: profile 1.1 supports at most 12 issues")
     distractors = config.get("clean_distractors", list(DISTRACTORS))
-    if (not isinstance(distractors, list) or any(item not in DISTRACTORS for item in distractors)
+    supported_distractors = (*DISTRACTORS, "next_day_settlement") if config_version == "1.1" else DISTRACTORS
+    if (not isinstance(distractors, list) or any(item not in supported_distractors for item in distractors)
             or len(distractors) != len(set(distractors))):
         raise ValueError("invalid_clean_distractors")
     size = config.get("company_size", {})
@@ -119,13 +121,13 @@ def _configuration(seed, config):
     return company, counts, timing, interaction, distractors, size, nonce
 
 
-def _add_paid_invoices(company, amount, issued_at, *, split=False):
+def _add_paid_invoices(company, amount, issued_at, *, split=False, payment_delay_days=2):
     entity = company.id("entity")
     currency = company.base_currency
     invoice = company.invoice(entity, issued_at, currency, amount)
     invoice_id = invoice["invoice_id"]
     company.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice_id)
-    received = issued_at + timedelta(days=2)
+    received = issued_at + timedelta(days=payment_delay_days)
     parts = (amount * 2 // 5, amount - amount * 2 // 5) if split else (amount,)
     for offset, part in enumerate(parts):
         timestamp = received + timedelta(days=offset)
@@ -140,6 +142,10 @@ def _add_clean_history(company, distractors, size):
     at = company.period_start + timedelta(days=rng.randrange(1, 10), hours=rng.randrange(8, 18))
     scale = 10 ** company.exponents[company.base_currency]
     amount = rng.randrange(10, 100) * 1_000 * scale
+    if "next_day_settlement" in distractors:
+        # A clean counterexample to the tempting label shortcut: receipt one day
+        # after invoice and exactly two UNAPPLIED movements also occur when paid in full.
+        _add_paid_invoices(company, amount, at, payment_delay_days=1)
     if "split_payment" in distractors:
         _add_paid_invoices(company, amount, at, split=True)
     if "equal_amount_different_supplier" in distractors:
@@ -322,6 +328,57 @@ def _write_records(directory, name, records, rng, fields=None):
                 writer.writerow({key: "null" if value is None else value for key, value in record.items()})
 
 
+def _write_source_book(source, changed, final_manifest, policy, nonce, order, private, public):
+    """Keep a public-format clean book in the trusted area, with a lossless transition."""
+    directory = private / "source_book"
+    directory.mkdir()
+    manifest = {key: value for key, value in final_manifest.items() if key != "episode_id"}
+    manifest.update(ledger_rows=len(source.ledger),
+                    document_count=len(source.invoices) + len(source.payments))
+    manifest["episode_id"] = _episode_id(source, manifest, policy, nonce)
+    _write_json(directory / "manifest.json", manifest)
+    _write_json(directory / "policy.json", policy)
+    _write_records(directory, "ledger", source.ledger, order, LEDGER_FIELDS)
+    _write_records(directory, "invoices", source.invoices, order)
+    _write_records(directory, "payments", source.payments, order)
+    _write_records(directory, "fx", sorted(source.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
+                   order, FX_FIELDS)
+
+    accounts = {"duplicate_invoice": {"AR", "REVENUE"},
+                "payment_allocation": {"AR", "UNAPPLIED"},
+                "period_cutoff": {"AR", "REVENUE", "FX_VALUATION", "FX_OFFSET"},
+                "fx_conversion": {"FX_VALUATION", "FX_OFFSET"}}
+    changes = []
+    for table, key in (("ledger", "row_id"), ("invoices", "doc_id"), ("payments", "doc_id")):
+        before = {record[key]: record for record in getattr(source, table)}
+        after = {record[key]: record for record in getattr(changed, table)}
+        for record_id in sorted(before.keys() | after.keys()):
+            old, new = before.get(record_id), after.get(record_id)
+            if old == new:
+                continue
+            record = new if new is not None else old
+            entities = {f"{kind}/{record[kind + '_id']}" for kind in ("invoice", "payment")
+                        if record.get(kind + "_id") is not None}
+            indexes = [index for index, mutation in enumerate(changed.mutations)
+                       if entities.intersection(mutation["affected_ids"])
+                       and (table == "ledger" and record["account"] in accounts[mutation["type"]]
+                            or table == "payments" and mutation["type"] == "payment_allocation")]
+            if not indexes:
+                raise RuntimeError("source_book_change_without_mutation")
+            changes.append({"table": table, "id": record_id, "before": old, "after": new,
+                            "mutation_indexes": indexes})
+    transition = {"schema_version": "1.0", "source_episode_id": manifest["episode_id"],
+                  "target_episode_id": final_manifest["episode_id"], "changes": changes}
+    transition_path = private / "source_transition.json"
+    _write_json(transition_path, transition)
+    def hashes(root):
+        return {file.name: sha256(file.read_bytes()).hexdigest() for file in sorted(root.iterdir())}
+    return {"schema_version": "1.0", "path": "source_book", "episode_id": manifest["episode_id"],
+            "files_sha256": hashes(directory), "target_files_sha256": hashes(public),
+            "transition_path": transition_path.name,
+            "transition_sha256": sha256(transition_path.read_bytes()).hexdigest()}
+
+
 def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> None:
     """Generate and validate an episode, then publish it at a fresh path."""
     output = Path(output_dir).absolute()
@@ -342,6 +399,9 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
             "document_count": len(company.invoices) + len(company.payments),
             "issue_count": len(company.issues),
         }
+        source_company = company
+        source_order = Random()
+        source_order.setstate(company.order_rng.getstate())
         company = company.apply_mutations()
         company.close_settlement_indexes()
     company.validate(counts, policy)
@@ -379,6 +439,9 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         if company.config_version == "1.1":
             provenance["timezone_database"] = {"package": "tzdata", "version": version("tzdata")}
             provenance["source_book_validation"] = source_book_validation
+            provenance["source_book"] = _write_source_book(
+                source_company, company, manifest, policy, nonce, source_order, private, public,
+            )
         _write_json(private / "provenance.json", provenance)
         staged.rename(output)
 

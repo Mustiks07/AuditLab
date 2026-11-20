@@ -20,7 +20,10 @@ import uuid
 
 from .transforms import comparable, read_json, transform_public, transform_truth, write_json
 
-VERSION = "internal-rehearsal-1.0"
+VERSION = "internal-rehearsal-1.1"
+SELECTION_VERSION = "internal-selection-1.1"
+# Fixed after public-only subhistory overlap audit; never chosen by policy scores.
+SELECTION_SEEDS = {"internal-02": 911843, "internal-05": 1226030}
 POLICIES = ("random", "reconcile", "flag_all", "oracle")
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
 PUBLIC_FILES = ("manifest.json", "policy.json", "ledger.csv", "invoices.jsonl", "payments.jsonl", "fx.csv")
@@ -72,10 +75,11 @@ def selection_manifest(config_version="1.1"):
                   "base_currency": "KZT", "currencies": ["KZT", currency], "timezone": zone,
                   "target_period": period, "issue_counts": counts, "interaction": interaction,
                   "clean_distractors": ["split_payment", "equal_amount_different_supplier", "refund", "archive_copy"]}
-        rows.append({"id": f"internal-{index+1:02d}", "seed": 807113 + index * 104729,
+        episode_id = f"internal-{index+1:02d}"
+        rows.append({"id": episode_id, "seed": SELECTION_SEEDS.get(episode_id, 807113 + index * 104729),
                      "category": "clean" if index < 5 else "interaction" if index < 10 else "single_or_mixed",
                      "config": config, "pair_seed": 190081 + index * 7919})
-    return {"version": VERSION, "purpose": "internal regression rehearsal, not organizer hidden evaluation",
+    return {"version": SELECTION_VERSION, "purpose": "internal regression rehearsal, not organizer hidden evaluation",
             "selection_rule": "Fixed before this run; never tune policies on this result and call it fresh holdout.",
             "policy_seed": 314159, "policies": list(POLICIES), "episodes": rows}
 
@@ -126,16 +130,16 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
     shutil.copytree(public, copied)
     resources = None
     if verifier_image:
-        from auditlab.runner.isolation import _CGROUP_PROBE, _parse_cgroup_measurements, _verify_cgroup_scope
+        from auditlab.runner.isolation import _CGROUP_PROBE, _parse_cgroup_measurements, _verify_cgroup_scope, launch_label_args
         name = "auditlab-verifier-" + uuid.uuid4().hex
         command = ["docker", "run", "--rm", "-i", "--pull=never", "--name", name,
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
                    "--security-opt", "no-new-privileges", "--pids-limit", "128",
-                   "--cpus", "2", "--memory", "2g", "--memory-swap", "2g", "--user", "65534:65534",
+                   "--cpus", "2", "--memory", "1536m", "--memory-swap", "1536m", "--user", "65534:65534",
                    "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m"]
         if cpuset:
             command += ["--cpuset-cpus", cpuset]
-        command += [verifier_image, "python", "-c", _VERIFIER_SCRIPT, _CGROUP_PROBE]
+        command += launch_label_args() + [verifier_image, "python", "-c", _VERIFIER_SCRIPT, _CGROUP_PROBE]
         payload = json.dumps({name: (copied / name).read_text(encoding="utf-8") for name in PUBLIC_FILES})
         if len(payload.encode()) > 8 * 1024 * 1024:
             raise ValueError("public snapshot exceeds verifier transport limit")
@@ -148,7 +152,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
             reply = json.loads(process.stdout)
             answer = reply["answer"]
             resources = _verify_cgroup_scope(_parse_cgroup_measurements(reply["resources"]), reply["resources"],
-                {"memory": "2g", "cpus": "2", "cpuset": cpuset, "pids": 128})
+                {"memory": "1536m", "cpus": "2", "cpuset": cpuset, "pids": 128})
         finally:
             subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=20)
         isolation = "docker_public_input_only"
@@ -194,7 +198,7 @@ def run_attempt(snapshot: Path, output: Path, selection: dict, policy_name: str,
             policy = OraclePolicy(snapshot)
         else:
             from auditlab.runner.isolation import DockerPolicy
-            kwargs = {"name": policy_name, "seed": policy_seed, "timeout_s": 60, "cpus": "2", "memory": "2g"}
+            kwargs = {"name": policy_name, "seed": policy_seed, "timeout_s": 60, "cpus": "2", "memory": "1536m"}
             if cpuset:
                 kwargs["cpuset"] = cpuset
             policy = DockerPolicy(policy_image, **kwargs)
@@ -204,12 +208,16 @@ def run_attempt(snapshot: Path, output: Path, selection: dict, policy_name: str,
             raise RuntimeError("runner produced no final record")
         final = copy.deepcopy(env.final)
         write_json(output / "final.json", final)
+        row.update(outcome=final["status"], persistence=final.get("persistence", []), infra=final.get("infra", []))
+        if final.get("persistence") or final.get("infra"):
+            raise RuntimeError("runner final record reports infrastructure or persistence failure")
         trusted = read_json(output / "trusted" / "attempt" / "report.json")
         trajectory_path = output / "trusted" / "attempt" / "trajectory.jsonl"
         trajectory = [json.loads(line) for line in trajectory_path.read_text(encoding="utf-8").splitlines()]
         if any(line["reward"] != 0 for line in trajectory):
             raise RuntimeError("closed trajectory leaked a non-neutral reward")
-        good_execution = final["status"] in {"submitted", "invalid_submission", "truncated_budget", "truncated_timeout"} and not trusted["infra"]
+        good_execution = (final["status"] in {"submitted", "invalid_submission", "truncated_budget", "truncated_timeout"}
+                          and not trusted["infra"] and trusted["completed"] is True)
         truth = read_json(snapshot / "private" / "truth.json")
         row.update(status="passed" if good_execution else "failed", kind="measured_attempt" if good_execution else
                    "policy_error" if final["status"] == "policy_failure" else "infrastructure_error",
@@ -340,7 +348,12 @@ def run_pair(snapshot, original_answer, original_oracle, destination, selection,
 
 
 def summarize(attempts):
-    """Missing/failed rows stay in denominators; no synthetic score assigned to a failure."""
+    """Full-plan headline scores require complete evidence; partial scores are labelled explicitly.
+
+    Failed policies retain their diagnostic empty-answer grade in the attempt record, but do not
+    receive an invented performance score. Measured-only aggregates must not masquerade as a
+    complete-plan result. Coverage and failure kinds always use all planned attempts.
+    """
     summary = {}
     for policy in POLICIES:
         rows = [row for row in attempts if row["policy"] == policy]
@@ -353,15 +366,25 @@ def summarize(attempts):
                          for key in ("tp", "fp", "fn")} for kind in ISSUE_TYPES}
         for total in totals.values():
             total["recall"] = total["tp"] / (total["tp"] + total["fn"]) if total["tp"] + total["fn"] else None
+        complete = bool(rows) and len(measured) == len(rows)
+        measured_micro = {**counts, "precision": tp / (tp + fp) if tp + fp else 0,
+                          "recall": tp / (tp + fn) if tp + fn else 0,
+                          "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else (1 if measured else None)}
+        measured_macro = statistics.mean(row["metrics"]["f1"] for row in measured) if measured else None
+        measured_reward = statistics.mean(row["metrics"]["reward"] for row in measured) if measured else None
         summary[policy] = {"planned": len(rows), "measured": len(measured),
+                           "score_status": "complete" if complete else "incomplete",
+                           "measurement_coverage": len(measured) / len(rows) if rows else None,
+                           "failure_kinds": dict(Counter(row.get("kind", "unspecified") for row in rows if row["status"] == "failed")),
+                           "measured_only": {"denominator": len(measured), "micro": measured_micro,
+                                             "macro_f1": measured_macro, "mean_reward": measured_reward,
+                                             "by_class": totals},
                            "failed": sum(row["status"] == "failed" for row in rows),
                            "not_checked": sum(row["status"] == "not_checked" for row in rows),
                            "outcomes": dict(Counter(row.get("outcome", row["status"]) for row in rows)),
-                           "micro": {**counts, "precision": tp / (tp + fp) if tp + fp else 0,
-                                     "recall": tp / (tp + fn) if tp + fn else 0,
-                                     "f1": 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else (1 if measured else None)},
-                           "macro_f1": statistics.mean(row["metrics"]["f1"] for row in measured) if measured else None,
-                           "mean_reward": statistics.mean(row["metrics"]["reward"] for row in measured) if measured else None,
+                           "micro": measured_micro if complete else None,
+                           "macro_f1": measured_macro if complete else None,
+                           "mean_reward": measured_reward if complete else None,
                            "mean_inspection_steps": statistics.mean(row["inspection_steps"] for row in measured) if measured else None,
                            "inspection_steps": [row["inspection_steps"] for row in measured],
                            "elapsed_seconds": [row.get("elapsed_seconds") for row in rows],
@@ -370,7 +393,7 @@ def summarize(attempts):
                            "clean": {"planned": len(clean), "measured": len(clean_measured),
                                      "false_accusation_episodes": sum(row["metrics"]["fp"] > 0 for row in clean_measured),
                                      "rate_over_measured": sum(row["metrics"]["fp"] > 0 for row in clean_measured) / len(clean_measured) if clean_measured else None},
-                           "by_class": totals}
+                           "by_class": totals if complete else None}
     return summary
 
 
@@ -385,7 +408,7 @@ def execute(output: Path, policy_image: str | None, verifier_image: str | None =
     result = pending_plan()
     result.update(selection_sha256=_hash(output / "selection.json"), generator_version=GENERATOR_VERSION,
                   started_at=datetime.now(timezone.utc).isoformat(), policy_image=policy_image,
-                  verifier_image=verifier_image, cpu_set=cpuset, policy_cpu_limit=2, policy_memory_limit_bytes=2 * 1024**3)
+                  verifier_image=verifier_image, cpu_set=cpuset, policy_cpu_limit=2, policy_memory_limit_bytes=1536 * 1024**2)
     def persist():
         result["summary"] = summarize(result["episodes"])
         write_json(output / "report.json", result)
@@ -405,6 +428,11 @@ def execute(output: Path, policy_image: str | None, verifier_image: str | None =
             generate_episode(selection["seed"], selection["config"], snapshot)
             hashes = file_hashes(snapshot)
             entry["snapshot_sha256"] = hashes
+            from tools.check_source_books import check_source_book
+            entry["source_book"] = check_source_book(snapshot)
+            write_json(output / f"{label}-source-book.json", entry["source_book"])
+            if selection["config"].get("config_version") == "1.1" and entry["source_book"]["status"] != "passed":
+                raise RuntimeError("profile 1.1 requires a complete independently checked source book")
             repeated = output / "repeated-snapshots" / label
             generate_episode(selection["seed"], selection["config"], repeated)
             entry["regeneration_identical"] = hashes == file_hashes(repeated)
