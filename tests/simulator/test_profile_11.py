@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
-from auditlab.generator import generate_episode
+from auditlab.generator import GENERATOR_VERSION, generate_episode
 from auditlab.environment import open_session
 from auditlab.generator.core import Company
 from test_policies import run_public_policy
@@ -92,7 +92,7 @@ class Profile11Tests(unittest.TestCase):
             self.assertEqual((manifest["ledger_rows"], manifest["document_count"]), (2000, 200))
             self.assert_reconcile(root)
             provenance = load(root / "private" / "provenance.json")
-            self.assertEqual(provenance["generator_version"], "1.5")
+            self.assertEqual(provenance["generator_version"], GENERATOR_VERSION)
             transfers = [e for e in provenance["events"] if e["kind"] == "treasury_transfer"]
             self.assertTrue(transfers)
             with (root / "public" / "ledger.csv").open(encoding="utf-8", newline="") as stream:

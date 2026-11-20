@@ -42,6 +42,7 @@ class Company:
         self.order_rng = random_stream(seed, "order")
         self._id_streams = {kind: random_stream(seed, "ids/" + kind) for kind in PREFIXES}
         self._source_id_stream = random_stream(seed, "source-only-ids")
+        self._mutation_id_stream = random_stream(seed, "mutation-only-ids")
         self._planned_rows = {}
         self._planned_issues = []
         self.invoices = []
@@ -64,8 +65,15 @@ class Company:
     def id(self, kind):
         return f"{PREFIXES[kind]}{self._id_streams[kind].getrandbits(96):024X}"
 
+    def sample_fault_slots(self, kind, capacity, count):
+        rng = random_stream(self._scenario_seed, f"mutations/{kind}")
+        return set(rng.sample(range(capacity), count))
+
     def _source_id(self, kind):
         return f"{PREFIXES[kind]}{self._source_id_stream.getrandbits(96):024X}"
+
+    def _mutation_id(self, kind):
+        return f"{PREFIXES[kind]}{self._mutation_id_stream.getrandbits(96):024X}"
 
     def invoice(self, entity_id, issued_at, currency, total_minor, *, invoice_id=None):
         due = max(self.period_end, issued_at.astimezone(self.zone) + timedelta(days=14))
@@ -80,7 +88,11 @@ class Company:
 
     def post(self, timestamp, currency, amount, debit_account, credit_account, entity_id,
              *, invoice_id=None, payment_id=None, after=None, source_only=False):
-        next_id = self._source_id if source_only else self.id
+        next_id = self.id
+        if source_only:
+            next_id = self._source_id
+        elif after is not None:
+            next_id = self._mutation_id
         common = {
             "timestamp": timestamp.isoformat(), "currency": currency, "entity_id": entity_id,
             "invoice_id": invoice_id, "payment_id": payment_id, "journal_id": next_id("journal"),
@@ -185,15 +197,45 @@ class Company:
             receipt_at, receipt_at + timedelta(minutes=1), self.period_end + timedelta(minutes=minute),
         )
 
-    def allocation_issue(self):
+    def allocation_case(self, *, enabled=True):
         _, day, hour, minute = self.case_parameters("allocation", 50_000, day=11, hour=10)
         receipt_at = self.period_start + timedelta(days=day, hours=hour, minutes=minute)
         scale = 10 ** self.exponents[self.base_currency]
         amount = self.events_rng.randrange(350, 900) * 100 * scale
+        if self.config_version == "1.1":
+            self._single_settlement(amount, receipt_at, enabled=enabled)
+            return
         self.allocation(
             self.id("entity"), self.base_currency, amount, amount * 3 // 5, receipt_at,
             receipt_at + timedelta(days=1), receipt_at + timedelta(days=2), leave_remainder=True,
         )
+
+    def _single_settlement(self, amount, receipt_at, *, enabled):
+        entity = self.id("entity")
+        currency = self.base_currency
+        issued_at = receipt_at - timedelta(days=1)
+        invoice = self.invoice(entity, issued_at, currency, amount)
+        invoice_id = invoice["invoice_id"]
+        self.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice_id)
+        payment, _ = self.payment(entity, receipt_at, currency, amount, invoice_id)
+        payment_id = payment["payment_id"]
+        settled_at = receipt_at + timedelta(days=1)
+        posting = self.post(settled_at, currency, amount, "UNAPPLIED", "AR", entity,
+                            invoice_id=invoice_id, payment_id=payment_id)
+        affected = [f"invoice/{invoice_id}", f"payment/{payment_id}"]
+        self.events.append({"kind": "designated_payment", "affected_ids": affected, "currency": currency,
+                            "amount_minor": amount, "receipt_at": receipt_at.isoformat(),
+                            "settled_at": settled_at.isoformat()})
+        if enabled:
+            applied = amount * 3 // 5
+            self.defer_posting_changes(posting, timestamp=settled_at, amount=applied)
+            self.mutations.append({
+                "type": "payment_allocation", "affected_ids": affected,
+                "before": {"settled_at": settled_at.isoformat(), "applied_minor": amount},
+                "after": {"settled_at": settled_at.isoformat(), "applied_minor": applied,
+                          "remaining_minor": amount - applied},
+                "effect": "The settlement posted less than the designated payment.",
+            })
 
     def close_settlement_indexes(self):
         movements = defaultdict(list)

@@ -44,14 +44,16 @@ def add_duplicate(b, *, enabled=True):
         })
 
 
-def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
+def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled, next_period=False):
     _, _, hour, minute = b.case_parameters("boundary", 100)
     distance = 1 if b.config_version == "1.0" else hour * 60 + minute + 1
-    issued_at = b.period_end - timedelta(minutes=distance)
-    posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else issued_at
+    issued_at = b.period_end + timedelta(minutes=distance if next_period else -distance)
+    # Recognition batches can run later than issue time without crossing a period.
+    recognized_at = issued_at + timedelta(minutes=distance // 2)
+    posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else recognized_at
     invoice = b.invoice(b.id("entity"), issued_at, currency, total_minor)
     deferred = b.config_version == "1.1" and cutoff_enabled
-    posting = _recognize(b, invoice, issued_at if deferred else posted_at)
+    posting = _recognize(b, invoice, recognized_at if deferred else posted_at)
     debit, _ = posting
     if deferred:
         b.defer_posting_changes(posting, timestamp=posted_at)
@@ -61,24 +63,24 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
         "kind": "invoice_issued", "affected_ids": affected, "source": source,
         "issued_at": issued_at.isoformat(), "total_minor": total_minor, "currency": currency,
     })
-    if not b.period_start <= posted_at < b.period_end:
+    if cutoff_enabled:
         evidence = [source, f"ledger/{debit['row_id']}", "policy/period"]
         b.issue("period_cutoff", affected, invoice["total_minor"], currency, evidence, deferred=True)
         b.mutations.append({
             "type": "period_cutoff", "affected_ids": affected,
-            "before": {"timestamp": issued_at.isoformat()},
+            "before": {"timestamp": recognized_at.isoformat()},
             "after": {"timestamp": posted_at.isoformat(), "journal_id": debit["journal_id"]},
             "effect": "The invoice was recognized in the following reporting period.",
             "evidence_ids": evidence,
         })
-    return invoice, posted_at
+    return invoice, posted_at, recognized_at
 
 
-def add_cutoff(b, *, enabled=True):
+def add_cutoff(b, *, enabled=True, next_period=False):
     """Recognize a base-currency invoice on either side of period_end."""
     units, *_ = b.case_parameters("cutoff", 24_000)
     amount = units * 10 ** b.exponents[b.base_currency]
-    _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled)
+    _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled, next_period=next_period)
 
 
 def _foreign_currency(b, *, prefer_usd=False):
@@ -137,7 +139,7 @@ def _convert(b, amount_minor, currency, rate):
         return int(target_minor.to_integral_value())
 
 
-def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
+def _value(b, invoice, posted_at, *, payment=None, fx_enabled, recognized_at=None):
     if payment is None:
         currency, amount = invoice["currency"], invoice["total_minor"]
         source_at = invoice["issued_at"]
@@ -152,6 +154,7 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
         affected = [f"payment/{payment_id}"]
 
     source_at = datetime.fromisoformat(source_at)
+    recognized_at = recognized_at if recognized_at is not None else source_at
     expected_date = source_at.astimezone(b.zone).date()
     correct_rate, alternate_date, alternate_rate = _rates(b, currency, expected_date, amount)
     actual_date, actual_rate = (alternate_date, alternate_rate) if fx_enabled else (expected_date, correct_rate)
@@ -159,12 +162,12 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
     actual = _convert(b, amount, currency, actual_rate)
     deferred = b.config_version == "1.1"
     posting = b.post(
-        source_at if deferred else posted_at, b.base_currency, expected if deferred else actual,
+        recognized_at if deferred else posted_at, b.base_currency, expected if deferred else actual,
         "FX_VALUATION", "FX_OFFSET", invoice["entity_id"],
         invoice_id=invoice["invoice_id"], payment_id=payment_id,
     )
     debit, _ = posting
-    if deferred and (posted_at != source_at or actual != expected):
+    if deferred and (posted_at != recognized_at or actual != expected):
         b.defer_posting_changes(posting, timestamp=posted_at, amount=actual)
     b.events.append({
         "kind": "reporting_valuation", "affected_ids": affected, "source": source,
@@ -218,11 +221,11 @@ def add_allocation_fx(b, *, allocation_enabled, fx_enabled):
     _value(b, invoice, received_at, payment=payment, fx_enabled=fx_enabled)
 
 
-def add_cutoff_fx(b, *, cutoff_enabled, fx_enabled):
+def add_cutoff_fx(b, *, cutoff_enabled, fx_enabled, next_period=False):
     """Use one invoice for independent period and FX controls."""
     currency = _foreign_currency(b, prefer_usd=True)
     units, *_ = b.case_parameters("cutoff_fx", 100)
-    invoice, posted_at = _boundary_invoice(
-        b, currency, units * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled,
+    invoice, posted_at, recognized_at = _boundary_invoice(
+        b, currency, units * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled, next_period=next_period,
     )
-    _value(b, invoice, posted_at, fx_enabled=fx_enabled)
+    _value(b, invoice, posted_at, fx_enabled=fx_enabled, recognized_at=recognized_at)
