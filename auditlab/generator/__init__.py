@@ -100,7 +100,8 @@ def _configuration(seed, config):
     if config_version == "1.1" and sum(counts.values()) > 12:
         raise ValueError("invalid_issue_counts: profile 1.1 supports at most 12 issues")
     distractors = config.get("clean_distractors", list(DISTRACTORS))
-    if (not isinstance(distractors, list) or any(item not in DISTRACTORS for item in distractors)
+    supported_distractors = (*DISTRACTORS, "next_day_settlement") if config_version == "1.1" else DISTRACTORS
+    if (not isinstance(distractors, list) or any(item not in supported_distractors for item in distractors)
             or len(distractors) != len(set(distractors))):
         raise ValueError("invalid_clean_distractors")
     size = config.get("company_size", {})
@@ -120,13 +121,13 @@ def _configuration(seed, config):
     return company, counts, timing, interaction, distractors, size, nonce
 
 
-def _add_paid_invoices(company, amount, issued_at, *, split=False):
+def _add_paid_invoices(company, amount, issued_at, *, split=False, payment_delay_days=2):
     entity = company.id("entity")
     currency = company.base_currency
     invoice = company.invoice(entity, issued_at, currency, amount)
     invoice_id = invoice["invoice_id"]
     company.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice_id)
-    received = issued_at + timedelta(days=2)
+    received = issued_at + timedelta(days=payment_delay_days)
     parts = (amount * 2 // 5, amount - amount * 2 // 5) if split else (amount,)
     for offset, part in enumerate(parts):
         timestamp = received + timedelta(days=offset)
@@ -141,6 +142,10 @@ def _add_clean_history(company, distractors, size):
     at = company.period_start + timedelta(days=rng.randrange(1, 10), hours=rng.randrange(8, 18))
     scale = 10 ** company.exponents[company.base_currency]
     amount = rng.randrange(10, 100) * 1_000 * scale
+    if "next_day_settlement" in distractors:
+        # A clean counterexample to the tempting label shortcut: receipt one day
+        # after invoice and exactly two UNAPPLIED movements also occur when paid in full.
+        _add_paid_invoices(company, amount, at, payment_delay_days=1)
     if "split_payment" in distractors:
         _add_paid_invoices(company, amount, at, split=True)
     if "equal_amount_different_supplier" in distractors:
