@@ -55,8 +55,14 @@ Reproduce the simulator tests:
 python -m unittest discover -s tests/simulator -v
 ```
 
-Generate the fixed internal selection and check its originals (use a fresh
-`artifacts/source-books` path):
+The receipt above concerns the original internal selection, before two clean
+subhistories were found to overlap dev and the internal set. To reproduce those
+exact historical hashes, use the clean repository commit
+`11612cd` (the generator 1.5 integration commit). Later selection revisions must
+produce their own receipt; the old receipt is not evidence for changed seeds.
+
+Generate the checked-out version's fixed internal selection and check its
+originals (use a fresh `artifacts/source-books` path):
 
 ```sh
 python - <<'PY'
