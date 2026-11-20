@@ -424,6 +424,11 @@ def execute(output: Path, policy_image: str | None, verifier_image: str | None =
             generate_episode(selection["seed"], selection["config"], snapshot)
             hashes = file_hashes(snapshot)
             entry["snapshot_sha256"] = hashes
+            from tools.check_source_books import check_source_book
+            entry["source_book"] = check_source_book(snapshot)
+            write_json(output / f"{label}-source-book.json", entry["source_book"])
+            if selection["config"].get("config_version") == "1.1" and entry["source_book"]["status"] != "passed":
+                raise RuntimeError("profile 1.1 requires a complete independently checked source book")
             repeated = output / "repeated-snapshots" / label
             generate_episode(selection["seed"], selection["config"], repeated)
             entry["regeneration_identical"] = hashes == file_hashes(repeated)
