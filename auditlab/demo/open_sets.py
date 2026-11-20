@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import subprocess
 import sys
@@ -80,8 +81,12 @@ def run(image: str, results: str, root: Path) -> int:
 
 # ----------------------------------------------------------------------- summarize
 def attempt_problem(row: dict) -> str | None:
-    if row.get("returncode") != 0:
-        return f"процесс завершился с кодом {row.get('returncode')}"
+    """Reason why an attempt cannot be counted as measured, or None. Types are exact: bool is not a number."""
+    returncode = row.get("returncode")
+    if type(returncode) is not int:
+        return f"нет целого кода возврата: {returncode!r}"
+    if returncode != 0:
+        return f"процесс завершился с кодом {returncode}"
     if row.get("parse_error"):
         return f"ответ не разобран: {row['parse_error']}"
     result = row.get("result")
@@ -90,11 +95,32 @@ def attempt_problem(row: dict) -> str | None:
     if result.get("status") != "submitted":
         return f"статус {result.get('status')!r}, а не submitted"
     score = result.get("score")
-    if not isinstance(score, dict) or any(type(score.get(k)) is not int for k in ("tp", "fp", "fn")):
-        return "нет score с целыми tp/fp/fn"
-    if type(result.get("reward")) not in (int, float):
-        return "нет reward"
+    if not isinstance(score, dict):
+        return "нет score"
+    for name in ("tp", "fp", "fn"):
+        value = score.get(name)
+        if type(value) is not int:
+            return f"score.{name} не целое число: {value!r}"
+        if value < 0:
+            return f"score.{name} отрицательное: {value}"
+    reward = result.get("reward")
+    if type(reward) not in (int, float):
+        return f"нет числового reward: {reward!r}"
+    if not math.isfinite(reward):
+        return f"reward не конечное число: {reward!r}"
+    if not -1 <= reward <= 1:
+        return f"reward {reward} вне диапазона [-1, 1] (SPEC §9)"
     return None
+
+
+def row_key(row: object) -> tuple[str, str, str] | None:
+    """(split, episode, policy) only for a JSON object with three non-empty string identifiers."""
+    if not isinstance(row, dict):
+        return None
+    key = tuple(row.get(name) for name in ("split", "episode", "policy"))
+    if not all(isinstance(part, str) and part for part in key):
+        return None
+    return key  # type: ignore[return-value]
 
 
 def expected_episodes(datasets: Path | None) -> dict[str, list[str]] | None:
@@ -116,9 +142,13 @@ def summarize(lines: list[str], expected: dict[str, list[str]] | None = None) ->
             continue
         try:
             row = json.loads(line)
-            key = (row["split"], row["episode"], row["policy"])
-        except (ValueError, TypeError, KeyError) as error:
+        except ValueError as error:
             problems.append(f"строка {number} не разобрана: {type(error).__name__}")
+            malformed = True
+            continue
+        key = row_key(row)
+        if key is None:
+            problems.append(f"строка {number}: нужен JSON-объект с непустыми строками split, episode, policy")
             malformed = True
             continue
         if key in rows:

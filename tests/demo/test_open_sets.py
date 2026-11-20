@@ -2,6 +2,7 @@
 
 Run: python -m unittest discover -s tests/demo -v
 """
+import copy
 import io
 import json
 import re
@@ -71,8 +72,8 @@ class Summary(unittest.TestCase):
         report = open_sets.summarize(lines(rows), episodes)
         self.assertEqual(report["exit_code"], 1)
         problems = [f["problem"] for row in report["policies"].values() for f in row["failed"]]
-        self.assertIn("нет score с целыми tp/fp/fn", problems)
-        self.assertIn("нет reward", problems)
+        self.assertIn("нет score", problems)
+        self.assertIn("нет числового reward: None", problems)
 
     def test_unparsed_output_and_no_output(self):
         self.assertEqual(open_sets.record("train", "E", "random", 0, "Traceback ...\n", "")["parse_error"][:4], "last")
@@ -137,6 +138,94 @@ class Summary(unittest.TestCase):
                          ["auditlab.runner", "policy", "--snapshot", "datasets/open/train/E1"])
         self.assertEqual(open_sets.attempt_command("dev", "E1", "oracle", "sha256:p", "/results")[3], "oracle")
 
+
+
+class InputValues(unittest.TestCase):
+    """Integrator review of c34a05c: values must be valid, not only typed, and keys must be checked first."""
+
+    def setUp(self):
+        self.episodes = open_sets.expected_episodes(DATASETS)
+        self.base = [open_sets.record(s, e, p, 0, json.dumps(
+            {"status": "submitted", "reward": 1, "score": {"tp": 1, "fp": 0, "fn": 0}}), "")
+            for s in open_sets.SPLITS for e in self.episodes[s] for p in open_sets.POLICIES]
+
+    def assert_rejected(self, rows, policy="train/random", reason=None, raw=None):
+        report = open_sets.summarize(raw if raw is not None else [json.dumps(r) for r in rows], self.episodes)
+        row = report["policies"][policy]
+        self.assertEqual((report["status"], report["exit_code"]), ("не проверено", 1))
+        self.assertIsNone(row["mean_reward"])
+        self.assertIsNone(row["micro"])
+        self.assertEqual(row["measured"], 9)
+        if reason:
+            self.assertTrue(any(reason in f["problem"] for f in row["failed"]) or
+                            any(reason in p for p in report["problems"]), (reason, row["failed"], report["problems"]))
+        return report
+
+    def test_plain_80_rows_still_pass(self):
+        report = open_sets.summarize([json.dumps(r) for r in self.base], self.episodes)
+        self.assertEqual((report["status"], report["exit_code"]), ("complete", 0))
+
+    def test_integrator_nan_reward(self):
+        rows = copy.deepcopy(self.base)
+        rows[0]["result"]["reward"] = float("nan")
+        self.assert_rejected(rows, reason="не конечное")
+
+    def test_infinity_from_json_1e309(self):
+        raw = [json.dumps(r) for r in self.base]
+        raw[0] = raw[0].replace('"reward": 1', '"reward": 1e309')
+        self.assertIn("1e309", raw[0])
+        self.assert_rejected(None, reason="не конечное", raw=raw)
+
+    def test_negative_and_boolean_counts(self):
+        for name, value, reason in (("tp", -10, "отрицательное"), ("fp", -1, "отрицательное"),
+                                    ("fn", True, "не целое"), ("tp", 1.0, "не целое")):
+            with self.subTest(name=name, value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0]["result"]["score"][name] = value
+                self.assert_rejected(rows, reason=reason)
+
+    def test_boolean_or_out_of_range_reward(self):
+        for value, reason in ((True, "нет числового reward"), ("1", "нет числового reward"), (1.5, "вне диапазона"),
+                              (-2, "вне диапазона")):
+            with self.subTest(value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0]["result"]["reward"] = value
+                self.assert_rejected(rows, reason=reason)
+
+    def test_return_code_must_be_an_integer_zero(self):
+        for value in (False, True, "0", None, 0.0):
+            with self.subTest(value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0]["returncode"] = value
+                self.assert_rejected(rows, reason="кода возврата")
+
+    def test_invalid_identifiers_are_malformed_rows_without_traceback(self):
+        for field, value in (("episode", None), ("episode", []), ("episode", ""), ("split", 3), ("policy", {"a": 1})):
+            with self.subTest(field=field, value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0][field] = value
+                report = self.assert_rejected(rows, reason="непустыми строками split, episode, policy")
+                self.assertEqual(report["policies"]["train/random"]["missing"], [self.base[0]["episode"]])
+
+    def test_row_that_is_not_an_object(self):
+        raw = [json.dumps(r) for r in self.base]
+        raw[0] = json.dumps(["train", self.base[0]["episode"], "random"])
+        raw.append("42")
+        self.assert_rejected(None, reason="JSON-объект", raw=raw)
+
+    def test_cli_reports_invalid_values_instead_of_crashing(self):
+        rows = copy.deepcopy(self.base)
+        rows[0]["episode"] = None
+        rows[1]["result"]["reward"] = float("inf")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "summary.jsonl"
+            path.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+            out = io.StringIO()
+            with redirect_stdout(out):
+                code = open_sets.main(["summarize", str(path), "--datasets", str(DATASETS)])
+        self.assertEqual(code, 1)
+        self.assertIn("НЕ ПРОВЕРЕНО: mean_reward null", out.getvalue())
+        self.assertIn("непустыми строками", out.getvalue())
 
 class HandoffCopy(unittest.TestCase):
     def test_handoff_embeds_the_shipped_tool_byte_for_byte(self):
