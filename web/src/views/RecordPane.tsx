@@ -6,9 +6,9 @@ import { money, opError, when } from "../format";
 
 const MONEY_FIELDS = new Set(["debit_minor", "credit_minor", "amount_minor", "total_minor"]);
 
-export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt, listedAt = null, cited, canChange }: {
+export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt, listedAt = null, cited, canChange, generator }: {
   runId: string; recordKey: string; onOpen: (k: string) => void; highlightFields: string[];
-  openedAt: number | null; listedAt?: number | null; cited: boolean; canChange: boolean;
+  openedAt: number | null; listedAt?: number | null; cited: boolean; canChange: boolean; generator?: string;
 }) {
   const [rec, setRec] = useState<RecordView | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -79,7 +79,7 @@ export function RecordPane({ runId, recordKey, onOpen, highlightFields, openedAt
         <button type="button" className="btn" onClick={() => setChanging(true)}>Изменить факт и запустить новый опыт…</button>
       )}
       {canEditTime && changing && (
-        <ChangeFact runId={runId} target={rec.key} current={String(rec.fields.timestamp)} onCancel={() => setChanging(false)} />
+        <ChangeFact runId={runId} target={rec.key} current={String(rec.fields.timestamp)} generator={generator} onCancel={() => setChanging(false)} />
       )}
     </div>
   );
@@ -109,7 +109,10 @@ function shiftIso(iso: string, minutes: number): string {
   return `${t.getUTCFullYear()}-${pad(t.getUTCMonth() + 1)}-${pad(t.getUTCDate())}T${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}:${pad(t.getUTCSeconds())}${offset}`;
 }
 
-export function ChangeFact({ runId, target, current, onCancel }: { runId: string; target: string; current: string; onCancel: () => void }) {
+export function ChangeFact({ runId, target, current, generator, onCancel }: {
+  runId: string; target: string; current: string; generator?: string; onCancel: () => void;
+}) {
+  const generated = (generator ?? "").startsWith("auditlab.generator");
   const [value, setValue] = useState(shiftIso(current, 2));
   const [prediction, setPrediction] = useState("");
   const [status, setStatus] = useState<OpStatus | null>(null);
@@ -134,7 +137,16 @@ export function ChangeFact({ runId, target, current, onCancel }: { runId: string
   return (
     <div className="change-form">
       <div className="change-title">Изменить один факт: <span className="mono">{target}.timestamp</span></div>
-      <div className="small muted">Будет создана новая неизменяемая компания с согласованными датами и прежними записанными суммами, по ней заново пройдёт аудитор и оценщик. Исходная попытка не меняется.</div>
+      {generated ? (
+        <div className="small muted">
+          Компанию заново построит настоящий генератор (<span className="mono">{generator}</span>) с тем же seed. Меняется один
+          параметр — время последнего зачёта относительно исключаемой границы периода: до, ровно на или после неё. Допустимое
+          значение — дата, которую ставит генератор (обычно ±1 минута от границы); другое значение будет отклонено с
+          перечнем допустимых. Затем пройдут настоящие аудитор, оценщик и SQL-сверка. Исходная попытка не меняется.
+        </div>
+      ) : (
+        <div className="small muted">Будет создана новая неизменяемая компания с согласованными датами и прежними записанными суммами, по ней заново пройдёт аудитор и оценщик. Исходная попытка не меняется.</div>
+      )}
       <label className="field">
         <span>было</span><code>{current}</code>
       </label>

@@ -1,0 +1,327 @@
+{
+ "scope": "Agent check of the published v0.1.0-rc.2 by the receiver instructions (Claude Pro 3, 2026-11-20). Not an independent human acceptance; RC2 is a historical candidate, blocker #23 is open; internal F1/rewards are not a contest score.",
+ "bundle": {
+  "zip": "AuditLab-v0.1.0-rc.2-offline.zip",
+  "zip_sha256": "54850f508b65d48be8e7b2aa6b1404d4a35cc0bdbc02f83c767afa06c16b62c9",
+  "source_revision": "0791995d2d8ff3d15d5043197fc6079be01e6a6f",
+  "payload_size_bytes": 314973218
+ },
+ "machine": {
+  "os": "Ubuntu 24.04.5 LTS (cloud session container)",
+  "kernel": "6.18.44-fc-v726",
+  "arch": "x86_64",
+  "python": "3.11.18 (launcher); 3.11.14 inside runtime image",
+  "docker_engine": "29.10.0",
+  "cgroup": 1
+ },
+ "stores": {
+  "classic": {
+   "driver": "overlay2",
+   "steps": [
+    {
+     "command": "python3.11 offline.py check",
+     "exit": 0,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py verify --output-root ./results",
+     "exit": 2,
+     "seconds": 118.0
+    },
+    {
+     "command": "python3.11 offline.py verify --suite rehearsal --output-root ./results",
+     "exit": 2,
+     "seconds": 212.5
+    },
+    {
+     "command": "python3.11 -I source/tools/check_rehearsal_evidence.py RESULTS --bundle . --output evidence-summary.json",
+     "exit": 2,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py image --role runtime",
+     "exit": 0,
+     "seconds": 0.3
+    }
+   ],
+   "verify_runs": [
+    {
+     "dir": "verify-20261120T122602Z-b3332956ff47",
+     "suite": "quick",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "image_load_seconds": 2.11,
+     "elapsed_seconds": 117.9,
+     "report_status": "incomplete",
+     "report_exit": 0,
+     "tests": 256,
+     "failed_or_skipped": 0
+    },
+    {
+     "dir": "verify-20261120T122800Z-b6c88a641919",
+     "suite": "rehearsal",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "image_load_seconds": 0.28,
+     "elapsed_seconds": 212.4,
+     "report_status": "incomplete",
+     "report_exit": 2,
+     "tests": 256,
+     "failed_or_skipped": 0
+    },
+    {
+     "dir": "verify-20261120T123425Z-d108491bc00d",
+     "suite": "quick",
+     "launcher_status": "interrupted",
+     "launcher_exit": 130,
+     "image_load_seconds": 0.33,
+     "elapsed_seconds": 25.2,
+     "report_status": "incomplete",
+     "report_exit": 0,
+     "tests": 256,
+     "failed_or_skipped": 0,
+     "note": "SIGINT sent only to the launcher PID: launcher wrote interrupted/130, the controller container kept running and completed this report afterwards"
+    },
+    {
+     "dir": "verify-20261120T123636Z-1d024c497ecd",
+     "suite": "quick",
+     "launcher_status": "interrupted",
+     "launcher_exit": 130,
+     "image_load_seconds": 0.3,
+     "elapsed_seconds": 25.3,
+     "report_status": "in_progress",
+     "report_exit": null,
+     "tests": 190,
+     "failed_or_skipped": 0,
+     "note": "SIGINT to the whole process group (as Ctrl+C): controller stopped at once, partial report"
+    },
+    {
+     "dir": "verify-20261120T123750Z-548ddc2e6a3a",
+     "suite": "quick",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "image_load_seconds": 0.28,
+     "elapsed_seconds": 108.4,
+     "report_status": "incomplete",
+     "report_exit": 0,
+     "tests": 256,
+     "failed_or_skipped": 0
+    }
+   ],
+   "loaded_images": {
+    "runtime": "sha256:13acda7016b26082c1957189da05f30e6400ec81d349fa40450f5e5a55c211b9",
+    "verifier": "sha256:b69b192846f3a689fbc45794d2684b617302f42a6dc4670a6dcc36e11f1f90c6",
+    "policy": "sha256:08632c77eac388b55b44336b5773a6c6d8b10fd95ffc39682c0167dfcb15d470"
+   },
+   "rehearsal_summary": {
+    "random": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 38,
+     "mean_reward": -0.5035
+    },
+    "reconcile": {
+     "tp": 38,
+     "fp": 0,
+     "fn": 0,
+     "mean_reward": 0.9512
+    },
+    "flag_all": {
+     "tp": 0,
+     "fp": 600,
+     "fn": 38,
+     "mean_reward": -1.0
+    },
+    "oracle": {
+     "tp": 38,
+     "fp": 0,
+     "fn": 0,
+     "mean_reward": 1.0
+    }
+   },
+   "evidence_checker": {
+    "status": "not_checked",
+    "exit_code": 2,
+    "datasets": 20,
+    "attempts": 80,
+    "pairs": 20,
+    "failures": [],
+    "missing_count": 102
+   },
+   "docker_events": {
+    "image_pull": 0,
+    "network_connect": [
+     "none"
+    ]
+   },
+   "console_vs_cli_rehearsal": {
+    "snapshots": 20,
+    "mismatches": 0,
+    "tp": 38,
+    "fp": 0,
+    "fn": 0,
+    "currencies": [
+     "JPY",
+     "KWD",
+     "KZT",
+     "USD"
+    ]
+   },
+   "demo": {
+    "health": {
+     "ok": true,
+     "runs": 3,
+     "static": true
+    },
+    "external_requests": 0,
+    "page_errors": 0,
+    "checked": "control pair Δ 20 000,00 ₸; ledger/R5 → public/ledger.csv line 6; Оценщик/Консоль/SQL; empty S01; two operation errors; fact change S01 ledger/R7; rescore ledger/R5→R6 TP 1→0; replay in UI; replay --check of the live run in a --network none container exit 0"
+   },
+   "interrupt": {
+    "ctrl_c_process_group": {
+     "exit": 130,
+     "controller_stopped": true
+    },
+    "sigint_launcher_only": {
+     "exit": 130,
+     "controller_stopped": false,
+     "controller_finished_after_s": "~120"
+    },
+    "rerun_after_interrupt": {
+     "exit": 2,
+     "seconds": 108.4
+    }
+   }
+  },
+  "containerd": {
+   "driver": "overlayfs io.containerd.snapshotter.v1",
+   "steps": [
+    {
+     "command": "python3.11 offline.py check",
+     "exit": 0,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py verify --output-root ./results",
+     "exit": 2,
+     "seconds": 121.9
+    },
+    {
+     "command": "python3.11 offline.py verify --suite rehearsal --output-root ./results",
+     "exit": 2,
+     "seconds": 240.7
+    },
+    {
+     "command": "python3.11 -I source/tools/check_rehearsal_evidence.py RESULTS --bundle . --output evidence-summary.json",
+     "exit": 2,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py image --role runtime",
+     "exit": 0,
+     "seconds": 0.4
+    }
+   ],
+   "verify_runs": [
+    {
+     "dir": "verify-20261120T124012Z-c12281ecb371",
+     "suite": "quick",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "image_load_seconds": 2.76,
+     "elapsed_seconds": 121.9,
+     "report_status": "incomplete",
+     "report_exit": 0,
+     "tests": 256,
+     "failed_or_skipped": 0
+    },
+    {
+     "dir": "verify-20261120T124214Z-428142f991a3",
+     "suite": "rehearsal",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "image_load_seconds": 2.24,
+     "elapsed_seconds": 240.6,
+     "report_status": "incomplete",
+     "report_exit": 2,
+     "tests": 256,
+     "failed_or_skipped": 0
+    }
+   ],
+   "loaded_images": {
+    "runtime": "sha256:a7679e5c26dc339046d1099342156e09740dec510aa82409376451306e6bbfd2",
+    "verifier": "sha256:07944ca79f767a7e7457ed55953c72e49fbaef7cc34c431fb1b2d78b9bb600b2",
+    "policy": "sha256:e59730978fd85ff117950dc1bdfc9c5b0a1c0e1e39c863586dedb8c3856cf0a5"
+   },
+   "rehearsal_summary": {
+    "random": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 38,
+     "mean_reward": -0.5035
+    },
+    "reconcile": {
+     "tp": 38,
+     "fp": 0,
+     "fn": 0,
+     "mean_reward": 0.9512
+    },
+    "flag_all": {
+     "tp": 0,
+     "fp": 600,
+     "fn": 38,
+     "mean_reward": -1.0
+    },
+    "oracle": {
+     "tp": 38,
+     "fp": 0,
+     "fn": 0,
+     "mean_reward": 1.0
+    }
+   },
+   "evidence_checker": {
+    "status": "not_checked",
+    "exit_code": 2,
+    "datasets": 20,
+    "attempts": 80,
+    "pairs": 20,
+    "failures": [],
+    "missing_count": 102
+   },
+   "docker_events": {
+    "image_pull": 0,
+    "network_connect": [
+     "none"
+    ]
+   },
+   "console_vs_cli_rehearsal": {
+    "snapshots": 20,
+    "mismatches": 0,
+    "tp": 38,
+    "fp": 0,
+    "fn": 0,
+    "currencies": [
+     "JPY",
+     "KWD",
+     "KZT",
+     "USD"
+    ]
+   },
+   "demo": {
+    "health": {
+     "ok": true,
+     "runs": 3,
+     "static": true
+    },
+    "external_requests": 0,
+    "page_errors": 0,
+    "checked": "control pair Δ 20 000,00 ₸; ledger/R5 → public/ledger.csv line 6; Оценщик/Консоль/SQL; empty S01; two operation errors; fact change S01 ledger/R7; rescore ledger/R5→R6 TP 1→0; replay in UI; replay --check of the live run in a --network none container exit 0"
+   }
+  }
+ },
+ "console_branch_check": {
+  "note": "console code of this PR (checkout), not the RC2 image",
+  "crosscheck_live": "6 runs, 0 mismatches; live replay and re-score executed",
+  "rehearsal_parity": "crosscheck --rehearsal on both stores' rehearsal results: 20/20 snapshots identical to CLI final.json and trajectories"
+ }
+}

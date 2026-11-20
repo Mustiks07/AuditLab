@@ -80,6 +80,19 @@ class ExportStore:
             out.append(meta)
         return out
 
+    def review_run_ids(self) -> list[str]:
+        """Include broken completed open exports in verification, never silently skip them.
+
+        Closed/unfinished attempts stay excluded, as they do in the console. A rejected
+        completed export contributes its ID only; the checker will report the refusal.
+        """
+        ids = set()
+        for directory in self._candidates():
+            meta, _ = self._check(directory)
+            if meta and meta.get("mode") == "train" and meta.get("status") == "completed":
+                ids.add(meta["run_id"])
+        return sorted(ids)
+
     def run_dir(self, run_id: str) -> Path:
         if not RUN_ID_RE.match(run_id or ""):
             raise NotFound(run_id)

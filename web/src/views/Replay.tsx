@@ -72,6 +72,7 @@ export function Replay({ runId }: { runId: string }) {
       </div>
       {check && (
         <div className={`banner ${check.observations_match && check.score_match !== false ? "banner-ok" : "banner-error"}`}>
+          <b>ЖИВОЙ ПЕРЕСЧЁТ</b>{check.executed_at && <> · выполнен сейчас: <span className="mono">{check.executed_at}</span>, {check.elapsed_ms} мс</>}.{" "}
           Повтор {check.steps_checked} инспекций через {check.session === "demo-standin" ? "учебную среду" : check.session}: наблюдения {check.observations_match ? "совпали" : `разошлись на шагах ${check.mismatches.map((m) => m.step).join(", ")}`}.
           {check.score_match !== undefined && check.score_match !== null && <> Повтор оценки: {check.score_match ? "совпала" : "разошлась"} (награда {reward(check.score_again?.reward)}).</>}
           {check.score_note && <> {check.score_note}</>}

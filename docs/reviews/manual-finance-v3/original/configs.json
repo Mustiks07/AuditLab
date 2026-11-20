@@ -1,0 +1,261 @@
+{
+ "C1-clean-refund": [
+  7101,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 0,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund",
+    "split_payment"
+   ]
+  }
+ ],
+ "C2-partial-allocation": [
+  7102,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 1,
+    "fx_conversion": 0,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [],
+   "settlement_timing": "after"
+  }
+ ],
+ "C3a-boundary-before": [
+  7103,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 0,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [],
+   "settlement_timing": "before"
+  }
+ ],
+ "C3b-boundary-at": [
+  7103,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 1,
+    "fx_conversion": 0,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [],
+   "settlement_timing": "at"
+  }
+ ],
+ "C4-interaction-a": [
+  7104,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 1,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": "allocation_fx_same_payment",
+   "clean_distractors": []
+  }
+ ],
+ "C5-interaction-b": [
+  7105,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "interaction": "cutoff_fx_same_invoice",
+   "clean_distractors": []
+  }
+ ],
+ "C6a-jpy-base-kwd": [
+  7106,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "JPY",
+   "currencies": [
+    "JPY",
+    "KWD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": []
+  }
+ ],
+ "C6b-kwd-base-jpy": [
+  7107,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KWD",
+   "currencies": [
+    "KWD",
+    "JPY"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "interaction": null,
+   "clean_distractors": []
+  }
+ ],
+ "C7a-dst-berlin-oct": [
+  7108,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "EUR",
+   "currencies": [
+    "EUR",
+    "USD"
+   ],
+   "timezone": "Europe/Berlin",
+   "target_period": "2026-10",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 1,
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "interaction": null,
+   "clean_distractors": [],
+   "settlement_timing": "at"
+  }
+ ],
+ "C7b-dst-newyork-mar": [
+  7109,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "USD",
+   "currencies": [
+    "USD",
+    "EUR"
+   ],
+   "timezone": "America/New_York",
+   "target_period": "2026-03",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund"
+   ]
+  }
+ ]
+}

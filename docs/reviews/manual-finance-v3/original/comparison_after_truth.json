@@ -1,0 +1,521 @@
+{
+ "C1-clean-refund": {
+  "rows": [],
+  "score_of_manual_answer": {
+   "tp": 0,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 0,
+  "unreachable_refs": []
+ },
+ "C2-partial-allocation": {
+  "rows": [
+   {
+    "key": [
+     "payment_allocation",
+     [
+      "invoice/I5FCB76057475D8259860EB6B",
+      "payment/P4700E4C29FE57D0C3B409D50"
+     ],
+     2000000,
+     "KZT"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D8CC8339DB5AB78D03D7C1EB7",
+      "ledger/R383BC1B132DED1FD6D822DB6",
+      "ledger/R8ED06150B03018A429EADA55",
+      "policy/allocation"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D8CC8339DB5AB78D03D7C1EB7",
+     "ledger/R383BC1B132DED1FD6D822DB6",
+     "ledger/R8ED06150B03018A429EADA55",
+     "policy/allocation"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 4,
+  "unreachable_refs": []
+ },
+ "C3a-boundary-before": {
+  "rows": [],
+  "score_of_manual_answer": {
+   "tp": 0,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 0,
+  "unreachable_refs": []
+ },
+ "C3b-boundary-at": {
+  "rows": [
+   {
+    "key": [
+     "payment_allocation",
+     [
+      "invoice/I616B3CE1915F22BD3ABFA507",
+      "payment/P9BCB58790CB3F82255710B71"
+     ],
+     2000000,
+     "KZT"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/DC3B075F85D5C96AC8B7B3963",
+      "ledger/R94047261EA323B89F2EDB3C2",
+      "ledger/RA033442996A3663724220E29",
+      "policy/allocation"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/DC3B075F85D5C96AC8B7B3963",
+     "ledger/R94047261EA323B89F2EDB3C2",
+     "ledger/RA033442996A3663724220E29",
+     "policy/allocation"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 4,
+  "unreachable_refs": []
+ },
+ "C4-interaction-a": {
+  "rows": [
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "payment/P620E9924D78902ED0775FA9D"
+     ],
+     925,
+     "KZT"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D2CE360CDD7C427086F030CE3",
+      "fx/2026-11-10/USD/KZT",
+      "ledger/R55955D3B3889C174948A8F53",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D2CE360CDD7C427086F030CE3",
+     "fx/2026-11-10/USD/KZT",
+     "policy/fx_date",
+     "ledger/R55955D3B3889C174948A8F53"
+    ]
+   },
+   {
+    "key": [
+     "payment_allocation",
+     [
+      "invoice/IDD4FD588DB0125C32C495705",
+      "payment/P620E9924D78902ED0775FA9D"
+     ],
+     1480,
+     "USD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D2CE360CDD7C427086F030CE3",
+      "ledger/R0C86090C53B981C9F4C11665",
+      "ledger/R0082D16BDB4A4D7B718B9EA8",
+      "policy/allocation"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D2CE360CDD7C427086F030CE3",
+     "ledger/R0C86090C53B981C9F4C11665",
+     "ledger/R0082D16BDB4A4D7B718B9EA8",
+     "policy/allocation"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 2,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 7,
+  "unreachable_refs": []
+ },
+ "C5-interaction-b": {
+  "rows": [
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "invoice/IF949E00CD51B203E1D60EF1E"
+     ],
+     1150,
+     "KZT"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/D1F56BA51ED559EE7A7D9F626",
+      "fx/2026-11-30/USD/KZT",
+      "ledger/R2CCED4C3617FAE167426BFBE",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/D1F56BA51ED559EE7A7D9F626",
+     "fx/2026-11-30/USD/KZT",
+     "policy/fx_date",
+     "ledger/R2CCED4C3617FAE167426BFBE"
+    ]
+   },
+   {
+    "key": [
+     "period_cutoff",
+     [
+      "invoice/IF949E00CD51B203E1D60EF1E"
+     ],
+     4600,
+     "USD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/D1F56BA51ED559EE7A7D9F626",
+      "ledger/R33993D295B4812F5BD78FE6B",
+      "policy/period"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/D1F56BA51ED559EE7A7D9F626",
+     "ledger/R33993D295B4812F5BD78FE6B",
+     "policy/period"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 2,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 6,
+  "unreachable_refs": []
+ },
+ "C6a-jpy-base-kwd": {
+  "rows": [
+   {
+    "key": [
+     "duplicate_invoice",
+     [
+      "invoice/I554D5494CD9F56034EAD8ED9"
+     ],
+     20375,
+     "JPY"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/D653F902FA3D8FE942389D9DD",
+      "invoices/D153C6EDE6976D0B9FCBC2734",
+      "ledger/R8A6F38FBC8A3CFBE9E38743D",
+      "ledger/R2D48E7AAAC6EAB8DFFE44035"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/D653F902FA3D8FE942389D9DD",
+     "invoices/D153C6EDE6976D0B9FCBC2734",
+     "ledger/R2D48E7AAAC6EAB8DFFE44035",
+     "ledger/R8A6F38FBC8A3CFBE9E38743D"
+    ]
+   },
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "payment/P1B5686A54C708EAD43A70BD9"
+     ],
+     48,
+     "JPY"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D83712B3252893FAA27BCB414",
+      "fx/2026-11-11/KWD/JPY",
+      "ledger/R17B67D8604C650207E02DEBA",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D83712B3252893FAA27BCB414",
+     "fx/2026-11-11/KWD/JPY",
+     "policy/fx_date",
+     "ledger/R17B67D8604C650207E02DEBA"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 2,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 8,
+  "unreachable_refs": []
+ },
+ "C6b-kwd-base-jpy": {
+  "rows": [
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "payment/P72961AB062418D2C29CDFDCF"
+     ],
+     705,
+     "KWD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D23D1B309770453ABE2D6EFD9",
+      "fx/2026-11-04/JPY/KWD",
+      "ledger/R5F635A1F741B92309D07BEF2",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D23D1B309770453ABE2D6EFD9",
+     "fx/2026-11-04/JPY/KWD",
+     "policy/fx_date",
+     "ledger/R5F635A1F741B92309D07BEF2"
+    ]
+   },
+   {
+    "key": [
+     "period_cutoff",
+     [
+      "invoice/I31CCD49C04B6BA0FB3C580C3"
+     ],
+     69044000,
+     "KWD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/DB9F4F75B3F9A1A54D5ABF67D",
+      "ledger/RB6D6F1088AFD0EEAEC91233E",
+      "policy/period"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/DB9F4F75B3F9A1A54D5ABF67D",
+     "ledger/RB6D6F1088AFD0EEAEC91233E",
+     "policy/period"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 2,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 7,
+  "unreachable_refs": []
+ },
+ "C7a-dst-berlin-oct": {
+  "rows": [
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "payment/P3F5B7FDE9F24C371FB1A7EF8"
+     ],
+     4000,
+     "EUR"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D1D93CD57398057CB271E8CE6",
+      "fx/2026-10-17/USD/EUR",
+      "ledger/R7DD23577F98E03E1C18A357B",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D1D93CD57398057CB271E8CE6",
+     "fx/2026-10-17/USD/EUR",
+     "policy/fx_date",
+     "ledger/R7DD23577F98E03E1C18A357B"
+    ]
+   },
+   {
+    "key": [
+     "payment_allocation",
+     [
+      "invoice/I9C603F82BCA7F47AA3AADFAF",
+      "payment/PA293796A0BBFCADEF5791764"
+     ],
+     2000000,
+     "EUR"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D8CFFD4E6A08A17F020F9CAD7",
+      "ledger/R61204DAAD45AAC5D90C0A235",
+      "ledger/RE19AA3C5E953099783DF60E0",
+      "policy/allocation"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D8CFFD4E6A08A17F020F9CAD7",
+     "ledger/R61204DAAD45AAC5D90C0A235",
+     "ledger/RE19AA3C5E953099783DF60E0",
+     "policy/allocation"
+    ]
+   },
+   {
+    "key": [
+     "period_cutoff",
+     [
+      "invoice/IF5C22537C8902321A256CB6B"
+     ],
+     6227500,
+     "EUR"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/DD84E526BC422788394C53D54",
+      "ledger/RC695057A9A222D563F5D8C21",
+      "policy/period"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/DD84E526BC422788394C53D54",
+     "ledger/RC695057A9A222D563F5D8C21",
+     "policy/period"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 3,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 11,
+  "unreachable_refs": []
+ },
+ "C7b-dst-newyork-mar": {
+  "rows": [
+   {
+    "key": [
+     "fx_conversion",
+     [
+      "payment/P84A39CAEF8F1D36EA5F2CDDE"
+     ],
+     156,
+     "USD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "payments/D4742E18FEF6C9831DA57242D",
+      "fx/2026-03-17/EUR/USD",
+      "ledger/R66124ACE477DC488F2BD6613",
+      "policy/fx_date"
+     ]
+    ],
+    "manual_evidence": [
+     "payments/D4742E18FEF6C9831DA57242D",
+     "fx/2026-03-17/EUR/USD",
+     "policy/fx_date",
+     "ledger/R66124ACE477DC488F2BD6613"
+    ]
+   },
+   {
+    "key": [
+     "period_cutoff",
+     [
+      "invoice/I1943E6256EB1459B76DAA7F1"
+     ],
+     3168500,
+     "USD"
+    ],
+    "manual": true,
+    "truth": true,
+    "covers_some_truth_set": true,
+    "truth_sets": [
+     [
+      "invoices/DDBB8D3332B18DD52448A1A05",
+      "ledger/R03DA8A69E285A1D7A5D1EE97",
+      "policy/period"
+     ]
+    ],
+    "manual_evidence": [
+     "invoices/DDBB8D3332B18DD52448A1A05",
+     "ledger/R03DA8A69E285A1D7A5D1EE97",
+     "policy/period"
+    ]
+   }
+  ],
+  "score_of_manual_answer": {
+   "tp": 2,
+   "fp": 0,
+   "fn": 0,
+   "reward": 1.0
+  },
+  "truth_refs": 7,
+  "unreachable_refs": []
+ }
+}

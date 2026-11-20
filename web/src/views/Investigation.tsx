@@ -62,7 +62,12 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
           ))}
         </div>
         <EngineLine engine={run.engine} />
-        {run.label === "training_sample" && <div className="banner banner-sample">УЧЕБНЫЙ ЭКСПОРТ. {run.note}</div>}
+        {run.label === "training_sample" && (
+          <div className="banner banner-sample">
+            ОТКРЫТЫЕ ДАННЫЕ, ЗАПИСАННЫЙ ПРОГОН. {run.note}
+            {run.source && <> Источник: <code>{run.source}</code>.</>}
+          </div>
+        )}
         {run.change && (
           <div className="banner banner-live">
             ЖИВОЙ ОПЫТ: факт <b className="mono">{run.change.target}.{run.change.field}</b> = <b className="mono">{run.change.value}</b> в новой компании.
@@ -92,7 +97,8 @@ export function Investigation({ runId, initialKey }: { runId: string; initialKey
         <Panel title={selectedKey ? "Запись документа" : selectedStep ? `Шаг ${selectedStep.step}` : "Документ"} className="col-record">
           {selectedKey ? (
             <RecordPane runId={run.run_id} recordKey={selectedKey} onOpen={openKey} highlightFields={highlightFields[selectedKey] ?? []}
-              openedAt={openedAt(selectedKey)} listedAt={listedAt(selectedKey)} cited={evidenceKeys.has(selectedKey)} canChange={run.status === "completed"} />
+              openedAt={openedAt(selectedKey)} listedAt={listedAt(selectedKey)} cited={evidenceKeys.has(selectedKey)} canChange={run.status === "completed"}
+              generator={run.engine?.generator} />
           ) : selectedStep ? (
             <StepView step={selectedStep} onOpen={openKey} />
           ) : (
@@ -240,7 +246,7 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
             <span className={view.console_agrees ? "ok-text" : "bad-text"}>
               {money(calc.result_minor === null ? null : Math.abs(calc.result_minor), calc.currency, exponents)} по открытым данным {view.console_agrees ? "— совпадает" : "— не совпадает"}
             </span>
-          ) : <span className="muted">нет расчёта для этого типа</span>}
+          ) : <span className="muted">консоль пересчитывает только распределение и FX; для этого типа независимый расчёт — SQL ниже</span>}
         </div>
         <div className="line">
           <span className="line-label">SQL</span>
@@ -248,6 +254,7 @@ function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys,
             ? <span className={view.verifier.agrees ? "ok-text" : "bad-text"}>{view.verifier.text ?? `${money(view.verifier.amount_minor ?? null, view.verifier.currency ?? "", exponents)} (${view.verifier.engine})`}{view.verifier.currency_matches === false && " — валюта не совпадает"}</span>
             : <span className="muted">{view.verifier.text}</span>}
         </div>
+        {view.verifier.explanation && <div className="small mono muted sql-arith">{view.verifier.explanation}</div>}
       </div>
       <div className="small muted">Совпадение суммы и валюты не заменяет зачёт доказательств оценщиком.</div>
       {canRescore && (

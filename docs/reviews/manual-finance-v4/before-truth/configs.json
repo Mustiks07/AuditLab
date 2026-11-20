@@ -1,0 +1,181 @@
+{
+ "N1-full-kzt-usd": [
+  7201,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 2000,
+    "documents_target": 200
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 2,
+    "payment_allocation": 3,
+    "fx_conversion": 3,
+    "period_cutoff": 2
+   },
+   "interaction": "allocation_fx_same_payment",
+   "clean_distractors": [
+    "split_payment",
+    "equal_amount_different_supplier",
+    "refund",
+    "archive_copy"
+   ]
+  }
+ ],
+ "N2-full-jpy-kwd-usd-berlin": [
+  7202,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 2000,
+    "documents_target": 200
+   },
+   "base_currency": "JPY",
+   "currencies": [
+    "JPY",
+    "KWD",
+    "USD"
+   ],
+   "timezone": "Europe/Berlin",
+   "target_period": "2026-10",
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "payment_allocation": 2,
+    "fx_conversion": 3,
+    "period_cutoff": 2
+   },
+   "interaction": "cutoff_fx_same_invoice",
+   "clean_distractors": [
+    "split_payment",
+    "equal_amount_different_supplier",
+    "refund",
+    "archive_copy"
+   ]
+  }
+ ],
+ "N3-half-kzt-jpy-clean": [
+  2,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "JPY"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund",
+    "split_payment"
+   ]
+  }
+ ],
+ "N4-half-kzt-jpy-error": [
+  6,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "JPY"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund",
+    "split_payment"
+   ]
+  }
+ ],
+ "N5-half-jpy-usd-error": [
+  22,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "JPY",
+   "currencies": [
+    "JPY",
+    "USD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund",
+    "split_payment"
+   ]
+  }
+ ],
+ "N6-half-kzt-kwd-both": [
+  192,
+  {
+   "config_version": "1.1",
+   "company_size": {
+    "ledger_rows_target": 0,
+    "documents_target": 0
+   },
+   "base_currency": "KZT",
+   "currencies": [
+    "KZT",
+    "KWD"
+   ],
+   "timezone": "Asia/Almaty",
+   "target_period": "2026-11",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "payment_allocation": 0,
+    "fx_conversion": 1,
+    "period_cutoff": 0
+   },
+   "interaction": null,
+   "clean_distractors": [
+    "refund",
+    "split_payment"
+   ]
+  }
+ ],
+ "N7-twin-of-N1": {
+  "transform_public": {
+   "source": "N1-full-kzt-usd",
+   "seed": 7207
+  }
+ }
+}
