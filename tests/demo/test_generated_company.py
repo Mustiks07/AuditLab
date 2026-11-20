@@ -2,6 +2,7 @@
 
 Run: python -m unittest discover -s tests/demo -v
 """
+import csv
 import hashlib
 import io
 import json
@@ -12,6 +13,7 @@ from contextlib import redirect_stdout
 from pathlib import Path
 
 from auditlab.demo import crosscheck, engines, lab, service
+from auditlab.demo.__main__ import main as demo_cli
 from auditlab.demo.paths import DemoPaths
 from auditlab.demo.store import ExportStore
 
@@ -127,6 +129,87 @@ class GeneratedCompany(unittest.TestCase):
         (target / "trajectories.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
         report = crosscheck.check_run(ExportStore([broken]), "BROKEN-1")
         self.assertTrue(any("награда" in p for p in report["problems"]), report["problems"])
+
+    def _damaged_copy(self, name):
+        root = self.tmp / name
+        target = root / name
+        shutil.copytree(self.paths.exports / self.pair["B"]["run_id"], target)
+        run = json.loads((target / "run.json").read_text())
+        (target / "run.json").write_text(json.dumps({**run, "run_id": name}))
+        return ExportStore([root]), target
+
+    def test_empty_check_and_empty_rehearsal_are_not_checked(self):
+        empty = DemoPaths(self.tmp / "empty-check").ensure()
+        for args in (["crosscheck", "--json"],
+                     ["crosscheck", "--rehearsal", str(self.tmp / "no-attempts"), "--json"]):
+            with redirect_stdout(io.StringIO()) as output:
+                code = demo_cli(["--root", str(empty.root), *args])
+            report = json.loads(output.getvalue())
+            self.assertEqual(code, 2)
+            self.assertFalse(report["ok"])
+            self.assertEqual(report["status"], "not_checked")
+
+    def test_missing_completed_export_is_not_silently_filtered(self):
+        store, target = self._damaged_copy("MISSING-EXPORT")
+        (target / "submission.json").unlink()
+        self.assertEqual(store.list_runs(), [])  # UI correctly refuses it.
+        with redirect_stdout(io.StringIO()) as output:
+            code = crosscheck.main(self.paths, store, [], [], False, True)
+        report = json.loads(output.getvalue())
+        self.assertEqual(code, 1)
+        self.assertFalse(report["ok"])
+        self.assertEqual(report["runs"][0]["run_id"], "MISSING-EXPORT")
+        self.assertTrue(report["runs"][0]["problems"])
+
+    def test_empty_trajectory_and_null_submission_do_not_pass(self):
+        for name, filename, content in (("EMPTY-JOURNAL", "trajectories.jsonl", ""),
+                                        ("NULL-SUBMIT", "submission.json", "null")):
+            store, target = self._damaged_copy(name)
+            (target / filename).write_text(content)
+            self.assertTrue(crosscheck.check_run(store, name)["problems"])
+
+    def test_live_check_requires_actual_rescoring(self):
+        # Public exports alone allow observation replay, but cannot certify re-scoring.
+        empty = DemoPaths(self.tmp / "no-trusted-truth").ensure()
+        source = self.pair["B"]["run_id"]
+        with redirect_stdout(io.StringIO()) as output:
+            code = crosscheck.main(empty, self.store, [self.paths.exports], [source], True, True)
+        report = json.loads(output.getvalue())
+        self.assertEqual(code, 1)
+        self.assertFalse(report["ok"])
+        self.assertIsNone(report["runs"][0]["live"]["score_match"])
+
+    def test_rehearsal_missing_evidence_is_not_checked(self):
+        root = self.tmp / "incomplete-rehearsal"
+        (root / "attempts" / "reconcile" / "example").mkdir(parents=True)
+        with self.assertRaisesRegex(ValueError, "обязательные файлы"):
+            crosscheck.rehearsal_parity(self.paths, root)
+
+    def test_generated_pair_changes_only_the_settlement_timestamp(self):
+        a = self.paths.exports / self.pair["A"]["run_id"] / "public"
+        b = self.paths.exports / self.pair["B"]["run_id"] / "public"
+        for name in ("invoices.jsonl", "fx.csv", "policy.json"):
+            self.assertEqual((a / name).read_bytes(), (b / name).read_bytes(), name)
+        # The settlement index is a derived list of rows before the reporting boundary.
+        # Source payment facts remain identical; the moved debit leaves that index.
+        def payments(path):
+            return [json.loads(line) for line in (path / "payments.jsonl").read_text().splitlines()]
+        left_payments, right_payments = payments(a), payments(b)
+        self.assertEqual([{k: v for k, v in p.items() if k != "settlement_index"} for p in left_payments],
+                         [{k: v for k, v in p.items() if k != "settlement_index"} for p in right_payments])
+        def rows(path):
+            with (path / "ledger.csv").open() as stream:
+                return {r["row_id"]: r for r in csv.DictReader(stream)}
+        left, right = rows(a), rows(b)
+        self.assertEqual(left.keys(), right.keys())
+        changed = []
+        for row_id in left:
+            differences = {key for key in left[row_id] if left[row_id][key] != right[row_id][key]}
+            if differences:
+                self.assertEqual(differences, {"timestamp"})
+                changed.append(row_id)
+        self.assertEqual(len(changed), 2)
+        self.assertIn(LAST_SETTLEMENT.split("/", 1)[1], changed)
 
 
 if __name__ == "__main__":

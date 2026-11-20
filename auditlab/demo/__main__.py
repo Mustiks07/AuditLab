@@ -190,7 +190,15 @@ def main(argv: list[str] | None = None) -> int:
                     "--with", args.replacement, "--op", op]
         return lab.main(lab_args + rest)
     if args.cmd == "crosscheck" and args.rehearsal:
-        rows = crosscheck.rehearsal_parity(paths, args.rehearsal.resolve())
+        try:
+            rows = crosscheck.rehearsal_parity(paths, args.rehearsal.resolve())
+        except (OSError, ValueError, TypeError, KeyError, AttributeError, lab.LabError) as error:
+            if args.json:
+                print(json.dumps({"rehearsal": [], "ok": False, "status": "not_checked",
+                                  "reason": str(error)}, ensure_ascii=False, indent=1))
+            else:
+                print(f"Не проверено: {error}")
+            return 2
         if args.json:
             print(json.dumps({"rehearsal": rows, "ok": not any(r["problems"] for r in rows)}, ensure_ascii=False, indent=1))
         for r in rows if not args.json else []:

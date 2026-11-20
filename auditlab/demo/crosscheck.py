@@ -19,7 +19,7 @@ from pathlib import Path
 
 from . import lab, service
 from .paths import DemoPaths
-from .store import ExportStore
+from .store import ExportStore, NotFound, Refused
 
 SCORE_KEYS = ("tp", "fp", "fn", "reward")
 
@@ -49,10 +49,32 @@ def _line_holds(public: Path, file: str, line: int, key: str) -> bool:
     return all(part in lines[line - 1] for part in local.split("/"))
 
 
+def _failed_run(run_id: str, problem: str) -> dict:
+    return {"run_id": run_id, "episode_id": None, "status": "unverified", "label": None,
+            "steps": 0, "inspections": 0, "findings": 0, "links": 0, "amounts": [],
+            "score": None, "problems": [problem]}
+
+
 def check_run(store: ExportStore, run_id: str) -> dict:
+    try:
+        return _check_run(store, run_id)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, NotFound, Refused) as error:
+        return _failed_run(run_id, f"Экспорт недоступен или повреждён: {type(error).__name__}: {error}")
+
+
+def _check_run(store: ExportStore, run_id: str) -> dict:
     directory = store.run_dir(run_id)
     raw = {name: _load(directory / name) for name in
            ("run.json", "score.json", "submission.json", "trajectories.jsonl", "verifier.json")}
+    for name in ("run.json", "score.json", "submission.json"):
+        if not isinstance(raw[name], dict):
+            return _failed_run(run_id, f"{name}: обязательный объект отсутствует или повреждён")
+    if not raw["trajectories.jsonl"]:
+        return _failed_run(run_id, "trajectories.jsonl: отсутствует непустой журнал завершённой попытки")
+    final = raw["trajectories.jsonl"][-1]
+    if (final.get("terminated") is not True or final.get("truncated") is not False
+            or (final.get("action") or {}).get("action") != "submit"):
+        return _failed_run(run_id, "trajectories.jsonl: последний шаг не подтверждает завершённую сдачу")
     public = directory / "public"
     manifest = _load(public / "manifest.json") or {}
     exponents = manifest.get("currency_exponents") or {}
@@ -90,7 +112,7 @@ def check_run(store: ExportStore, run_id: str) -> dict:
         problems.append(f"инспекций: журнал {inspections}, экспорт {recorded_inspections}")
     final = trajectory[-1] if trajectory else {}
     if (final.get("action") or {}).get("action") == "submit":
-        if raw["submission.json"] is not None and (final["action"].get("args") or {}).get("findings") != raw["submission.json"].get("findings"):
+        if final["action"].get("args") != raw["submission.json"]:
             problems.append("submit в журнале не равен submission.json")
         if score is not None and final.get("reward") is not None and final["reward"] != score.get("reward"):
             problems.append(f"награда: журнал {final['reward']}, score.json {score.get('reward')}")
@@ -140,20 +162,27 @@ def live_check(paths: DemoPaths, run_id: str, extra: list[Path]) -> dict:
 
 def main(paths: DemoPaths, store: ExportStore, extra: list[Path], run_ids: list[str], live: bool,
          as_json: bool) -> int:
-    ids = run_ids or [r["run_id"] for r in service.list_runs(store)]
+    ids = run_ids or store.review_run_ids()
     reports = []
     for run_id in ids:
         report = check_run(store, run_id)
-        if live:
-            replay = live_check(paths, run_id, extra)
+        if live and not report["problems"]:
+            try:
+                replay = live_check(paths, run_id, extra)
+            except (OSError, ValueError, TypeError, KeyError, AttributeError, lab.LabError) as error:
+                report["problems"].append(f"Живой пересчёт не выполнен: {type(error).__name__}: {error}")
+                reports.append(report)
+                continue
             report["live"] = replay
             if not replay["observations_match"]:
                 report["problems"].append(f"живой повтор: наблюдения разошлись на шагах {replay['mismatches']}")
-            if replay.get("score_match") is False:
-                report["problems"].append(f"живой пересчёт оценки разошёлся: {replay.get('score_again')}")
+            if replay.get("score_match") is not True:
+                report["problems"].append(f"живой пересчёт оценки не подтверждён: {replay.get('score_note') or replay.get('score_again')}")
         reports.append(report)
+    ok = bool(reports) and not any(r["problems"] for r in reports)
+    status = "passed" if ok else "failed" if reports else "not_checked"
     if as_json:
-        print(json.dumps({"runs": reports, "ok": not any(r["problems"] for r in reports)}, ensure_ascii=False, indent=1))
+        print(json.dumps({"runs": reports, "ok": ok, "status": status}, ensure_ascii=False, indent=1))
     else:
         for r in reports:
             mark = "OK " if not r["problems"] else "ERR"
@@ -173,7 +202,9 @@ def main(paths: DemoPaths, store: ExportStore, extra: list[Path], run_ids: list[
                 print(f"    ✗ {problem}")
         bad = sum(1 for r in reports if r["problems"])
         print(f"Проверено запусков: {len(reports)}; расхождений: {bad}.")
-    return 1 if any(r["problems"] for r in reports) else 0
+        if not reports:
+            print("Не проверено: нет завершённых открытых запусков.")
+    return 0 if ok else 1 if reports else 2
 
 
 def rehearsal_parity(paths: DemoPaths, rehearsal: Path, policy: str = "reconcile") -> list[dict]:
@@ -186,12 +217,24 @@ def rehearsal_parity(paths: DemoPaths, rehearsal: Path, policy: str = "reconcile
     """
     store = ExportStore([paths.exports], paths.ops)
     out = []
-    for attempt in sorted((rehearsal / "attempts" / policy).iterdir()):
+    attempts = rehearsal / "attempts" / policy
+    if not attempts.is_dir() or not any(attempts.iterdir()):
+        raise ValueError("Не проверено: отсутствуют попытки внутренней репетиции")
+    for attempt in sorted(attempts.iterdir()):
         name = attempt.name
         snapshot = rehearsal / "snapshots" / name
+        required = (attempt / "final.json", attempt / "trusted" / "attempt" / "trajectory.jsonl",
+                    snapshot / "private" / "truth.json", snapshot / "public" / "manifest.json")
+        missing = [str(p.relative_to(rehearsal)) for p in required if not p.is_file()]
+        if missing:
+            raise ValueError("Не проверено: отсутствуют обязательные файлы: " + ", ".join(missing))
         final = _load(attempt / "final.json")
+        if not isinstance(final, dict) or final.get("status") != "submitted":
+            raise ValueError(f"Не проверено: попытка {name} не завершилась сдачей")
         cli_actions = [line.get("action") for line in
                        _load(attempt / "trusted" / "attempt" / "trajectory.jsonl") or []]
+        if not cli_actions or (cli_actions[-1] or {}).get("action") != "submit":
+            raise ValueError(f"Не проверено: в попытке {name} нет конечной сдачи в журнале")
         truth = _load(snapshot / "private" / "truth.json")
         run = lab.execute(paths, snapshot / "public", truth, {
             "key": f"rehearsal:{policy}:{name}:{final['submission']['episode_id']}", "run_id": f"REH-{name}",
