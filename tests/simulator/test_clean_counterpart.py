@@ -30,6 +30,7 @@ class CleanCounterpartTests(unittest.TestCase):
         nominals, dates, identifiers = set(), set(), set()
         with TemporaryDirectory() as temporary:
             for seed in range(10):
+                source_primary = None
                 for defect in (0, 1):
                     with self.subTest(seed=seed, defect=defect):
                         root = Path(temporary) / f"{seed}-{defect}"
@@ -45,30 +46,34 @@ class CleanCounterpartTests(unittest.TestCase):
                             and len(p["settlement_index"]["unapplied_row_ids"]) == 2
                             and datetime.fromisoformat(p["timestamp"]) - datetime.fromisoformat(
                                 invoices[p["invoice_refs"][0]]["issued_at"]) == timedelta(days=1)]
-                        self.assertEqual(len(candidates), 1 + defect)
+                        primary = {table: (public / f"{table}.jsonl").read_bytes()
+                                   for table in ("invoices", "payments")}
+                        if source_primary is None:
+                            source_primary = primary
+                        self.assertEqual(primary, source_primary)
+                        self.assertEqual(len(candidates), 6)
                         wrong, clean = [], []
                         for payment in candidates:
                             rows = [ledger[key] for key in payment["settlement_index"]["unapplied_row_ids"]]
                             remaining = sum(r["credit_minor"] - r["debit_minor"] for r in rows)
                             (wrong if remaining else clean).append(payment)
-                        self.assertEqual((len(clean), len(wrong)), (1, defect))
-                        [paid] = clean
-                        nominals.add(paid["amount_minor"])
-                        dates.add(paid["timestamp"])
-                        identifiers.add(paid["payment_id"])
+                        self.assertEqual((len(clean), len(wrong)), (6 - defect, defect))
+                        nominals.update(paid["amount_minor"] for paid in clean)
+                        dates.update(paid["timestamp"] for paid in clean)
+                        identifiers.update(paid["payment_id"] for paid in clean)
                         sql = verify_report(public)
                         ordinary = run_public_policy("reconcile", 17, public)[-1]["args"]["findings"]
                         self.assertEqual(sql["notes"], [])
                         for findings in (sql["findings"], ordinary):
                             self.assertEqual(len(findings), defect)
                             self.assertTrue(all(f"payment/{paid['payment_id']}" not in f["affected_ids"]
-                                                for f in findings))
+                                                for f in findings for paid in clean))
                             if defect:
                                 self.assertIn(f"payment/{wrong[0]['payment_id']}", findings[0]["affected_ids"])
                         self.assertEqual(check_source_book(root)["status"], "passed")
         self.assertGreater(len(nominals), 1)
         self.assertGreater(len(dates), 1)
-        self.assertEqual(len(identifiers), 20)  # independent ID positions with/without the real defect
+        self.assertEqual(len(identifiers), 60)  # stable within each pair, distinct across seeds
 
     def test_option_is_explicit_profile_11_only_and_replays_exactly(self):
         with TemporaryDirectory() as temporary:

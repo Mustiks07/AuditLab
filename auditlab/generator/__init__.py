@@ -17,7 +17,7 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.5"
+GENERATOR_VERSION = "1.6"
 SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
@@ -25,6 +25,7 @@ ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "peri
 INTERACTIONS = ("allocation_fx_same_payment", "cutoff_fx_same_invoice")
 DISTRACTORS = ("split_payment", "equal_amount_different_supplier", "refund", "archive_copy")
 TIMINGS = {"before": -1, "at": 0, "after": 1}
+MAX_ISSUES_PER_TYPE = 5
 CONFIG_FIELDS = {
     "config_version", "company_size", "base_currency", "currencies", "timezone", "target_period",
     "issue_counts", "interaction", "clean_distractors", "settlement_timing", "snapshot_nonce",
@@ -81,7 +82,7 @@ def _configuration(seed, config):
         raise ValueError("invalid_currencies: use unique supported currencies including the base currency")
     counts = config.get("issue_counts", {})
     if (not isinstance(counts, dict) or counts.keys() - set(ISSUE_TYPES)
-            or any(not _bounded_int(value, 0, 5) for value in counts.values())):
+            or any(not _bounded_int(value, 0, MAX_ISSUES_PER_TYPE) for value in counts.values())):
         raise ValueError("invalid_issue_counts: each supported issue count must be an integer from 0 to 5")
     counts = {key: counts.get(key, 0) for key in ISSUE_TYPES}
     interaction = config.get("interaction")
@@ -121,13 +122,13 @@ def _configuration(seed, config):
     return company, counts, timing, interaction, distractors, size, nonce
 
 
-def _add_paid_invoices(company, amount, issued_at, *, split=False, payment_delay_days=2):
+def _add_paid_invoices(company, amount, issued_at, *, split=False):
     entity = company.id("entity")
     currency = company.base_currency
     invoice = company.invoice(entity, issued_at, currency, amount)
     invoice_id = invoice["invoice_id"]
     company.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice_id)
-    received = issued_at + timedelta(days=payment_delay_days)
+    received = issued_at + timedelta(days=2)
     parts = (amount * 2 // 5, amount - amount * 2 // 5) if split else (amount,)
     for offset, part in enumerate(parts):
         timestamp = received + timedelta(days=offset)
@@ -141,11 +142,11 @@ def _add_clean_history(company, distractors, size):
     rng = company.noise_rng
     at = company.period_start + timedelta(days=rng.randrange(1, 10), hours=rng.randrange(8, 18))
     scale = 10 ** company.exponents[company.base_currency]
-    amount = rng.randrange(10, 100) * 1_000 * scale
-    if "next_day_settlement" in distractors:
-        # A clean counterexample to the tempting label shortcut: receipt one day
-        # after invoice and exactly two UNAPPLIED movements also occur when paid in full.
-        _add_paid_invoices(company, amount, at, payment_delay_days=1)
+    if company.config_version == "1.1":
+        at += timedelta(minutes=rng.randrange(60))
+        amount = rng.randrange(10_000 * scale, 100_000 * scale)
+    else:
+        amount = rng.randrange(10, 100) * 1_000 * scale
     if "split_payment" in distractors:
         _add_paid_invoices(company, amount, at, split=True)
     if "equal_amount_different_supplier" in distractors:
@@ -160,27 +161,33 @@ def _add_clean_history(company, distractors, size):
                      payment_id=payment["payment_id"])
         company.events.append({"kind": "refund", "payment_id": payment["payment_id"],
                                "amount_minor": deposit, "returned_at": returned.isoformat()})
-    if "archive_copy" in distractors:
+    if "archive_copy" in distractors and company.config_version == "1.0":
         add_duplicate(company, enabled=False)
     if company.config_version == "1.1":
-        # Clean counterparts prevent archive copies, boundary dates and FX rows from being labels.
         if distractors:
             add_cutoff(company, enabled=False)
-            if len(company.exponents) > 1:
-                add_fx(company, enabled=False)
-        _add_bounded_filler(company, size, rng, scale)
+            # Neighboring-period evidence also contains valid recognition outside the target.
+            # Vary its count independently of the requested mispostings.
+            for _ in range(rng.randint(1, MAX_ISSUES_PER_TYPE + 1)):
+                add_cutoff(company, enabled=False, next_period=True)
+        duplicate_capacity = 2 * MAX_ISSUES_PER_TYPE if "archive_copy" in distractors else 0
+        _add_bounded_filler(company, size, rng, scale, duplicate_capacity)
     else:
         _add_filler(company, size, rng, scale)
 
 
-def _add_bounded_filler(company, size, rng, scale):
+def _add_bounded_filler(company, size, rng, scale, duplicate_capacity):
     """Keep primary documents bounded while allowing larger accounting books."""
     docs_target = size.get("documents_target", 0)
     rows_target = size.get("ledger_rows_target", 0)
+    # Match the primary document mix across duplicate counts, including the
+    # all-clean state. Budget for the largest allowed addition, not this label.
+    extra_rows = max(duplicate_capacity, company.planned_ledger_rows - len(company.ledger))
     while len(company.invoices) + len(company.payments) < docs_target:
         remaining = docs_target - len(company.invoices) - len(company.payments)
-        at = company.period_start + timedelta(days=rng.randrange(2, 20), hours=rng.randrange(8, 18))
-        amount = rng.randrange(5, 150) * 1_000 * scale
+        at = company.period_start + timedelta(days=rng.randrange(2, 20), hours=rng.randrange(8, 18),
+                                             minutes=rng.randrange(60))
+        amount = rng.randrange(5_000 * scale, 150_000 * scale)
         if remaining == 1:
             entity = company.id("entity")
             payment, _ = company.payment(entity, at, company.base_currency, amount)
@@ -189,7 +196,12 @@ def _add_bounded_filler(company, size, rng, scale):
             company.events.append({"kind": "refund", "payment_id": payment["payment_id"],
                                    "amount_minor": amount, "returned_at": (at + timedelta(minutes=1)).isoformat()})
         else:
-            _add_paid_invoices(company, amount, at, split=remaining >= 3 and bool(rng.getrandbits(1)))
+            split = remaining >= 3 and bool(rng.getrandbits(1))
+            if split and rows_target:
+                rest = remaining - 3
+                minimum_rows = len(company.ledger) + extra_rows + 10 + 3 * rest + rest % 2
+                split = minimum_rows <= rows_target
+            _add_paid_invoices(company, amount, at, split=split)
     # Treasury cash transfers are real balanced internal events, without extra external invoices.
     # They do not change designated-payment settlement indexes or financial issue evidence.
     available_cash = sum(row["debit_minor"] - row["credit_minor"] for row in company.ledger
@@ -199,10 +211,10 @@ def _add_bounded_filler(company, size, rng, scale):
         _add_paid_invoices(company, available_cash, company.period_start + timedelta(days=3))
     treasury_entity = None
     balance = 0
+    at = company.period_end - timedelta(hours=3)
     while company.planned_ledger_rows < rows_target:
         if treasury_entity is None:
             treasury_entity = company.id("entity")
-        at = company.period_end - timedelta(hours=3) + timedelta(seconds=company.planned_ledger_rows)
         amount = balance if balance else min(available_cash, rng.randrange(1, 100) * scale)
         debit, credit = ("CASH", "CASH_RESERVE") if balance else ("CASH_RESERVE", "CASH")
         row, _ = company.post(at, company.base_currency, amount, debit, credit, treasury_entity)
@@ -211,6 +223,7 @@ def _add_bounded_filler(company, size, rng, scale):
                                "amount_minor": amount, "currency": company.base_currency,
                                "timestamp": at.isoformat()})
         balance = 0 if balance else amount
+        at += timedelta(seconds=2)
     if company.planned_ledger_rows > 2_000 or len(company.invoices) + len(company.payments) > 200:
         raise ValueError("company_size_exceeds_profile: use fewer source events")
 
@@ -235,7 +248,7 @@ def _add_filler(company, size, rng, scale):
         _add_paid_invoices(company, amount, at, split=split)
 
 
-def _add_audit_cases(company, counts, timing, interaction):
+def _add_audit_cases(company, counts, timing, interaction, distractors):
     remaining = counts.copy()
     if timing is not None:
         company.boundary_pair_member(TIMINGS[timing])
@@ -246,16 +259,42 @@ def _add_audit_cases(company, counts, timing, interaction):
         add_allocation_fx(company, allocation_enabled=allocation, fx_enabled=fx)
         remaining["payment_allocation"] -= allocation
         remaining["fx_conversion"] -= fx
-    elif interaction == "cutoff_fx_same_invoice":
+    if interaction == "cutoff_fx_same_invoice":
         cutoff = bool(remaining["period_cutoff"])
         fx = bool(remaining["fx_conversion"])
-        add_cutoff_fx(company, cutoff_enabled=cutoff, fx_enabled=fx)
         remaining["period_cutoff"] -= cutoff
         remaining["fx_conversion"] -= fx
-    builders = (add_duplicate, lambda b: b.allocation_issue(), add_fx, add_cutoff)
-    for issue_type, build in zip(ISSUE_TYPES, builders, strict=True):
-        for _ in range(remaining[issue_type]):
-            build(company)
+    else:
+        cutoff = fx = False
+    if company.config_version == "1.1" and (
+        interaction == "cutoff_fx_same_invoice" or (distractors and len(company.exponents) > 1)
+    ):
+        [focus] = company.sample_fault_slots("cutoff_fx", 2, 1)
+        for slot in range(2):
+            add_cutoff_fx(company, cutoff_enabled=cutoff and slot == focus, fx_enabled=fx and slot == focus)
+        # With exactly one clean neighbor the number of future foreign entries
+        # would still disclose the cutoff switch for this interaction.
+        for _ in range(company.noise_rng.randrange(1, 4)):
+            add_cutoff_fx(company, cutoff_enabled=False, fx_enabled=False, next_period=True)
+    elif interaction == "cutoff_fx_same_invoice":
+        add_cutoff_fx(company, cutoff_enabled=cutoff, fx_enabled=fx)
+    builders = (add_duplicate, Company.allocation_case, add_fx, add_cutoff)
+    matched_controls = (
+        "archive_copy" in distractors,
+        "split_payment" in distractors or "next_day_settlement" in distractors,
+        bool(distractors) and len(company.exponents) > 1,
+        False,
+    )
+    for issue_type, build, controls in zip(ISSUE_TYPES, builders, matched_controls, strict=True):
+        requested = remaining[issue_type]
+        if controls and company.config_version == "1.1":
+            capacity = MAX_ISSUES_PER_TYPE + 1
+            faulty_slots = company.sample_fault_slots(issue_type, capacity, requested)
+            for slot in range(capacity):
+                build(company, enabled=slot in faulty_slots)
+        else:
+            for _ in range(requested):
+                build(company)
 
 
 def _policy(company):
@@ -328,6 +367,18 @@ def _write_records(directory, name, records, rng, fields=None):
                 writer.writerow({key: "null" if value is None else value for key, value in record.items()})
 
 
+def _write_snapshot_records(directory, company, order):
+    if company.config_version == "1.0":
+        _write_records(directory, "ledger", company.ledger, order, LEDGER_FIELDS)
+    _write_records(directory, "invoices", company.invoices, order)
+    _write_records(directory, "payments", company.payments, order)
+    _write_records(directory, "fx", sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
+                   order, FX_FIELDS)
+    if company.config_version == "1.1":
+        # A change in the ledger row count must not reshuffle otherwise identical documents.
+        _write_records(directory, "ledger", company.ledger, order, LEDGER_FIELDS)
+
+
 def _write_source_book(source, changed, final_manifest, policy, nonce, order, private, public):
     """Keep a public-format clean book in the trusted area, with a lossless transition."""
     directory = private / "source_book"
@@ -338,11 +389,7 @@ def _write_source_book(source, changed, final_manifest, policy, nonce, order, pr
     manifest["episode_id"] = _episode_id(source, manifest, policy, nonce)
     _write_json(directory / "manifest.json", manifest)
     _write_json(directory / "policy.json", policy)
-    _write_records(directory, "ledger", source.ledger, order, LEDGER_FIELDS)
-    _write_records(directory, "invoices", source.invoices, order)
-    _write_records(directory, "payments", source.payments, order)
-    _write_records(directory, "fx", sorted(source.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
-                   order, FX_FIELDS)
+    _write_snapshot_records(directory, source, order)
 
     accounts = {"duplicate_invoice": {"AR", "REVENUE"},
                 "payment_allocation": {"AR", "UNAPPLIED"},
@@ -385,7 +432,7 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
     if os.path.lexists(output):
         raise FileExistsError(output)
     company, counts, timing, interaction, distractors, size, nonce = _configuration(seed, config)
-    _add_audit_cases(company, counts, timing, interaction)
+    _add_audit_cases(company, counts, timing, interaction, distractors)
     _add_clean_history(company, distractors, size)
     if not company.invoices and not company.payments:
         _add_paid_invoices(company, 10_000 * 10 ** company.exponents[company.base_currency],
@@ -424,11 +471,7 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         manifest["episode_id"] = episode_id
         _write_json(public / "manifest.json", manifest)
         _write_json(public / "policy.json", policy)
-        _write_records(public, "ledger", company.ledger, company.order_rng, LEDGER_FIELDS)
-        _write_records(public, "invoices", company.invoices, company.order_rng)
-        _write_records(public, "payments", company.payments, company.order_rng)
-        _write_records(public, "fx", sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
-                       company.order_rng, FX_FIELDS)
+        _write_snapshot_records(public, company, company.order_rng)
         _write_json(private / "truth.json", {"episode_id": episode_id, "issues": company.issues})
         provenance = {
             "episode_id": episode_id, "generator_version": (

@@ -44,10 +44,10 @@ def add_duplicate(b, *, enabled=True):
         })
 
 
-def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
+def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled, next_period=False):
     _, _, hour, minute = b.case_parameters("boundary", 100)
     distance = 1 if b.config_version == "1.0" else hour * 60 + minute + 1
-    issued_at = b.period_end - timedelta(minutes=distance)
+    issued_at = b.period_end + timedelta(minutes=distance if next_period else -distance)
     posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else issued_at
     invoice = b.invoice(b.id("entity"), issued_at, currency, total_minor)
     deferred = b.config_version == "1.1" and cutoff_enabled
@@ -61,7 +61,7 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
         "kind": "invoice_issued", "affected_ids": affected, "source": source,
         "issued_at": issued_at.isoformat(), "total_minor": total_minor, "currency": currency,
     })
-    if not b.period_start <= posted_at < b.period_end:
+    if cutoff_enabled:
         evidence = [source, f"ledger/{debit['row_id']}", "policy/period"]
         b.issue("period_cutoff", affected, invoice["total_minor"], currency, evidence, deferred=True)
         b.mutations.append({
@@ -74,11 +74,11 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
     return invoice, posted_at
 
 
-def add_cutoff(b, *, enabled=True):
+def add_cutoff(b, *, enabled=True, next_period=False):
     """Recognize a base-currency invoice on either side of period_end."""
     units, *_ = b.case_parameters("cutoff", 24_000)
     amount = units * 10 ** b.exponents[b.base_currency]
-    _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled)
+    _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled, next_period=next_period)
 
 
 def _foreign_currency(b, *, prefer_usd=False):
@@ -218,11 +218,11 @@ def add_allocation_fx(b, *, allocation_enabled, fx_enabled):
     _value(b, invoice, received_at, payment=payment, fx_enabled=fx_enabled)
 
 
-def add_cutoff_fx(b, *, cutoff_enabled, fx_enabled):
+def add_cutoff_fx(b, *, cutoff_enabled, fx_enabled, next_period=False):
     """Use one invoice for independent period and FX controls."""
     currency = _foreign_currency(b, prefer_usd=True)
     units, *_ = b.case_parameters("cutoff_fx", 100)
     invoice, posted_at = _boundary_invoice(
-        b, currency, units * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled,
+        b, currency, units * 10 ** b.exponents[currency], cutoff_enabled=cutoff_enabled, next_period=next_period,
     )
     _value(b, invoice, posted_at, fx_enabled=fx_enabled)
