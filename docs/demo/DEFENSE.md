@@ -9,28 +9,29 @@
 `results/verify-…/verify/report.json` и `evidence-summary.json`; их границы описаны в
 [VALIDATION.md](../release/VALIDATION.md).
 
-> **Какой комплект нужен.** Сценарий ниже использует сгенерированные компании открытого набора. Они есть в
-> консоли начиная с этого PR, то есть в checkout `main` после слияния и в кандидате, собранном после него.
-> Опубликованный `v0.1.0-rc.2` построен раньше: в его консоли только ручная пара S01/S02 и FX01, для него
-> действует [сокращённый вариант](#вариант-для-v010-rc2) в конце. RC2 — исторический кандидат, блокер
-> [#23](https://github.com/Mustiks07/AuditLab/issues/23) в нём не исправлен.
+> **Какой комплект нужен.** Сценарий для `v0.1.0-rc.3`, source
+> `b7a1857a51bf47bb36e42699988b38b4d897fa1f`: используйте опубликованный архив
+> на [странице RC3](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.3).
+> Передача и проверка checksum описаны в [HANDOFF.md](HANDOFF.md).
+> RC2 — исторический кандидат: у него только ручная пара S01/S02 и FX01, для него сохранён
+> [сокращённый вариант](#вариант-для-v010-rc2) в конце. Его результаты не подтверждают новый архив.
 
 ## Подготовка (до выхода к жюри)
 
-**Из офлайн-комплекта**, после `python offline.py verify` (образы уже загружены; подробно в
+**Из офлайн-комплекта**, после `python3.11 offline.py verify` (образы уже загружены; подробно в
 [HANDOFF.md](HANDOFF.md)):
 
 ```sh
-AUDITLAB_RUNTIME_IMAGE=$(python offline.py image --role runtime)
+AUDITLAB_RUNTIME_IMAGE=$(python3.11 offline.py image --role runtime)
 mkdir -p demo-results
-docker run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop ALL \
+docker --host unix:///var/run/docker.sock run --rm --pull never --user "$(id -u):$(id -g)" --read-only --cap-drop ALL \
   --security-opt no-new-privileges --cpus 2 --memory 2g \
   --tmpfs /tmp:rw,nosuid,size=1g -p 127.0.0.1:8765:8765 \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" \
   "$AUDITLAB_RUNTIME_IMAGE" python run.py demo --host 0.0.0.0 --root /results/demo
 ```
 
-**Из checkout:**
+**Для разработчика из checkout (не маршрут независимой приёмки архива):**
 
 ```sh
 python -m pip install --require-hashes -r requirements.lock
@@ -42,13 +43,19 @@ python run.py demo
 
 Откройте `http://127.0.0.1:8765/`. Первый старт занимает несколько секунд: настоящий раннер проходит шесть
 компаний, после чего `/demo/health` отвечает `"runs":6`. `run_id` назначает раннер, он меняется от запуска к
-запуску; ID берите с экрана или из `python -m auditlab.demo --root … list`. ID эпизодов и строк ниже
+запуску; ID берите с экрана или командой `list` в контейнере (ниже). ID эпизодов и строк ниже
 постоянны: они из опубликованного `datasets/open/train`.
 
-Перед выходом сверьте консоль с экспортами и выполните живой пересчёт; ожидается «расхождений: 0», exit 0:
+Перед выходом сверьте консоль с экспортами и выполните живой пересчёт. Для получателя архива
+команда выполняется в поставленном контейнере, без установки пакетов на хосте. Ожидается шесть
+проверенных запусков (или больше после собственных опытов), «расхождений: 0», exit 0:
 
 ```sh
-python -m auditlab.demo --root runs/demo crosscheck --live
+docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user "$(id -u):$(id -g)" \
+  --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 1536m --memory-swap 1536m \
+  --pids-limit 256 --tmpfs /tmp:rw,size=64m \
+  --mount "type=bind,src=$(pwd)/demo-results,dst=/results" "$AUDITLAB_RUNTIME_IMAGE" \
+  python -m auditlab.demo --root /results/demo crosscheck --live
 ```
 
 ## Тайминг
@@ -76,19 +83,19 @@ python -m auditlab.demo --root runs/demo crosscheck --live
 - **Браузер недоступен.** Те же данные без сети:
 
 ```sh
-docker run --rm --pull never --network none --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
+docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user "$(id -u):$(id -g)" --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" "$AUDITLAB_RUNTIME_IMAGE" \
   python -m auditlab.demo --root /results/demo list
 ```
 
 ```sh
-docker run --rm --pull never --network none --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
+docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user "$(id -u):$(id -g)" --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" "$AUDITLAB_RUNTIME_IMAGE" \
   python -m auditlab.demo --root /results/demo show --run RUN_ID
 ```
 
 ```sh
-docker run --rm --pull never --network none --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
+docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user "$(id -u):$(id -g)" --read-only --cap-drop ALL --tmpfs /tmp:rw,size=64m \
   --mount "type=bind,src=$(pwd)/demo-results,dst=/results" "$AUDITLAB_RUNTIME_IMAGE" \
   python run.py replay --root /results/demo --run RUN_ID --check
 ```
