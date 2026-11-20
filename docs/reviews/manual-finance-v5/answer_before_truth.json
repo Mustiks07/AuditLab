@@ -1,0 +1,1740 @@
+{
+ "base_main": "daf1fc64df37651e14801e0286b9741b30820d35",
+ "generator": "1.5",
+ "note": "Public-only. automated = audit_calc.py; manual = hand work from rows. Fixtures X* are hand-made, not generator output.",
+ "generator_cases": {
+  "G01-max-clean-kzt": {
+   "episode_id": "EED9DB2F81BB7C84D92D6B6F6CD2ADD4D",
+   "automated": {
+    "findings": [],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PD3D8F2C35F4214E33A92D8F6: 11100/10^2 x 503.00 x 10^2 = 5583300 -> 5583300; recorded 5583300"
+    ]
+   }
+  },
+  "G02-max-12-issues-kzt": {
+   "episode_id": "E2F2DBAE67A916871E41BFE41290E8E21",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I42E8B22CF6B9954CF0F28B3B"
+      ],
+      "claimed_amount_minor": 2986900,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D0B78B83E708D6F3B2079BF5B",
+       "invoices/DBC3009C4799EFECE8370C663",
+       "ledger/R4ACC4EC76C8D88E47FA150DA",
+       "ledger/R141341F7D5A8239429D57D09"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I9810128FBC8A9812D646ACC3"
+      ],
+      "claimed_amount_minor": 809800,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D41AADE6E14E0B09D27AF8203",
+       "invoices/DA220CA4B4E3EF7185FF614F9",
+       "ledger/RAE11ADDFF35A75E45520BF38",
+       "ledger/RD3DA86217485FC795D245C8A"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/IA689D702EC87661AF2716D79"
+      ],
+      "claimed_amount_minor": 3064300,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D7811393C4D4BF8FF62F35D60",
+       "invoices/DA2CF3A6BBCC67342EE17CEB8",
+       "ledger/R72EEFF87F4003A9A684B5B33",
+       "ledger/RD3899383656C33584BD1F6F6"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P1511504D2E4A2ED85A37AAED"
+      ],
+      "claimed_amount_minor": 5600,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D8085AA93328274ED2CF524B6",
+       "fx/2026-11-18/USD/KZT",
+       "policy/fx_date",
+       "ledger/RD484CC39ADAFA469950EBBA2"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P601FD45D441DA43E76B4205F"
+      ],
+      "claimed_amount_minor": 5000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D5859BBDB2D13442A75CE2C36",
+       "fx/2026-11-19/USD/KZT",
+       "policy/fx_date",
+       "ledger/RD06B675291EBC1C3941A0212"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PEAE01CE5A87C9AF23584A177"
+      ],
+      "claimed_amount_minor": 2100,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DE4B1D4DE55F426CF8D8CA64D",
+       "fx/2026-11-18/USD/KZT",
+       "policy/fx_date",
+       "ledger/RE1F8FA9468B05B948105F4B5"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I5E10132EB5E52031FE14740E",
+       "payment/PEAE01CE5A87C9AF23584A177"
+      ],
+      "claimed_amount_minor": 3360,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/DE4B1D4DE55F426CF8D8CA64D",
+       "ledger/R27F38D1711796FD7403A7209",
+       "ledger/R739A282EC5C43907AB57E40B",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I7FFB2DB842AA67278A5A3C76",
+       "payment/P06CB1C8643A99124673BB59C"
+      ],
+      "claimed_amount_minor": 2168000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D2A1A03FFB0558B47F33B5796",
+       "ledger/RD4A40F0C0916A0B52B1A2408",
+       "ledger/R93AC614868B92C89C41F1845",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IC8714516AA846CDBF7BAEC90",
+       "payment/P6E075261900E2BC114367F17"
+      ],
+      "claimed_amount_minor": 2100000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DF6F56706F19F3CFE7FBEC367",
+       "ledger/R71F348357F746A325EE67478",
+       "ledger/R5BF690284342D76A773E1293",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I22D6F0B07566730A4B70FF4B"
+      ],
+      "claimed_amount_minor": 2309000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D7E23C4231A50BF744903F8E5",
+       "ledger/R743F1C99BBF300B4C21B3331",
+       "policy/period"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/IB58E2C0009EB2F4C2E7A5347"
+      ],
+      "claimed_amount_minor": 3910400,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D4201FD1F707489ADF1E30326",
+       "ledger/R19C8F32B0624DE54D0DFC02B",
+       "policy/period"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/ICE821E05865FF8B9918CECFB"
+      ],
+      "claimed_amount_minor": 926800,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/DCC1C9EE4C013916189770AAE",
+       "ledger/R3F43737338D2C9A0EC0D238E",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P06CB1C8643A99124673BB59C: credits-debits before 2026-12-01T00:00:00+05:00 = 2168000 KZT",
+     "alloc PEAE01CE5A87C9AF23584A177: credits-debits before 2026-12-01T00:00:00+05:00 = 3360 USD",
+     "alloc P6E075261900E2BC114367F17: credits-debits before 2026-12-01T00:00:00+05:00 = 2100000 KZT",
+     "fx payment P601FD45D441DA43E76B4205F: 20000/10^2 x 505.75 x 10^2 = 10115000 -> 10115000; recorded 10120000",
+     "fx payment PBFD8E7BD76C063FD46B9FE0F: 6700/10^2 x 503.00 x 10^2 = 3370100 -> 3370100; recorded 3370100",
+     "fx payment P1511504D2E4A2ED85A37AAED: 22400/10^2 x 505.50 x 10^2 = 11323200 -> 11323200; recorded 11328800",
+     "fx payment PEAE01CE5A87C9AF23584A177: 8400/10^2 x 505.50 x 10^2 = 4246200 -> 4246200; recorded 4248300",
+     "dup IA689D702EC87661AF2716D79: 2 docs, 2 recognitions 6128600 - 3064300",
+     "dup I9810128FBC8A9812D646ACC3: 2 docs, 2 recognitions 1619600 - 809800",
+     "dup I42E8B22CF6B9954CF0F28B3B: 2 docs, 2 recognitions 5973800 - 2986900",
+     "cutoff invoice ICE821E05865FF8B9918CECFB: issued period 0, recognised period 1, nominal 926800 KZT",
+     "cutoff invoice IB58E2C0009EB2F4C2E7A5347: issued period 0, recognised period 1, nominal 3910400 KZT",
+     "cutoff invoice I22D6F0B07566730A4B70FF4B: issued period 0, recognised period 1, nominal 2309000 KZT"
+    ]
+   },
+   "manual": {
+    "spot": [
+     [
+      "duplicate_invoice",
+      2986900,
+      "KZT"
+     ],
+     [
+      "fx_conversion",
+      5600,
+      "KZT"
+     ],
+     [
+      "payment_allocation",
+      3360,
+      "USD"
+     ],
+     [
+      "period_cutoff",
+      2309000,
+      "KZT"
+     ]
+    ],
+    "work": "first finding of each type by hand: dup I42E8B two docs two journals; P15115 224.00 x 505.50 = 113232 KZT, recorded 11328800 -> 5600; PEAE01 8400 - 5040 = 3360; I22D6F issued 11-30 recognised 12-01"
+   }
+  },
+  "G03-max-12-issues-kwd-berlin": {
+   "episode_id": "E4EBCA6CE8D709ADF0896B83F5E67E3D7",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I64C0F4E457232E608BF6F5E2"
+      ],
+      "claimed_amount_minor": 11743000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/DCA73962AA9D910AFD7297116",
+       "invoices/D96E80619A33597502640C0DC",
+       "ledger/R3E6ED5409CD12374974BEDEE",
+       "ledger/RCC806E9797394B9C80CFC8D6"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/IF08996494B1FFF065C4A3E0D"
+      ],
+      "claimed_amount_minor": 25186000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/D9C0F805F5F7A0079DB1AF4B4",
+       "invoices/DBD0C417EC9993500465CDE83",
+       "ledger/RAAE4168C2426C60AFEE3053D",
+       "ledger/RECEEB7E870E39A37FB1B56C1"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "invoice/I8B32CFAF2D6D2D27799C44E5"
+      ],
+      "claimed_amount_minor": 56750,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/D40F0AC0D8BC9CF375C475C05",
+       "fx/2026-03-31/USD/KWD",
+       "policy/fx_date",
+       "ledger/R56115F884A1D7BB7BE16E348"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P1AE44B2F717AC950547756F7"
+      ],
+      "claimed_amount_minor": 250,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/D574161AB642C77D537099DDE",
+       "fx/2026-03-06/JPY/KWD",
+       "policy/fx_date",
+       "ledger/R05126C8F05E94F86A96E61C5"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P647A72C506AEB8EBB8CDCBDD"
+      ],
+      "claimed_amount_minor": 725,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/DED69A3723C8F11552AB81966",
+       "fx/2026-03-08/JPY/KWD",
+       "policy/fx_date",
+       "ledger/R47FC8E5D3D4A0824FA8EB994"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PF13FE1220A4BEA120BECBF4E"
+      ],
+      "claimed_amount_minor": 500,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/D4C7F622EA820CA22A7FB3433",
+       "fx/2026-03-13/JPY/KWD",
+       "policy/fx_date",
+       "ledger/RCD9CD377A51F4545F9010C15"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I12C23AD968641E599975D5FE",
+       "payment/P724A73ECACA21D5F32F69A89"
+      ],
+      "claimed_amount_minor": 31840000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/DFCD3CFB890A91FD697ACF8AF",
+       "ledger/R853578EF732CF898EAB847FA",
+       "ledger/R117ED04208AB88598E429EEA",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I3BD19D37B8C4275B52A74325",
+       "payment/PA879B7B2DE951F842C3DE580"
+      ],
+      "claimed_amount_minor": 29120000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/D4D672EC042F24A534DBA5388",
+       "ledger/R3DD06B7C718B76D1F12CD9AA",
+       "ledger/RE069CB7307AC13BA0165EC0C",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IF8B83AD774A028FA0E83BDC1",
+       "payment/P735E6C694F8B1BA08A27D910"
+      ],
+      "claimed_amount_minor": 15480000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/D0C4BD3AB9D8CDEE694709DE5",
+       "ledger/R592E78BF2C8128C8FAF8D86A",
+       "ledger/R32E85D80BB6C588E2507D073",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I4909B2FA2FE30A30298A0350"
+      ],
+      "claimed_amount_minor": 27093000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/DB4D7F23DD287DB1DDD3E5199",
+       "ledger/R103836B5BB746E90590CAA08",
+       "policy/period"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I8B32CFAF2D6D2D27799C44E5"
+      ],
+      "claimed_amount_minor": 22700,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/D40F0AC0D8BC9CF375C475C05",
+       "ledger/R582B1AAC01D5F7BB78D68CB7",
+       "policy/period"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I987256D1C209270645A02470"
+      ],
+      "claimed_amount_minor": 68399000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/DCA1F8BF546426A627CD22C4D",
+       "ledger/R5D68B09DC796862515632218",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P724A73ECACA21D5F32F69A89: credits-debits before 2026-04-01T00:00:00+02:00 = 31840000 KWD",
+     "alloc P735E6C694F8B1BA08A27D910: credits-debits before 2026-04-01T00:00:00+02:00 = 15480000 KWD",
+     "alloc PA879B7B2DE951F842C3DE580: credits-debits before 2026-04-01T00:00:00+02:00 = 29120000 KWD",
+     "fx invoice I8B32CFAF2D6D2D27799C44E5: 22700/10^2 x 2.80 x 10^3 = 635600 -> 635600; recorded 692350",
+     "fx payment P1AE44B2F717AC950547756F7: 50/10^0 x 1.115 x 10^3 = 55750 -> 55750; recorded 56000",
+     "fx payment PF13FE1220A4BEA120BECBF4E: 100/10^0 x 1.150 x 10^3 = 115000 -> 115000; recorded 115500",
+     "fx payment PEEE3342764ED01393C79F871: 107/10^0 x 1.175 x 10^3 = 125725 -> 125725; recorded 125725",
+     "fx payment P647A72C506AEB8EBB8CDCBDD: 145/10^0 x 1.125 x 10^3 = 163125 -> 163125; recorded 163850",
+     "dup I64C0F4E457232E608BF6F5E2: 2 docs, 2 recognitions 23486000 - 11743000",
+     "dup IF08996494B1FFF065C4A3E0D: 2 docs, 2 recognitions 50372000 - 25186000",
+     "cutoff invoice I4909B2FA2FE30A30298A0350: issued period 0, recognised period 1, nominal 27093000 KWD",
+     "cutoff invoice I987256D1C209270645A02470: issued period 0, recognised period 1, nominal 68399000 KWD",
+     "cutoff invoice I8B32CFAF2D6D2D27799C44E5: issued period 0, recognised period 1, nominal 22700 USD"
+    ]
+   },
+   "manual": {
+    "spot": [
+     [
+      "duplicate_invoice",
+      11743000,
+      "KWD"
+     ],
+     [
+      "fx_conversion",
+      56750,
+      "KWD"
+     ],
+     [
+      "payment_allocation",
+      31840000,
+      "KWD"
+     ],
+     [
+      "period_cutoff",
+      27093000,
+      "KWD"
+     ]
+    ],
+    "work": "dup I64C0F two docs two journals; invoice I8B32C 227.00 x 2.80 = 635.600 KWD, recorded 692350 -> 56750; P724A7 79600000 - 47760000 = 31840000; I4909B issued 03-31 recognised 04-01"
+   }
+  },
+  "G04-max-clean-jpy-newyork": {
+   "episode_id": "E41AC4F22184F05A2ED62D83A967CC47E",
+   "automated": {
+    "findings": [],
+    "notes": [],
+    "arithmetic": [
+     "fx payment P167EE0208AB4BAEF7EAF10BE: 6300/10^2 x 1.14 x 10^0 = 3591/50 -> 72; recorded 72"
+    ]
+   }
+  },
+  "G05-boundary-before": {
+   "episode_id": "E429A99655019E31A092B69CE6E91AA57",
+   "automated": {
+    "findings": [],
+    "notes": [],
+    "arithmetic": []
+   },
+   "manual": {
+    "expected": [],
+    "work": "5000000 - 3000000 - 2000000 (2026-11-30T23:59+05) = 0"
+   }
+  },
+  "G06-boundary-at": {
+   "episode_id": "E7A0B5DD49FC9245A5F60C843736BB784",
+   "automated": {
+    "findings": [
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IDF337F4078ACC07050B0E1DD",
+       "payment/PDB44908F97F4C0DE0E264BC1"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D6513CF756CE7E6DDB6D53434",
+       "ledger/R5E2FB0BF9FCA5DCF5274A41E",
+       "ledger/R38FB283E4E1F00177E17EAFE",
+       "policy/allocation"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PDB44908F97F4C0DE0E264BC1: credits-debits before 2026-12-01T00:00:00+05:00 = 2000000 KZT"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "payment_allocation",
+      2000000,
+      "KZT"
+     ]
+    ],
+    "work": "settlement at exactly 2026-12-01T00:00+05 excluded: 5000000 - 3000000 = 2000000"
+   }
+  },
+  "G07-partial-allocation-refund": {
+   "episode_id": "E79160D967A66FE48911DC3B4E089AE3C",
+   "automated": {
+    "findings": [
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I3238C1FA077EB147835A6A53",
+       "payment/PDC230C1394120FDA0F4B3C66"
+      ],
+      "claimed_amount_minor": 2000000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DD397373B51049355B3C6A201",
+       "ledger/R3ECC1AE585F23609006E2BB9",
+       "ledger/REC114B7DEF4EF6F4E81C12B4",
+       "policy/allocation"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PDC230C1394120FDA0F4B3C66: credits-debits before 2026-12-01T00:00:00+05:00 = 2000000 KZT",
+     "fx payment P9EAD152BE4AF795F65D48041: 25400/10^2 x 503.25 x 10^2 = 12782550 -> 12782550; recorded 12782550"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "payment_allocation",
+      2000000,
+      "KZT"
+     ]
+    ],
+    "work": "deposit 800000 refunded 11-08; next-day payment 4100000 settled; 254.00 USD x 503.25 = 127825.50 KZT = 12782550 = recorded; PDC23: 5000000 - 3000000 = 2000000 (rest applied 12-01 00:01)"
+   }
+  },
+  "G08-clean-refunds": {
+   "episode_id": "E3DFB4B053FD1E41851780C23323E4ED5",
+   "automated": {
+    "findings": [],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PE0A488CC06784220B5EE1C7B: 7500/10^2 x 505.50 x 10^2 = 3791250 -> 3791250; recorded 3791250"
+    ]
+   },
+   "manual": {
+    "expected": [],
+    "work": "4 x 5300000 from different suppliers, one recognition each; I7418 two documents one recognition; split 2120000 + 3180000; refund 200000; 75.00 USD x 505.50 = 37912.50 = 3791250 = recorded"
+   }
+  },
+  "G09-block-8611": {
+   "episode_id": "E0415DA8B3D039C087F0260B2DF061734",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I082779DB431C479D7623AE01"
+      ],
+      "claimed_amount_minor": 1847600,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/D4962D10622FEEE5E14D48B74",
+       "invoices/DBDFE90E4B81E3D0B08A31BC0",
+       "ledger/R2BA022995AD0462B58B01A48",
+       "ledger/R0D3E6479BD2B9A4002F6B276"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PAF25EA4F8467325BABCF765F"
+      ],
+      "claimed_amount_minor": 68,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/D82F102C3541E2C7938E9C09A",
+       "fx/2026-03-07/JPY/USD",
+       "policy/fx_date",
+       "ledger/R455E9FA24D02C7125BF44DCE"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IAC1FEBF859B29150D4CECEF0",
+       "payment/PB945112282B10DB013D8F5AD"
+      ],
+      "claimed_amount_minor": 1596000,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/D5E2F115977147ED447E133F3",
+       "ledger/R822E52548091C13961A01EC0",
+       "ledger/R5AEE73234B45C642BDA44E4D",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IDB027027B90F9845A0073698",
+       "payment/PAF25EA4F8467325BABCF765F"
+      ],
+      "claimed_amount_minor": 55,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/D82F102C3541E2C7938E9C09A",
+       "ledger/R47B4B629DADE19E99A48FED0",
+       "ledger/R55181CA3C8315EA6106F15CC",
+       "policy/allocation"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PAF25EA4F8467325BABCF765F: credits-debits before 2026-04-01T00:00:00-04:00 = 55 JPY",
+     "alloc PB945112282B10DB013D8F5AD: credits-debits before 2026-04-01T00:00:00-04:00 = 1596000 USD",
+     "fx payment PF3933D008C90CFB77EC3F357: 58/10^0 x 1.155 x 10^2 = 6699 -> 6699; recorded 6699",
+     "fx payment PAF25EA4F8467325BABCF765F: 136/10^0 x 1.120 x 10^2 = 15232 -> 15232; recorded 15300",
+     "dup I082779DB431C479D7623AE01: 2 docs, 2 recognitions 3695200 - 1847600"
+    ]
+   }
+  },
+  "G10-block-8612": {
+   "episode_id": "E5AEDD911773605595AE3F5DBD9B8F344",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I128889594BFD51449B6A8010"
+      ],
+      "claimed_amount_minor": 15004,
+      "currency": "JPY",
+      "evidence_ids": [
+       "invoices/D85EDCD20B48514E788C42213",
+       "invoices/DD0D9517767758D2BE4FE2D80",
+       "ledger/REF40A3E9DC7AA57A6611F3E9",
+       "ledger/R45AA25792AE1EF4CB9BD0C24"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I858FDA3E5EC80ADECA0FB91B"
+      ],
+      "claimed_amount_minor": 24763,
+      "currency": "JPY",
+      "evidence_ids": [
+       "invoices/D948F024DD12B5629410FB6E5",
+       "invoices/DDBA611F084EE7CF81C103ECF",
+       "ledger/R4094C1B4CBC626027CFDCB84",
+       "ledger/R33A0864579DE30C97CABFDDE"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "invoice/I6A014F3D05CCE3ACFCE112F9"
+      ],
+      "claimed_amount_minor": 57,
+      "currency": "JPY",
+      "evidence_ids": [
+       "invoices/DE11BAE36C503FFEF2D47828E",
+       "fx/2026-03-31/USD/JPY",
+       "policy/fx_date",
+       "ledger/R85770D1536F7D5174240120D"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IB782AC7604BE5CA5D2EE258C",
+       "payment/PE6A88D8255930F4025C685C8"
+      ],
+      "claimed_amount_minor": 34000,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/D42650CF11553E22F2346D1F8",
+       "ledger/RF9D20F0DEAD0759CAA0241F3",
+       "ledger/RF3E0EEB449C8A5609133859B",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/ICFB0AB26A768DABC1B693609",
+       "payment/P2C28E948BB6FF08B5E7EC47C"
+      ],
+      "claimed_amount_minor": 14880,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/D3A0B8AF3B2FC0DF5D8B32D2C",
+       "ledger/R4AB874281512865AFC63DB44",
+       "ledger/RE0BB794A558CC0768F852C21",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I6A014F3D05CCE3ACFCE112F9"
+      ],
+      "claimed_amount_minor": 22900,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/DE11BAE36C503FFEF2D47828E",
+       "ledger/R4992CEBB3B99860D83D9603F",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PE6A88D8255930F4025C685C8: credits-debits before 2026-04-01T00:00:00-04:00 = 34000 JPY",
+     "alloc P2C28E948BB6FF08B5E7EC47C: credits-debits before 2026-04-01T00:00:00-04:00 = 14880 JPY",
+     "fx invoice I6A014F3D05CCE3ACFCE112F9: 22900/10^2 x 2.80 x 10^0 = 3206/5 -> 641; recorded 698",
+     "fx payment P10F6818531ECA99BC836ED96: 14100/10^2 x 7.55 x 10^0 = 21291/20 -> 1065; recorded 1065",
+     "dup I858FDA3E5EC80ADECA0FB91B: 2 docs, 2 recognitions 49526 - 24763",
+     "dup I128889594BFD51449B6A8010: 2 docs, 2 recognitions 30008 - 15004",
+     "cutoff invoice I6A014F3D05CCE3ACFCE112F9: issued period 0, recognised period 1, nominal 22900 USD"
+    ]
+   }
+  },
+  "G11-block-8613": {
+   "episode_id": "E3AD1C5531E05A583F73F6B441FBCE3A6",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P96170C9717E7C5B793AD209F"
+      ],
+      "claimed_amount_minor": 1240,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/DCC2AFB823EA3BDF69A3EA2D7",
+       "fx/2026-03-18/JPY/KWD",
+       "policy/fx_date",
+       "ledger/RF0E808D3330B095ACD0B412D"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment P96170C9717E7C5B793AD209F: 248/10^0 x 1.175 x 10^3 = 291400 -> 291400; recorded 292640",
+     "fx payment PABBA98D3D12E145C5BC8ABC2: 54/10^0 x 1.150 x 10^3 = 62100 -> 62100; recorded 62100"
+    ]
+   }
+  },
+  "G12-block-8614": {
+   "episode_id": "EF70714AC1BE641E80262DF61C33D4512",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I053308F5B936B2C97AA95371"
+      ],
+      "claimed_amount_minor": 2157900,
+      "currency": "EUR",
+      "evidence_ids": [
+       "invoices/DEB52928D0995E29D20D3AE64",
+       "invoices/D5C93B7E28B99EE1285F2056A",
+       "ledger/RA131A8E78098553DFD445ED6",
+       "ledger/R19CF7DB77B3E6F53BDAC506E"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P1FE14D57A90883E8194F0784"
+      ],
+      "claimed_amount_minor": 2175,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/D57938A4F8DB01D960C0226C8",
+       "fx/2026-03-03/USD/EUR",
+       "policy/fx_date",
+       "ledger/RC87B6D6D59E50ED9B0397A10"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P56B818D12D10D223C10DF229"
+      ],
+      "claimed_amount_minor": 1825,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/DB72273242F0CC0B5B4909398",
+       "fx/2026-03-21/USD/EUR",
+       "policy/fx_date",
+       "ledger/R5321C55964C8BC25EAE72C62"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IC2E499D1ACF69AB0AEE5639C",
+       "payment/P56B818D12D10D223C10DF229"
+      ],
+      "claimed_amount_minor": 2920,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/DB72273242F0CC0B5B4909398",
+       "ledger/R55C4FC714205219C14A99E4F",
+       "ledger/R1105655F7BBBD7EC0A43D430",
+       "policy/allocation"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P56B818D12D10D223C10DF229: credits-debits before 2026-04-01T00:00:00-04:00 = 2920 USD",
+     "fx payment P1B509347BDFCE97BBCDA6FA8: 13100/10^2 x 4.05 x 10^2 = 53055 -> 53055; recorded 53055",
+     "fx payment P56B818D12D10D223C10DF229: 7300/10^2 x 8.05 x 10^2 = 58765 -> 58765; recorded 60590",
+     "fx payment P1FE14D57A90883E8194F0784: 8700/10^2 x 3.55 x 10^2 = 30885 -> 30885; recorded 33060",
+     "dup I053308F5B936B2C97AA95371: 2 docs, 2 recognitions 4315800 - 2157900"
+    ]
+   }
+  },
+  "G13-block-8615": {
+   "episode_id": "EA975EC9CF6F2CAC974E59122913A195F",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I61FE8DC6531EFA4614E5233C"
+      ],
+      "claimed_amount_minor": 1167300,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D48E21DA70CB2AED691DEC1B8",
+       "invoices/D541AE3DC96444E961CA73A12",
+       "ledger/RF69F259C3615B41A669E771A",
+       "ledger/R857F3249D9782F7657C3BC3D"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/IDEC76FC427C311F54CDD0006"
+      ],
+      "claimed_amount_minor": 423800,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/DDC29406E0927F454789138B6",
+       "invoices/D9E333BC33F857987E2A56828",
+       "ledger/R44CE61E05E4CAF4EFF9A8CF3",
+       "ledger/R4AF31610D7302A18DB924807"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "invoice/I644D12FD41BC2CD43D16A637"
+      ],
+      "claimed_amount_minor": 4150,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D29F9643161810EBF015733B3",
+       "fx/2026-12-31/USD/KZT",
+       "policy/fx_date",
+       "ledger/R517FB2F255646F9B59C7B02D"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PC59CD2C6AAE1A549DEAE4C50"
+      ],
+      "claimed_amount_minor": 5475,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D293CDF38EA7DBC2D263B3576",
+       "fx/2026-12-16/USD/KZT",
+       "policy/fx_date",
+       "ledger/R0B3F789AE37D00507BCBC8BC"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I644D12FD41BC2CD43D16A637"
+      ],
+      "claimed_amount_minor": 16600,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/D29F9643161810EBF015733B3",
+       "ledger/R87C000A918B4AF66F72B903A",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PC59CD2C6AAE1A549DEAE4C50: 21900/10^2 x 504.75 x 10^2 = 11054025 -> 11054025; recorded 11059500",
+     "fx payment P3DCA7B124D7FB56EC7974125: 6400/10^2 x 502.25 x 10^2 = 3214400 -> 3214400; recorded 3214400",
+     "fx invoice I644D12FD41BC2CD43D16A637: 16600/10^2 x 500.75 x 10^2 = 8312450 -> 8312450; recorded 8316600",
+     "dup IDEC76FC427C311F54CDD0006: 2 docs, 2 recognitions 847600 - 423800",
+     "dup I61FE8DC6531EFA4614E5233C: 2 docs, 2 recognitions 2334600 - 1167300",
+     "cutoff invoice I644D12FD41BC2CD43D16A637: issued period 0, recognised period 1, nominal 16600 USD"
+    ]
+   }
+  },
+  "G14-block-8616": {
+   "episode_id": "E0C2F5666E9D71431ECD18BF32E34C77B",
+   "automated": {
+    "findings": [
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IF9B610F5E812FFC524EFFF8C",
+       "payment/P66189A66801B7CE50C2689C9"
+      ],
+      "claimed_amount_minor": 1780000,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/D4B231FCFCF459F307646C12E",
+       "ledger/R482A1785609054564EB1EBAF",
+       "ledger/R2BEE7140AC81D50C3CAA7DC7",
+       "policy/allocation"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P66189A66801B7CE50C2689C9: credits-debits before 2027-01-01T00:00:00+00:00 = 1780000 USD",
+     "fx payment P85E636BA9415D911E8BA3690: 80/10^0 x 1.095 x 10^2 = 8760 -> 8760; recorded 8760"
+    ]
+   }
+  },
+  "G15-block-8617": {
+   "episode_id": "E3892BDF22C9FFA1F93C76DEF535BD066",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I5145B099B1595631B8F6CC9E"
+      ],
+      "claimed_amount_minor": 12314,
+      "currency": "JPY",
+      "evidence_ids": [
+       "invoices/D930A106810AA6C87EF7CB889",
+       "invoices/DFEAD6F357B5E34504F074BC0",
+       "ledger/R2DB57D4EB99D8184A9B95964",
+       "ledger/R70F7C5883504E9A2C486E237"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P6B9E42F3287FA2D51857B40D"
+      ],
+      "claimed_amount_minor": 35,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/D8FC2B7A5455F29898C7D4D8C",
+       "fx/2026-12-15/USD/JPY",
+       "policy/fx_date",
+       "ledger/R040796BFCE8FBB7C94E43EDF"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I8365D5EFEFB73D80364747F8",
+       "payment/P6B9E42F3287FA2D51857B40D"
+      ],
+      "claimed_amount_minor": 5560,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/D8FC2B7A5455F29898C7D4D8C",
+       "ledger/R944590D4B4F9C662D89A7E2D",
+       "ledger/R2751419BE16F08EADFD138B0",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I77C68239FC57FBCFBB8EFB73"
+      ],
+      "claimed_amount_minor": 61862,
+      "currency": "JPY",
+      "evidence_ids": [
+       "invoices/D17E8319044CCE7E880BE7D30",
+       "ledger/RFCE3D00A21C65032C08E02B4",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P6B9E42F3287FA2D51857B40D: credits-debits before 2027-01-01T00:00:00+00:00 = 5560 USD",
+     "fx payment P6B9E42F3287FA2D51857B40D: 13900/10^2 x 5.55 x 10^0 = 15429/20 -> 771; recorded 806",
+     "fx payment P0A31CAB54B0E347C1760917E: 9100/10^2 x 3.55 x 10^0 = 6461/20 -> 323; recorded 323",
+     "dup I5145B099B1595631B8F6CC9E: 2 docs, 2 recognitions 24628 - 12314",
+     "cutoff invoice I77C68239FC57FBCFBB8EFB73: issued period 0, recognised period 1, nominal 61862 JPY"
+    ]
+   }
+  },
+  "G16-block-8618": {
+   "episode_id": "E19509B6BCDDB3333098510DAB6F85F15",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I06C4B649D46CE26C06896FF4"
+      ],
+      "claimed_amount_minor": 16743000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/D7C29AECCFE96F8EF536B51B0",
+       "invoices/D12E8118131244614744D9E1C",
+       "ledger/RFA56435556ECE675D399F633",
+       "ledger/RB4771D6F701C1A88EBF49A54"
+      ]
+     },
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/ID4978CF52A96D96B8FCEE08C"
+      ],
+      "claimed_amount_minor": 31722000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/DD151D79EE506B2B268196592",
+       "invoices/D80D5151D0D22177618AD7189",
+       "ledger/R7A555EC9CBFE1675B8B2EC14",
+       "ledger/R6998FD4930C7F60247D04ED7"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "invoice/IE6F3109105E7C849C4C7969A"
+      ],
+      "claimed_amount_minor": 54250,
+      "currency": "KWD",
+      "evidence_ids": [
+       "invoices/D577400CD7892C172891629F0",
+       "fx/2026-12-31/USD/KWD",
+       "policy/fx_date",
+       "ledger/RDA0F4469FD8FDCF40C9030EC"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I1AF18789D63ADA8D5D99B652",
+       "payment/PAB178359F414BCF9DC76E9B1"
+      ],
+      "claimed_amount_minor": 29480000,
+      "currency": "KWD",
+      "evidence_ids": [
+       "payments/D03C22B2D323615256DC286F2",
+       "ledger/R43FA12133E06553C9FB171ED",
+       "ledger/R194764A802E1DA8A3125C4DD",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/IE6F3109105E7C849C4C7969A"
+      ],
+      "claimed_amount_minor": 21700,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/D577400CD7892C172891629F0",
+       "ledger/RF8940F177A036B0ACDC6EBBE",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PAB178359F414BCF9DC76E9B1: credits-debits before 2027-01-01T00:00:00+00:00 = 29480000 KWD",
+     "fx invoice IE6F3109105E7C849C4C7969A: 21700/10^2 x 1.80 x 10^3 = 390600 -> 390600; recorded 444850",
+     "fx payment P6C692AA9346ACD82BE36A33F: 41/10^0 x 1.080 x 10^3 = 44280 -> 44280; recorded 44280",
+     "dup ID4978CF52A96D96B8FCEE08C: 2 docs, 2 recognitions 63444000 - 31722000",
+     "dup I06C4B649D46CE26C06896FF4: 2 docs, 2 recognitions 33486000 - 16743000",
+     "cutoff invoice IE6F3109105E7C849C4C7969A: issued period 0, recognised period 1, nominal 21700 USD"
+    ]
+   }
+  },
+  "G17-block-8619": {
+   "episode_id": "E4C7628D9F1074AF47EB7068F93360C09",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PBBB46ECEA8952E823E551364"
+      ],
+      "claimed_amount_minor": 4325,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/D768E3B3A4EA23182F0333D9E",
+       "fx/2026-12-07/USD/EUR",
+       "policy/fx_date",
+       "ledger/RABAC7184C50F36B3C2FA720D"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I06B1AE739E5FE6C1ED2CCFF1",
+       "payment/PF169D34F39E1257615881CF2"
+      ],
+      "claimed_amount_minor": 2532000,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/D367B400B10F96BFD2B334272",
+       "ledger/R2197BA346F015ACE827EF6CC",
+       "ledger/R4F204F0D37C1F41D697CDA17",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IBDF2C0F5AD95B6747D804DA0",
+       "payment/PC5A2D09857C6E8396203C5FF"
+      ],
+      "claimed_amount_minor": 1936000,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/D03A8FD5F9B59A5E7F2B04D30",
+       "ledger/R9F76285CC71CBE2AD529D785",
+       "ledger/RE48D7DF32614045A36046892",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/IEB6BBB35B2801972742EC25A"
+      ],
+      "claimed_amount_minor": 6727200,
+      "currency": "EUR",
+      "evidence_ids": [
+       "invoices/D2022D5DFCC050A82B965EDFB",
+       "ledger/R0C40434858A8BC1F9A0D4AD7",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc PF169D34F39E1257615881CF2: credits-debits before 2027-01-01T00:00:00+00:00 = 2532000 EUR",
+     "alloc PC5A2D09857C6E8396203C5FF: credits-debits before 2027-01-01T00:00:00+00:00 = 1936000 EUR",
+     "fx payment PBBB46ECEA8952E823E551364: 17300/10^2 x 3.55 x 10^2 = 61415 -> 61415; recorded 65740",
+     "fx payment P49C489941FBE6624315E1E48: 15400/10^2 x 4.05 x 10^2 = 62370 -> 62370; recorded 62370",
+     "cutoff invoice IEB6BBB35B2801972742EC25A: issued period 0, recognised period 1, nominal 6727200 EUR"
+    ]
+   }
+  },
+  "G18-block-8620": {
+   "episode_id": "E6B8D0E59A99ECE98C149958739C5CAF7",
+   "automated": {
+    "findings": [
+     {
+      "type": "duplicate_invoice",
+      "affected_ids": [
+       "invoice/I83B29ECC0DB19C4815AEF258"
+      ],
+      "claimed_amount_minor": 3577900,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/D4F97A3F7339E0932588239B1",
+       "invoices/D5ECE7E213F5E5DD9476AE11A",
+       "ledger/R7521F454A60C54C32669BE9E",
+       "ledger/R456EED54B54B7863B8C3473E"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P55A2851E9BED537C7C881B89"
+      ],
+      "claimed_amount_minor": 1950,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D52F1DE283FC20DFA52D9C19F",
+       "fx/2027-01-07/USD/KZT",
+       "policy/fx_date",
+       "ledger/RDC411421BC60F4E6A45B20DE"
+      ]
+     },
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P9F552564237841778D25CA09"
+      ],
+      "claimed_amount_minor": 2825,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DDC03E9F63EECE4473DD177DE",
+       "fx/2027-01-11/USD/KZT",
+       "policy/fx_date",
+       "ledger/RD5B276A743F9A241A4C00C40"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/IB05F7DC662A4DA7B4DFE7319",
+       "payment/P9F552564237841778D25CA09"
+      ],
+      "claimed_amount_minor": 4520,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/DDC03E9F63EECE4473DD177DE",
+       "ledger/R2B40F0E1EE9B707F9C484AA8",
+       "ledger/R6B70A2B01D5F9DB0B78456B0",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/ID873953E8791F974F51C67B9",
+       "payment/P3D6DB2E701974A4769BC54C1"
+      ],
+      "claimed_amount_minor": 2884000,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D01ADAB4772052A3E6EE108F1",
+       "ledger/R26F18B3F7C9E29EE2ED2744C",
+       "ledger/R6179A5FF295A8488CD68535B",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I25EB448B58937FE62E5DDDE5"
+      ],
+      "claimed_amount_minor": 2729300,
+      "currency": "KZT",
+      "evidence_ids": [
+       "invoices/DA29C37D3C92A52CCA69F05A2",
+       "ledger/R05EAC3D6198D19D7FBF2C856",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P3D6DB2E701974A4769BC54C1: credits-debits before 2027-02-01T00:00:00+05:45 = 2884000 KZT",
+     "alloc P9F552564237841778D25CA09: credits-debits before 2027-02-01T00:00:00+05:45 = 4520 USD",
+     "fx payment P55A2851E9BED537C7C881B89: 7800/10^2 x 502.50 x 10^2 = 3919500 -> 3919500; recorded 3921450",
+     "fx payment P9F552564237841778D25CA09: 11300/10^2 x 503.50 x 10^2 = 5689550 -> 5689550; recorded 5692375",
+     "fx payment PC82A7B87E14064D7C2C43D30: 7500/10^2 x 503.75 x 10^2 = 3778125 -> 3778125; recorded 3778125",
+     "dup I83B29ECC0DB19C4815AEF258: 2 docs, 2 recognitions 7155800 - 3577900",
+     "cutoff invoice I25EB448B58937FE62E5DDDE5: issued period 0, recognised period 1, nominal 2729300 KZT"
+    ]
+   }
+  },
+  "H-JPY-from-USD-clean-8753": {
+   "episode_id": "E631385666D0C0F28926EDECEE6E4B3A8",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PC6B6DFEC90926AB664106EFE"
+      ],
+      "claimed_amount_minor": 10,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/D6ECFACB29F80CA7E2C44BA88",
+       "fx/2026-11-06/USD/JPY",
+       "policy/fx_date",
+       "ledger/RC887983DC8029E2A5FB435FF"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment P6EF3965965338FE1A0B8C187: 21000/10^2 x 6.05 x 10^0 = 2541/2 -> 1271; recorded 1271 [EXACT HALF EVEN-FLOOR]",
+     "fx payment PC6B6DFEC90926AB664106EFE: 4300/10^2 x 3.55 x 10^0 = 3053/20 -> 153; recorded 163"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      10,
+      "JPY"
+     ]
+    ],
+    "work": "210.00 x 6.05 = 1270.5 -> 1271 = recorded (half-even 1270); 43.00 x 3.55 = 152.65 -> 153, recorded 163 -> 10"
+   }
+  },
+  "H-JPY-from-USD-error-8706": {
+   "episode_id": "E1750FBE9458105E1CF7ABCC5368783A6",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P86E4C45AC07F7BBAC9DCB45A"
+      ],
+      "claimed_amount_minor": 27,
+      "currency": "JPY",
+      "evidence_ids": [
+       "payments/DEB663A66F9D6A1306F4E9423",
+       "fx/2026-11-18/USD/JPY",
+       "policy/fx_date",
+       "ledger/RA241EE6C10176EC358FB2F0F"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PFCE38BA242567970C8056D0D: 11400/10^2 x 6.55 x 10^0 = 7467/10 -> 747; recorded 747",
+     "fx payment P86E4C45AC07F7BBAC9DCB45A: 11000/10^2 x 6.55 x 10^0 = 1441/2 -> 721; recorded 748 [EXACT HALF EVEN-FLOOR]"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      27,
+      "JPY"
+     ]
+    ],
+    "work": "110.00 x 6.55 = 720.5 -> 721, recorded 748 -> 27 (half-even 28); 114.00 x 6.55 = 746.7 -> 747 = recorded"
+   }
+  },
+  "H-KZT-from-JPY-clean-8702": {
+   "episode_id": "E397B315DA68AEC09B18056769EAF24EF",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PD9960C70AAFC4A9B58B91F60"
+      ],
+      "claimed_amount_minor": 36,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D15E8AF18DCB9CBEE8B4CD52E",
+       "fx/2026-11-12/JPY/KZT",
+       "policy/fx_date",
+       "ledger/R0AB11F15AE23A2D660ACBC46"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PD9960C70AAFC4A9B58B91F60: 73/10^0 x 2.585 x 10^2 = 37741/2 -> 18871; recorded 18907 [EXACT HALF EVEN-FLOOR]",
+     "fx payment P6D22965EBFA3A5CE61D1EB04: 299/10^0 x 2.615 x 10^2 = 156377/2 -> 78189; recorded 78189 [EXACT HALF EVEN-FLOOR]"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      36,
+      "KZT"
+     ]
+    ],
+    "work": "299 x 2.615 = 781.885 -> 78188.5 -> 78189 = recorded; 73 x 2.585 = 188.705 -> 18870.5 -> 18871, recorded 18907 -> 36 (half-even 37)"
+   }
+  },
+  "H-KZT-from-JPY-error-8701": {
+   "episode_id": "E080AE36B802A5731193C066A6E01AA25",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P1B9F2CBE6C77A9BA06E5DC28"
+      ],
+      "claimed_amount_minor": 25,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DF4E5D6E0220C5C249636ECCF",
+       "fx/2026-11-18/JPY/KZT",
+       "policy/fx_date",
+       "ledger/RDD98DA96E24EF51CC987A35C"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment P1B9F2CBE6C77A9BA06E5DC28: 51/10^0 x 2.615 x 10^2 = 26673/2 -> 13337; recorded 13362 [EXACT HALF EVEN-FLOOR]",
+     "fx payment PB70C9866438AF08B60378665: 135/10^0 x 2.550 x 10^2 = 34425 -> 34425; recorded 34425"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      25,
+      "KZT"
+     ]
+    ],
+    "work": "51 x 2.615 = 133.365 -> 13336.5 -> 13337, recorded 13362 -> 25 (half-even 26); 135 x 2.550 = 344.25 = 34425 = recorded"
+   }
+  },
+  "H-KZT-from-KWD-clean-8708": {
+   "episode_id": "EE7B08F1EE42478695C28557365734B3F",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P929DDB418219CF773EC9277E"
+      ],
+      "claimed_amount_minor": 9900,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/DBC1668E8F85527640A846D46",
+       "fx/2026-11-14/KWD/KZT",
+       "policy/fx_date",
+       "ledger/R3C200B25C9AFC7F5AA1ADF4A"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment P929DDB418219CF773EC9277E: 198010/10^3 x 1609.5 x 10^2 = 63739419/2 -> 31869710; recorded 31879610 [EXACT HALF]",
+     "fx payment P3CB87754E7B0E174BCA5D0A2: 37010/10^3 x 1606.5 x 10^2 = 11891313/2 -> 5945657; recorded 5945657 [EXACT HALF EVEN-FLOOR]"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      9900,
+      "KZT"
+     ]
+    ],
+    "work": "37.010 x 1606.5 = 59456.565 -> 5945656.5 -> 5945657 = recorded; 198.010 x 1609.5 = 318697.095 -> 31869709.5 -> 31869710, recorded 31879610 -> 9900"
+   }
+  },
+  "H-KZT-from-KWD-error-8702": {
+   "episode_id": "EEA885762CE533272E144BCA3ADB1F8D9",
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/PD9960C70AAFC4A9B58B91F60"
+      ],
+      "claimed_amount_minor": 3600,
+      "currency": "KZT",
+      "evidence_ids": [
+       "payments/D15E8AF18DCB9CBEE8B4CD52E",
+       "fx/2026-11-12/KWD/KZT",
+       "policy/fx_date",
+       "ledger/R0AB11F15AE23A2D660ACBC46"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment PD9960C70AAFC4A9B58B91F60: 72010/10^3 x 1608.5 x 10^2 = 23165617/2 -> 11582809; recorded 11586409 [EXACT HALF EVEN-FLOOR]",
+     "fx payment P6D22965EBFA3A5CE61D1EB04: 298010/10^3 x 1611.5 x 10^2 = 96048623/2 -> 48024312; recorded 48024312 [EXACT HALF]"
+    ]
+   },
+   "manual": {
+    "expected": [
+     [
+      "fx_conversion",
+      3600,
+      "KZT"
+     ]
+    ],
+    "work": "72.010 x 1608.5 = 115828.085 -> 11582808.5 -> 11582809, recorded 11586409 -> 3600 (half-even 3601); 298.010 x 1611.5 = 480243.115 -> 48024311.5 -> 48024312 = recorded"
+   }
+  }
+ },
+ "fixtures": {
+  "X1-NY-FALLBACK": {
+   "episode_id": "X1-NY-FALLBACK",
+   "manual_hand_truth": {
+    "episode_id": "X1-NY-FALLBACK",
+    "issues": [
+     {
+      "issue_id": "X1-1",
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P2"
+      ],
+      "expected_amount_minor": 100,
+      "currency": "USD",
+      "evidence_sets": [
+       [
+        "payments/DP2",
+        "fx/2026-11-01/EUR/USD",
+        "policy/fx_date",
+        "ledger/R13"
+       ]
+      ]
+     },
+     {
+      "issue_id": "X1-2",
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I4"
+      ],
+      "expected_amount_minor": 25000,
+      "currency": "USD",
+      "evidence_sets": [
+       [
+        "invoices/DI4",
+        "ledger/R25",
+        "policy/period"
+       ]
+      ]
+     },
+     {
+      "issue_id": "X1-3",
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I5",
+       "payment/P4"
+      ],
+      "expected_amount_minor": 8000,
+      "currency": "USD",
+      "evidence_sets": [
+       [
+        "payments/DP4",
+        "ledger/R30",
+        "policy/allocation"
+       ]
+      ]
+     }
+    ]
+   },
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/P2"
+      ],
+      "claimed_amount_minor": 100,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/DP2",
+       "fx/2026-11-01/EUR/USD",
+       "policy/fx_date",
+       "ledger/R13"
+      ]
+     },
+     {
+      "type": "payment_allocation",
+      "affected_ids": [
+       "invoice/I5",
+       "payment/P4"
+      ],
+      "claimed_amount_minor": 8000,
+      "currency": "USD",
+      "evidence_ids": [
+       "payments/DP4",
+       "ledger/R30",
+       "policy/allocation"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/I4"
+      ],
+      "claimed_amount_minor": 25000,
+      "currency": "USD",
+      "evidence_ids": [
+       "invoices/DI4",
+       "ledger/R25",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "alloc P4: credits-debits before 2026-12-01T00:00:00-05:00 = 8000 USD",
+     "fx payment P1: 10000/10^2 x 1.10 x 10^2 = 11000 -> 11000; recorded 11000",
+     "fx payment P2: 10000/10^2 x 1.10 x 10^2 = 11000 -> 11000; recorded 11100",
+     "fx payment P3: 5000/10^2 x 1.20 x 10^2 = 6000 -> 6000; recorded 6000",
+     "cutoff invoice I4: issued period -1, recognised period 0, nominal 25000 USD"
+    ]
+   }
+  },
+  "X2-BERLIN-SPRING": {
+   "episode_id": "X2-BERLIN-SPRING",
+   "manual_hand_truth": {
+    "episode_id": "X2-BERLIN-SPRING",
+    "issues": [
+     {
+      "issue_id": "X2-1",
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/Q2"
+      ],
+      "expected_amount_minor": 200,
+      "currency": "EUR",
+      "evidence_sets": [
+       [
+        "payments/DQ2",
+        "fx/2026-03-29/USD/EUR",
+        "policy/fx_date",
+        "ledger/R13"
+       ]
+      ]
+     },
+     {
+      "issue_id": "X2-2",
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/J4"
+      ],
+      "expected_amount_minor": 9000,
+      "currency": "EUR",
+      "evidence_sets": [
+       [
+        "invoices/DJ4",
+        "ledger/R25",
+        "policy/period"
+       ]
+      ]
+     }
+    ]
+   },
+   "automated": {
+    "findings": [
+     {
+      "type": "fx_conversion",
+      "affected_ids": [
+       "payment/Q2"
+      ],
+      "claimed_amount_minor": 200,
+      "currency": "EUR",
+      "evidence_ids": [
+       "payments/DQ2",
+       "fx/2026-03-29/USD/EUR",
+       "policy/fx_date",
+       "ledger/R13"
+      ]
+     },
+     {
+      "type": "period_cutoff",
+      "affected_ids": [
+       "invoice/J4"
+      ],
+      "claimed_amount_minor": 9000,
+      "currency": "EUR",
+      "evidence_ids": [
+       "invoices/DJ4",
+       "ledger/R25",
+       "policy/period"
+      ]
+     }
+    ],
+    "notes": [],
+    "arithmetic": [
+     "fx payment Q1: 20000/10^2 x 0.90 x 10^2 = 18000 -> 18000; recorded 18000",
+     "fx payment Q2: 20000/10^2 x 0.90 x 10^2 = 18000 -> 18000; recorded 18200",
+     "fx payment Q3: 3310/10^2 x 0.95 x 10^2 = 6289/2 -> 3145; recorded 3145 [EXACT HALF EVEN-FLOOR]",
+     "cutoff invoice J4: issued period 0, recognised period 1, nominal 9000 EUR"
+    ]
+   }
+  }
+ },
+ "manual_vs_automated": [
+  {
+   "case": "G02-max-12-issues-kzt",
+   "agree": true
+  },
+  {
+   "case": "G03-max-12-issues-kwd-berlin",
+   "agree": true
+  },
+  {
+   "case": "G05-boundary-before",
+   "agree": true
+  },
+  {
+   "case": "G06-boundary-at",
+   "agree": true
+  },
+  {
+   "case": "G07-partial-allocation-refund",
+   "agree": true
+  },
+  {
+   "case": "G08-clean-refunds",
+   "agree": true
+  },
+  {
+   "case": "H-JPY-from-USD-clean-8753",
+   "agree": true
+  },
+  {
+   "case": "H-JPY-from-USD-error-8706",
+   "agree": true
+  },
+  {
+   "case": "H-KZT-from-JPY-clean-8702",
+   "agree": true
+  },
+  {
+   "case": "H-KZT-from-JPY-error-8701",
+   "agree": true
+  },
+  {
+   "case": "H-KZT-from-KWD-clean-8708",
+   "agree": true
+  },
+  {
+   "case": "H-KZT-from-KWD-error-8702",
+   "agree": true
+  },
+  {
+   "case": "X1-NY-FALLBACK",
+   "agree": true
+  },
+  {
+   "case": "X2-BERLIN-SPRING",
+   "agree": true
+  }
+ ]
+}
