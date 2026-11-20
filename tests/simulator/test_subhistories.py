@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT / "tests" / "verifier"))
 from cases import Case
 from auditlab.release.transforms import transform_public
 from datasets.audit_families import fingerprints
-from datasets.audit_subhistories import check_subhistories
+from datasets.audit_subhistories import check_published_and_internal, check_subhistories
 
 
 def company(root, core_amount, background_amount):
@@ -27,6 +27,15 @@ def company(root, core_amount, background_amount):
 
 
 class CommercialSubhistoryTests(unittest.TestCase):
+    def test_frozen_internal_selection_has_no_cross_split_complete_chains(self):
+        report = check_published_and_internal()
+        self.assertEqual(report["selection_version"], "internal-selection-1.1")
+        self.assertEqual(report["whole"]["compared"],
+                         {"train/dev": 100, "train/internal": 200, "dev/internal": 200})
+        self.assertFalse(any(pairs for view in report["whole"]["cross"].values() for pairs in view.values()))
+        for view in report["partial"]["views"].values():
+            self.assertEqual(view["shared_families"], 0)
+
     def test_copied_story_survives_different_background_and_id_permutation(self):
         with TemporaryDirectory() as temp:
             root = Path(temp)

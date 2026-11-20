@@ -21,6 +21,9 @@ import uuid
 from .transforms import comparable, read_json, transform_public, transform_truth, write_json
 
 VERSION = "internal-rehearsal-1.1"
+SELECTION_VERSION = "internal-selection-1.1"
+# Fixed after public-only subhistory overlap audit; never chosen by policy scores.
+SELECTION_SEEDS = {"internal-02": 911843, "internal-05": 1226030}
 POLICIES = ("random", "reconcile", "flag_all", "oracle")
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
 PUBLIC_FILES = ("manifest.json", "policy.json", "ledger.csv", "invoices.jsonl", "payments.jsonl", "fx.csv")
@@ -72,10 +75,11 @@ def selection_manifest(config_version="1.1"):
                   "base_currency": "KZT", "currencies": ["KZT", currency], "timezone": zone,
                   "target_period": period, "issue_counts": counts, "interaction": interaction,
                   "clean_distractors": ["split_payment", "equal_amount_different_supplier", "refund", "archive_copy"]}
-        rows.append({"id": f"internal-{index+1:02d}", "seed": 807113 + index * 104729,
+        episode_id = f"internal-{index+1:02d}"
+        rows.append({"id": episode_id, "seed": SELECTION_SEEDS.get(episode_id, 807113 + index * 104729),
                      "category": "clean" if index < 5 else "interaction" if index < 10 else "single_or_mixed",
                      "config": config, "pair_seed": 190081 + index * 7919})
-    return {"version": VERSION, "purpose": "internal regression rehearsal, not organizer hidden evaluation",
+    return {"version": SELECTION_VERSION, "purpose": "internal regression rehearsal, not organizer hidden evaluation",
             "selection_rule": "Fixed before this run; never tune policies on this result and call it fresh holdout.",
             "policy_seed": 314159, "policies": list(POLICIES), "episodes": rows}
 
