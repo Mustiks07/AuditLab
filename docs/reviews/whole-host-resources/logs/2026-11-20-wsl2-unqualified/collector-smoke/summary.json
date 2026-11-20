@@ -1,0 +1,77 @@
+{
+  "method": "Sampled /proc/meminfo, /proc/vmstat, /proc/pressure/memory; cgroup v2 memory.current/memory.peak/memory.events; VmRSS/VmHWM of Docker daemons. No root, no writes outside --out.",
+  "interval_s": 0.25,
+  "kernel": "6.18.58.1-microsoft-standard-WSL2",
+  "started_utc": "2026-11-20T15:07:55.147+00:00",
+  "stopped_utc": "2026-11-20T15:07:58.150+00:00",
+  "duration_s": 3.003,
+  "samples": 14,
+  "gaps_s": {
+    "median": 0.25,
+    "max": 0.2509999999999999
+  },
+  "host": {
+    "mem_total_bytes": 7945748480,
+    "swap_total_bytes": 2147483648,
+    "sampled_peak_used_excluding_reclaimable": {
+      "bytes": 593866752,
+      "at_t": 0.0,
+      "at_utc": "2026-11-20T15:07:55.147+00:00"
+    },
+    "sampled_peak_used_including_cache": {
+      "bytes": 1074302976,
+      "at_t": 0.0,
+      "at_utc": "2026-11-20T15:07:55.147+00:00"
+    },
+    "sampled_min_mem_available": {
+      "bytes": 7351881728,
+      "at_t": 0.0,
+      "at_utc": "2026-11-20T15:07:55.147+00:00"
+    },
+    "sampled_peak_swap_used": {
+      "bytes": 0,
+      "at_t": 0.0,
+      "at_utc": "2026-11-20T15:07:55.147+00:00"
+    },
+    "sampled_peak_psi_some_avg10": 0.0,
+    "sampled_peak_psi_full_avg10": 0.0
+  },
+  "oom": {
+    "vmstat_oom_kill_delta": 0,
+    "system.slice_oom_kill_delta": 0,
+    "user.slice_oom_kill_delta": 0,
+    "init.scope_oom_kill_delta": 0
+  },
+  "named_cgroups": {
+    "system.slice": {
+      "continuous_peak_bytes": 346509312,
+      "sampled_peak_current_bytes": 291278848,
+      "oom_kill_delta": 0
+    },
+    "user.slice": {
+      "continuous_peak_bytes": 19259392,
+      "sampled_peak_current_bytes": 12324864,
+      "oom_kill_delta": 0
+    },
+    "init.scope": {
+      "continuous_peak_bytes": 4698112,
+      "sampled_peak_current_bytes": 3043328,
+      "oom_kill_delta": 0
+    },
+    "docker.service": null,
+    "containerd.service": null
+  },
+  "containers": {},
+  "daemons": {},
+  "phases": [],
+  "limit_bytes": 4000000000,
+  "mem_total_within_limit": false,
+  "sampled_peak_within_limit": true,
+  "limits_of_inference": [
+    "Host figures are sampled every interval_s; a shorter spike can be missed. They are not a continuous maximum.",
+    "continuous_peak_bytes comes from one cgroup's memory.peak; peaks of different cgroups need not coincide, so their sum is not the host peak and is never reported as such.",
+    "A container's memory.peak is lost when its cgroup is removed; last_seen_continuous_peak_bytes is the last value read while it existed and can be below its true final peak.",
+    "used_excluding_reclaimable = MemTotal - MemAvailable (kernel estimate). used_including_cache adds page cache.",
+    "MemTotal is what the guest kernel reports; it is below the RAM assigned by the hypervisor."
+  ]
+}
