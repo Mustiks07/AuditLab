@@ -1,0 +1,40 @@
+{
+ "JPY<-USD": {
+  "clean": {
+   "seed": 8753,
+   "line": "fx payment P6EF3965965338FE1A0B8C187: 21000/10^2 x 6.05 x 10^0 = 2541/2 -> 1271; recorded 1271 [EXACT HALF EVEN-FLOOR]"
+  },
+  "error": {
+   "seed": 8706,
+   "line": "fx payment P86E4C45AC07F7BBAC9DCB45A: 11000/10^2 x 6.55 x 10^0 = 1441/2 -> 721; recorded 748 [EXACT HALF EVEN-FLOOR]"
+  }
+ },
+ "KZT<-JPY": {
+  "clean": {
+   "seed": 8702,
+   "line": "fx payment P6D22965EBFA3A5CE61D1EB04: 299/10^0 x 2.615 x 10^2 = 156377/2 -> 78189; recorded 78189 [EXACT HALF EVEN-FLOOR]"
+  },
+  "error": {
+   "seed": 8701,
+   "line": "fx payment P1B9F2CBE6C77A9BA06E5DC28: 51/10^0 x 2.615 x 10^2 = 26673/2 -> 13337; recorded 13362 [EXACT HALF EVEN-FLOOR]"
+  }
+ },
+ "KZT<-KWD": {
+  "clean": {
+   "seed": 8708,
+   "line": "fx payment P3CB87754E7B0E174BCA5D0A2: 37010/10^3 x 1606.5 x 10^2 = 11891313/2 -> 5945657; recorded 5945657 [EXACT HALF EVEN-FLOOR]"
+  },
+  "error": {
+   "seed": 8702,
+   "line": "fx payment PD9960C70AAFC4A9B58B91F60: 72010/10^3 x 1608.5 x 10^2 = 23165617/2 -> 11582809; recorded 11586409 [EXACT HALF EVEN-FLOOR]"
+  }
+ },
+ "USD<-KWD": {
+  "clean": null,
+  "error": null
+ },
+ "KWD<-JPY": {
+  "clean": null,
+  "error": null
+ }
+}
