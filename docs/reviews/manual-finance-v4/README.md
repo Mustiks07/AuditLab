@@ -57,13 +57,36 @@ Python 3.11.14, зависимости из `requirements.lock` (`--require-hash
 
 ## Воспроизведение
 
+Материалы проверки опубликованы позже проверенного кода. Поэтому нужны два каталога:
+один с неизменными материалами PR #26, второй с кодом генератора 1.4. Ниже команды
+для нового рабочего каталога в Linux/WSL; `uv` должен быть установлен. `PYTHONTZPATH`
+заставляет независимый калькулятор читать установленный `tzdata` из lock-файла,
+а не системную базу часовых поясов.
+
 ```sh
-git clone https://github.com/Mustiks07/AuditLab.git && cd AuditLab && git checkout a301b16b825c5575393d94f92ac1707f42e292cb
-uv venv --python 3.11.14 .venv && uv pip install --python .venv/bin/python --require-hashes -r requirements.lock
-mkdir ../v4 && cp docs/reviews/manual-finance-v4/before-truth/*.py ../v4/ && cp docs/reviews/manual-finance-v4/after-truth/compare_v4.py ../v4/
-cp docs/reviews/manual-finance-v4/before-truth/answer_before_truth.json ../v4/ && cd ../v4
-../AuditLab/.venv/bin/python generate_v4.py ../AuditLab .          # эпизоды N1–N7 (сверить с after-truth/episodes.sha256)
-../AuditLab/.venv/bin/python audit_calc.py public_only/N4-half-kzt-jpy-error/public
-../AuditLab/.venv/bin/python compare_v4.py ../AuditLab             # сравнение, reconcile, verifier
-../AuditLab/.venv/bin/python scan_dst.py ../AuditLab SCRATCH 1 301 # поиск событий у переходов DST
+git clone https://github.com/Mustiks07/AuditLab.git AuditLab-review
+git -C AuditLab-review checkout --detach 55690578ac79361eef429d598da97cb386a81838
+git -C AuditLab-review worktree add --detach ../AuditLab-code a301b16b825c5575393d94f92ac1707f42e292cb
+uv venv --python 3.11.14 AuditLab-code/.venv
+uv pip install --python AuditLab-code/.venv/bin/python --require-hashes -r AuditLab-code/requirements.lock
+mkdir v4
+cp AuditLab-review/docs/reviews/manual-finance-v4/before-truth/*.py v4/
+cp AuditLab-review/docs/reviews/manual-finance-v4/after-truth/compare_v4.py v4/
+cp AuditLab-review/docs/reviews/manual-finance-v4/before-truth/answer_before_truth.json v4/
+cd v4
+export PYTHONTZPATH=''
+../AuditLab-code/.venv/bin/python generate_v4.py ../AuditLab-code .
+sha256sum -c ../AuditLab-review/docs/reviews/manual-finance-v4/after-truth/episodes.sha256
+../AuditLab-code/.venv/bin/python audit_calc.py public_only/N4-half-kzt-jpy-error/public
+../AuditLab-code/.venv/bin/python compare_v4.py ../AuditLab-code
+# Необязательный отдельный перебор событий у переходов DST:
+../AuditLab-code/.venv/bin/python scan_dst.py ../AuditLab-code SCRATCH 1 301
 ```
+
+Ожидается совпадение всех 55 хешей эпизодов. В `comparison_after_truth.json` для
+каждого из семи случаев должны быть `status: "MATCH"`, нулевые FP/FN у ответа,
+`reconcile` и verifier, пустые `unreachable` и `verifier.notes`, а у каждой строки —
+`identical_set: true`. Скрипт сравнения сохраняет диагностический отчёт и сам по себе
+не возвращает ненулевой код при расхождении; результат нужно проверять по этим полям.
+Повторение опубликованного ответа проверяет воспроизводимость, а не создаёт новое
+свидетельство расчёта до первого открытия truth.
