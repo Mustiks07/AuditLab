@@ -1,0 +1,578 @@
+{
+ "scope": "Agent check (Claude Pro 3, 2026-11-20) of the published v0.1.0-rc.3 archive by docs/demo/HANDOFF.md. Not an independent human acceptance; OPS-02 stays not_checked. Internal F1/rewards are not a contest score.",
+ "archive": {
+  "url": "https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.3",
+  "zip": "AuditLab-v0.1.0-rc.3-offline.zip",
+  "size_bytes": 330616243,
+  "sha256": "a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81",
+  "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+ },
+ "machine": {
+  "os": "Ubuntu 24.04.5 LTS (cloud session container)",
+  "kernel": "6.18.44-fc-v726 x86_64",
+  "cpus": 4,
+  "python": "3.11.18",
+  "docker": "29.10.0 client/server",
+  "cgroup": 1
+ },
+ "stores": {
+  "containerd": {
+   "driver": "overlayfs io.containerd.snapshotter.v1",
+   "handoff_steps": [
+    {
+     "command": "test -f AuditLab-v0.1.0-rc.3-offline.zip && sha256sum -c AuditLab-v0.1.0-rc.3-SHA256SUMS.txt --ignore-missing",
+     "exit": 0,
+     "seconds": 0.3
+    },
+    {
+     "command": "mkdir bundle && unzip AuditLab-v0.1.0-rc.3-offline.zip -d bundle && ls bundle",
+     "exit": 0,
+     "seconds": 1.8
+    },
+    {
+     "command": "python3.11 offline.py check",
+     "exit": 0,
+     "seconds": 0.4
+    },
+    {
+     "command": "python3.11 offline.py verify --suite quick --output-root ./results",
+     "exit": 2,
+     "seconds": 256.9
+    },
+    {
+     "command": "python3.11 offline.py verify --suite rehearsal --output-root ./results",
+     "exit": 2,
+     "seconds": 378.3
+    },
+    {
+     "command": "python3.11 -I source/tools/check_rehearsal_evidence.py $RESULTS --bundle . --output evidence-summary.json",
+     "exit": 2,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py image --role runtime",
+     "exit": 0,
+     "seconds": 0.4
+    }
+   ],
+   "verify_runs": [
+    {
+     "dir": "verify-20261120T150132Z-d08fec377fa5",
+     "suite": "quick",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "signal": null,
+     "tests": 347,
+     "not_passed": 0,
+     "report_status": "incomplete",
+     "image_load_seconds": 2.65,
+     "elapsed_seconds": 256.8,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    },
+    {
+     "dir": "verify-20261120T150548Z-8b3577c8826e",
+     "suite": "rehearsal",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "signal": null,
+     "tests": 347,
+     "not_passed": 0,
+     "report_status": "incomplete",
+     "image_load_seconds": 2.04,
+     "elapsed_seconds": 378.3,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f",
+     "rehearsal": {
+      "random": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 0,
+       "fp": 0,
+       "fn": 38,
+       "mean_reward": -0.5035
+      },
+      "reconcile": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 38,
+       "fp": 0,
+       "fn": 0,
+       "mean_reward": 0.9512
+      },
+      "flag_all": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 0,
+       "fp": 600,
+       "fn": 38,
+       "mean_reward": -1.0
+      },
+      "oracle": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 38,
+       "fp": 0,
+       "fn": 0,
+       "mean_reward": 1.0
+      }
+     },
+     "acceptance": {
+      "passed": 22,
+      "not_checked": [
+       "OPS-01",
+       "OPS-02"
+      ]
+     }
+    },
+    {
+     "dir": "verify-20261120T151243Z-996cbfb57de1",
+     "suite": "quick",
+     "launcher_status": "interrupted",
+     "launcher_exit": 130,
+     "signal": 2,
+     "tests": 3,
+     "not_passed": 0,
+     "report_status": "in_progress",
+     "image_load_seconds": 2.44,
+     "elapsed_seconds": 25.3,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    },
+    {
+     "dir": "verify-20261120T151324Z-3c3bd996f9f4",
+     "suite": "quick",
+     "launcher_status": "interrupted",
+     "launcher_exit": 143,
+     "signal": 15,
+     "tests": 3,
+     "not_passed": 0,
+     "report_status": "in_progress",
+     "image_load_seconds": 2.53,
+     "elapsed_seconds": 25.2,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    }
+   ],
+   "loaded_images": {
+    "runtime": "sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b",
+    "verifier": "sha256:1aa26e89b71861ec7358405165706ae3ad13b1d408d1b0ae0eb73d5b6bdea31f",
+    "policy": "sha256:965008c64e516a07118cb526183e3e7e93f0e7cd457e006cb2bb21a2d24b68fe"
+   },
+   "evidence_checker": {
+    "status": "not_checked",
+    "exit_code": 2,
+    "datasets": 20,
+    "attempts": 80,
+    "pairs": 20,
+    "failures": [],
+    "missing_count": 102
+   },
+   "docker_events_during_handoff_steps": {
+    "image_pull": 0,
+    "network_connect": [
+     "none"
+    ]
+   },
+   "open_train_dev_policies": {
+    "train/random": {
+     "n": 10,
+     "tp": 0,
+     "fp": 10,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "train/reconcile": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 0.982
+    },
+    "train/flag_all": {
+     "n": 10,
+     "tp": 0,
+     "fp": 300,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "train/oracle": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 1.0
+    },
+    "dev/random": {
+     "n": 10,
+     "tp": 0,
+     "fp": 10,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "dev/reconcile": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 0.982
+    },
+    "dev/flag_all": {
+     "n": 10,
+     "tp": 0,
+     "fp": 300,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "dev/oracle": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 1.0
+    }
+   }
+  },
+  "classic": {
+   "driver": "overlay2",
+   "handoff_steps": [
+    {
+     "command": "test -f AuditLab-v0.1.0-rc.3-offline.zip && sha256sum -c AuditLab-v0.1.0-rc.3-SHA256SUMS.txt --ignore-missing",
+     "exit": 0,
+     "seconds": 0.3
+    },
+    {
+     "command": "mkdir bundle && unzip AuditLab-v0.1.0-rc.3-offline.zip -d bundle && ls bundle",
+     "exit": 0,
+     "seconds": 1.7
+    },
+    {
+     "command": "python3.11 offline.py check",
+     "exit": 0,
+     "seconds": 0.4
+    },
+    {
+     "command": "python3.11 offline.py verify --suite quick --output-root ./results",
+     "exit": 2,
+     "seconds": 262.2
+    },
+    {
+     "command": "python3.11 offline.py verify --suite rehearsal --output-root ./results",
+     "exit": 2,
+     "seconds": 383.6
+    },
+    {
+     "command": "python3.11 -I source/tools/check_rehearsal_evidence.py $RESULTS --bundle . --output evidence-summary.json",
+     "exit": 2,
+     "seconds": 0.3
+    },
+    {
+     "command": "python3.11 offline.py image --role runtime",
+     "exit": 0,
+     "seconds": 0.4
+    }
+   ],
+   "verify_runs": [
+    {
+     "dir": "verify-20261120T152148Z-0b689d2d14c5",
+     "suite": "quick",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "signal": null,
+     "tests": 347,
+     "not_passed": 0,
+     "report_status": "incomplete",
+     "image_load_seconds": 2.37,
+     "elapsed_seconds": 262.1,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    },
+    {
+     "dir": "verify-20261120T152610Z-6d7a05949ac2",
+     "suite": "rehearsal",
+     "launcher_status": "incomplete",
+     "launcher_exit": 2,
+     "signal": null,
+     "tests": 347,
+     "not_passed": 0,
+     "report_status": "incomplete",
+     "image_load_seconds": 0.29,
+     "elapsed_seconds": 383.5,
+     "cleanup": {
+      "status": "passed",
+      "remaining_containers": 0,
+      "removed_siblings": []
+     },
+     "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f",
+     "rehearsal": {
+      "random": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 0,
+       "fp": 0,
+       "fn": 38,
+       "mean_reward": -0.5035
+      },
+      "reconcile": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 38,
+       "fp": 0,
+       "fn": 0,
+       "mean_reward": 0.9512
+      },
+      "flag_all": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 0,
+       "fp": 600,
+       "fn": 38,
+       "mean_reward": -1.0
+      },
+      "oracle": {
+       "planned": 20,
+       "measured": 20,
+       "score_status": "complete",
+       "tp": 38,
+       "fp": 0,
+       "fn": 0,
+       "mean_reward": 1.0
+      }
+     },
+     "acceptance": {
+      "passed": 22,
+      "not_checked": [
+       "OPS-01",
+       "OPS-02"
+      ]
+     }
+    }
+   ],
+   "loaded_images": {
+    "runtime": "sha256:48e53a677ee9162640aa88a6c56b1c916338ec31f71e7fb0f9002a81ffb9014f",
+    "verifier": "sha256:0babfeed9363509c4fda28f17ee352794d46e4f337cb9ba726709816a5ec3ddd",
+    "policy": "sha256:f7416647338f46390cc9a214551c1dfa812effac3ac8e2116bf1f5b7411cc830"
+   },
+   "evidence_checker": {
+    "status": "not_checked",
+    "exit_code": 2,
+    "datasets": 20,
+    "attempts": 80,
+    "pairs": 20,
+    "failures": [],
+    "missing_count": 102
+   },
+   "docker_events_during_handoff_steps": {
+    "image_pull": 0,
+    "network_connect": [
+     "none"
+    ]
+   },
+   "open_train_dev_policies": {
+    "train/random": {
+     "n": 10,
+     "tp": 0,
+     "fp": 10,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "train/reconcile": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 0.982
+    },
+    "train/flag_all": {
+     "n": 10,
+     "tp": 0,
+     "fp": 300,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "train/oracle": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 1.0
+    },
+    "dev/random": {
+     "n": 10,
+     "tp": 0,
+     "fp": 10,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "dev/reconcile": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 0.982
+    },
+    "dev/flag_all": {
+     "n": 10,
+     "tp": 0,
+     "fp": 300,
+     "fn": 11,
+     "submitted": 10,
+     "mean_reward": -1.0
+    },
+    "dev/oracle": {
+     "n": 10,
+     "tp": 11,
+     "fp": 0,
+     "fn": 0,
+     "submitted": 10,
+     "mean_reward": 1.0
+    }
+   }
+  }
+ },
+ "demo_rc3_image": {
+  "start": {
+   "command": "HANDOFF §6 docker run … python run.py demo",
+   "health": {
+    "ok": true,
+    "runs": 6,
+    "static": true
+   },
+   "ready_seconds": 5.4
+  },
+  "browser_walk": {
+   "widths": [
+    1440,
+    1280,
+    1024
+   ],
+   "stores": [
+    "containerd (3 widths)",
+    "classic (1440)"
+   ],
+   "external_requests": 0,
+   "page_errors": 0,
+   "console_404_note": "one 404 is the deliberate navigation to #/runs/NO-SUCH-RUN",
+   "fact_change_latency_s": [
+    1.35,
+    1.85,
+    1.34,
+    1.35
+   ],
+   "rescore_latency_s": [
+    0.85,
+    0.84,
+    0.84
+   ]
+  },
+  "crosscheck_live_network_none": {
+   "containerd": {
+    "runs": 12,
+    "mismatches": 0,
+    "exit": 0
+   },
+   "classic": {
+    "runs": 8,
+    "mismatches": 0,
+    "exit": 0
+   }
+  },
+  "replay_check_network_none": {
+   "exit": 0,
+   "observations": "match",
+   "score": "match",
+   "executed_ms": 32.4
+  },
+  "backup_cli_seconds": {
+   "list": 0.46,
+   "show": 0.46,
+   "replay_recorded": 0.52,
+   "replay_check": 0.59
+  },
+  "paced_rehearsal_original_script": {
+   "total_s": 151.1,
+   "segments_end_s": [
+    22.0,
+    40.2,
+    84.3,
+    112.9,
+    130.6,
+    151.1
+   ],
+   "note": "Playwright with narration pauses = words/2.2 per segment; no human, no mouse travel"
+  },
+  "ui_findings_on_rc3": [
+   "runs table overflows the page at 1280 and 1024 px; Связи/Расследование/Повтор cut off at 1024",
+   "open-pair summary shows only 'Различий в документах: 3' without naming the changed fact",
+   "unknown run error is English ('No open completed run with this id.')",
+   "F1 = 1.000 on a clean company with 0/0/0 is unexplained",
+   "repeated rehearsals accumulate live runs in the same demo directory (12 runs after 3 walks)",
+   "CLI list shows no company name or pair role for the backup path"
+  ]
+ },
+ "branch_fixes_not_rc3": {
+  "note": "Measured on the review branch code from checkout, not on the RC3 image",
+  "runs_table_1024_1280_1440": {
+   "page_overflow": false,
+   "clipped_action_buttons": 0,
+   "buttons": 24
+  },
+  "paced_rehearsal_revised_script": {
+   "total_s": 135.7,
+   "segments_end_s": [
+    22.0,
+    40.2,
+    68.8,
+    97.5,
+    115.2,
+    135.7
+   ]
+  },
+  "tests": {
+   "tests/demo": "42/42",
+   "web": "3/3",
+   "tsc+vite build": "ok"
+  }
+ }
+}

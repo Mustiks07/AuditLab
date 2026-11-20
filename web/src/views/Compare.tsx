@@ -69,6 +69,12 @@ export function Compare({ left, right }: { left: string; right: string }) {
           <div className="cs-block">
             <div className="cs-label">Открытая пара</div>
             <div className="cs-main">Различий в документах: {view.changes.length}</div>
+            {view.changes.filter((c) => c.field === "timestamp").slice(0, 4).map((c) => (
+              <div key={c.key} className="small break"><span className="mono">{c.key}</span>: {when(String(c.before))} → <b>{when(String(c.after))}</b></div>
+            ))}
+            {view.changes.some((c) => c.field !== "timestamp") && (
+              <div className="small muted">остальные различия — следствия этой даты; полный список внизу страницы</div>
+            )}
           </div>
         )}
         <div className="cs-block">

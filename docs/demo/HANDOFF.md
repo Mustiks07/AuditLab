@@ -169,6 +169,74 @@ PYCODE
 Сравните результат с опубликованным evidence RC3 **для этого source SHA и вашего хранилища**.
 Самостоятельные финансовые результаты и показатели ресурса не заменяются статусом CI.
 
+## 5а. Обязательные политики на 10 train и 10 dev
+
+Критерий OPS-02 в SPEC §14 требует приложить результаты обязательных политик на открытых наборах
+`datasets/open/train` и `datasets/open/dev` (по 10 компаний). Репетиция §4 их не включает: в ней 20 внутренних
+снимков. Наборы лежат внутри runtime-образа. Команда ниже использует только поставленные образы. Каждая
+обычная политика запускается в отдельном контейнере без сети, как в `verify`. Выполняйте после шага 2 или 3,
+когда образы загружены.
+
+```sh
+AUDITLAB_RUNTIME_IMAGE=$(python3.11 offline.py image --role runtime)
+AUDITLAB_POLICY_IMAGE=$(python3.11 offline.py image --role policy)
+mkdir -p open-results
+```
+
+```sh
+docker --host unix:///var/run/docker.sock run -i --rm --pull never --network none --read-only --cap-drop ALL \
+  --security-opt no-new-privileges --user "$(id -u):$(id -g)" \
+  --group-add "$(stat -c %g /var/run/docker.sock)" --cpus 2 --memory 1536m \
+  --tmpfs /tmp:rw,nosuid,size=1g \
+  --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  --mount "type=bind,src=$(pwd)/open-results,dst=/results" \
+  "$AUDITLAB_RUNTIME_IMAGE" python - "$AUDITLAB_POLICY_IMAGE" > open-results/summary.jsonl <<'PYLOOP'
+import json, os, subprocess, sys
+image = sys.argv[1]
+for split in ("train", "dev"):
+    for episode in sorted(os.listdir(f"datasets/open/{split}")):
+        snapshot = f"datasets/open/{split}/{episode}"
+        for policy in ("random", "reconcile", "flag_all", "oracle"):
+            command = [sys.executable, "-m", "auditlab.runner"]
+            command += (["oracle", "--snapshot", snapshot] if policy == "oracle" else
+                        ["policy", "--snapshot", snapshot, "--name", policy, "--image", image])
+            command += ["--mode", "closed", "--trusted-dir", f"/results/{split}/{episode}/{policy}"]
+            done = subprocess.run(command, capture_output=True, text=True)
+            lines = done.stdout.strip().splitlines()
+            result = json.loads(lines[-1]) if lines else {"status": "no_output", "exit": done.returncode}
+            print(json.dumps({"split": split, "episode": episode, "policy": policy, "result": result}), flush=True)
+PYLOOP
+```
+
+Сводка (стандартная библиотека Python на хосте):
+
+```sh
+python3.11 - open-results/summary.jsonl <<'PYCODE'
+import collections, json, sys
+total = collections.defaultdict(lambda: [0, 0, 0, 0, 0.0, collections.Counter()])
+for line in open(sys.argv[1], encoding="utf-8"):
+    row = json.loads(line); result = row["result"]; score = result.get("score") or {}
+    t = total[(row["split"], row["policy"])]
+    t[0] += 1; t[1] += score.get("tp", 0); t[2] += score.get("fp", 0); t[3] += score.get("fn", 0)
+    t[4] += result.get("reward") or 0; t[5][result.get("status")] += 1
+for (split, policy), (n, tp, fp, fn, reward, status) in sorted(total.items()):
+    print(split, policy, "n:", n, "status:", dict(status), "TP/FP/FN:", tp, fp, fn,
+          "mean_reward:", round(reward / n, 4))
+PYCODE
+```
+
+Ожидается 80 строк, у каждой `status = submitted`. Агентская проверка RC3 получила следующее (TP / FP / FN
+и средняя награда; внутренняя диагностика открытых наборов, не конкурсный балл):
+
+| Набор | random | reconcile | flag_all | oracle |
+|---|---|---|---|---|
+| train | 0 / 10 / 11, −1 | 11 / 0 / 0, 0,982 | 0 / 300 / 11, −1 | 11 / 0 / 0, 1 |
+| dev | 0 / 10 / 11, −1 | 11 / 0 / 0, 0,982 | 0 / 300 / 11, −1 | 11 / 0 / 0, 1 |
+
+В каждом наборе две чистые компании; reconcile не дал на них ложных обвинений. Около 1,5 минуты на 2 CPU.
+Сравните со своим запуском, а не переписывайте эти числа. Подкоманда runner называется `policy`; в
+docstring модуля RC3 по ошибке написано `public`.
+
 ## 6. Консоль и сценарий
 
 Запуск демо, адрес и сценарий на 3 минуты — [DEFENSE.md](DEFENSE.md). Кратко:
@@ -246,6 +314,11 @@ PID launcher. Если прервали раньше создания контр
 - После перезагрузки загруженные Docker-образы сохраняются; повторите `verify` или `image`.
 
 ## 9. Что вернуть авторам
+
+Заполните [форму журнала](../reviews/receiver-acceptance-rc3/JOURNAL_FORM.md); короткая версия всего
+порядка — [пакет получателя](../reviews/receiver-acceptance-rc3/RECEIVER_PACKAGE.md). Агентская проверка RC3 —
+[отчёт](../reviews/receiver-acceptance-rc3/REPORT.md); она не заменяет ваш журнал.
+
 
 Журнал по разделам 1–8: версии ОС, Python и Docker, хранилище и cgroup, SHA архива и исходников, три image ID
 из `launch.json`, команды, коды возврата и длительности, сводку репетиции, вывод evidence checker и

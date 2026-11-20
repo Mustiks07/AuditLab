@@ -218,7 +218,9 @@ def main(argv: list[str] | None = None) -> int:
             print("Нет завершённых открытых запусков. Создайте учебные: python -m auditlab.demo samples")
         for r in runs:
             reward = "—" if r.get("reward") is None else f"{r['reward']:.6f}"
-            print(f"{r['run_id']:<24} [{r['label_text']}] {r['episode_id']:<12} {r['policy']:<10} {r['status']:<10} награда {reward}")
+            role = f" · пара {r['pair_id']} {r['pair_role']}" if r.get("pair_role") else ""
+            print(f"{r['run_id']:<24} [{r['label_text']}] {r['episode_id']:<12} {r['policy']:<10} {r['status']:<10} награда {reward}"
+                  f"  {r.get('company') or ''}{role}")
         return 0
     try:
         detail = service.run_detail(store, args.run)
