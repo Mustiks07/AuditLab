@@ -1,0 +1,608 @@
+{
+  "generator_version": "1.4",
+  "selection_version": "internal-rehearsal-1.0",
+  "selection_sha256": "fcb6f8c74b2086b232078f0f761a650e98626a9fd7d2313e058d1db56e720b8c",
+  "whole": {
+    "version": "1.0",
+    "counts": {
+      "train": 10,
+      "dev": 10,
+      "internal": 20
+    },
+    "compared": {
+      "train/dev": 100,
+      "train/internal": 200,
+      "dev/internal": 200
+    },
+    "within": {
+      "family": {
+        "train": [
+          [
+            "E6476455CA5F6F7CF4A34F78E68AD54C0",
+            "E651B6A63DDA2448A91DC825714D7732E"
+          ]
+        ],
+        "dev": [
+          [
+            "E4C30409A2F4E6DFE858E8FF06B8C4436",
+            "E509506A67D640282D2FD1D8B154EF4EC"
+          ]
+        ],
+        "internal": []
+      },
+      "book": {
+        "train": [],
+        "dev": [],
+        "internal": []
+      }
+    },
+    "cross": {
+      "family": {
+        "train/dev": [],
+        "train/internal": [],
+        "dev/internal": []
+      },
+      "book": {
+        "train/dev": [],
+        "train/internal": [],
+        "dev/internal": []
+      }
+    }
+  },
+  "partial": {
+    "version": "commercial-subhistories-1.0",
+    "scope": "Exact complete commercial chains; not arbitrary subgraphs or label leakage",
+    "counts": {
+      "train": 10,
+      "dev": 10,
+      "internal": 20
+    },
+    "views": {
+      "counterparty": {
+        "units_per_split": {
+          "train": 327,
+          "dev": 324,
+          "internal": 1164
+        },
+        "shared_families": 2,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": [
+            [
+              "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+              "internal-05"
+            ],
+            [
+              "E2C25779161020D87EF54FE3600D099E4",
+              "internal-02"
+            ]
+          ]
+        },
+        "matches": [
+          {
+            "sha256": "74e2a1f82e9b3b7fa18000a2619b2cb1cad584f9711d9d1595889ec7a1bdd154",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E2C25779161020D87EF54FE3600D099E4",
+                "counterparty_index": 22,
+                "invoice_index": null
+              },
+              {
+                "split": "internal",
+                "episode": "internal-02",
+                "counterparty_index": 33,
+                "invoice_index": null
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    [
+                      [
+                        "KZT",
+                        6500000,
+                        1072800000000,
+                        2678400000000,
+                        [
+                          {
+                            "amount_minor": 6500000,
+                            "description": "Commercial services"
+                          }
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "KZT",
+                          2600000,
+                          1245600000000
+                        ],
+                        []
+                      ],
+                      [
+                        [
+                          "KZT",
+                          3900000,
+                          1332000000000
+                        ],
+                        []
+                      ]
+                    ]
+                  ]
+                ],
+                []
+              ],
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          },
+          {
+            "sha256": "b79bff98a8cc13767971e8563d64eb992ea8ea1129089383c8c64fb0d7c432db",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+                "counterparty_index": 1,
+                "invoice_index": null
+              },
+              {
+                "split": "internal",
+                "episode": "internal-05",
+                "counterparty_index": 4,
+                "invoice_index": null
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    [
+                      [
+                        "KZT",
+                        10200000,
+                        306000000000,
+                        2678400000000,
+                        [
+                          {
+                            "amount_minor": 10200000,
+                            "description": "Commercial services"
+                          }
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "KZT",
+                          10200000,
+                          478800000000
+                        ],
+                        []
+                      ]
+                    ]
+                  ]
+                ],
+                []
+              ],
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          }
+        ]
+      },
+      "invoice": {
+        "units_per_split": {
+          "train": 321,
+          "dev": 322,
+          "internal": 1137
+        },
+        "shared_families": 2,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": [
+            [
+              "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+              "internal-05"
+            ],
+            [
+              "E2C25779161020D87EF54FE3600D099E4",
+              "internal-02"
+            ]
+          ]
+        },
+        "matches": [
+          {
+            "sha256": "17035e9f292577fee1e4389d693f69189d2ef9cfaf6e6202fbf479bcdd31560c",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+                "counterparty_index": 1,
+                "invoice_index": 0
+              },
+              {
+                "split": "internal",
+                "episode": "internal-05",
+                "counterparty_index": 4,
+                "invoice_index": 0
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    "KZT",
+                    10200000,
+                    306000000000,
+                    2678400000000,
+                    [
+                      {
+                        "amount_minor": 10200000,
+                        "description": "Commercial services"
+                      }
+                    ]
+                  ]
+                ],
+                [
+                  [
+                    [
+                      "KZT",
+                      10200000,
+                      478800000000
+                    ],
+                    []
+                  ]
+                ]
+              ],
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          },
+          {
+            "sha256": "924f470ed5ac4d9ca3bb41e87bcb1286196415b49865710a05ab0d011439dfec",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E2C25779161020D87EF54FE3600D099E4",
+                "counterparty_index": 22,
+                "invoice_index": 0
+              },
+              {
+                "split": "internal",
+                "episode": "internal-02",
+                "counterparty_index": 33,
+                "invoice_index": 0
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    "KZT",
+                    6500000,
+                    1072800000000,
+                    2678400000000,
+                    [
+                      {
+                        "amount_minor": 6500000,
+                        "description": "Commercial services"
+                      }
+                    ]
+                  ]
+                ],
+                [
+                  [
+                    [
+                      "KZT",
+                      2600000,
+                      1245600000000
+                    ],
+                    []
+                  ],
+                  [
+                    [
+                      "KZT",
+                      3900000,
+                      1332000000000
+                    ],
+                    []
+                  ]
+                ]
+              ],
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          }
+        ]
+      },
+      "posted_counterparty": {
+        "units_per_split": {
+          "train": 327,
+          "dev": 324,
+          "internal": 1164
+        },
+        "shared_families": 2,
+        "episode_pairs": {
+          "train/dev": [],
+          "train/internal": [],
+          "dev/internal": [
+            [
+              "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+              "internal-05"
+            ],
+            [
+              "E2C25779161020D87EF54FE3600D099E4",
+              "internal-02"
+            ]
+          ]
+        },
+        "matches": [
+          {
+            "sha256": "9b5f80511e56b253e098a07219a9b77b7e9a66c33e154cc04a5479d23437d5f3",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+                "counterparty_index": 1,
+                "invoice_index": null
+              },
+              {
+                "split": "internal",
+                "episode": "internal-05",
+                "counterparty_index": 4,
+                "invoice_index": null
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    [
+                      [
+                        "KZT",
+                        10200000,
+                        306000000000,
+                        2678400000000,
+                        [
+                          {
+                            "amount_minor": 10200000,
+                            "description": "Commercial services"
+                          }
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "KZT",
+                          10200000,
+                          478800000000
+                        ],
+                        [
+                          [
+                            [
+                              "AR",
+                              "KZT",
+                              478860000000,
+                              0,
+                              10200000
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              478860000000,
+                              10200000,
+                              0
+                            ]
+                          ],
+                          [
+                            [
+                              "CASH",
+                              "KZT",
+                              478800000000,
+                              10200000,
+                              0
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              478800000000,
+                              0,
+                              10200000
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "AR",
+                          "KZT",
+                          306000000000,
+                          10200000,
+                          0
+                        ],
+                        [
+                          "REVENUE",
+                          "KZT",
+                          306000000000,
+                          0,
+                          10200000
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [],
+                []
+              ],
+              "base_currency": "KZT",
+              "rounding": "ROUND_HALF_UP",
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          },
+          {
+            "sha256": "eb88dfd1b04341f20cf7b5ef6ad0af750ae66fa542367212f0910aec19eca1ba",
+            "members": [
+              {
+                "split": "dev",
+                "episode": "E2C25779161020D87EF54FE3600D099E4",
+                "counterparty_index": 22,
+                "invoice_index": null
+              },
+              {
+                "split": "internal",
+                "episode": "internal-02",
+                "counterparty_index": 33,
+                "invoice_index": null
+              }
+            ],
+            "canonical": {
+              "unit": [
+                [
+                  [
+                    [
+                      [
+                        "KZT",
+                        6500000,
+                        1072800000000,
+                        2678400000000,
+                        [
+                          {
+                            "amount_minor": 6500000,
+                            "description": "Commercial services"
+                          }
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "KZT",
+                          2600000,
+                          1245600000000
+                        ],
+                        [
+                          [
+                            [
+                              "AR",
+                              "KZT",
+                              1245660000000,
+                              0,
+                              2600000
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              1245660000000,
+                              2600000,
+                              0
+                            ]
+                          ],
+                          [
+                            [
+                              "CASH",
+                              "KZT",
+                              1245600000000,
+                              2600000,
+                              0
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              1245600000000,
+                              0,
+                              2600000
+                            ]
+                          ]
+                        ]
+                      ],
+                      [
+                        [
+                          "KZT",
+                          3900000,
+                          1332000000000
+                        ],
+                        [
+                          [
+                            [
+                              "AR",
+                              "KZT",
+                              1332060000000,
+                              0,
+                              3900000
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              1332060000000,
+                              3900000,
+                              0
+                            ]
+                          ],
+                          [
+                            [
+                              "CASH",
+                              "KZT",
+                              1332000000000,
+                              3900000,
+                              0
+                            ],
+                            [
+                              "UNAPPLIED",
+                              "KZT",
+                              1332000000000,
+                              0,
+                              3900000
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      [
+                        [
+                          "AR",
+                          "KZT",
+                          1072800000000,
+                          6500000,
+                          0
+                        ],
+                        [
+                          "REVENUE",
+                          "KZT",
+                          1072800000000,
+                          0,
+                          6500000
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [],
+                []
+              ],
+              "base_currency": "KZT",
+              "rounding": "ROUND_HALF_UP",
+              "exponents": {
+                "KZT": 2
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
