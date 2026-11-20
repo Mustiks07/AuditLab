@@ -33,6 +33,7 @@ class StressControlsTests(unittest.TestCase):
         stress = load("check_generalization")
         cases = list(stress.matrix())
         self.assertEqual(len({r["seed"] for r in cases}), 1000)
+        self.assertEqual(sum("next_day_settlement" in r["config"]["clean_distractors"] for r in cases), 500)
         self.assertEqual(len({tuple(r["config"]["currencies"]) for r in cases}), 20)
         self.assertEqual({r["config"]["company_size"]["ledger_rows_target"] for r in cases}, {240, 800, 2000})
         self.assertTrue(any(sum(r["config"]["issue_counts"].values()) == 12 for r in cases))

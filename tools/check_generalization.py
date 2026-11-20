@@ -22,14 +22,14 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from auditlab.generator import GENERATOR_VERSION, generate_episode
+from auditlab.generator import DISTRACTORS, GENERATOR_VERSION, generate_episode
 from auditlab.policies import make_policy
 from auditlab.release.transforms import comparable, transform_public, transform_truth, write_json
 from auditlab.runner import make_env
 from auditlab.runner.episode import run_episode
 from auditlab.verifier import verify_report
 
-VERSION = "financial-stress-1.0"
+VERSION = "financial-stress-1.1"
 TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
 
 
@@ -56,6 +56,7 @@ def matrix(count=1000, first_seed=920001):
         yield {"id": f"G{index + 1:04d}", "seed": first_seed + index, "config": {
             "config_version": "1.1", "base_currency": base, "currencies": [base, foreign],
             "timezone": zone, "target_period": period, "issue_counts": counts,
+            "clean_distractors": [*DISTRACTORS, *(["next_day_settlement"] if index % 2 else [])],
             "interaction": interaction, "company_size": {"ledger_rows_target": rows, "documents_target": docs}}}
 
 
