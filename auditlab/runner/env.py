@@ -21,6 +21,7 @@ from typing import Callable
 from auditlab.contracts import MAX_STEPS, Action, Observation, StepResult, ToolReply
 from auditlab.evaluator.matcher import validate_truth
 from auditlab.runner import export as export_mod
+from auditlab.runner.wire import json_snapshot, rejected_marker
 
 VERSIONS = {"runner": "1.1", "evaluator": "1.1", "public_schema": "1.0"}
 TOOLS = ("list_records", "get_record", "get_document", "calculator")
@@ -207,32 +208,57 @@ class AuditEnvironment:
     def step(self, action: Action) -> StepResult:
         if self._phase != "active":
             return self._already_finished()
+        # One bounded, recursion-free walk before anything else touches untrusted input (#23).
+        safe, problem = json_snapshot(action)
         if self._clock() >= self._deadline:
-            return self._finish("truncated_timeout", action, _error("time_limit", "Time limit exceeded."))
-        if not self._well_formed(action):
-            # Damaged transport packet: not an accepted action, so no budget and no trajectory line.
-            self._events.append({"event": "malformed_action"})
+            return self._finish("truncated_timeout", self._record_of(action, safe, problem),
+                                _error("time_limit", "Time limit exceeded."))
+        if not self._well_formed(action) or problem == "not_json":
+            # Damaged transport packet (not an envelope, or not JSON at all): no budget, no trajectory line.
+            self._events.append({"event": "malformed_action", "reason": problem or "envelope"})
             return self._protocol("malformed_action", "Action must be an object with 'action' and 'args'.",
                                   False, False, remaining=True)
-        name, args = action["action"], action.get("args")
+        if problem is not None:
+            # Valid JSON beyond the published limits: judged as a bad request/submission, never forwarded.
+            record = self._record_of(action, safe, problem)
+            self._events.append({"event": "action_rejected", "action": record["action"], "reason": problem})
+            if action["action"] == "submit":
+                return self._submit(record, rejected_marker(problem))  # SPEC §8: invalid structure -> -1
+            self._inspections += 1
+            reply = _error("invalid_request", "Invalid request.") if action["action"] in TOOLS \
+                else _error("unknown_action", "Unknown action.")
+            return self._after_inspection(record, reply)
+        name, args = safe["action"], safe.get("args")
         if name == "submit":
-            return self._submit(action, args)  # a recognised submit with a broken body is judged, not dropped
+            return self._submit(safe, args)  # a recognised submit with a broken body is judged, not dropped
         self._inspections += 1  # the single budget counter
         if name in TOOLS and not isinstance(args, dict):
             reply = _error("invalid_request", "Invalid request.")
         elif name in TOOLS:
             try:
-                reply = _clean_reply(self._session.inspect({"action": name, "args": args}))
+                reply = _clean_reply(self._session.inspect({"action": name, "args": copy.deepcopy(args)}))
             except Exception as error:  # session defect: generic public error, details stay trusted
                 self._events.append({"event": "session_exception", "detail": f"{type(error).__name__}: {error}"})
                 self._infra.append("session_exception")
                 reply = _error("internal_error", "Internal error.")
         else:
             reply = _error("unknown_action", "Unknown action.")
+        return self._after_inspection(safe, reply)
+
+    def _after_inspection(self, record: dict, reply: ToolReply) -> StepResult:
         observation = {**reply, "remaining_steps": MAX_STEPS - self._inspections}
         if self._inspections >= MAX_STEPS:
-            return self._finish("truncated_budget", action, reply)
-        return self._emit(action, observation, 0.0, False, False, {"inspection_steps": self._inspections})
+            return self._finish("truncated_budget", record, reply)
+        return self._emit(record, observation, 0.0, False, False, {"inspection_steps": self._inspections})
+
+    @staticmethod
+    def _record_of(action: object, safe: object, problem: str | None) -> object:
+        """JSON-safe, bounded value kept in the trajectory for an action."""
+        if problem is None:
+            return safe
+        if isinstance(action, dict) and type(action.get("action")) is str:
+            return {"action": action["action"][:256], "args": rejected_marker(problem)}
+        return rejected_marker(problem)
 
     def abort(self, reason: str) -> StepResult:
         """Trusted driver hook: the policy crashed or broke the channel. Not a financial result.
@@ -263,7 +289,7 @@ class AuditEnvironment:
             and set(action) <= {"action", "args"}
 
     def _already_finished(self) -> StepResult:
-        if self._phase is None:
+        if self._phase is None or self.final is None:
             return self._protocol("no_active_episode", "Call reset first.", False, False)
         return self._protocol("episode_finished", "The episode is already finished.",
                               self.final["terminated"], self.final["truncated"])
@@ -274,14 +300,17 @@ class AuditEnvironment:
             observation["remaining_steps"] = MAX_STEPS - self._inspections
         return observation, 0.0, terminated, truncated, {"protocol_error": code}
 
-    def _submit(self, action: Action, body: dict) -> StepResult:
+    def _submit(self, record: dict, body: object) -> StepResult:
+        """Grade exactly once. `record` and `body` are already JSON-safe, bounded copies."""
         result = self._grade(body, self._inspections)
         if result is None:
-            return self._finish("infra_error", action, _error("internal_error", "Internal error."))
+            return self._finish("infra_error", record, _error("internal_error", "Internal error."), submission=body)
         if result["status"] == "invalid_submission":
-            return self._finish("invalid_submission", action,
-                                _error("invalid_submission", "Submission failed schema validation."), result)
-        return self._finish("submitted", action, {"ok": True, "result": {"status": "submitted"}}, result)
+            return self._finish("invalid_submission", record,
+                                _error("invalid_submission", "Submission failed schema validation."), result,
+                                submission=body)
+        return self._finish("submitted", record, {"ok": True, "result": {"status": "submitted"}}, result,
+                            submission=body)
 
     def _grade(self, submission: object, inspection_steps: int) -> dict | None:
         try:
@@ -291,8 +320,13 @@ class AuditEnvironment:
             self._infra.append("evaluator_failure")
             return None
 
-    def _finish(self, status: str, action: Action | None, reply: ToolReply, graded: dict | None = None) -> StepResult:
-        """The one and only finalization. Scores exactly once and freezes the record."""
+    def _finish(self, status: str, record: object, reply: ToolReply, graded: dict | None = None,
+                submission: object = None) -> StepResult:
+        """The one and only finalization: build everything first, then commit state in one place.
+
+        `record` is the JSON-safe trajectory value of the action (None when the trusted driver ends the
+        episode). Persistence runs after the commit; its failure is recorded, never half-applied.
+        """
         submitted = status in ("submitted", "invalid_submission")
         if graded is None and status != "infra_error":
             graded = self._grade({"episode_id": self._episode_id, "findings": []}, self._inspections)
@@ -307,21 +341,27 @@ class AuditEnvironment:
         info: dict[str, object] = {"status": status}
         if self.mode == "train" and graded and status in COMPLETED:
             info["score"] = graded["score"]
+        row = self._row(record, observation, public_reward, terminated, truncated)
+        final = {"status": status, "terminated": terminated, "truncated": truncated,
+                 "inspection_steps": self._inspections, "graded": graded, "reward": true_reward,
+                 "submission": submission if submitted else {"episode_id": self._episode_id, "findings": []}}
+        # Commit: nothing below this line can leave a half-finished episode (done + final=None).
+        self._trajectory.append(row)
+        self.final = final
         self._phase = "done"
-        step = self._emit(action, observation, public_reward, terminated, truncated, info)
-        self.final = {"status": status, "terminated": terminated, "truncated": truncated,
-                      "inspection_steps": self._inspections, "graded": graded, "reward": true_reward,
-                      "submission": copy.deepcopy(action.get("args")) if submitted and action
-                      else {"episode_id": self._episode_id, "findings": []}}
         self._persist(status, graded)
-        return step
+        return observation, public_reward, terminated, truncated, info
 
-    def _emit(self, action: object, observation: Observation, reward: float, terminated: bool,
+    def _row(self, record: object, observation: Observation, reward: float, terminated: bool,
+             truncated: bool) -> dict:
+        # record is already an independent bounded copy; the observation is trusted and shallow.
+        return {"episode_id": self._episode_id, "step": len(self._trajectory) + 1, "action": record,
+                "observation": copy.deepcopy(observation), "reward": reward,
+                "terminated": terminated, "truncated": truncated}
+
+    def _emit(self, record: object, observation: Observation, reward: float, terminated: bool,
               truncated: bool, info: dict) -> StepResult:
-        # Deep copies: a policy mutating its action or observation later cannot rewrite the record.
-        self._trajectory.append({"episode_id": self._episode_id, "step": len(self._trajectory) + 1,
-                                 "action": copy.deepcopy(action), "observation": copy.deepcopy(observation),
-                                 "reward": reward, "terminated": terminated, "truncated": truncated})
+        self._trajectory.append(self._row(record, observation, reward, terminated, truncated))
         return observation, reward, terminated, truncated, info
 
     def _run_record(self, status: str) -> dict:
@@ -338,13 +378,27 @@ class AuditEnvironment:
         export_mod.write_trusted_report(self.trusted_dir, self._run_id, report, self._trajectory)
 
     def _persist(self, status: str, graded: dict | None) -> None:
-        self._persist_trusted(status, graded, self.final["reward"])
-        if self.mode != "train" or self._export_dir is None:
-            return
-        export_status = "failed" if self._infra else EXPORT_STATUS[status]
-        run = {**self._run_record(export_status), "outcome": status,
-               "inspection_steps": self._inspections}
-        written = export_mod.write_public_run(self._export_dir, run, self._public_dir, self._trajectory,
-                                              self.final["submission"], graded["score"] if graded else None)
-        if written is None:
-            self._events.append({"event": "export_exists_not_overwritten"})
+        """Public export first, then the trusted report, so the report also records an export failure.
+
+        A failed write never undoes the committed result and is never reported as success: the
+        failure is kept in final["persistence"] and in the trusted events.
+        """
+        problems = []
+        if self.mode == "train" and self._export_dir is not None:
+            export_status = "failed" if self._infra else EXPORT_STATUS[status]
+            run = {**self._run_record(export_status), "outcome": status,
+                   "inspection_steps": self._inspections}
+            try:
+                written = export_mod.write_public_run(self._export_dir, run, self._public_dir, self._trajectory,
+                                                      self.final["submission"], graded["score"] if graded else None)
+                if written is None:
+                    self._events.append({"event": "export_exists_not_overwritten"})
+            except Exception as error:
+                problems.append(f"export: {type(error).__name__}: {error}")
+                self._events.append({"event": "export_failure", "detail": problems[-1]})
+        try:
+            self._persist_trusted(status, graded, self.final["reward"])
+        except Exception as error:
+            problems.append(f"trusted_report: {type(error).__name__}: {error}")
+        if problems:
+            self.final["persistence"] = problems
