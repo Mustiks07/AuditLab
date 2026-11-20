@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AuditLab — образец C3</title><link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="workspace.css"></head>
+<body>
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+ <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+ <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8Z"/></symbol>
+ <symbol id="i-compare" viewBox="0 0 24 24"><path d="M3 7h17m-5-5 5 5-5 5M21 17H4m5-5-5 5 5 5"/></symbol>
+ <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8Zm0 0v6h5M8 13h8M8 17h6"/></symbol>
+ <symbol id="i-save" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4Z"/></symbol>
+ <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 5M12 17h.01"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17m-6-6 6 6-6 6"/></symbol>
+ <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 8V5h7l2 3h9v12H3Zm0 4h18"/></symbol>
+ <symbol id="i-building" viewBox="0 0 24 24"><path d="M6 21V5l12-3v19M3 21h18M9 8h1m4-1h1M9 12h1m4-1h1M9 16h1m4-1h1M11 21v-3h3v3"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+ <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6Z"/></symbol>
+ <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">К содержимому</a>
+<aside class="sidebar" aria-label="Навигация">
+ <a class="brand" href="workspace.html"><span class="brand-mark" aria-hidden="true">[ ]</span>AuditLab</a>
+ <div class="environment">Локальная среда</div>
+ <nav>
+  <a href="workspace.html" aria-current="page"><svg><use href="#i-grid"/></svg>Рабочая область</a>
+  <a href="#recent"><svg><use href="#i-play"/></svg>Запуски</a>
+  <button data-prototype="В приложении здесь открывается выбор доступной пары запусков."><svg><use href="#i-compare"/></svg>Сравнения</button>
+  <button data-prototype="В приложении здесь открываются документы выбранного запуска; без выбора сначала предлагается выбрать запуск."><svg><use href="#i-doc"/></svg>Документы</button>
+  <button data-prototype="В приложении здесь открываются локально сохранённые ссылки на проверки."><svg><use href="#i-save"/></svg>Сохранённое</button>
+ </nav>
+ <div class="sidebar-bottom"><button data-prototype="В приложении здесь находится помощь и раздел «О данных» с происхождением и ограничениями набора."><svg><use href="#i-help"/></svg>Справка</button><span class="local"><i></i>Локально</span></div>
+</aside>
+<main id="main">
+ <div class="utility"><button class="mobile-menu" aria-label="Открыть навигацию"><svg><use href="#i-menu"/></svg></button><div class="breadcrumb">AuditLab <span>/</span> <b>Рабочая область</b></div><label class="search"><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="Поиск запусков" aria-label="Поиск запусков"><kbd>Ctrl K</kbd></label></div>
+ <header class="page-heading"><div><h1>Рабочая область</h1><p>Проверки, к которым стоит вернуться.</p></div><button class="primary" id="open-run"><svg><use href="#i-folder"/></svg>Открыть запуск</button></header>
+ <section class="feature-grid" aria-label="Продолжение работы">
+  <article class="continue panel"><div class="eyebrow">Продолжить проверку</div><div class="company"><span class="company-icon"><svg><use href="#i-building"/></svg></span><div><h2>Компания B</h2><p>Ноябрь 2026 · Сверка платежей</p></div></div>
+   <div class="financial"><div class="result"><strong>20 000,00 <span>₸</span></strong><span class="finding">Нераспределённый платёж</span></div><div class="calculation" aria-label="50 тысяч минус 30 тысяч равно 20 тысяч тенге"><div><span>Поступило</span><b>50 000,00 ₸</b></div><div><span>Распределено</span><b>30 000,00 ₸</b></div><div class="balance"><span>Остаток</span><b>20 000,00 ₸</b></div></div></div>
+   <footer class="continue-footer"><span class="verified"><svg><use href="#i-check"/></svg>Подтверждено по документам</span><button class="text-link" data-prototype="В приложении открывается выбранная проверка с её настоящими выводами и источниками.">Открыть проверку<svg><use href="#i-arrow"/></svg></button></footer>
+  </article>
+  <article class="pair"><div class="pair-title"><svg><use href="#i-compare"/></svg><div><h2>Сравнить сценарии</h2><p>Граница периода</p></div></div><div class="pair-time"><span class="role a">A</span><b>30.11 · 23:59</b></div><div class="boundary"><i></i><span>01.12 · 00:00</span></div><div class="pair-time"><span class="role b">B</span><b>01.12 · 00:01</b></div><button class="text-link pair-link" data-prototype="В приложении открывается сравнение двух настоящих запусков; даты и направление A/B берутся из данных пары.">Открыть сравнение<svg><use href="#i-arrow"/></svg></button></article>
+ </section>
+ <section class="recent" id="recent"><div class="section-title"><h2>Последние запуски</h2><button class="text-link" id="all-runs">Все запуски<svg><use href="#i-arrow"/></svg></button></div><div class="table-toolbar"><div class="segments" role="group" aria-label="Фильтр результатов"><button data-filter="all" aria-pressed="true">Все</button><button data-filter="finding" aria-pressed="false">С выводами</button><button data-filter="clear" aria-pressed="false">Без выводов</button></div><span class="count" id="count" aria-live="polite"></span></div><table><thead><tr><th>Запуск</th><th>Аудитор</th><th>Результат</th><th><span class="sr-only">Действие</span></th></tr></thead><tbody id="run-rows"></tbody></table><div class="empty" id="empty" hidden>Ничего не найдено. <button class="text-link" id="reset">Сбросить поиск и фильтры</button></div></section>
+ <footer class="page-footer"><button class="muted-link" data-prototype="Это отдельный образец оформления на фиксированных значениях. Он не подключён к данным AuditLab. В готовом продукте «О данных» описывает происхождение выбранного набора.">О данных</button><span>Образец оформления · C3</span></footer>
+</main>
+<dialog id="notice" aria-labelledby="notice-title"><h2 id="notice-title">Образец интерфейса</h2><p id="notice-text"></p><p class="muted">Этот файл показывает оформление одного экрана. Реальные переходы GPT Pro 1 подключит в приложении.</p><form method="dialog"><button class="primary">Понятно</button></form></dialog>
+<script src="workspace.js"></script></body></html>
