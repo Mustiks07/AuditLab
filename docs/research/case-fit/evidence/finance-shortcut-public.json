@@ -1,0 +1,53 @@
+{
+  "artifacts/case-fit-finance/snapshots/A00": [],
+  "artifacts/case-fit-finance/snapshots/A01": [],
+  "artifacts/case-fit-finance/snapshots/A10": [
+    "payment/P94D703D1F91C2561A2B89003"
+  ],
+  "artifacts/case-fit-finance/snapshots/A11": [
+    "payment/P94D703D1F91C2561A2B89003"
+  ],
+  "artifacts/case-fit-finance/snapshots/B00": [],
+  "artifacts/case-fit-finance/snapshots/B01": [],
+  "artifacts/case-fit-finance/snapshots/B10": [],
+  "artifacts/case-fit-finance/snapshots/B11": [],
+  "artifacts/case-fit-finance/snapshots/JPY-TWIN": [],
+  "artifacts/case-fit-finance/snapshots/MAX": [
+    "payment/P59AD88413F3E01B7D8D98625",
+    "payment/PCD45FA679847FC96ADECE459",
+    "payment/PD15C907269C3599B2EBE9DF5"
+  ],
+  "artifacts/case-fit-finance/snapshots/REFUND": [],
+  "datasets/open/dev/E15BFA18342414E20C536E2F217B94A1A": [],
+  "datasets/open/dev/E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E": [],
+  "datasets/open/dev/E2C25779161020D87EF54FE3600D099E4": [],
+  "datasets/open/dev/E406D4C3A8F0D3286AC70149C9F0E1CF9": [
+    "payment/P27959452879500B45B268F01"
+  ],
+  "datasets/open/dev/E4C30409A2F4E6DFE858E8FF06B8C4436": [
+    "payment/P4E91910D2DE9D485504219FC"
+  ],
+  "datasets/open/dev/E509506A67D640282D2FD1D8B154EF4EC": [],
+  "datasets/open/dev/E7C2CB988BDE6605CEFB48E231F21DFD7": [],
+  "datasets/open/dev/EAA9D228EE94081E1C02F82DEDCCA190B": [],
+  "datasets/open/dev/EC3F05E92121031C312CBEFA265787AC6": [
+    "payment/P49901E8533CDA9F05C8C1BCE"
+  ],
+  "datasets/open/dev/EDA0C3DF206AB95B8490EEFD58F3B292F": [],
+  "datasets/open/train/E04F4ED6D6765D816DF94C62477B6EC4C": [],
+  "datasets/open/train/E077255A43F950625D099C4A3E1D26109": [],
+  "datasets/open/train/E39A14EA0FB98F9BC3E42C3738182D142": [
+    "payment/P96A1B85844AC58B4A3FFE303"
+  ],
+  "datasets/open/train/E3C1B04E2DCF07E6D4883BB9CEB56A932": [
+    "payment/PC90B595F5350F8CC9C769EB7"
+  ],
+  "datasets/open/train/E6476455CA5F6F7CF4A34F78E68AD54C0": [],
+  "datasets/open/train/E651B6A63DDA2448A91DC825714D7732E": [
+    "payment/P308C7000EC7515B02EEB3610"
+  ],
+  "datasets/open/train/E73A2954018B6B96D20AD0E9CFD9B9B18": [],
+  "datasets/open/train/E9689AB84BDCEA83B6B6558C0DF66C1BB": [],
+  "datasets/open/train/EE66DC47098559362CDB36A9B4107782C": [],
+  "datasets/open/train/EFFAAAA5971F93F3CF54B03F09CAFBDEE": []
+}
