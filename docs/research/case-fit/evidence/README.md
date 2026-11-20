@@ -13,17 +13,37 @@
 
 ## Три прогона GPT Pro 1 на исходном коде
 
-Из корня исследования с зависимостями проекта и новым каталогом вывода. Пресет ниже привязан к базовому SHA. Сбой #23 и отказ FX являются ожидаемыми результатами этого диагностического скрипта.
+Это исторические проверки кода `a301b16b825c5575393d94f92ac1707f42e292cb`,
+а не текущего `main`. Скрипт `root-probe.py` импортирует проект относительно своего
+расположения. После слияния исправлений запуск из текущей ветки уже не воспроизводит
+старый сбой и не должен трактоваться как регрессия. Команды ниже создают отдельный
+checkout кода и копируют в него только материалы проверки; код остаётся на исходном SHA.
+Ожидаемые сбой #23 и отказ FX относятся именно к нему.
 
-```text
-git rev-parse 3faef433475e101bf71115ebabe2b7b8d8d16748^
-python docs/research/case-fit/evidence/root-probe.py prepare artifacts/case-fit-root-repeat
+В новом рабочем каталоге Linux/WSL с установленным `uv`:
+
+```sh
+git clone https://github.com/Mustiks07/AuditLab.git AuditLab-research
+git -C AuditLab-research checkout --detach 7e54e5b3c32ec6ac37a339a3ae40d21ce66e28b1
+git -C AuditLab-research worktree add --detach ../AuditLab-baseline a301b16b825c5575393d94f92ac1707f42e292cb
+mkdir -p AuditLab-baseline/docs/research/case-fit
+cp -R AuditLab-research/docs/research/case-fit/evidence AuditLab-baseline/docs/research/case-fit/
+uv venv --python 3.11.14 AuditLab-baseline/.venv
+uv pip install --python AuditLab-baseline/.venv/bin/python --require-hashes -r AuditLab-baseline/requirements.lock
+cd AuditLab-baseline
+export PYTHONTZPATH=''
+git rev-parse HEAD
+.venv/bin/python docs/research/case-fit/evidence/root-probe.py prepare artifacts/case-fit-root-repeat
 # Читать только artifacts/case-fit-root-repeat/auditor и сверить ручной ответ.
-# В Windows применялась следующая команда до открытия truth.
-Get-FileHash docs/research/case-fit/evidence/root-public.md -Algorithm SHA256
-python docs/research/case-fit/evidence/root-probe.py check artifacts/case-fit-root-repeat
-python -m unittest discover -s tests/integration -p test_control_pair.py -v
+sha256sum docs/research/case-fit/evidence/root-public.md
+.venv/bin/python docs/research/case-fit/evidence/root-probe.py check artifacts/case-fit-root-repeat
+.venv/bin/python -m unittest discover -s tests/integration -p test_control_pair.py -v
 ```
+
+Исходный автор использовал Windows/Python 3.12.14, как указано выше, и `Get-FileHash`
+вместо `sha256sum`. Новый рецепт использует поддерживаемый проектом Python 3.11.14;
+это инструкция повторения исторического входа, а не замена условий первоначального
+замера. Проверку текущих исправлений нужно проводить отдельно на их точных SHA.
 
 Скрипт создаёт отдельные публичные копии, а на второй стадии проверяет хеш ручного ответа, затем открывает truth чистого FX-контроля. Фиксированный SHA-256 ручного ответа `de5d8a0f358e32c90f607a8ead664a9361adb9ed9adda1a33e45d09147eef518`. Локальная последовательность этапов записана здесь. Хеш даёт проверку неизменности файла, независимой внешней отметки времени для этого прогона нет. [Ручной ответ](root-public.md) · [Файл SHA-256](root-public.sha256) · [Наблюдения](root-observed.json)
 
