@@ -1,6 +1,6 @@
 """Offline launcher contract: corrupt packages never reach Docker, no implicit pulls or mounts."""
 import hashlib
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
 from pathlib import Path
@@ -10,18 +10,24 @@ import sys
 import unittest
 from unittest.mock import patch
 
+from image_archive_fixture import write_image_archive
 import offline
 
 
-def manifest_for(directory):
+def manifest_for(directory, **archive_defects):
+    images = {role: {"id": "sha256:" + character * 64, "tag": f"auditlab-{role}:test", "os": "linux"}
+              for role, character in (("runtime", "1"), ("verifier", "2"), ("policy", "3"))}
+    identities = write_image_archive(directory / "images.tar", images, **archive_defects)
+    for image in images.values():
+        if image["id"] in identities and not archive_defects:
+            image["oci_manifest_digest"] = identities[image["id"]]
     files = {}
     for name in offline.FILES:
-        content = (name + " payload\n").encode()
-        (directory / name).write_bytes(content)
+        if name != "images.tar":
+            (directory / name).write_bytes((name + " payload\n").encode())
+        content = (directory / name).read_bytes()
         files[name] = {"sha256": hashlib.sha256(content).hexdigest(), "size_bytes": len(content)}
-    manifest = {"format_version": "1.0", "source_revision": "a" * 40, "files": files,
-                "images": {role: {"id": "sha256:" + character * 64, "os": "linux"}
-                           for role, character in (("runtime", "1"), ("verifier", "2"), ("policy", "3"))}}
+    manifest = {"format_version": "1.0", "source_revision": "a" * 40, "files": files, "images": images}
     (directory / "manifest.json").write_text(json.dumps(manifest))
     return manifest
 
@@ -44,6 +50,13 @@ class OfflineBundleTests(unittest.TestCase):
             self.assertIn(descriptor, command)
             self.assertIn("AUDITLAB_POLICY_IMAGE=" + descriptor, command)
             self.assertNotIn("mutable:tag", command)
+
+    def test_store_resolving_config_id_to_recorded_manifest_is_accepted(self):
+        config, descriptor = "sha256:" + "a" * 64, "sha256:" + "b" * 64
+        image = dict(id=config, oci_manifest_digest=descriptor, os="linux")
+        found = subprocess.CompletedProcess([], 0, json.dumps(dict(Id=descriptor, Os="linux")))
+        with patch("offline.subprocess.run", return_value=found):
+            self.assertEqual(offline.loaded_image(image, {})["id"], descriptor)
 
     def test_unrelated_loaded_identity_and_platform_are_rejected(self):
         image = dict(id="sha256:" + "a" * 64, architecture="amd64")
@@ -88,6 +101,19 @@ class OfflineBundleTests(unittest.TestCase):
             (root / "source.tar.gz").write_bytes(b"truncated")
             with self.assertRaises(ValueError):
                 offline.verify_bundle(root)
+
+    def test_archive_losing_images_on_containerd_is_rejected_before_docker(self):
+        # v0.1.0-rc.1: three untagged legacy entries, one untagged OCI descriptor.
+        for defects in (dict(tagged=False, annotated=False, indexed=1), dict(indexed=1), dict(annotated=False)):
+            for command in ("check", "verify"):
+                with self.subTest(defects=defects, command=command), tempfile.TemporaryDirectory() as temporary:
+                    root = Path(temporary)
+                    manifest_for(root, **defects)
+                    stderr = io.StringIO()
+                    with patch("offline.subprocess.run") as docker, redirect_stderr(stderr):
+                        self.assertEqual(offline.main([command, "--bundle", str(root), "--output-root", str(root / "r")]), 1)
+                    docker.assert_not_called()
+                    self.assertIn("saved", stderr.getvalue())
 
     def test_runtime_is_networkless_and_uses_only_result_and_trusted_socket_mounts(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -16,7 +16,7 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.3"
+GENERATOR_VERSION = "1.4"
 SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
@@ -103,10 +103,11 @@ def _configuration(seed, config):
             or len(distractors) != len(set(distractors))):
         raise ValueError("invalid_clean_distractors")
     size = config.get("company_size", {})
+    document_limit = 200 if config_version == "1.1" else 600
     if (not isinstance(size, dict) or size.keys() - {"ledger_rows_target", "documents_target"}
             or not _bounded_int(size.get("ledger_rows_target", 0), 0, 2_000)
-            or not _bounded_int(size.get("documents_target", 0), 0, 200 if config_version == "1.1" else 600)):
-        raise ValueError("invalid_company_size: use integer targets 0–2000 ledger rows and 0–600 documents")
+            or not _bounded_int(size.get("documents_target", 0), 0, document_limit)):
+        raise ValueError(f"invalid_company_size: use integer targets 0–2000 ledger rows and 0–{document_limit} documents")
     nonce = config.get("snapshot_nonce", "")
     if not isinstance(nonce, str) or not re.fullmatch(r"[A-Za-z0-9_-]{0,64}", nonce):
         raise ValueError("invalid_snapshot_nonce")
@@ -187,15 +188,15 @@ def _add_bounded_filler(company, size, rng, scale):
     # They do not change designated-payment settlement indexes or financial issue evidence.
     available_cash = sum(row["debit_minor"] - row["credit_minor"] for row in company.ledger
                          if row["account"] == "CASH" and row["currency"] == company.base_currency)
-    if len(company.ledger) < rows_target and available_cash <= 0:
+    if company.planned_ledger_rows < rows_target and available_cash <= 0:
         available_cash = 10_000 * scale
         _add_paid_invoices(company, available_cash, company.period_start + timedelta(days=3))
     treasury_entity = None
     balance = 0
-    while len(company.ledger) < rows_target:
+    while company.planned_ledger_rows < rows_target:
         if treasury_entity is None:
             treasury_entity = company.id("entity")
-        at = company.period_end - timedelta(hours=3) + timedelta(seconds=len(company.ledger))
+        at = company.period_end - timedelta(hours=3) + timedelta(seconds=company.planned_ledger_rows)
         amount = balance if balance else min(available_cash, rng.randrange(1, 100) * scale)
         debit, credit = ("CASH", "CASH_RESERVE") if balance else ("CASH_RESERVE", "CASH")
         row, _ = company.post(at, company.base_currency, amount, debit, credit, treasury_entity)
@@ -204,7 +205,7 @@ def _add_bounded_filler(company, size, rng, scale):
                                "amount_minor": amount, "currency": company.base_currency,
                                "timestamp": at.isoformat()})
         balance = 0 if balance else amount
-    if len(company.ledger) > 2_000 or len(company.invoices) + len(company.payments) > 200:
+    if company.planned_ledger_rows > 2_000 or len(company.invoices) + len(company.payments) > 200:
         raise ValueError("company_size_exceeds_profile: use fewer source events")
 
 
@@ -334,6 +335,15 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
                            company.period_start + timedelta(days=3))
     company.close_settlement_indexes()
     policy = _policy(company)
+    if company.config_version == "1.1":
+        company.validate({}, policy)
+        source_book_validation = {
+            "ledger_rows": len(company.ledger),
+            "document_count": len(company.invoices) + len(company.payments),
+            "issue_count": len(company.issues),
+        }
+        company = company.apply_mutations()
+        company.close_settlement_indexes()
     company.validate(counts, policy)
     output.parent.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(prefix=".auditlab-", dir=output.parent) as staging:
@@ -368,6 +378,7 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         }
         if company.config_version == "1.1":
             provenance["timezone_database"] = {"package": "tzdata", "version": version("tzdata")}
+            provenance["source_book_validation"] = source_book_validation
         _write_json(private / "provenance.json", provenance)
         staged.rename(output)
 
