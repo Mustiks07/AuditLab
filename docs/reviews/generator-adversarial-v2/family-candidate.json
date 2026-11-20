@@ -1,0 +1,158 @@
+{
+  "generator": "1.6",
+  "signed": false,
+  "public_seal": "cba51d0b093423259447ed886611685599213c6ff568a10f9def0833f99cc5c1",
+  "cohorts": {
+    "calibration": {
+      "episodes": 24,
+      "invoice_units": 772
+    },
+    "holdout": {
+      "episodes": 24,
+      "invoice_units": 778
+    },
+    "control": {
+      "episodes": 48,
+      "invoice_units": 1468
+    }
+  },
+  "renamed_control_invoices": 31,
+  "motifs": {
+    "structure": {
+      "predictive_motifs": [],
+      "metrics": {
+        "holdout": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "payment_allocation": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "fx_conversion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 9
+          },
+          "period_cutoff": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          }
+        },
+        "control": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "payment_allocation": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12
+          },
+          "fx_conversion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 24
+          },
+          "period_cutoff": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12
+          }
+        }
+      }
+    },
+    "relative": {
+      "predictive_motifs": [],
+      "metrics": {
+        "holdout": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "payment_allocation": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          },
+          "fx_conversion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 9
+          },
+          "period_cutoff": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 6
+          }
+        },
+        "control": {
+          "duplicate_invoice": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "payment_allocation": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12
+          },
+          "fx_conversion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 24
+          },
+          "period_cutoff": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 12
+          }
+        }
+      }
+    }
+  },
+  "whole_holdout": {
+    "train": {
+      "pairs": 240,
+      "family": 0,
+      "book": 0
+    },
+    "dev": {
+      "pairs": 240,
+      "family": 0,
+      "book": 0
+    },
+    "internal": {
+      "pairs": 480,
+      "family": 0,
+      "book": 0
+    },
+    "calibration": {
+      "pairs": 576,
+      "family": 0,
+      "book": 0
+    }
+  },
+  "exact_partial_holdout": {
+    "reference_units": {
+      "train": 327,
+      "dev": 324,
+      "internal": 1318,
+      "calibration": 801
+    },
+    "test_units": 805,
+    "counts": {
+      "train": 0,
+      "dev": 0,
+      "internal": 0,
+      "calibration": 0
+    },
+    "examples": []
+  }
+}
