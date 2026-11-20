@@ -1,6 +1,7 @@
 """Build the economic history and its public accounting representation."""
 
 from collections import Counter, defaultdict
+from copy import copy, deepcopy
 from datetime import datetime, timedelta
 from hashlib import sha256
 from random import Random
@@ -40,6 +41,9 @@ class Company:
         self.noise_rng = random_stream(seed, "distractors")
         self.order_rng = random_stream(seed, "order")
         self._id_streams = {kind: random_stream(seed, "ids/" + kind) for kind in PREFIXES}
+        self._source_id_stream = random_stream(seed, "source-only-ids")
+        self._planned_rows = {}
+        self._planned_issues = []
         self.invoices = []
         self.payments = []
         self.ledger = []
@@ -60,6 +64,9 @@ class Company:
     def id(self, kind):
         return f"{PREFIXES[kind]}{self._id_streams[kind].getrandbits(96):024X}"
 
+    def _source_id(self, kind):
+        return f"{PREFIXES[kind]}{self._source_id_stream.getrandbits(96):024X}"
+
     def invoice(self, entity_id, issued_at, currency, total_minor, *, invoice_id=None):
         due = max(self.period_end, issued_at.astimezone(self.zone) + timedelta(days=14))
         record = {
@@ -72,18 +79,50 @@ class Company:
         return record
 
     def post(self, timestamp, currency, amount, debit_account, credit_account, entity_id,
-             *, invoice_id=None, payment_id=None):
+             *, invoice_id=None, payment_id=None, after=None, source_only=False):
+        next_id = self._source_id if source_only else self.id
         common = {
             "timestamp": timestamp.isoformat(), "currency": currency, "entity_id": entity_id,
-            "invoice_id": invoice_id, "payment_id": payment_id, "journal_id": self.id("journal"),
+            "invoice_id": invoice_id, "payment_id": payment_id, "journal_id": next_id("journal"),
         }
-        debit = dict(common, row_id=self.id("row"), account=debit_account, debit_minor=amount, credit_minor=0)
-        credit = dict(common, row_id=self.id("row"), account=credit_account, debit_minor=0, credit_minor=amount)
-        self.ledger.extend((debit, credit))
+        debit = dict(common, row_id=next_id("row"), account=debit_account, debit_minor=amount, credit_minor=0)
+        credit = dict(common, row_id=next_id("row"), account=credit_account, debit_minor=0, credit_minor=amount)
+        if after is not None:
+            self._planned_rows[after["row_id"]] = (after, debit, credit)
+        else:
+            self.ledger.extend((debit, credit))
+        if source_only:
+            for row in (debit, credit):
+                self._planned_rows[row["row_id"]] = ()
         return debit, credit
 
-    def issue(self, issue_type, affected_ids, amount_minor, currency, evidence_ids):
-        self.issues.append({
+    def defer_posting_changes(self, rows, *, timestamp, amount=None):
+        """Record replacements for both sides of a journal without changing the source book."""
+        for row in rows:
+            replacement = dict(row, timestamp=timestamp.isoformat())
+            if amount is not None:
+                amount_key = "debit_minor" if row["debit_minor"] else "credit_minor"
+                replacement[amount_key] = amount
+            self._planned_rows[row["row_id"]] = (replacement,)
+
+    @property
+    def planned_ledger_rows(self):
+        return len(self.ledger) + sum(len(replacements) - 1 for replacements in self._planned_rows.values())
+
+    def apply_mutations(self):
+        """Create the changed book from the validated source and its deferred postings."""
+        changed = copy(self)
+        changed.invoices, changed.payments, changed.fx = deepcopy((self.invoices, self.payments, self.fx))
+        changed.ledger = [dict(replacement) for row in self.ledger
+                          for replacement in self._planned_rows.get(row["row_id"], (row,))]
+        changed.issues = list(self._planned_issues)
+        changed._planned_rows = {}
+        changed._planned_issues = []
+        return changed
+
+    def issue(self, issue_type, affected_ids, amount_minor, currency, evidence_ids, *, deferred=False):
+        issues = self._planned_issues if deferred and self.config_version == "1.1" else self.issues
+        issues.append({
             "issue_id": self.id("issue"), "type": issue_type, "affected_ids": sorted(affected_ids),
             "expected_amount_minor": amount_minor, "currency": currency,
             "evidence_sets": [list(evidence_ids)],
@@ -110,17 +149,24 @@ class Company:
         payment_id = payment["payment_id"]
         first, _ = self.post(first_at, currency, first_amount, "UNAPPLIED", "AR", entity_id,
                              invoice_id=invoice_id, payment_id=payment_id)
+        defective = leave_remainder or last_at >= self.period_end
+        deferred = self.config_version == "1.1" and defective
+        source_last_at = min(last_at, self.period_end - timedelta(minutes=1)) if deferred else last_at
         last = None
-        if not leave_remainder:
-            last, _ = self.post(last_at, currency, amount - first_amount, "UNAPPLIED", "AR", entity_id,
-                                invoice_id=invoice_id, payment_id=payment_id)
+        if deferred or not leave_remainder:
+            posting = self.post(source_last_at, currency, amount - first_amount, "UNAPPLIED", "AR", entity_id,
+                                invoice_id=invoice_id, payment_id=payment_id, source_only=leave_remainder)
+            if not leave_remainder:
+                last = posting[0]
+                if deferred:
+                    self.defer_posting_changes(posting, timestamp=last_at)
         affected = [f"invoice/{invoice_id}", f"payment/{payment_id}"]
         self.events.append({
             "kind": "designated_payment", "affected_ids": affected, "currency": currency,
             "amount_minor": amount, "scheduled_tranches_minor": [first_amount, amount - first_amount],
-            "receipt_at": receipt_at.isoformat(), "settled_at": last_at.isoformat() if last else None,
+            "receipt_at": receipt_at.isoformat(), "settled_at": source_last_at.isoformat() if deferred or last else None,
         })
-        if leave_remainder or last_at >= self.period_end:
+        if defective:
             self.mutations.append({
                 "type": "payment_allocation", "affected_ids": affected,
                 "before": {"second_tranche_minor": amount - first_amount,

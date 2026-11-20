@@ -4,12 +4,11 @@ from datetime import UTC, date, datetime, timedelta
 from decimal import ROUND_HALF_UP, Context, Decimal, localcontext
 
 
-def _recognize(b, invoice, posted_at):
-    debit, _ = b.post(
+def _recognize(b, invoice, posted_at, *, after=None):
+    return b.post(
         posted_at, invoice["currency"], invoice["total_minor"], "AR", "REVENUE",
-        invoice["entity_id"], invoice_id=invoice["invoice_id"],
+        invoice["entity_id"], invoice_id=invoice["invoice_id"], after=after,
     )
-    return debit
 
 
 def add_duplicate(b, *, enabled=True):
@@ -23,14 +22,16 @@ def add_duplicate(b, *, enabled=True):
     archive_copy = b.invoice(
         entity_id, issued_at, currency, total_minor, invoice_id=original["invoice_id"],
     )
-    first = _recognize(b, original, issued_at)
+    first, closing_row = _recognize(b, original, issued_at)
     affected = [f"invoice/{original['invoice_id']}"]
     records = [f"invoices/{doc['doc_id']}" for doc in (original, archive_copy)]
     b.events.append({"kind": "invoice_archive", "affected_ids": affected, "documents": records})
     if enabled:
-        extra = _recognize(b, archive_copy, issued_at)
+        extra, _ = _recognize(
+            b, archive_copy, issued_at, after=closing_row if b.config_version == "1.1" else None,
+        )
         evidence = [*records, f"ledger/{first['row_id']}", f"ledger/{extra['row_id']}"]
-        b.issue("duplicate_invoice", affected, extra["debit_minor"], currency, evidence)
+        b.issue("duplicate_invoice", affected, extra["debit_minor"], currency, evidence, deferred=True)
         b.mutations.append({
             "type": "duplicate_invoice", "affected_ids": affected,
             "before": {"journals": [first["journal_id"]], "recognized_minor": first["debit_minor"]},
@@ -49,7 +50,11 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
     issued_at = b.period_end - timedelta(minutes=distance)
     posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else issued_at
     invoice = b.invoice(b.id("entity"), issued_at, currency, total_minor)
-    debit = _recognize(b, invoice, posted_at)
+    deferred = b.config_version == "1.1" and cutoff_enabled
+    posting = _recognize(b, invoice, issued_at if deferred else posted_at)
+    debit, _ = posting
+    if deferred:
+        b.defer_posting_changes(posting, timestamp=posted_at)
     affected = [f"invoice/{invoice['invoice_id']}"]
     source = f"invoices/{invoice['doc_id']}"
     b.events.append({
@@ -58,7 +63,7 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled):
     })
     if not b.period_start <= posted_at < b.period_end:
         evidence = [source, f"ledger/{debit['row_id']}", "policy/period"]
-        b.issue("period_cutoff", affected, invoice["total_minor"], currency, evidence)
+        b.issue("period_cutoff", affected, invoice["total_minor"], currency, evidence, deferred=True)
         b.mutations.append({
             "type": "period_cutoff", "affected_ids": affected,
             "before": {"timestamp": issued_at.isoformat()},
@@ -135,25 +140,31 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled):
         payment_id = payment["payment_id"]
         affected = [f"payment/{payment_id}"]
 
-    expected_date = datetime.fromisoformat(source_at).astimezone(b.zone).date()
+    source_at = datetime.fromisoformat(source_at)
+    expected_date = source_at.astimezone(b.zone).date()
     correct_rate, alternate_date, alternate_rate = _rates(b, currency, expected_date)
     actual_date, actual_rate = (alternate_date, alternate_rate) if fx_enabled else (expected_date, correct_rate)
     expected = _convert(b, amount, currency, correct_rate)
     actual = _convert(b, amount, currency, actual_rate)
-    debit, _ = b.post(
-        posted_at, b.base_currency, actual, "FX_VALUATION", "FX_OFFSET", invoice["entity_id"],
+    deferred = b.config_version == "1.1"
+    posting = b.post(
+        source_at if deferred else posted_at, b.base_currency, expected if deferred else actual,
+        "FX_VALUATION", "FX_OFFSET", invoice["entity_id"],
         invoice_id=invoice["invoice_id"], payment_id=payment_id,
     )
+    debit, _ = posting
+    if deferred and (posted_at != source_at or actual != expected):
+        b.defer_posting_changes(posting, timestamp=posted_at, amount=actual)
     b.events.append({
         "kind": "reporting_valuation", "affected_ids": affected, "source": source,
         "source_currency": currency, "source_minor": amount, "local_date": expected_date.isoformat(),
         "base_currency": b.base_currency,
     })
-    difference = abs(debit["debit_minor"] - expected)
+    difference = abs((actual if deferred else debit["debit_minor"]) - expected)
     if difference:
         evidence = [source, f"fx/{expected_date}/{currency}/{b.base_currency}",
                     f"ledger/{debit['row_id']}", "policy/fx_date"]
-        b.issue("fx_conversion", affected, difference, b.base_currency, evidence)
+        b.issue("fx_conversion", affected, difference, b.base_currency, evidence, deferred=True)
         b.mutations.append({
             "type": "fx_conversion", "affected_ids": affected,
             "before": {"quote_date": expected_date.isoformat(), "rate": correct_rate, "amount_minor": expected},

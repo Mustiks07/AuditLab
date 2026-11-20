@@ -92,7 +92,7 @@ class Profile11Tests(unittest.TestCase):
             self.assertEqual((manifest["ledger_rows"], manifest["document_count"]), (2000, 200))
             self.assert_reconcile(root)
             provenance = load(root / "private" / "provenance.json")
-            self.assertEqual(provenance["generator_version"], "1.3")
+            self.assertEqual(provenance["generator_version"], "1.4")
             transfers = [e for e in provenance["events"] if e["kind"] == "treasury_transfer"]
             self.assertTrue(transfers)
             with (root / "public" / "ledger.csv").open(encoding="utf-8", newline="") as stream:
@@ -158,10 +158,13 @@ class Profile11Tests(unittest.TestCase):
 
     def test_new_profile_limits_and_legacy_boundary_pair(self):
         with TemporaryDirectory() as temporary:
-            for config in ({"company_size": {"documents_target": 201}},
-                           {"issue_counts": dict.fromkeys(("duplicate_invoice", "payment_allocation", "fx_conversion"), 5)}):
-                with self.assertRaises(ValueError):
-                    generate_episode(7, {"config_version": "1.1", **config}, Path(temporary) / "invalid")
+            for profile, limit in (("1.0", 600), ("1.1", 200)):
+                with self.assertRaisesRegex(ValueError, f"invalid_company_size:.*0–{limit} documents"):
+                    generate_episode(7, {"config_version": profile,
+                        "company_size": {"documents_target": limit + 1}}, Path(temporary) / "invalid")
+            with self.assertRaisesRegex(ValueError, "invalid_issue_counts"):
+                generate_episode(7, {"config_version": "1.1", "issue_counts": dict.fromkeys(
+                    ("duplicate_invoice", "payment_allocation", "fx_conversion"), 5)}, Path(temporary) / "invalid")
             for mode, amount in (("before", 0), ("after", 2_000_000)):
                 root = Path(temporary) / mode
                 generate_episode(7, {"config_version": "1.1", "settlement_timing": mode}, root)
