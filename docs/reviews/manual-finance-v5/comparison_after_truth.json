@@ -1,0 +1,3725 @@
+{
+ "generator_cases": {
+  "G01-max-clean-kzt": {
+   "status": "MATCH",
+   "truth_issues": 0,
+   "answer_score": [
+    0,
+    0,
+    0
+   ],
+   "identical_sets": 0,
+   "rows": [],
+   "refs": 0,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 48,
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "reward": 0.906,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "extra_finding": [
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  "G02-max-12-issues-kzt": {
+   "status": "MATCH",
+   "truth_issues": 12,
+   "answer_score": [
+    12,
+    0,
+    0
+   ],
+   "identical_sets": 12,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I42E8B22CF6B9954CF0F28B3B"
+      ],
+      2986900,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DBC3009C4799EFECE8370C663",
+       "invoices/D0B78B83E708D6F3B2079BF5B",
+       "ledger/R141341F7D5A8239429D57D09",
+       "ledger/R4ACC4EC76C8D88E47FA150DA"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D0B78B83E708D6F3B2079BF5B",
+      "invoices/DBC3009C4799EFECE8370C663",
+      "ledger/R4ACC4EC76C8D88E47FA150DA",
+      "ledger/R141341F7D5A8239429D57D09"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I9810128FBC8A9812D646ACC3"
+      ],
+      809800,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D41AADE6E14E0B09D27AF8203",
+       "invoices/DA220CA4B4E3EF7185FF614F9",
+       "ledger/RAE11ADDFF35A75E45520BF38",
+       "ledger/RD3DA86217485FC795D245C8A"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D41AADE6E14E0B09D27AF8203",
+      "invoices/DA220CA4B4E3EF7185FF614F9",
+      "ledger/RAE11ADDFF35A75E45520BF38",
+      "ledger/RD3DA86217485FC795D245C8A"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/IA689D702EC87661AF2716D79"
+      ],
+      3064300,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D7811393C4D4BF8FF62F35D60",
+       "invoices/DA2CF3A6BBCC67342EE17CEB8",
+       "ledger/R72EEFF87F4003A9A684B5B33",
+       "ledger/RD3899383656C33584BD1F6F6"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D7811393C4D4BF8FF62F35D60",
+      "invoices/DA2CF3A6BBCC67342EE17CEB8",
+      "ledger/R72EEFF87F4003A9A684B5B33",
+      "ledger/RD3899383656C33584BD1F6F6"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P1511504D2E4A2ED85A37AAED"
+      ],
+      5600,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D8085AA93328274ED2CF524B6",
+       "fx/2026-11-18/USD/KZT",
+       "ledger/RD484CC39ADAFA469950EBBA2",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D8085AA93328274ED2CF524B6",
+      "fx/2026-11-18/USD/KZT",
+      "policy/fx_date",
+      "ledger/RD484CC39ADAFA469950EBBA2"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P601FD45D441DA43E76B4205F"
+      ],
+      5000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D5859BBDB2D13442A75CE2C36",
+       "fx/2026-11-19/USD/KZT",
+       "ledger/RD06B675291EBC1C3941A0212",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D5859BBDB2D13442A75CE2C36",
+      "fx/2026-11-19/USD/KZT",
+      "policy/fx_date",
+      "ledger/RD06B675291EBC1C3941A0212"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PEAE01CE5A87C9AF23584A177"
+      ],
+      2100,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DE4B1D4DE55F426CF8D8CA64D",
+       "fx/2026-11-18/USD/KZT",
+       "ledger/RE1F8FA9468B05B948105F4B5",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DE4B1D4DE55F426CF8D8CA64D",
+      "fx/2026-11-18/USD/KZT",
+      "policy/fx_date",
+      "ledger/RE1F8FA9468B05B948105F4B5"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I5E10132EB5E52031FE14740E",
+       "payment/PEAE01CE5A87C9AF23584A177"
+      ],
+      3360,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DE4B1D4DE55F426CF8D8CA64D",
+       "ledger/R27F38D1711796FD7403A7209",
+       "ledger/R739A282EC5C43907AB57E40B",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DE4B1D4DE55F426CF8D8CA64D",
+      "ledger/R27F38D1711796FD7403A7209",
+      "ledger/R739A282EC5C43907AB57E40B",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I7FFB2DB842AA67278A5A3C76",
+       "payment/P06CB1C8643A99124673BB59C"
+      ],
+      2168000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D2A1A03FFB0558B47F33B5796",
+       "ledger/RD4A40F0C0916A0B52B1A2408",
+       "ledger/R93AC614868B92C89C41F1845",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D2A1A03FFB0558B47F33B5796",
+      "ledger/RD4A40F0C0916A0B52B1A2408",
+      "ledger/R93AC614868B92C89C41F1845",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IC8714516AA846CDBF7BAEC90",
+       "payment/P6E075261900E2BC114367F17"
+      ],
+      2100000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DF6F56706F19F3CFE7FBEC367",
+       "ledger/R71F348357F746A325EE67478",
+       "ledger/R5BF690284342D76A773E1293",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DF6F56706F19F3CFE7FBEC367",
+      "ledger/R71F348357F746A325EE67478",
+      "ledger/R5BF690284342D76A773E1293",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I22D6F0B07566730A4B70FF4B"
+      ],
+      2309000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D7E23C4231A50BF744903F8E5",
+       "ledger/R743F1C99BBF300B4C21B3331",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D7E23C4231A50BF744903F8E5",
+      "ledger/R743F1C99BBF300B4C21B3331",
+      "policy/period"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/IB58E2C0009EB2F4C2E7A5347"
+      ],
+      3910400,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D4201FD1F707489ADF1E30326",
+       "ledger/R19C8F32B0624DE54D0DFC02B",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D4201FD1F707489ADF1E30326",
+      "ledger/R19C8F32B0624DE54D0DFC02B",
+      "policy/period"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/ICE821E05865FF8B9918CECFB"
+      ],
+      926800,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DCC1C9EE4C013916189770AAE",
+       "ledger/R3F43737338D2C9A0EC0D238E",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DCC1C9EE4C013916189770AAE",
+      "ledger/R3F43737338D2C9A0EC0D238E",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 37,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 48,
+    "tp_fp_fn": [
+     12,
+     0,
+     0
+    ],
+    "reward": 0.906,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     12,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     11,
+     1,
+     1
+    ],
+    "currency": [
+     11,
+     1,
+     1
+    ],
+    "extra_finding": [
+     12,
+     1,
+     0
+    ]
+   }
+  },
+  "G03-max-12-issues-kwd-berlin": {
+   "status": "MATCH",
+   "truth_issues": 12,
+   "answer_score": [
+    12,
+    0,
+    0
+   ],
+   "identical_sets": 12,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I64C0F4E457232E608BF6F5E2"
+      ],
+      11743000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DCA73962AA9D910AFD7297116",
+       "invoices/D96E80619A33597502640C0DC",
+       "ledger/R3E6ED5409CD12374974BEDEE",
+       "ledger/RCC806E9797394B9C80CFC8D6"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DCA73962AA9D910AFD7297116",
+      "invoices/D96E80619A33597502640C0DC",
+      "ledger/R3E6ED5409CD12374974BEDEE",
+      "ledger/RCC806E9797394B9C80CFC8D6"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/IF08996494B1FFF065C4A3E0D"
+      ],
+      25186000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D9C0F805F5F7A0079DB1AF4B4",
+       "invoices/DBD0C417EC9993500465CDE83",
+       "ledger/RECEEB7E870E39A37FB1B56C1",
+       "ledger/RAAE4168C2426C60AFEE3053D"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D9C0F805F5F7A0079DB1AF4B4",
+      "invoices/DBD0C417EC9993500465CDE83",
+      "ledger/RAAE4168C2426C60AFEE3053D",
+      "ledger/RECEEB7E870E39A37FB1B56C1"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "invoice/I8B32CFAF2D6D2D27799C44E5"
+      ],
+      56750,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D40F0AC0D8BC9CF375C475C05",
+       "fx/2026-03-31/USD/KWD",
+       "ledger/R56115F884A1D7BB7BE16E348",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D40F0AC0D8BC9CF375C475C05",
+      "fx/2026-03-31/USD/KWD",
+      "policy/fx_date",
+      "ledger/R56115F884A1D7BB7BE16E348"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P1AE44B2F717AC950547756F7"
+      ],
+      250,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D574161AB642C77D537099DDE",
+       "fx/2026-03-06/JPY/KWD",
+       "ledger/R05126C8F05E94F86A96E61C5",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D574161AB642C77D537099DDE",
+      "fx/2026-03-06/JPY/KWD",
+      "policy/fx_date",
+      "ledger/R05126C8F05E94F86A96E61C5"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P647A72C506AEB8EBB8CDCBDD"
+      ],
+      725,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DED69A3723C8F11552AB81966",
+       "fx/2026-03-08/JPY/KWD",
+       "ledger/R47FC8E5D3D4A0824FA8EB994",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DED69A3723C8F11552AB81966",
+      "fx/2026-03-08/JPY/KWD",
+      "policy/fx_date",
+      "ledger/R47FC8E5D3D4A0824FA8EB994"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PF13FE1220A4BEA120BECBF4E"
+      ],
+      500,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D4C7F622EA820CA22A7FB3433",
+       "fx/2026-03-13/JPY/KWD",
+       "ledger/RCD9CD377A51F4545F9010C15",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D4C7F622EA820CA22A7FB3433",
+      "fx/2026-03-13/JPY/KWD",
+      "policy/fx_date",
+      "ledger/RCD9CD377A51F4545F9010C15"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I12C23AD968641E599975D5FE",
+       "payment/P724A73ECACA21D5F32F69A89"
+      ],
+      31840000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DFCD3CFB890A91FD697ACF8AF",
+       "ledger/R853578EF732CF898EAB847FA",
+       "ledger/R117ED04208AB88598E429EEA",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DFCD3CFB890A91FD697ACF8AF",
+      "ledger/R853578EF732CF898EAB847FA",
+      "ledger/R117ED04208AB88598E429EEA",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I3BD19D37B8C4275B52A74325",
+       "payment/PA879B7B2DE951F842C3DE580"
+      ],
+      29120000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D4D672EC042F24A534DBA5388",
+       "ledger/R3DD06B7C718B76D1F12CD9AA",
+       "ledger/RE069CB7307AC13BA0165EC0C",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D4D672EC042F24A534DBA5388",
+      "ledger/R3DD06B7C718B76D1F12CD9AA",
+      "ledger/RE069CB7307AC13BA0165EC0C",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IF8B83AD774A028FA0E83BDC1",
+       "payment/P735E6C694F8B1BA08A27D910"
+      ],
+      15480000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D0C4BD3AB9D8CDEE694709DE5",
+       "ledger/R592E78BF2C8128C8FAF8D86A",
+       "ledger/R32E85D80BB6C588E2507D073",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D0C4BD3AB9D8CDEE694709DE5",
+      "ledger/R592E78BF2C8128C8FAF8D86A",
+      "ledger/R32E85D80BB6C588E2507D073",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I4909B2FA2FE30A30298A0350"
+      ],
+      27093000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DB4D7F23DD287DB1DDD3E5199",
+       "ledger/R103836B5BB746E90590CAA08",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DB4D7F23DD287DB1DDD3E5199",
+      "ledger/R103836B5BB746E90590CAA08",
+      "policy/period"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I8B32CFAF2D6D2D27799C44E5"
+      ],
+      22700,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D40F0AC0D8BC9CF375C475C05",
+       "ledger/R582B1AAC01D5F7BB78D68CB7",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D40F0AC0D8BC9CF375C475C05",
+      "ledger/R582B1AAC01D5F7BB78D68CB7",
+      "policy/period"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I987256D1C209270645A02470"
+      ],
+      68399000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DCA1F8BF546426A627CD22C4D",
+       "ledger/R5D68B09DC796862515632218",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DCA1F8BF546426A627CD22C4D",
+      "ledger/R5D68B09DC796862515632218",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 37,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 48,
+    "tp_fp_fn": [
+     12,
+     0,
+     0
+    ],
+    "reward": 0.906,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     12,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     11,
+     1,
+     1
+    ],
+    "currency": [
+     11,
+     1,
+     1
+    ],
+    "extra_finding": [
+     12,
+     1,
+     0
+    ]
+   }
+  },
+  "G04-max-clean-jpy-newyork": {
+   "status": "MATCH",
+   "truth_issues": 0,
+   "answer_score": [
+    0,
+    0,
+    0
+   ],
+   "identical_sets": 0,
+   "rows": [],
+   "refs": 0,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 48,
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "reward": 0.906,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "extra_finding": [
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  "G05-boundary-before": {
+   "status": "MATCH",
+   "truth_issues": 0,
+   "answer_score": [
+    0,
+    0,
+    0
+   ],
+   "identical_sets": 0,
+   "rows": [],
+   "refs": 0,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "extra_finding": [
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  "G06-boundary-at": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IDF337F4078ACC07050B0E1DD",
+       "payment/PDB44908F97F4C0DE0E264BC1"
+      ],
+      2000000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D6513CF756CE7E6DDB6D53434",
+       "ledger/R5E2FB0BF9FCA5DCF5274A41E",
+       "ledger/R38FB283E4E1F00177E17EAFE",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D6513CF756CE7E6DDB6D53434",
+      "ledger/R5E2FB0BF9FCA5DCF5274A41E",
+      "ledger/R38FB283E4E1F00177E17EAFE",
+      "policy/allocation"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "G07-partial-allocation-refund": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I3238C1FA077EB147835A6A53",
+       "payment/PDC230C1394120FDA0F4B3C66"
+      ],
+      2000000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DD397373B51049355B3C6A201",
+       "ledger/R3ECC1AE585F23609006E2BB9",
+       "ledger/REC114B7DEF4EF6F4E81C12B4",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DD397373B51049355B3C6A201",
+      "ledger/R3ECC1AE585F23609006E2BB9",
+      "ledger/REC114B7DEF4EF6F4E81C12B4",
+      "policy/allocation"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "G08-clean-refunds": {
+   "status": "MATCH",
+   "truth_issues": 0,
+   "answer_score": [
+    0,
+    0,
+    0
+   ],
+   "identical_sets": 0,
+   "rows": [],
+   "refs": 0,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     0,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "extra_finding": [
+     0,
+     1,
+     0
+    ]
+   }
+  },
+  "G09-block-8611": {
+   "status": "MATCH",
+   "truth_issues": 4,
+   "answer_score": [
+    4,
+    0,
+    0
+   ],
+   "identical_sets": 4,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I082779DB431C479D7623AE01"
+      ],
+      1847600,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DBDFE90E4B81E3D0B08A31BC0",
+       "invoices/D4962D10622FEEE5E14D48B74",
+       "ledger/R2BA022995AD0462B58B01A48",
+       "ledger/R0D3E6479BD2B9A4002F6B276"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D4962D10622FEEE5E14D48B74",
+      "invoices/DBDFE90E4B81E3D0B08A31BC0",
+      "ledger/R2BA022995AD0462B58B01A48",
+      "ledger/R0D3E6479BD2B9A4002F6B276"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PAF25EA4F8467325BABCF765F"
+      ],
+      68,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D82F102C3541E2C7938E9C09A",
+       "fx/2026-03-07/JPY/USD",
+       "ledger/R455E9FA24D02C7125BF44DCE",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D82F102C3541E2C7938E9C09A",
+      "fx/2026-03-07/JPY/USD",
+      "policy/fx_date",
+      "ledger/R455E9FA24D02C7125BF44DCE"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IAC1FEBF859B29150D4CECEF0",
+       "payment/PB945112282B10DB013D8F5AD"
+      ],
+      1596000,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D5E2F115977147ED447E133F3",
+       "ledger/R822E52548091C13961A01EC0",
+       "ledger/R5AEE73234B45C642BDA44E4D",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D5E2F115977147ED447E133F3",
+      "ledger/R822E52548091C13961A01EC0",
+      "ledger/R5AEE73234B45C642BDA44E4D",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IDB027027B90F9845A0073698",
+       "payment/PAF25EA4F8467325BABCF765F"
+      ],
+      55,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D82F102C3541E2C7938E9C09A",
+       "ledger/R47B4B629DADE19E99A48FED0",
+       "ledger/R55181CA3C8315EA6106F15CC",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D82F102C3541E2C7938E9C09A",
+      "ledger/R47B4B629DADE19E99A48FED0",
+      "ledger/R55181CA3C8315EA6106F15CC",
+      "policy/allocation"
+     ]
+    }
+   ],
+   "refs": 14,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     3,
+     1,
+     1
+    ],
+    "currency": [
+     3,
+     1,
+     1
+    ],
+    "extra_finding": [
+     4,
+     1,
+     0
+    ]
+   }
+  },
+  "G10-block-8612": {
+   "status": "MATCH",
+   "truth_issues": 6,
+   "answer_score": [
+    6,
+    0,
+    0
+   ],
+   "identical_sets": 6,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I128889594BFD51449B6A8010"
+      ],
+      15004,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DD0D9517767758D2BE4FE2D80",
+       "invoices/D85EDCD20B48514E788C42213",
+       "ledger/REF40A3E9DC7AA57A6611F3E9",
+       "ledger/R45AA25792AE1EF4CB9BD0C24"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D85EDCD20B48514E788C42213",
+      "invoices/DD0D9517767758D2BE4FE2D80",
+      "ledger/REF40A3E9DC7AA57A6611F3E9",
+      "ledger/R45AA25792AE1EF4CB9BD0C24"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I858FDA3E5EC80ADECA0FB91B"
+      ],
+      24763,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DDBA611F084EE7CF81C103ECF",
+       "invoices/D948F024DD12B5629410FB6E5",
+       "ledger/R33A0864579DE30C97CABFDDE",
+       "ledger/R4094C1B4CBC626027CFDCB84"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D948F024DD12B5629410FB6E5",
+      "invoices/DDBA611F084EE7CF81C103ECF",
+      "ledger/R4094C1B4CBC626027CFDCB84",
+      "ledger/R33A0864579DE30C97CABFDDE"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "invoice/I6A014F3D05CCE3ACFCE112F9"
+      ],
+      57,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DE11BAE36C503FFEF2D47828E",
+       "fx/2026-03-31/USD/JPY",
+       "ledger/R85770D1536F7D5174240120D",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DE11BAE36C503FFEF2D47828E",
+      "fx/2026-03-31/USD/JPY",
+      "policy/fx_date",
+      "ledger/R85770D1536F7D5174240120D"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IB782AC7604BE5CA5D2EE258C",
+       "payment/PE6A88D8255930F4025C685C8"
+      ],
+      34000,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D42650CF11553E22F2346D1F8",
+       "ledger/RF9D20F0DEAD0759CAA0241F3",
+       "ledger/RF3E0EEB449C8A5609133859B",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D42650CF11553E22F2346D1F8",
+      "ledger/RF9D20F0DEAD0759CAA0241F3",
+      "ledger/RF3E0EEB449C8A5609133859B",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/ICFB0AB26A768DABC1B693609",
+       "payment/P2C28E948BB6FF08B5E7EC47C"
+      ],
+      14880,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D3A0B8AF3B2FC0DF5D8B32D2C",
+       "ledger/R4AB874281512865AFC63DB44",
+       "ledger/RE0BB794A558CC0768F852C21",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D3A0B8AF3B2FC0DF5D8B32D2C",
+      "ledger/R4AB874281512865AFC63DB44",
+      "ledger/RE0BB794A558CC0768F852C21",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I6A014F3D05CCE3ACFCE112F9"
+      ],
+      22900,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DE11BAE36C503FFEF2D47828E",
+       "ledger/R4992CEBB3B99860D83D9603F",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DE11BAE36C503FFEF2D47828E",
+      "ledger/R4992CEBB3B99860D83D9603F",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 21,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     6,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     6,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     5,
+     1,
+     1
+    ],
+    "currency": [
+     5,
+     1,
+     1
+    ],
+    "extra_finding": [
+     6,
+     1,
+     0
+    ]
+   }
+  },
+  "G11-block-8613": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P96170C9717E7C5B793AD209F"
+      ],
+      1240,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DCC2AFB823EA3BDF69A3EA2D7",
+       "fx/2026-03-18/JPY/KWD",
+       "ledger/RF0E808D3330B095ACD0B412D",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DCC2AFB823EA3BDF69A3EA2D7",
+      "fx/2026-03-18/JPY/KWD",
+      "policy/fx_date",
+      "ledger/RF0E808D3330B095ACD0B412D"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "G12-block-8614": {
+   "status": "MATCH",
+   "truth_issues": 4,
+   "answer_score": [
+    4,
+    0,
+    0
+   ],
+   "identical_sets": 4,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I053308F5B936B2C97AA95371"
+      ],
+      2157900,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D5C93B7E28B99EE1285F2056A",
+       "invoices/DEB52928D0995E29D20D3AE64",
+       "ledger/R19CF7DB77B3E6F53BDAC506E",
+       "ledger/RA131A8E78098553DFD445ED6"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DEB52928D0995E29D20D3AE64",
+      "invoices/D5C93B7E28B99EE1285F2056A",
+      "ledger/RA131A8E78098553DFD445ED6",
+      "ledger/R19CF7DB77B3E6F53BDAC506E"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P1FE14D57A90883E8194F0784"
+      ],
+      2175,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D57938A4F8DB01D960C0226C8",
+       "fx/2026-03-03/USD/EUR",
+       "ledger/RC87B6D6D59E50ED9B0397A10",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D57938A4F8DB01D960C0226C8",
+      "fx/2026-03-03/USD/EUR",
+      "policy/fx_date",
+      "ledger/RC87B6D6D59E50ED9B0397A10"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P56B818D12D10D223C10DF229"
+      ],
+      1825,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DB72273242F0CC0B5B4909398",
+       "fx/2026-03-21/USD/EUR",
+       "ledger/R5321C55964C8BC25EAE72C62",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DB72273242F0CC0B5B4909398",
+      "fx/2026-03-21/USD/EUR",
+      "policy/fx_date",
+      "ledger/R5321C55964C8BC25EAE72C62"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IC2E499D1ACF69AB0AEE5639C",
+       "payment/P56B818D12D10D223C10DF229"
+      ],
+      2920,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DB72273242F0CC0B5B4909398",
+       "ledger/R55C4FC714205219C14A99E4F",
+       "ledger/R1105655F7BBBD7EC0A43D430",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DB72273242F0CC0B5B4909398",
+      "ledger/R55C4FC714205219C14A99E4F",
+      "ledger/R1105655F7BBBD7EC0A43D430",
+      "policy/allocation"
+     ]
+    }
+   ],
+   "refs": 14,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     3,
+     1,
+     1
+    ],
+    "currency": [
+     3,
+     1,
+     1
+    ],
+    "extra_finding": [
+     4,
+     1,
+     0
+    ]
+   }
+  },
+  "G13-block-8615": {
+   "status": "MATCH",
+   "truth_issues": 5,
+   "answer_score": [
+    5,
+    0,
+    0
+   ],
+   "identical_sets": 5,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I61FE8DC6531EFA4614E5233C"
+      ],
+      1167300,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D541AE3DC96444E961CA73A12",
+       "invoices/D48E21DA70CB2AED691DEC1B8",
+       "ledger/RF69F259C3615B41A669E771A",
+       "ledger/R857F3249D9782F7657C3BC3D"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D48E21DA70CB2AED691DEC1B8",
+      "invoices/D541AE3DC96444E961CA73A12",
+      "ledger/RF69F259C3615B41A669E771A",
+      "ledger/R857F3249D9782F7657C3BC3D"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/IDEC76FC427C311F54CDD0006"
+      ],
+      423800,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DDC29406E0927F454789138B6",
+       "invoices/D9E333BC33F857987E2A56828",
+       "ledger/R4AF31610D7302A18DB924807",
+       "ledger/R44CE61E05E4CAF4EFF9A8CF3"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DDC29406E0927F454789138B6",
+      "invoices/D9E333BC33F857987E2A56828",
+      "ledger/R44CE61E05E4CAF4EFF9A8CF3",
+      "ledger/R4AF31610D7302A18DB924807"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "invoice/I644D12FD41BC2CD43D16A637"
+      ],
+      4150,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D29F9643161810EBF015733B3",
+       "fx/2026-12-31/USD/KZT",
+       "ledger/R517FB2F255646F9B59C7B02D",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D29F9643161810EBF015733B3",
+      "fx/2026-12-31/USD/KZT",
+      "policy/fx_date",
+      "ledger/R517FB2F255646F9B59C7B02D"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PC59CD2C6AAE1A549DEAE4C50"
+      ],
+      5475,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D293CDF38EA7DBC2D263B3576",
+       "fx/2026-12-16/USD/KZT",
+       "ledger/R0B3F789AE37D00507BCBC8BC",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D293CDF38EA7DBC2D263B3576",
+      "fx/2026-12-16/USD/KZT",
+      "policy/fx_date",
+      "ledger/R0B3F789AE37D00507BCBC8BC"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I644D12FD41BC2CD43D16A637"
+      ],
+      16600,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D29F9643161810EBF015733B3",
+       "ledger/R87C000A918B4AF66F72B903A",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D29F9643161810EBF015733B3",
+      "ledger/R87C000A918B4AF66F72B903A",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 17,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     5,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     5,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     4,
+     1,
+     1
+    ],
+    "currency": [
+     4,
+     1,
+     1
+    ],
+    "extra_finding": [
+     5,
+     1,
+     0
+    ]
+   }
+  },
+  "G14-block-8616": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IF9B610F5E812FFC524EFFF8C",
+       "payment/P66189A66801B7CE50C2689C9"
+      ],
+      1780000,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D4B231FCFCF459F307646C12E",
+       "ledger/R482A1785609054564EB1EBAF",
+       "ledger/R2BEE7140AC81D50C3CAA7DC7",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D4B231FCFCF459F307646C12E",
+      "ledger/R482A1785609054564EB1EBAF",
+      "ledger/R2BEE7140AC81D50C3CAA7DC7",
+      "policy/allocation"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "G15-block-8617": {
+   "status": "MATCH",
+   "truth_issues": 4,
+   "answer_score": [
+    4,
+    0,
+    0
+   ],
+   "identical_sets": 4,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I5145B099B1595631B8F6CC9E"
+      ],
+      12314,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DFEAD6F357B5E34504F074BC0",
+       "invoices/D930A106810AA6C87EF7CB889",
+       "ledger/R70F7C5883504E9A2C486E237",
+       "ledger/R2DB57D4EB99D8184A9B95964"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D930A106810AA6C87EF7CB889",
+      "invoices/DFEAD6F357B5E34504F074BC0",
+      "ledger/R2DB57D4EB99D8184A9B95964",
+      "ledger/R70F7C5883504E9A2C486E237"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P6B9E42F3287FA2D51857B40D"
+      ],
+      35,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D8FC2B7A5455F29898C7D4D8C",
+       "fx/2026-12-15/USD/JPY",
+       "ledger/R040796BFCE8FBB7C94E43EDF",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D8FC2B7A5455F29898C7D4D8C",
+      "fx/2026-12-15/USD/JPY",
+      "policy/fx_date",
+      "ledger/R040796BFCE8FBB7C94E43EDF"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I8365D5EFEFB73D80364747F8",
+       "payment/P6B9E42F3287FA2D51857B40D"
+      ],
+      5560,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D8FC2B7A5455F29898C7D4D8C",
+       "ledger/R944590D4B4F9C662D89A7E2D",
+       "ledger/R2751419BE16F08EADFD138B0",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D8FC2B7A5455F29898C7D4D8C",
+      "ledger/R944590D4B4F9C662D89A7E2D",
+      "ledger/R2751419BE16F08EADFD138B0",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I77C68239FC57FBCFBB8EFB73"
+      ],
+      61862,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D17E8319044CCE7E880BE7D30",
+       "ledger/RFCE3D00A21C65032C08E02B4",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D17E8319044CCE7E880BE7D30",
+      "ledger/RFCE3D00A21C65032C08E02B4",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 14,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     3,
+     1,
+     1
+    ],
+    "currency": [
+     3,
+     1,
+     1
+    ],
+    "extra_finding": [
+     4,
+     1,
+     0
+    ]
+   }
+  },
+  "G16-block-8618": {
+   "status": "MATCH",
+   "truth_issues": 5,
+   "answer_score": [
+    5,
+    0,
+    0
+   ],
+   "identical_sets": 5,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I06C4B649D46CE26C06896FF4"
+      ],
+      16743000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D12E8118131244614744D9E1C",
+       "invoices/D7C29AECCFE96F8EF536B51B0",
+       "ledger/RB4771D6F701C1A88EBF49A54",
+       "ledger/RFA56435556ECE675D399F633"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D7C29AECCFE96F8EF536B51B0",
+      "invoices/D12E8118131244614744D9E1C",
+      "ledger/RFA56435556ECE675D399F633",
+      "ledger/RB4771D6F701C1A88EBF49A54"
+     ]
+    },
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/ID4978CF52A96D96B8FCEE08C"
+      ],
+      31722000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DD151D79EE506B2B268196592",
+       "invoices/D80D5151D0D22177618AD7189",
+       "ledger/R6998FD4930C7F60247D04ED7",
+       "ledger/R7A555EC9CBFE1675B8B2EC14"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DD151D79EE506B2B268196592",
+      "invoices/D80D5151D0D22177618AD7189",
+      "ledger/R7A555EC9CBFE1675B8B2EC14",
+      "ledger/R6998FD4930C7F60247D04ED7"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "invoice/IE6F3109105E7C849C4C7969A"
+      ],
+      54250,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D577400CD7892C172891629F0",
+       "fx/2026-12-31/USD/KWD",
+       "ledger/RDA0F4469FD8FDCF40C9030EC",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D577400CD7892C172891629F0",
+      "fx/2026-12-31/USD/KWD",
+      "policy/fx_date",
+      "ledger/RDA0F4469FD8FDCF40C9030EC"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I1AF18789D63ADA8D5D99B652",
+       "payment/PAB178359F414BCF9DC76E9B1"
+      ],
+      29480000,
+      "KWD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D03C22B2D323615256DC286F2",
+       "ledger/R43FA12133E06553C9FB171ED",
+       "ledger/R194764A802E1DA8A3125C4DD",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D03C22B2D323615256DC286F2",
+      "ledger/R43FA12133E06553C9FB171ED",
+      "ledger/R194764A802E1DA8A3125C4DD",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/IE6F3109105E7C849C4C7969A"
+      ],
+      21700,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D577400CD7892C172891629F0",
+       "ledger/RF8940F177A036B0ACDC6EBBE",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D577400CD7892C172891629F0",
+      "ledger/RF8940F177A036B0ACDC6EBBE",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 18,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     5,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     5,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     4,
+     1,
+     1
+    ],
+    "currency": [
+     4,
+     1,
+     1
+    ],
+    "extra_finding": [
+     5,
+     1,
+     0
+    ]
+   }
+  },
+  "G17-block-8619": {
+   "status": "MATCH",
+   "truth_issues": 4,
+   "answer_score": [
+    4,
+    0,
+    0
+   ],
+   "identical_sets": 4,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PBBB46ECEA8952E823E551364"
+      ],
+      4325,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D768E3B3A4EA23182F0333D9E",
+       "fx/2026-12-07/USD/EUR",
+       "ledger/RABAC7184C50F36B3C2FA720D",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D768E3B3A4EA23182F0333D9E",
+      "fx/2026-12-07/USD/EUR",
+      "policy/fx_date",
+      "ledger/RABAC7184C50F36B3C2FA720D"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I06B1AE739E5FE6C1ED2CCFF1",
+       "payment/PF169D34F39E1257615881CF2"
+      ],
+      2532000,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D367B400B10F96BFD2B334272",
+       "ledger/R2197BA346F015ACE827EF6CC",
+       "ledger/R4F204F0D37C1F41D697CDA17",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D367B400B10F96BFD2B334272",
+      "ledger/R2197BA346F015ACE827EF6CC",
+      "ledger/R4F204F0D37C1F41D697CDA17",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IBDF2C0F5AD95B6747D804DA0",
+       "payment/PC5A2D09857C6E8396203C5FF"
+      ],
+      1936000,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D03A8FD5F9B59A5E7F2B04D30",
+       "ledger/R9F76285CC71CBE2AD529D785",
+       "ledger/RE48D7DF32614045A36046892",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D03A8FD5F9B59A5E7F2B04D30",
+      "ledger/R9F76285CC71CBE2AD529D785",
+      "ledger/RE48D7DF32614045A36046892",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/IEB6BBB35B2801972742EC25A"
+      ],
+      6727200,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D2022D5DFCC050A82B965EDFB",
+       "ledger/R0C40434858A8BC1F9A0D4AD7",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D2022D5DFCC050A82B965EDFB",
+      "ledger/R0C40434858A8BC1F9A0D4AD7",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 14,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     4,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     3,
+     1,
+     1
+    ],
+    "currency": [
+     3,
+     1,
+     1
+    ],
+    "extra_finding": [
+     4,
+     1,
+     0
+    ]
+   }
+  },
+  "G18-block-8620": {
+   "status": "MATCH",
+   "truth_issues": 6,
+   "answer_score": [
+    6,
+    0,
+    0
+   ],
+   "identical_sets": 6,
+   "rows": [
+    {
+     "key": [
+      "duplicate_invoice",
+      [
+       "invoice/I83B29ECC0DB19C4815AEF258"
+      ],
+      3577900,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/D5ECE7E213F5E5DD9476AE11A",
+       "invoices/D4F97A3F7339E0932588239B1",
+       "ledger/R456EED54B54B7863B8C3473E",
+       "ledger/R7521F454A60C54C32669BE9E"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/D4F97A3F7339E0932588239B1",
+      "invoices/D5ECE7E213F5E5DD9476AE11A",
+      "ledger/R7521F454A60C54C32669BE9E",
+      "ledger/R456EED54B54B7863B8C3473E"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P55A2851E9BED537C7C881B89"
+      ],
+      1950,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D52F1DE283FC20DFA52D9C19F",
+       "fx/2027-01-07/USD/KZT",
+       "ledger/RDC411421BC60F4E6A45B20DE",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D52F1DE283FC20DFA52D9C19F",
+      "fx/2027-01-07/USD/KZT",
+      "policy/fx_date",
+      "ledger/RDC411421BC60F4E6A45B20DE"
+     ]
+    },
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P9F552564237841778D25CA09"
+      ],
+      2825,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DDC03E9F63EECE4473DD177DE",
+       "fx/2027-01-11/USD/KZT",
+       "ledger/RD5B276A743F9A241A4C00C40",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DDC03E9F63EECE4473DD177DE",
+      "fx/2027-01-11/USD/KZT",
+      "policy/fx_date",
+      "ledger/RD5B276A743F9A241A4C00C40"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/IB05F7DC662A4DA7B4DFE7319",
+       "payment/P9F552564237841778D25CA09"
+      ],
+      4520,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DDC03E9F63EECE4473DD177DE",
+       "ledger/R2B40F0E1EE9B707F9C484AA8",
+       "ledger/R6B70A2B01D5F9DB0B78456B0",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DDC03E9F63EECE4473DD177DE",
+      "ledger/R2B40F0E1EE9B707F9C484AA8",
+      "ledger/R6B70A2B01D5F9DB0B78456B0",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/ID873953E8791F974F51C67B9",
+       "payment/P3D6DB2E701974A4769BC54C1"
+      ],
+      2884000,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D01ADAB4772052A3E6EE108F1",
+       "ledger/R26F18B3F7C9E29EE2ED2744C",
+       "ledger/R6179A5FF295A8488CD68535B",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D01ADAB4772052A3E6EE108F1",
+      "ledger/R26F18B3F7C9E29EE2ED2744C",
+      "ledger/R6179A5FF295A8488CD68535B",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I25EB448B58937FE62E5DDDE5"
+      ],
+      2729300,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DA29C37D3C92A52CCA69F05A2",
+       "ledger/R05EAC3D6198D19D7FBF2C856",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DA29C37D3C92A52CCA69F05A2",
+      "ledger/R05EAC3D6198D19D7FBF2C856",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 20,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 13,
+    "tp_fp_fn": [
+     6,
+     0,
+     0
+    ],
+    "reward": 0.976,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     6,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     5,
+     1,
+     1
+    ],
+    "currency": [
+     5,
+     1,
+     1
+    ],
+    "extra_finding": [
+     6,
+     1,
+     0
+    ]
+   }
+  },
+  "H-JPY-from-USD-clean-8753": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PC6B6DFEC90926AB664106EFE"
+      ],
+      10,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D6ECFACB29F80CA7E2C44BA88",
+       "fx/2026-11-06/USD/JPY",
+       "ledger/RC887983DC8029E2A5FB435FF",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D6ECFACB29F80CA7E2C44BA88",
+      "fx/2026-11-06/USD/JPY",
+      "policy/fx_date",
+      "ledger/RC887983DC8029E2A5FB435FF"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "H-JPY-from-USD-error-8706": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P86E4C45AC07F7BBAC9DCB45A"
+      ],
+      27,
+      "JPY"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DEB663A66F9D6A1306F4E9423",
+       "fx/2026-11-18/USD/JPY",
+       "ledger/RA241EE6C10176EC358FB2F0F",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DEB663A66F9D6A1306F4E9423",
+      "fx/2026-11-18/USD/JPY",
+      "policy/fx_date",
+      "ledger/RA241EE6C10176EC358FB2F0F"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "H-KZT-from-JPY-clean-8702": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PD9960C70AAFC4A9B58B91F60"
+      ],
+      36,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D15E8AF18DCB9CBEE8B4CD52E",
+       "fx/2026-11-12/JPY/KZT",
+       "ledger/R0AB11F15AE23A2D660ACBC46",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D15E8AF18DCB9CBEE8B4CD52E",
+      "fx/2026-11-12/JPY/KZT",
+      "policy/fx_date",
+      "ledger/R0AB11F15AE23A2D660ACBC46"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "H-KZT-from-JPY-error-8701": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P1B9F2CBE6C77A9BA06E5DC28"
+      ],
+      25,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DF4E5D6E0220C5C249636ECCF",
+       "fx/2026-11-18/JPY/KZT",
+       "ledger/RDD98DA96E24EF51CC987A35C",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DF4E5D6E0220C5C249636ECCF",
+      "fx/2026-11-18/JPY/KZT",
+      "policy/fx_date",
+      "ledger/RDD98DA96E24EF51CC987A35C"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "H-KZT-from-KWD-clean-8708": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P929DDB418219CF773EC9277E"
+      ],
+      9900,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DBC1668E8F85527640A846D46",
+       "fx/2026-11-14/KWD/KZT",
+       "ledger/R3C200B25C9AFC7F5AA1ADF4A",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DBC1668E8F85527640A846D46",
+      "fx/2026-11-14/KWD/KZT",
+      "policy/fx_date",
+      "ledger/R3C200B25C9AFC7F5AA1ADF4A"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  },
+  "H-KZT-from-KWD-error-8702": {
+   "status": "MATCH",
+   "truth_issues": 1,
+   "answer_score": [
+    1,
+    0,
+    0
+   ],
+   "identical_sets": 1,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/PD9960C70AAFC4A9B58B91F60"
+      ],
+      3600,
+      "KZT"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/D15E8AF18DCB9CBEE8B4CD52E",
+       "fx/2026-11-12/KWD/KZT",
+       "ledger/R0AB11F15AE23A2D660ACBC46",
+       "policy/fx_date"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/D15E8AF18DCB9CBEE8B4CD52E",
+      "fx/2026-11-12/KWD/KZT",
+      "policy/fx_date",
+      "ledger/R0AB11F15AE23A2D660ACBC46"
+     ]
+    }
+   ],
+   "refs": 4,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     1,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     0,
+     1,
+     1
+    ],
+    "currency": [
+     0,
+     1,
+     1
+    ],
+    "extra_finding": [
+     1,
+     1,
+     0
+    ]
+   }
+  }
+ },
+ "fixtures": {
+  "X1-NY-FALLBACK": {
+   "status": "MATCH",
+   "truth_issues": 3,
+   "answer_score": [
+    3,
+    0,
+    0
+   ],
+   "identical_sets": 3,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/P2"
+      ],
+      100,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DP2",
+       "fx/2026-11-01/EUR/USD",
+       "policy/fx_date",
+       "ledger/R13"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DP2",
+      "fx/2026-11-01/EUR/USD",
+      "policy/fx_date",
+      "ledger/R13"
+     ]
+    },
+    {
+     "key": [
+      "payment_allocation",
+      [
+       "invoice/I5",
+       "payment/P4"
+      ],
+      8000,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DP4",
+       "ledger/R30",
+       "policy/allocation"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DP4",
+      "ledger/R30",
+      "policy/allocation"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/I4"
+      ],
+      25000,
+      "USD"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DI4",
+       "ledger/R25",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DI4",
+      "ledger/R25",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 10,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     3,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     3,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     2,
+     1,
+     1
+    ],
+    "currency": [
+     2,
+     1,
+     1
+    ],
+    "extra_finding": [
+     3,
+     1,
+     0
+    ]
+   }
+  },
+  "X2-BERLIN-SPRING": {
+   "status": "MATCH",
+   "truth_issues": 2,
+   "answer_score": [
+    2,
+    0,
+    0
+   ],
+   "identical_sets": 2,
+   "rows": [
+    {
+     "key": [
+      "fx_conversion",
+      [
+       "payment/Q2"
+      ],
+      200,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "payments/DQ2",
+       "fx/2026-03-29/USD/EUR",
+       "policy/fx_date",
+       "ledger/R13"
+      ]
+     ],
+     "answer_evidence": [
+      "payments/DQ2",
+      "fx/2026-03-29/USD/EUR",
+      "policy/fx_date",
+      "ledger/R13"
+     ]
+    },
+    {
+     "key": [
+      "period_cutoff",
+      [
+       "invoice/J4"
+      ],
+      9000,
+      "EUR"
+     ],
+     "answer": true,
+     "truth": true,
+     "covers": true,
+     "identical": true,
+     "truth_sets": [
+      [
+       "invoices/DJ4",
+       "ledger/R25",
+       "policy/period"
+      ]
+     ],
+     "answer_evidence": [
+      "invoices/DJ4",
+      "ledger/R25",
+      "policy/period"
+     ]
+    }
+   ],
+   "refs": 7,
+   "unreachable": [],
+   "reconcile": {
+    "steps": 6,
+    "tp_fp_fn": [
+     2,
+     0,
+     0
+    ],
+    "reward": 0.99,
+    "truncated": false
+   },
+   "verifier": {
+    "engine": "duckdb",
+    "rules": "verifier-rules-1.1",
+    "tp_fp_fn": [
+     2,
+     0,
+     0
+    ],
+    "notes": []
+   },
+   "controls": {
+    "amount+1": [
+     1,
+     1,
+     1
+    ],
+    "currency": [
+     1,
+     1,
+     1
+    ],
+    "extra_finding": [
+     2,
+     1,
+     0
+    ]
+   }
+  }
+ },
+ "dat01_source_books": {
+  "G01-max-clean-kzt": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G02-max-12-issues-kzt": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G03-max-12-issues-kwd-berlin": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G04-max-clean-jpy-newyork": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G05-boundary-before": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G06-boundary-at": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G07-partial-allocation-refund": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G08-clean-refunds": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G09-block-8611": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G10-block-8612": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G11-block-8613": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G12-block-8614": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G13-block-8615": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G14-block-8616": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G15-block-8617": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G16-block-8618": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G17-block-8619": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "G18-block-8620": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-JPY-from-USD-clean-8753": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-JPY-from-USD-error-8706": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-KZT-from-JPY-clean-8702": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-KZT-from-JPY-error-8701": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-KZT-from-KWD-clean-8708": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  },
+  "H-KZT-from-KWD-error-8702": {
+   "findings": 0,
+   "notes": [],
+   "files": [
+    "fx.csv",
+    "invoices.jsonl",
+    "ledger.csv",
+    "manifest.json",
+    "payments.jsonl",
+    "policy.json"
+   ]
+  }
+ }
+}

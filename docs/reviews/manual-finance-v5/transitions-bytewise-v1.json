@@ -1,0 +1,194 @@
+{
+ "G01-max-clean-kzt": {
+  "changed_objects": 0,
+  "transition_entries": 0,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G02-max-12-issues-kzt": {
+  "changed_objects": 27,
+  "transition_entries": 27,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G03-max-12-issues-kwd-berlin": {
+  "changed_objects": 27,
+  "transition_entries": 27,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": false
+ },
+ "G04-max-clean-jpy-newyork": {
+  "changed_objects": 0,
+  "transition_entries": 0,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G05-boundary-before": {
+  "changed_objects": 0,
+  "transition_entries": 0,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G06-boundary-at": {
+  "changed_objects": 3,
+  "transition_entries": 3,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G07-partial-allocation-refund": {
+  "changed_objects": 3,
+  "transition_entries": 3,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G08-clean-refunds": {
+  "changed_objects": 0,
+  "transition_entries": 0,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G09-block-8611": {
+  "changed_objects": 10,
+  "transition_entries": 10,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G10-block-8612": {
+  "changed_objects": 14,
+  "transition_entries": 14,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G11-block-8613": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G12-block-8614": {
+  "changed_objects": 9,
+  "transition_entries": 9,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G13-block-8615": {
+  "changed_objects": 10,
+  "transition_entries": 10,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G14-block-8616": {
+  "changed_objects": 3,
+  "transition_entries": 3,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G15-block-8617": {
+  "changed_objects": 9,
+  "transition_entries": 9,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G16-block-8618": {
+  "changed_objects": 11,
+  "transition_entries": 11,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G17-block-8619": {
+  "changed_objects": 10,
+  "transition_entries": 10,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "G18-block-8620": {
+  "changed_objects": 14,
+  "transition_entries": 14,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-JPY-from-USD-clean-8753": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-JPY-from-USD-error-8706": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-KZT-from-JPY-clean-8702": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-KZT-from-JPY-error-8701": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-KZT-from-KWD-clean-8708": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ },
+ "H-KZT-from-KWD-error-8702": {
+  "changed_objects": 2,
+  "transition_entries": 2,
+  "unexplained": [],
+  "mismatched": [],
+  "phantom": [],
+  "fx_policy_identical": true
+ }
+}
