@@ -122,12 +122,18 @@ def _configuration(seed, config):
     return company, counts, timing, interaction, distractors, size, nonce
 
 
-def _add_paid_invoices(company, amount, issued_at, *, split=False):
+def _add_clean_invoice(company, amount, issued_at):
     entity = company.id("entity")
     currency = company.base_currency
     invoice = company.invoice(entity, issued_at, currency, amount)
+    company.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice["invoice_id"])
+    return invoice
+
+
+def _add_paid_invoices(company, amount, issued_at, *, split=False):
+    invoice = _add_clean_invoice(company, amount, issued_at)
+    entity, currency = invoice["entity_id"], invoice["currency"]
     invoice_id = invoice["invoice_id"]
-    company.post(issued_at, currency, amount, "AR", "REVENUE", entity, invoice_id=invoice_id)
     received = issued_at + timedelta(days=2)
     parts = (amount * 2 // 5, amount - amount * 2 // 5) if split else (amount,)
     for offset, part in enumerate(parts):
@@ -188,7 +194,11 @@ def _add_bounded_filler(company, size, rng, scale, duplicate_capacity):
         at = company.period_start + timedelta(days=rng.randrange(2, 20), hours=rng.randrange(8, 18),
                                              minutes=rng.randrange(60))
         amount = rng.randrange(5_000 * scale, 150_000 * scale)
-        if remaining == 1:
+        budgeted_rows = len(company.ledger) + extra_rows
+        if rows_target and budgeted_rows + 3 * remaining + remaining % 2 > rows_target:
+            # A properly recognized, unpaid invoice needs two rows and one document.
+            _add_clean_invoice(company, amount, at)
+        elif remaining == 1:
             entity = company.id("entity")
             payment, _ = company.payment(entity, at, company.base_currency, amount)
             company.post(at + timedelta(minutes=1), company.base_currency, amount, "UNAPPLIED", "CASH",
@@ -199,7 +209,7 @@ def _add_bounded_filler(company, size, rng, scale, duplicate_capacity):
             split = remaining >= 3 and bool(rng.getrandbits(1))
             if split and rows_target:
                 rest = remaining - 3
-                minimum_rows = len(company.ledger) + extra_rows + 10 + 3 * rest + rest % 2
+                minimum_rows = budgeted_rows + 10 + 3 * rest + rest % 2
                 split = minimum_rows <= rows_target
             _add_paid_invoices(company, amount, at, split=split)
     # Treasury cash transfers are real balanced internal events, without extra external invoices.
