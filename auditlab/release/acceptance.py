@@ -60,6 +60,7 @@ REQUIRED = {
         + cases("simulator", "test_policies.PublicPolicyTests", "largest_supported_snapshot_fits_reconcile_budget")
         + cases("runner", "test_public_schemas.RealSnapshots", "every_record_of_every_shipped_snapshot"),
     "DAT-05": cases("integration", "test_control_pair.PublicControlPairTests", "boundary_order_and_timezone", "public_index_proves_completeness_on_each_side")
+        + cases("simulator", "test_clean_counterpart.CleanCounterpartTests", "shortcut_fires_on_clean_and_defective_but_financial_auditors_distinguish")
         + cases("simulator", "test_scenarios.ScenarioTests", "archive_copies_need_two_recognitions_to_be_a_duplicate")
         + cases("simulator", "test_generation.GenerationTests", "clean_history_has_refunds_split_payments_and_equal_amounts")
         + cases("verifier", "test_verifier.SingleClassTests", "duplicate_invoice", "payment_allocation_and_clean_tranches_and_refund"),
@@ -81,6 +82,7 @@ REQUIRED = {
     "REP-02": cases("integration", "test_rehearsal.RehearsalTests", "real_oracle_closed_trajectory_and_transformed_pair")
         + cases("metamorphic", "test_transforms.TransformTests", "rename_and_permute_preserve_answer"),
     "REP-03": cases("simulator", "test_families.EconomicsFamilyTests", "published_internal_split_reports_known_twins_only_inside_their_split", "transformed_twin_crosses_split_and_late_variant_stays_in_family")
+        + cases("simulator", "test_subhistories.CommercialSubhistoryTests", "frozen_internal_selection_has_no_cross_split_complete_chains", "copied_story_survives_different_background_and_id_permutation", "posting_defect_changes_book_but_not_primary_story", "same_rule_and_structure_with_different_terms_is_not_a_copy")
         + cases("simulator", "test_transformed_policy.TransformedPolicyTests", "reconcile_rediscovers_evidence_on_open_train_and_dev_pairs", "reconcile_rediscovers_evidence_on_frozen_internal_pairs")
         + cases("simulator", "test_generated_pair.GeneratedPairTests", "same_seed_snapshots_bind_cursors_to_public_content"),
     "VER-01": cases("verifier", "test_crosscheck.CrosscheckTests", "controlled_truth_distortions_are_detected_by_kind", "counterexample_is_reduced_on_a_copy")
