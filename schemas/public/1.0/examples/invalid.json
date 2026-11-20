@@ -1,0 +1,1739 @@
+[
+ {
+  "base": "S02.train.get_document_D9.observation",
+  "instance": {
+   "ok": true,
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "observation_without_remaining_steps",
+  "pointer": "#/$defs/okObservation",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.error_not_found.observation",
+  "instance": {
+   "error": {
+    "code": "not_found",
+    "message": "Public record not found."
+   },
+   "remaining_steps": 85
+  },
+  "name": "observation_without_ok",
+  "pointer": "#/$defs/errorObservation",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.error_not_found.observation",
+  "instance": {
+   "error": {
+    "message": "Public record not found."
+   },
+   "ok": false,
+   "remaining_steps": 85
+  },
+  "name": "error_without_code",
+  "pointer": "#/$defs/errorObservation",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.reset.manifest",
+  "instance": {
+   "base_currency": "KZT",
+   "currency_exponents": {
+    "KZT": 2
+   },
+   "document_count": 2,
+   "ledger_rows": 8,
+   "period_end": "2026-12-01T00:00:00+05:00",
+   "period_start": "2026-11-01T00:00:00+05:00",
+   "rounding": "ROUND_HALF_UP",
+   "schema_version": "1.0",
+   "timezone": "Asia/Almaty"
+  },
+  "name": "manifest_without_episode_id",
+  "pointer": "#/$defs/manifest",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.get_ledger_R4.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 93,
+   "result": {
+    "account": "UNAPPLIED",
+    "credit_minor": 5000000,
+    "debit_minor": 0,
+    "entity_id": "C7",
+    "invoice_id": "I4",
+    "journal_id": "J2",
+    "payment_id": "P9",
+    "row_id": "R4",
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "ledger_row_without_currency",
+  "pointer": "#/$defs/replyGetLedger",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "finding_without_explanation",
+  "pointer": "#/$defs/submission",
+  "why": "missing required field"
+ },
+ {
+  "base": "S02.train.reset",
+  "instance": [
+   {
+    "manifest": {
+     "base_currency": "KZT",
+     "currency_exponents": {
+      "KZT": 2
+     },
+     "document_count": 2,
+     "episode_id": "S02",
+     "ledger_rows": 8,
+     "period_end": "2026-12-01T00:00:00+05:00",
+     "period_start": "2026-11-01T00:00:00+05:00",
+     "rounding": "ROUND_HALF_UP",
+     "schema_version": "1.0",
+     "timezone": "Asia/Almaty"
+    },
+    "policy": {
+     "allocation": {
+      "deadline": "2026-12-01T00:00:00+05:00",
+      "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its remaining balance is credits minus debits. The settlement index includes every UNAPPLIED row for the payment strictly before the reporting boundary."
+     },
+     "fx_date": "Local date of the source event",
+     "period": {
+      "end_exclusive": true,
+      "recognition": "invoice issue date for invoice; transaction date for cash and settlement"
+     },
+     "rounding": "ROUND_HALF_UP"
+    },
+    "remaining_steps": 100,
+    "task": "Audit the company's documents for the target period using the listed tools, then call submit once with your findings (possibly none).",
+    "tools": {
+     "calculator": {
+      "args": {
+       "expression": "str"
+      }
+     },
+     "get_document": {
+      "args": {
+       "doc_id": "str"
+      }
+     },
+     "get_record": {
+      "args": {
+       "id": "str",
+       "table": "str"
+      }
+     },
+     "list_records": {
+      "args": {
+       "cursor": "str|null",
+       "limit": "1..50",
+       "table": "str"
+      }
+     },
+     "submit": {
+      "args": {
+       "episode_id": "str",
+       "findings": "list (<=30)"
+      }
+     }
+    }
+   }
+  ],
+  "name": "reset_without_info",
+  "pointer": "#/$defs/reset",
+  "why": "missing tuple element"
+ },
+ {
+  "base": "S02.train.get_document_D9.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": "88",
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "remaining_steps_as_string",
+  "pointer": "#/$defs/okObservation",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.get_document_D9.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 88.0,
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "remaining_steps_as_float",
+  "pointer": "#/$defs/okObservation",
+  "why": "wrong type (integer means no fraction)"
+ },
+ {
+  "base": "S02.train.get_document_D9.observation",
+  "instance": {
+   "ok": "true",
+   "remaining_steps": 87,
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "ok_as_string",
+  "pointer": "#/$defs/okObservation",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.get_ledger_R4.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 93,
+   "result": {
+    "account": "UNAPPLIED",
+    "credit_minor": 5000000,
+    "currency": "KZT",
+    "debit_minor": "0",
+    "entity_id": "C7",
+    "invoice_id": "I4",
+    "journal_id": "J2",
+    "payment_id": "P9",
+    "row_id": "R4",
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "debit_as_string",
+  "pointer": "#/$defs/replyGetLedger",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.get_ledger_R4.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 93,
+   "result": {
+    "account": "UNAPPLIED",
+    "credit_minor": true,
+    "currency": "KZT",
+    "debit_minor": 0,
+    "entity_id": "C7",
+    "invoice_id": "I4",
+    "journal_id": "J2",
+    "payment_id": "P9",
+    "row_id": "R4",
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "debit_as_bool",
+  "pointer": "#/$defs/replyGetLedger",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.list_payments.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 96,
+   "result": {
+    "next_cursor": null,
+    "records": {}
+   }
+  },
+  "name": "records_as_object",
+  "pointer": "#/$defs/replyListPayments",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.list_ledger_page1.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 99,
+   "result": {
+    "next_cursor": 3,
+    "records": [
+     {
+      "account": "AR",
+      "credit_minor": 0,
+      "currency": "KZT",
+      "debit_minor": 5000000,
+      "entity_id": "C7",
+      "invoice_id": "I4",
+      "journal_id": "J1",
+      "payment_id": null,
+      "row_id": "R1",
+      "timestamp": "2026-11-01T10:00:00+05:00"
+     },
+     {
+      "account": "REVENUE",
+      "credit_minor": 5000000,
+      "currency": "KZT",
+      "debit_minor": 0,
+      "entity_id": "C7",
+      "invoice_id": "I4",
+      "journal_id": "J1",
+      "payment_id": null,
+      "row_id": "R2",
+      "timestamp": "2026-11-01T10:00:00+05:00"
+     },
+     {
+      "account": "CASH",
+      "credit_minor": 0,
+      "currency": "KZT",
+      "debit_minor": 5000000,
+      "entity_id": "C7",
+      "invoice_id": "I4",
+      "journal_id": "J2",
+      "payment_id": "P9",
+      "row_id": "R3",
+      "timestamp": "2026-11-14T16:00:00+05:00"
+     }
+    ]
+   }
+  },
+  "name": "cursor_as_number",
+  "pointer": "#/$defs/replyListLedger",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.calculator.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 86,
+   "result": 666666.67
+  },
+  "name": "calculator_result_as_number",
+  "pointer": "#/$defs/replyCalculator",
+  "why": "wrong type (decimal string expected)"
+ },
+ {
+  "base": "S02.train.submit.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 71,
+    "result": {
+     "status": "submitted"
+    }
+   },
+   0.944,
+   1,
+   false,
+   {
+    "score": {
+     "f1": 1.0,
+     "fn": 0,
+     "fp": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "reward": 0.944,
+     "tp": 1
+    },
+    "status": "submitted"
+   }
+  ],
+  "name": "terminated_as_int",
+  "pointer": "#/$defs/stepTrain",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.get_document_D9.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 87,
+    "result": {
+     "amount_minor": 5000000,
+     "currency": "KZT",
+     "doc_id": "D9",
+     "invoice_refs": [
+      "I4"
+     ],
+     "payment_id": "P9",
+     "settlement_index": {
+      "before": "2026-12-01T00:00:00+05:00",
+      "unapplied_row_ids": [
+       "R4",
+       "R5"
+      ]
+     },
+     "timestamp": "2026-11-14T16:00:00+05:00"
+    }
+   },
+   "0",
+   false,
+   false,
+   {
+    "inspection_steps": 13
+   }
+  ],
+  "name": "reward_as_string",
+  "pointer": "#/$defs/stepTrain",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000.0,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "amount_as_float",
+  "pointer": "#/$defs/submission",
+  "why": "integer amount written as 2000000.0"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": true,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "amount_as_bool",
+  "pointer": "#/$defs/submission",
+  "why": "wrong type"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": -1,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "amount_negative",
+  "pointer": "#/$defs/submission",
+  "why": "negative amount"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    },
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "findings_31",
+  "pointer": "#/$defs/submission",
+  "why": "more than 30 findings"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "ledger/R0",
+      "ledger/R1",
+      "ledger/R2",
+      "ledger/R3",
+      "ledger/R4",
+      "ledger/R5",
+      "ledger/R6",
+      "ledger/R7",
+      "ledger/R8",
+      "ledger/R9",
+      "ledger/R10"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "evidence_11",
+  "pointer": "#/$defs/submission",
+  "why": "more than 10 evidence ids"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f\u044f",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "explanation_1001",
+  "pointer": "#/$defs/submission",
+  "why": "explanation over 1000 characters"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "fraud"
+    }
+   ]
+  },
+  "name": "finding_unknown_type",
+  "pointer": "#/$defs/submission",
+  "why": "unknown issue type"
+ },
+ {
+  "base": "S02.train.submit.submission",
+  "instance": {
+   "confidence": 1,
+   "episode_id": "S02",
+   "findings": [
+    {
+     "affected_ids": [
+      "payment/P9",
+      "invoice/I4"
+     ],
+     "claimed_amount_minor": 2000000,
+     "currency": "KZT",
+     "evidence_ids": [
+      "payments/D9",
+      "ledger/R4",
+      "ledger/R5",
+      "policy/allocation"
+     ],
+     "explanation": "50 000 - 30 000 = 20 000 KZT remain unapplied before the exclusive boundary.",
+     "type": "payment_allocation"
+    }
+   ]
+  },
+  "name": "submission_extra_field",
+  "pointer": "#/$defs/submission",
+  "why": "extra field"
+ },
+ {
+  "base": "action.list_records",
+  "instance": {
+   "action": "list_records",
+   "args": {
+    "cursor": null,
+    "limit": 0,
+    "table": "payments"
+   }
+  },
+  "name": "action_limit_0",
+  "pointer": "#/$defs/action",
+  "why": "limit outside 1..50"
+ },
+ {
+  "base": "action.get_record",
+  "instance": {
+   "action": "get_record",
+   "args": {
+    "id": "R4",
+    "table": "truth"
+   }
+  },
+  "name": "action_unknown_table",
+  "pointer": "#/$defs/action",
+  "why": "unknown table"
+ },
+ {
+  "base": "action.get_document",
+  "instance": {
+   "action": "get_document",
+   "args": {
+    "doc_id": "D9"
+   },
+   "debug": true
+  },
+  "name": "action_extra_envelope_field",
+  "pointer": "#/$defs/action",
+  "why": "extra field"
+ },
+ {
+  "base": "action.get_document",
+  "instance": {
+   "action": "read_truth",
+   "args": {
+    "doc_id": "D9"
+   }
+  },
+  "name": "action_unknown_name",
+  "pointer": "#/$defs/action",
+  "why": "unknown action"
+ },
+ {
+  "base": "action.calculator",
+  "instance": {
+   "action": "calculator"
+  },
+  "name": "action_without_args",
+  "pointer": "#/$defs/action",
+  "why": "missing args"
+ },
+ {
+  "base": "S02.closed.get_document_D9.observation",
+  "instance": {
+   "evidence_sets": [
+    [
+     "ledger/R4"
+    ]
+   ],
+   "ok": true,
+   "remaining_steps": 87,
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "closed_key_in_observation",
+  "pointer": "#/$defs/okObservation",
+  "why": "truth field next to the result"
+ },
+ {
+  "base": "S02.closed.get_document_D9.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 87,
+   "result": {
+    "amount_minor": 5000000,
+    "currency": "KZT",
+    "doc_id": "D9",
+    "expected_amount_minor": 2000000,
+    "invoice_refs": [
+     "I4"
+    ],
+    "payment_id": "P9",
+    "settlement_index": {
+     "before": "2026-12-01T00:00:00+05:00",
+     "unapplied_row_ids": [
+      "R4",
+      "R5"
+     ]
+    },
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "closed_key_in_record",
+  "pointer": "#/$defs/replyGetDocument",
+  "why": "hidden field inside a public document"
+ },
+ {
+  "base": "S02.closed.get_policy_allocation.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 90,
+   "result": {
+    "deadline": "2026-12-01T00:00:00+05:00",
+    "details": {
+     "issue_id": "X1"
+    },
+    "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its remaining balance is credits minus debits. The settlement index includes every UNAPPLIED row for the payment strictly before the reporting boundary."
+   }
+  },
+  "name": "closed_key_nested_in_policy_value",
+  "pointer": "#/$defs/okObservation",
+  "why": "closed key nested in a free-form rule"
+ },
+ {
+  "base": "S02.closed.reset.observation",
+  "instance": {
+   "manifest": {
+    "base_currency": "KZT",
+    "currency_exponents": {
+     "KZT": 2
+    },
+    "document_count": 2,
+    "episode_id": "S02",
+    "ledger_rows": 8,
+    "period_end": "2026-12-01T00:00:00+05:00",
+    "period_start": "2026-11-01T00:00:00+05:00",
+    "rounding": "ROUND_HALF_UP",
+    "schema_version": "1.0",
+    "timezone": "Asia/Almaty"
+   },
+   "policy": {
+    "allocation": {
+     "deadline": "2026-12-01T00:00:00+05:00",
+     "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its remaining balance is credits minus debits. The settlement index includes every UNAPPLIED row for the payment strictly before the reporting boundary."
+    },
+    "fx_date": "Local date of the source event",
+    "period": {
+     "end_exclusive": true,
+     "recognition": "invoice issue date for invoice; transaction date for cash and settlement"
+    },
+    "rounding": "ROUND_HALF_UP",
+    "truth": {
+     "issues": []
+    }
+   },
+   "remaining_steps": 100,
+   "task": "Audit the company's documents for the target period using the listed tools, then call submit once with your findings (possibly none).",
+   "tools": {
+    "calculator": {
+     "args": {
+      "expression": "str"
+     }
+    },
+    "get_document": {
+     "args": {
+      "doc_id": "str"
+     }
+    },
+    "get_record": {
+     "args": {
+      "id": "str",
+      "table": "str"
+     }
+    },
+    "list_records": {
+     "args": {
+      "cursor": "str|null",
+      "limit": "1..50",
+      "table": "str"
+     }
+    },
+    "submit": {
+     "args": {
+      "episode_id": "str",
+      "findings": "list (<=30)"
+     }
+    }
+   }
+  },
+  "name": "closed_key_in_policy_document",
+  "pointer": "#/$defs/initialObservation",
+  "why": "truth in the initial policy"
+ },
+ {
+  "base": "S02.closed.reset.manifest",
+  "instance": {
+   "base_currency": "KZT",
+   "currency_exponents": {
+    "KZT": 2
+   },
+   "document_count": 2,
+   "episode_id": "S02",
+   "issue_count": 1,
+   "ledger_rows": 8,
+   "period_end": "2026-12-01T00:00:00+05:00",
+   "period_start": "2026-11-01T00:00:00+05:00",
+   "rounding": "ROUND_HALF_UP",
+   "schema_version": "1.0",
+   "timezone": "Asia/Almaty"
+  },
+  "name": "manifest_reveals_issue_count",
+  "pointer": "#/$defs/manifest",
+  "why": "number of errors must stay hidden"
+ },
+ {
+  "base": "S02.closed.reset",
+  "instance": [
+   {
+    "manifest": {
+     "base_currency": "KZT",
+     "currency_exponents": {
+      "KZT": 2
+     },
+     "document_count": 2,
+     "episode_id": "S02",
+     "ledger_rows": 8,
+     "period_end": "2026-12-01T00:00:00+05:00",
+     "period_start": "2026-11-01T00:00:00+05:00",
+     "rounding": "ROUND_HALF_UP",
+     "schema_version": "1.0",
+     "timezone": "Asia/Almaty"
+    },
+    "policy": {
+     "allocation": {
+      "deadline": "2026-12-01T00:00:00+05:00",
+      "rule": "Apply the entire designated payment before period_end (exclusive). UNAPPLIED is credit-normal. Its remaining balance is credits minus debits. The settlement index includes every UNAPPLIED row for the payment strictly before the reporting boundary."
+     },
+     "fx_date": "Local date of the source event",
+     "period": {
+      "end_exclusive": true,
+      "recognition": "invoice issue date for invoice; transaction date for cash and settlement"
+     },
+     "rounding": "ROUND_HALF_UP"
+    },
+    "remaining_steps": 100,
+    "task": "Audit the company's documents for the target period using the listed tools, then call submit once with your findings (possibly none).",
+    "tools": {
+     "calculator": {
+      "args": {
+       "expression": "str"
+      }
+     },
+     "get_document": {
+      "args": {
+       "doc_id": "str"
+      }
+     },
+     "get_record": {
+      "args": {
+       "id": "str",
+       "table": "str"
+      }
+     },
+     "list_records": {
+      "args": {
+       "cursor": "str|null",
+       "limit": "1..50",
+       "table": "str"
+      }
+     },
+     "submit": {
+      "args": {
+       "episode_id": "str",
+       "findings": "list (<=30)"
+      }
+     }
+    }
+   },
+   {
+    "episode_id": "S02",
+    "max_steps": 100,
+    "mode": "closed",
+    "seed": 0
+   }
+  ],
+  "name": "reset_info_reveals_seed",
+  "pointer": "#/$defs/reset",
+  "why": "seed in public info"
+ },
+ {
+  "base": "S02.closed.submit.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 71,
+    "result": {
+     "status": "submitted"
+    }
+   },
+   0.0,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 1.0,
+     "fn": 0,
+     "fp": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "reward": 0.992,
+     "tp": 1
+    },
+    "status": "submitted"
+   }
+  ],
+  "name": "closed_info_with_score",
+  "pointer": "#/$defs/stepClosed",
+  "why": "grading leaked in closed mode"
+ },
+ {
+  "base": "S02.closed.submit.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 71,
+    "result": {
+     "status": "submitted"
+    }
+   },
+   0.992,
+   true,
+   false,
+   {
+    "status": "submitted"
+   }
+  ],
+  "name": "closed_nonzero_reward",
+  "pointer": "#/$defs/stepClosed",
+  "why": "true reward leaked in closed mode"
+ },
+ {
+  "base": "S02.closed.trajectory.24",
+  "instance": {
+   "action": {
+    "action": "calculator",
+    "args": {
+     "expression": "1/0"
+    }
+   },
+   "episode_id": "S02",
+   "observation": {
+    "error": {
+     "code": "division_by_zero",
+     "message": "Division by zero."
+    },
+    "ok": false,
+    "remaining_steps": 76
+   },
+   "reward": -1.0,
+   "step": 24,
+   "terminated": false,
+   "truncated": false
+  },
+  "name": "closed_trajectory_reward",
+  "pointer": "#/$defs/trajectoryLineClosed",
+  "why": "true reward in a closed trajectory"
+ },
+ {
+  "base": "S02.train.submit.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 71,
+    "result": {
+     "status": "submitted"
+    }
+   },
+   0.944,
+   true,
+   false,
+   {
+    "score": {
+     "f1": 1.0,
+     "fn": 0,
+     "fp": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "reward": 0.944,
+     "tp": 1
+    },
+    "status": "submitted",
+    "true_reward": 0.992
+   }
+  ],
+  "name": "train_info_true_reward",
+  "pointer": "#/$defs/stepTrain",
+  "why": "trusted field in info"
+ },
+ {
+  "base": "S02.train.internal_error.observation",
+  "instance": {
+   "error": {
+    "code": "internal_error",
+    "message": "C:/secret/private/truth.json is unreadable"
+   },
+   "ok": false,
+   "remaining_steps": 99
+  },
+  "name": "error_message_with_internal_path",
+  "pointer": "#/$defs/errorObservation",
+  "why": "free text in a bounded error"
+ },
+ {
+  "base": "S02.train.error_not_found.observation",
+  "instance": {
+   "error": {
+    "code": "not_found",
+    "detail": "row R4 exists in private/",
+    "message": "Public record not found."
+   },
+   "ok": false,
+   "remaining_steps": 85
+  },
+  "name": "error_with_detail_field",
+  "pointer": "#/$defs/errorObservation",
+  "why": "extra field in error"
+ },
+ {
+  "base": "S02.train.error_not_found.observation",
+  "instance": {
+   "error": {
+    "code": "truth_mismatch",
+    "message": "Public record not found."
+   },
+   "ok": false,
+   "remaining_steps": 85
+  },
+  "name": "error_unknown_code",
+  "pointer": "#/$defs/errorObservation",
+  "why": "unpublished error code"
+ },
+ {
+  "base": "S02.train.get_ledger_R4.observation",
+  "instance": {
+   "ok": true,
+   "remaining_steps": 93,
+   "result": {
+    "account": "UNAPPLIED",
+    "credit_minor": 5000000,
+    "currency": "KZT",
+    "debit_minor": 0,
+    "entity_id": "C7",
+    "invoice_id": "I4",
+    "journal_id": "J2",
+    "mutated": true,
+    "payment_id": "P9",
+    "row_id": "R4",
+    "timestamp": "2026-11-14T16:00:00+05:00"
+   }
+  },
+  "name": "ledger_row_extra_field",
+  "pointer": "#/$defs/replyGetLedger",
+  "why": "hidden mutation marker"
+ },
+ {
+  "base": "S02.train.after_finish.step",
+  "instance": [
+   {
+    "error": {
+     "code": "episode_finished",
+     "message": "The episode is already finished."
+    },
+    "ok": false
+   },
+   0.5,
+   true,
+   false,
+   {
+    "protocol_error": "episode_finished"
+   }
+  ],
+  "name": "protocol_with_remaining_and_flags",
+  "pointer": "#/$defs/stepTrain",
+  "why": "finished episode must not report a reward"
+ },
+ {
+  "base": "S02.train.get_document_D9.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 87,
+    "result": {
+     "amount_minor": 5000000,
+     "currency": "KZT",
+     "doc_id": "D9",
+     "invoice_refs": [
+      "I4"
+     ],
+     "payment_id": "P9",
+     "settlement_index": {
+      "before": "2026-12-01T00:00:00+05:00",
+      "unapplied_row_ids": [
+       "R4",
+       "R5"
+      ]
+     },
+     "timestamp": "2026-11-14T16:00:00+05:00"
+    }
+   },
+   0.1,
+   false,
+   false,
+   {
+    "inspection_steps": 13
+   }
+  ],
+  "name": "nonterminal_with_reward",
+  "pointer": "#/$defs/stepTrain",
+  "why": "intermediate reward must be 0"
+ },
+ {
+  "base": "S02.train.submit.step",
+  "instance": [
+   {
+    "ok": true,
+    "remaining_steps": 71,
+    "result": {
+     "status": "submitted"
+    }
+   },
+   0.944,
+   true,
+   true,
+   {
+    "score": {
+     "f1": 1.0,
+     "fn": 0,
+     "fp": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "reward": 0.944,
+     "tp": 1
+    },
+    "status": "submitted"
+   }
+  ],
+  "name": "both_terminated_and_truncated",
+  "pointer": "#/$defs/stepTrain",
+  "why": "terminated and truncated together"
+ },
+ {
+  "base": "export.S02-reconcile.run",
+  "instance": {
+   "episode_id": "S02",
+   "inspection_steps": 5,
+   "mode": "train",
+   "outcome": "submitted",
+   "policy": "reconcile",
+   "run_id": "S02-reconcile",
+   "status": "submitted"
+  },
+  "name": "export_status_submitted",
+  "pointer": "#/$defs/exportRun",
+  "why": "console reads only completed/truncated/failed"
+ }
+]

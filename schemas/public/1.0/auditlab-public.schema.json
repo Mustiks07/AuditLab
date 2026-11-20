@@ -1,0 +1,443 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:auditlab:public-schema:1.0",
+  "title": "AuditLab public wire format 1.0",
+  "description": "Executable description of the public reset/step contract as implemented by runner 1.1 and environment (generator profiles 1.0 and 1.1). Select a message type with a JSON pointer into $defs, e.g. #/$defs/action or #/$defs/stepTrain. See README.md next to this file.",
+  "$comment": "Strict integer semantics: an AuditLab integer is a JSON number token without fraction or exponent. Standard Draft 2020-12 validators also accept 2.0 as an integer; the evaluator rejects it (invalid_submission, reward -1).",
+  "$defs": {
+    "text": {"type": "string"},
+    "nonEmptyText": {"type": "string", "minLength": 1},
+    "timestamp": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"},
+    "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "minor": {"type": "integer", "minimum": 0},
+    "decimalString": {"type": "string", "pattern": "^-?[0-9]+(\\.[0-9]+)?$"},
+    "cursor": {"type": "string", "pattern": "^[1-9a-f][0-9a-f]{0,15}\\.[0-9a-f]{32}$"},
+    "remainingAfterInspection": {"type": "integer", "minimum": 0, "maximum": 99},
+    "remainingAny": {"type": "integer", "minimum": 0, "maximum": 100},
+    "tableName": {"enum": ["ledger", "invoices", "payments", "fx", "policy"]},
+
+    "closedKey": {
+      "$comment": "Keys of closed data (truth, provenance, trusted grading). They must never appear inside free-form public values.",
+      "enum": ["truth", "issues", "issue_id", "evidence_sets", "expected_amount_minor", "provenance",
+               "mutation", "mutations", "intervention", "interventions", "seed", "private",
+               "true_reward", "score", "tp", "fp", "fn", "matches", "unmatched"]
+    },
+    "publicValue": {
+      "description": "Any JSON value whose objects, at any depth, contain no closed key.",
+      "anyOf": [
+        {"type": ["null", "boolean", "number", "string"]},
+        {"type": "array", "items": {"$ref": "#/$defs/publicValue"}},
+        {"type": "object", "propertyNames": {"not": {"$ref": "#/$defs/closedKey"}},
+         "additionalProperties": {"$ref": "#/$defs/publicValue"}}
+      ]
+    },
+
+    "manifest": {
+      "type": "object",
+      "required": ["schema_version", "episode_id", "base_currency", "period_start", "period_end", "timezone",
+                   "ledger_rows", "document_count", "currency_exponents", "rounding"],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "episode_id": {"$ref": "#/$defs/nonEmptyText"},
+        "base_currency": {"$ref": "#/$defs/currency"},
+        "period_start": {"$ref": "#/$defs/timestamp"},
+        "period_end": {"$ref": "#/$defs/timestamp"},
+        "period_end_exclusive": {"const": true, "$comment": "Profile 1.1 only."},
+        "timezone": {"$ref": "#/$defs/nonEmptyText"},
+        "ledger_rows": {"$ref": "#/$defs/minor"},
+        "document_count": {"$ref": "#/$defs/minor"},
+        "currency_exponents": {"type": "object", "propertyNames": {"$ref": "#/$defs/currency"},
+                               "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 6}},
+        "rounding": {"type": "string", "pattern": "^ROUND_[A-Z_]+$"}
+      },
+      "additionalProperties": false
+    },
+    "policyDocument": {
+      "type": "object",
+      "propertyNames": {"not": {"$ref": "#/$defs/closedKey"}},
+      "additionalProperties": {"$ref": "#/$defs/publicValue"}
+    },
+
+    "ledgerRow": {
+      "type": "object",
+      "required": ["row_id", "timestamp", "account", "debit_minor", "credit_minor", "currency",
+                   "entity_id", "invoice_id", "payment_id", "journal_id"],
+      "properties": {
+        "row_id": {"$ref": "#/$defs/nonEmptyText"},
+        "timestamp": {"$ref": "#/$defs/timestamp"},
+        "account": {"$ref": "#/$defs/nonEmptyText"},
+        "debit_minor": {"$ref": "#/$defs/minor"},
+        "credit_minor": {"$ref": "#/$defs/minor"},
+        "currency": {"$ref": "#/$defs/currency"},
+        "entity_id": {"$ref": "#/$defs/nonEmptyText"},
+        "invoice_id": {"type": ["string", "null"]},
+        "payment_id": {"type": ["string", "null"]},
+        "journal_id": {"$ref": "#/$defs/nonEmptyText"}
+      },
+      "additionalProperties": false
+    },
+    "lineItem": {
+      "type": "object",
+      "required": ["description", "amount_minor"],
+      "properties": {"description": {"$ref": "#/$defs/text"}, "amount_minor": {"$ref": "#/$defs/minor"}},
+      "additionalProperties": false
+    },
+    "invoice": {
+      "type": "object",
+      "required": ["doc_id", "invoice_id", "entity_id", "issued_at", "due_at", "currency", "total_minor", "line_items"],
+      "properties": {
+        "doc_id": {"$ref": "#/$defs/nonEmptyText"},
+        "invoice_id": {"$ref": "#/$defs/nonEmptyText"},
+        "entity_id": {"$ref": "#/$defs/nonEmptyText"},
+        "issued_at": {"$ref": "#/$defs/timestamp"},
+        "due_at": {"$ref": "#/$defs/timestamp"},
+        "currency": {"$ref": "#/$defs/currency"},
+        "total_minor": {"$ref": "#/$defs/minor"},
+        "line_items": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/lineItem"}}
+      },
+      "additionalProperties": false
+    },
+    "payment": {
+      "type": "object",
+      "required": ["doc_id", "payment_id", "timestamp", "currency", "amount_minor", "invoice_refs", "settlement_index"],
+      "properties": {
+        "doc_id": {"$ref": "#/$defs/nonEmptyText"},
+        "payment_id": {"$ref": "#/$defs/nonEmptyText"},
+        "timestamp": {"$ref": "#/$defs/timestamp"},
+        "currency": {"$ref": "#/$defs/currency"},
+        "amount_minor": {"$ref": "#/$defs/minor"},
+        "invoice_refs": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyText"}},
+        "settlement_index": {
+          "type": "object",
+          "required": ["before", "unapplied_row_ids"],
+          "properties": {"before": {"$ref": "#/$defs/timestamp"},
+                         "unapplied_row_ids": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyText"}}},
+          "additionalProperties": false
+        },
+        "allocation_instructions": {"$ref": "#/$defs/publicValue",
+                                    "$comment": "Documented optional public extension (SPEC §5); not present in published snapshots."}
+      },
+      "additionalProperties": false
+    },
+    "fxRow": {
+      "type": "object",
+      "required": ["date", "source_currency", "target_currency", "rate"],
+      "properties": {
+        "date": {"$ref": "#/$defs/date"},
+        "source_currency": {"$ref": "#/$defs/currency"},
+        "target_currency": {"$ref": "#/$defs/currency"},
+        "rate": {"$ref": "#/$defs/decimalString"}
+      },
+      "additionalProperties": false
+    },
+    "policyRow": {
+      "type": "object",
+      "required": ["id", "value"],
+      "properties": {
+        "id": {"allOf": [{"$ref": "#/$defs/nonEmptyText"}, {"not": {"$ref": "#/$defs/closedKey"}}]},
+        "value": {"$ref": "#/$defs/publicValue"},
+        "version": {"$ref": "#/$defs/nonEmptyText", "$comment": "Profile 1.1 only."}
+      },
+      "additionalProperties": false
+    },
+    "anyRecord": {"oneOf": [{"$ref": "#/$defs/ledgerRow"}, {"$ref": "#/$defs/invoice"}, {"$ref": "#/$defs/payment"},
+                            {"$ref": "#/$defs/fxRow"}, {"$ref": "#/$defs/policyRow"}]},
+
+    "pageLedger": {"$ref": "#/$defs/_page", "properties": {"records": {"items": {"$ref": "#/$defs/ledgerRow"}}}},
+    "pageInvoices": {"$ref": "#/$defs/_page", "properties": {"records": {"items": {"$ref": "#/$defs/invoice"}}}},
+    "pagePayments": {"$ref": "#/$defs/_page", "properties": {"records": {"items": {"$ref": "#/$defs/payment"}}}},
+    "pageFx": {"$ref": "#/$defs/_page", "properties": {"records": {"items": {"$ref": "#/$defs/fxRow"}}}},
+    "pagePolicy": {"$ref": "#/$defs/_page", "properties": {"records": {"items": {"$ref": "#/$defs/policyRow"}}}},
+    "_page": {
+      "type": "object",
+      "required": ["records", "next_cursor"],
+      "properties": {
+        "records": {"type": "array", "maxItems": 50, "items": {"$ref": "#/$defs/anyRecord"}},
+        "next_cursor": {"oneOf": [{"$ref": "#/$defs/cursor"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+
+    "error": {
+      "description": "Bounded public error: a fixed code with its fixed message. No internal values can travel in it.",
+      "oneOf": [
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_action"}, "message": {"const": "Expected an action with an argument object."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "unknown_action"}, "message": {"enum": ["Unknown action.", "Unknown inspection action."]}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_args"}, "message": {"const": "Invalid arguments for this action."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "unknown_table"}, "message": {"const": "Unknown public table."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "not_found"}, "message": {"const": "Public record not found."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_cursor"}, "message": {"const": "Invalid cursor for this table and episode."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_expression"}, "message": {"const": "Invalid decimal expression."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "division_by_zero"}, "message": {"const": "Division by zero."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "arithmetic_limit"}, "message": {"const": "Decimal arithmetic exceeded the calculator limits."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_request"}, "message": {"const": "Invalid request."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "internal_error"}, "message": {"const": "Internal error."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "invalid_submission"}, "message": {"const": "Submission failed schema validation."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "time_limit"}, "message": {"const": "Time limit exceeded."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "aborted"}, "message": {"const": "Episode aborted."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "malformed_action"}, "message": {"const": "Action must be an object with 'action' and 'args'."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "no_active_episode"}, "message": {"const": "Call reset first."}}},
+        {"$ref": "#/$defs/_err", "properties": {"code": {"const": "episode_finished"}, "message": {"const": "The episode is already finished."}}}
+      ]
+    },
+    "_err": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {"code": {"type": "string"}, "message": {"type": "string"}},
+      "additionalProperties": false
+    },
+
+    "listRecordsArgs": {
+      "type": "object", "required": ["table", "cursor", "limit"],
+      "properties": {"table": {"$ref": "#/$defs/tableName"},
+                     "cursor": {"oneOf": [{"$ref": "#/$defs/cursor"}, {"type": "null"}]},
+                     "limit": {"type": "integer", "minimum": 1, "maximum": 50}},
+      "additionalProperties": false
+    },
+    "getRecordArgs": {
+      "type": "object", "required": ["table", "id"],
+      "properties": {"table": {"$ref": "#/$defs/tableName"}, "id": {"$ref": "#/$defs/nonEmptyText"}},
+      "additionalProperties": false
+    },
+    "getDocumentArgs": {
+      "type": "object", "required": ["doc_id"], "properties": {"doc_id": {"$ref": "#/$defs/nonEmptyText"}},
+      "additionalProperties": false
+    },
+    "calculatorArgs": {
+      "type": "object", "required": ["expression"],
+      "properties": {"expression": {"type": "string", "minLength": 1, "maxLength": 256}},
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": ["type", "affected_ids", "claimed_amount_minor", "currency", "evidence_ids", "explanation"],
+      "properties": {
+        "type": {"enum": ["duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff"]},
+        "affected_ids": {"type": "array", "items": {"type": "string"}},
+        "claimed_amount_minor": {"$ref": "#/$defs/minor"},
+        "currency": {"type": "string", "$comment": "Any string is structurally valid; only the published upper-case code can match (SPEC §9.1)."},
+        "evidence_ids": {"type": "array", "maxItems": 10, "items": {"type": "string"}},
+        "explanation": {"type": "string", "maxLength": 1000}
+      },
+      "additionalProperties": false
+    },
+    "submission": {
+      "description": "Body of submit. Failing this schema ends the episode with invalid_submission and reward -1 (SPEC §8). The evaluator additionally requires episode_id to equal the current manifest.episode_id.",
+      "type": "object",
+      "required": ["episode_id", "findings"],
+      "properties": {"episode_id": {"type": "string"},
+                     "findings": {"type": "array", "maxItems": 30, "items": {"$ref": "#/$defs/finding"}}},
+      "additionalProperties": false
+    },
+    "action": {
+      "description": "A well-formed action of the published protocol.",
+      "oneOf": [
+        {"$ref": "#/$defs/_action", "properties": {"action": {"const": "list_records"}, "args": {"$ref": "#/$defs/listRecordsArgs"}}},
+        {"$ref": "#/$defs/_action", "properties": {"action": {"const": "get_record"}, "args": {"$ref": "#/$defs/getRecordArgs"}}},
+        {"$ref": "#/$defs/_action", "properties": {"action": {"const": "get_document"}, "args": {"$ref": "#/$defs/getDocumentArgs"}}},
+        {"$ref": "#/$defs/_action", "properties": {"action": {"const": "calculator"}, "args": {"$ref": "#/$defs/calculatorArgs"}}},
+        {"$ref": "#/$defs/_action", "properties": {"action": {"const": "submit"}, "args": {"$ref": "#/$defs/submission"}}}
+      ]
+    },
+    "_action": {
+      "type": "object", "required": ["action", "args"],
+      "properties": {"action": {"type": "string"}, "args": {"type": "object"}},
+      "additionalProperties": false
+    },
+    "actionEnvelope": {
+      "description": "What the runner accepts as a transport-valid action (anything else is malformed_action, no step spent). An envelope that is not a well-formed #/$defs/action still spends a step and gets a bounded error.",
+      "type": "object", "required": ["action"],
+      "properties": {"action": {"type": "string"}, "args": {"$ref": "#/$defs/publicValue"}},
+      "additionalProperties": false
+    },
+
+    "initialObservation": {
+      "type": "object",
+      "required": ["task", "tools", "manifest", "policy", "remaining_steps"],
+      "properties": {
+        "task": {"$ref": "#/$defs/nonEmptyText"},
+        "tools": {
+          "type": "object",
+          "required": ["list_records", "get_record", "get_document", "calculator", "submit"],
+          "propertyNames": {"enum": ["list_records", "get_record", "get_document", "calculator", "submit"]},
+          "additionalProperties": {
+            "type": "object", "required": ["args"],
+            "properties": {"args": {"type": "object", "additionalProperties": {"type": "string"}}},
+            "additionalProperties": false
+          }
+        },
+        "manifest": {"$ref": "#/$defs/manifest"},
+        "policy": {"oneOf": [{"$ref": "#/$defs/policyDocument"}, {"type": "null"}]},
+        "remaining_steps": {"const": 100}
+      },
+      "additionalProperties": false
+    },
+    "resetInfo": {
+      "type": "object", "required": ["episode_id", "max_steps", "mode"],
+      "properties": {"episode_id": {"$ref": "#/$defs/nonEmptyText"}, "max_steps": {"const": 100},
+                     "mode": {"enum": ["train", "closed"]}},
+      "additionalProperties": false
+    },
+    "reset": {
+      "description": "reset(seed, config) -> [observation, info]. Seed and trusted config never appear here.",
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "prefixItems": [{"$ref": "#/$defs/initialObservation"}, {"$ref": "#/$defs/resetInfo"}], "items": false
+    },
+
+    "okObservation": {
+      "type": "object", "required": ["ok", "result", "remaining_steps"],
+      "properties": {"ok": {"const": true}, "result": {"$ref": "#/$defs/publicValue"},
+                     "remaining_steps": {"$ref": "#/$defs/remainingAfterInspection"}},
+      "additionalProperties": false
+    },
+    "errorObservation": {
+      "type": "object", "required": ["ok", "error", "remaining_steps"],
+      "properties": {"ok": {"const": false}, "error": {"$ref": "#/$defs/error"},
+                     "remaining_steps": {"$ref": "#/$defs/remainingAny"}},
+      "additionalProperties": false
+    },
+    "protocolObservation": {
+      "description": "Step before reset or after the single finalization: nothing is spent or recorded.",
+      "type": "object", "required": ["ok", "error"],
+      "properties": {"ok": {"const": false},
+                     "error": {"allOf": [{"$ref": "#/$defs/error"},
+                                         {"properties": {"code": {"enum": ["no_active_episode", "episode_finished"]}}}]}},
+      "additionalProperties": false
+    },
+    "stepObservation": {"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"},
+                                  {"$ref": "#/$defs/protocolObservation"}]},
+
+    "replyListLedger": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/pageLedger"}}},
+    "replyListInvoices": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/pageInvoices"}}},
+    "replyListPayments": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/pagePayments"}}},
+    "replyListFx": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/pageFx"}}},
+    "replyListPolicy": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/pagePolicy"}}},
+    "replyGetLedger": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/ledgerRow"}}},
+    "replyGetInvoice": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/invoice"}}},
+    "replyGetPayment": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/payment"}}},
+    "replyGetFx": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/fxRow"}}},
+    "replyGetPolicy": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/publicValue"}}},
+    "replyGetDocument": {"$ref": "#/$defs/_reply", "properties": {"result": {"oneOf": [{"$ref": "#/$defs/invoice"}, {"$ref": "#/$defs/payment"}]}}},
+    "replyCalculator": {"$ref": "#/$defs/_reply", "properties": {"result": {"$ref": "#/$defs/decimalString"}}},
+    "replySubmitAccepted": {
+      "type": "object", "required": ["ok", "result", "remaining_steps"],
+      "properties": {"ok": {"const": true},
+                     "result": {"type": "object", "required": ["status"], "properties": {"status": {"const": "submitted"}},
+                                "additionalProperties": false},
+                     "remaining_steps": {"type": "integer", "minimum": 0, "maximum": 99}},
+      "additionalProperties": false
+    },
+    "_reply": {
+      "type": "object", "required": ["ok", "result", "remaining_steps"],
+      "properties": {"ok": {"const": true}, "result": true, "remaining_steps": {"$ref": "#/$defs/remainingAfterInspection"}},
+      "additionalProperties": false
+    },
+
+    "score": {
+      "type": "object", "required": ["tp", "fp", "fn", "precision", "recall", "f1", "reward"],
+      "properties": {"tp": {"$ref": "#/$defs/minor"}, "fp": {"$ref": "#/$defs/minor"}, "fn": {"$ref": "#/$defs/minor"},
+                     "precision": {"type": "number", "minimum": 0, "maximum": 1},
+                     "recall": {"type": "number", "minimum": 0, "maximum": 1},
+                     "f1": {"type": "number", "minimum": 0, "maximum": 1},
+                     "reward": {"type": "number", "minimum": -1, "maximum": 1}},
+      "additionalProperties": false
+    },
+    "finalStatus": {"enum": ["submitted", "invalid_submission", "truncated_budget", "truncated_timeout", "policy_failure", "infra_error"]},
+    "inspectionInfo": {
+      "type": "object", "required": ["inspection_steps"],
+      "properties": {"inspection_steps": {"type": "integer", "minimum": 1, "maximum": 99}},
+      "additionalProperties": false
+    },
+    "protocolInfo": {
+      "type": "object", "required": ["protocol_error"],
+      "properties": {"protocol_error": {"enum": ["malformed_action", "no_active_episode", "episode_finished"]}},
+      "additionalProperties": false
+    },
+    "terminalInfoClosed": {
+      "description": "Closed mode: the outcome only. No score, reward or matching detail.",
+      "type": "object", "required": ["status"], "properties": {"status": {"$ref": "#/$defs/finalStatus"}},
+      "additionalProperties": false
+    },
+    "terminalInfoTrain": {
+      "oneOf": [
+        {"type": "object", "required": ["status", "score"],
+         "properties": {"status": {"enum": ["submitted", "invalid_submission", "truncated_budget", "truncated_timeout"]},
+                        "score": {"$ref": "#/$defs/score"}},
+         "additionalProperties": false},
+        {"type": "object", "required": ["status"],
+         "properties": {"status": {"enum": ["policy_failure", "infra_error"]}},
+         "additionalProperties": false}
+      ]
+    },
+
+    "stepTrain": {
+      "description": "step(action) -> [observation, reward, terminated, truncated, info] in train mode.",
+      "oneOf": [
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"const": false}, {"const": false}, {"$ref": "#/$defs/inspectionInfo"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/replySubmitAccepted"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"type": "number", "minimum": -1, "maximum": 1}, {"const": true}, {"const": false},
+                                                  {"$ref": "#/$defs/terminalInfoTrain"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"type": "number", "minimum": -1, "maximum": 1}, {"const": false}, {"const": true},
+                                                  {"$ref": "#/$defs/terminalInfoTrain"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/protocolObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"type": "boolean"}, {"type": "boolean"}, {"$ref": "#/$defs/protocolInfo"}]}
+      ]
+    },
+    "stepClosed": {
+      "description": "step(...) in closed mode: reward is always the neutral 0 and info carries no grading.",
+      "oneOf": [
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"const": false}, {"const": false}, {"$ref": "#/$defs/inspectionInfo"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/replySubmitAccepted"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"const": true}, {"const": false}, {"$ref": "#/$defs/terminalInfoClosed"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"const": false}, {"const": true}, {"$ref": "#/$defs/terminalInfoClosed"}]},
+        {"$ref": "#/$defs/_step", "items": false, "prefixItems": [{"oneOf": [{"$ref": "#/$defs/protocolObservation"}, {"$ref": "#/$defs/errorObservation"}]},
+                                                  {"const": 0}, {"type": "boolean"}, {"type": "boolean"}, {"$ref": "#/$defs/protocolInfo"}]}
+      ]
+    },
+    "_step": {"type": "array", "minItems": 5, "maxItems": 5},
+
+    "trajectoryLineTrain": {
+      "$ref": "#/$defs/_trajectoryLine",
+      "properties": {"reward": {"type": "number", "minimum": -1, "maximum": 1}}
+    },
+    "trajectoryLineClosed": {
+      "$ref": "#/$defs/_trajectoryLine",
+      "properties": {"reward": {"const": 0}}
+    },
+    "_trajectoryLine": {
+      "description": "One line of trajectories.jsonl (SPEC §11): exactly what step returned for an accepted action. action is null when the trusted driver ended the episode (timeout while waiting, policy failure).",
+      "type": "object",
+      "required": ["episode_id", "step", "action", "observation", "reward", "terminated", "truncated"],
+      "properties": {
+        "episode_id": {"$ref": "#/$defs/nonEmptyText"},
+        "step": {"type": "integer", "minimum": 1, "maximum": 100},
+        "action": {"$ref": "#/$defs/publicValue"},
+        "observation": {"anyOf": [{"$ref": "#/$defs/okObservation"}, {"$ref": "#/$defs/errorObservation"},
+                                  {"$ref": "#/$defs/replySubmitAccepted"}]},
+        "reward": {"type": "number"},
+        "terminated": {"type": "boolean"},
+        "truncated": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "exportRun": {
+      "description": "run.json of a public export (INTERFACES 1.1). The console lists only status=completed.",
+      "type": "object", "required": ["run_id", "episode_id", "policy", "mode", "status"],
+      "properties": {
+        "run_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,95}$"},
+        "episode_id": {"$ref": "#/$defs/nonEmptyText"},
+        "policy": {"$ref": "#/$defs/nonEmptyText"},
+        "mode": {"const": "train"},
+        "status": {"enum": ["completed", "truncated", "failed"]},
+        "outcome": {"$ref": "#/$defs/finalStatus"},
+        "inspection_steps": {"type": "integer", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    }
+  }
+}
