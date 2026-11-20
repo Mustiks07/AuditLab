@@ -132,6 +132,16 @@ python3.11 -I source/tools/check_rehearsal_evidence.py RESULTS --bundle . --outp
 `--pull never`. Launcher игнорирует удалённые Docker contexts/DOCKER_HOST и
 использует локальный Unix socket.
 
+Отмена launcher через Ctrl+C/SIGINT или SIGTERM (включая сигнал только его PID)
+сохраняет `launch.json` со статусом `interrupted`, кодом 130/143 и результатом
+`cleanup`. Каждый запуск имеет случайный `launch_id`: controller создаётся до
+присоединения клиента, а его policy/verifier контейнеры помечаются той же Docker
+label. Финализация сначала удаляет controller, затем только контейнеры этого
+запуска и повторно проверяет отсутствие оставшихся. Другие запуски и контейнеры
+не затрагиваются. Ошибка доступа к Docker отражается как `cleanup.status=failed`,
+а не как успешная очистка. SIGKILL, выключение хоста или недоступный daemon не
+позволяют launcher гарантировать очистку; `launch_id` остаётся в отчёте.
+
 Обычный `verify` передаёт policy image через `AUDITLAB_POLICY_IMAGE`, чтобы
 проверки реальной границы контейнера могли использовать поставляемый образ.
 `--suite rehearsal` дополнительно передаёт точные `--policy-image`,

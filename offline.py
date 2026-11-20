@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import sys
 import tarfile
@@ -189,7 +190,7 @@ def new_output_dir(root):
     return output
 
 
-def runtime_command(manifest, output, cpu_set, suite, docker_gid=None):
+def runtime_command(manifest, output, cpu_set, suite, docker_gid=None, launch_id=None):
     images = {role: item["id"] for role, item in manifest["images"].items()}
     command = ["docker", "run", "--rm", "--pull", "never", "--network", "none",
                "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
@@ -206,6 +207,12 @@ def runtime_command(manifest, output, cpu_set, suite, docker_gid=None):
                "--output", "/results/controller-resources.json", "--",
                "python", "run.py", "verify", "--suite", suite,
                "--output", "/results/verify"]
+    if launch_id is not None:
+        if not re.fullmatch(r"[0-9a-f]{32}", launch_id):
+            raise ValueError("invalid launch identity")
+        command[2:2] = ["--name", "auditlab-controller-" + launch_id,
+                        "--label", "org.auditlab.launch=" + launch_id,
+                        "--env", "AUDITLAB_LAUNCH_ID=" + launch_id]
     if suite == "rehearsal":
         command += ["--policy-image", images["policy"], "--verifier-image", images["verifier"],
                     "--cpu-set", cpu_set]
@@ -231,6 +238,47 @@ def write_report(path, report):
     temporary.replace(path)
 
 
+class LaunchInterrupted(BaseException):
+    def __init__(self, signum):
+        self.signum = signum
+
+
+def cleanup_launch(launch_id, environment):
+    """Remove this launch only, controller first so it cannot start more work.
+
+    Siblings have the same random label; it is never forwarded to a policy.
+    Recheck after a quiet interval to include daemon-side creates already in flight.
+    An unavailable daemon is a failed cleanup, never evidence of an empty launch.
+    """
+    if not re.fullmatch(r"[0-9a-f]{32}", launch_id):
+        raise ValueError("invalid launch identity")
+    controller = "auditlab-controller-" + launch_id
+    subprocess.run(["docker", "rm", "--force", controller], capture_output=True,
+                   env=environment, timeout=10)
+    deadline = time.monotonic() + 10
+    quiet_since = None
+    removed = set()
+    while time.monotonic() < deadline:
+        found = subprocess.run(["docker", "ps", "--all", "--filter",
+                                "label=org.auditlab.launch=" + launch_id, "--format", "{{.ID}}"],
+                               capture_output=True, text=True, env=environment, timeout=5, check=True)
+        identities = found.stdout.split()
+        if any(not re.fullmatch(r"[0-9a-f]{12,64}", identity) for identity in identities):
+            raise ValueError("invalid container identity in cleanup response")
+        if identities:
+            quiet_since = None
+            subprocess.run(["docker", "rm", "--force", *identities], capture_output=True,
+                           env=environment, timeout=10)
+            removed.update(identities)
+        elif quiet_since is None:
+            quiet_since = time.monotonic()
+        elif time.monotonic() - quiet_since >= 1:
+            return {"status": "passed", "remaining_containers": 0,
+                    "removed_siblings": sorted(removed)}
+        time.sleep(.1)
+    raise ValueError("launch containers remain or continue appearing after cleanup")
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("verify", "check", "image"))
@@ -243,6 +291,16 @@ def main(argv=None):
     args = parser.parse_args(argv)
     report, report_path = None, None
     started = time.monotonic()
+    launch_id, environment = None, None
+    deferred_signal = None
+    creating = False
+    def interrupted(signum, _frame):
+        nonlocal deferred_signal
+        if creating:
+            deferred_signal = signum
+        else:
+            raise LaunchInterrupted(signum)
+    handlers = {signum: signal.signal(signum, interrupted) for signum in (signal.SIGINT, signal.SIGTERM)}
     try:
         if sys.version_info[:2] != (3, 11):
             raise ValueError("launcher requires Python 3.11")
@@ -282,12 +340,27 @@ def main(argv=None):
         report["image_load_seconds"] = time.monotonic() - load_started
         resolved = {role: loaded_image(image, environment) for role, image in manifest["images"].items()}
         runtime_manifest = {**manifest, "images": resolved}
-        command = runtime_command(runtime_manifest, output, cpu_set, args.suite, Path("/var/run/docker.sock").stat().st_gid)
+        launch_id = uuid.uuid4().hex
+        command = runtime_command(runtime_manifest, output, cpu_set, args.suite,
+                                  Path("/var/run/docker.sock").stat().st_gid, launch_id)
         report.update(phase="verification", command=command, loaded_images=resolved)
         write_report(report_path, report)
         print(f"Running offline verification on CPUs {cpu_set}; results: {output}", flush=True)
         verification_started = time.monotonic()
-        result = subprocess.run(command, env=environment)
+        # Create synchronously before attaching: killing a docker-run client can
+        # otherwise leave a daemon request creating a container after cleanup.
+        report["launch_id"] = launch_id
+        write_report(report_path, report)
+        creating = True
+        try:
+            subprocess.run(["docker", "create", *command[2:]], env=environment,
+                           capture_output=True, check=True, timeout=30, start_new_session=True)
+        finally:
+            creating = False
+        if deferred_signal is not None:
+            raise LaunchInterrupted(deferred_signal)
+        result = subprocess.run(["docker", "start", "--attach", "auditlab-controller-" + launch_id],
+                                env=environment, start_new_session=True)
         report["verification_container_seconds"] = time.monotonic() - verification_started
         code = result.returncode
         report["child_exit_code"] = code
@@ -307,14 +380,35 @@ def main(argv=None):
         if report is not None:
             report.update(status="failed", exit_code=1, error=str(error))
         return 1
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, LaunchInterrupted) as error:
+        signum = error.signum if isinstance(error, LaunchInterrupted) else signal.SIGINT
+        code = 128 + signum
         if report is not None:
-            report.update(status="interrupted", exit_code=130)
-        return 130
+            report.update(status="interrupted", exit_code=code, signal=signum)
+        return code
     finally:
-        if report is not None and report_path is not None:
-            report["elapsed_seconds"] = time.monotonic() - started
-            write_report(report_path, report)
+        # A repeated Ctrl+C must not interrupt the bounded cleanup itself.
+        for signum in handlers:
+            signal.signal(signum, signal.SIG_IGN)
+        cleanup_failed = False
+        if launch_id is not None:
+            try:
+                report["cleanup"] = cleanup_launch(launch_id, environment)
+            except (OSError, ValueError, subprocess.SubprocessError) as error:
+                cleanup_failed = True
+                report["cleanup"] = {"status": "failed", "error": str(error)}
+                print(f"Container cleanup failed: {error}", file=sys.stderr)
+                if report["status"] != "interrupted":
+                    report.update(status="failed", exit_code=1)
+        try:
+            if report is not None and report_path is not None:
+                report["elapsed_seconds"] = time.monotonic() - started
+                write_report(report_path, report)
+        finally:
+            for signum, handler in handlers.items():
+                signal.signal(signum, handler)
+        if cleanup_failed and report["status"] != "interrupted":
+            return 1
 
 
 if __name__ == "__main__":

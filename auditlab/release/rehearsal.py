@@ -126,7 +126,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
     shutil.copytree(public, copied)
     resources = None
     if verifier_image:
-        from auditlab.runner.isolation import _CGROUP_PROBE, _parse_cgroup_measurements, _verify_cgroup_scope
+        from auditlab.runner.isolation import _CGROUP_PROBE, _parse_cgroup_measurements, _verify_cgroup_scope, launch_label_args
         name = "auditlab-verifier-" + uuid.uuid4().hex
         command = ["docker", "run", "--rm", "-i", "--pull=never", "--name", name,
                    "--network", "none", "--read-only", "--cap-drop", "ALL",
@@ -135,7 +135,7 @@ def independent_answer(public: Path, destination: Path, verifier_image: str | No
                    "--tmpfs", "/tmp:rw,noexec,nosuid,size=64m"]
         if cpuset:
             command += ["--cpuset-cpus", cpuset]
-        command += [verifier_image, "python", "-c", _VERIFIER_SCRIPT, _CGROUP_PROBE]
+        command += launch_label_args() + [verifier_image, "python", "-c", _VERIFIER_SCRIPT, _CGROUP_PROBE]
         payload = json.dumps({name: (copied / name).read_text(encoding="utf-8") for name in PUBLIC_FILES})
         if len(payload.encode()) > 8 * 1024 * 1024:
             raise ValueError("public snapshot exceeds verifier transport limit")

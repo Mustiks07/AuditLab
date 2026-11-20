@@ -162,6 +162,16 @@ def scrubbed_env(extra: dict[str, str] | None = None) -> dict[str, str]:
     return env
 
 
+def launch_label_args() -> list[str]:
+    """Trusted orchestration ownership, never an environment variable in the sandbox."""
+    launch_id = os.environ.get("AUDITLAB_LAUNCH_ID")
+    if launch_id is None:
+        return []
+    if not re.fullmatch(r"[0-9a-f]{32}", launch_id):
+        raise ValueError("invalid launch identity")
+    return ["--label", "org.auditlab.launch=" + launch_id]
+
+
 def docker_command(image: str, *, cpus: str = "2", memory: str = "4g", pids: int = 128,
                    container_name: str | None = None, cpuset: str | None = None) -> list[str]:
     """No registry access, network, host mounts, writable rootfs, GPU or capabilities."""
@@ -173,7 +183,7 @@ def docker_command(image: str, *, cpus: str = "2", memory: str = "4g", pids: int
         command += ["--name", container_name]
     if cpuset is not None:
         command += ["--cpuset-cpus", cpuset]
-    return command + [image]
+    return command + launch_label_args() + [image]
 
 
 class SubprocessPolicy:
