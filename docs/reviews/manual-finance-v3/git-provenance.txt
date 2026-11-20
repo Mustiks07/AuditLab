@@ -1,0 +1,47 @@
+# git log --format=fuller (review-v3 local repository)
+commit bc64a2c97450b573e3dc13901c4d78e748226a73
+Author:     jegrud <214578960+jegrud@users.noreply.github.com>
+AuthorDate: Fri Nov 20 10:01:04 2026 +0500
+Commit:     jegrud <214578960+jegrud@users.noreply.github.com>
+CommitDate: Fri Nov 20 10:01:04 2026 +0500
+
+    Correct reference and clean-episode counts in review report
+
+commit 5bae2a1ee68e5a0292f2c32bb0ce7cdf71654532
+Author:     jegrud <214578960+jegrud@users.noreply.github.com>
+AuthorDate: Fri Nov 20 10:00:55 2026 +0500
+Commit:     jegrud <214578960+jegrud@users.noreply.github.com>
+CommitDate: Fri Nov 20 10:00:55 2026 +0500
+
+    Compare frozen manual answers with truth; review report
+
+commit e09d4aaae922d59ebb1a54b29b3a22e225a9be5f
+Author:     jegrud <214578960+jegrud@users.noreply.github.com>
+AuthorDate: Fri Nov 20 09:58:57 2026 +0500
+Commit:     jegrud <214578960+jegrud@users.noreply.github.com>
+CommitDate: Fri Nov 20 09:58:57 2026 +0500
+
+    Manual public-only answers for 10 new profile-1.1 episodes, frozen before truth
+
+# git cat-file -p e09d4aa
+tree 1038a1d2b8e0e9bad60011053211ac5ee7f5db48
+author jegrud <214578960+jegrud@users.noreply.github.com> 1795150737 +0500
+committer jegrud <214578960+jegrud@users.noreply.github.com> 1795150737 +0500
+
+Manual public-only answers for 10 new profile-1.1 episodes, frozen before truth
+
+# git ls-tree -r e09d4aa (files frozen before truth)
+100644 blob 3da7a31893a8d0927a0f82213bea2e5263407283	configs.json
+100644 blob 3f29bfbf8bdcf7b10cf854590d02b51cd9c7be33	expand.py
+100644 blob b2f0c99cff48a1bf13a8b24eb521078aa96c6166	generate.py
+100644 blob 244b0c4391d9ffad7908ef357b241c5bb028500b	manual_before_truth.json
+100644 blob 72a7f0cb2a03b5dc2bc828726ce47fd6118ae46f	manual_before_truth.sha256
+100644 blob 8beb81bccf53a309655f59460cca5377865e5b43	manual_before_truth.src.json
+100644 blob 36765b7ba1e5321107f5e1e48c78577120625f1e	show.py
+
+# git diff --stat e09d4aa bc64a2c (later commits only add files)
+ REVIEW.md                   |  67 ++++++
+ compare.py                  |  45 ++++
+ comparison_after_truth.json | 521 ++++++++++++++++++++++++++++++++++++++++++++
+ ordinary.py                 |  23 ++
+ 4 files changed, 656 insertions(+)
