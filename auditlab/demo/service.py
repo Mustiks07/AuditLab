@@ -11,7 +11,7 @@ from .snapshot import Snapshot, diff_snapshots
 from .store import ExportStore
 
 LABELS = {
-    "training_sample": "УЧЕБНЫЙ ЭКСПОРТ",
+    "training_sample": "ОТКРЫТЫЕ ДАННЫЕ",
     "live_experiment": "ЖИВОЙ ОПЫТ",
     "rescore_copy": "КОПИЯ СДАЧИ",
     "recorded": "ПОВТОР ЗАПИСИ",
@@ -94,7 +94,8 @@ def _verifier_line(verifier: dict | None, finding: dict) -> dict:
                     "currency": item.get("currency"), "evidence_ids": item.get("evidence_ids"),
                     "agrees": item.get("claimed_amount_minor") == finding.get("claimed_amount_minor")
                               and item.get("currency") == finding.get("currency"),
-                    "currency_matches": item.get("currency") == finding.get("currency")}
+                    "currency_matches": item.get("currency") == finding.get("currency"),
+                    "explanation": item.get("explanation")}
     return {"connected": True, "engine": verifier.get("engine"), "amount_minor": None, "agrees": False,
             "text": "Сверка не нашла такого расхождения"}
 
