@@ -73,10 +73,13 @@ python build/release-candidate/offline.py verify --suite rehearsal
 Получатель комплекта запускает вторую команду без установки зависимостей и без
 доступа контейнеров к сети. Нужны Python 3.11 и локальный Linux Docker Engine.
 Точные image IDs, хеши, траектории, результаты и измерения ресурсов сохраняются.
+Сборка требует классического Docker image store; полученный комплект проверяется на classic и containerd.
 Инструкции: [офлайн-поставка](docs/release/offline.md),
 [внутренняя репетиция](docs/REHEARSAL.md), [граница изоляции](docker/runtime/README.md).
 Исходники распространяются по [MIT](LICENSE).
 
+- [Стресс-проверка 1 000 компаний](docs/release/GENERALIZATION.md)
+- [Правила 24 внутренних групп](docs/release/ACCEPTANCE_MAPPING.md)
 - [Измерения и оставшаяся приёмка](docs/release/VALIDATION.md)
 - [Дизайн и границы доверия](docs/DESIGN.md)
 - [Техническое задание](docs/SPEC.md)
@@ -85,3 +88,7 @@ python build/release-candidate/offline.py verify --suite rehearsal
 - [Рабочие задачи](https://github.com/Mustiks07/AuditLab/issues)
 
 Каждый аккаунт использует свою ветку и задачу. Интегратор проверяет PR и выпускает сборку из main.
+
+Новые эпизоды для проверки кейса задавайте явно с `config_version: "1.1"`.
+Сброс без версии сохраняет прежний профиль 1.0 для совместимости. Версия реализации
+генератора записана отдельно в приватном provenance; публичный аудитор её не получает.
