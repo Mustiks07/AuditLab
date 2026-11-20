@@ -26,6 +26,8 @@ export const OP_ERRORS: Record<string, string> = {
   invalid_value: "значение не распознано: нужна дата-время ISO 8601 со смещением, например 2026-11-15T00:01:00+05:00",
   out_of_range: "дата вне поддерживаемых синтетических лет",
   unsupported_field: "менять можно только дату (timestamp)",
+  generator_unsupported: "настоящий генератор меняет в этой компании только время последнего зачёта относительно границы периода (до, ровно на, после)",
+  generator_mismatch: "генератор не воспроизвёл исходную компанию побайтно; новый опыт не создан",
   unknown_target: "запись нельзя изменить: нужна строка книги или документ платежа этого прогона",
   no_change: "новое значение совпадает с текущим",
   no_rate_for_date: "на новую местную дату нет опубликованного курса",
@@ -44,6 +46,8 @@ export function opError(code: string | undefined, message: string | undefined): 
   const text = (code && OP_ERRORS[code]) || "операция не выполнена";
   return `${text} [${code ?? "без кода"}${message ? `: ${message}` : ""}]`;
 }
+
+export const TIMINGS: Record<string, string> = { before: "до границы", at: "ровно на границе", after: "после границы" };
 
 export function when(ts: string | undefined): string {
   if (!ts) return "—";

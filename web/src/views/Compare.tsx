@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, CompareSide, CompareView, Derivation } from "../api";
 import { ErrorBox, LabelBadge, Panel, StatusPill } from "../components";
-import { minor, money, reward, REASONS, when } from "../format";
+import { minor, money, reward, REASONS, when, TIMINGS } from "../format";
 
 function fmt(v: unknown): string {
   if (v === null || v === undefined) return "—";
@@ -43,6 +43,13 @@ export function Compare({ left, right }: { left: string; right: string }) {
               <span className="mono strong">{ch.value}</span>
             </div>
             {ch.moved && <div className="small muted">согласованно перенесены: {ch.moved.join(", ")}</div>}
+            {ch.timing && (
+              <div className="small">
+                Компанию заново построил <b>{view.right.run.engine?.generator ?? "генератор"}</b> с тем же seed:{" "}
+                <span className="mono">settlement_timing</span> {TIMINGS[ch.timing.from] ?? ch.timing.from} → <b>{TIMINGS[ch.timing.to] ?? ch.timing.to}</b>.
+                Эталон новой компании выдал генератор, а не консоль.
+              </div>
+            )}
           </div>
         )}
         {view.derived_from && (
@@ -50,6 +57,12 @@ export function Compare({ left, right }: { left: string; right: string }) {
             <div className="cs-label">Изменено доказательство в копии сдачи</div>
             <div className="cs-main mono">вывод #{view.derived_from.finding_index}: {view.derived_from.replaced.from} → {view.derived_from.replaced.to}</div>
             <div className="small muted">Снимок данных тот же; изменилась только сдача.</div>
+            {view.left.score && view.right.score && (
+              <div className="small">
+                Оценщик заново: TP {view.left.score.tp} → <b>{view.right.score.tp}</b>, награда {reward(view.left.score.reward)} → <b>{reward(view.right.score.reward)}</b>.
+                {view.right.score.tp < view.left.score.tp && <> Остальные выводы и эталон не менялись, поэтому потерянный зачёт вызван только заменой доказательства в выводе #{view.derived_from.finding_index}: сумма та же, но допустимый набор доказательств больше не покрыт.</>}
+              </div>
+            )}
           </div>
         )}
         {!ch && !view.derived_from && view.changes.length > 0 && (

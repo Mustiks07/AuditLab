@@ -17,9 +17,12 @@ export interface RunMeta {
   reward?: number | null;
   findings?: number | null;
   pair_id?: string;
+  pair_role?: "A" | "B";
+  source?: string;
   parent_run_id?: string;
   children?: string[];
-  change?: { target: string; field: string; value: string; moved?: string[] };
+  change?: { target: string; field: string; value: string; moved?: string[]; generator_parameter?: string;
+             timing?: { from: string; to: string } };
   prediction?: string;
   note?: string;
   reason?: string;
@@ -93,7 +96,7 @@ export interface FindingView {
   uncited_operands: string[];
   console_agrees: boolean;
   verdict: { index: number; matched: boolean; reason: string; source?: "per_finding" | "aggregate" } | null;
-  verifier: { connected: boolean; text?: string; engine?: string; amount_minor?: number | null; currency?: string; agrees?: boolean; currency_matches?: boolean };
+  verifier: { connected: boolean; text?: string; engine?: string; amount_minor?: number | null; currency?: string; agrees?: boolean; currency_matches?: boolean; explanation?: string };
 }
 
 export interface Score {
@@ -166,6 +169,8 @@ export interface ReplayCheck {
   session: string;
   score_match?: boolean | null;
   score_again?: Record<string, number>;
+  executed_at?: string;
+  elapsed_ms?: number;
   evaluator?: string;
   score_note?: string;
 }

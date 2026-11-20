@@ -8,6 +8,7 @@
     python -m auditlab.demo replay --run ID --check  # re-execute actions, re-score, compare
     python -m auditlab.demo change --source ID --target ledger/R7 --value 2026-12-01T00:01:00+05:00
     python -m auditlab.demo rescore --source ID --replace ledger/R5 --with ledger/R6
+    python -m auditlab.demo crosscheck [--run ID] [--live]  # console vs export files (+ live replay/re-score)
 """
 from __future__ import annotations
 
@@ -17,7 +18,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from . import lab, service
+from . import crosscheck, lab, service
 from .paths import DemoPaths
 from .store import ExportStore, NotFound, Refused
 
@@ -56,6 +57,9 @@ def _print_run(detail: dict, replay: bool = False) -> None:
     if run.get("change"):
         ch = run["change"]
         print(f"  изменённый факт: {ch.get('target')}.{ch.get('field')} = {ch.get('value')} (от {run.get('parent_run_id')})")
+        if ch.get("timing"):
+            print(f"  генератор {engine.get('generator')}: settlement_timing {ch['timing']['from']} → {ch['timing']['to']}; "
+                  f"перенесены {', '.join(ch.get('moved') or [])}")
     if run.get("derived_from"):
         d = run["derived_from"]
         print(f"  копия сдачи {d['run_id']}: вывод #{d['finding_index']} {d['replaced']['from']} → {d['replaced']['to']}")
@@ -92,6 +96,8 @@ def _print_run(detail: dict, replay: bool = False) -> None:
                     f"на странице шага {ev['listed_at_step']}" if ev.get("listed_at_step") else "аудитор не получал")
             print(f"    доказательство {ev['key']:<28} {where:<26} {seen}")
         calc = f["derivation"]
+        if not calc:
+            print("  Консоль:  пересчитывает только распределение и FX; для этого типа независимый расчёт — SQL")
         if calc:
             print(f"  Консоль:  {calc['formula']}  → {money(calc['result_minor'], calc['currency'], exponents)}")
             for op in calc.get("operands") or []:
@@ -107,6 +113,8 @@ def _print_run(detail: dict, replay: bool = False) -> None:
             print("  Оценщик:  опубликован только итог TP/FP/FN, вердикт по выводу неоднозначен")
         vr = f["verifier"]
         print("  SQL:      " + (vr.get("text") or f"{money(vr.get('amount_minor'), vr.get('currency'), exponents)} ({vr.get('engine')})"))
+        if vr.get("explanation"):
+            print(f"            {vr['explanation']}")
     score = detail["score"]
     if score:
         print()
@@ -145,6 +153,12 @@ def main(argv: list[str] | None = None) -> int:
     rs.add_argument("--replace", required=True)
     rs.add_argument("--with", dest="replacement", required=True)
     rs.add_argument("--op", default=None)
+    cc = sub.add_parser("crosscheck", help="console view vs raw export files; --live also replays and re-scores")
+    cc.add_argument("--run", action="append", default=[])
+    cc.add_argument("--live", action="store_true")
+    cc.add_argument("--json", action="store_true")
+    cc.add_argument("--rehearsal", type=Path, default=None,
+                    help="results/verify-*/verify/rehearsal: rerun its snapshots and compare with the CLI attempts")
     args = parser.parse_args(argv)
 
     paths = (DemoPaths(args.root.resolve()) if args.root else DemoPaths.default()).ensure()
@@ -175,6 +189,29 @@ def main(argv: list[str] | None = None) -> int:
             rest = ["rescore", "--source", args.source, "--finding", str(args.finding), "--replace", args.replace,
                     "--with", args.replacement, "--op", op]
         return lab.main(lab_args + rest)
+    if args.cmd == "crosscheck" and args.rehearsal:
+        try:
+            rows = crosscheck.rehearsal_parity(paths, args.rehearsal.resolve())
+        except (OSError, ValueError, TypeError, KeyError, AttributeError, lab.LabError) as error:
+            if args.json:
+                print(json.dumps({"rehearsal": [], "ok": False, "status": "not_checked",
+                                  "reason": str(error)}, ensure_ascii=False, indent=1))
+            else:
+                print(f"Не проверено: {error}")
+            return 2
+        if args.json:
+            print(json.dumps({"rehearsal": rows, "ok": not any(r["problems"] for r in rows)}, ensure_ascii=False, indent=1))
+        for r in rows if not args.json else []:
+            print(f"{'OK ' if not r['problems'] else 'ERR'} {r['episode']:<12} CLI {r['cli_status']:<10} выводов {r['findings']:>2} "
+                  f"TP/FP/FN {r['tp']}/{r['fp']}/{r['fn']} инспекций {r['inspection_steps']:>3} награда {r['reward']} "
+                  f"консоль {r['run_id']}" + (("  суммы: " + "; ".join(r["amounts"][:4]) + (" …" if len(r["amounts"]) > 4 else "")) if r["amounts"] else ""))
+            for problem in r["problems"]:
+                print(f"    ✗ {problem}")
+        if not args.json:
+            print(f"Снимков репетиции: {len(rows)}; расхождений консоли с CLI: {sum(1 for r in rows if r['problems'])}.")
+        return 1 if any(r["problems"] for r in rows) else 0
+    if args.cmd == "crosscheck":
+        return crosscheck.main(paths, store, extra, args.run, args.live, args.json)
     if args.cmd == "list":
         runs = service.list_runs(store)
         if not runs:
@@ -193,8 +230,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     _print_run(detail, replay=args.cmd == "replay")
     if args.cmd == "replay" and args.check:
-        result = lab.replay_check(paths, args.run, extra)
+        result = crosscheck.live_check(paths, args.run, extra)
         print()
+        print(f"ЖИВОЙ ПЕРЕСЧЁТ, выполнен {result['executed_at']} за {result['elapsed_ms']} мс "
+              f"(среда {result['session']}, оценщик {result.get('evaluator', '—')}):")
         print(f"Повтор действий: {result['steps_checked']} шагов, наблюдения "
               f"{'совпали' if result['observations_match'] else 'РАЗОШЛИСЬ на шагах ' + str(result['mismatches'])}")
         if result.get("score_match") is not None:

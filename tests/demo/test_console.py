@@ -40,7 +40,7 @@ def tree_hash(path: Path) -> str:
 
 def sample_ids(built):
     """Actual run_ids of the labelled samples, in SAMPLES order (the real runner assigns its own ids)."""
-    return dict(zip(("S01", "S02", "FX01"), built))
+    return dict(zip(("S01", "S02", "FX01", "OPEN_A", "OPEN_B", "OPEN_CLEAN"), built))
 
 
 class Workspace(unittest.TestCase):
@@ -162,7 +162,7 @@ class LabEndToEnd(Workspace):
     def test_samples_live_change_rescore_replay(self):
         built = lab.build_samples(self.paths)
         ids = sample_ids(built)
-        self.assertEqual(len(set(built)), 3)
+        self.assertEqual(len(set(built)), 6)
         store = self.store()
         s02 = service.run_detail(store, ids["S02"])
         self.assertEqual(s02["run"]["label"], "training_sample")
@@ -300,7 +300,7 @@ class Api(Workspace):
         client = self.client()
         listed = client.get("/demo/runs").json()["runs"]
         ids = {r["episode_id"]: r["run_id"] for r in listed if r.get("label") == "training_sample"}
-        self.assertEqual(set(ids), {"S01", "S02", "FX01"})
+        self.assertEqual(set(ids), {"S01", "S02", "FX01", *(e for e, *_ in lab.OPEN_SAMPLES)})
         s02 = ids["S02"]
         api_detail = client.get(f"/demo/runs/{s02}").json()
         env = {**os.environ, "PYTHONPATH": str(ROOT)}
