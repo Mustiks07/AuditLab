@@ -71,7 +71,9 @@ class SchemaAndGolden(unittest.TestCase):
 
     def test_golden_examples_are_reproduced_by_the_real_components(self):
         golden = _load_by_path("schema_golden", HERE / "schema_golden.py")
-        valid = golden.build_valid()
+        # The committed files were built with the evaluator in its own process; rebuilding with the
+        # in-process backend must give the same messages (and keeps the suite within run.py's timeout).
+        valid = golden.build_valid(evaluator="inprocess")
         self.assertEqual(json.loads(golden.dump(None, valid)), VALID, "wire format drifted from the golden JSON")
         self.assertEqual(json.loads(golden.dump(None, golden.build_invalid(valid))), INVALID)
 
@@ -167,7 +169,9 @@ class RealSnapshots(unittest.TestCase):
 
 class RealPolicies(unittest.TestCase):
     def run_checked(self, mode, snapshot, policy):
-        env = make_env(mode)  # real session, evaluator in its own process
+        # Real session and policies; in-process evaluator (the separate process is covered by the
+        # adapter, PolicyInput and Exports tests) so the suite fits run.py's per-suite timeout.
+        env = make_env(mode, evaluator="inprocess")
         observation, info = env.reset(19, {"snapshot_dir": str(snapshot)})
         self.assertEqual(V.errors([observation, info], "#/$defs/reset"), [])
         steps = 0

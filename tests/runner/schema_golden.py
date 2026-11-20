@@ -52,6 +52,13 @@ def _trajectory_pointer(mode):
     return "#/$defs/trajectoryLineTrain" if mode == "train" else "#/$defs/trajectoryLineClosed"
 
 
+EVALUATOR = "subprocess"  # the committed files are built with the evaluator in its own process
+
+
+def _env(mode, **options):
+    return make_env(mode, evaluator=EVALUATOR, **options)
+
+
 class Clock:
     def __init__(self):
         self.now = 1000.0
@@ -83,10 +90,10 @@ class Recorder:
 
 def _transcript(rec: Recorder, label: str, mode: str) -> None:
     prefix = f"{label}.{mode}"
-    fresh = make_env(mode)
+    fresh = _env(mode)
     result = fresh.step(D9)
     rec.add(f"{prefix}.before_reset.step", _step_pointer(mode), list(result))
-    env = make_env(mode)
+    env = _env(mode)
     observation, info = env.reset(0, {"snapshot_dir": str(FIXTURES / label)})
     rec.add(f"{prefix}.reset", "#/$defs/reset", [observation, info])
     rec.add(f"{prefix}.reset.observation", "#/$defs/initialObservation", observation)
@@ -156,7 +163,7 @@ def _transcript(rec: Recorder, label: str, mode: str) -> None:
 def _endings(rec: Recorder, mode: str) -> None:
     prefix = f"S02.{mode}"
     snapshot = {"snapshot_dir": str(FIXTURES / "S02")}
-    env = make_env(mode)
+    env = _env(mode)
     env.reset(0, snapshot)
     rec.step(env, f"{prefix}.invalid_submission", mode, {"action": "submit", "args": {"episode_id": "S02", "findings": "x"}},
              "#/$defs/errorObservation")
@@ -164,43 +171,43 @@ def _endings(rec: Recorder, mode: str) -> None:
             ("invalid_submission_extra_keys", {"episode_id": "S02", "findings": [], **FOREIGN}),
             ("invalid_submission_finding_extra_keys",
              {"episode_id": "S02", "findings": [dict(GOOD_S02, truth={"expected_amount_minor": 2000000}, seed=7)]})):
-        env = make_env(mode)
+        env = _env(mode)
         env.reset(0, snapshot)
         rec.add(f"{prefix}.{name}.action", "#/$defs/actionEnvelope", {"action": "submit", "args": body})
         rec.step(env, f"{prefix}.{name}", mode, {"action": "submit", "args": body}, "#/$defs/errorObservation")
         rec.add(f"{prefix}.{name}.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
     # Issue #23: depth 64 reaches the evaluator, deeper is refused by the runner; both end with -1.
     for name, depth in (("depth_602", 602), ("depth_64", 64), ("depth_65", 65)):
-        env = make_env(mode)
+        env = _env(mode)
         env.reset(0, snapshot)
         rec.step(env, f"{prefix}.submit_{name}", mode, _deep_submit(depth), "#/$defs/errorObservation")
         rec.add(f"{prefix}.submit_{name}.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
         rec.add(f"{prefix}.submit_{name}.after", _step_pointer(mode), list(env.step(D9)))
-    env = make_env(mode)
+    env = _env(mode)
     env.reset(0, snapshot)
     rec.step(env, f"{prefix}.tool_depth_65", mode, {"action": "get_document", "args": {"doc_id": _nest(63)}},
              "#/$defs/errorObservation")
     rec.add(f"{prefix}.tool_depth_65.trajectory", _trajectory_pointer(mode), env._trajectory[-1])
     rec.step(env, f"{prefix}.non_json_value", mode, {"action": "submit", "args": {"episode_id": "S02", "findings": [{1, 2}]}},
              "#/$defs/errorObservation")
-    env = make_env(mode)
+    env = _env(mode)
     env.reset(0, snapshot)
     for _ in range(99):
         env.step(D9)
     rec.step(env, f"{prefix}.truncated_budget_100th_inspection", mode, D9, "#/$defs/okObservation")
-    env = make_env(mode)
+    env = _env(mode)
     env.reset(0, snapshot)
     for _ in range(99):
         env.step(D9)
     rec.step(env, f"{prefix}.submit_on_step_100", mode, {"action": "submit", "args": {"episode_id": "S02", "findings": [GOOD_S02]}},
              "#/$defs/replySubmitAccepted")
     clock = Clock()
-    env = make_env(mode, clock=clock)
+    env = _env(mode, clock=clock)
     env.reset(0, snapshot)
     env.step(D9)
     clock.now += 61
     rec.step(env, f"{prefix}.truncated_timeout", mode, D9, "#/$defs/errorObservation")
-    env = make_env(mode)
+    env = _env(mode)
     env.reset(0, snapshot)
     env.step(D9)
     result = env.abort("policy crashed")
@@ -217,14 +224,14 @@ def _endings(rec: Recorder, mode: str) -> None:
                 raise RuntimeError("C:/secret/private/truth.json is unreadable")
             return self._session.inspect(action)
 
-    env = make_env(mode, session_opener=Failing)
+    env = _env(mode, session_opener=Failing)
     env.reset(0, snapshot)
     rec.step(env, f"{prefix}.internal_error", mode, {"action": "get_document", "args": {"doc_id": "FAIL"}},
              "#/$defs/errorObservation")
 
 
 def _fx(rec: Recorder) -> None:
-    env = make_env("train")
+    env = _env("train")
     env.reset(0, {"snapshot_dir": str(FX_SNAPSHOT)})
     page = rec.step(env, "dataset.train.list_fx", "train",
                     {"action": "list_records", "args": {"table": "fx", "cursor": None, "limit": 50}}, "#/$defs/replyListFx")
@@ -242,7 +249,10 @@ def _exports(rec: Recorder) -> None:
                 json.loads((run / "submission.json").read_text(encoding="utf-8")))
 
 
-def build_valid() -> list[dict]:
+def build_valid(evaluator: str = "subprocess") -> list[dict]:
+    """Messages of the real components. Both evaluator backends must give identical bytes."""
+    global EVALUATOR
+    EVALUATOR = evaluator
     rec = Recorder()
     for label in ("S01", "S02"):
         for mode in ("train", "closed"):
