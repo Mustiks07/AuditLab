@@ -126,15 +126,7 @@ jobs:
         run: python build/ci-release/offline.py check
       - name: Record that project images are absent on this host
         run: |
-          mkdir -p artifacts/offline-ci
-          python - <<'PYPROBE'
-          import json, subprocess
-          from pathlib import Path
-          manifest = json.loads(Path('build/ci-release/manifest.json').read_text())
-          present = {role: subprocess.run(['docker', 'image', 'inspect', image['id']], capture_output=True).returncode == 0 for role, image in manifest['images'].items()}
-          Path('artifacts/offline-ci/preload.json').write_text(json.dumps({'images_present_before_load': present}, indent=2))
-          assert not any(present.values()), 'Fresh-host claim requires project images to be absent'
-          PYPROBE
+          python tools/check_clean_docker.py --manifest build/ci-release/manifest.json --output artifacts/offline-ci/preload.json
       - name: Execute with all container networks disabled
         id: exercise
         continue-on-error: true
