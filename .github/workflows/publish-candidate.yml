@@ -1,0 +1,69 @@
+name: Publish verified candidate
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'New immutable candidate tag, e.g. v0.1.0-rc.3'
+        required: true
+        type: string
+      source:
+        description: 'Full tested source SHA, already merged into main'
+        required: true
+        type: string
+      run:
+        description: 'Successful Integration checks run ID with both Docker stores'
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-auditlab-candidate
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'Mustiks07/AuditLab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ACCEPTED_TAG: ${{ inputs.tag }}
+      ACCEPTED_SOURCE: ${{ inputs.source }}
+      ACCEPTED_RUN: ${{ inputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.14'
+      - name: Require merged source, exact successful jobs and immutable artifacts
+        run: python tools/publish_candidate.py guard --tag "$ACCEPTED_TAG" --source "$ACCEPTED_SOURCE" --run-id "$ACCEPTED_RUN"
+      - uses: actions/download-artifact@v4
+        with:
+          name: offline-bundle-${{ inputs.source }}
+          path: publication/bundle
+          run-id: ${{ inputs.run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: offline-evidence-classic-${{ inputs.source }}
+          path: publication/evidence/classic
+          run-id: ${{ inputs.run }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: offline-evidence-containerd-${{ inputs.source }}
+          path: publication/evidence/containerd
+          run-id: ${{ inputs.run }}
+          github-token: ${{ github.token }}
+      - name: Revalidate packaged evidence, upload draft, verify assets by ID, publish prerelease
+        run: python tools/publish_candidate.py publish --tag "$ACCEPTED_TAG" --source "$ACCEPTED_SOURCE" --run-id "$ACCEPTED_RUN"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publication-receipt-${{ github.run_id }}
+          path: |
+            publication/ci-receipt.json
+            publication/dist/*REPORT.json
+            publication/dist/*SHA256SUMS.txt
