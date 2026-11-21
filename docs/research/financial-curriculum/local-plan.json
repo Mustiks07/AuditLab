@@ -15,6 +15,7 @@
   "search": {"candidate_budget": 9, "attempt_budget": 18, "repetitions": 2, "min_weak_repetitions": 2, "seed": 4103701},
   "reduction": {"repetitions": 3, "min_matches": 2, "max_candidates": 8, "max_runs": 27, "max_seconds": 120},
   "paired_examples": ["train-boundary-a", "dev-boundary"],
+  "clean_calibration": ["train-review-c", "train-invoice-c"],
   "candidates": [
     {"candidate_id":"train-boundary-a", "family_id":"family-41051", "split":"train", "stratum":"period_boundary", "seed":41051, "config":{"settlement_timing":"after", "issue_counts":{"payment_allocation":1}}},
     {"candidate_id":"train-boundary-b", "family_id":"family-41053", "split":"train", "stratum":"period_boundary", "seed":41053, "config":{"settlement_timing":"at", "issue_counts":{"payment_allocation":1}}},

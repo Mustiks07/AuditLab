@@ -48,7 +48,8 @@ def summary(output):
         expected = bool(pair["expected"])
         shortcut[("true" if predicted == expected else "false") + ("_positive" if predicted else "_negative")] += 1
     return {
-        "schema_version": "1.0", "artifact_id": f"experiment-summary-{experiment['agent']['kind']}",
+        "schema_version": "1.0",
+        "artifact_id": "experiment-summary-" + experiment["agent"].get("name", experiment["agent"]["kind"]),
         "source_sha": experiment["source_sha"], "protocol_id": experiment["protocol_id"],
         "plan_sha256": experiment["plan_sha256"], "partition_sha256": curriculum["partition_sha256"],
         "agent": experiment["agent"], "reason": experiment["reason"],
@@ -59,6 +60,7 @@ def summary(output):
                    "size_pairs": sorted({tuple(pair["public_size"]) for pair in pairs}),
                    "public_motif_guesser": shortcut},
         "exported": dict(Counter(f"{row['split']}/{row['status']}" for row in curriculum["examples"])),
+        "clean_calibration": dict(Counter(control["status"] for control in experiment["clean_calibration"])),
         "partial_overlap": curriculum["partial_overlap"], "reduction": reduction,
     }
 

@@ -121,10 +121,11 @@ def run_experiment(plan, source_sha, validate, investigate, output, *, agent_met
     protocol = plan["protocol_id"]
     roster = [Candidate(**{**item, "config": {**plan["generator"], **item["config"]}}) for item in plan["candidates"]]
     candidate_ids = {c.candidate_id: c.split for c in roster}
+    calibration = plan.get("clean_calibration", [])
     if (len(candidate_ids) != len(roster) or any(not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,79}", key)
             for key in candidate_ids) or any(candidate_ids.get(key) not in {"train", "dev"}
-            for key in plan.get("paired_examples", []))):
-        raise ValueError("Expected unique portable candidate IDs and train/dev paired cases")
+            for key in plan.get("paired_examples", [])) or any(candidate_ids.get(key) != "train" for key in calibration)):
+        raise ValueError("Expected portable candidate IDs, train/dev pairs and train-only calibration")
     if agent_metadata.get("kind") != "built_in_policy" and any(
         plan[phase].get("max_attempt_cost_micros") is None or plan[phase].get("cost_budget_micros") is None
         for phase in ("search", "reduction")
@@ -192,6 +193,19 @@ def run_experiment(plan, source_sha, validate, investigate, output, *, agent_met
                                           read_json(path), _selection_cost(offered[key]),
                                           _teacher(read_json(path.parent / "answer_before_truth.json")))
 
+    controls = []
+    for key in calibration:
+        member = family_plan.assert_searchable(key)
+        directory = output / "calibration" / key
+        receipt = validate(member.snapshot, directory)
+        answer = read_json(directory / "answer_before_truth.json") if receipt["status"] == "passed" else None
+        passed = answer is not None and not answer["findings"]
+        status = "not_checked" if answer is None else ("passed" if passed else "failed")
+        controls.append({"candidate_id": key, "status": status, "validation_ref": str(directory / "validation.json")})
+        if passed and key not in examples:
+            examples[key] = CurriculumExample(key, {**provenance[key], "selection": "predeclared_clean_control"},
+                receipt, _selection_cost(offered.get(key, [])), _teacher(answer))
+
     # Controls are defined before the comparison. A dev control never launches a searched agent.
     members = []
     paired = []
@@ -237,7 +251,8 @@ def run_experiment(plan, source_sha, validate, investigate, output, *, agent_met
     export_curriculum(family_plan, examples.values(), output / "curriculum", artifact_id="curriculum-" + family_plan.sha256[:24],
                       source_sha=source_sha, protocol_id=protocol)
     experiment.update(status="completed", search="search/search.json", curriculum="curriculum/curriculum.json",
-                      paired=paired, reduction="reduction/reduction.json" if reduction is not None else None,
+                      paired=paired, clean_calibration=controls,
+                      reduction="reduction/reduction.json" if reduction is not None else None,
                       reason=(None if reduction is not None else
                               "no_repeated_target_selected" if accepted else "no_target_weakness_observed"))
     write_json(output / "experiment.json", experiment)
