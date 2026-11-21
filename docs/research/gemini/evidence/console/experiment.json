@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535",
+  "source_sha": "045f4dced18485262193a334bc1a09de5a6922b2",
   "protocol_id": "genesis-official-60s",
   "provenance": {
     "kind": "measured",
@@ -13,7 +13,7 @@
   "agents": [
     {
       "variant_id": "gemini-tools",
-      "label": "gemini-tools",
+      "label": "gemini-3.1-flash-lite · без заметок",
       "kind": "llm",
       "model": {
         "provider": "openai_compatible",
@@ -22,7 +22,7 @@
     },
     {
       "variant_id": "gemini-memory",
-      "label": "gemini-memory",
+      "label": "gemini-3.1-flash-lite · с заметками",
       "kind": "llm",
       "model": {
         "provider": "openai_compatible",
