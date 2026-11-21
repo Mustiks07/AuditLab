@@ -159,6 +159,9 @@ def publish_curriculum(output, target):
         repeats[label]={'failed':part['frequency']['matched'],'total':part['frequency']['attempted'],'attempt_ids':aids}
     frequency=red['baseline']['frequency'];interval=frequency['per_attempt']['wilson_95']
     write(target/'experiment.json',make('experiment',eid,title='Поиск и сокращение финансовой ошибки',status=exp['status'],
+        mode={'protocol_id':exp['budget']['episode_protocol_id'],
+              'official':exp['budget']['episode_protocol_id']=='genesis-official-60s',
+              'action_limit':exp['budget']['actions_per_episode'],'time_limit_s':exp['budget']['seconds_per_episode']},
         agents=[{'variant_id':exp['agent']['name'],'label':'Случайный аудитор','kind':'baseline_policy'}],
         attempt_ids=attempt_ids,progress={'planned':len(attempt_ids),'completed':len(attempt_ids),'running':0},
         repetitions=red['budget']['repetitions'],budget={'currency':'USD','limit':0,'spent':red['cost']['cost_micros']/1e6}))

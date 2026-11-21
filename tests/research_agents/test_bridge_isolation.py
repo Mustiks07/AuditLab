@@ -143,6 +143,32 @@ class EgressProxyTests(unittest.TestCase):
         port, _ = self.proxy()
         self.assertIn(b"403", self.request(port, self.connect_line(f"127.0.0.1:{self.echo_port + 1}")))
 
+    def test_upstream_proxy_preserves_allowlist_and_tunnels(self):
+        target = f'127.0.0.1:{self.echo_port}'
+        upstream, upstream_log = self.proxy()
+        port, log = self.proxy(upstream_proxy=f'http://127.0.0.1:{upstream}')
+        with self.open(port, self.connect_line(target)) as sock:
+            self.assertIn(b'200', self.status(sock))
+            sock.sendall(b'via-proxy')
+            self.assertEqual(sock.recv(100), b'via-proxy')
+        self.assertIn(b'403', self.request(port, self.connect_line('unlisted.example:443')))
+        self.assertTrue(_wait(lambda: len(log.records()) == 2 and upstream_log.records()))
+        self.assertEqual([r['target'] for r in upstream_log.records()], [target])
+        self.assertNotIn(SENTINEL, upstream_log.getvalue() + log.getvalue())
+
+    def test_upstream_proxy_failure_does_not_fall_back_to_direct(self):
+        upstream, _ = self.proxy(allow=['127.0.0.1:1'])
+        port, log = self.proxy(upstream_proxy=f'http://127.0.0.1:{upstream}')
+        self.assertIn(b'502', self.request(port, self.connect_line(f'127.0.0.1:{self.echo_port}')))
+        self.assertTrue(_wait(lambda: log.records()))
+        self.assertEqual(log.records()[0]['reason'], 'upstream_proxy_failed')
+
+    def test_upstream_proxy_rejects_credentials_and_ambiguous_urls(self):
+        for value in ['http://user:password@proxy:80', 'https://proxy:80', 'http://proxy',
+                      'http://proxy:80/path', 'http://proxy:80?key=secret', 'http://proxy:80#x']:
+            with self.assertRaises(ValueError):
+                egress_proxy.upstream_address(value)
+
     def test_plain_http_methods_are_rejected_without_logging_target_or_headers(self):
         port, log = self.proxy()
         for method in ("GET", "POST"):
@@ -263,6 +289,10 @@ class SandboxTests(unittest.TestCase):
         self.assertIn(SECRET, envs)  # name only: Docker copies the value from the client environment
         self.assertFalse([e for e in envs if e.startswith(SECRET + "=")])
         self.assertIn(f"HTTPS_PROXY=http://{plan.proxy_name}:3128", envs)
+        for name in ('HTTP_PROXY', 'http_proxy', 'https_proxy'):
+            self.assertIn(f'{name}=http://{plan.proxy_name}:3128', envs)
+        for name in ('NO_PROXY', 'no_proxy', 'ALL_PROXY', 'all_proxy'):
+            self.assertIn(f'{name}=', envs)
         self.assertEqual(create[-1], "auditlab-llm-bridge:dev")
         proxy_create = next(argv for argv in plan.setup if argv[:2] == ("docker", "create"))
         self.assertNotIn(SECRET, proxy_create)

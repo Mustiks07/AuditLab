@@ -57,6 +57,16 @@ shows `stopping` until completion. A persistent job lock prevents double-clicks 
 relaunch after server restart. CLI resume requires reviewing saved state; changed
 plans require a fresh output directory. Never remove a lock while a worker runs.
 
+Managed networks may require `docker.upstream_proxy` in the trusted experiment
+plan (an explicit `http://host:port` CONNECT proxy without credentials). Only the
+egress proxy uses this route; the agent remains on the internal network and the
+provider allowlist still applies. Upper/lowercase proxy environment variables are
+set consistently so Docker client defaults cannot override the internal proxy.
+If the managed network uses its own certificate authority, prepare a derived bridge
+image containing that environment's trusted CA bundle and record the image/bundle
+hashes with the experiment. Keep TLS verification enabled. Environment-specific
+proxy addresses and CA bundles do not belong in a portable release configuration.
+
 Provider errors with unknown usage retain a conservative reservation rather than
 claiming zero cost. Interrupted paid attempts reserve their full attempt budget.
 Reports distinguish known usage cost from the budget debit; unknown costs stay null.

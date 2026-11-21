@@ -398,7 +398,7 @@ export function ReductionScreen({ id, side, docKey }: { id: string; side?: strin
   const r = (name: string) => repeats[name] ? share(repeats[name].failed, repeats[name].total) + " попыток" : "нет повторов";
   const activeSide = side === "original" ? original : side === "reduced" ? reduced : undefined;
   return <>
-    <WorkspaceHeader title="Сокращённый случай" subtitle="Тот же финансовый дефект на минимальном наборе документов."
+    <WorkspaceHeader title="Сокращённый случай" subtitle="Тот же финансовый дефект на сокращённом наборе документов."
       action={<Origin provenance={reduction._provenance}/>}/>
     <Stale at={view.staleAt} retry={view.retry}/>
     <ResearchPath current="reduction" links={links}/>

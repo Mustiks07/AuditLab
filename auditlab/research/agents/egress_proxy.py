@@ -16,6 +16,7 @@ logging their target, which could carry a query string).
 from __future__ import annotations
 
 import argparse
+import http.client
 import ipaddress
 import json
 import re
@@ -26,6 +27,7 @@ import sys
 import threading
 import time
 from datetime import datetime, timezone
+from urllib.parse import urlsplit
 
 DEFAULT_ALLOW = ("api.anthropic.com:443",)
 MAX_HEADER_BYTES = 8192
@@ -75,6 +77,17 @@ def _is_ip(host: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+def upstream_address(url: str | None):
+    """An explicit trusted CONNECT proxy, never credentials or a client-supplied URL."""
+    if url is None:
+        return None
+    parsed = urlsplit(url)
+    if (parsed.scheme != 'http' or not parsed.hostname or parsed.username or parsed.password
+            or parsed.path not in ('', '/') or parsed.query or parsed.fragment or not parsed.port):
+        raise ValueError('upstream proxy must be http://host:port without credentials or a path')
+    return parse_target(format_target(parsed.hostname, parsed.port))
 
 
 class _Reject(Exception):
@@ -171,6 +184,17 @@ class _Handler(socketserver.BaseRequestHandler):
             if not addresses or any(not ipaddress.ip_address(info[4][0].split("%")[0]).is_global
                                     for info in addresses):
                 raise _Reject("403 Forbidden", "resolved_to_non_public_address", target)
+        if self.server.upstream_proxy:
+            connection = http.client.HTTPConnection(*self.server.upstream_proxy,
+                                                    timeout=self.server.connect_timeout_s)
+            try:
+                connection.set_tunnel(host, port)
+                connection.connect()
+                upstream, connection.sock = connection.sock, None
+                return upstream
+            except (OSError, http.client.HTTPException):
+                connection.close()
+                raise _Reject('502 Bad Gateway', 'upstream_proxy_failed', target) from None
         for family, kind, proto, _, address in addresses:
             upstream = socket.socket(family, kind, proto)
             upstream.settimeout(self.server.connect_timeout_s)
@@ -237,10 +261,11 @@ class EgressProxy(socketserver.ThreadingTCPServer):
     def __init__(self, address, allow=DEFAULT_ALLOW, *, log=None, max_tunnels: int = MAX_TUNNELS,
                  max_header_bytes: int = MAX_HEADER_BYTES, header_timeout_s: float = HEADER_TIMEOUT_S,
                  connect_timeout_s: float = CONNECT_TIMEOUT_S, idle_timeout_s: float = IDLE_TIMEOUT_S,
-                 max_tunnel_s: float = MAX_TUNNEL_S):
+                 max_tunnel_s: float = MAX_TUNNEL_S, upstream_proxy: str | None = None):
         if max_tunnels < 1 or max_header_bytes < 64:
             raise ValueError("invalid proxy limits")
         self.allow = normalise_allowlist(allow)
+        self.upstream_proxy = upstream_address(upstream_proxy)
         self.slots = threading.BoundedSemaphore(max_tunnels)
         self.max_header_bytes, self.header_timeout_s = max_header_bytes, header_timeout_s
         self.connect_timeout_s, self.idle_timeout_s = connect_timeout_s, idle_timeout_s
@@ -282,6 +307,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-header-bytes", type=int, default=MAX_HEADER_BYTES)
     parser.add_argument("--idle-timeout", type=float, default=IDLE_TIMEOUT_S)
     parser.add_argument("--max-tunnel-seconds", type=float, default=MAX_TUNNEL_S)
+    parser.add_argument("--upstream-proxy", help="trusted http://host:port CONNECT proxy; no credentials")
     args = parser.parse_args(argv)
     host, _, port = args.listen.rpartition(":")
     if not host or not port.isdigit():
@@ -290,7 +316,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         server = EgressProxy((host.strip("[]"), int(port)), args.allow or DEFAULT_ALLOW, log=log,
                              max_tunnels=args.max_tunnels, max_header_bytes=args.max_header_bytes,
-                             idle_timeout_s=args.idle_timeout, max_tunnel_s=args.max_tunnel_seconds)
+                             idle_timeout_s=args.idle_timeout, max_tunnel_s=args.max_tunnel_seconds,
+                             upstream_proxy=args.upstream_proxy)
     except ValueError as error:
         parser.error(str(error))
     try:
