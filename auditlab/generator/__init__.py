@@ -17,8 +17,8 @@ from .core import FX_FIELDS, LEDGER_FIELDS, Company
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
-GENERATOR_VERSION = "1.6"
-SUPPORTED_GENERATOR_VERSIONS = {"1.1", GENERATOR_VERSION}
+GENERATOR_VERSION = "1.7"
+SUPPORTED_GENERATOR_VERSIONS = {"1.1", "1.6", GENERATOR_VERSION}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
@@ -29,6 +29,7 @@ MAX_ISSUES_PER_TYPE = 5
 CONFIG_FIELDS = {
     "config_version", "company_size", "base_currency", "currencies", "timezone", "target_period",
     "issue_counts", "interaction", "clean_distractors", "settlement_timing", "snapshot_nonce",
+    "allocation_mode",
 }
 
 
@@ -91,6 +92,13 @@ def _configuration(seed, config):
     if (interaction or counts["fx_conversion"]) and len(currencies) < 2:
         raise ValueError("foreign_currency_required")
     timing = config.get("settlement_timing")
+    allocation_mode = config.get("allocation_mode", "partial")
+    if allocation_mode not in ("partial", "omitted") or (
+        "allocation_mode" in config and config_version != "1.1"
+    ):
+        raise ValueError("invalid_allocation_mode: profile 1.1 supports partial or omitted")
+    if allocation_mode == "omitted" and (timing is not None or interaction == "allocation_fx_same_payment"):
+        raise ValueError("incompatible_allocation_mode: omission requires a standalone settlement")
     if timing is not None:
         if not isinstance(timing, str) or timing not in TIMINGS:
             raise ValueError("invalid_settlement_timing: expected before, at or after")
@@ -118,7 +126,7 @@ def _configuration(seed, config):
     period_start, period_end = _period(config.get("target_period", "2026-11"), zone_name, config_version)
     exponents = {code: CURRENCY_EXPONENTS[code] for code in currencies}
     company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents,
-                      config_version=config_version)
+                      config_version=config_version, allocation_mode=allocation_mode)
     return company, counts, timing, interaction, distractors, size, nonce
 
 
@@ -212,6 +220,9 @@ def _add_bounded_filler(company, size, rng, scale, duplicate_capacity):
                 minimum_rows = budgeted_rows + 10 + 3 * rest + rest % 2
                 split = minimum_rows <= rows_target
             _add_paid_invoices(company, amount, at, split=split)
+    if company.allocation_mode == "omitted":
+        # Use the clean book as the size floor for both members of the pair.
+        rows_target = max(rows_target, len(company.ledger) + extra_rows)
     # Treasury cash transfers are real balanced internal events, without extra external invoices.
     # They do not change designated-payment settlement indexes or financial issue evidence.
     available_cash = sum(row["debit_minor"] - row["credit_minor"] for row in company.ledger
@@ -291,7 +302,7 @@ def _add_audit_cases(company, counts, timing, interaction, distractors):
     builders = (add_duplicate, Company.allocation_case, add_fx, add_cutoff)
     matched_controls = (
         "archive_copy" in distractors,
-        "split_payment" in distractors or "next_day_settlement" in distractors,
+        "split_payment" in distractors or "next_day_settlement" in distractors or company.allocation_mode == "omitted",
         bool(distractors) and len(company.exponents) > 1,
         False,
     )
