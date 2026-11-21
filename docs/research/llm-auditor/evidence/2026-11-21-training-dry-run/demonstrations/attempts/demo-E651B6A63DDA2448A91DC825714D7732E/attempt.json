@@ -1,0 +1,144 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "kind": "oracle_demonstration",
+    "limits": {
+      "max_model_calls_per_action": 12,
+      "max_nudges": 2,
+      "max_prechecks": 0
+    },
+    "max_tokens": 16000,
+    "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "model": "oracle-demonstration",
+      "provider": "oracle_demonstration",
+      "teacher": true
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "demo-E651B6A63DDA2448A91DC825714D7732E",
+  "attempt_id": "demo-E651B6A63DDA2448A91DC825714D7732E",
+  "budget_usd": 0.0,
+  "episode": {
+    "episode_ref": "datasets/open/train/E651B6A63DDA2448A91DC825714D7732E",
+    "episode_sha256": "2aabc19f7c21f7511e8937a1368a2f29f781caba3e94849410dd9ad70f54ca84",
+    "family_id": "E651B6A63DDA2448A91DC825714D7732E",
+    "split": "train"
+  },
+  "evaluation_ref": "trusted\\demo-E651B6A63DDA2448A91DC825714D7732E\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E651B6A63DDA2448A91DC825714D7732E",
+        "findings": [
+          {
+            "affected_ids": [
+              "invoice/IFB7EC04001E37EA268207EFC",
+              "payment/P308C7000EC7515B02EEB3610"
+            ],
+            "claimed_amount_minor": 2000000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "ledger/R53432EC1D005F5311538DE28",
+              "ledger/RB74667B32C20460A9F0BCE8C",
+              "payments/DBD292EDAEA4FDA14AEF2A4FA",
+              "policy/allocation"
+            ],
+            "explanation": "payment_allocation on invoice/IFB7EC04001E37EA268207EFC, payment/P308C7000EC7515B02EEB3610: the cited records show a discrepancy of 2000000 minor units of KZT.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "invoice/IE1AA509B3457554062C97F19"
+            ],
+            "claimed_amount_minor": 1200000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "invoices/D3DA6071040B70FA2D90C18D0",
+              "invoices/D7534210C633A07D8851B8F7E",
+              "ledger/R765F277C72A53DF193243B58",
+              "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+            ],
+            "explanation": "duplicate_invoice on invoice/IE1AA509B3457554062C97F19: the cited records show a discrepancy of 1200000 minor units of KZT.",
+            "type": "duplicate_invoice"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E651B6A63DDA2448A91DC825714D7732E",
+    "findings": [
+      {
+        "affected_ids": [
+          "invoice/IFB7EC04001E37EA268207EFC",
+          "payment/P308C7000EC7515B02EEB3610"
+        ],
+        "claimed_amount_minor": 2000000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "ledger/R53432EC1D005F5311538DE28",
+          "ledger/RB74667B32C20460A9F0BCE8C",
+          "payments/DBD292EDAEA4FDA14AEF2A4FA",
+          "policy/allocation"
+        ],
+        "explanation": "payment_allocation on invoice/IFB7EC04001E37EA268207EFC, payment/P308C7000EC7515B02EEB3610: the cited records show a discrepancy of 2000000 minor units of KZT.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "invoice/IE1AA509B3457554062C97F19"
+        ],
+        "claimed_amount_minor": 1200000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D3DA6071040B70FA2D90C18D0",
+          "invoices/D7534210C633A07D8851B8F7E",
+          "ledger/R765F277C72A53DF193243B58",
+          "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+        ],
+        "explanation": "duplicate_invoice on invoice/IE1AA509B3457554062C97F19: the cited records show a discrepancy of 1200000 minor units of KZT.",
+        "type": "duplicate_invoice"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:13:01.098856+00:00",
+  "inspection_steps": 8,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Research protocol: same 100 actions and tools, 600 s wall clock for slow API models. Never reported as an official-protocol result.",
+    "max_actions": 100,
+    "official": false,
+    "protocol_id": "auditlab-research-600s",
+    "resumable": true,
+    "time_limit_s": 600.0
+  },
+  "protocol_id": "auditlab-research-600s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "started_at": "2026-11-21T11:13:00.678741+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 9,
+    "inspection_steps": 8,
+    "provider_calls": 9,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.419
+  },
+  "variant": "oracle_demonstration"
+}

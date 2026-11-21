@@ -1,0 +1,131 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--1a27881adb9e6932",
+  "attempt_id": "reconcile--1a27881adb9e6932",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/EC3F05E92121031C312CBEFA265787AC6",
+    "episode_sha256": "fdc1fda81847f4afb46b6ba676a36813b3728931927931fefef54dfc19354f4d",
+    "family_id": "EC3F05E92121031C312CBEFA265787AC6",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\reconcile--1a27881adb9e6932\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "EC3F05E92121031C312CBEFA265787AC6",
+        "findings": [
+          {
+            "affected_ids": [
+              "payment/P49901E8533CDA9F05C8C1BCE",
+              "invoice/IB1A3D243BCCE43C9FEBED947"
+            ],
+            "claimed_amount_minor": 20000,
+            "currency": "KWD",
+            "evidence_ids": [
+              "payments/D26865EF3E8FD945C338254EE",
+              "ledger/R5DBAC2E13601C2DBE01DB43D",
+              "ledger/R0752724E29B16ABD602BEBF3",
+              "policy/allocation"
+            ],
+            "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P49901E8533CDA9F05C8C1BCE"
+            ],
+            "claimed_amount_minor": 50000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D26865EF3E8FD945C338254EE",
+              "fx/2026-12-14/KWD/KZT",
+              "ledger/R01AA1D1167AF3A99AA2EBDA2",
+              "policy/fx_date"
+            ],
+            "explanation": "Converting the nominal amount at the local source date rate gives a different valuation.",
+            "type": "fx_conversion"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "EC3F05E92121031C312CBEFA265787AC6",
+    "findings": [
+      {
+        "affected_ids": [
+          "payment/P49901E8533CDA9F05C8C1BCE",
+          "invoice/IB1A3D243BCCE43C9FEBED947"
+        ],
+        "claimed_amount_minor": 20000,
+        "currency": "KWD",
+        "evidence_ids": [
+          "payments/D26865EF3E8FD945C338254EE",
+          "ledger/R5DBAC2E13601C2DBE01DB43D",
+          "ledger/R0752724E29B16ABD602BEBF3",
+          "policy/allocation"
+        ],
+        "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P49901E8533CDA9F05C8C1BCE"
+        ],
+        "claimed_amount_minor": 50000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D26865EF3E8FD945C338254EE",
+          "fx/2026-12-14/KWD/KZT",
+          "ledger/R01AA1D1167AF3A99AA2EBDA2",
+          "policy/fx_date"
+        ],
+        "explanation": "Converting the nominal amount at the local source date rate gives a different valuation.",
+        "type": "fx_conversion"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:12:42.181437+00:00",
+  "inspection_steps": 9,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "started_at": "2026-11-21T11:12:41.759388+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 10,
+    "inspection_steps": 9,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.421
+  },
+  "variant": "reconcile"
+}

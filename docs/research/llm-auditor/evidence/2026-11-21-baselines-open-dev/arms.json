@@ -1,0 +1,8 @@
+{"arms": [
+  {"name": "empty", "agent": {"kind": "baseline_policy", "policy": "empty"}},
+  {"name": "flag_all", "agent": {"kind": "baseline_policy", "policy": "flag_all"}},
+  {"name": "random", "agent": {"kind": "baseline_policy", "policy": "random", "seed": 1}},
+  {"name": "reconcile", "agent": {"kind": "baseline_policy", "policy": "reconcile"}}
+ ],
+ "transport": "in_process",
+ "analysis": {"pairs": [["reconcile", "empty"], ["reconcile", "flag_all"], ["random", "empty"]], "bootstrap": 10000, "seed": 20261121}}

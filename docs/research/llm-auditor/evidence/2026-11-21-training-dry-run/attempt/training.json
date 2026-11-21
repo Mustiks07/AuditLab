@@ -1,0 +1,157 @@
+{
+  "artifact_id": "training-a2f139545b124dca888be330cd1de726",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "budget": {
+    "actual_basis": null,
+    "actual_unavailable_reason": "no trained_tokens reported yet",
+    "actual_usd": null,
+    "billable_tokens_estimate": 110362,
+    "budget_usd": null,
+    "estimate_method": "tokens: (train + validation chars/3) x n_epochs; local GPU compute is not priced here (record GPU hours separately)",
+    "estimated_usd": null,
+    "n_epochs": 2,
+    "price_per_million_training_tokens": null,
+    "train_tokens_estimate": 55181,
+    "validation_tokens_estimate": 0
+  },
+  "checkpoint_id": null,
+  "checkpoints": [],
+  "claimed_as": "training",
+  "config_sha256": "6b889e1bbdb64bd13b12b9690416b9b1755d68c3912f83935e75be996794ad2d",
+  "curriculum": {
+    "artifact_id": "published-train-2026-11-21",
+    "kind": "published_train",
+    "ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/curriculum.json",
+    "sha256": "8369a853470f058f9493a8a041f5ec58289332ca419b5c0176c8b1e89652ed03"
+  },
+  "dataset": {
+    "examples": 10,
+    "manifest_artifact_id": "sft-487544d74ca1da96-bac6d4a1",
+    "manifest_sha256": "1df42cf0f252aeaa3589bd4451b3101b42ae90fe1f1f68c3bd4f8b223f523f17",
+    "ref": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dataset\\dataset.jsonl",
+    "sampling": null,
+    "sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6",
+    "teachers": [
+      {
+        "model": "oracle-demonstration",
+        "provider": "oracle_demonstration",
+        "source": "oracle_demonstration"
+      }
+    ],
+    "token_estimate": {
+      "max_example": 12396,
+      "method": "estimate: len(json chars) / 3, not a tokenizer count",
+      "total": 55181
+    }
+  },
+  "events": [],
+  "job": {
+    "api_key_env": null,
+    "base_url": null,
+    "job_id": null,
+    "jobs_root": null,
+    "provider": "local_lora",
+    "provider_status": null,
+    "training_file_id": null,
+    "validation_file_id": null
+  },
+  "job_id": null,
+  "kind": "weights",
+  "missing_conditions": [
+    "python module 'torch' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'transformers' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "CUDA availability unknown because torch is not importable",
+    "free disk 43.4 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt is below min_free_disk_gb 50.0"
+  ],
+  "mock": false,
+  "preflight": {
+    "facts": {
+      "base_model_kind": "hub_id (downloaded on the GPU machine at run time)",
+      "cuda_available": null,
+      "free_disk_gb": 43.4,
+      "modules_missing": [
+        "torch",
+        "transformers",
+        "peft",
+        "trl"
+      ]
+    },
+    "jobs_root": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt\\jobs",
+    "missing_conditions": [
+      "python module 'torch' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'transformers' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "CUDA availability unknown because torch is not importable",
+      "free disk 43.4 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt is below min_free_disk_gb 50.0"
+    ],
+    "provider": "local_lora",
+    "test_double": false,
+    "trainer": [
+      "python",
+      "-m",
+      "auditlab.research.training.local_lora",
+      "run"
+    ]
+  },
+  "protocol_id": "auditlab-research-600s",
+  "provider": "local_lora",
+  "refusal": null,
+  "result": {
+    "error": null,
+    "error_reason": "not started: see missing_conditions",
+    "fine_tuned_model": null,
+    "trained_tokens": null
+  },
+  "result_model": null,
+  "schema_version": "1.0",
+  "series": "trainable-model series (kind=weights); never pooled with the Claude series into one causal claim",
+  "settings": {
+    "allowed_splits": [
+      "train"
+    ],
+    "job_key": "al-cc348df73d263539d5bcbc1d",
+    "method": {
+      "lora": {
+        "alpha": 32,
+        "r": 16
+      },
+      "supervised": {
+        "hyperparameters": {
+          "batch_size": 1,
+          "learning_rate": 0.0001,
+          "n_epochs": 2
+        }
+      },
+      "type": "supervised_lora"
+    },
+    "poll_interval_s": 60,
+    "seed": 20261121,
+    "suffix": "al-487544d74ca1"
+  },
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "status": "not_started_missing_access",
+  "teacher": {
+    "allowed_sources": [
+      "oracle_demonstration",
+      "self"
+    ],
+    "dataset_teacher_terms_acknowledged": null,
+    "self_models": [],
+    "sources": {
+      "oracle_demonstration": 10
+    },
+    "teacher_terms_acknowledged": null,
+    "teachers": [
+      {
+        "model": "oracle-demonstration",
+        "provider": "oracle_demonstration",
+        "source": "oracle_demonstration"
+      }
+    ]
+  },
+  "updated_at": "2026-11-21T11:13:11+00:00",
+  "validation_dataset": null
+}

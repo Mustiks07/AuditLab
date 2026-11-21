@@ -1,0 +1,350 @@
+{
+  "artifact_id": "sft-487544d74ca1da96-bac6d4a1",
+  "counts": {
+    "assistant_messages": 54,
+    "examples": 10,
+    "meets_minimum_examples": true,
+    "minimum_examples": 10,
+    "rejected": 0,
+    "tool_calls": 54
+  },
+  "created_at": "2026-11-21T11:13:09+00:00",
+  "dataset": {
+    "bytes": 162892,
+    "path": "dataset.jsonl",
+    "sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6"
+  },
+  "format": "openai_chat_sft_jsonl_with_tools",
+  "format_docs": [
+    "https://developers.openai.com/api/docs/guides/supervised-fine-tuning",
+    "https://developers.openai.com/api/reference/resources/files"
+  ],
+  "kind": "weights",
+  "protocol_id": "auditlab-research-600s",
+  "protocol_ids": [
+    "auditlab-research-600s"
+  ],
+  "rejected": [],
+  "roots": [
+    "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations"
+  ],
+  "sampling": null,
+  "schema_version": "1.0",
+  "selection_rule": {
+    "allowed_splits": [
+      "train"
+    ],
+    "curriculum": {
+      "artifact_id": "published-train-2026-11-21",
+      "kind": "published_train",
+      "ref": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\curriculum.json",
+      "sha256": "8369a853470f058f9493a8a041f5ec58289332ca419b5c0176c8b1e89652ed03"
+    },
+    "exclude_test_double": true,
+    "max_example_tokens": 65536,
+    "metric": "ROOT/trusted/<attempt_id>/evaluation.json official.return",
+    "min_return": 0.0,
+    "status": "completed",
+    "system_role": "system"
+  },
+  "source_attempts": [
+    {
+      "artifact_id": "demo-E04F4ED6D6765D816DF94C62477B6EC4C",
+      "assistant_messages": 3,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E04F4ED6D6765D816DF94C62477B6EC4C",
+      "attempt_id": "demo-E04F4ED6D6765D816DF94C62477B6EC4C",
+      "episode_ref": "datasets/open/train/E04F4ED6D6765D816DF94C62477B6EC4C",
+      "episode_sha256": "816dfb926c0d28929b2c0070043e99a3bfbb173b0bf79698f26dff280fd8f8db",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E04F4ED6D6765D816DF94C62477B6EC4C/evaluation.json",
+      "family_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+      "files_sha256": {
+        "attempt.json": "55e4158a4c167850739d17220aeed2c0fd68ae25d94e4bc8aeab55e7bf0ad665",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "a997164764cfb3daaea674e38cd3d141c5fffc612a3e663a8154f51d76909b77",
+        "steps.jsonl": "2cb649c69ab84c179ca83554ce40fa5435fdaeb1fa2320438a2728b6d836c6bf",
+        "transcript.jsonl": "d94ceb1fc3aa2f66d5b32136c2903a296f1af9ca2e0665f62630378f420c2530",
+        "trusted/evaluation.json": "cae940578ad382ba9ba9d2f8186152d5de01b1f7fd7705c2ab97569557cb6a85"
+      },
+      "index": 0,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.996,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 12396,
+      "tool_calls": 3
+    },
+    {
+      "artifact_id": "demo-E077255A43F950625D099C4A3E1D26109",
+      "assistant_messages": 7,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E077255A43F950625D099C4A3E1D26109",
+      "attempt_id": "demo-E077255A43F950625D099C4A3E1D26109",
+      "episode_ref": "datasets/open/train/E077255A43F950625D099C4A3E1D26109",
+      "episode_sha256": "07c88c874b367ef1d8526747b47b143f3b9758475c498a5a879dceef436fd1fe",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E077255A43F950625D099C4A3E1D26109/evaluation.json",
+      "family_id": "E077255A43F950625D099C4A3E1D26109",
+      "files_sha256": {
+        "attempt.json": "79fe53f25fb2ef520d2e8c523b1308a46e2faab9d093901302cffe491e3255b2",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "eda14794fe25a3daab34a003fbd1dc92c0544e47dfe7a4c84cf1bd2d20aefa23",
+        "steps.jsonl": "4a8f91887e817060f3c10494627778db9c85ec38d1280a724421e0367cbd1979",
+        "transcript.jsonl": "dfdf91124bee7ac605cee2595aa560fa35c06d89c6a49919319f28168e4c733b",
+        "trusted/evaluation.json": "639854441566dd80caf71463bcc046d955f3b6726439b729396e2863a160aa89"
+      },
+      "index": 1,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.988,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3948,
+      "tool_calls": 7
+    },
+    {
+      "artifact_id": "demo-E39A14EA0FB98F9BC3E42C3738182D142",
+      "assistant_messages": 8,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E39A14EA0FB98F9BC3E42C3738182D142",
+      "attempt_id": "demo-E39A14EA0FB98F9BC3E42C3738182D142",
+      "episode_ref": "datasets/open/train/E39A14EA0FB98F9BC3E42C3738182D142",
+      "episode_sha256": "e81dfa143596517c68b905e8afd0f4e0fe86ebc864772dc8ef24d4116a984ee6",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E39A14EA0FB98F9BC3E42C3738182D142/evaluation.json",
+      "family_id": "E39A14EA0FB98F9BC3E42C3738182D142",
+      "files_sha256": {
+        "attempt.json": "f05a1354578340bf55d887cbbe6b376190e84f98a57f1379ef7fe09de0f8e08a",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "0f0c9e5495639b4790e7d9fd0ff9baecbcf4a4d2513d5ad0c72a85dfc80ba2da",
+        "steps.jsonl": "df26fb99b5727dc98dde805e24db6dd127c64f32f5cd1b4851d79d226c65e523",
+        "transcript.jsonl": "c7aab4d04b9a6fdd4b38b71d9340b5b3c2618893fd3feca1b0d1d9168acf83d1",
+        "trusted/evaluation.json": "26699ad9e78ed03aed5cd29e6ee461ac9ada5629b449451581f5283f08a312ac"
+      },
+      "index": 2,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.986,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 4331,
+      "tool_calls": 8
+    },
+    {
+      "artifact_id": "demo-E3C1B04E2DCF07E6D4883BB9CEB56A932",
+      "assistant_messages": 5,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E3C1B04E2DCF07E6D4883BB9CEB56A932",
+      "attempt_id": "demo-E3C1B04E2DCF07E6D4883BB9CEB56A932",
+      "episode_ref": "datasets/open/train/E3C1B04E2DCF07E6D4883BB9CEB56A932",
+      "episode_sha256": "407e64f3b5ac42bfcbba345eb7f974f939878c0750979db742a2d7ae547c9afd",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E3C1B04E2DCF07E6D4883BB9CEB56A932/evaluation.json",
+      "family_id": "E3C1B04E2DCF07E6D4883BB9CEB56A932",
+      "files_sha256": {
+        "attempt.json": "37ad55442cb8847bde4ea2e9e5ccb710d6e8ef66894601ec077b830b06ff2105",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "d3e1f447eae42a98c8a645629df022348dd817e3d0f3c0dc82582b9c07d0d1ac",
+        "steps.jsonl": "26d8086f81dc3763a76a685cb61fc23f1872ad6e301de84c961270d7fe8d7c06",
+        "transcript.jsonl": "fd418b478d5a758f930655a952454a6b1cbf9bb9ec50e27cce2997c708cc3ea1",
+        "trusted/evaluation.json": "9bdba0f7b31a64e0adbd67e30ee4c38a28c731334c62229970f0dac34c2309c5"
+      },
+      "index": 3,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.992,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3612,
+      "tool_calls": 5
+    },
+    {
+      "artifact_id": "demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+      "assistant_messages": 5,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+      "attempt_id": "demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+      "episode_ref": "datasets/open/train/E6476455CA5F6F7CF4A34F78E68AD54C0",
+      "episode_sha256": "6e8d4d18c35147965b7bd2b65879948df01cbf11a35077326922349faf0d1d74",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E6476455CA5F6F7CF4A34F78E68AD54C0/evaluation.json",
+      "family_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+      "files_sha256": {
+        "attempt.json": "30947f0ba768bdaa1503cc6265ae9f35947ec539d151d164f23202721295b8ff",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "908ad8312ec7098ec3662dabf58c35b864c3026ddb2004f91a57bcfc6cdd1663",
+        "steps.jsonl": "4413048b056fd4b97e6554cc5502f3164ca5eb0c7c9ab64095da9268a338af9c",
+        "transcript.jsonl": "52866e638af789bcda58f36740dc205e045cf9615e0e75ac8c80b2e548606f89",
+        "trusted/evaluation.json": "ace77aa4eebf3e7d7acacf6b6de5ef5bae8607c7ca510d7236321cc700a533c8"
+      },
+      "index": 4,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.992,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3562,
+      "tool_calls": 5
+    },
+    {
+      "artifact_id": "demo-E651B6A63DDA2448A91DC825714D7732E",
+      "assistant_messages": 9,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E651B6A63DDA2448A91DC825714D7732E",
+      "attempt_id": "demo-E651B6A63DDA2448A91DC825714D7732E",
+      "episode_ref": "datasets/open/train/E651B6A63DDA2448A91DC825714D7732E",
+      "episode_sha256": "2aabc19f7c21f7511e8937a1368a2f29f781caba3e94849410dd9ad70f54ca84",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E651B6A63DDA2448A91DC825714D7732E/evaluation.json",
+      "family_id": "E651B6A63DDA2448A91DC825714D7732E",
+      "files_sha256": {
+        "attempt.json": "4d5dc1748917774b22f9bbf7818e3f2c1ad258f7a9bbddfd24d076ab327addf4",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "e8aa427dff37a82db57d6de4cfb3c3b062dd9da70f77f99b054e894a32d279ce",
+        "steps.jsonl": "78ec662903d9bc54f7fde01dda45d9e9e663baed22194c5b403d1af6f202591e",
+        "transcript.jsonl": "1ed90b6fb30a84dcbfd263546a50363ce8fee98e2d5b4a0a3856ed9e31b59fda",
+        "trusted/evaluation.json": "ebdceb7832f52d60814c44af85ac7b6986fc6dc89f8742e62f04723e99c8365f"
+      },
+      "index": 5,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.984,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 4699,
+      "tool_calls": 9
+    },
+    {
+      "artifact_id": "demo-E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "assistant_messages": 5,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "attempt_id": "demo-E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "episode_ref": "datasets/open/train/E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "episode_sha256": "2d403e0388063a805e1812f2d0e54eb15fd9584ff2a39481e18d3cd899075939",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E73A2954018B6B96D20AD0E9CFD9B9B18/evaluation.json",
+      "family_id": "E73A2954018B6B96D20AD0E9CFD9B9B18",
+      "files_sha256": {
+        "attempt.json": "b8a06039c1e6a87e9f21d284bf19e97e0cda9e701a73bc0e28ebc249be87fb63",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "5d654075c8cc0aa430a438b29a2a58ec21a203d684a09113e9b8325a37503bb5",
+        "steps.jsonl": "b94570749148b4dcb0d2645ddef63818cb5b9fd71b08a991c3791c4cfc4a534a",
+        "transcript.jsonl": "7048cb3ba00eb8a8f7903af13fe73f89b9eca4441e586f6293a75cf33cc88089",
+        "trusted/evaluation.json": "dfb02f930ca8b5fd02112284b8e837f611dfe11d50149942afba18428cf2eaa0"
+      },
+      "index": 6,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.992,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3560,
+      "tool_calls": 5
+    },
+    {
+      "artifact_id": "demo-E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "assistant_messages": 5,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "attempt_id": "demo-E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "episode_ref": "datasets/open/train/E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "episode_sha256": "d1d8a5bec38a21f69c92e65e5d402b6f19ce8e556d3199289084673505a6f124",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E9689AB84BDCEA83B6B6558C0DF66C1BB/evaluation.json",
+      "family_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
+      "files_sha256": {
+        "attempt.json": "a5dcacee5acb74dfa12dc9aa0329d22367d60e0fc015d5d31d85ae2fa0717700",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "8527fb02967834988450924fe28f822d44b45cfbbcacf1db3e93a5e8c2207874",
+        "steps.jsonl": "e3c13049a0c52dfc0f2ceac52aa16fb6d124b3d3892da6619a072add5dff0386",
+        "transcript.jsonl": "d3e24ff0e243000360e44885c51465cfe03c15dec4ac787c498bfe1343459aff",
+        "trusted/evaluation.json": "877fead2577311edd749ad5875039dbcb7561bac5ac902eb5292b4978542ae49"
+      },
+      "index": 7,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.992,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3455,
+      "tool_calls": 5
+    },
+    {
+      "artifact_id": "demo-EE66DC47098559362CDB36A9B4107782C",
+      "assistant_messages": 4,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-EE66DC47098559362CDB36A9B4107782C",
+      "attempt_id": "demo-EE66DC47098559362CDB36A9B4107782C",
+      "episode_ref": "datasets/open/train/EE66DC47098559362CDB36A9B4107782C",
+      "episode_sha256": "98bbf2445e15a351eb48392083d735e44c189119eb0032a5f4d1d9edfc584cd5",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-EE66DC47098559362CDB36A9B4107782C/evaluation.json",
+      "family_id": "EE66DC47098559362CDB36A9B4107782C",
+      "files_sha256": {
+        "attempt.json": "63df4efe133c5b8875e4a4c2bea9f39c3770843c544605f5897c73deb6cc0e0e",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "6ee6d4802cef318b75ecf7e05dcd12552df18f020f75bbaeead2277cf7873a1b",
+        "steps.jsonl": "928ab1c6bda1ce7e29ca0389604fd51703f64b7eedfa8315d661de8c72e25b71",
+        "transcript.jsonl": "0e1430d841773b9e457e4ab4c751135fc9889d9fa7418439aae282f693c2919f",
+        "trusted/evaluation.json": "15756aa76f7409857c19d3ceccd11032122a47ba413d06a9e199bf816db85ef2"
+      },
+      "index": 8,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.994,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 3234,
+      "tool_calls": 4
+    },
+    {
+      "artifact_id": "demo-EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "assistant_messages": 3,
+      "attempt_dir": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/attempts/demo-EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "attempt_id": "demo-EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "episode_ref": "datasets/open/train/EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "episode_sha256": "e06e5e54e796cd7931d012cd77f1da69d84aa3128d9a64de0617400a52e34812",
+      "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-EFFAAAA5971F93F3CF54B03F09CAFBDEE/evaluation.json",
+      "family_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+      "files_sha256": {
+        "attempt.json": "b1bba295ed48b9d436a8bd8f313e84adde467026ccc1a34dfa5b1a6b5263ef74",
+        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
+        "provider_calls.jsonl": "96be37254218b65faa8e01ec2a2243deca2904bbed42a7f649a64aea5c36ed7d",
+        "steps.jsonl": "2c80095e8ec12df50451a8a73a50f464ff5a83fbeed064a6ed0e5e61174f095e",
+        "transcript.jsonl": "b0b149d5650d57b1c108ea5876f7877cb8367739a58b376fcfa740053026e0d5",
+        "trusted/evaluation.json": "82a3581b35f40aa8638108a8c4a6dc35fc08ed0045915818da00ae88d08e0c5d"
+      },
+      "index": 9,
+      "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+      "protocol_id": "auditlab-research-600s",
+      "return": 0.996,
+      "split": "train",
+      "teacher_source": "oracle_demonstration",
+      "token_estimate": 12384,
+      "tool_calls": 3
+    }
+  ],
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "split_check": {
+    "allowed": [
+      "train"
+    ],
+    "forbidden": [
+      "final",
+      "holdout",
+      "test"
+    ],
+    "observed": [
+      "train"
+    ],
+    "passed": true
+  },
+  "teacher_policy": {
+    "allowed_sources": [
+      "oracle_demonstration",
+      "self"
+    ],
+    "self_models": [],
+    "teacher_terms_acknowledged": null
+  },
+  "teacher_sources": {
+    "oracle_demonstration": 10
+  },
+  "teachers": [
+    {
+      "model": "oracle-demonstration",
+      "provider": "oracle_demonstration",
+      "source": "oracle_demonstration"
+    }
+  ],
+  "token_estimate": {
+    "max_example": 12396,
+    "method": "estimate: len(json chars) / 3, not a tokenizer count",
+    "total": 55181
+  }
+}

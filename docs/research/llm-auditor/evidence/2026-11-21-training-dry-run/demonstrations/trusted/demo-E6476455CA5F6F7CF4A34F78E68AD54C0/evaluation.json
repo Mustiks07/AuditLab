@@ -1,0 +1,43 @@
+{
+  "attempt_id": "demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+  "env_status": "submitted",
+  "inspection_steps": 4,
+  "internal_score": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.992,
+    "tp": 1
+  },
+  "matches": [
+    [
+      0,
+      "X8EE259970BB24724765613FD"
+    ]
+  ],
+  "not_evaluable_reason": null,
+  "official": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.992,
+    "tp": 1
+  },
+  "official_by_rule": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.992,
+    "tp": 1
+  },
+  "schema_version": "1.0",
+  "status": "completed",
+  "truth_issue_count": 1,
+  "unmatched": {}
+}

@@ -1,0 +1,11 @@
+{
+  "artifact_id": "sft-487544d74ca1da96-bac6d4a1",
+  "examples": 10,
+  "rejected": 0,
+  "token_estimate": 55181,
+  "dataset_sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6",
+  "split_check": true,
+  "teacher_sources": {
+    "oracle_demonstration": 10
+  }
+}

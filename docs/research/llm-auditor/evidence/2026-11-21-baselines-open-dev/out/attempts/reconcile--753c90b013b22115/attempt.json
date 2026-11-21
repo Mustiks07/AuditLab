@@ -1,0 +1,129 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--753c90b013b22115",
+  "attempt_id": "reconcile--753c90b013b22115",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/E4C30409A2F4E6DFE858E8FF06B8C4436",
+    "episode_sha256": "befc471495c15c925ca9addd6d6079bc4896bb9a72319924c9013148cde4f0ed",
+    "family_id": "E4C30409A2F4E6DFE858E8FF06B8C4436",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\reconcile--753c90b013b22115\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E4C30409A2F4E6DFE858E8FF06B8C4436",
+        "findings": [
+          {
+            "affected_ids": [
+              "payment/P4E91910D2DE9D485504219FC",
+              "invoice/I5AAEBD9EAF62D2547A677062"
+            ],
+            "claimed_amount_minor": 2000000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/DDCA0450C334DC54A9511B86F",
+              "ledger/RA9D7F2FC68075C804173CC77",
+              "ledger/RA0D1E191D983C621814DAF59",
+              "policy/allocation"
+            ],
+            "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "invoice/I7464C74237F658EB079AED71"
+            ],
+            "claimed_amount_minor": 2400000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "invoices/D87507162564E502F9D2B6551",
+              "ledger/R38070514A6C29E4BC53D174D",
+              "policy/period"
+            ],
+            "explanation": "The invoice issue date and the accounting recognition fall on opposite sides of the reporting boundary.",
+            "type": "period_cutoff"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E4C30409A2F4E6DFE858E8FF06B8C4436",
+    "findings": [
+      {
+        "affected_ids": [
+          "payment/P4E91910D2DE9D485504219FC",
+          "invoice/I5AAEBD9EAF62D2547A677062"
+        ],
+        "claimed_amount_minor": 2000000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DDCA0450C334DC54A9511B86F",
+          "ledger/RA9D7F2FC68075C804173CC77",
+          "ledger/RA0D1E191D983C621814DAF59",
+          "policy/allocation"
+        ],
+        "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "invoice/I7464C74237F658EB079AED71"
+        ],
+        "claimed_amount_minor": 2400000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D87507162564E502F9D2B6551",
+          "ledger/R38070514A6C29E4BC53D174D",
+          "policy/period"
+        ],
+        "explanation": "The invoice issue date and the accounting recognition fall on opposite sides of the reporting boundary.",
+        "type": "period_cutoff"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:12:35.986371+00:00",
+  "inspection_steps": 9,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "started_at": "2026-11-21T11:12:35.560183+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 10,
+    "inspection_steps": 9,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.425
+  },
+  "variant": "reconcile"
+}

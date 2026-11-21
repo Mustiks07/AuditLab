@@ -1,0 +1,1 @@
+{"action": {"args": {"findings": {"episode_id": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E", "findings": []}}, "name": "submit"}, "env_seconds": 0.545095, "index": 1, "info": {"status": "submitted"}, "observation": {"error": null, "remaining_steps": 99, "result": {"accepted": true}}, "reward": 0.0, "terminated": true, "truncated": false}

@@ -1,0 +1,27 @@
+{
+  "events": [
+    {
+      "artifact_id": "training-a2f139545b124dca888be330cd1de726",
+      "at": "2026-11-21T11:13:11+00:00",
+      "config_sha256": "6b889e1bbdb64bd13b12b9690416b9b1755d68c3912f83935e75be996794ad2d",
+      "dataset_sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6",
+      "job_key": "al-cc348df73d263539d5bcbc1d",
+      "phase": "initialized",
+      "seq": 0
+    },
+    {
+      "at": "2026-11-21T11:13:11+00:00",
+      "missing_conditions": [
+        "python module 'torch' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+        "python module 'transformers' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+        "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+        "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+        "CUDA availability unknown because torch is not importable",
+        "free disk 43.4 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt is below min_free_disk_gb 50.0"
+      ],
+      "phase": "not_started",
+      "seq": 1
+    }
+  ],
+  "schema_version": "1.0"
+}

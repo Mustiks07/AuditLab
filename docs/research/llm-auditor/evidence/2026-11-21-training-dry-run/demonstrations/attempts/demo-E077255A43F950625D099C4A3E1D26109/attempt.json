@@ -1,0 +1,140 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "kind": "oracle_demonstration",
+    "limits": {
+      "max_model_calls_per_action": 12,
+      "max_nudges": 2,
+      "max_prechecks": 0
+    },
+    "max_tokens": 16000,
+    "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "model": "oracle-demonstration",
+      "provider": "oracle_demonstration",
+      "teacher": true
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "demo-E077255A43F950625D099C4A3E1D26109",
+  "attempt_id": "demo-E077255A43F950625D099C4A3E1D26109",
+  "budget_usd": 0.0,
+  "episode": {
+    "episode_ref": "datasets/open/train/E077255A43F950625D099C4A3E1D26109",
+    "episode_sha256": "07c88c874b367ef1d8526747b47b143f3b9758475c498a5a879dceef436fd1fe",
+    "family_id": "E077255A43F950625D099C4A3E1D26109",
+    "split": "train"
+  },
+  "evaluation_ref": "trusted\\demo-E077255A43F950625D099C4A3E1D26109\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E077255A43F950625D099C4A3E1D26109",
+        "findings": [
+          {
+            "affected_ids": [
+              "invoice/I0555B87A2D28587E928BB9DC"
+            ],
+            "claimed_amount_minor": 10000,
+            "currency": "USD",
+            "evidence_ids": [
+              "invoices/D5EEBF820E0E03DD78A012B4A",
+              "ledger/R5BA1BB55813BD1643EBB6A64",
+              "policy/period"
+            ],
+            "explanation": "period_cutoff on invoice/I0555B87A2D28587E928BB9DC: the cited records show a discrepancy of 10000 minor units of USD.",
+            "type": "period_cutoff"
+          },
+          {
+            "affected_ids": [
+              "invoice/I0555B87A2D28587E928BB9DC"
+            ],
+            "claimed_amount_minor": 100000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "fx/2026-11-30/USD/KZT",
+              "invoices/D5EEBF820E0E03DD78A012B4A",
+              "ledger/R018A7ADB265B794DFC02BE1C",
+              "policy/fx_date"
+            ],
+            "explanation": "fx_conversion on invoice/I0555B87A2D28587E928BB9DC: the cited records show a discrepancy of 100000 minor units of KZT.",
+            "type": "fx_conversion"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E077255A43F950625D099C4A3E1D26109",
+    "findings": [
+      {
+        "affected_ids": [
+          "invoice/I0555B87A2D28587E928BB9DC"
+        ],
+        "claimed_amount_minor": 10000,
+        "currency": "USD",
+        "evidence_ids": [
+          "invoices/D5EEBF820E0E03DD78A012B4A",
+          "ledger/R5BA1BB55813BD1643EBB6A64",
+          "policy/period"
+        ],
+        "explanation": "period_cutoff on invoice/I0555B87A2D28587E928BB9DC: the cited records show a discrepancy of 10000 minor units of USD.",
+        "type": "period_cutoff"
+      },
+      {
+        "affected_ids": [
+          "invoice/I0555B87A2D28587E928BB9DC"
+        ],
+        "claimed_amount_minor": 100000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "fx/2026-11-30/USD/KZT",
+          "invoices/D5EEBF820E0E03DD78A012B4A",
+          "ledger/R018A7ADB265B794DFC02BE1C",
+          "policy/fx_date"
+        ],
+        "explanation": "fx_conversion on invoice/I0555B87A2D28587E928BB9DC: the cited records show a discrepancy of 100000 minor units of KZT.",
+        "type": "fx_conversion"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:12:54.892857+00:00",
+  "inspection_steps": 6,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Research protocol: same 100 actions and tools, 600 s wall clock for slow API models. Never reported as an official-protocol result.",
+    "max_actions": 100,
+    "official": false,
+    "protocol_id": "auditlab-research-600s",
+    "resumable": true,
+    "time_limit_s": 600.0
+  },
+  "protocol_id": "auditlab-research-600s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "started_at": "2026-11-21T11:12:54.449043+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 7,
+    "inspection_steps": 6,
+    "provider_calls": 7,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.443
+  },
+  "variant": "oracle_demonstration"
+}

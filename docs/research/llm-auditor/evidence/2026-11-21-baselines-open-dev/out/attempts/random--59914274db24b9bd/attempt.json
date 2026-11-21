@@ -1,0 +1,67 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "random",
+    "seed": 1,
+    "test_double": false
+  },
+  "artifact_id": "random--59914274db24b9bd",
+  "attempt_id": "random--59914274db24b9bd",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/E15BFA18342414E20C536E2F217B94A1A",
+    "episode_sha256": "2e571d7513a8a5d2846bb2fdbf64298ad8fa46e1c8fe3e5012357753c7a3d985",
+    "family_id": "E15BFA18342414E20C536E2F217B94A1A",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\random--59914274db24b9bd\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+        "findings": []
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+    "findings": []
+  },
+  "finished_at": "2026-11-21T11:12:14.366354+00:00",
+  "inspection_steps": 6,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "started_at": "2026-11-21T11:12:13.930706+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 7,
+    "inspection_steps": 6,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.435
+  },
+  "variant": "random"
+}

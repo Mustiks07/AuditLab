@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "artifact_id": "training-83c9bc44404f4d00a8826a16fee2d6e6",
+      "at": "2026-11-21T11:13:10+00:00",
+      "config_sha256": "6b889e1bbdb64bd13b12b9690416b9b1755d68c3912f83935e75be996794ad2d",
+      "dataset_sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6",
+      "job_key": "al-cc348df73d263539d5bcbc1d",
+      "phase": "initialized",
+      "seq": 0
+    },
+    {
+      "at": "2026-11-21T11:13:10+00:00",
+      "phase": "dry_run",
+      "seq": 1
+    }
+  ],
+  "schema_version": "1.0"
+}
