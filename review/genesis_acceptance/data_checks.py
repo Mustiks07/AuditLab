@@ -36,7 +36,7 @@ SCENARIOS = {
     "D07": (9107, cfg(issue_counts={**Z, "duplicate_invoice": 1}, base_currency="JPY", currencies=["JPY", "USD"], clean_distractors=["archive_copy"]), "duplicate invoice"),
     "D08": (9108, cfg(issue_counts={**Z, "duplicate_invoice": 1}, company_size={"ledger_rows_target": 2000, "documents_target": 200},
                       clean_distractors=["equal_amount_different_supplier", "archive_copy", "refund", "split_payment"]), "duplicate invoice (max size)"),
-    "D09": (9109, cfg(issue_counts={**Z, "payment_allocation": 1}), "allocation: partial (generator applies 3/5)"),
+    "D09": (9109, cfg(issue_counts={**Z, "payment_allocation": 1}, allocation_mode="omitted"), "allocation: full omission"),
     "D10": (9110, cfg(issue_counts={**Z, "payment_allocation": 1}, settlement_timing="after"), "allocation: remainder settled after the boundary"),
     "D11": (9111, cfg(issue_counts={**Z, "payment_allocation": 1}, settlement_timing="at"), "allocation: remainder settled exactly at the boundary"),
     "D12": (9112, cfg(issue_counts={**Z, "fx_conversion": 1}), "FX date/rate"),
@@ -163,12 +163,32 @@ def phase_compare(work: Path, open_session, verify_report, evaluate) -> list[dic
                      "transition": tr, "format_problems": fmt, "verifier_tp_fp_fn": [verifier_tp["tp"], verifier_tp["fp"], verifier_tp["fn"]],
                      "status": "passed" if all(conds.values()) else "failed",
                      "adapter_transport": "not_checked (generated with auditlab.generator directly; judge_adapter.generate_episode absent)"})
-    kinds = {did: [i["type"] for i in json.loads((work / "episodes" / did / "private" / "truth.json").read_text())["issues"]] for did in answers}
-    rows.append({"id": "D09-D11-matrix", "block": "data", "status": "failed",
-                 "reason": "The definitions need at least one omission (whole designated payment not applied) and one partial case. "
-                           "Generator 1.6 profile 1.1 only offers partial allocation (3/5 applied, or the remainder at/after the boundary); "
-                           "no documented setting produces a full omission.", "types": {d: kinds[d] for d in ("D09", "D10", "D11")}})
+    coverage = allocation_coverage(work, answers)
+    rows.append({"id": "D09-D11-matrix", "block": "data",
+                 "status": "passed" if {"omitted", "partial"} <= set(coverage.values()) else "failed",
+                 "reason": "Classified from public payment amounts, actual pre-boundary settlement rows and the independently frozen answer.",
+                 "allocation_modes": coverage})
     return rows
+
+
+def allocation_coverage(work, answers):
+    modes = {}
+    for did in ("D09", "D10", "D11"):
+        public = work / "episodes" / did / "public"
+        payments = {p["payment_id"]: p for p in map(json.loads, (public / "payments.jsonl").read_text().splitlines())}
+        ledger = list(csv.DictReader(io.StringIO((public / "ledger.csv").read_text())))
+        for finding in answers[did]["findings"]:
+            if finding["type"] != "payment_allocation": continue
+            pid = next(a.split("/", 1)[1] for a in finding["affected_ids"] if a.startswith("payment/"))
+            payment = payments[pid]
+            boundary = datetime.fromisoformat(payment["settlement_index"]["before"])
+            applied = sum(int(r["debit_minor"]) for r in ledger if r["payment_id"] == pid and r["account"] == "UNAPPLIED"
+                          and datetime.fromisoformat(r["timestamp"]) < boundary)
+            amount = payment["amount_minor"]
+            delta = finding["claimed_amount_minor"]
+            if delta == amount and amount > 0 and applied == 0: modes[did] = "omitted"
+            elif 0 < delta < amount and applied == amount - delta: modes[did] = "partial"
+    return modes
 
 
 # ------------------------------------------------------------------ pairs

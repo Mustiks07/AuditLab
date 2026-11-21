@@ -81,3 +81,26 @@ class IntegrationTests(unittest.TestCase):
             (base/'experiment.json').symlink_to(private/'secret.json')
             store=ResearchStore([base]);self.assertFalse(store.artifacts['experiment'])
             self.assertEqual(len(store.incompatible),1)
+
+class AllocationMatrixTests(unittest.TestCase):
+    def test_observed_full_and_partial_coverage_not_a_hardcoded_pass(self):
+        from review.genesis_acceptance.data_checks import SCENARIOS,allocation_coverage
+        from review.genesis_acceptance.independent_calc import audit
+        from auditlab.generator import generate_episode
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp);answers={}
+            for did in ('D09','D10','D11'):
+                seed,config,_=SCENARIOS[did];ep=base/'episodes'/did
+                generate_episode(seed,config,ep);answers[did]=audit(ep/'public')
+            self.assertEqual(allocation_coverage(base,answers),{'D09':'omitted','D10':'partial','D11':'partial'})
+            answers['D09']['findings']=[]
+            self.assertNotIn('omitted',allocation_coverage(base,answers).values())
+
+class SchemaTests(unittest.TestCase):
+    def test_public_schema_rejects_unknown_cost_nan_and_private_fields(self):
+        from auditlab.research.artifacts import validate
+        data={'schema_version':'1.0','artifact_kind':'experiment','artifact_id':'x','source_sha':'x','protocol_id':'x',
+              'provenance':{'kind':'measured'},'status':'completed','agents':[],'progress':{}}
+        validate(data)
+        for patch in ({'cost':float('nan')},{'metadata':{'api_key':'secret'}},{'progress':[]}):
+            with self.assertRaises(ValueError):validate({**data,**patch})
