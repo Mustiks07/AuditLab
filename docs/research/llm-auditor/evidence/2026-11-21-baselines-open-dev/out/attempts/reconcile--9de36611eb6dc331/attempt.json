@@ -1,0 +1,97 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--9de36611eb6dc331",
+  "attempt_id": "reconcile--9de36611eb6dc331",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/E509506A67D640282D2FD1D8B154EF4EC",
+    "episode_sha256": "a49191d2b6cf4afebac6ad66cfc3dfb89e26b0f80c3e844576daabeac7282b23",
+    "family_id": "E509506A67D640282D2FD1D8B154EF4EC",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\reconcile--9de36611eb6dc331\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E509506A67D640282D2FD1D8B154EF4EC",
+        "findings": [
+          {
+            "affected_ids": [
+              "invoice/I7464C74237F658EB079AED71"
+            ],
+            "claimed_amount_minor": 2400000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "invoices/D87507162564E502F9D2B6551",
+              "ledger/R38070514A6C29E4BC53D174D",
+              "policy/period"
+            ],
+            "explanation": "The invoice issue date and the accounting recognition fall on opposite sides of the reporting boundary.",
+            "type": "period_cutoff"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E509506A67D640282D2FD1D8B154EF4EC",
+    "findings": [
+      {
+        "affected_ids": [
+          "invoice/I7464C74237F658EB079AED71"
+        ],
+        "claimed_amount_minor": 2400000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D87507162564E502F9D2B6551",
+          "ledger/R38070514A6C29E4BC53D174D",
+          "policy/period"
+        ],
+        "explanation": "The invoice issue date and the accounting recognition fall on opposite sides of the reporting boundary.",
+        "type": "period_cutoff"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:18:33.562277+00:00",
+  "inspection_steps": 9,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:18:33.083443+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 10,
+    "inspection_steps": 9,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.478
+  },
+  "variant": "reconcile"
+}

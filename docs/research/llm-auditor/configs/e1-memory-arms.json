@@ -1,0 +1,12 @@
+{"arms": [
+  {"name": "claude-tools", "agent": {"kind": "llm", "variant": "tools", "max_tokens": 16000},
+   "provider": {"provider": "anthropic", "model": "claude-opus-5-5", "effort": "high", "api_key_env": "ANTHROPIC_API_KEY",
+                "fallbacks": null, "strict_tools": true, "prompt_cache": true}},
+  {"name": "claude-memory", "agent": {"kind": "llm", "variant": "memory", "max_tokens": 16000},
+   "provider": {"provider": "anthropic", "model": "claude-opus-5-5", "effort": "high", "api_key_env": "ANTHROPIC_API_KEY",
+                "fallbacks": null, "strict_tools": true, "prompt_cache": true}}
+ ],
+ "transport": "docker",
+ "budget": {"max_usd_total": null, "max_usd_per_attempt": null},
+ "analysis": {"pairs": [["claude-memory", "claude-tools"]], "bootstrap": 10000, "seed": 20261121},
+ "note": "E1 of agent-generalization-1.1: same model, prompt base, effort, step and token budget; only the memory tools differ. Budget is intentionally empty: a paid run is refused until the integrator sets a spend limit."}

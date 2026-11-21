@@ -1,0 +1,80 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "kind": "oracle_demonstration",
+    "limits": {
+      "max_model_calls_per_action": 12,
+      "max_nudges": 2,
+      "max_prechecks": 0
+    },
+    "max_tokens": 16000,
+    "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "model": "oracle-demonstration",
+      "provider": "oracle_demonstration",
+      "teacher": true
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "demo-E04F4ED6D6765D816DF94C62477B6EC4C",
+  "attempt_id": "demo-E04F4ED6D6765D816DF94C62477B6EC4C",
+  "budget_usd": 0.0,
+  "episode": {
+    "episode_ref": "datasets/open/train/E04F4ED6D6765D816DF94C62477B6EC4C",
+    "episode_sha256": "816dfb926c0d28929b2c0070043e99a3bfbb173b0bf79698f26dff280fd8f8db",
+    "family_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+    "split": "train"
+  },
+  "evaluation_ref": "trusted\\demo-E04F4ED6D6765D816DF94C62477B6EC4C\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+        "findings": []
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+    "findings": []
+  },
+  "finished_at": "2026-11-21T11:18:49.646679+00:00",
+  "inspection_steps": 2,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Research protocol: same 100 actions and tools, 600 s wall clock for slow API models. Never reported as an official-protocol result.",
+    "max_actions": 100,
+    "official": false,
+    "protocol_id": "auditlab-research-600s",
+    "resumable": true,
+    "time_limit_s": 600.0
+  },
+  "protocol_id": "auditlab-research-600s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:18:49.201323+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 3,
+    "inspection_steps": 2,
+    "provider_calls": 3,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.429
+  },
+  "variant": "oracle_demonstration"
+}

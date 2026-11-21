@@ -1,0 +1,5 @@
+{"schema_version": "1.0", "protocol_id": "auditlab-research-600s", "provider": "local_lora",
+ "base_model": "Qwen/Qwen2.5-7B-Instruct", "dataset": "dataset",
+ "hyperparameters": {"n_epochs": 2, "learning_rate": 0.0001, "batch_size": 1}, "lora": {"r": 16, "alpha": 32},
+ "seed": 20261121, "lora_module_name": "auditlab-lora-published-train", "min_examples": 10, "poll_interval_s": 60,
+ "note": "base model is a placeholder until the integrator fixes the trainable model and GPU host"}

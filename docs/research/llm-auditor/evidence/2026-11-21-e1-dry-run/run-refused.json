@@ -1,0 +1,2 @@
+{"status": "refused", "reason": "paid run refused: budget.max_usd_total must be a positive spend limit; budget.max_usd_per_attempt must be positive; arm claude-tools: secret variable ANTHROPIC_API_KEY is not set; arm claude-memory: secret variable ANTHROPIC_API_KEY is not set"}
+exit=2

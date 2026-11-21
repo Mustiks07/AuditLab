@@ -1,0 +1,161 @@
+{
+  "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+  "prompt_version": "llm-auditor-prompt-1.0",
+  "system": "You are a financial auditor working inside a simulated accounting environment. One company, one reporting period. Find the financial errors that are really present in the books and submit them with evidence, or submit no findings if the books are clean.\n\nYou act only through the provided tools. Every call of list_records, get_record, get_document, calculator and submit is one environment action: at most 100 actions in total including submit, and the episode also has a wall-clock limit. Exploration actions lower the final reward slightly (0.002 per action), but a wrong or missing finding costs far more than a few extra reads. Submit exactly once; after submit the episode ends.\n\nData: ledger rows (row_id, timestamp, account, debit_minor, credit_minor, currency, entity_id, invoice_id, payment_id, journal_id), invoices and payments documents (doc_id), fx rates (date/SOURCE/TARGET, decimal strings) and policy rules (period boundary, fx date choice, rounding, allocation). Money is in integer minor units of the stated currency. Use the calculator for every arithmetic step; do not do arithmetic in your head. Different currencies are never compared without conversion under the policy.\n\nError types: duplicate_invoice (one obligation recognised twice), payment_allocation (a designated payment missing or only partly applied by the reporting boundary), fx_conversion (wrong date or rate used for a conversion under the policy), period_cutoff (recognised in the wrong reporting period). Correct look-alikes exist: split payments, refunds, legitimate repeated amounts, archive copies, boundary cases that the policy allows.\n\nA finding is {type, affected_ids, claimed_amount_minor, currency, evidence_ids, explanation}. affected_ids use invoice/<invoice_id> and payment/<payment_id>. evidence_ids cite records you actually read: ledger/<row_id>, invoices/<doc_id>, payments/<doc_id>, fx/<date>/<SOURCE>/<TARGET>, policy/<rule>. Cite every record needed to verify the finding and nothing you have not seen. claimed_amount_minor is the size of the discrepancy, an integer, in the currency you state. explanation is a short justification (under 1000 characters), not your reasoning process. Limits: 30 findings, 10 evidence ids per finding. False accusations are penalised as much as missed errors; a duplicate of a finding gains nothing.",
+  "tools": [
+    {
+      "description": "Read one page (at most 50 rows) of a public table. Start with cursor null and pass next_cursor to continue. One environment action.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "table": {
+            "enum": [
+              "ledger",
+              "invoices",
+              "payments",
+              "fx",
+              "policy"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "table",
+          "cursor",
+          "limit"
+        ],
+        "type": "object"
+      },
+      "name": "list_records"
+    },
+    {
+      "description": "Read one record by its lookup id (ledger row_id, invoices/payments doc_id, fx DATE/SOURCE/TARGET, policy rule name). One environment action.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "table": {
+            "enum": [
+              "ledger",
+              "invoices",
+              "payments",
+              "fx",
+              "policy"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "table",
+          "id"
+        ],
+        "type": "object"
+      },
+      "name": "get_record"
+    },
+    {
+      "description": "Read one invoice or payment document by doc_id. One environment action.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "doc_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_id"
+        ],
+        "type": "object"
+      },
+      "name": "get_document"
+    },
+    {
+      "description": "Exact decimal arithmetic (+ - * / and parentheses on decimal numbers). Returns a decimal string. One environment action.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "expression": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expression"
+        ],
+        "type": "object"
+      },
+      "name": "calculator"
+    },
+    {
+      "description": "Submit the final findings (possibly an empty list) and end the episode. Counts as an environment action. Use the episode_id from the manifest.",
+      "input_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "episode_id": {
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "affected_ids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "claimed_amount_minor": {
+                  "type": "integer"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "explanation": {
+                  "type": "string"
+                },
+                "type": {
+                  "description": "One of: duplicate_invoice, payment_allocation, fx_conversion, period_cutoff",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "affected_ids",
+                "claimed_amount_minor",
+                "currency",
+                "evidence_ids",
+                "explanation"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "episode_id",
+          "findings"
+        ],
+        "type": "object"
+      },
+      "name": "submit"
+    }
+  ]
+}

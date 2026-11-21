@@ -1,0 +1,47 @@
+{
+  "attempt_id": "reconcile--cc96b9d7dd61d2db",
+  "env_status": "submitted",
+  "inspection_steps": 9,
+  "internal_score": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.982,
+    "tp": 2
+  },
+  "matches": [
+    [
+      0,
+      "XD0BD8E1F546449F4F991B225"
+    ],
+    [
+      1,
+      "X5B5C070385DEB1B0A2A0E27A"
+    ]
+  ],
+  "not_evaluable_reason": null,
+  "official": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.982,
+    "tp": 2
+  },
+  "official_by_rule": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.982,
+    "tp": 2
+  },
+  "schema_version": "1.0",
+  "status": "completed",
+  "truth_issue_count": 2,
+  "unmatched": {}
+}

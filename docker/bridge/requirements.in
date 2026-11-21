@@ -1,0 +1,6 @@
+# LLM network bridge dependencies (Python 3.11.14).
+# NOT LOCKED YET: the integrator pins the version here, then generates requirements.lock with
+#   uv pip compile docker/bridge/requirements.in --python-version 3.11.14 --generate-hashes --output-file docker/bridge/requirements.lock
+# (the command documented in docs/TEAM.md) and puts the matching wheels in docker/wheels/bridge/.
+# Until then docker/bridge/Dockerfile is not buildable and the bridge image is unchecked.
+anthropic

@@ -268,6 +268,18 @@ class StepContract(AdapterCase):
         self.assertEqual((terminated, truncated, observation["error"]["code"]), (False, True, "time_limit"))
         self.assertEqual(env.trusted_result()["inspection_steps"], 1)
 
+    def test_judge_can_abort_a_crashed_policy(self):
+        env, *_ = self.start()
+        env.step(LOOK)
+        observation, _, terminated, truncated, _ = env.abort("provider_error: upstream 529")
+        self.assertEqual((terminated, truncated, observation["error"]["code"]), (False, True, "aborted"))
+        self.assertEqual(env.trusted_result()["status"], "policy_failure")  # not a financial answer
+        self.clock.now += 61
+        env2, *_ = self.start()
+        self.clock.now += 61
+        env2.abort("late")
+        self.assertEqual(env2.trusted_result()["status"], "truncated_timeout")  # past the deadline it is a timeout
+
     def test_c19_closed_mode_hides_reward_and_diagnostics(self):
         env, episode, *_ = self.start()
         seen = [env.step(LOOK) for _ in range(3)]

@@ -1,0 +1,12 @@
+# GPU training profile "gpu-training" for auditlab/research/training/local_lora.py.
+# NOT part of the offline AuditLab bundle and never installed by the offline release.
+# Names only: the integrator pins exact versions and produces a hashed lock file for the target
+# CUDA image (docs checked 2026-11-21 against TRL v1.18.2 and PEFT v0.22.0; transformers v5 docs).
+torch
+transformers
+datasets
+peft
+trl
+accelerate
+safetensors
+# Serving the trained adapter (may be a separate image): vllm
