@@ -87,6 +87,8 @@ def prepare_teacher(checkout: Path, curriculum: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=False)
     env = dict(os.environ)
     env["PYTHONPATH"] = os.pathsep.join(filter(None, (str(checkout), env.get("PYTHONPATH"))))
+    # Claude 1's scripted provider derives tool call IDs from Python's hash().
+    env["PYTHONHASHSEED"] = "0"
     subprocess.run([sys.executable, "-c", _PREPARE, str(curriculum), str(output)],
                    cwd=curriculum.parent, env=env, check=True)
 

@@ -1,0 +1,233 @@
+[
+  {
+    "agent": {
+      "kind": "built_in_policy",
+      "name": "random",
+      "network": false,
+      "provider_calls": 0
+    },
+    "arms": {
+      "adaptive": {
+        "accepted": 4,
+        "agent_runs": 18,
+        "cost_micros": 0,
+        "offered": 9,
+        "scored_attempts": 18,
+        "stop_reason": "candidate_budget",
+        "weak_attempts": 8
+      },
+      "uniform": {
+        "accepted": 4,
+        "agent_runs": 18,
+        "cost_micros": 0,
+        "offered": 9,
+        "scored_attempts": 18,
+        "stop_reason": "candidate_budget",
+        "weak_attempts": 8
+      }
+    },
+    "artifact_id": "experiment-summary-random",
+    "clean_calibration": {
+      "passed": 2
+    },
+    "exported": {
+      "dev/filtered": 1,
+      "dev/included": 4,
+      "train/filtered": 1,
+      "train/included": 10
+    },
+    "paired": {
+      "passed": 8,
+      "public_motif_guesser": {
+        "false_negative": 0,
+        "false_positive": 2,
+        "true_negative": 0,
+        "true_positive": 6
+      },
+      "size_pairs": [
+        [
+          240,
+          76
+        ]
+      ],
+      "total": 8
+    },
+    "partial_overlap": {
+      "shared_distinct_complete_chains": {
+        "dev/test": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        },
+        "train/dev": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        },
+        "train/test": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        }
+      }
+    },
+    "partition_sha256": "897ab2c5a9508a53f8a5b531c4c576744ed28270cb5fb247edc1d9195d7e0baa",
+    "plan_sha256": "e0d24cc0f8cebba33f457b7167b826d3cf2ffde071b0d4770c8c4ab2205b2ecd",
+    "protocol_id": "financial-curriculum-local-1.0",
+    "reason": null,
+    "reduction": {
+      "baseline": {
+        "frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "sizes": {
+          "documents": 76,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "snapshot_sha256": "8dc683a88b2fff6ca9a3739b5acc89088020275a9e12685f81382d421c1a6d45"
+      },
+      "candidate_id": "train-review-a",
+      "cost": {
+        "cost_micros": 0,
+        "known_cost_micros": 0,
+        "unknown_attempt_costs": 0
+      },
+      "runs_used": 6,
+      "selected": {
+        "frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 6
+        },
+        "snapshot_sha256": "5982f27bbdc4a59092fdb82365593ca5c4412fa5266edf0007bbdeb6d5133167"
+      },
+      "status": "reduced",
+      "target": {
+        "affected_ids": [
+          "invoice/I0A65FC14BD3760CB13D935F4",
+          "payment/P20C21B948CE9185487600851"
+        ],
+        "issue_id": "XCBF5F01A35EDAE8CA93F2372",
+        "issue_type": "payment_allocation",
+        "reason": "missed_issue"
+      }
+    },
+    "schema_version": "1.0",
+    "source_sha": "0b7f65c56f3069e2a3fb2081fe80b2bf9c901cf3"
+  },
+  {
+    "agent": {
+      "kind": "built_in_policy",
+      "name": "reconcile",
+      "network": false,
+      "provider_calls": 0
+    },
+    "arms": {
+      "adaptive": {
+        "accepted": 0,
+        "agent_runs": 18,
+        "cost_micros": 0,
+        "offered": 9,
+        "scored_attempts": 18,
+        "stop_reason": "candidate_budget",
+        "weak_attempts": 0
+      },
+      "uniform": {
+        "accepted": 0,
+        "agent_runs": 18,
+        "cost_micros": 0,
+        "offered": 9,
+        "scored_attempts": 18,
+        "stop_reason": "candidate_budget",
+        "weak_attempts": 0
+      }
+    },
+    "artifact_id": "experiment-summary-reconcile",
+    "clean_calibration": {
+      "passed": 2
+    },
+    "exported": {
+      "dev/filtered": 1,
+      "dev/included": 4,
+      "train/included": 2
+    },
+    "paired": {
+      "passed": 8,
+      "public_motif_guesser": {
+        "false_negative": 0,
+        "false_positive": 2,
+        "true_negative": 0,
+        "true_positive": 6
+      },
+      "size_pairs": [
+        [
+          240,
+          76
+        ]
+      ],
+      "total": 8
+    },
+    "partial_overlap": {
+      "shared_distinct_complete_chains": {
+        "dev/test": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        },
+        "train/dev": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        },
+        "train/test": {
+          "counterparty": 0,
+          "invoice": 0,
+          "posted_counterparty": 0
+        }
+      }
+    },
+    "partition_sha256": "897ab2c5a9508a53f8a5b531c4c576744ed28270cb5fb247edc1d9195d7e0baa",
+    "plan_sha256": "e0d24cc0f8cebba33f457b7167b826d3cf2ffde071b0d4770c8c4ab2205b2ecd",
+    "protocol_id": "financial-curriculum-local-1.0",
+    "reason": "no_target_weakness_observed",
+    "reduction": null,
+    "schema_version": "1.0",
+    "source_sha": "0b7f65c56f3069e2a3fb2081fe80b2bf9c901cf3"
+  }
+]
