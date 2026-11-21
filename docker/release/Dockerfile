@@ -22,6 +22,7 @@ COPY auditlab /app/auditlab
 COPY sql /app/sql
 COPY schemas /app/schemas
 COPY tests /app/tests
+COPY review /app/review
 COPY fixtures /app/fixtures
 COPY datasets /app/datasets
 COPY docs /app/docs
