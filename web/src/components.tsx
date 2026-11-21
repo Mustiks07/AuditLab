@@ -1,122 +1,109 @@
-import { ReactNode } from "react";
-import type { Derivation, Operand, RunMeta } from "./api";
-import { minor, money, OP_ERRORS, opError, STATUS, when } from "./format";
+import type { ReactNode } from "react";
+import { ApiError, type Derivation, type Operand, type RunMeta } from "./api";
+import { money } from "./format";
+import { fieldName, friendlyError, humanFact, operandName, recordName } from "./workspace/copy";
+import { findingName, runStatus } from "./workspace/model";
 
 export function LabelBadge({ run }: { run: RunMeta }) {
-  return <span className={`badge badge-${run.label ?? "export"}`}>{run.label_text}</span>;
+  if (run.label === "live_experiment") return <span className="pill">Новая проверка</span>;
+  if (run.label === "rescore_copy") return <span className="pill">Пересчитанная копия</span>;
+  return null;
 }
 
 export function StatusPill({ status }: { status: string }) {
-  return <span className={`pill pill-${status}`}>{STATUS[status] ?? status}</span>;
+  return <span className={`pill pill-${status}`}>{runStatus(status)}</span>;
 }
 
-export function EngineLine({ engine }: { engine?: Record<string, string> }) {
-  if (!engine) return null;
-  const names: Record<string, string> = { session: "среда", policy: "политика", evaluator: "оценщик", generator: "генератор", verifier: "сверка" };
-  return (
-    <div className="engine-line" title="Какие модули дали этот результат">
-      {Object.entries(engine).map(([k, v]) => (
-        <span key={k} className={`engine ${v === "demo-standin" ? "engine-standin" : v === "not_connected" ? "engine-off" : ""}`}>
-          {names[k] ?? k}: {v === "demo-standin" ? "учебная замена" : v === "not_connected" ? "не подключена" : v}
-        </span>
-      ))}
-    </div>
-  );
+export function KeyChip({ k, onOpen, active, missing, hint, label }: {
+  k: string; onOpen?: (key: string) => void; active?: boolean; missing?: boolean; hint?: string; label?: string;
+}) {
+  const className = `chip ${active ? "chip-active" : ""} ${missing ? "chip-missing" : ""}`;
+  const title = label ?? recordName(k);
+  if (!onOpen) return <span className={className} title={hint}>{title}</span>;
+  return <button type="button" className={className} onClick={() => onOpen(k)}
+    aria-pressed={active === undefined ? undefined : active} title={hint}>{title}</button>;
 }
 
-export function KeyChip({ k, onOpen, active, missing, hint }: { k: string; onOpen?: (k: string) => void; active?: boolean; missing?: boolean; hint?: string }) {
-  return (
-    <button type="button" className={`chip ${active ? "chip-active" : ""} ${missing ? "chip-missing" : ""}`}
-      onClick={() => onOpen?.(k)} title={hint ? `${k} · ${hint}` : k} disabled={!onOpen}>
-      {k}
-    </button>
-  );
-}
-
-export function Panel({ title, extra, children, className }: { title: ReactNode; extra?: ReactNode; children: ReactNode; className?: string }) {
-  return (
-    <section className={`panel ${className ?? ""}`}>
-      <div className="panel-head">
-        <h2>{title}</h2>
-        {extra}
-      </div>
-      <div className="panel-body">{children}</div>
-    </section>
-  );
+export function Panel({ title, extra, children, className = "" }: {
+  title: ReactNode; extra?: ReactNode; children: ReactNode; className?: string;
+}) {
+  return <section className={`panel ${className}`}>
+    <div className="panel-head"><h2>{title}</h2>{extra}</div>
+    <div className="panel-body">{children}</div>
+  </section>;
 }
 
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
-  return (
-    <div className="empty">
-      <div className="empty-title">{title}</div>
-      {children && <div className="empty-body">{children}</div>}
-    </div>
-  );
+  return <div className="empty">
+    <div className="empty-title">{title}</div>
+    {children && <div className="empty-body">{children}</div>}
+  </div>;
 }
 
-export function ErrorBox({ error }: { error: unknown }) {
-  const code = typeof error === "object" && error !== null && "code" in error ? String((error as { code: unknown }).code) : undefined;
-  const raw = error instanceof Error ? error.message : String(error);
-  const msg = code && OP_ERRORS[code] ? opError(code, raw) : raw;
-  return <div className="error-box" role="alert"><b>Ошибка.</b> {msg}</div>;
+export function DiagnosticDownload({ data, label = "Скачать диагностику" }: { data: unknown; label?: string }) {
+  function download() {
+    const file = new Blob([JSON.stringify(data, null, 2) ?? ""], { type: "application/json" });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "auditlab-report.json";
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  return <button className="text-link" type="button" onClick={download}>{label}</button>;
 }
 
-function operandValue(op: Operand): string {
-  if (op.value !== undefined) return op.value;
-  return minor(op.value_minor);
+export function ErrorBox({ error, title }: { error: unknown; title?: string }) {
+  const message = friendlyError(error instanceof ApiError ? error.code : undefined);
+  return <div className="error-box" role="alert">
+    {title && <strong>{title}</strong>}
+    <div>{message}</div>
+    <DiagnosticDownload data={error instanceof ApiError ?
+      { status: error.status, code: error.code, message: error.message } :
+      { message: error instanceof Error ? error.message : String(error) }}/>
+  </div>;
 }
 
-/** Operands → result. Every operand links to the exact file line it was read from. */
-export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: { exponents: Record<string, number>; calc: Derivation; onOpen: (k: string) => void; cited?: string[]; activeKey?: string | null }) {
+function valueOf(op: Operand, exponents: Record<string, number>) {
+  if (op.value_minor !== undefined && op.currency) return money(op.value_minor, op.currency, exponents);
+  return humanFact(op.value, op.field);
+}
+
+export function DerivationView({ calc, onOpen, cited, activeKey, exponents }: {
+  exponents: Record<string, number>; calc: Derivation; onOpen: (key: string) => void;
+  cited?: string[]; activeKey?: string | null;
+}) {
   const citedSet = new Set(cited ?? []);
   const rule = calc.rule;
-  return (
-    <div className="derivation">
-      <div className="derivation-title">{calc.title}</div>
-      <div className="operands-hint small muted">← Таблица расчёта прокручивается по горизонтали →</div>
-      <div className="operands-scroll" role="region" aria-label={`Расчёт: ${calc.title}`} tabIndex={0}>
+  return <div className="derivation">
+    <h3 className="derivation-title">Расчёт по документам</h3>
+    <div className="operands-scroll" role="region" aria-label={`Расчёт: ${findingName(calc.type)}`} tabIndex={0}>
       <table className="operands">
-        <thead>
-          <tr><th></th><th title="Числа в файлах — целые минимальные единицы валюты (тиын, цент); под ними — сумма по разрядности из манифеста">значение, мин. ед.</th><th>источник</th><th>строка</th><th>смысл</th></tr>
-        </thead>
+        <thead><tr><th scope="col">Операция</th><th scope="col">Значение</th><th scope="col">Источник</th></tr></thead>
         <tbody>
-          {calc.operands.map((op) => (
-            <tr key={op.key + op.field} className={activeKey === op.key ? "row-active" : ""}>
-              <td className="sign">{calc.type === "fx_conversion" ? (op.sign < 0 ? "−" : op.field === "rate" ? "×" : "") : op.sign < 0 ? "−" : "+"}</td>
-              <td className="num">{operandValue(op)}{op.value_minor !== undefined && op.currency && <div className="small muted">{money(op.value_minor, op.currency, exponents)}</div>}</td>
-              <td>
-                <KeyChip k={op.key} onOpen={onOpen} active={activeKey === op.key} missing={cited !== undefined && !citedSet.has(op.key)}
-                  hint={cited !== undefined && !citedSet.has(op.key) ? "Этот операнд не процитирован в выводе" : `${op.file}:${op.line}`} />
-              </td>
-              <td className="mono small">{op.file.replace("public/", "")}:{op.line} · {op.field}</td>
-              <td className="small">{op.label}{op.timestamp ? ` · ${when(op.timestamp)}` : ""}</td>
-            </tr>
-          ))}
-          {(calc.context ?? []).map((op) => (
-            <tr key={"ctx" + op.key} className="row-context">
-              <td className="sign">·</td>
-              <td className="num">{operandValue(op)}{op.value_minor !== undefined && op.currency && <div className="small muted">{money(op.value_minor, op.currency, exponents)}</div>}</td>
-              <td><KeyChip k={op.key} onOpen={onOpen} active={activeKey === op.key} /></td>
-              <td className="mono small">{op.file.replace("public/", "")}:{op.line}</td>
-              <td className="small">{op.label}{op.timestamp ? ` · ${when(op.timestamp)}` : ""}</td>
-            </tr>
-          ))}
+          {[...calc.operands, ...(calc.context ?? [])].map((op, index) => {
+            const context = index >= calc.operands.length;
+            const label = operandName(op, calc.type, context);
+            return <tr key={`${op.key}:${op.field}`} className={activeKey === op.key ? "row-active" : context ? "row-context" : undefined}>
+              <td>{label}{op.timestamp && <small className="operand-date">{humanFact(op.timestamp)}</small>}</td>
+              <td className="money-cell">{valueOf(op, exponents)}</td>
+              <td><KeyChip k={op.key} label={`${recordName(op.key)} · ${fieldName(op.field).toLocaleLowerCase("ru")}`}
+                onOpen={onOpen} active={activeKey === op.key} missing={!context && cited !== undefined && !citedSet.has(op.key)}/></td>
+            </tr>;
+          })}
         </tbody>
       </table>
-      </div>
-      <div className="formula mono">{calc.formula} <span className="muted small">· в мин. ед.; итог в {calc.currency}</span></div>
-      <div className="rule">
-        <KeyChip k={rule.key} onOpen={onOpen} active={activeKey === rule.key}
-          missing={cited !== undefined && !citedSet.has(rule.key)} />
-        {"boundary" in rule && <span> граница {when(String(rule.boundary))} (исключительно)</span>}
-        {"local_date" in rule && <span> местная дата {String(rule.local_date)} ({String(rule.timezone)}), округление {String(rule.rounding)}</span>}
-      </div>
-      {calc.index_check && !calc.index_check.complete && (
-        <div className="warn">Опубликованный индекс {calc.index_check.published.join(", ")} не совпадает с группировкой книги {calc.index_check.grouped.join(", ")}</div>
-      )}
-      <div className="derivation-result">
-        Итог: <b>{money(calc.result_minor, calc.currency, exponents)}</b> <span className="muted mono">({minor(calc.result_minor)} мин. ед.)</span>
-      </div>
     </div>
-  );
+    {calc.type === "fx_conversion" && calc.expected_minor != null && calc.recorded_minor != null && <p>
+      По курсу: <b>{money(calc.expected_minor, calc.currency, exponents)}</b> · В учёте: <b>{money(calc.recorded_minor, calc.currency, exponents)}</b>
+    </p>}
+    <div className="rule">
+      <KeyChip k={rule.key} onOpen={onOpen} active={activeKey === rule.key}
+        missing={cited !== undefined && !citedSet.has(rule.key)}/>
+      {typeof rule.boundary === "string" && <span>Граница: {humanFact(rule.boundary)}{rule.boundary_exclusive === true ? ", не включается" : ""}</span>}
+      {typeof rule.local_date === "string" && <span>Местная дата курса: {humanFact(rule.local_date)}</span>}
+    </div>
+    {calc.index_check && !calc.index_check.complete && <p className="warn">Перечень движений платежа расходится с проводками.</p>}
+    <div className="derivation-result">Итог: <b>{money(calc.result_minor, calc.currency, exponents)}</b></div>
+  </div>;
 }

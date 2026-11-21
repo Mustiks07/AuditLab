@@ -1,0 +1,27 @@
+.c3-record { min-width: 0; }
+.c3-record .record-head { align-items: flex-start; }
+.c3-record .record-head h3 { margin: 0 0 var(--space-1); }
+.c3-record .record-head p { margin: 0; }
+.c3-record .fields th { width: 38%; }
+.c3-record .fields th, .c3-record .fields td { padding: var(--space-2); vertical-align: top; }
+.record-highlight { display: block; margin-top: var(--space-1); }
+.record-positions { list-style: none; margin: 0; padding: 0; }
+.record-positions li { display: grid; gap: var(--space-1); }
+.record-positions li + li { margin-top: var(--space-2); }
+.record-related, .record-nearby { margin-top: var(--space-4); }
+.record-related h4 { margin: 0 0 var(--space-1); }
+.record-related p { margin: 0 0 var(--space-2); }
+.record-links, .record-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.record-actions, .record-nearby .record-links { margin-top: var(--space-3); }
+.record-nearby summary { color: var(--color-accent); cursor: pointer; min-height: 32px; }
+.record-preview { margin: 0 0 var(--space-2); overflow-wrap: anywhere; }
+.record-current { display: grid; gap: var(--space-1); padding: var(--space-2) 0; }
+.record-timing { min-inline-size: 0; margin: 0; padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-control); }
+.record-timing legend { color: var(--color-muted); font-size: 13px; }
+.record-timing-option { display: flex; align-items: center; gap: var(--space-2); min-height: 44px; }
+.record-timing-option input { flex: 0 0 auto; accent-color: var(--color-accent); }
+.record-timing-option small { display: block; color: var(--color-muted); }
+.record-link { display: inline-flex; align-items: center; }
+@media (max-width: 767px) {
+  .record-actions .btn, .record-links .chip, .record-nearby summary { min-height: 44px; }
+}

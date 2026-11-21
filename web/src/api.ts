@@ -199,12 +199,12 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
-  runs: () => call<{ runs: RunMeta[] }>("/demo/runs"),
-  run: (id: string) => call<RunDetail>(`/demo/runs/${encodeURIComponent(id)}`),
+  runs: (signal?: AbortSignal) => call<{ runs: RunMeta[] }>("/demo/runs", { signal }),
+  run: (id: string, signal?: AbortSignal) => call<RunDetail>(`/demo/runs/${encodeURIComponent(id)}`, { signal }),
   record: (id: string, key: string) =>
     call<RecordView>(`/demo/runs/${encodeURIComponent(id)}/records/${key.split("/").map(encodeURIComponent).join("/")}`),
-  compare: (left: string, right: string) =>
-    call<CompareView>(`/demo/compare?left=${encodeURIComponent(left)}&right=${encodeURIComponent(right)}`),
+  compare: (left: string, right: string, signal?: AbortSignal) =>
+    call<CompareView>(`/demo/compare?left=${encodeURIComponent(left)}&right=${encodeURIComponent(right)}`, { signal }),
   createPair: (body: { source_run_id: string; change: { target: string; field: string; value: string }; prediction?: string; operation_key: string }) =>
     call<OpStatus>("/demo/pairs", { method: "POST", body: JSON.stringify(body) }),
   rescore: (id: string, body: { finding_index: number; replace: string; with: string; operation_key: string }) =>

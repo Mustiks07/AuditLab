@@ -1,0 +1,79 @@
+{
+  "scope": "Standalone C3 HTML design reference only. Not integrated AuditLab application.",
+  "checks": [
+    {
+      "name": "no horizontal overflow 1440",
+      "pass": true
+    },
+    {
+      "name": "no horizontal overflow 1280",
+      "pass": true
+    },
+    {
+      "name": "no horizontal overflow 390",
+      "pass": true
+    },
+    {
+      "name": "no horizontal overflow 320",
+      "pass": true
+    },
+    {
+      "name": "5 initial rows",
+      "pass": true
+    },
+    {
+      "name": "2 finding rows",
+      "pass": true
+    },
+    {
+      "name": "filter + search",
+      "pass": true
+    },
+    {
+      "name": "empty state",
+      "pass": true
+    },
+    {
+      "name": "reset",
+      "pass": true
+    },
+    {
+      "name": "search shortcut",
+      "pass": true
+    },
+    {
+      "name": "prototype notice",
+      "pass": true
+    },
+    {
+      "name": "dialog closes",
+      "pass": true
+    },
+    {
+      "name": "focus returns",
+      "pass": true
+    },
+    {
+      "name": "clean main copy",
+      "pass": true
+    },
+    {
+      "name": "reduced motion",
+      "pass": true
+    },
+    {
+      "name": "font loaded",
+      "pass": true
+    },
+    {
+      "name": "no external requests",
+      "pass": true
+    },
+    {
+      "name": "no JS errors",
+      "pass": true
+    }
+  ],
+  "external": [],
+  "errors": []
+}
