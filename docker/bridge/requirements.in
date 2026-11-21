@@ -3,4 +3,4 @@
 #   uv pip compile docker/bridge/requirements.in --python-version 3.11.14 --generate-hashes --output-file docker/bridge/requirements.lock
 # (the command documented in docs/TEAM.md) and puts the matching wheels in docker/wheels/bridge/.
 # Until then docker/bridge/Dockerfile is not buildable and the bridge image is unchecked.
-anthropic
+anthropic==2.12.0

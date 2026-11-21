@@ -1,9 +1,9 @@
 # LLM network bridge image
 
-Status: **not built, not checked.** `requirements.in` lists `anthropic` without a pinned
-version; `requirements.lock` and the offline wheels in `docker/wheels/bridge/` do not exist
-yet, so `docker build` fails at the lock `COPY`. No live Docker run of the topology below
-has been performed.
+The integrator supplies `anthropic==2.12.0` and a hash-locked transitive dependency set.
+Build and the internal-network/proxy refusal check are exercised in PR CI. This checks
+network isolation, not a live provider response. Wheels are downloaded into the separate
+`docker/wheels/bridge/` directory with `--require-hashes`; no SDK is added to the offline core.
 
 ## Topology
 
@@ -35,9 +35,9 @@ controller ──stdin/stdout JSONL──▶ bridge container          network: 
 `dev_bridge_command()` is a host subprocess with **no network or filesystem isolation**; it
 is refused for the official protocol, like the runner's `--unsafe-dev-subprocess`.
 
-## To finish
+## Reproduce
 
-1. Pin `anthropic` in `requirements.in`, lock it (command in the file header), add wheels.
+1. `python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels/bridge -r docker/bridge/requirements.lock`
 2. `docker build --network=none -f docker/bridge/Dockerfile -t auditlab-llm-bridge:dev .`
 3. `AUDITLAB_BRIDGE_IMAGE=auditlab-llm-bridge:dev python -m unittest discover -s tests/research_agents -p test_bridge_isolation.py -v`
    (the live test checks that the bridge network has no direct route out and that the

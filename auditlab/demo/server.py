@@ -13,7 +13,7 @@ import sys
 import threading
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
@@ -211,7 +211,15 @@ def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = 
         return view
 
     @app.post("/research/experiments/{artifact_id}/{action}")
-    def research_control(artifact_id: str, action: str):
+    def research_control(artifact_id: str, action: str, request: Request):
+        # This endpoint can spend a configured budget. Reject browser cross-site requests
+        # and DNS rebinding before looking up an experiment or invoking its controller.
+        origin = request.headers.get("origin")
+        host = request.url.hostname
+        if (host not in {"127.0.0.1", "localhost", "::1", "testserver"}
+                or request.headers.get("sec-fetch-site") == "cross-site"
+                or (origin is not None and origin != str(request.base_url).rstrip("/"))):
+            raise HTTPException(403, {"code": "cross_origin_refused", "message": "Use the local console origin."})
         if action not in ("start", "stop"):
             raise HTTPException(404, {"code": "not_found", "message": "Unknown action."})
         _research(lambda p: p.store.get("experiment", artifact_id))

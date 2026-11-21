@@ -104,3 +104,15 @@ class SchemaTests(unittest.TestCase):
         validate(data)
         for patch in ({'cost':float('nan')},{'metadata':{'api_key':'secret'}},{'progress':[]}):
             with self.assertRaises(ValueError):validate({**data,**patch})
+
+
+class ControllerOriginTests(unittest.TestCase):
+    def test_external_site_cannot_start_a_budgeted_local_job(self):
+        from fastapi.testclient import TestClient
+        from auditlab.demo.server import create_app
+        from auditlab.demo.paths import DemoPaths
+        with tempfile.TemporaryDirectory() as tmp:
+            client=TestClient(create_app(DemoPaths(Path(tmp)),build_samples=False))
+            for headers in ({'Origin':'https://unrelated.example'}, {'Sec-Fetch-Site':'cross-site'}, {'Host':'unrelated.example'}):
+                response=client.post('/research/experiments/unknown/start',headers=headers)
+                self.assertEqual(response.status_code,403)

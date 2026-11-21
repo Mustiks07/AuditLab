@@ -1,0 +1,389 @@
+{
+  "scope": "Integrator measurements; not an organizer score or evidence of trained-model improvement",
+  "research_source_sha": "9987225cd3f76502252e1cfdff546dc03705b347",
+  "acceptance_source_sha": "e7653bb0106775c76558fd52c2ccefe5deed20e0",
+  "published_definition_checks": {
+    "reward": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "m-examples": {
+      "passed": 15,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "extra-negative": {
+      "passed": 13,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "contract": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "data": {
+      "passed": 21,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "pairs": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    }
+  },
+  "legacy_internal_diagnostics": {
+    "integrator_probe_reproduced": "see probe-results-reproduced.json in the review package",
+    "closed_mode_leakage_internal": {
+      "status": "passed",
+      "leaks": [],
+      "rewards_all_zero": true,
+      "steps": 17,
+      "trusted_result_kept": true,
+      "scope": "internal AuditEnvironment closed mode; not the jury adapter (C19/C20 stay not_checked)"
+    },
+    "deadline_origin_internal": {
+      "status": "failed",
+      "stimulus": "fake clock; session_opener inside reset advances it by 61 s; then one step",
+      "expected": "truncated=true (61 s since the start of reset > 60 s)",
+      "actual": {
+        "truncated": false,
+        "terminated": false,
+        "elapsed_since_reset_entry_s": 61.0,
+        "remaining_steps": 99
+      },
+      "cause": "AuditEnvironment.reset sets _started after generation/loading/validate_truth/session opening (auditlab/runner/env.py)"
+    },
+    "deadline_origin_adapter": {
+      "status": "passed",
+      "stimulus": "fake clock; 61 s inside reset (session opener); then one step",
+      "expected": "truncated=true",
+      "actual": {
+        "truncated": true,
+        "terminated": false,
+        "error": {
+          "code": "time_limit",
+          "message": "Time limit exceeded."
+        }
+      }
+    },
+    "reset_wall_time_max_size": {
+      "ledger_rows": 2000,
+      "reset_wall_s": 0.0076,
+      "note": "time currently excluded from the deadline; measured on this machine only"
+    }
+  },
+  "legacy_core_comparison": {
+    "reward": {
+      "passed": 20,
+      "failed": 0
+    },
+    "m-examples": {
+      "passed": 14,
+      "failed": 1
+    },
+    "extra-negative": {
+      "passed": 11,
+      "failed": 2
+    }
+  },
+  "baseline_attempts": 40,
+  "baselines": {
+    "empty": {
+      "attempts": 10,
+      "scored": 10,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 11
+      },
+      "mean_reward": {
+        "value": -0.6,
+        "n": 10
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 2,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 10,
+        "timeout": 0,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 10,
+        "attempts": 10
+      },
+      "actions": {
+        "n": 10,
+        "mean": 1.0,
+        "median": 1.0,
+        "p90": 1
+      },
+      "input_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "output_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "wall_time_s": {
+        "n": 10,
+        "mean": 0.0434,
+        "median": 0.0395,
+        "p90": 0.074
+      },
+      "cost_usd": {
+        "n": 10,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "live_attempts": 0
+    },
+    "flag_all": {
+      "attempts": 10,
+      "scored": 10,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 300,
+        "fn": 11
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 10
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 2,
+        "clean_attempts": 2,
+        "fp_findings": 60
+      },
+      "status": {
+        "completed": 10,
+        "timeout": 0,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 10,
+        "attempts": 10
+      },
+      "actions": {
+        "n": 10,
+        "mean": 3.0,
+        "median": 3.0,
+        "p90": 3
+      },
+      "input_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "output_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "wall_time_s": {
+        "n": 10,
+        "mean": 0.0437,
+        "median": 0.0415,
+        "p90": 0.054
+      },
+      "cost_usd": {
+        "n": 10,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "live_attempts": 0
+    },
+    "random": {
+      "attempts": 10,
+      "scored": 10,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 10,
+        "fn": 11
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 10
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 2,
+        "clean_attempts": 2,
+        "fp_findings": 2
+      },
+      "status": {
+        "completed": 10,
+        "timeout": 0,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 10,
+        "attempts": 10
+      },
+      "actions": {
+        "n": 10,
+        "mean": 11.0,
+        "median": 11.0,
+        "p90": 11
+      },
+      "input_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "output_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "wall_time_s": {
+        "n": 10,
+        "mean": 0.0427,
+        "median": 0.041,
+        "p90": 0.052
+      },
+      "cost_usd": {
+        "n": 10,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "live_attempts": 0
+    },
+    "reconcile": {
+      "attempts": 10,
+      "scored": 10,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 1.0,
+        "tp": 11,
+        "fp": 0,
+        "fn": 0
+      },
+      "mean_reward": {
+        "value": 0.982,
+        "n": 10
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 2,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 10,
+        "timeout": 0,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 10,
+        "attempts": 10
+      },
+      "actions": {
+        "n": 10,
+        "mean": 10.0,
+        "median": 10.0,
+        "p90": 10
+      },
+      "input_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "output_tokens": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "wall_time_s": {
+        "n": 10,
+        "mean": 0.045599999999999995,
+        "median": 0.045,
+        "p90": 0.05
+      },
+      "cost_usd": {
+        "n": 10,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "live_attempts": 0
+    }
+  },
+  "sft": {
+    "assistant_messages": 44,
+    "examples": 10,
+    "meets_minimum_examples": true,
+    "minimum_examples": 10,
+    "rejected": 0,
+    "tool_calls": 44
+  },
+  "search": {
+    "status": "completed",
+    "network_calls": 0,
+    "reduction_original_rows": 240,
+    "reduction_rows": 6,
+    "original_documents": 76,
+    "reduced_documents": 2,
+    "repeated_misses_before": 3,
+    "repeated_misses_after": 3,
+    "repeats_per_side": 3,
+    "policy": "random",
+    "adaptive_advantage": "not_observed"
+  },
+  "browser": {
+    "screens": 18,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "page_errors": [],
+    "data": "measured local policy artifacts; no intercepted backend responses"
+  },
+  "not_checked": [
+    "live API model",
+    "weight training",
+    "sealed final holdout",
+    "new offline release and human receiver acceptance"
+  ],
+  "evidence_hashes": {
+    "genesis-e7653bb/report.json": "73e7fc94a2f89b48c219c772b1a56351acc68dc871fe35f76547ff551681caab",
+    "rehearsal-9987225/receipt.json": "b1f176cd02823be08d4da6b69977a5aa4a6cf0903a5e24f1ad8d67f52ace184f",
+    "browser/results.json": "86ab5e94eca28fd9f4a37bfd1e12a6784c075d720b7d9e7398c947f0615d2a39"
+  }
+}

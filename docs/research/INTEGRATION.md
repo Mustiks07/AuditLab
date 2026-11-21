@@ -76,3 +76,20 @@ including the real internal-network/proxy topology check. The ordinary offline
 rehearsal retains the original core suite and does not need an API bridge or SDK.
 An unconfigured provider and a missing GPU are explicit unmeasured conditions,
 not passing experiments. Historical RC3 evidence is unchanged.
+
+## Recorded integration evidence
+
+[Integration measurements](integration-2026-11-22.json) bind the research rehearsal to
+`9987225` and the updated omission matrix to `e7653bb`. The official adapter layer
+passed 20 contract, 20 reward, 20 data scenarios plus the omission-coverage matrix,
+20 pairs, 15 published examples and 13 additional negative checks. These are local
+reproductions of published definitions, not an organizer-issued score. The legacy
+internal reward API has different semantics; its negative diagnostics are retained
+separately rather than hidden or pooled into the official-adapter results.
+
+The rehearsal ran 40 ordinary baseline attempts on open dev, independently rescored
+them, reproduced the random-policy miss 3/3 before and 3/3 after reduction, and
+prepared 10 accepted SFT examples (44 tool calls). This proves the integrated path,
+not an advantage of adaptive selection or a trained neural auditor. Six research
+screens were checked against those actual artifacts at 1440, 390 and 320 pixels.
+Private holdout files are not in this repository and have not been received here.
