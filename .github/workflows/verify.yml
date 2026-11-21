@@ -27,15 +27,20 @@ jobs:
           python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels -r requirements.lock
       - name: Build the real policy sandbox without package network access
         run: docker build --network=none -f docker/runtime/Dockerfile -t auditlab-policy:ci .
+      - name: Prepare and build the isolated research bridge
+        run: |
+          python -m pip download --require-hashes --only-binary=:all: --dest docker/wheels/bridge -r docker/bridge/requirements.lock
+          docker build --network=none -f docker/bridge/Dockerfile -t auditlab-llm-bridge:ci .
       - name: Run available checks (incomplete release is reported explicitly)
         env:
           AUDITLAB_POLICY_IMAGE: auditlab-policy:ci
-        run: python run.py verify --output artifacts/ci
+          AUDITLAB_BRIDGE_IMAGE: auditlab-llm-bridge:ci
+        run: python run.py verify --include-research --timeout 300 --output artifacts/ci
       - name: Bind passing tests to the event head and base
         env:
           REVIEW_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
           REVIEW_BASE: ${{ github.event.pull_request.base.sha }}
-        run: python tools/review_evidence.py check --context artifacts/review-context.json --report artifacts/ci/report.json --expected-head "$REVIEW_HEAD" --expected-base "$REVIEW_BASE" --output artifacts/review-receipt.json
+        run: python tools/review_evidence.py check --context artifacts/review-context.json --report artifacts/ci/report.json --expected-head "$REVIEW_HEAD" --expected-base "$REVIEW_BASE" --include-research --output artifacts/review-receipt.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

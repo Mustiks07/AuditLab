@@ -107,10 +107,10 @@ class Provider(Protocol):
 
 
 def estimate_input_tokens(request: ProviderRequest) -> int:
-    """Conservative pre-call estimate (about 3 characters per token) for the budget guard only."""
+    """Conservative UTF-8 byte bound plus framing allowance for budget reservation."""
     size = len(request.system) + len(json.dumps([asdict(tool) for tool in request.tools]))
     size += len(json.dumps(request.transcript, default=str))
-    return size // 3 + 64
+    return size * 4 + 4096
 
 
 # ----------------------------------------------------------------------------------- Anthropic

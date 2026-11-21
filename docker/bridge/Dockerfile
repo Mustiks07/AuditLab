@@ -1,6 +1,4 @@
-# LLM network bridge image (also runs the stdlib egress proxy). NOT YET BUILT OR CHECKED:
-# docker/bridge/requirements.lock does not exist yet, so the COPY below fails closed until the
-# integrator pins and locks requirements.in (see docker/bridge/README.md).
+# Optional LLM network bridge; pinned dependencies and a separate wheelhouse.
 # Contains only the public contracts and auditlab/research/agents: no evaluator, runner, generator,
 # fixtures, datasets, truth or reports. Build from the repo root:
 #   docker build --network=none -f docker/bridge/Dockerfile -t auditlab-llm-bridge:dev .

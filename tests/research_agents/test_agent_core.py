@@ -409,7 +409,8 @@ class Experiments(Workspace):
         (partial / "provider_calls.jsonl").write_text(json.dumps({"status": "ok", "cost_usd": 0.25}) + "\n")
         experiment.run_experiment(plan, sha, self.out, log=lambda _: None)
         interrupted = json.loads((self.out / "attempts" / slot / "attempt.json").read_text())
-        self.assertEqual((interrupted["status"], interrupted["totals"]["cost_usd"]), ("interrupted", 0.25))
+        self.assertEqual((interrupted["status"], interrupted["totals"]["cost_usd"]), ("interrupted", None))
+        self.assertEqual(interrupted["totals"]["budget_debit_usd"], 0.25)
         retry = json.loads((self.out / "attempts" / f"{slot}--retry1" / "attempt.json").read_text())
         self.assertEqual(retry["status"], "completed")
 

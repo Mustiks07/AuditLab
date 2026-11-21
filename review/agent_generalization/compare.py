@@ -66,7 +66,7 @@ def metrics(rows: list[dict]) -> dict:
     clean = [r for r in scored if r["variant"] == "clean"]
     clean_accused = [r for r in clean if r["score"].get("valid") is False or (r["score"].get("n_findings") or 0) > 0]
     return {"attempts": n, "scored": len(scored), "excluded_infra": n - len(scored),
-            "micro_f1": {"value": float(Fraction(2 * tp, 2 * tp + fp + fn)) if 2 * tp + fp + fn else 1.0, "tp": tp, "fp": fp, "fn": fn},
+            "micro_f1": {"value": float(Fraction(2 * tp, 2 * tp + fp + fn)) if 2 * tp + fp + fn else (1.0 if scored else None), "tp": tp, "fp": fp, "fn": fn},
             "mean_reward": {"value": float(sum(r["score"]["return"] for r in scored) / len(scored)) if scored else None, "n": len(scored)},
             "fp_on_clean": {"attempts_with_findings": len(clean_accused), "clean_attempts": len(clean),
                             "fp_findings": sum(r["score"]["fp"] or 0 for r in clean if r["score"].get("valid"))},

@@ -175,6 +175,7 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
     started = clock()
     steps, tokens, cost, calls, failure = 0, {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0}, 0.0, 0, None
     unpriced = 0
+    budget_debit = 0.0
     try:
         observation, info = env.reset(int(spec.get("seed", 0)), {"mode": "closed", "episode_dir": str(episode_dir),
                                                                   "team_config": {}})
@@ -205,9 +206,10 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
                     for key, name in (("input", "input_tokens"), ("output", "output_tokens"),
                                       ("cache_read", "cache_read_input_tokens"), ("cache_write", "cache_creation_input_tokens")):
                         tokens[key] += int((call.get("usage") or {}).get(name) or 0)
-                    if call.get("cost_usd") is None and call.get("status") == "ok":
+                    if call.get("cost_usd") is None:
                         unpriced += 1
                     cost += float(call.get("cost_usd") or 0.0)
+                    budget_debit += float(call.get("budget_debit_usd", call.get("cost_usd")) or 0.0)
                     _append(partial / "provider_calls.jsonl", [call])
                 if telemetry.get("memory") is not None:
                     _write_json(partial / "memory.json", telemetry["memory"])
@@ -266,9 +268,12 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
     record["inspection_steps"] = evaluation["inspection_steps"]
     if env_status not in ("submitted", "invalid_submission"):
         record["final_answer"] = None  # a submit the environment never accepted is not an answer
+    if failure and spec.get("agent", {}).get("kind") != "baseline_policy" and spec.get("budget_usd") is not None:
+        unpriced = max(1, unpriced)
     record.update(finished_at=_now(), status=status, status_detail=None if failure is None else failure[1],
                   totals={"environment_actions": steps, "provider_calls": calls, "tokens": tokens,
-                          "cost_usd": round(cost, 6), "unpriced_calls": unpriced,
+                          "cost_usd": None if unpriced else round(cost, 6), "known_cost_usd": round(cost, 6),
+                          "budget_debit_usd": round(max(budget_debit, spec.get("budget_usd") or 0) if failure and spec.get("agent", {}).get("kind") != "baseline_policy" else budget_debit, 6), "unpriced_calls": unpriced,
                           "wall_seconds": round(clock() - started, 3),
                           "inspection_steps": evaluation["inspection_steps"]})
     _write_json(partial / "attempt.json", record)
@@ -293,7 +298,8 @@ def finalize_interrupted(output_root: str | Path) -> list[str]:
                  if line.strip()] if (partial / "provider_calls.jsonl").exists() else []
         record.update(status="interrupted", status_detail="controller stopped before finalization; resumed later",
                       finished_at=_now(), totals={**(record.get("totals") or {}), "provider_calls": len(calls),
-                                                  "cost_usd": round(sum(float(c.get("cost_usd") or 0) for c in calls), 6)})
+                                                  "cost_usd": None, "unpriced_calls": max(1, sum(c.get("cost_usd") is None for c in calls)),
+                                                  "budget_debit_usd": record.get("budget_usd") or sum(float(c.get("budget_debit_usd", c.get("cost_usd")) or 0) for c in calls)})
         _write_json(path, record)
         target = root / attempt_id
         if target.exists():

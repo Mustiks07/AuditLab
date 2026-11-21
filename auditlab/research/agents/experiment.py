@@ -15,6 +15,8 @@ import hashlib
 import json
 import os
 import random
+import re
+import math
 import statistics
 from pathlib import Path
 from typing import Callable
@@ -43,6 +45,14 @@ def validate_plan(plan: dict) -> None:
     for key in ("schema_version", "artifact_id", "protocol_id", "episodes", "arms", "repetitions"):
         if key not in plan:
             raise PlanError(f"plan misses {key}")
+    if plan['schema_version'] != '1.0':
+        raise PlanError('unsupported schema version')
+    for ident in [plan['artifact_id'], *[a.get('name') for a in plan['arms']]]:
+        if not isinstance(ident,str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{0,63}',ident):
+            raise PlanError('plan and arm identifiers must be portable names')
+    for key,value in (plan.get('budget') or {}).items():
+        if key.startswith('max_usd') and (type(value) not in (int,float) or not math.isfinite(value) or value < 0):
+            raise PlanError('spend limits must be finite non-negative numbers')
     protocol = get_protocol(plan["protocol_id"])
     if not plan["episodes"] or not plan["arms"]:
         raise PlanError("plan needs episodes and arms")
@@ -64,7 +74,7 @@ def validate_plan(plan: dict) -> None:
     if protocol.official and llm and transport == "in_process":
         raise PlanError("the official protocol needs an isolated bridge transport (subprocess is development only, "
                         "docker for official runs)")
-    if not isinstance(plan["repetitions"], int) or plan["repetitions"] < 1:
+    if type(plan["repetitions"]) is not int or plan["repetitions"] < 1:
         raise PlanError("repetitions must be a positive integer")
 
 
@@ -122,12 +132,13 @@ def _bridge_factory(plan: dict, arm: dict, repetition: int, provider_override=No
 def _spent(out: Path) -> float:
     total = 0.0
     for path in (out / "attempts").glob("*/attempt.json") if (out / "attempts").exists() else []:
-        total += float((json.loads(path.read_text(encoding="utf-8")).get("totals") or {}).get("cost_usd") or 0.0)
+        totals = json.loads(path.read_text(encoding="utf-8")).get("totals") or {}
+        total += float(totals.get("budget_debit_usd", totals.get("cost_usd")) or 0.0)
     return total
 
 
 def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: bool = False, provider_override=None,
-                   env_factory=None, log: Callable[[str], None] = print) -> dict:
+                   env_factory=None, log: Callable[[str], None] = print, stop_requested: Callable[[], bool] | None = None) -> dict:
     out = Path(out)
     ensure_safe_output(out.resolve())
     slots = attempt_slots(plan)
@@ -155,6 +166,8 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
     budget = plan.get("budget") or {}
     done = {path.parent.name for path in (out / "attempts").glob("*/attempt.json")} if (out / "attempts").exists() else set()
     for slot in slots:
+        if stop_requested and stop_requested():
+            break
         evaluated = [name for name in done if name == slot["slot"] or name.startswith(slot["slot"] + "--retry")]
         statuses = [json.loads((out / "attempts" / name / "attempt.json").read_text(encoding="utf-8"))["status"]
                     for name in evaluated]
@@ -229,7 +242,7 @@ def summarize(out: str | Path, plan: dict, plan_sha: str) -> dict:
             "tokens_total": {k: sum((a["totals"].get("tokens") or {}).get(k, 0) for a in rows)
                              for k in ("input", "output", "cache_read", "cache_write")},
             "wall_seconds": _dist([a["totals"].get("wall_seconds", 0.0) for a in rows]),
-            "cost_usd_total": round(sum(a["totals"].get("cost_usd", 0.0) for a in rows), 6),
+            "cost_usd_total": None if any(a["totals"].get("unpriced_calls", 0) for a in rows) else round(sum(a["totals"].get("cost_usd") or 0.0 for a in rows), 6),
             "unpriced_calls": sum(a["totals"].get("unpriced_calls", 0) for a in rows),
             "test_double": any(a.get("test_double") for a in rows),
         }

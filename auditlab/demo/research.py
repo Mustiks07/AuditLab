@@ -32,7 +32,7 @@ ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$")
 # Keys that belong to the trusted side. Removed recursively from every projection.
 PRIVATE_KEYS = {"truth", "truth_ref", "private", "private_ref", "trusted_ref", "trusted_dir", "seed", "seed_hex",
                 "generator_config", "config", "api_key", "api_keys", "secret", "secrets", "password",
-                "authorization", "bearer", "answer_key", "expected_findings", "closed_answer"}
+                "authorization", "bearer", "api_key_env", "evaluation_ref", "episode_ref", "answer_key", "expected_findings", "closed_answer"}
 # Counters must be non-negative integers; a float, bool or negative value makes the artifact incompatible.
 COUNTERS = {"planned", "completed", "running", "timeout", "provider_error", "invalid_response", "budget_stop",
             "tp", "fp", "fn", "count", "denominator", "total", "timeouts", "errors", "repetitions",
@@ -122,6 +122,9 @@ class ResearchStore:
         def bad(reason: str, kind: str | None = None):
             self.incompatible.append({"file": rel.as_posix(), "kind": kind, "reason": reason})
         try:
+            resolved = path.resolve()
+            if path.is_symlink() or root not in resolved.parents or {"trusted", "private"} & set(resolved.relative_to(root).parts[:-1]):
+                return bad("путь вне публичного корня")
             if path.stat().st_size > MAX_BYTES:
                 return bad("файл больше допустимого размера")
             data = json.loads(path.read_text(encoding="utf-8"))
@@ -180,7 +183,9 @@ class ResearchStore:
         if root is None:
             return None
         path = (root / ref).resolve()
-        if root not in path.parents or not (path / "manifest.json").is_file():
+        if root not in path.parents or {"private", "trusted"} & set(path.relative_to(root).parts) or not (path / "manifest.json").is_file():
+            return None
+        if any(p.is_symlink() for p in path.iterdir()):
             return None
         sid = hashlib.sha256(str(path).encode()).hexdigest()[:16]
         self.snapshots[sid] = path
@@ -513,6 +518,8 @@ class Projection:
 def controller_module():
     """The integrator's controller (``auditlab.research.controller``) when merged; else None."""
     module = engines._module("auditlab.research.controller")
+    if module is not None and callable(getattr(module, "configured", None)) and not module.configured():
+        return None
     if module is not None and all(callable(getattr(module, name, None)) for name in ("status", "start", "stop")):
         return module
     return None

@@ -12,6 +12,7 @@ import json
 import random
 import time
 from dataclasses import dataclass
+import math
 from typing import Callable
 
 from auditlab.research.agents.pricing import cost_usd, worst_case_cost
@@ -32,6 +33,8 @@ class SpendGuard:
     """Per-attempt budget in USD (None = unpriced test double only). Reports what was really charged."""
 
     def __init__(self, limit_usd: float | None, price_override: dict | None = None, allow_unpriced: bool = False):
+        if limit_usd is not None and (type(limit_usd) not in (int, float) or not math.isfinite(limit_usd) or limit_usd < 0):
+            raise ValueError("budget must be finite and non-negative")
         self.limit_usd = limit_usd
         self.spent_usd = 0.0
         self.unpriced_calls = 0
@@ -95,7 +98,11 @@ class ModelCaller:
                 response = self.provider.complete(request)
             except ProviderError as error:
                 record.update(status="error", error=error.to_dict(), latency_s=self.clock() - started,
-                              usage=None, cost_usd=0.0, cost_note="error response: provider reported no usage")
+                              usage=None, cost_usd=None, cost_note="usage unavailable; call reservation retained")
+                reserved = worst_case_cost(self.provider.model, estimate_input_tokens(request), request.max_tokens, self.guard.price_override)
+                self.guard.spent_usd += reserved or 0.0
+                self.guard.unpriced_calls += 1
+                record["budget_debit_usd"] = reserved
                 self.records.append(record)
                 last = error
                 if not error.retryable or try_index + 1 >= self.policy.max_tries:
@@ -110,7 +117,7 @@ class ModelCaller:
                 continue
             cost, reason = self.guard.charge(response.model_served, response.usage)
             record.update(status="ok", latency_s=self.clock() - started, usage=response.usage, cost_usd=cost,
-                          cost_note=reason, model_served=response.model_served,
+                          cost_note=reason, budget_debit_usd=cost, model_served=response.model_served,
                           served_by_fallback=response.served_by_fallback, stop_reason=response.stop_reason,
                           request_id=response.request_id, test_double=bool(getattr(self.provider, "is_test_double", False)))
             self.records.append(record)

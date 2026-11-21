@@ -39,6 +39,8 @@ def price_for(model: str, override: dict | None = None) -> dict | None:
         write = inp * Fraction(5, 4)
     else:
         return None
+    if any(v < 0 for v in (inp, out, read, write)):
+        raise ValueError("prices cannot be negative")
     return {key: value / MILLION for key, value in
             (("input", inp), ("output", out), ("cache_read", read), ("cache_write", write))}
 
