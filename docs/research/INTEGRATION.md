@@ -6,10 +6,12 @@ SFT export and the C3 console. Local policies are identified as such. An SFT fil
 not a trained model. API measurements, weight updates and the sealed final holdout
 remain `not_checked` until executed with available access and resources.
 
-From a clean, non-shallow checkout, Python 3.11.14:
+From a clean, non-shallow checkout, Python 3.11.14 and Node.js 22:
 
 ```sh
 python -m pip install --require-hashes -r requirements.lock
+npm --prefix web ci
+npm --prefix web run build
 python tools/research_rehearsal.py --output artifacts/research-rehearsal
 python -m auditlab.demo --root artifacts/research-console serve --port 8765 \
   --research artifacts/research-rehearsal/console-search \
