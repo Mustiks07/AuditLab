@@ -1,0 +1,99 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--a38b33fb83c1c481",
+  "attempt_id": "reconcile--a38b33fb83c1c481",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/EAA9D228EE94081E1C02F82DEDCCA190B",
+    "episode_sha256": "4c7870c8d9f7051027c8ce44cda18ba03b9216bcaa30a937ee2f6dc5c6bdfc4c",
+    "family_id": "EAA9D228EE94081E1C02F82DEDCCA190B",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\reconcile--a38b33fb83c1c481\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "EAA9D228EE94081E1C02F82DEDCCA190B",
+        "findings": [
+          {
+            "affected_ids": [
+              "invoice/IEF351A08D1C262436BC8316F"
+            ],
+            "claimed_amount_minor": 12000,
+            "currency": "JPY",
+            "evidence_ids": [
+              "invoices/D189879BEA4FE3DFE5C4E679D",
+              "invoices/DD774D66E5D0EB1A941AC3D00",
+              "ledger/R141A1192854B2E79708DF8A4",
+              "ledger/RA4C314722442D916CEFC0AD9"
+            ],
+            "explanation": "Documents for one commercial invoice have repeated accounts receivable entries.",
+            "type": "duplicate_invoice"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "EAA9D228EE94081E1C02F82DEDCCA190B",
+    "findings": [
+      {
+        "affected_ids": [
+          "invoice/IEF351A08D1C262436BC8316F"
+        ],
+        "claimed_amount_minor": 12000,
+        "currency": "JPY",
+        "evidence_ids": [
+          "invoices/D189879BEA4FE3DFE5C4E679D",
+          "invoices/DD774D66E5D0EB1A941AC3D00",
+          "ledger/R141A1192854B2E79708DF8A4",
+          "ledger/RA4C314722442D916CEFC0AD9"
+        ],
+        "explanation": "Documents for one commercial invoice have repeated accounts receivable entries.",
+        "type": "duplicate_invoice"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:18:36.731602+00:00",
+  "inspection_steps": 9,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:18:36.272629+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 10,
+    "inspection_steps": 9,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.458
+  },
+  "variant": "reconcile"
+}

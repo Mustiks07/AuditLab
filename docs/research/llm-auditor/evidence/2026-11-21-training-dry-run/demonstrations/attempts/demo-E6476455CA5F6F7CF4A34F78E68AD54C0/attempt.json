@@ -1,0 +1,112 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "kind": "oracle_demonstration",
+    "limits": {
+      "max_model_calls_per_action": 12,
+      "max_nudges": 2,
+      "max_prechecks": 0
+    },
+    "max_tokens": 16000,
+    "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "model": "oracle-demonstration",
+      "provider": "oracle_demonstration",
+      "teacher": true
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+  "attempt_id": "demo-E6476455CA5F6F7CF4A34F78E68AD54C0",
+  "budget_usd": 0.0,
+  "episode": {
+    "episode_ref": "datasets/open/train/E6476455CA5F6F7CF4A34F78E68AD54C0",
+    "episode_sha256": "6e8d4d18c35147965b7bd2b65879948df01cbf11a35077326922349faf0d1d74",
+    "family_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+    "split": "train"
+  },
+  "evaluation_ref": "trusted\\demo-E6476455CA5F6F7CF4A34F78E68AD54C0\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+        "findings": [
+          {
+            "affected_ids": [
+              "invoice/IE1AA509B3457554062C97F19"
+            ],
+            "claimed_amount_minor": 1200000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "invoices/D3DA6071040B70FA2D90C18D0",
+              "invoices/D7534210C633A07D8851B8F7E",
+              "ledger/R765F277C72A53DF193243B58",
+              "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+            ],
+            "explanation": "duplicate_invoice on invoice/IE1AA509B3457554062C97F19: the cited records show a discrepancy of 1200000 minor units of KZT.",
+            "type": "duplicate_invoice"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+    "findings": [
+      {
+        "affected_ids": [
+          "invoice/IE1AA509B3457554062C97F19"
+        ],
+        "claimed_amount_minor": 1200000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "invoices/D3DA6071040B70FA2D90C18D0",
+          "invoices/D7534210C633A07D8851B8F7E",
+          "ledger/R765F277C72A53DF193243B58",
+          "ledger/RBFFE41AEECFF5B82D6F4BF3C"
+        ],
+        "explanation": "duplicate_invoice on invoice/IE1AA509B3457554062C97F19: the cited records show a discrepancy of 1200000 minor units of KZT.",
+        "type": "duplicate_invoice"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:18:55.948444+00:00",
+  "inspection_steps": 4,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Research protocol: same 100 actions and tools, 600 s wall clock for slow API models. Never reported as an official-protocol result.",
+    "max_actions": 100,
+    "official": false,
+    "protocol_id": "auditlab-research-600s",
+    "resumable": true,
+    "time_limit_s": 600.0
+  },
+  "protocol_id": "auditlab-research-600s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:18:55.535186+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 5,
+    "inspection_steps": 4,
+    "provider_calls": 5,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.413
+  },
+  "variant": "oracle_demonstration"
+}

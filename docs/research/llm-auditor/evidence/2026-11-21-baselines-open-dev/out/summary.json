@@ -1,0 +1,267 @@
+{
+  "arms": {
+    "empty": {
+      "actions": {
+        "max": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "min": 1,
+        "n": 10
+      },
+      "attempts": 10,
+      "clean_attempts": 2,
+      "clean_with_fp": 0,
+      "cost_usd_total": 0.0,
+      "evaluable": 10,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 11,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 10
+      },
+      "return": {
+        "max": 1.0,
+        "mean": -0.6,
+        "median": -1.0,
+        "min": -1.0,
+        "n": 10
+      },
+      "statuses": {
+        "completed": 10
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.449,
+        "mean": 0.4192,
+        "median": 0.416,
+        "min": 0.407,
+        "n": 10
+      }
+    },
+    "flag_all": {
+      "actions": {
+        "max": 3,
+        "mean": 3.0,
+        "median": 3.0,
+        "min": 3,
+        "n": 10
+      },
+      "attempts": 10,
+      "clean_attempts": 2,
+      "clean_with_fp": 2,
+      "cost_usd_total": 0.0,
+      "evaluable": 10,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 11,
+        "fp": 300,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 10
+      },
+      "return": {
+        "max": -1.0,
+        "mean": -1.0,
+        "median": -1.0,
+        "min": -1.0,
+        "n": 10
+      },
+      "statuses": {
+        "completed": 10
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.438,
+        "mean": 0.41689999999999994,
+        "median": 0.4125,
+        "min": 0.407,
+        "n": 10
+      }
+    },
+    "random": {
+      "actions": {
+        "max": 7,
+        "mean": 7.0,
+        "median": 7.0,
+        "min": 7,
+        "n": 10
+      },
+      "attempts": 10,
+      "clean_attempts": 2,
+      "clean_with_fp": 0,
+      "cost_usd_total": 0.0,
+      "evaluable": 10,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 11,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 10
+      },
+      "return": {
+        "max": 0.988,
+        "mean": -0.6024,
+        "median": -1.0,
+        "min": -1.0,
+        "n": 10
+      },
+      "statuses": {
+        "completed": 10
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.468,
+        "mean": 0.42299999999999993,
+        "median": 0.4175,
+        "min": 0.407,
+        "n": 10
+      }
+    },
+    "reconcile": {
+      "actions": {
+        "max": 10,
+        "mean": 10.0,
+        "median": 10.0,
+        "min": 10,
+        "n": 10
+      },
+      "attempts": 10,
+      "clean_attempts": 2,
+      "clean_with_fp": 0,
+      "cost_usd_total": 0.0,
+      "evaluable": 10,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "tp": 11
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 10
+      },
+      "return": {
+        "max": 0.982,
+        "mean": 0.982,
+        "median": 0.982,
+        "min": 0.982,
+        "n": 10
+      },
+      "statuses": {
+        "completed": 10
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.478,
+        "mean": 0.43689999999999996,
+        "median": 0.425,
+        "min": 0.416,
+        "n": 10
+      }
+    }
+  },
+  "attempts_total": 40,
+  "is_experiment": true,
+  "kind": "internal_summary",
+  "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. Means over evaluable attempts; not_evaluable attempts are listed, never dropped.",
+  "paired": [
+    {
+      "a": "reconcile",
+      "b": "empty",
+      "ci95": [
+        0.982,
+        1.982
+      ],
+      "families": 10,
+      "mean_difference": 1.582,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "reconcile",
+      "b": "flag_all",
+      "ci95": [
+        1.982,
+        1.982
+      ],
+      "families": 10,
+      "mean_difference": 1.982,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "random",
+      "b": "empty",
+      "ci95": [
+        -0.006000000000000005,
+        0.0
+      ],
+      "families": 10,
+      "mean_difference": -0.002400000000000002,
+      "metric": "return",
+      "missing_families": []
+    }
+  ],
+  "plan_artifact_id": "baselines-open-dev-2026-11-21",
+  "plan_sha256": "c8b552530350cf0a034bd837aa090157486e32182843ccd47c0d39daef1b8af1",
+  "protocol_id": "genesis-official-60s",
+  "schema_version": "1.0",
+  "test_double": false
+}

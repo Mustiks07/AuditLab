@@ -1,0 +1,43 @@
+{
+  "attempt_id": "reconcile--3ecaa59ca30146fd",
+  "env_status": "submitted",
+  "inspection_steps": 9,
+  "internal_score": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.982,
+    "tp": 1
+  },
+  "matches": [
+    [
+      0,
+      "X5C0015FCFB6CD04146962602"
+    ]
+  ],
+  "not_evaluable_reason": null,
+  "official": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.982,
+    "tp": 1
+  },
+  "official_by_rule": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.982,
+    "tp": 1
+  },
+  "schema_version": "1.0",
+  "status": "completed",
+  "truth_issue_count": 1,
+  "unmatched": {}
+}
