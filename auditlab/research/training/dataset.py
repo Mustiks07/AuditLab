@@ -38,7 +38,7 @@ import subprocess
 import uuid
 from collections import Counter
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePath
 
 from auditlab.research.agents.openai_chat import rebuild_assistant, tool_definitions, tool_messages
 
@@ -156,14 +156,19 @@ def load_curriculum(path) -> dict:
     for item in data["episodes"]:
         if not isinstance(item, dict) or not item.get("episode_ref"):
             raise DatasetError("curriculum episode without episode_ref")
-        episodes[str(item["episode_ref"])] = {"split": item.get("split"), "family_id": item.get("family_id")}
+        episodes[_ref_key(item["episode_ref"])] = {"split": item.get("split"), "family_id": item.get("family_id")}
     return {"ref": str(path), "sha256": sha256_file(path), "kind": data.get("kind"),
             "artifact_id": data.get("artifact_id"), "schema_version": data.get("schema_version"),
             "episodes": episodes}
 
 
+def _ref_key(episode_ref) -> str:
+    """Episode refs compare as POSIX paths, so a ref written on Windows matches the same ref elsewhere."""
+    return PurePath(str(episode_ref).replace("\\", "/")).as_posix()
+
+
 def curriculum_problem(episode_ref: str, split: str, curriculum: dict, allowed) -> str | None:
-    entry = curriculum["episodes"].get(str(episode_ref))
+    entry = curriculum["episodes"].get(_ref_key(episode_ref))
     if entry is None:
         return f"episode {episode_ref!r} is not in the curriculum"
     if entry["split"] != split:

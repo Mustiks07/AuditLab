@@ -529,6 +529,9 @@ class ReviewExportAndDemonstrations(Workspace):
         self.assertEqual((record["status"], record["agent"]["kind"], record["test_double"]), ("completed", "oracle_demonstration", False))
         self.assertEqual(self.evaluation(record["attempt_id"])["official"]["tp"], 1)
         self.assertEqual(record["totals"]["cost_usd"], 0.0)
+        self.assertNotIn("\\", record["episode"]["episode_ref"])  # POSIX refs match curricula on every OS
+        from auditlab.research.training.dataset import _ref_key
+        self.assertEqual(_ref_key("datasets\open\train\E1"), "datasets/open/train/E1")
         for split in ("dev", "final", "holdout", "test"):
             with self.assertRaises(ValueError):
                 run_demonstration({"episode_ref": str(self.episodes["S01"]), "family_id": "S01", "split": split}, self.out, f"x-{split}")

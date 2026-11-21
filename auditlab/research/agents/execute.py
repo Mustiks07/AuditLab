@@ -159,7 +159,7 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
         env_factory = lambda: judge_adapter.make_env(time_limit_s=protocol.time_limit_s)  # noqa: E731
     record = {"schema_version": ARTIFACT_SCHEMA_VERSION, "artifact_id": attempt_id, "attempt_id": attempt_id, "kind": "attempt",
               "source_sha": source_sha(), "protocol_id": protocol.protocol_id, "protocol": protocol.to_dict(),
-              "episode": {"episode_ref": str(episode_dir), "episode_sha256": public_digest(episode_dir),
+              "episode": {"episode_ref": episode_dir.as_posix(), "episode_sha256": public_digest(episode_dir),
                           **(spec.get("episode") or {})},
               "variant": spec.get("variant"), "repetition": spec.get("repetition", 0), "seed": spec.get("seed", 0),
               "budget_usd": spec.get("budget_usd"), "started_at": _now(), "finished_at": None,
