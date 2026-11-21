@@ -26,6 +26,14 @@
 Claude Pro 3 продолжает эту систему. GPT Pro 1 первым отдельным PR закрывает
 [полный пропуск распределения #40](https://github.com/Mustiks07/AuditLab/issues/40). Все работают в отдельных клонах/worktree.
 
+## Задачи на GitHub
+
+- GPT Pro 1: [#41](https://github.com/Mustiks07/AuditLab/issues/41), первый отдельный PR — [#40](https://github.com/Mustiks07/AuditLab/issues/40).
+- Claude Pro 1: [#42](https://github.com/Mustiks07/AuditLab/issues/42).
+- Claude Pro 2: [#43](https://github.com/Mustiks07/AuditLab/issues/43).
+- Claude Pro 3: [#44](https://github.com/Mustiks07/AuditLab/issues/44).
+- GPT Pro 2: существующая интеграционная [#5](https://github.com/Mustiks07/AuditLab/issues/5).
+
 ## Полный объём
 
 1. Сильный агент через API использует только публичное наблюдение и разрешённые
