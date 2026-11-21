@@ -147,8 +147,7 @@ def run(work: Path, policy: dict, evaluate, max_matching, adapter) -> list[dict]
             refscore = ref.score(findings, gm_truth["issues"], 10, refs_gm, tau)
             core = _core(evaluate, gm_truth, findings, 10, tau)
             core_ok = _compare(core, expv, False)
-            official = _official(adapter, gm if tau == 0 else None, gm_truth, findings, 10, expv, work, cid,
-                                 note=None if tau == 0 else "a published per-type tau mechanism is needed for the jury interface")
+            official = _official(adapter, gm if tau == 0 else _with_tau(gm, tau, work / f"GM-tau{tau}"), gm_truth, findings, 10, expv, work, cid)
             out.append({"id": cid, "block": block, "expectation_source": "fintech-checks.txt, " + ("M-examples" if block == "m-examples" else "task brief, matcher rules 1-8"),
                         "stimulus": text + (f"; tau={tau}" if tau else ""), "expected": _plain(expv),
                         "expectation_checks": {"reference_scorer_agrees": _compare(refscore, expv, False)},
@@ -160,18 +159,82 @@ def run(work: Path, policy: dict, evaluate, max_matching, adapter) -> list[dict]
         issues = [{"issue_id": "A"}, {"issue_id": "B"}]
         pairs = _ref_graph(adj, issues)
         ref_owner = [dict((j, i) for j, i in pairs)[k] for k in ("A", "B")]
+        via = "auditlab.evaluator.matcher._max_matching (graph)"
         owner = list(max_matching(adj, 2))
         perm = list(max_matching([adj[1], adj[0]], 2))  # permuted findings: TP must not change
+        genesis = _evaluate_genesis(evaluate, gm, cid)
+        if genesis is not None:  # the evaluator offers the Genesis profile: test what it actually uses
+            via, owner, perm = "evaluate(rules='genesis-2026-11-20') pairs", genesis["owner"], genesis["perm_owner"]
         core_ok = owner == expected_owner and sum(o is not None for o in perm) == 2
         out.append({"id": cid, "block": "m-examples", "expectation_source": "fintech-checks.txt, M-examples + tie-break rule",
                     "stimulus": text + " (graph level; AuditLab validate_truth rejects two issues with equal type+affected_ids, so this graph cannot be built from a valid AuditLab truth)",
                     "expected": {"owners_A_B": expected_owner, "tp": 2},
                     "expectation_checks": {"reference_scorer_agrees": ref_owner == expected_owner},
-                    "core": {"result": {"owners_A_B": owner, "tp": sum(o is not None for o in owner), "tp_after_permutation": sum(o is not None for o in perm)},
+                    "core": {"result": {"via": via, "owners_A_B": owner, "tp": sum(o is not None for o in owner), "tp_after_permutation": sum(o is not None for o in perm)},
                              "status": "passed" if core_ok else "failed"},
-                    "official": {"status": "not_checked", "reason": "graph-level example; not expressible through score_episode with a valid AuditLab truth"},
-                    "status": "not_checked"})
+                    "official": (off := _official_ambiguous(adapter, gm, work, cid)), "status": off["status"]})
     return out
+
+
+def _evaluate_genesis(evaluate, gm: Path, cid: str):
+    """Owners of A/B chosen by evaluate() under the Genesis rules profile, if that profile exists."""
+    import inspect
+    if "rules" not in inspect.signature(evaluate).parameters:
+        return None
+    base = {"type": "payment_allocation", "affected_ids": ["payment/P1", "invoice/I1"], "currency": "KZT", "evidence_sets": [["payments/DP1", "ledger/R4"]]}
+    amounts = {"M10": (10000, 10002), "M11": (10000, 10000)}[cid]
+    truth = {"episode_id": "GM", "issues": [{**base, "issue_id": "A", "expected_amount_minor": amounts[0]},
+                                             {**base, "issue_id": "B", "expected_amount_minor": amounts[1]}]}
+    fs = {"M10": [M(claimed_amount_minor=10001), M(claimed_amount_minor=10000)], "M11": [M(), M()]}[cid]
+
+    def owners(findings):
+        ev = evaluate({"episode_id": "GM", "findings": copy.deepcopy(findings)}, truth, 10, 1, rules="genesis-2026-11-20")
+        by_issue = {issue: idx for idx, issue in ev.matches}
+        return [by_issue.get("A"), by_issue.get("B")]
+    try:
+        return {"owner": owners(fs), "perm_owner": owners(fs[::-1])}
+    except Exception:  # noqa: BLE001  (profile name absent or different)
+        return None
+
+
+def _with_tau(gm: Path, tau: int, dst: Path) -> Path:
+    """Copy of the M fixture whose public policy declares tau with the team's documented key.
+    (fintech-checks: the team publishes tau in policy or matcher documentation; AuditLab's adapter
+    documents policy.json "matching_tolerance_minor"). Returns the copy."""
+    import shutil
+    if not dst.exists():
+        shutil.copytree(gm, dst)
+        pol_path = dst / "public" / "policy.json"
+        pol = json.loads(pol_path.read_text(encoding="utf-8")); pol["matching_tolerance_minor"] = tau
+        pol_path.write_text(json.dumps(pol, indent=2), encoding="utf-8", newline="\n")
+    return dst
+
+
+def _official_ambiguous(adapter, gm: Path, work: Path, cid: str) -> dict:
+    """M10/M11 through score_episode: two truth issues with equal type+affected_ids, tau=1 in policy.
+    M10: A=10000, B=10002; F0=10001 fits A and B, F1=10000 fits only A -> TP=2.
+    M11: A=B=10000; F0, F1 both 10000 fit both -> TP=2, independent of finding order."""
+    if adapter is None:
+        return {"status": "not_checked", "reason": "judge_adapter.py is not importable at this commit"}
+    import shutil
+    d = work / f"amb-{cid}"
+    if d.exists():
+        shutil.rmtree(d)
+    _with_tau(gm, 1, d)
+    base = {"type": "payment_allocation", "affected_ids": ["payment/P1", "invoice/I1"], "currency": "KZT", "evidence_sets": [["payments/DP1", "ledger/R4"]]}
+    amounts = {"M10": (10000, 10002), "M11": (10000, 10000)}[cid]
+    truth = {"episode_id": "GM", "issues": [{**base, "issue_id": "A", "expected_amount_minor": amounts[0]},
+                                             {**base, "issue_id": "B", "expected_amount_minor": amounts[1]}]}
+    (d / "private" / "truth.json").write_text(json.dumps(truth), encoding="utf-8")
+    fs = {"M10": [M(claimed_amount_minor=10001), M(claimed_amount_minor=10000)], "M11": [M(), M()]}[cid]
+    try:
+        a = adapter.score_episode(str(d), {"episode_id": "GM", "findings": copy.deepcopy(fs)}, 10)
+        b = adapter.score_episode(str(d), {"episode_id": "GM", "findings": copy.deepcopy(fs[::-1])}, 10)
+    except Exception as error:  # noqa: BLE001
+        return {"status": "failed", "reason": f"score_episode raised {type(error).__name__}: {error}"}
+    ok = all((r.get("tp"), r.get("fp"), r.get("fn")) == (2, 0, 0) and _close(r.get("return"), Fr(49, 50)) for r in (a, b))
+    return {"status": "passed" if ok else "failed", "result": {"order": a, "reversed": b},
+            "note": "score_episode exposes counts, not the chosen pairs; the pairing rule is checked on the graph level (core)"}
 
 
 def _ref_graph(adj, issues):
