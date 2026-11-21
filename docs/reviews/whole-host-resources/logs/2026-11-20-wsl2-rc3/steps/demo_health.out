@@ -1,0 +1,5 @@
+$ wait_health
+curl: (56) Recv failure: Connection reset by peer
+curl: (56) Recv failure: Connection reset by peer
+curl: (56) Recv failure: Connection reset by peer
+{"ok":true,"runs":6,"static":true}

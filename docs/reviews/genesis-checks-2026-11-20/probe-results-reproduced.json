@@ -1,0 +1,73 @@
+{
+  "scope": "Read-only compatibility probes; not official acceptance or a score",
+  "cases": [
+    {
+      "case": "baseline",
+      "status": "scored",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "reward": 0.98
+      },
+      "matches": [
+        [
+          0,
+          "X1"
+        ]
+      ],
+      "reason": null
+    },
+    {
+      "case": "extra_unavailable_evidence",
+      "status": "scored",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "reward": 0.98
+      },
+      "matches": [
+        [
+          0,
+          "X1"
+        ]
+      ],
+      "reason": null
+    },
+    {
+      "case": "unknown_string_type",
+      "status": "invalid_submission",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "reward": -1.0
+      },
+      "matches": [],
+      "reason": "bad_type"
+    }
+  ],
+  "m11_owners_A_B": [
+    1,
+    0
+  ],
+  "judge_adapter_importable": false,
+  "official_envelope_directly_to_internal_env": {
+    "ok": false,
+    "error": {
+      "code": "malformed_action",
+      "message": "Action must be an object with 'action' and 'args'."
+    },
+    "remaining_steps": 100
+  }
+}

@@ -1,0 +1,1057 @@
+{
+ "D01": {
+  "arithmetic": [],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EE2A058120F48D0F535C10E4CEE1A6779",
+  "findings": [],
+  "meaning": "clean: ordinary reconciliation",
+  "notes": [],
+  "seed": 9101
+ },
+ "D02": {
+  "arithmetic": [
+   "fx payment P0953673D2B840424647564FF: 24700/10^2 x 502.00 x 10^2 = 12399400 -> 12399400; recorded 12399400",
+   "fx invoice I1ADD5DD7DD0B4E977E6BB336: 28100/10^2 x 500.75 x 10^2 = 14071075 -> 14071075; recorded 14071075",
+   "fx payment P9741566705CC9B587F349966: 7200/10^2 x 505.00 x 10^2 = 3636000 -> 3636000; recorded 3636000",
+   "fx payment P94C85BF84E84F9EBAD5E8B56: 12400/10^2 x 505.25 x 10^2 = 6265100 -> 6265100; recorded 6265100",
+   "fx payment PFE070732F371C454CEAB7055: 14700/10^2 x 502.00 x 10^2 = 7379400 -> 7379400; recorded 7379400",
+   "fx invoice IFEC70B733A133443B1C2BACC: 13200/10^2 x 501.00 x 10^2 = 6613200 -> 6613200; recorded 6613200",
+   "fx invoice IAB0E9BF4A79EBED9D8FEB1D6: 10100/10^2 x 500.75 x 10^2 = 5057575 -> 5057575; recorded 5057575",
+   "fx invoice I9F22EB24EBD4374090156592: 29500/10^2 x 501.00 x 10^2 = 14779500 -> 14779500; recorded 14779500",
+   "fx payment P1D6E53A0359306666B7FB1A5: 7200/10^2 x 504.25 x 10^2 = 3630600 -> 3630600; recorded 3630600",
+   "fx payment P572E7FCF4AEBAB2F27AE5884: 26200/10^2 x 506.00 x 10^2 = 13257200 -> 13257200; recorded 13257200"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [
+    "split_payment"
+   ],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E00B89042CD73BE4A37F19176147F570B",
+  "findings": [],
+  "meaning": "clean: correctly split payment",
+  "notes": [],
+  "seed": 9102
+ },
+ "D03": {
+  "arithmetic": [
+   "fx payment PB66000BEF69B195B01E6B5DC: 12700/10^2 x 504.25 x 10^2 = 6403975 -> 6403975; recorded 6403975",
+   "fx invoice I23656595E8FE0C6F8CB9882E: 28800/10^2 x 501.00 x 10^2 = 14428800 -> 14428800; recorded 14428800",
+   "fx payment P95E5C61FEBE8EF051B491B2A: 19100/10^2 x 505.75 x 10^2 = 9659825 -> 9659825; recorded 9659825",
+   "fx payment P3CC237A55972BFEED89897BA: 12100/10^2 x 505.75 x 10^2 = 6119575 -> 6119575; recorded 6119575",
+   "fx invoice I76732ADD1F1D98E83D14EA63: 13000/10^2 x 501.00 x 10^2 = 6513000 -> 6513000; recorded 6513000",
+   "fx invoice I50669418691798AC4B63C459: 22400/10^2 x 500.75 x 10^2 = 11216800 -> 11216800; recorded 11216800",
+   "fx invoice IB6A3781E177991E7BC81987A: 15600/10^2 x 500.75 x 10^2 = 7811700 -> 7811700; recorded 7811700",
+   "fx payment P59413395610AD456C05022B0: 10800/10^2 x 505.25 x 10^2 = 5456700 -> 5456700; recorded 5456700",
+   "fx payment P7007C14FD765E5E7D15DE104: 27400/10^2 x 502.50 x 10^2 = 13768500 -> 13768500; recorded 13768500",
+   "fx payment PCAD82F31E038E2D7E52BF8B1: 22100/10^2 x 502.00 x 10^2 = 11094200 -> 11094200; recorded 11094200"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [
+    "refund"
+   ],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EDCF98759874E00155E6CD0A642800977",
+  "findings": [],
+  "meaning": "clean: correct refund",
+  "notes": [],
+  "seed": 9103
+ },
+ "D04": {
+  "arithmetic": [
+   "fx invoice IB9466E98873C2AD2C32035DF: 7300/10^2 x 501.00 x 10^2 = 3657300 -> 3657300; recorded 3657300",
+   "fx payment P63ADA8CB979C3EE8C64B6743: 8100/10^2 x 503.00 x 10^2 = 4074300 -> 4074300; recorded 4074300",
+   "fx payment PA7106CEAD1A7686D9C89C9C0: 21700/10^2 x 506.25 x 10^2 = 10985625 -> 10985625; recorded 10985625",
+   "fx invoice I4286219E4DCFCACD79C2A9D4: 16900/10^2 x 501.00 x 10^2 = 8466900 -> 8466900; recorded 8466900",
+   "fx payment PE62EAFE742102655B9CEE7EC: 10300/10^2 x 505.25 x 10^2 = 5204075 -> 5204075; recorded 5204075",
+   "fx invoice I68A3741497B88233BD1100DC: 29000/10^2 x 500.75 x 10^2 = 14521750 -> 14521750; recorded 14521750",
+   "fx invoice I4BC6210125927793FE04961C: 8900/10^2 x 501.00 x 10^2 = 4458900 -> 4458900; recorded 4458900",
+   "fx payment PCD8ACE92F15FCB5164C7A8E8: 28400/10^2 x 504.00 x 10^2 = 14313600 -> 14313600; recorded 14313600",
+   "fx payment P45DDB3C3A7295FC197C6EEAB: 16300/10^2 x 504.75 x 10^2 = 8227425 -> 8227425; recorded 8227425",
+   "fx payment P6405E10425462CFE9E1BB976: 29800/10^2 x 503.75 x 10^2 = 15011750 -> 15011750; recorded 15011750",
+   "fx invoice ICA3F6A9D80A8B79F4E949051: 27800/10^2 x 500.75 x 10^2 = 13920850 -> 13920850; recorded 13920850"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [
+    "equal_amount_different_supplier",
+    "archive_copy"
+   ],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E36FC773A63B02249CFD86E2F16662BD6",
+  "findings": [],
+  "meaning": "clean: legitimate repeated amounts",
+  "notes": [],
+  "seed": 9104
+ },
+ "D05": {
+  "arithmetic": [],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD",
+    "JPY"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "settlement_timing": "before",
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E891D2986D5F20EBCB6C0B802A0DB8B4F",
+  "findings": [],
+  "meaning": "clean: currency/period boundary per policy",
+  "notes": [],
+  "seed": 9105
+ },
+ "D06": {
+  "arithmetic": [
+   "fx invoice I0E655821CA7346A5C60B639D: 29300/10^2 x 500.75 x 10^2 = 14671975 -> 14671975; recorded 14671975",
+   "fx payment P4345B1CE523402AAA8D8A321: 25600/10^2 x 503.25 x 10^2 = 12883200 -> 12883200; recorded 12883200",
+   "fx payment PBB896BEA4A12B99360FF376F: 17000/10^2 x 505.50 x 10^2 = 8593500 -> 8593500; recorded 8593500",
+   "fx payment P20FE65E8CDD94DF5985E0AB4: 4800/10^2 x 505.00 x 10^2 = 2424000 -> 2424000; recorded 2424000",
+   "fx invoice I4F906887A73A76CCB05FD55B: 14500/10^2 x 501.00 x 10^2 = 7264500 -> 7264500; recorded 7264500",
+   "fx invoice IE58C9EC28229110E0C5C1792: 25100/10^2 x 501.00 x 10^2 = 12575100 -> 12575100; recorded 12575100",
+   "fx payment PD4054D25FB03339EF41A3495: 7700/10^2 x 504.50 x 10^2 = 3884650 -> 3884650; recorded 3884650",
+   "fx invoice IBD61BF2AB2D7D56E5E3954FA: 9700/10^2 x 500.75 x 10^2 = 4857275 -> 4857275; recorded 4857275",
+   "fx payment P22313CE7FF0BA2B46AEDACEB: 8700/10^2 x 504.50 x 10^2 = 4389150 -> 4389150; recorded 4389150",
+   "fx payment P4382DE1E17CFEDAA5E14DB8E: 21200/10^2 x 504.25 x 10^2 = 10690100 -> 10690100; recorded 10690100",
+   "dup I96C27DA09D165F662CA37D78: 2 docs, 2 recognitions 1178600 - 589300"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [
+    "equal_amount_different_supplier"
+   ],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EA6741DEBF4FAF5FA70B6155AE3A76F75",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I96C27DA09D165F662CA37D78"
+    ],
+    "claimed_amount_minor": 589300,
+    "currency": "KZT",
+    "evidence_ids": [
+     "invoices/D2FD82D77252C78CC1B5485D7",
+     "invoices/D5BCB780B5A52E96D0D9AA93E",
+     "ledger/R7A61DB4B3410CE1F96302F0D",
+     "ledger/RC923B1B6332719E1098E4E36"
+    ],
+    "type": "duplicate_invoice"
+   }
+  ],
+  "meaning": "duplicate invoice",
+  "notes": [],
+  "seed": 9106
+ },
+ "D07": {
+  "arithmetic": [
+   "fx payment P9FF0053C0460751E98061D8E: 3300/10^2 x 4.80 x 10^0 = 792/5 -> 158; recorded 158",
+   "fx payment P0310CFCACAFB2BBB8D600AAF: 19200/10^2 x 3.30 x 10^0 = 3168/5 -> 634; recorded 634",
+   "fx payment PE6E54BE7C851EBAE1553B656: 22200/10^2 x 3.30 x 10^0 = 3663/5 -> 733; recorded 733",
+   "fx invoice I0E1A421472D5607BB1052A0B: 11000/10^2 x 2.05 x 10^0 = 451/2 -> 226; recorded 226 [EXACT HALF]",
+   "fx invoice I197F9C99B48909C0D1DF877A: 24100/10^2 x 1.80 x 10^0 = 2169/5 -> 434; recorded 434",
+   "fx payment PD5939965F8A8A43C027EA515: 7600/10^2 x 4.05 x 10^0 = 1539/5 -> 308; recorded 308",
+   "fx invoice I913ACE0A7C508B137BC81D68: 27300/10^2 x 2.05 x 10^0 = 11193/20 -> 560; recorded 560",
+   "fx invoice I59D8F5D51DDBF21E4E5D27A7: 28000/10^2 x 2.05 x 10^0 = 574 -> 574; recorded 574",
+   "fx invoice I63495E4326ED580FDAD7A0AE: 16800/10^2 x 1.80 x 10^0 = 1512/5 -> 302; recorded 302",
+   "fx payment PF5470C706A291A1607CA70B3: 27700/10^2 x 3.30 x 10^0 = 9141/10 -> 914; recorded 914",
+   "fx payment P544BDEEC92810ED4FF4BFF50: 7100/10^2 x 7.30 x 10^0 = 5183/10 -> 518; recorded 518",
+   "dup I4BF52BB9F58EE6AF8209F88B: 2 docs, 2 recognitions 9466 - 4733"
+  ],
+  "config": {
+   "base_currency": "JPY",
+   "clean_distractors": [
+    "archive_copy"
+   ],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "JPY",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EEC407ABB65298DB4CBC819F1008292DF",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I4BF52BB9F58EE6AF8209F88B"
+    ],
+    "claimed_amount_minor": 4733,
+    "currency": "JPY",
+    "evidence_ids": [
+     "invoices/DC6C7CEAEC6C613647E8BA27A",
+     "invoices/D2A9FBDDF67D1B0BF13F5139A",
+     "ledger/R24A3D9CC8AB30F920D51B609",
+     "ledger/R20E2459106C588C5E3C2B051"
+    ],
+    "type": "duplicate_invoice"
+   }
+  ],
+  "meaning": "duplicate invoice",
+  "notes": [],
+  "seed": 9107
+ },
+ "D08": {
+  "arithmetic": [
+   "fx invoice IEB292B07392A4AF9302DB108: 8300/10^2 x 501.00 x 10^2 = 4158300 -> 4158300; recorded 4158300",
+   "fx invoice IC087A1DAD8FC1CD412A3A31A: 24900/10^2 x 500.75 x 10^2 = 12468675 -> 12468675; recorded 12468675",
+   "fx payment P9CB940C8EE9D274ABBD084DF: 14000/10^2 x 503.00 x 10^2 = 7042000 -> 7042000; recorded 7042000",
+   "fx payment P4C40A03005AD8C704F44E197: 7200/10^2 x 505.75 x 10^2 = 3641400 -> 3641400; recorded 3641400",
+   "fx payment P9EFF8049C89088829F9A4D1F: 5300/10^2 x 504.75 x 10^2 = 2675175 -> 2675175; recorded 2675175",
+   "fx payment P0B9BD805C007459842EF5679: 20300/10^2 x 502.25 x 10^2 = 10195675 -> 10195675; recorded 10195675",
+   "fx payment P81789F6176E9864419C6E65A: 16100/10^2 x 506.25 x 10^2 = 8150625 -> 8150625; recorded 8150625",
+   "fx payment P26707BD0320C1338E90F991A: 28800/10^2 x 503.75 x 10^2 = 14508000 -> 14508000; recorded 14508000",
+   "fx invoice I1545046718C6C6DDDB5047A5: 27600/10^2 x 500.75 x 10^2 = 13820700 -> 13820700; recorded 13820700",
+   "fx invoice I44EEFE729D3A78891F5B1F22: 11200/10^2 x 501.00 x 10^2 = 5611200 -> 5611200; recorded 5611200",
+   "dup I551D85995164DAA0B4E8E000: 2 docs, 2 recognitions 2675000 - 1337500"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [
+    "equal_amount_different_supplier",
+    "archive_copy",
+    "refund",
+    "split_payment"
+   ],
+   "company_size": {
+    "documents_target": 200,
+    "ledger_rows_target": 2000
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E959A310494A0ED8C6D995D3BB3254E65",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I551D85995164DAA0B4E8E000"
+    ],
+    "claimed_amount_minor": 1337500,
+    "currency": "KZT",
+    "evidence_ids": [
+     "invoices/D35A55762ED30E12891D7744B",
+     "invoices/D923C0908425B495CEE3E28E8",
+     "ledger/R71F4253FBDFB559292857971",
+     "ledger/R756483B6B36EE0324E926B94"
+    ],
+    "type": "duplicate_invoice"
+   }
+  ],
+  "meaning": "duplicate invoice (max size)",
+  "notes": [],
+  "seed": 9108
+ },
+ "D09": {
+  "arithmetic": [
+   "alloc PE8AF3C87930D862E9FAB5006: credits-debits before 2026-12-01T00:00:00+05:00 = 3448000 KZT"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 1,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E04306BCC0CAF82ABC2133FAE4D1BB320",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I4FBA872A3176D90CB7E3CDCD",
+     "payment/PE8AF3C87930D862E9FAB5006"
+    ],
+    "claimed_amount_minor": 3448000,
+    "currency": "KZT",
+    "evidence_ids": [
+     "payments/D9D8CF8FA0854FB3B459ED7AF",
+     "ledger/RAA5DB2E8C061ACE7B81D3A7F",
+     "ledger/RBBAE6DAEBB5616F3D7FE1D12",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "allocation: partial (generator applies 3/5)",
+  "notes": [],
+  "seed": 9109
+ },
+ "D10": {
+  "arithmetic": [
+   "alloc P767EF683D77FFA5F8D2C838E: credits-debits before 2026-12-01T00:00:00+05:00 = 2000000 KZT"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 1,
+    "period_cutoff": 0
+   },
+   "settlement_timing": "after",
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EA334C83FEF9071F540B80FC4933B7CBE",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/IB824087C8D6B8CD8BD52038D",
+     "payment/P767EF683D77FFA5F8D2C838E"
+    ],
+    "claimed_amount_minor": 2000000,
+    "currency": "KZT",
+    "evidence_ids": [
+     "payments/D070057DA22AE76E4B42A4CB1",
+     "ledger/R76FAFBADD8B41AE8C4E39F97",
+     "ledger/RF2005885B8C4B5137927B395",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "allocation: remainder settled after the boundary",
+  "notes": [],
+  "seed": 9110
+ },
+ "D11": {
+  "arithmetic": [
+   "alloc P60CCB5CCB4CE8AACE995D5BC: credits-debits before 2026-12-01T00:00:00+05:00 = 2000000 KZT"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 1,
+    "period_cutoff": 0
+   },
+   "settlement_timing": "at",
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E7B685FD0195617A0D5252527AFAF61FB",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/IC0FBE400E7D6C2551538601B",
+     "payment/P60CCB5CCB4CE8AACE995D5BC"
+    ],
+    "claimed_amount_minor": 2000000,
+    "currency": "KZT",
+    "evidence_ids": [
+     "payments/D2B645FBFD047AE99495937AE",
+     "ledger/R8DAA544C6D93331B5A933A43",
+     "ledger/R4440AB79B34BE97D9FB53682",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "allocation: remainder settled exactly at the boundary",
+  "notes": [],
+  "seed": 9111
+ },
+ "D12": {
+  "arithmetic": [
+   "fx payment P79B4591FE8559A77C9AFF64A: 25200/10^2 x 502.00 x 10^2 = 12650400 -> 12650400; recorded 12656700"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EA1B60EC69D6CC234014F11EA610E7D2A",
+  "findings": [
+   {
+    "affected_ids": [
+     "payment/P79B4591FE8559A77C9AFF64A"
+    ],
+    "claimed_amount_minor": 6300,
+    "currency": "KZT",
+    "evidence_ids": [
+     "payments/D066233D37104CC11F37B48E6",
+     "fx/2026-11-04/USD/KZT",
+     "policy/fx_date",
+     "ledger/R58AB060823AAFD8676B8F449"
+    ],
+    "type": "fx_conversion"
+   }
+  ],
+  "meaning": "FX date/rate",
+  "notes": [],
+  "seed": 9112
+ },
+ "D13": {
+  "arithmetic": [
+   "fx payment PEB1C991493E311627447B2EE: 158/10^0 x 1.090 x 10^3 = 172220 -> 172220; recorded 173010"
+  ],
+  "config": {
+   "base_currency": "KWD",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KWD",
+    "JPY"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 0,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E64C50B0994407CB125598F405AFBDC6A",
+  "findings": [
+   {
+    "affected_ids": [
+     "payment/PEB1C991493E311627447B2EE"
+    ],
+    "claimed_amount_minor": 790,
+    "currency": "KWD",
+    "evidence_ids": [
+     "payments/DFA2FB5DF1FB091890D1E7BE2",
+     "fx/2026-11-04/JPY/KWD",
+     "policy/fx_date",
+     "ledger/R7CDF68A62C90AB2BB75273D6"
+    ],
+    "type": "fx_conversion"
+   }
+  ],
+  "meaning": "FX date/rate (3/0 decimals)",
+  "notes": [],
+  "seed": 9113
+ },
+ "D14": {
+  "arithmetic": [
+   "cutoff invoice I2BF58EBC85E78D249DFE8F15: issued period 0, recognised period 1, nominal 5680900 KZT"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 1
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E1FEAF74F5FB057B8627396D29EE8818B",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I2BF58EBC85E78D249DFE8F15"
+    ],
+    "claimed_amount_minor": 5680900,
+    "currency": "KZT",
+    "evidence_ids": [
+     "invoices/D9EAA44625AE5E916C8DE82B1",
+     "ledger/RC9E0FF80054010993B401313",
+     "policy/period"
+    ],
+    "type": "period_cutoff"
+   }
+  ],
+  "meaning": "period cutoff",
+  "notes": [],
+  "seed": 9114
+ },
+ "D15": {
+  "arithmetic": [
+   "cutoff invoice I1485C5112A2838F271CDECB3: issued period 0, recognised period 1, nominal 4509900 EUR"
+  ],
+  "config": {
+   "base_currency": "EUR",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "EUR",
+    "USD"
+   ],
+   "interaction": null,
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 0,
+    "payment_allocation": 0,
+    "period_cutoff": 1
+   },
+   "target_period": "2026-10",
+   "timezone": "Europe/Berlin"
+  },
+  "episode_id": "E32D2358D73E72FCF5BF505855F0C0D4A",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I1485C5112A2838F271CDECB3"
+    ],
+    "claimed_amount_minor": 4509900,
+    "currency": "EUR",
+    "evidence_ids": [
+     "invoices/DB83FF6C1EF7F430A852F3093",
+     "ledger/R6C3672CDA7B56D600C5FD5B9",
+     "policy/period"
+    ],
+    "type": "period_cutoff"
+   }
+  ],
+  "meaning": "period cutoff (DST zone)",
+  "notes": [],
+  "seed": 9115
+ },
+ "D16": {
+  "arithmetic": [
+   "alloc P485D4EA578151722143254A6: credits-debits before 2026-12-01T00:00:00+05:00 = 2760 USD",
+   "fx payment P485D4EA578151722143254A6: 6900/10^2 x 506.25 x 10^2 = 3493125 -> 3493125; recorded 3494850"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": "allocation_fx_same_payment",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 1,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "EDA9D719797FEC2AFBCD1A56D60218F70",
+  "findings": [
+   {
+    "affected_ids": [
+     "payment/P485D4EA578151722143254A6"
+    ],
+    "claimed_amount_minor": 1725,
+    "currency": "KZT",
+    "evidence_ids": [
+     "payments/D836764D04246B17A1A10C351",
+     "fx/2026-11-21/USD/KZT",
+     "policy/fx_date",
+     "ledger/RFF45BB60B582A46494A7DCBE"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "invoice/IDB9453871CEA1CAB46811879",
+     "payment/P485D4EA578151722143254A6"
+    ],
+    "claimed_amount_minor": 2760,
+    "currency": "USD",
+    "evidence_ids": [
+     "payments/D836764D04246B17A1A10C351",
+     "ledger/R16A16748450496D7AF2CBE63",
+     "ledger/R5B1A925CB87D92DEA387F66B",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "interaction A",
+  "notes": [],
+  "seed": 9116
+ },
+ "D17": {
+  "arithmetic": [
+   "alloc P76A8258D922B39654FFFD60C: credits-debits before 2026-12-01T00:00:00+05:00 = 3560 USD",
+   "fx payment P76A8258D922B39654FFFD60C: 8900/10^2 x 6.05 x 10^0 = 10769/20 -> 538; recorded 561"
+  ],
+  "config": {
+   "base_currency": "JPY",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "JPY",
+    "USD",
+    "KWD"
+   ],
+   "interaction": "allocation_fx_same_payment",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 1,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E70C15BE2E215D455E6858EEF6FD881F5",
+  "findings": [
+   {
+    "affected_ids": [
+     "payment/P76A8258D922B39654FFFD60C"
+    ],
+    "claimed_amount_minor": 23,
+    "currency": "JPY",
+    "evidence_ids": [
+     "payments/D70A652564FF3CE28C0E45161",
+     "fx/2026-11-16/USD/JPY",
+     "policy/fx_date",
+     "ledger/RC73FE067BDD9FDAE82EA1C0F"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "invoice/I5D0BAD434FC7296AD0164C8D",
+     "payment/P76A8258D922B39654FFFD60C"
+    ],
+    "claimed_amount_minor": 3560,
+    "currency": "USD",
+    "evidence_ids": [
+     "payments/D70A652564FF3CE28C0E45161",
+     "ledger/R6B04A4F84C5D05CF1C4267A0",
+     "ledger/R4A1DB6E646500A94985B7D8D",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "interaction A (JPY base)",
+  "notes": [],
+  "seed": 9117
+ },
+ "D18": {
+  "arithmetic": [
+   "alloc PF67B0BF82BEDEEF2134BD555: credits-debits before 2026-04-01T00:00:00-04:00 = 3520000 USD",
+   "alloc PABE488C37782D3DF105CF413: credits-debits before 2026-04-01T00:00:00-04:00 = 5880 EUR",
+   "fx payment P325E90CF242DC15E3B818B44: 16000/10^2 x 1.30 x 10^2 = 20800 -> 20800; recorded 20960",
+   "fx payment PABE488C37782D3DF105CF413: 14700/10^2 x 1.20 x 10^2 = 17640 -> 17640; recorded 17787"
+  ],
+  "config": {
+   "base_currency": "USD",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "USD",
+    "EUR"
+   ],
+   "interaction": "allocation_fx_same_payment",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 2,
+    "payment_allocation": 2,
+    "period_cutoff": 0
+   },
+   "target_period": "2026-03",
+   "timezone": "America/New_York"
+  },
+  "episode_id": "EBA94F12EDC406A4608A19430338FF688",
+  "findings": [
+   {
+    "affected_ids": [
+     "payment/P325E90CF242DC15E3B818B44"
+    ],
+    "claimed_amount_minor": 160,
+    "currency": "USD",
+    "evidence_ids": [
+     "payments/D2868C3F2D94CFD9689A3EC46",
+     "fx/2026-03-18/EUR/USD",
+     "policy/fx_date",
+     "ledger/R0A56744EF2FBA8CA2AB59857"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "payment/PABE488C37782D3DF105CF413"
+    ],
+    "claimed_amount_minor": 147,
+    "currency": "USD",
+    "evidence_ids": [
+     "payments/D69BABCAB993DD0C32627527A",
+     "fx/2026-03-08/EUR/USD",
+     "policy/fx_date",
+     "ledger/R28B4E63AD78FAF75C8E0DA31"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "invoice/I082E1D35E2D589931B5B42AD",
+     "payment/PF67B0BF82BEDEEF2134BD555"
+    ],
+    "claimed_amount_minor": 3520000,
+    "currency": "USD",
+    "evidence_ids": [
+     "payments/DF32E2464206877BE7DFE1FE2",
+     "ledger/R78841CE0A60E7C3DF092C6AC",
+     "ledger/RE126884C587E263952C94DFC",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   },
+   {
+    "affected_ids": [
+     "invoice/I0879FA2B25663D072E524A69",
+     "payment/PABE488C37782D3DF105CF413"
+    ],
+    "claimed_amount_minor": 5880,
+    "currency": "EUR",
+    "evidence_ids": [
+     "payments/D69BABCAB993DD0C32627527A",
+     "ledger/RE5F8D6278F6DC544FB33293F",
+     "ledger/RB249A0B9BA622DA695250571",
+     "policy/allocation"
+    ],
+    "type": "payment_allocation"
+   }
+  ],
+  "meaning": "interaction A (NY, more issues)",
+  "notes": [],
+  "seed": 9118
+ },
+ "D19": {
+  "arithmetic": [
+   "fx invoice I356422DD31F952DFA2727937: 10900/10^2 x 501.00 x 10^2 = 5460900 -> 5460900; recorded 5460900",
+   "fx invoice I3A32612B8C648AF9B58CBC65: 3400/10^2 x 500.75 x 10^2 = 1702550 -> 1702550; recorded 1703400",
+   "fx invoice I88424925BAD09A12E9E509F6: 28500/10^2 x 500.75 x 10^2 = 14271375 -> 14271375; recorded 14271375",
+   "cutoff invoice I3A32612B8C648AF9B58CBC65: issued period 0, recognised period 1, nominal 3400 USD"
+  ],
+  "config": {
+   "base_currency": "KZT",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "interaction": "cutoff_fx_same_invoice",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 0,
+    "period_cutoff": 1
+   },
+   "target_period": "2026-11",
+   "timezone": "Asia/Almaty"
+  },
+  "episode_id": "E2E1D8684A994A791EB5932CDA9CBB2B9",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/I3A32612B8C648AF9B58CBC65"
+    ],
+    "claimed_amount_minor": 850,
+    "currency": "KZT",
+    "evidence_ids": [
+     "invoices/D58DB8E57E91F4E20956ACC27",
+     "fx/2026-11-30/USD/KZT",
+     "policy/fx_date",
+     "ledger/R4B7AB3D8447A70F6C267C512"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "invoice/I3A32612B8C648AF9B58CBC65"
+    ],
+    "claimed_amount_minor": 3400,
+    "currency": "USD",
+    "evidence_ids": [
+     "invoices/D58DB8E57E91F4E20956ACC27",
+     "ledger/R6D418F1698297D3F745E5E0C",
+     "policy/period"
+    ],
+    "type": "period_cutoff"
+   }
+  ],
+  "meaning": "interaction B",
+  "notes": [],
+  "seed": 9119
+ },
+ "D20": {
+  "arithmetic": [
+   "fx invoice IA0F788EA287927914BEDA9C3: 5100/10^2 x 3.05 x 10^3 = 155550 -> 155550; recorded 155550",
+   "fx invoice I44E7FA259BF5FD1B47A59696: 27800/10^2 x 2.80 x 10^3 = 778400 -> 778400; recorded 778400",
+   "fx invoice I50D07487DC6A2B4ABD8EDFF4: 18900/10^2 x 3.05 x 10^3 = 576450 -> 576450; recorded 576450",
+   "fx invoice IC476B6B5DD82DA607FC7BAB1: 23400/10^2 x 2.80 x 10^3 = 655200 -> 655200; recorded 713700",
+   "fx invoice I90AED30E24424590A099C196: 30000/10^2 x 3.05 x 10^3 = 915000 -> 915000; recorded 915000",
+   "cutoff invoice IC476B6B5DD82DA607FC7BAB1: issued period 0, recognised period 1, nominal 23400 USD"
+  ],
+  "config": {
+   "base_currency": "KWD",
+   "clean_distractors": [],
+   "company_size": {
+    "documents_target": 65,
+    "ledger_rows_target": 400
+   },
+   "config_version": "1.1",
+   "currencies": [
+    "KWD",
+    "USD"
+   ],
+   "interaction": "cutoff_fx_same_invoice",
+   "issue_counts": {
+    "duplicate_invoice": 0,
+    "fx_conversion": 1,
+    "payment_allocation": 0,
+    "period_cutoff": 1
+   },
+   "target_period": "2026-03",
+   "timezone": "Europe/Berlin"
+  },
+  "episode_id": "E2F60DAC3AF91EE78C4F96A66DA5E652B",
+  "findings": [
+   {
+    "affected_ids": [
+     "invoice/IC476B6B5DD82DA607FC7BAB1"
+    ],
+    "claimed_amount_minor": 58500,
+    "currency": "KWD",
+    "evidence_ids": [
+     "invoices/D34BE955268399C9B3BF6DCBF",
+     "fx/2026-03-31/USD/KWD",
+     "policy/fx_date",
+     "ledger/R344377BF35FA732E8B17F674"
+    ],
+    "type": "fx_conversion"
+   },
+   {
+    "affected_ids": [
+     "invoice/IC476B6B5DD82DA607FC7BAB1"
+    ],
+    "claimed_amount_minor": 23400,
+    "currency": "USD",
+    "evidence_ids": [
+     "invoices/D34BE955268399C9B3BF6DCBF",
+     "ledger/RC7B41268DF19A43475EEC54F",
+     "policy/period"
+    ],
+    "type": "period_cutoff"
+   }
+  ],
+  "meaning": "interaction B (KWD, Berlin spring)",
+  "notes": [],
+  "seed": 9120
+ }
+}

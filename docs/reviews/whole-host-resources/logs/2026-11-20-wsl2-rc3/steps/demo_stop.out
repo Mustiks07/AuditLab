@@ -1,0 +1,2 @@
+$ docker --host unix:///var/run/docker.sock stop auditlab-ops01-demo-711
+auditlab-ops01-demo-711

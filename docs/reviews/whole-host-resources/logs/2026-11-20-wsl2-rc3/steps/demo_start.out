@@ -1,0 +1,2 @@
+$ docker --host unix:///var/run/docker.sock run -d --rm --name auditlab-ops01-demo-711 --pull never --user 1000:1000 --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 2g --tmpfs /tmp:rw,nosuid,size=1g -p 127.0.0.1:8765:8765 --mount type=bind,src=/home/user/ops01/review-20261120T153901Z/bundle/demo-results,dst=/results sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b python run.py demo --host 0.0.0.0 --root /results/demo
+29788c169d9d33f245e27253586a15f28a253d35715b9049a6aaafd43a9b359f

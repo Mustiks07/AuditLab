@@ -1,0 +1,26 @@
+{
+  "limit_bytes": 4000000000,
+  "facts": {
+    "machine": "x86_64",
+    "mem_total_bytes": 7945748480,
+    "swap_total_bytes": 2147483648,
+    "affinity_cpus": 8,
+    "online_cpus": 8,
+    "python": "3.14.4",
+    "cgroup2": true,
+    "docker_server": "",
+    "docker_cgroup": "",
+    "wsl": true
+  },
+  "checks": {
+    "x86_64": true,
+    "two_cpus": false,
+    "mem_total_le_limit": false,
+    "swap_disabled": false,
+    "python_3_11": false,
+    "cgroup_v2": false,
+    "docker_engine_reachable": false
+  },
+  "qualified": false,
+  "note": "MemTotal is the guest kernel view and is below the RAM the hypervisor assigned; record the assigned size from the hypervisor configuration separately."
+}

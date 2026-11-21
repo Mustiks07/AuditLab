@@ -20,10 +20,11 @@ from typing import Callable
 
 from auditlab.contracts import MAX_STEPS, Action, Observation, StepResult, ToolReply
 from auditlab.evaluator.matcher import validate_truth
+from auditlab.evaluator.schema import RULES, RULES_INTERNAL
 from auditlab.runner import export as export_mod
 from auditlab.runner.wire import json_snapshot, rejected_marker
 
-VERSIONS = {"runner": "1.1", "evaluator": "1.1", "public_schema": "1.0"}
+VERSIONS = {"runner": "1.2", "evaluator": "1.2", "public_schema": "1.0"}
 TOOLS = ("list_records", "get_record", "get_document", "calculator")
 TOOL_DOC = {
     "list_records": {"args": {"table": "str", "cursor": "str|null", "limit": "1..50"}},
@@ -32,7 +33,7 @@ TOOL_DOC = {
     "calculator": {"args": {"expression": "str"}},
     "submit": {"args": {"episode_id": "str", "findings": "list (<=30)"}},
 }
-RUNNER_KEYS = ("snapshot_dir", "export_dir", "policy_name", "run_id", "time_limit_s")
+RUNNER_KEYS = ("snapshot_dir", "export_dir", "policy_name", "run_id", "time_limit_s", "started_at")
 # Detailed outcome -> run.json status (INTERFACES 1.1). Only a submitted episode is "completed";
 # truncation and crashes are exported for the record but the console never lists them.
 EXPORT_STATUS = {"submitted": "completed", "invalid_submission": "completed",
@@ -79,19 +80,26 @@ def _default_generator(seed: int, config: dict, output_dir: Path) -> None:
     generate_episode(seed, config, output_dir)
 
 
+def _evaluator_request(private_dir: Path, submission: object, inspection_steps: int, rules: str) -> dict:
+    request = {"private_dir": str(private_dir), "submission": submission, "inspection_steps": inspection_steps}
+    if rules != RULES_INTERNAL:  # the default request stays identical to evaluator 1.1
+        request["rules"] = rules
+    return request
+
+
 class SubprocessEvaluator:
     """Runs `python -m auditlab.evaluator` per episode. It reads truth from the closed volume itself."""
 
-    def __init__(self, timeout_s: float = 30.0):
+    def __init__(self, timeout_s: float = 30.0, rules: str = RULES_INTERNAL):
         self.timeout_s = timeout_s
+        self.rules = rules
 
     def __call__(self, private_dir: Path, submission: object, inspection_steps: int) -> dict:
         env = {"PYTHONPATH": _PACKAGE_PARENT, "PYTHONIOENCODING": "utf-8"}
         for key in ("SYSTEMROOT", "PATH"):
             if key in os.environ:
                 env[key] = os.environ[key]
-        request = json.dumps({"private_dir": str(private_dir), "submission": submission,
-                              "inspection_steps": inspection_steps})
+        request = json.dumps(_evaluator_request(private_dir, submission, inspection_steps, self.rules))
         done = subprocess.run([sys.executable, "-m", "auditlab.evaluator"], input=request, text=True,
                               encoding="utf-8", capture_output=True, timeout=self.timeout_s, env=env,
                               cwd=_PACKAGE_PARENT, check=False)
@@ -107,10 +115,12 @@ class SubprocessEvaluator:
 class InProcessEvaluator:
     """Same contract without a child process, for fast unit tests."""
 
+    def __init__(self, rules: str = RULES_INTERNAL):
+        self.rules = rules
+
     def __call__(self, private_dir: Path, submission: object, inspection_steps: int) -> dict:
         from auditlab.evaluator.service import handle
-        return handle({"private_dir": str(private_dir), "submission": submission,
-                       "inspection_steps": inspection_steps})
+        return handle(_evaluator_request(private_dir, submission, inspection_steps, self.rules))
 
 
 class AuditEnvironment:
@@ -119,10 +129,13 @@ class AuditEnvironment:
     def __init__(self, mode: str, *, session_opener: Callable[[Path], object] | None = None,
                  generator: Callable[[int, dict, Path], None] | None = None,
                  clock: Callable[[], float] = time.monotonic, evaluator: object = "subprocess",
-                 trusted_dir: str | Path | None = None):
+                 trusted_dir: str | Path | None = None, rules: str = RULES_INTERNAL):
         if mode not in ("train", "closed"):
             raise ValueError("mode must be 'train' or 'closed'")
+        if rules not in RULES:
+            raise ValueError("unknown evaluator rules")
         self.mode = mode
+        self.rules = rules  # trusted: which published matcher rules grade this environment
         self._opener = session_opener or _default_opener
         self._generator = generator or _default_generator
         self._clock = clock
@@ -130,7 +143,7 @@ class AuditEnvironment:
         if isinstance(evaluator, str):
             if evaluator not in backends:
                 raise ValueError("unknown evaluator backend")
-            evaluator = backends[evaluator]()
+            evaluator = backends[evaluator](rules=rules)
         self._evaluate = evaluator
         self._export_dir: Path | None = None
         self.trusted_dir = Path(trusted_dir) if trusted_dir else None
@@ -143,8 +156,12 @@ class AuditEnvironment:
         """reset(seed, {snapshot_dir, export_dir, policy_name}) per INTERFACES 1.1.
 
         Trusted keys (never echoed to the policy): snapshot_dir, export_dir, policy_name, run_id,
-        time_limit_s. Every other key is generator configuration, used only without snapshot_dir.
+        time_limit_s, started_at. Every other key is generator configuration, used only without
+        snapshot_dir. started_at is a reading of this environment's clock taken by a caller that
+        must count the time limit from an earlier moment (the Genesis adapter: entry into reset,
+        before loading or generating the episode); by default the limit starts after loading.
         """
+        entered = self._clock()
         if self._phase == "active":  # an unfinished attempt is recorded as such, never as a result
             self._events.append({"event": "abandoned_by_reset"})
             self._persist_trusted("abandoned", None, None)
@@ -157,6 +174,9 @@ class AuditEnvironment:
         time_limit = float(options.get("time_limit_s", DEFAULT_TIME_LIMIT_S))
         if not time_limit > 0:
             raise RunnerError("time_limit_s must be positive")
+        started_at = options.get("started_at")
+        if started_at is not None and (type(started_at) not in (int, float) or not started_at <= entered):
+            raise RunnerError("started_at must be a reading of the environment clock taken before reset")
         export_dir = options.get("export_dir")
         if export_dir is not None:
             if self.mode != "train":
@@ -173,7 +193,8 @@ class AuditEnvironment:
         self._public_dir = Path(snapshot) / "public"
         self._private_dir = Path(snapshot) / "private"
         truth = json.loads((self._private_dir / "truth.json").read_text(encoding="utf-8"))
-        validate_truth(truth)  # a malformed reference is a generator defect: fail before the policy sees anything
+        # A malformed reference is a generator defect: fail before the policy sees anything.
+        validate_truth(truth, distinct_causes=self.rules == RULES_INTERNAL)
         manifest = json.loads((self._public_dir / "manifest.json").read_text(encoding="utf-8"))
         policy_file = self._public_dir / "policy.json"
         policy = json.loads(policy_file.read_text(encoding="utf-8")) if policy_file.is_file() else None
@@ -185,7 +206,7 @@ class AuditEnvironment:
         self._policy_name = str(options.get("policy_name", "unknown"))
         self._seed = seed
         self._time_limit = time_limit
-        self._started = self._clock()
+        self._started = float(started_at) if started_at is not None else self._clock()
         self._deadline = self._started + self._time_limit
         self._inspections = 0
         self._trajectory: list[dict] = []
