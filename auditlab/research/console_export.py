@@ -178,13 +178,17 @@ def publish_curriculum(output, target):
         if item['status']!='included':
             filtered.append({'title':'Повтор оформления','reason':item.get('reason')});continue
         splits[item['split']]=splits.get(item['split'],0)+1
+        provenance=item.get('provenance') or {}
+        origin=('reduction' if provenance.get('reduction') else 'family_transform' if item.get('parent')
+                else 'clean_control' if provenance.get('selection')=='predeclared_clean_control'
+                else 'failure' if provenance.get('selection')=='observed_agent_failure' else 'search')
         items.append({'item_id':item['candidate_id'],'title':'Финансовый случай '+str(len(items)+1),
             'split':item['split'],'family_id':item['family_id'],'hash':item['snapshot_sha256'],
-            'validation':item['validation']['status'],'origin':'Адаптивный поиск и заранее заданные контрольные случаи'})
+            'validation':item['validation']['status'],'origin':origin})
     write(target/'curriculum.json',make('curriculum',cur['artifact_id'],experiment_id=eid,title='Проверенный учебный набор',
         failure_ids=[fid],reduction_ids=[rid],items=items,filtered=filtered,splits=splits,export_formats=['SFT'],split_hash=exp['partition']['partition_sha256']))
     write(target/'training.json',make('training','training-'+eid,curriculum_id=cur['artifact_id'],kind='weights',
-        state='not_started_missing_access',result=None,error={'code':'not_checked','message':'Обучение весов не запускалось: модель и GPU не настроены.'}))
+        state='not_available',result=None,error={'code':'not_checked','message':'Обучение весов не запускалось: модель и GPU не настроены.'}))
     write(target/'comparison.json',make('comparison','comparison-'+eid,experiment_id=eid,title='Эффект обучения ещё не измерен',
         status='not_checked',verification={'status':'not_checked','reason':'Нет обученных моделей и финального эксперимента.'},
         variants=[],paired=[],missing=[{'variant_id':'weights','reason':'Обучение весов и независимый финальный прогон не выполнены.'}]))
