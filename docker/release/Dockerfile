@@ -25,7 +25,7 @@ COPY tests /app/tests
 COPY fixtures /app/fixtures
 COPY datasets /app/datasets
 COPY docs /app/docs
-COPY run.py offline.py README.md LICENSE .python-version /app/
+COPY run.py offline.py judge_adapter.py README.md LICENSE .python-version /app/
 COPY tools /app/tools
 COPY docker/release/notices /app/notices
 RUN chmod -R a+rX /app
