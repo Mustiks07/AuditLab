@@ -1,0 +1,145 @@
+{
+  "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535",
+  "plan_sha256": "e15f0cc9b62178080e84e019c93d9ede90105e1439266259a5f90a6bd95adf4b",
+  "model": "gemini-3.1-flash-lite",
+  "protocol": "genesis-official-60s",
+  "families": 1,
+  "episodes": 2,
+  "repetitions": 1,
+  "attempts": [
+    {
+      "attempt_id": "gemini-memory--179abae414e8fd95",
+      "variant": "gemini-memory",
+      "episode": "clean",
+      "status": "provider_error",
+      "status_detail": "rate_limit: HTTP 429",
+      "totals": {
+        "budget_debit_usd": 0.01,
+        "cost_usd": null,
+        "environment_actions": 0,
+        "inspection_steps": 0,
+        "known_cost_usd": 0.0,
+        "provider_calls": 2,
+        "tokens": {
+          "cache_read": 0,
+          "cache_write": 0,
+          "input": 0,
+          "output": 0
+        },
+        "unpriced_calls": 2,
+        "wall_seconds": 13.946
+      },
+      "final_answer": null,
+      "official": null,
+      "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535"
+    },
+    {
+      "attempt_id": "gemini-memory--6a8c0b9147bd176d",
+      "variant": "gemini-memory",
+      "episode": "allocation",
+      "status": "provider_error",
+      "status_detail": "rate_limit: HTTP 429",
+      "totals": {
+        "budget_debit_usd": 0.01,
+        "cost_usd": null,
+        "environment_actions": 0,
+        "inspection_steps": 0,
+        "known_cost_usd": 0.0,
+        "provider_calls": 2,
+        "tokens": {
+          "cache_read": 0,
+          "cache_write": 0,
+          "input": 0,
+          "output": 0
+        },
+        "unpriced_calls": 2,
+        "wall_seconds": 14.087
+      },
+      "final_answer": null,
+      "official": null,
+      "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535"
+    },
+    {
+      "attempt_id": "gemini-tools--5bb8e8182dd5b656",
+      "variant": "gemini-tools",
+      "episode": "clean",
+      "status": "provider_error",
+      "status_detail": "rate_limit: HTTP 429",
+      "totals": {
+        "budget_debit_usd": 0.01,
+        "cost_usd": null,
+        "environment_actions": 15,
+        "inspection_steps": 15,
+        "known_cost_usd": 0.0,
+        "provider_calls": 18,
+        "tokens": {
+          "cache_read": 291382,
+          "cache_write": 0,
+          "input": 69439,
+          "output": 498
+        },
+        "unpriced_calls": 3,
+        "wall_seconds": 46.773
+      },
+      "final_answer": null,
+      "official": null,
+      "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535"
+    },
+    {
+      "attempt_id": "gemini-tools--82be64bda11527df",
+      "variant": "gemini-tools",
+      "episode": "allocation",
+      "status": "completed",
+      "status_detail": null,
+      "totals": {
+        "budget_debit_usd": 0.0,
+        "cost_usd": 0.0,
+        "environment_actions": 7,
+        "inspection_steps": 6,
+        "known_cost_usd": 0.0,
+        "provider_calls": 7,
+        "tokens": {
+          "cache_read": 95881,
+          "cache_write": 0,
+          "input": 38472,
+          "output": 246
+        },
+        "unpriced_calls": 0,
+        "wall_seconds": 28.457
+      },
+      "final_answer": {
+        "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+        "findings": []
+      },
+      "official": {
+        "f1": 0.0,
+        "fn": 1,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "return": -1.0,
+        "tp": 0
+      },
+      "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535"
+    }
+  ],
+  "preliminary_infrastructure_failures": {
+    "proxy_route": 4,
+    "ca_permissions": 4,
+    "excluded_from_financial_conclusions": true
+  },
+  "api_smoke": {
+    "passed": true,
+    "network_calls": 1
+  },
+  "prior_model_probe": {
+    "gemini-3.8-flash": "timeout on two tool requests and one native request",
+    "gemini-2.5-flash": "404, unavailable to new users"
+  },
+  "weight_training": "not_checked",
+  "sealed_holdout": "not_checked",
+  "comparison_quality": "incomplete_due_to_rate_limits_and_one_family",
+  "billing": "Free-tier prices declared by user and provider table; no invoice/account billing was inspected; unknown usage/cost stays null",
+  "bridge_image": "sha256:71825f77056381f5b4832a9b47783806da34e0e2237c184efda4730bfe03fec8",
+  "managed_ca_bundle_sha256": "b67dce2c84359d6ba0b0ffbb980c819737cb6fc94aa85ead330ae1e957c69e69"
+}

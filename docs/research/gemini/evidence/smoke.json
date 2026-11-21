@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "tool_calls": [
+    {
+      "name": "calculator",
+      "input": {
+        "expression": "1+1"
+      }
+    }
+  ],
+  "stop_reason": "tool_calls",
+  "model_served": "gemini-3.1-flash-lite",
+  "served_by_fallback": false,
+  "provider": {
+    "provider": "openai_compatible",
+    "model": "gemini-3.1-flash-lite",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "api_key_env": "GEMINI_API_KEY",
+    "system_role": "system",
+    "strict_tools": false,
+    "parallel_tool_calls": false,
+    "reasoning_effort": "minimal",
+    "prices": {
+      "gemini-3.1-flash-lite": {
+        "input": 0,
+        "output": 0,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    "max_tokens_param": "max_completion_tokens",
+    "client_retries": 0
+  },
+  "tries": [
+    {
+      "logical_call": 1,
+      "try": 1,
+      "request_sha256": "f46feab3d225c46348f905ce6528bc4545c87a9ef030e71a93e5ea165980e4c7",
+      "model_requested": "gemini-3.1-flash-lite",
+      "timeout_s": 45.0,
+      "status": "ok",
+      "latency_s": 1.4812329330015928,
+      "usage": {
+        "input_tokens": 86,
+        "output_tokens": 16,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0
+      },
+      "cost_usd": 0.0,
+      "cost_note": null,
+      "budget_debit_usd": 0.0,
+      "model_served": "gemini-3.1-flash-lite",
+      "served_by_fallback": false,
+      "stop_reason": "tool_calls",
+      "request_id": null,
+      "test_double": false
+    }
+  ],
+  "spent_usd": 0.0,
+  "wall_seconds": 1.482,
+  "network_calls": 1
+}

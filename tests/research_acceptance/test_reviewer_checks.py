@@ -39,6 +39,12 @@ class FamilyStatistics(unittest.TestCase):
     def test_missing_families_are_reported_not_imputed(self):
         r = compare.paired({"a": 1.0, "b": 0.0}, {"a": 0.0}, resamples=200)
         self.assertEqual(r["families"], 1); self.assertEqual(r["missing_in_b"], ["b"])
+        self.assertIsNone(r['ci95']);self.assertIsNone(r['p_value']);self.assertFalse(r['shown'])
+
+    def test_one_family_cannot_produce_a_zero_width_confidence_interval(self):
+        r=compare.paired({'one':1.0},{'one':-1.0},resamples=200)
+        self.assertEqual(r['difference'],2.0)
+        self.assertIsNone(r['ci95']);self.assertFalse(r['shown'])
 
 
 @unittest.skipUnless(HAVE_GEN, "not_checked: tzdata/judge_adapter unavailable")

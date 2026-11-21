@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "attempt",
+  "artifact_id": "gemini-memory--6a8c0b9147bd176d",
+  "experiment_id": "gemini-live-official-v2",
+  "variant_id": "gemini-memory",
+  "repetition": 0,
+  "status": "provider_error",
+  "snapshot_ref": "snapshots/gemini-memory--6a8c0b9147bd176d/public",
+  "episode": {
+    "family_id": "dev-922101",
+    "split": "dev"
+  },
+  "evaluation": null,
+  "submission": null,
+  "steps": [],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": null,
+    "elapsed_s": 14.087
+  },
+  "started_at": "2026-11-21T20:47:19.396747+00:00",
+  "finished_at": "2026-11-21T20:47:33.484476+00:00"
+}

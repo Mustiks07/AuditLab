@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "gemini-live-official-v2",
+  "protocol_id": "genesis-official-60s",
+  "purpose": "selection",
+  "transport": "docker",
+  "docker": {
+    "image": "auditlab-llm-bridge:gemini",
+    "allow": [
+      "generativelanguage.googleapis.com:443"
+    ]
+  },
+  "repetitions": 1,
+  "episodes": [
+    {
+      "episode_ref": "artifacts/gemini-episodes/allocation",
+      "family_id": "dev-922101",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "artifacts/gemini-episodes/clean",
+      "family_id": "dev-922101",
+      "split": "dev"
+    }
+  ],
+  "arms": [
+    {
+      "name": "gemini-tools",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 2
+        }
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        },
+        "pricing_basis": "User-provided Free Tier key; published Free Tier prices. Actual account billing not inspected.",
+        "pricing_source": "https://aistudio.google.com/docs/pricing#gemini-3.8-flash"
+      }
+    },
+    {
+      "name": "gemini-memory",
+      "agent": {
+        "kind": "llm",
+        "variant": "memory",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 2
+        }
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        },
+        "pricing_basis": "User-provided Free Tier key; published Free Tier prices. Actual account billing not inspected.",
+        "pricing_source": "https://aistudio.google.com/docs/pricing#gemini-3.8-flash"
+      }
+    }
+  ],
+  "budget": {
+    "max_usd_total": 0.04,
+    "max_usd_per_attempt": 0.01
+  },
+  "analysis": {
+    "pairs": [
+      [
+        "gemini-memory",
+        "gemini-tools"
+      ]
+    ],
+    "bootstrap": 1000,
+    "seed": 922101
+  },
+  "note": "Exploratory dev pair, not sealed holdout. Same financial family clean/defective, two variants, one repetition. Free Tier prices per user account declaration, account billing not inspected. No weight training."
+}

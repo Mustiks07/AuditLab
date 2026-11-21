@@ -1,0 +1,76 @@
+{
+  "status": "failed",
+  "error": {
+    "kind": "timeout",
+    "message": "timeout: request timed out",
+    "status": null,
+    "retry_after": null,
+    "request_id": null
+  },
+  "provider": {
+    "provider": "openai_compatible",
+    "model": "gemini-3.8-flash",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "api_key_env": "GEMINI_API_KEY",
+    "system_role": "system",
+    "strict_tools": false,
+    "parallel_tool_calls": false,
+    "reasoning_effort": "low",
+    "prices": {
+      "gemini-3.8-flash": {
+        "input": 0,
+        "output": 0,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    "max_tokens_param": "max_completion_tokens",
+    "client_retries": 0
+  },
+  "tries": [
+    {
+      "logical_call": 1,
+      "try": 1,
+      "request_sha256": "f46feab3d225c46348f905ce6528bc4545c87a9ef030e71a93e5ea165980e4c7",
+      "model_requested": "gemini-3.8-flash",
+      "timeout_s": 45.0,
+      "status": "error",
+      "error": {
+        "kind": "server",
+        "message": "server: HTTP 503",
+        "status": 503,
+        "retry_after": null,
+        "request_id": null
+      },
+      "latency_s": 32.11283124899637,
+      "usage": null,
+      "cost_usd": null,
+      "cost_note": "usage unavailable; call reservation retained",
+      "budget_debit_usd": 0.0,
+      "waited_s": 1.3444218515250481
+    },
+    {
+      "logical_call": 1,
+      "try": 2,
+      "request_sha256": "f46feab3d225c46348f905ce6528bc4545c87a9ef030e71a93e5ea165980e4c7",
+      "model_requested": "gemini-3.8-flash",
+      "timeout_s": 25.542,
+      "status": "error",
+      "error": {
+        "kind": "timeout",
+        "message": "timeout: request timed out",
+        "status": null,
+        "retry_after": null,
+        "request_id": null
+      },
+      "latency_s": 25.575242401995638,
+      "usage": null,
+      "cost_usd": null,
+      "cost_note": "usage unavailable; call reservation retained",
+      "budget_debit_usd": 0.0
+    }
+  ],
+  "spent_usd": 0.0,
+  "wall_seconds": 59.035,
+  "network_calls": 2
+}

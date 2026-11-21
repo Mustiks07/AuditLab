@@ -1,0 +1,18 @@
+{
+  "provider": "openai_compatible",
+  "model": "gemini-3.1-flash-lite",
+  "api_key_env": "GEMINI_API_KEY",
+  "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+  "reasoning_effort": "minimal",
+  "strict_tools": false,
+  "prices": {
+    "gemini-3.1-flash-lite": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "cache_write": 0
+    }
+  },
+  "pricing_basis": "User-provided Free Tier key; published Free Tier prices. Actual account billing not inspected.",
+  "pricing_source": "https://aistudio.google.com/docs/pricing#gemini-3.1-flash-lite"
+}

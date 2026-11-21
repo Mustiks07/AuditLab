@@ -101,12 +101,16 @@ def publish(plan, output, target, *, comparison=None, state=None):
                 'actions_mean':m['actions']['mean'],'time_s':m['wall_time_s']['mean'],
                 'cost_usd':None if m['cost_usd']['n']!=m['attempts'] else (m['cost_usd']['mean'] or 0)*m['attempts']}})
         pairs=[{'a':v['a'],'b':v['b'],'metric':'mean_reward','difference':v['difference'],'interval':v['ci95'],
-                'method':'Парный bootstrap по экономическим семействам'} for v in comparison['paired_by_family'].values() if v['difference'] is not None]
+                'method':'Парный bootstrap по экономическим семействам'} for v in comparison['paired_by_family'].values() if v['difference'] is not None and v['ci95'] is not None]
+        missing=[{'variant_id':name,'reason':f"Завершено {m['completion']['submitted']} из {m['attempts']} попыток; сбои сервиса не доказывают качество модели."}
+                 for name,m in comparison['arms'].items() if m['completion']['submitted'] < m['attempts']]
+        missing += [{'variant_id':v['a'],'reason':'Недостаточно независимых семейств для оценки неопределённости сравнения.'}
+                    for v in comparison['paired_by_family'].values() if v['ci95'] is None]
         write(target/'comparison.json',artifact('comparison',f'comparison-{eid}', experiment_id=eid,
-            title='Независимое сравнение аудиторов',status='completed', verification={'status':'passed'},
+            title='Независимое сравнение аудиторов',status='incomplete' if missing else 'completed', verification={'status':'passed'},
             verified_by='review.agent_generalization.compare', sample={'families':comparison['families'],
             'episodes':comparison['episodes'],'repetitions':plan['repetitions'],'note':'Внутренняя открытая проверка, не конкурсный балл.'},
-            variants=variants,paired=pairs,missing=[]))
+            variants=variants,paired=pairs,missing=missing))
     return {'experiment_id':eid,'attempts':len(rows),'target':str(target)}
 
 
