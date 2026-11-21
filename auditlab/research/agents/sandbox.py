@@ -33,7 +33,7 @@ import uuid
 from dataclasses import dataclass
 from pathlib import Path
 
-from auditlab.research.agents.egress_proxy import format_target, parse_target
+from auditlab.research.agents.egress_proxy import format_target, parse_target, upstream_address
 from auditlab.research.agents.protocol import get_protocol
 from auditlab.runner.isolation import (PolicyFailure, SubprocessPolicy, launch_label_args,
                                        scrubbed_env)
@@ -153,7 +153,7 @@ def docker_bridge_commands(image: str, proxy_image: str | None = None, network_n
                            secret_env: str | None = "ANTHROPIC_API_KEY", allow=("api.anthropic.com:443",), *,
                            cpus: str = "1", memory: str = "1g", pids: int = 64,
                            proxy_cpus: str = "0.5", proxy_memory: str = "128m",
-                           egress_network: str | None = None) -> DockerBridgePlan:
+                           egress_network: str | None = None, upstream_proxy: str | None = None) -> DockerBridgePlan:
     """Build (but do not run) the internal-network + egress-proxy + bridge topology.
 
     ``proxy_image`` defaults to ``image`` (the bridge image contains the stdlib proxy module).
@@ -179,6 +179,9 @@ def docker_bridge_commands(image: str, proxy_image: str | None = None, network_n
     labels = tuple(launch_label_args())
     proxy, bridge = network + "-proxy", network + "-bridge"
     proxy_args = [arg for entry in allow for arg in ("--allow", entry)]
+    if upstream_proxy is not None:
+        upstream_address(upstream_proxy)
+        proxy_args += ['--upstream-proxy', upstream_proxy]
     # `docker start` returns before Python has bound its socket. Wait inside the
     # proxy container, without granting the bridge any additional network access.
     readiness = (
@@ -203,9 +206,12 @@ def docker_bridge_commands(image: str, proxy_image: str | None = None, network_n
         ("docker", "exec", proxy, "python", "-c", readiness),
     )
     secret_args = ("-e", secret_env) if secret_env else ()
+    proxy_env = tuple(arg for key in ('HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy')
+                      for arg in ('-e', f'{key}=http://{proxy}:{PROXY_PORT}'))
+    no_bypass = tuple(arg for key in ('NO_PROXY', 'no_proxy', 'ALL_PROXY', 'all_proxy') for arg in ('-e', f'{key}='))
     create = ("docker", "create", "-i", "--pull=never", "--name", bridge, "--network", network, *_HARDENING,
               "--pids-limit", str(int(pids)), "--cpus", cpus, "--memory", memory, "--memory-swap", memory,
-              "--log-driver", "none", "-e", f"HTTPS_PROXY=http://{proxy}:{PROXY_PORT}", "-e", "NO_PROXY=",
+              "--log-driver", "none", *proxy_env, *no_bypass,
               *secret_args, "--label", "org.auditlab.role=llm-bridge", *labels, image)
     teardown = (("docker", "rm", "--force", bridge), ("docker", "rm", "--force", proxy),
                 ("docker", "network", "rm", network), ("docker", "network", "rm", egress))

@@ -75,7 +75,8 @@ class DockerBridge(_BridgeTransport):
         plan = sandbox.docker_bridge_commands(self.docker_config["image"], self.docker_config.get("proxy_image"),
                                               secret_env=self.secret_env, allow=self.allow,
                                               cpus=str(self.docker_config.get("cpus", "1")),
-                                              memory=str(self.docker_config.get("memory", "1g")))
+                                              memory=str(self.docker_config.get("memory", "1g")),
+                                              upstream_proxy=self.docker_config.get('upstream_proxy'))
         return sandbox.DockerBridgeProcess(plan, secret_env=self.secret_env, init=init, init_timeout_s=INIT_TIMEOUT_S)
 
 

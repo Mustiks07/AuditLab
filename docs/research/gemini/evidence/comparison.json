@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "comparison-independent-review",
+  "protocol_id": "agent-generalization-1.1",
+  "source_sha": "9cf953dfd40d08fedcc049e2a4e3913f928de535",
+  "arms": {
+    "gemini-memory": {
+      "attempts": 2,
+      "scored": 2,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "mean_reward": {
+        "value": 0.0,
+        "n": 2
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 1,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 0,
+        "timeout": 0,
+        "provider_error": 2,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 0,
+        "attempts": 2
+      },
+      "actions": {
+        "n": 2,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0
+      },
+      "input_tokens": {
+        "n": 2,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0
+      },
+      "output_tokens": {
+        "n": 2,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0
+      },
+      "wall_time_s": {
+        "n": 2,
+        "mean": 14.0165,
+        "median": 14.0165,
+        "p90": 14.087
+      },
+      "cost_usd": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "live_attempts": 2
+    },
+    "gemini-tools": {
+      "attempts": 2,
+      "scored": 2,
+      "excluded_infra": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1
+      },
+      "mean_reward": {
+        "value": -0.015,
+        "n": 2
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 1,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 1,
+        "timeout": 0,
+        "provider_error": 1,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 1,
+        "attempts": 2
+      },
+      "actions": {
+        "n": 2,
+        "mean": 11.0,
+        "median": 11.0,
+        "p90": 15
+      },
+      "input_tokens": {
+        "n": 2,
+        "mean": 247587.0,
+        "median": 247587.0,
+        "p90": 360821
+      },
+      "output_tokens": {
+        "n": 2,
+        "mean": 372.0,
+        "median": 372.0,
+        "p90": 498
+      },
+      "wall_time_s": {
+        "n": 2,
+        "mean": 37.615,
+        "median": 37.615,
+        "p90": 46.773
+      },
+      "cost_usd": {
+        "n": 1,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "live_attempts": 2
+    }
+  },
+  "paired_by_family": {
+    "gemini-memory_vs_gemini-tools": {
+      "a": "gemini-memory",
+      "b": "gemini-tools",
+      "families": 1,
+      "difference": 0.015000000000000013,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "families": 1,
+  "episodes": 2,
+  "attempts": 4,
+  "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "045f4dced18485262193a334bc1a09de5a6922b2",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "comparison",
+  "artifact_id": "comparison-gemini-live-official-v2",
+  "experiment_id": "gemini-live-official-v2",
+  "title": "Независимое сравнение аудиторов",
+  "status": "incomplete",
+  "verification": {
+    "status": "passed"
+  },
+  "verified_by": "review.agent_generalization.compare",
+  "sample": {
+    "families": 1,
+    "episodes": 2,
+    "repetitions": 1,
+    "split": "dev",
+    "note": "Внутренняя открытая проверка, не конкурсный балл."
+  },
+  "variants": [
+    {
+      "variant_id": "gemini-memory",
+      "label": "gemini-3.1-flash-lite · с заметками",
+      "metrics": {
+        "micro_f1": 0.0,
+        "mean_reward": 0.0,
+        "clean_fp": {
+          "count": 0,
+          "denominator": 1
+        },
+        "completion": {
+          "completed": 0,
+          "total": 2
+        },
+        "timeouts": 0,
+        "errors": 2,
+        "actions_mean": 0.0,
+        "time_s": 14.0165,
+        "cost_usd": null
+      }
+    },
+    {
+      "variant_id": "gemini-tools",
+      "label": "gemini-3.1-flash-lite · без заметок",
+      "metrics": {
+        "micro_f1": 0.0,
+        "mean_reward": -0.015,
+        "clean_fp": {
+          "count": 0,
+          "denominator": 1
+        },
+        "completion": {
+          "completed": 1,
+          "total": 2
+        },
+        "timeouts": 0,
+        "errors": 1,
+        "actions_mean": 11.0,
+        "time_s": 37.615,
+        "cost_usd": null
+      }
+    }
+  ],
+  "paired": [],
+  "missing": [
+    {
+      "variant_id": "gemini-memory",
+      "reason": "incomplete_runs",
+      "message": "Завершено 0 из 2 попыток; сбои сервиса не доказывают качество модели."
+    },
+    {
+      "variant_id": "gemini-tools",
+      "reason": "incomplete_runs",
+      "message": "Завершено 1 из 2 попыток; сбои сервиса не доказывают качество модели."
+    },
+    {
+      "variant_id": "gemini-memory",
+      "reason": "insufficient_families",
+      "message": "Недостаточно независимых семейств для оценки неопределённости сравнения."
+    }
+  ]
+}

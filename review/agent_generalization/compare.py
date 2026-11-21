@@ -88,8 +88,11 @@ def family_values(rows: list[dict]) -> dict:
 
 def paired(a: dict, b: dict, resamples=10000, seed=20261121) -> dict:
     fams = sorted(set(a) & set(b))
-    if not fams:
-        return {"families": 0, "difference": None, "ci95": None, "p_value": None}
+    if len(fams) < 2:
+        return {"families": len(fams), "difference": a[fams[0]]-b[fams[0]] if fams else None,
+                "ci95": None, "p_value": None, "shown": False,
+                "missing_in_a": sorted(set(b)-set(a)), "missing_in_b": sorted(set(a)-set(b)),
+                "reason": "at least two independent families are required for an uncertainty estimate"}
     d = [a[f] - b[f] for f in fams]
     rng = random.Random(seed)
     boots = sorted(statistics.fmean(rng.choice(d) for _ in d) for _ in range(resamples))

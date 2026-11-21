@@ -140,7 +140,7 @@ export interface ComparisonView {
     sample?: { families?: number; episodes?: number; repetitions?: number; split?: string; note?: string };
     variants?: { variant_id: string; label?: string; training_id?: string | null; metrics: VariantMetrics | null; missing_reason?: string }[];
     paired?: { a: string; b: string; metric: string; difference: number; interval: [number, number] | null; method?: string; unit?: string }[];
-    missing?: { variant_id: string; reason: string }[]; _provenance: Provenance;
+    missing?: { variant_id: string; reason: string; message?: string }[]; _provenance: Provenance;
   };
 }
 export interface Overview {

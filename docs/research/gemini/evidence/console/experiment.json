@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "045f4dced18485262193a334bc1a09de5a6922b2",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "experiment",
+  "artifact_id": "gemini-live-official-v2",
+  "title": "Проверка финансовых аудиторов",
+  "status": "completed",
+  "agents": [
+    {
+      "variant_id": "gemini-tools",
+      "label": "gemini-3.1-flash-lite · без заметок",
+      "kind": "llm",
+      "model": {
+        "provider": "openai_compatible",
+        "model_id": "gemini-3.1-flash-lite"
+      }
+    },
+    {
+      "variant_id": "gemini-memory",
+      "label": "gemini-3.1-flash-lite · с заметками",
+      "kind": "llm",
+      "model": {
+        "provider": "openai_compatible",
+        "model_id": "gemini-3.1-flash-lite"
+      }
+    }
+  ],
+  "mode": {
+    "protocol_id": "genesis-official-60s",
+    "official": true,
+    "action_limit": 100,
+    "time_limit_s": 60.0
+  },
+  "progress": {
+    "planned": 4,
+    "completed": 1,
+    "running": 0,
+    "failed": {
+      "provider_error": 3
+    }
+  },
+  "repetitions": 1,
+  "attempt_ids": [
+    "gemini-memory--179abae414e8fd95",
+    "gemini-memory--6a8c0b9147bd176d",
+    "gemini-tools--5bb8e8182dd5b656",
+    "gemini-tools--82be64bda11527df"
+  ],
+  "budget": {
+    "currency": "USD",
+    "limit": 0.04,
+    "spent": null
+  },
+  "cost": {
+    "usd": null
+  },
+  "split": {
+    "rule": "Исходное разбиение зафиксировано в плане; открытая выборка."
+  }
+}
