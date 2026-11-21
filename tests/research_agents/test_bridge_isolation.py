@@ -285,6 +285,25 @@ class SandboxTests(unittest.TestCase):
             plan = sandbox.docker_bridge_commands("img", network_name="auditlab-bridge-t2")
         self.assertIn("org.auditlab.launch=" + "0" * 32, plan.bridge_create)
 
+    def test_proxy_readiness_waits_for_listener_and_fails_when_unavailable(self):
+        plan = sandbox.docker_bridge_commands("img", secret_env=None)
+        self.assertEqual(plan.setup[-2], ("docker", "start", plan.proxy_name))
+        self.assertEqual(plan.setup[-1][:3], ("docker", "exec", plan.proxy_name))
+        with socket.socket() as listener:
+            listener.bind(("127.0.0.1", 0))
+            port = listener.getsockname()[1]
+            script = plan.setup[-1][-1].replace(str(sandbox.PROXY_PORT), str(port))
+            timer = threading.Timer(.3, listener.listen)
+            timer.start()
+            try:
+                result = subprocess.run([sys.executable, "-c", script], capture_output=True, timeout=5)
+                self.assertEqual(result.returncode, 0, result.stderr)
+            finally:
+                timer.join()
+        result = subprocess.run([sys.executable, "-c", script.replace("+10", "+.2")],
+                                capture_output=True, timeout=5)
+        self.assertNotEqual(result.returncode, 0)
+
     def test_dev_command_refuses_official_protocol(self):
         with self.assertRaises(ValueError):
             sandbox.dev_bridge_command({"protocol_id": "genesis-official-60s"})
@@ -432,6 +451,7 @@ class LiveDockerTopologyTest(unittest.TestCase):
             probe = subprocess.run(["docker", "run", "--rm", "--network", plan.network, "--read-only",
                                     "--cap-drop", "ALL", "--entrypoint", "python", image, "-c", PROBE,
                                     plan.proxy_name], capture_output=True, text=True, timeout=60)
+            self.assertEqual(probe.returncode, 0, probe.stderr)
             result = json.loads(probe.stdout)
             self.assertEqual(result, {"dns": "failed", "proxy": "HTTP/1.1 403 Forbidden"})
         finally:

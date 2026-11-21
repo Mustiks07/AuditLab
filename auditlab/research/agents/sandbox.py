@@ -179,6 +179,18 @@ def docker_bridge_commands(image: str, proxy_image: str | None = None, network_n
     labels = tuple(launch_label_args())
     proxy, bridge = network + "-proxy", network + "-bridge"
     proxy_args = [arg for entry in allow for arg in ("--allow", entry)]
+    # `docker start` returns before Python has bound its socket. Wait inside the
+    # proxy container, without granting the bridge any additional network access.
+    readiness = (
+        "import socket,time\n"
+        "deadline=time.monotonic()+10\n"
+        "while True:\n"
+        " try:\n"
+        f"  socket.create_connection(('127.0.0.1',{PROXY_PORT}),timeout=.5).close(); break\n"
+        " except OSError:\n"
+        "  if time.monotonic()>=deadline: raise\n"
+        "  time.sleep(.05)\n"
+    )
     setup = (
         ("docker", "network", "create", "--internal", *labels, network),
         ("docker", "network", "create", *labels, egress),
@@ -188,6 +200,7 @@ def docker_bridge_commands(image: str, proxy_image: str | None = None, network_n
          proxy_image or image, "-m", PROXY_MODULE, "--listen", f"0.0.0.0:{PROXY_PORT}", *proxy_args),
         ("docker", "network", "connect", egress, proxy),
         ("docker", "start", proxy),
+        ("docker", "exec", proxy, "python", "-c", readiness),
     )
     secret_args = ("-e", secret_env) if secret_env else ()
     create = ("docker", "create", "-i", "--pull=never", "--name", bridge, "--network", network, *_HARDENING,
