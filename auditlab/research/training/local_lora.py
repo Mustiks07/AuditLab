@@ -175,7 +175,8 @@ class LocalLoraBackend:
 
     def describe(self) -> dict:
         return {"provider": self.name, "jobs_root": str(self.jobs_root), "test_double": self.is_test_double,
-                "trainer": self.trainer_command or [sys.executable, "-m", "auditlab.research.training.local_lora", "run"]}
+                # recorded without the local interpreter path; the launch itself uses sys.executable
+                "trainer": self.trainer_command or ["python", "-m", "auditlab.research.training.local_lora", "run"]}
 
     def preflight(self, config: dict, *, network: bool = False) -> dict:
         missing, facts = ([], {"skipped": "stand-in trainer (test double)"}) if self.trainer_command else \
