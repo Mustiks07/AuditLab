@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "financial-curriculum-local-plan",
+  "protocol_id": "financial-curriculum-local-1.0",
+  "episode_protocol_id": "genesis-official-60s",
+  "generator": {
+    "config_version": "1.1",
+    "base_currency": "KZT",
+    "currencies": ["KZT"],
+    "timezone": "UTC",
+    "target_period": "2032-06",
+    "company_size": {"ledger_rows_target": 240, "documents_target": 76},
+    "clean_distractors": ["next_day_settlement"]
+  },
+  "search": {"candidate_budget": 9, "attempt_budget": 18, "repetitions": 2, "min_weak_repetitions": 2, "seed": 4103701},
+  "reduction": {"repetitions": 3, "min_matches": 2, "max_candidates": 8, "max_runs": 27, "max_seconds": 120},
+  "paired_examples": ["train-boundary-a", "dev-boundary"],
+  "clean_calibration": ["train-review-c", "train-invoice-c"],
+  "candidates": [
+    {"candidate_id":"train-boundary-a", "family_id":"family-41051", "split":"train", "stratum":"period_boundary", "seed":41051, "config":{"settlement_timing":"after", "issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"train-boundary-b", "family_id":"family-41053", "split":"train", "stratum":"period_boundary", "seed":41053, "config":{"settlement_timing":"at", "issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"train-boundary-c", "family_id":"family-41057", "split":"train", "stratum":"period_boundary", "seed":41057, "config":{"settlement_timing":"after", "issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"train-boundary-d", "family_id":"family-41059", "split":"train", "stratum":"period_boundary", "seed":41059, "config":{"settlement_timing":"before", "issue_counts":{"payment_allocation":0}}},
+    {"candidate_id":"train-review-a", "family_id":"family-41063", "split":"train", "stratum":"standard_book", "seed":41063, "config":{"issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"train-review-b", "family_id":"family-41069", "split":"train", "stratum":"standard_book", "seed":41069, "config":{"issue_counts":{"period_cutoff":1}}},
+    {"candidate_id":"train-review-c", "family_id":"family-41077", "split":"train", "stratum":"standard_book", "seed":41077, "config":{"issue_counts":{},"clean_distractors":["next_day_settlement","refund"]}},
+    {"candidate_id":"train-review-d", "family_id":"family-41081", "split":"train", "stratum":"standard_book", "seed":41081, "config":{"issue_counts":{},"clean_distractors":["next_day_settlement","refund"]}},
+    {"candidate_id":"train-fx-a", "family_id":"family-41087", "split":"train", "stratum":"cross_currency", "seed":41087, "config":{"currencies":["KZT","USD"], "interaction":"allocation_fx_same_payment", "issue_counts":{"payment_allocation":1,"fx_conversion":1}}},
+    {"candidate_id":"train-fx-b", "family_id":"family-41089", "split":"train", "stratum":"cross_currency", "seed":41089, "config":{"currencies":["KZT","USD"], "interaction":"cutoff_fx_same_invoice", "issue_counts":{"period_cutoff":1,"fx_conversion":1}}},
+    {"candidate_id":"train-fx-c", "family_id":"family-41113", "split":"train", "stratum":"cross_currency", "seed":41113, "config":{"currencies":["KZT","USD"], "issue_counts":{"fx_conversion":1}}},
+    {"candidate_id":"train-fx-d", "family_id":"family-41117", "split":"train", "stratum":"cross_currency", "seed":41117, "config":{"currencies":["KZT","USD"], "interaction":"cutoff_fx_same_invoice", "issue_counts":{}}},
+    {"candidate_id":"train-invoice-a", "family_id":"family-41131", "split":"train", "stratum":"archive_controls", "seed":41131, "config":{"issue_counts":{"duplicate_invoice":1},"clean_distractors":["archive_copy","next_day_settlement"]}},
+    {"candidate_id":"train-invoice-b", "family_id":"family-41141", "split":"train", "stratum":"archive_controls", "seed":41141, "config":{"issue_counts":{"duplicate_invoice":1,"period_cutoff":1},"clean_distractors":["archive_copy","next_day_settlement"]}},
+    {"candidate_id":"train-invoice-c", "family_id":"family-41143", "split":"train", "stratum":"archive_controls", "seed":41143, "config":{"issue_counts":{},"clean_distractors":["archive_copy","next_day_settlement"]}},
+    {"candidate_id":"train-invoice-d", "family_id":"family-41149", "split":"train", "stratum":"archive_controls", "seed":41149, "config":{"issue_counts":{},"clean_distractors":["archive_copy","next_day_settlement"]}},
+    {"candidate_id":"dev-boundary", "family_id":"family-41161", "split":"dev", "stratum":"period_boundary", "seed":41161, "config":{"target_period":"2032-08", "settlement_timing":"after", "issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"test-partition-fixture", "family_id":"family-41177", "split":"test", "stratum":"standard_book", "seed":41177, "config":{"target_period":"2032-09", "issue_counts":{"period_cutoff":1}}}
+  ]
+}
