@@ -1,0 +1,154 @@
+{
+  "counts": {
+    "allocation_explicit": {
+      "fn": 0,
+      "fp": 88,
+      "next_day_candidates": 96,
+      "snapshots": 16,
+      "tp": 8
+    },
+    "duplicate_invoice": {
+      "groups_on_0_faults/6": 16,
+      "groups_on_1_faults/6": 16,
+      "raw_count_matches": 0,
+      "snapshots": 32
+    },
+    "fx_conversion": {
+      "groups_on_0_faults/10": 4,
+      "groups_on_0_faults/11": 6,
+      "groups_on_0_faults/9": 6,
+      "groups_on_1_faults/10": 4,
+      "groups_on_1_faults/11": 6,
+      "groups_on_1_faults/9": 6,
+      "raw_count_matches": 0,
+      "snapshots": 32
+    },
+    "payment_allocation": {
+      "fn": 0,
+      "fp": 176,
+      "next_day_candidates": 192,
+      "snapshots": 32,
+      "tp": 16
+    },
+    "period_cutoff": {
+      "fn": 0,
+      "fp": 192,
+      "snapshots": 32,
+      "tp": 16
+    }
+  },
+  "examples": {
+    "82460601/duplicate_invoice/0": {
+      "feature_count": 6
+    },
+    "82460601/duplicate_invoice/1": {
+      "feature_count": 6
+    },
+    "82460601/fx_conversion/0": {
+      "feature_count": 10
+    },
+    "82460601/fx_conversion/1": {
+      "feature_count": 10
+    },
+    "82460601/payment_allocation/0": {
+      "affected": [],
+      "all_next_day": [
+        "payment/P2E6602A6D98CAAEB6E398D35",
+        "payment/P6350D1D5C98F6C0A4E540ACB",
+        "payment/P9164900FF47982432239FE6C",
+        "payment/PA71BD71DC897C2EF1CED2169",
+        "payment/PDB41901EDF1D7B46B3E64D85",
+        "payment/PE6AC7B80B395410C5CCB98C2"
+      ],
+      "candidates": [
+        "payment/P2E6602A6D98CAAEB6E398D35",
+        "payment/P6350D1D5C98F6C0A4E540ACB",
+        "payment/P9164900FF47982432239FE6C",
+        "payment/PA71BD71DC897C2EF1CED2169",
+        "payment/PDB41901EDF1D7B46B3E64D85",
+        "payment/PE6AC7B80B395410C5CCB98C2"
+      ]
+    },
+    "82460601/payment_allocation/1": {
+      "affected": [
+        "payment/P9164900FF47982432239FE6C"
+      ],
+      "all_next_day": [
+        "payment/P2E6602A6D98CAAEB6E398D35",
+        "payment/P6350D1D5C98F6C0A4E540ACB",
+        "payment/P9164900FF47982432239FE6C",
+        "payment/PA71BD71DC897C2EF1CED2169",
+        "payment/PDB41901EDF1D7B46B3E64D85",
+        "payment/PE6AC7B80B395410C5CCB98C2"
+      ],
+      "candidates": [
+        "payment/P2E6602A6D98CAAEB6E398D35",
+        "payment/P6350D1D5C98F6C0A4E540ACB",
+        "payment/P9164900FF47982432239FE6C",
+        "payment/PA71BD71DC897C2EF1CED2169",
+        "payment/PDB41901EDF1D7B46B3E64D85",
+        "payment/PE6AC7B80B395410C5CCB98C2"
+      ]
+    },
+    "82460601/period_cutoff/0": {
+      "affected": [],
+      "candidates": [
+        "invoice/I0171DB9A794B155FBA7A1F88",
+        "invoice/I2CAC7C8177DE86CA25A9D2C4",
+        "invoice/IE41D1D1975D43EA7193720FA"
+      ]
+    },
+    "82460601/period_cutoff/1": {
+      "affected": [
+        "invoice/I9BE4B1A09D1F446691E8419F"
+      ],
+      "candidates": [
+        "invoice/I0171DB9A794B155FBA7A1F88",
+        "invoice/I2CAC7C8177DE86CA25A9D2C4",
+        "invoice/I42C163CF18987F1CAC85CD2A",
+        "invoice/I9BE4B1A09D1F446691E8419F"
+      ]
+    },
+    "82460701/allocation_explicit/0": {
+      "affected": [],
+      "all_next_day": [
+        "payment/P2F1BB254E86761DBFA30C955",
+        "payment/P63010E074713BA00DCDD8A82",
+        "payment/P8920E52752F591B8542C67A7",
+        "payment/PAFBB8E942A67D4394A33CE89",
+        "payment/PB55D474EADEDACF99A1C5DC4",
+        "payment/PF22423E8F84E102FF16068E2"
+      ],
+      "candidates": [
+        "payment/P2F1BB254E86761DBFA30C955",
+        "payment/P63010E074713BA00DCDD8A82",
+        "payment/P8920E52752F591B8542C67A7",
+        "payment/PAFBB8E942A67D4394A33CE89",
+        "payment/PB55D474EADEDACF99A1C5DC4",
+        "payment/PF22423E8F84E102FF16068E2"
+      ]
+    },
+    "82460701/allocation_explicit/1": {
+      "affected": [
+        "payment/P63010E074713BA00DCDD8A82"
+      ],
+      "all_next_day": [
+        "payment/P2F1BB254E86761DBFA30C955",
+        "payment/P63010E074713BA00DCDD8A82",
+        "payment/P8920E52752F591B8542C67A7",
+        "payment/PAFBB8E942A67D4394A33CE89",
+        "payment/PB55D474EADEDACF99A1C5DC4",
+        "payment/PF22423E8F84E102FF16068E2"
+      ],
+      "candidates": [
+        "payment/P2F1BB254E86761DBFA30C955",
+        "payment/P63010E074713BA00DCDD8A82",
+        "payment/P8920E52752F591B8542C67A7",
+        "payment/PAFBB8E942A67D4394A33CE89",
+        "payment/PB55D474EADEDACF99A1C5DC4",
+        "payment/PF22423E8F84E102FF16068E2"
+      ]
+    }
+  },
+  "generator": "1.6"
+}

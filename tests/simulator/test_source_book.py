@@ -79,13 +79,21 @@ class SourceBookTests(unittest.TestCase):
                 "company_size": {"ledger_rows_target": 300, "documents_target": 80},
             })
         self.assertEqual(Counter(issue["type"] for issue in changed.issues), Counter(issue_types))
-        self.assertEqual((len(source.ledger), len(source.invoices) + len(source.payments)), (300, 80))
+        self.assertEqual((len(source.ledger), len(changed.ledger), len(source.invoices) + len(source.payments)),
+                         (298, 300, 80))
         source_rows = {row["row_id"]: row for row in source.ledger}
         changed_rows = {row["row_id"]: row for row in changed.ledger}
         added = [changed_rows[key] for key in changed_rows.keys() - source_rows.keys()]
-        removed = [source_rows[key] for key in source_rows.keys() - changed_rows.keys()]
         self.assertCountEqual([row["account"] for row in added], ["AR", "REVENUE"])
-        self.assertCountEqual([row["account"] for row in removed], ["UNAPPLIED", "AR"])
+        self.assertFalse(source_rows.keys() - changed_rows.keys())
+        allocation = next(issue for issue in changed.issues if issue["type"] == "payment_allocation")
+        payment_id = next(key.split("/")[1] for key in allocation["affected_ids"] if key.startswith("payment/"))
+        reduced = [row for key, row in source_rows.items()
+                   if row["payment_id"] == payment_id and row != changed_rows[key]]
+        self.assertCountEqual([row["account"] for row in reduced], ["UNAPPLIED", "AR"])
+        for row in reduced:
+            field = "debit_minor" if row["debit_minor"] else "credit_minor"
+            self.assertEqual(row[field] - changed_rows[row["row_id"]][field], allocation["expected_amount_minor"])
 
     def test_balanced_but_incorrect_source_is_rejected_before_application(self):
         post = Company.post
