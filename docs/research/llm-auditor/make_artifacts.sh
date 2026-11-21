@@ -5,7 +5,7 @@
 # re-scores the baseline run independently. Python 3.11+.
 set -u
 PY=${PYTHON:-python}
-R=docs/research/llm-auditor/runs
+R=docs/research/llm-auditor/evidence
 REVIEW=${1:-}
 mkdir -p "$R"
 
