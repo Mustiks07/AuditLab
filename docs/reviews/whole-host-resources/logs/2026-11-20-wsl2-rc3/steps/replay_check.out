@@ -1,0 +1,45 @@
+$ docker --host unix:///var/run/docker.sock run --rm --pull never --network none --user 1000:1000 --read-only --cap-drop ALL --security-opt no-new-privileges --cpus 2 --memory 1536m --memory-swap 1536m --pids-limit 256 --tmpfs /tmp:rw,size=64m --mount type=bind,src=/home/user/ops01/review-20261120T153901Z/bundle/demo-results,dst=/results sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b python -m auditlab.demo --root /results/demo replay --run 0f03a9e32243 --check
+[ОТКРЫТЫЕ ДАННЫЕ] 0f03a9e32243  Сгенерированная компания · последний зачёт 01.12 00:01
+  эпизод E651B6A63DDA2448A91DC825714D7732E · политика reconcile · режим train · статус completed
+  движок: runner=auditlab.runner, session=auditlab.runner, policy=auditlab.policies, evaluator=auditlab.runner, generator=auditlab.generator 1.1, verifier=auditlab.verifier
+
+ПОВТОР ЗАПИСИ — действия аудитора:
+    1. ok  list_records policy  (осталось 99)
+    2. ok  list_records payments  (осталось 98)
+    3. ok  list_records invoices  (осталось 97)
+    4. ok  list_records ledger  (осталось 96)
+    5. ok  list_records ledger (далее)  (осталось 95)
+    6. ok  list_records ledger (далее)  (осталось 94)
+    7. ok  list_records ledger (далее)  (осталось 93)
+    8. ok  list_records ledger (далее)  (осталось 92)
+    9. ok  list_records fx  (осталось 91)
+   10. ok  submit · выводов: 2  (осталось 90)
+
+Вывод #0: Нераспределённый платёж · payment/P308C7000EC7515B02EEB3610, invoice/IFB7EC04001E37EA268207EFC
+  Агент:    20 000,00 ₸ (2000000 мин. ед.)
+    доказательство payments/DBD292EDAEA4FDA14AEF2A4FA public/payments.jsonl:15   на странице шага 2
+    доказательство ledger/R53432EC1D005F5311538DE28 public/ledger.csv:101      на странице шага 5
+    доказательство ledger/RB74667B32C20460A9F0BCE8C public/ledger.csv:76       на странице шага 7
+    доказательство policy/allocation            public/policy.json:11      на странице шага 1
+  Консоль:  − 3000000 + 5000000 = 2000000  → 20 000,00 ₸ (2000000 мин. ед.)
+    операнд ledger/RB74667B32C20460A9F0BCE8C public/ledger.csv:76 debit_minor=3000000  (зачёт с нераспределённого остатка)
+    операнд ledger/R53432EC1D005F5311538DE28 public/ledger.csv:101 credit_minor=5000000  (поступление на нераспределённый остаток)
+  Оценщик:  засчитан (TP) (выведено из итога TP/FP/FN)
+  SQL:      20 000,00 ₸ (2000000 мин. ед.) (auditlab.verifier)
+            policy/allocation: UNAPPLIED P308C7000EC7515B02EEB3610: credits 5000000 - debits 3000000 = 2000000 KZT minor units on rows before 2026-12-01T00:00:00+05:00 (exclusive); designated amount 5000000
+Вывод #1: Дублирующий счёт · invoice/IE1AA509B3457554062C97F19
+  Агент:    12 000,00 ₸ (1200000 мин. ед.)
+    доказательство invoices/D3DA6071040B70FA2D90C18D0 public/invoices.jsonl:27   на странице шага 3
+    доказательство invoices/D7534210C633A07D8851B8F7E public/invoices.jsonl:14   на странице шага 3
+    доказательство ledger/R765F277C72A53DF193243B58 public/ledger.csv:231      на странице шага 6
+    доказательство ledger/RBFFE41AEECFF5B82D6F4BF3C public/ledger.csv:117      на странице шага 7
+  Консоль:  пересчитывает только распределение и FX; для этого типа независимый расчёт — SQL
+  Оценщик:  засчитан (TP) (выведено из итога TP/FP/FN)
+  SQL:      12 000,00 ₸ (1200000 мин. ед.) (auditlab.verifier)
+            invoice canonical key: one recognition per commercial invoice: 2 documents of IE1AA509B3457554062C97F19 (C5958843CDD2186B3FB872E9C), 2 recognitions: 2400000 - 1200000 = 1200000 KZT minor units recognised in excess
+
+Оценка: TP 2 / FP 0 / FN 0 · F1 1.0000 · инспекций 9 · награда 0.982000
+
+ЖИВОЙ ПЕРЕСЧЁТ, выполнен 2026-11-20T15:54:43+00:00 за 36.5 мс (среда auditlab.environment, оценщик auditlab.evaluator):
+Повтор действий: 9 шагов, наблюдения совпали
+Повтор оценки: совпала {'tp': 2, 'fp': 0, 'fn': 0, 'reward': 0.982}

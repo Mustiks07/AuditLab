@@ -1,0 +1,12 @@
+{"phase":"baseline_idle","exit_code":0,"start_mono":359.547945261,"end_mono":389.582722393}
+{"phase":"check","exit_code":0,"start_mono":389.612270472,"end_mono":390.076749914}
+{"phase":"rehearsal","exit_code":2,"start_mono":390.098024689,"end_mono":950.443312026}
+{"phase":"image_runtime","exit_code":0,"start_mono":950.460750756,"end_mono":951.292121833}
+{"phase":"evidence_checker","exit_code":0,"start_mono":951.607607899,"end_mono":951.926003545}
+{"phase":"launch_cleanup","exit_code":0,"start_mono":951.966365806,"end_mono":952.140051488}
+{"phase":"demo_start","exit_code":0,"start_mono":952.177597028,"end_mono":952.907776462}
+{"phase":"demo_health","exit_code":0,"start_mono":952.926590557,"end_mono":959.016798942}
+{"phase":"demo_runs","exit_code":0,"start_mono":959.037960435,"end_mono":959.066397303}
+{"phase":"crosscheck_live","exit_code":0,"start_mono":959.116425441,"end_mono":960.20014413}
+{"phase":"replay_check","exit_code":0,"start_mono":960.218162339,"end_mono":961.236222879}
+{"phase":"demo_stop","exit_code":0,"start_mono":961.254300513,"end_mono":961.967610084}

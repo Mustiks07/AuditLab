@@ -1,0 +1,4 @@
+review directory: /tmp/ops01-gate/review-20261120T150753Z
+qualification: {"x86_64": true, "two_cpus": false, "mem_total_le_limit": false, "swap_disabled": false, "python_3_11": false, "cgroup_v2": false, "docker_engine_reachable": false}
+machine does not satisfy the OPS-01 profile: status stays 'not checked' (see qualification.json)
+run_review exit=3

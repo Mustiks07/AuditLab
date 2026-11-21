@@ -1,0 +1,2 @@
+$ python3.11 offline.py image --role runtime
+sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b

@@ -1,0 +1,60 @@
+{
+  "source_revision": "b7a1857a51bf47bb36e42699988b38b4d897fa1f",
+  "checked": [
+    {
+      "role": "runtime",
+      "kind": "id",
+      "ref": "sha256:48e53a677ee9162640aa88a6c56b1c916338ec31f71e7fb0f9002a81ffb9014f",
+      "present": false
+    },
+    {
+      "role": "runtime",
+      "kind": "oci_manifest_digest",
+      "ref": "sha256:bc52a5ecaafa9a414bcff9e5e50f42d13f3f3f3475883dd5f5589ae6ebe9706b",
+      "present": false
+    },
+    {
+      "role": "runtime",
+      "kind": "tag",
+      "ref": "auditlab-runtime:b7a1857a51bf",
+      "present": false
+    },
+    {
+      "role": "verifier",
+      "kind": "id",
+      "ref": "sha256:0babfeed9363509c4fda28f17ee352794d46e4f337cb9ba726709816a5ec3ddd",
+      "present": false
+    },
+    {
+      "role": "verifier",
+      "kind": "oci_manifest_digest",
+      "ref": "sha256:1aa26e89b71861ec7358405165706ae3ad13b1d408d1b0ae0eb73d5b6bdea31f",
+      "present": false
+    },
+    {
+      "role": "verifier",
+      "kind": "tag",
+      "ref": "auditlab-verifier:b7a1857a51bf",
+      "present": false
+    },
+    {
+      "role": "policy",
+      "kind": "id",
+      "ref": "sha256:f7416647338f46390cc9a214551c1dfa812effac3ac8e2116bf1f5b7411cc830",
+      "present": false
+    },
+    {
+      "role": "policy",
+      "kind": "oci_manifest_digest",
+      "ref": "sha256:965008c64e516a07118cb526183e3e7e93f0e7cd457e006cb2bb21a2d24b68fe",
+      "present": false
+    },
+    {
+      "role": "policy",
+      "kind": "tag",
+      "ref": "auditlab-policy:b7a1857a51bf",
+      "present": false
+    }
+  ],
+  "present": []
+}

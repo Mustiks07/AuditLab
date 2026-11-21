@@ -1,0 +1,16 @@
+$ python3.11 offline.py verify --suite rehearsal --output-root ./results
+Bundle hashes verified; source b7a1857a51bf47bb36e42699988b38b4d897fa1f
+Image archive lists all three tagged images for classic and containerd Docker stores
+Loaded image: auditlab-runtime:b7a1857a51bf
+Loaded image: auditlab-verifier:b7a1857a51bf
+Loaded image: auditlab-policy:b7a1857a51bf
+Running offline verification on CPUs 0,1; results: /home/user/ops01/review-20261120T153901Z/bundle/results/verify-20261120T154512Z-687f0e763bbc
+foundation: пройдено (3 tests)
+integration: пройдено (87 tests)
+simulator: пройдено (50 tests)
+evaluator: пройдено (32 tests)
+runner: пройдено (96 tests)
+verifier: пройдено (34 tests)
+metamorphic: пройдено (4 tests)
+demo: пройдено (41 tests)
+Report: /results/verify/report.json; status=incomplete; exit=2

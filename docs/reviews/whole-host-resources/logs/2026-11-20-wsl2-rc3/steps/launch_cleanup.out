@@ -1,0 +1,1 @@
+$ docker --host unix:///var/run/docker.sock ps --all --filter label=org.auditlab.launch=a4cc6fca3f844b518554a1deed63b5cf --format {{.ID}} {{.Names}}

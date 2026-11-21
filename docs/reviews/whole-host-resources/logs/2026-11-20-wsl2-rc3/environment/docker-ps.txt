@@ -1,0 +1,2 @@
+$ docker --host unix:///var/run/docker.sock ps --all --format {{.ID}} {{.Image}} {{.Status}} {{.Names}}
+exit=0

@@ -1,0 +1,27 @@
+{
+  "tool": "collect_host_memory.py",
+  "version": "1.0",
+  "interval_s": 0.25,
+  "kernel": "6.18.58.1-microsoft-standard-WSL2",
+  "machine": "x86_64",
+  "python": "3.14.4",
+  "pid": 481,
+  "started_utc": "2026-11-20T15:07:55.146+00:00",
+  "sources": {
+    "cgroup_v2": true,
+    "memory_peak_supported": true,
+    "psi": true,
+    "named_cgroups_present": {
+      "system.slice": true,
+      "user.slice": true,
+      "init.scope": true,
+      "docker.service": false,
+      "containerd.service": false
+    }
+  },
+  "method": "Sampled /proc/meminfo, /proc/vmstat, /proc/pressure/memory; cgroup v2 memory.current/memory.peak/memory.events; VmRSS/VmHWM of Docker daemons. No root, no writes outside --out.",
+  "monotonic_start": 92.860808892,
+  "stopped_utc": "2026-11-20T15:07:58.151+00:00",
+  "duration_s": 3.005,
+  "samples": 14
+}
