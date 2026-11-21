@@ -1,0 +1,56 @@
+{
+  "checks": [
+    "Real home, local font, amount, dates, modal and keyboard",
+    "Open a real run, save, return and restore after reload",
+    "Workspace fits desktop, tablet, mobile and effective 200% width",
+    "Live pair, exact document links, Back and the document library",
+    "Recorded replay and live verification",
+    "Change a real posting and rescore a copy without touching originals",
+    "Move the real generated settlement across the published boundary",
+    "Real missing run and document states",
+    "Controlled API states show empty, offline and no verification without a false success",
+    "Slow response, removed saved item, loading and long names are handled"
+  ],
+  "screens": [
+    {
+      "name": "1440x960",
+      "window": 1440,
+      "body": 1440,
+      "font": true
+    },
+    {
+      "name": "1280x800",
+      "window": 1280,
+      "body": 1280,
+      "font": true
+    },
+    {
+      "name": "390x844",
+      "window": 390,
+      "body": 390,
+      "font": true
+    },
+    {
+      "name": "320x844",
+      "window": 320,
+      "body": 320,
+      "font": true
+    },
+    {
+      "name": "Effective CSS viewport at 200%",
+      "window": 720,
+      "body": 720,
+      "font": true
+    },
+    {
+      "name": "320 px, long company and unavailable result",
+      "window": 320,
+      "body": 320,
+      "font": true
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "missing": [],
+  "warnings": []
+}

@@ -57,8 +57,10 @@ class EvaluatorMutationTests(unittest.TestCase):
                         ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         matcher = package / "evaluator/matcher.py"
         original = matcher.read_text(encoding="utf-8")
-        before = "matched_left = {left: right for right, left in enumerate(owner) if left is not None}"
-        after = "matched_left = {left: edges[0] for left, edges in enumerate(adjacency) if edges}"
+        # Evaluator 1.2: the same mutation on the organizers' tie-break matcher. Every finding with an
+        # eligible edge is credited with its first issue, so one issue can be counted twice.
+        before = 'matches = sorted((finding, issues[issue]["issue_id"]) for issue, finding in chosen.items())'
+        after = 'matches = sorted((finding, issues[edges[0]]["issue_id"]) for finding, edges in enumerate(adjacency) if edges)'
         self.assertEqual(original.count(before), 1, "Matcher changed: review the mutation instead of silently skipping it")
         mutant = original.replace(before, after)
         matcher.write_text(mutant, encoding="utf-8")

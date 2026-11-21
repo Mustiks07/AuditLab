@@ -40,6 +40,10 @@ export const OP_ERRORS: Record<string, string> = {
   infrastructure_error: "сбой подключённого модуля; результат не засчитан и не подменён учебной заменой",
   timeout: "опыт не завершился за 60 с",
   offline: "сервер консоли недоступен",
+  not_found: "такого открытого завершённого прогона нет: проверьте ID в списке запусков",
+  unknown_key: "в снимке этого прогона нет записи с таким ключом",
+  refused: "этот экспорт консоль не показывает (закрытый режим, незавершённая попытка или каталог private/)",
+  unknown_operation: "операция с таким ключом не найдена",
 };
 
 export function opError(code: string | undefined, message: string | undefined): string {

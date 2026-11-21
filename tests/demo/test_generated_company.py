@@ -46,6 +46,15 @@ class GeneratedCompany(unittest.TestCase):
     def tearDownClass(cls):
         shutil.rmtree(cls.tmp, ignore_errors=True)
 
+    def test_cli_list_names_the_company_and_pair_role(self):
+        out = io.StringIO()
+        with redirect_stdout(out):
+            self.assertEqual(demo_cli(["--root", str(self.paths.root), "list"]), 0)
+        lines = {line.split()[0]: line for line in out.getvalue().splitlines() if line.strip()}
+        self.assertIn("пара train-boundary A", lines[self.pair["A"]["run_id"]])
+        self.assertIn("пара train-boundary B", lines[self.pair["B"]["run_id"]])
+        self.assertIn("Сгенерированная чистая компания", lines[self.ids["E04F4ED6D6765D816DF94C62477B6EC4C"]])
+
     def test_open_pair_and_clean_company_are_real_runs(self):
         a, b = self.pair["A"], self.pair["B"]
         self.assertEqual((a["episode_id"], b["episode_id"]),

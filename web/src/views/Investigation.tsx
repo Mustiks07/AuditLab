@@ -1,320 +1,278 @@
 import { useEffect, useMemo, useState } from "react";
-import { api, FindingView, RunDetail, Step } from "../api";
-import { DerivationView, EngineLine, Empty, ErrorBox, KeyChip, LabelBadge, Panel, StatusPill } from "../components";
+import { api, type FindingView, type RunDetail, type Step } from "../api";
+import { DerivationView, DiagnosticDownload, Empty, ErrorBox, KeyChip, LabelBadge, Panel, StatusPill } from "../components";
 import { money, reward, REASONS } from "../format";
+import { compareLink, go, recordLink, runLink } from "../navigation";
+import { WorkspaceHeader } from "../workspace/AppShell";
+import { humanText, named, recordName, referenceLabels, stepName, tableName } from "../workspace/copy";
+import { auditorName, companyName, documentConfirmed, findingName, independentConfirmed, periodName } from "../workspace/model";
+import { useResource } from "../workspace/resources";
 import { RecordPane } from "./RecordPane";
 import { RescoreForm } from "./RescoreForm";
 
-type Selection = { kind: "record"; key: string } | { kind: "step"; step: number } | null;
-
-export function Investigation({ runId, initialKey }: { runId: string; initialKey?: string }) {
-  const [detail, setDetail] = useState<RunDetail | null>(null);
-  const [error, setError] = useState<unknown>(null);
-  const [selection, setSelection] = useState<Selection>(initialKey ? { kind: "record", key: initialKey } : null);
+export function Investigation({ runId, initialKey, documents = false, title, names, saved, onSave }: {
+  runId: string; initialKey?: string; documents?: boolean; title?: string; names: ReadonlyMap<string, string>;
+  saved: boolean; onSave: () => void;
+}) {
+  const response = useResource(runId, signal => api.run(runId, signal));
+  const detail = response?.value;
+  const [stepNumber, chooseStep] = useState<number | null>(null);
   const [focus, setFocus] = useState<number | null>(0);
+  const labels = useMemo(() => referenceLabels(detail?.keys ?? []), [detail?.keys]);
+  const recordLabels = useMemo(() => new Map(Object.entries(labels)), [labels]);
+  const openKey = (key: string) => go(recordLink(runId, key));
+  const focused = focus === null ? undefined : detail?.findings.find(f => f.index === focus);
+  const evidenceKeys = new Set(focused?.finding.evidence_ids ?? []);
 
   useEffect(() => {
-    api.run(runId).then(setDetail).catch(setError);
-  }, [runId]);
+    if (initialKey && window.matchMedia("(max-width: 767px)").matches) {
+      document.getElementById("current-document")?.scrollIntoView({ block: "start" });
+    }
+  }, [initialKey, detail]);
 
-  const openKey = (key: string) => {
-    setSelection({ kind: "record", key });
-    history.replaceState(null, "", `#/runs/${encodeURIComponent(runId)}/record/${key}`);
-  };
-
-  const focused: FindingView | null = detail && focus !== null ? detail.findings[focus] ?? null : null;
-  const evidenceKeys = useMemo(() => new Set(focused?.finding.evidence_ids ?? []), [focused]);
-  const highlightFields = useMemo(() => {
-    const map: Record<string, string[]> = {};
-    focused?.derivation?.operands.forEach((op) => (map[op.key] = [...(map[op.key] ?? []), op.field]));
-    return map;
-  }, [focused]);
-
-  if (error) return <ErrorBox error={error} />;
-  if (!detail) return <div className="loading">Загрузка прогона {runId}…</div>;
+  if (response?.error) return <>
+    <WorkspaceHeader title="Проверка недоступна"/>
+    <ErrorBox error={response.error}/><a className="text-link" href="#/runs">К запускам</a>
+  </>;
+  if (!detail) return <div className="loading" role="status">Загружаем проверку…</div>;
   const run = detail.run;
-  const selectedKey = selection?.kind === "record" ? selection.key : null;
-  const selectedStep = selection?.kind === "step" ? detail.steps.find((s) => s.step === selection.step) ?? null : null;
-  const openedAt = (key: string) => detail.steps.find((s) => s.opened_key === key)?.step ?? null;
-  const listedAt = (key: string) => detail.steps.find((s) => s.listed_keys.includes(key))?.step ?? null;
+  const parent = run.parent_run_id ?? run.derived_from?.run_id;
+  const openedAt = (key: string) => detail.steps.find(step => step.opened_key === key)?.step ?? null;
+  const listedAt = (key: string) => detail.steps.find(step => step.listed_keys.includes(key))?.step ?? null;
+  const selectedStep = !initialKey && detail.steps.find(step => step.step === stepNumber);
+  const exponents = detail.snapshot.manifest.currency_exponents ?? {};
+  const related = Object.fromEntries(detail.findings.flatMap(view =>
+    view.affected.flatMap(item => item.key ? [[item.id, item.key]] : [])));
+  const subtitle = `${periodName(run)} · ${auditorName(run.policy)}`;
 
-  return (
-    <div className="investigation">
-      <div className="run-head">
-        <div className="run-title">
-          <a href="#/" className="back">← Запуски</a>
-          <LabelBadge run={run} />
-          <h1>{run.company ?? run.episode_id}</h1>
-          <StatusPill status={run.status} />
-        </div>
-        <div className="run-meta">
-          <span className="mono">{run.run_id}</span>
-          <span>эпизод <b className="mono">{run.episode_id}</b></span>
-          <span>политика <b className="mono">{run.policy}</b></span>
-          <span>режим <b>{run.mode === "train" ? "открытый" : run.mode}</b></span>
-          <span>шагов {run.steps} · инспекций {run.inspection_steps ?? "—"}</span>
-          <span>награда <b className="mono">{reward(run.reward)}</b></span>
-          <span className="spacer" />
-          {detail.journal.available && <a className="btn btn-small btn-ghost" href={`#/runs/${run.run_id}/replay`}>▶ Повтор опыта</a>}
-          {run.parent_run_id && <a className="btn btn-small" href={`#/compare/${run.parent_run_id}/${run.run_id}`}>Сравнить с исходной {run.parent_run_id}</a>}
-          {detail.children.map((c) => (
-            <a key={c} className="btn btn-small" href={`#/compare/${run.run_id}/${c}`}>Сравнить с {c}</a>
-          ))}
-        </div>
-        <EngineLine engine={run.engine} />
-        {run.label === "training_sample" && (
-          <div className="banner banner-sample">
-            ОТКРЫТЫЕ ДАННЫЕ, ЗАПИСАННЫЙ ПРОГОН. {run.note}
-            {run.source && <> Источник: <code>{run.source}</code>.</>}
-          </div>
-        )}
-        {run.change && (
-          <div className="banner banner-live">
-            ЖИВОЙ ОПЫТ: факт <b className="mono">{run.change.target}.{run.change.field}</b> = <b className="mono">{run.change.value}</b> в новой компании.
-            Исходная попытка <a href={`#/runs/${run.parent_run_id}`}>{run.parent_run_id}</a> сохранена без изменений.
-          </div>
-        )}
-        {run.derived_from && (
-          <div className="banner banner-copy">
-            КОПИЯ СДАЧИ попытки <a href={`#/runs/${run.derived_from.run_id}`}>{run.derived_from.run_id}</a>: в выводе #{run.derived_from.finding_index}{" "}
-            <span className="mono">{run.derived_from.replaced.from}</span> заменено на <span className="mono">{run.derived_from.replaced.to}</span>.
-            Действия до сдачи взяты из исходной попытки.
-          </div>
-        )}
-        {run.reason && (
-          <div className="banner banner-error">
-            Попытка оборвана: {run.reason}. Журнал {run.journal_available ? `доступен, ${detail.journal.lines} строк, неполный` : "недоступен"}. Итог не засчитан.
-          </div>
-        )}
+  if (documents) return <>
+    <WorkspaceHeader title="Документы проверки" subtitle={`${title ?? companyName(run)} · ${periodName(run)}`}
+      action={<a className="btn" href={runLink(runId)}>К проверке</a>}/>
+    <DocumentsList runId={runId} keys={detail.keys} labels={labels}/>
+  </>;
+
+  return <div className="investigation">
+    <WorkspaceHeader title={title ?? companyName(run)} subtitle={subtitle}
+      action={<button type="button" className="btn" aria-pressed={saved} onClick={onSave}>
+        {saved ? "Убрать из сохранённого" : "Сохранить проверку"}
+      </button>}/>
+    <div className="run-overview">
+      <div className="run-meta">
+        <StatusPill status={run.status}/><LabelBadge run={run}/>
+        {run.steps !== undefined && <span>Шагов: <b>{run.steps}</b></span>}
+        {run.inspection_steps !== undefined && <span>Запросов к документам: <b>{run.inspection_steps}</b></span>}
+        {run.reward != null && <span>Награда: <b>{reward(run.reward)}</b></span>}
       </div>
-
-      <div className="three">
-        <Panel title={`Действия аудитора · ${detail.steps.length}`} className="col-steps">
-          <StepsList steps={detail.steps} selection={selection} evidence={evidenceKeys}
-            onSelect={(s) => (s.opened_key ? openKey(s.opened_key) : setSelection({ kind: "step", step: s.step }))} />
-        </Panel>
-
-        <Panel title={selectedKey ? "Запись документа" : selectedStep ? `Шаг ${selectedStep.step}` : "Документ"} className="col-record">
-          {selectedKey ? (
-            <RecordPane runId={run.run_id} recordKey={selectedKey} onOpen={openKey} highlightFields={highlightFields[selectedKey] ?? []}
-              openedAt={openedAt(selectedKey)} listedAt={listedAt(selectedKey)} cited={evidenceKeys.has(selectedKey)} canChange={run.status === "completed"}
-              generator={run.engine?.generator} />
-          ) : selectedStep ? (
-            <StepView step={selectedStep} onOpen={openKey} />
-          ) : (
-            <Empty title="Выберите доказательство, сумму или шаг">
-              Нажмите на ссылку доказательства в выводе справа — здесь откроется конкретная строка исходного файла.
-              <div className="manifest mono small">
-                {Object.entries(detail.snapshot.tables).map(([t, n]) => <span key={t}>{t}: {n}</span>)}
-              </div>
-            </Empty>
-          )}
-        </Panel>
-
-        <Panel title="Проверяемый вывод" className="col-findings">
-          {detail.submission === null && <Empty title="Сдачи нет">Попытка не дошла до submit; итог не засчитан.</Empty>}
-          {detail.empty_submission && (
-            <div className="no-findings">
-              <div className="no-findings-title">Ошибок не заявлено</div>
-              <div className="small">Аудитор сдал пустой список.</div>
-              <ScoreBlock detail={detail} />
-              <ConsoleScan detail={detail} onOpen={openKey} />
-            </div>
-          )}
-          {detail.findings.map((f) => (
-            <FindingCard key={f.index} runId={run.run_id} view={f} focused={focus === f.index} selectedKey={selectedKey}
-              onFocus={() => setFocus(focus === f.index ? null : f.index)} onOpen={openKey} keys={detail.keys}
-              canRescore={run.status === "completed"} exponents={detail.snapshot.manifest.currency_exponents ?? {}} />
-          ))}
-          {detail.findings.length > 0 && <ScoreBlock detail={detail} />}
-        </Panel>
+      <div className="detail-actions">
+        <a className="btn" href={`${runLink(runId)}/documents`}>Документы проверки</a>
+        {detail.journal.available && <a className="btn" href={`${runLink(runId)}/replay`}>Повторить проверку</a>}
+        {parent && <a className="btn" href={compareLink(parent, runId)}>Сравнить с исходной</a>}
+        {detail.children.map(child => <a className="btn" key={child} href={compareLink(runId, child)}>
+          {names.get(child) ? `Сравнить: ${names.get(child)}` : "Сравнить с новой проверкой"}</a>)}
       </div>
     </div>
-  );
-}
+    {run.change && <p className="banner banner-live">Условие изменено в новой проверке.
+      {parent && <> <a href={runLink(parent)}>Открыть исходную</a></>}</p>}
+    {run.derived_from && <p className="banner banner-copy">Доказательство заменено в копии ответа.
+      {" "}<a href={runLink(run.derived_from.run_id)}>Открыть исходную</a></p>}
+    {run.reason && <p className="banner banner-error">Проверка прервана.
+      {run.journal_available ? " Доступна часть журнала действий." : " Журнал действий недоступен."}</p>}
 
-function calcValue(result: unknown): string {
-  // Public contract: the calculator returns a decimal string.
-  if (typeof result === "string") return result;
-  if (result && typeof result === "object" && "value" in result) return String((result as { value: unknown }).value);
-  return String(result);
-}
+    <div className="three">
+      <Panel title={`Действия аудитора · ${detail.steps.length}`} className="col-steps">
+        {!detail.steps.length ? <Empty title="Журнал действий недоступен"/> : <ol className="steps">
+          {detail.steps.map(step => {
+            const active = initialKey ? initialKey === step.opened_key : stepNumber === step.step;
+            const evidence = (step.opened_key && evidenceKeys.has(step.opened_key)) ||
+              step.listed_keys.some(key => evidenceKeys.has(key));
+            return <li key={step.step}>
+              <button type="button" className={`step ${active ? "step-active" : ""} ${step.ok ? "" : "step-error"}`}
+                aria-pressed={active} onClick={() => {
+                  if (step.opened_key) openKey(step.opened_key);
+                  else { chooseStep(step.step); if (initialKey) go(runLink(runId)); }
+                }}>
+                <span className="step-n">{step.step}</span><span className="step-text">{stepName(step)}</span>
+                {evidence && <span className="step-tag" title="Шаг содержит доказательство">Док.</span>}
+              </button>
+            </li>;
+          })}
+        </ol>}
+      </Panel>
 
-function StepsList({ steps, selection, evidence, onSelect }: { steps: Step[]; selection: Selection; evidence: Set<string>; onSelect: (s: Step) => void }) {
-  return (
-    <ol className="steps">
-      {steps.map((s) => {
-        const active = (selection?.kind === "step" && selection.step === s.step) || (selection?.kind === "record" && s.opened_key === selection.key);
-        return (
-          <li key={s.step}>
-            <button type="button" className={`step ${active ? "step-active" : ""} ${s.ok ? "" : "step-error"}`} onClick={() => onSelect(s)}>
-              <span className="step-n">{s.step}</span>
-              <span className="step-text mono">{s.text}</span>
-              {((s.opened_key && evidence.has(s.opened_key)) || s.listed_keys.some((k) => evidence.has(k))) &&
-                <span className="step-tag" title="Шаг вернул запись, процитированную в выбранном выводе">док.</span>}
-              {s.action.action === "calculator" && s.ok && <span className="step-tag step-tag-calc">= {calcValue(s.observation.result)}</span>}
-              {s.terminated && <span className="step-tag step-tag-end">сдача</span>}
-              {s.truncated && <span className="step-tag step-tag-end">усечение</span>}
-              <span className="step-rest">{s.remaining_steps}</span>
-            </button>
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
-
-export function StepView({ step, onOpen }: { step: Step; onOpen: (k: string) => void }) {
-  return (
-    <div className="step-view">
-      <div className="kv"><span>действие</span><code>{JSON.stringify(step.action)}</code></div>
-      <div className="kv"><span>результат</span><b>{step.ok ? "ok" : `ошибка ${step.error?.code}`}</b></div>
-      <div className="kv"><span>осталось шагов</span><b>{step.remaining_steps}</b></div>
-      {step.listed_keys.length > 0 && (
-        <div className="listed">
-          <div className="small muted">Страница содержит записи:</div>
-          {step.listed_keys.map((k) => <KeyChip key={k} k={k} onOpen={onOpen} />)}
+      <Panel title={initialKey ? recordName(initialKey) : selectedStep ? `Шаг ${selectedStep.step}` : "Документ"}
+        className="col-record">
+        <div id="current-document">
+          {initialKey ? <RecordPane runId={runId} recordKey={initialKey} onOpen={openKey}
+            highlightFields={focused?.derivation?.operands.filter(op => op.key === initialKey).map(op => op.field) ?? []}
+            openedAt={openedAt(initialKey)} listedAt={listedAt(initialKey)} cited={evidenceKeys.has(initialKey)}
+            canChange={run.status === "completed"} generator={run.engine?.generator} periodEnd={run.period?.end}
+            relatedKeys={related}/> : selectedStep ? <StepView step={selectedStep} onOpen={openKey} labels={labels}/> :
+            <Empty title="Выберите документ">
+              <p>Откройте доказательство или действие аудитора, чтобы увидеть исходную запись.</p>
+              <a className="text-link" href={`${runLink(runId)}/documents`}>Все документы проверки</a>
+            </Empty>}
         </div>
-      )}
-      {step.opened_key && <div className="listed"><KeyChip k={step.opened_key} onOpen={onOpen} /></div>}
-      <pre className="observation">{JSON.stringify(step.observation, null, 1)}</pre>
+      </Panel>
+
+      <Panel title="Выводы проверки" className="col-findings">
+        {detail.submission === null && <Empty title="Ответ аудитора недоступен"/>}
+        {detail.empty_submission && <div className="no-findings">
+          <div className="no-findings-title">Ошибок не заявлено</div>
+          <p>Аудитор завершил проверку без выводов.</p>
+          <ConsoleScan detail={detail} onOpen={openKey} labels={labels}/>
+        </div>}
+        {detail.findings.map(view => <FindingCard key={view.index} runId={runId} view={view} focused={focus === view.index}
+          selectedKey={initialKey} onFocus={() => setFocus(focus === view.index ? null : view.index)}
+          onOpen={openKey} keys={detail.keys} labels={labels} recordLabels={recordLabels}
+          canRescore={run.status === "completed"} exponents={exponents}/>)}
+        <ScoreBlock detail={detail}/>
+        <DiagnosticDownload data={{ run, score: detail.score, findings: detail.findings, journal: detail.journal }}/>
+      </Panel>
     </div>
-  );
+  </div>;
 }
 
-function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys, canRescore, exponents }: {
-  runId: string; view: FindingView; focused: boolean; selectedKey: string | null; onFocus: () => void;
-  onOpen: (k: string) => void; keys: string[]; canRescore: boolean; exponents: Record<string, number>;
+function DocumentsList({ runId, keys, labels }: { runId: string; keys: string[]; labels: Record<string, string> }) {
+  const [type, setType] = useState("");
+  const [query, setQuery] = useState("");
+  const tables = [...new Set(keys.map(key => key.split("/")[0]))];
+  const current = type || (tables.includes("payments") ? "payments" : tables[0]);
+  const found = keys.filter(key => key.split("/")[0] === current &&
+    (!query.trim() || labels[key]?.toLocaleLowerCase("ru").includes(query.trim().toLocaleLowerCase("ru"))));
+  return <Panel title="Записи проверки">
+    {!tables.length ? <Empty title="Документы недоступны"/> : <>
+      <div className="document-toolbar">
+        <label>Раздел<select aria-label="Раздел" value={current} onChange={event => { setType(event.target.value); setQuery(""); }}>
+          {tables.map(table => <option key={table} value={table}>{tableName(table)}</option>)}
+        </select></label>
+        <label>Поиск записи<input type="search" value={query} onChange={event => setQuery(event.target.value)}/></label>
+      </div>
+      {found.length ? <ul className="choice-list">
+        {found.map(key => <li key={key}><a href={recordLink(runId, key)}>{labels[key]}</a></li>)}
+      </ul> : <Empty title="Ничего не найдено"/>}
+    </>}
+  </Panel>;
+}
+
+export function StepView({ step, onOpen, labels = {} }: {
+  step: Step; onOpen: (key: string) => void; labels?: Record<string, string>;
+}) {
+  const result = step.observation.result;
+  const calculation = result && typeof result === "object" && "value" in result ? result.value : result;
+  const calc = step.ok && step.action.action === "calculator" && typeof calculation === "string" &&
+    /^[-+]?\d+(?:\.\d+)?$/.test(calculation) ? calculation : null;
+  return <div className="step-view">
+    <div className="kv"><span>Действие</span><b>{stepName(step)}</b></div>
+    <div className="kv"><span>Результат</span><b>{step.ok ? "Выполнено" : "Не удалось выполнить"}</b></div>
+    <div className="kv"><span>Осталось шагов</span><b>{step.remaining_steps ?? "—"}</b></div>
+    {calc && <div className="kv"><span>Расчёт</span><b>{calc}</b></div>}
+    {step.listed_keys.length > 0 && <div className="listed">
+      <p>Записи на этой странице</p>
+      {step.listed_keys.map(key => <KeyChip key={key} k={key} label={labels[key]} onOpen={onOpen}/>)}
+    </div>}
+    {step.opened_key && <KeyChip k={step.opened_key} label={labels[step.opened_key]} onOpen={onOpen}/>}
+    <DiagnosticDownload data={step} label="Скачать запись действия"/>
+  </div>;
+}
+
+function FindingCard({ runId, view, focused, selectedKey, onFocus, onOpen, keys, labels, recordLabels, canRescore, exponents }: {
+  runId: string; view: FindingView; focused: boolean; selectedKey?: string; onFocus: () => void;
+  onOpen: (key: string) => void; keys: string[]; labels: Record<string, string>; recordLabels: ReadonlyMap<string, string>;
+  canRescore: boolean; exponents: Record<string, number>;
 }) {
   const f = view.finding;
   const calc = view.derivation;
+  const explanation = humanText(f.explanation);
   const [rescoring, setRescoring] = useState(false);
-  return (
-    <article className={`finding ${focused ? "finding-focused" : ""}`}>
-      <header className="finding-head">
-        <span className="finding-n">#{view.index}</span>
-        <span className="finding-type">{view.type_name}</span>
-        <span className="small mono muted">{f.type}</span>
-      </header>
-      <div className="affected">
-        {view.affected.map((a) => (
-          <KeyChip key={a.id} k={a.id} onOpen={a.key ? () => onOpen(a.key!) : undefined} hint={a.key ?? "нет документа"} />
-        ))}
+  const verifier = view.verifier;
+  const independentlyVerified = independentConfirmed(view);
+  return <article className={`finding ${focused ? "finding-focused" : ""}`}>
+    <header className="finding-head"><h3 className="finding-type">{findingName(f.type)}</h3></header>
+    <div className="line line-agent">
+      <span className="line-label">Заявлено</span>
+      <button type="button" className="amount" aria-expanded={focused} onClick={onFocus}>
+        {money(f.claimed_amount_minor, f.currency, exponents)}
+      </button>
+      <span className="small muted">{focused ? "Скрыть расчёт" : "Показать расчёт"}</span>
+    </div>
+    <div className="evidence">
+      <div className="small muted">Доказательства · {view.evidence.length}</div>
+      {view.evidence.map(item => <div key={item.key} className={`evidence-row ${selectedKey === item.key ? "evidence-active" : ""}`}>
+        <KeyChip k={item.key} label={labels[item.key]} onOpen={item.exists ? onOpen : undefined} active={selectedKey === item.key} missing={!item.exists}/>
+        <small>{!item.exists ? "Запись недоступна" : item.opened_at_step ? `Открыто на шаге ${item.opened_at_step}` :
+          item.listed_at_step ? `Получено на шаге ${item.listed_at_step}` : "В журнале нет открытия"}</small>
+      </div>)}
+    </div>
+    {explanation && <p className="explanation">{explanation}</p>}
+    {focused && calc && <DerivationView calc={calc} exponents={exponents} onOpen={onOpen} cited={f.evidence_ids} activeKey={selectedKey}/>}
+    {focused && view.uncited_operands.length > 0 && <div className="warn">
+      В ответе не хватает доказательств.{" "}
+      {view.uncited_operands.map(key => <KeyChip key={key} k={key} label={labels[key]} onOpen={onOpen} missing/>)}
+    </div>}
+    <div className="verdicts">
+      <div className="line"><span className="line-label">Оценщик</span>
+        {view.verdict ? <span className={view.verdict.matched ? "ok-text" : "bad-text"}>
+          {view.verdict.matched ? "Вывод засчитан" : `Вывод не засчитан. ${named(REASONS, view.verdict.reason) ?? "Причина не опубликована."}`}
+          {view.verdict.source === "aggregate" && <small> По общей оценке проверки.</small>}
+        </span> : <span className="muted">Отдельный вердикт по выводу недоступен</span>}
       </div>
-
-      <div className="line line-agent">
-        <span className="line-label">Агент</span>
-        <button type="button" className="amount" onClick={onFocus} title="Откуда сумма? Показать операнды">
-          {money(f.claimed_amount_minor, f.currency, exponents)}
-        </button>
-        <span className="small muted">{focused ? "скрыть расчёт" : "откуда сумма?"}</span>
+      <div className="line"><span className="line-label">По документам</span>
+        {calc ? <span className={documentConfirmed(view) ? "ok-text" : "muted"}>
+          {money(calc.result_minor, calc.currency, exponents)} · {documentConfirmed(view) ? "Расчёт подтверждён" : "Расчёт требует проверки"}
+        </span> : <span className="muted">Расчёт для этого вывода недоступен</span>}
       </div>
-      <div className="evidence">
-        <div className="small muted">Доказательства ({f.evidence_ids.length}):</div>
-        {view.evidence.map((e) => (
-          <div key={e.key} className={`evidence-row ${selectedKey === e.key ? "evidence-active" : ""}`}>
-            <KeyChip k={e.key} onOpen={e.exists ? onOpen : undefined} active={selectedKey === e.key} missing={!e.exists} />
-            <span className="mono small">{e.exists ? `${e.file?.replace("public/", "")}:${e.line}` : "нет такой записи в снимке"}</span>
-            <span className="small muted">{e.opened_at_step ? `открыт на шаге ${e.opened_at_step}` : e.listed_at_step ? `получен на странице шага ${e.listed_at_step}` : "аудитор не получал"}</span>
-          </div>
-        ))}
+      <div className="line"><span className="line-label">Независимая сверка</span>
+        {independentlyVerified && verifier.currency
+          ? <span className="ok-text">Независимо подтверждено · {money(verifier.amount_minor, verifier.currency, exponents)}</span>
+          : <span className="muted">{verifier?.connected !== true ? "Независимая сверка не выполнена" :
+            verifier.currency_matches === false ? "Валюта не совпадает" :
+            verifier.agrees === false ? "Вывод не подтверждён сверкой" : "Результат сверки недоступен"}</span>}
       </div>
-      <p className="explanation">{f.explanation}</p>
-
-      {focused && calc && (
-        <DerivationView calc={calc} exponents={exponents} onOpen={onOpen} cited={f.evidence_ids} activeKey={selectedKey} />
-      )}
-      {focused && view.uncited_operands.length > 0 && (
-        <div className="warn">
-          Не подкреплено ссылкой в выводе: {view.uncited_operands.map((k) => <KeyChip key={k} k={k} onOpen={onOpen} missing />)}
-        </div>
-      )}
-
-      <div className="verdicts">
-        <div className="line">
-          <span className="line-label">Оценщик</span>
-          {view.verdict ? (
-            <span className={view.verdict.matched ? "ok-text" : "bad-text"}>
-              {view.verdict.matched ? "✓ засчитан (TP)" : `✗ не засчитан — ${REASONS[view.verdict.reason] ?? view.verdict.reason}`}
-              {view.verdict.source === "aggregate" && <span className="muted small"> · выведено из итога TP/FP/FN</span>}
-            </span>
-          ) : <span className="muted">оценщик опубликовал только итог TP/FP/FN; вердикт по этому выводу неоднозначен</span>}
-        </div>
-        <div className="line">
-          <span className="line-label">Консоль</span>
-          {calc ? (
-            <span className={view.console_agrees ? "ok-text" : "bad-text"}>
-              {money(calc.result_minor === null ? null : Math.abs(calc.result_minor), calc.currency, exponents)} по открытым данным {view.console_agrees ? "— совпадает" : "— не совпадает"}
-            </span>
-          ) : <span className="muted">консоль пересчитывает только распределение и FX; для этого типа независимый расчёт — SQL ниже</span>}
-        </div>
-        <div className="line">
-          <span className="line-label">SQL</span>
-          {view.verifier.connected
-            ? <span className={view.verifier.agrees ? "ok-text" : "bad-text"}>{view.verifier.text ?? `${money(view.verifier.amount_minor ?? null, view.verifier.currency ?? "", exponents)} (${view.verifier.engine})`}{view.verifier.currency_matches === false && " — валюта не совпадает"}</span>
-            : <span className="muted">{view.verifier.text}</span>}
-        </div>
-        {view.verifier.explanation && <div className="small mono muted sql-arith">{view.verifier.explanation}</div>}
-      </div>
-      <div className="small muted">Совпадение суммы и валюты не заменяет зачёт доказательств оценщиком.</div>
-      {canRescore && (
-        <div className="finding-actions">
-          {!rescoring ? (
-            <button type="button" className="btn btn-small btn-ghost" onClick={() => setRescoring(true)}>Заменить доказательство в копии сдачи…</button>
-          ) : (
-            <RescoreForm runId={runId} findingIndex={view.index} evidence={f.evidence_ids} keys={keys} onCancel={() => setRescoring(false)} />
-          )}
-        </div>
-      )}
-    </article>
-  );
+    </div>
+    {canRescore && <div className="finding-actions">
+      {rescoring ? <RescoreForm runId={runId} findingIndex={view.index} evidence={f.evidence_ids} keys={keys} recordLabels={recordLabels}
+        onCancel={() => setRescoring(false)}/> : <button type="button" className="btn" onClick={() => setRescoring(true)}>
+        Заменить доказательство в копии
+      </button>}
+    </div>}
+  </article>;
 }
 
 function ScoreBlock({ detail }: { detail: RunDetail }) {
   const s = detail.score;
   if (!s) return null;
-  return (
-    <div className="score">
-      <div className="score-title">Вердикт оценщика · {detail.run.engine?.evaluator === "demo-standin" ? "учебная замена" : detail.run.engine?.evaluator}</div>
-      <div className="score-grid">
-        <div><span>TP</span><b>{s.tp}</b></div>
-        <div><span>FP</span><b>{s.fp}</b></div>
-        <div><span>FN</span><b>{s.fn}</b></div>
-        <div><span>F1</span><b>{s.f1.toFixed(3)}</b></div>
-        <div><span>инспекций</span><b>{s.inspection_steps ?? "—"}</b></div>
-        <div><span>награда</span><b>{reward(s.reward)}</b></div>
-      </div>
-      <div className="small muted mono">clip(2×F1 − 1 − 0.002×{s.inspection_steps}, −1, 1) = {s.reward}</div>
+  return <div className="score">
+    <div className="score-title">Итог оценщика</div>
+    <div className="score-grid">
+      <div><span>Подтверждено</span><b>{s.tp}</b></div>
+      <div><span>Ложные выводы</span><b>{s.fp}</b></div>
+      <div><span>Пропущено</span><b>{s.fn}</b></div>
+      <div><span>F1 проверки</span><b>{reward(s.f1)}</b></div>
+      <div><span>Запросов</span><b>{s.inspection_steps ?? "—"}</b></div>
+      <div><span>Награда</span><b>{reward(s.reward)}</b></div>
     </div>
-  );
+    {s.tp === 0 && s.fp === 0 && s.fn === 0 && (
+      <p className="small muted">F1 равна 1: в эталоне нет ошибок и аудитор не заявил ни одной.</p>
+    )}
+  </div>;
 }
 
-function ConsoleScan({ detail, onOpen }: { detail: RunDetail; onOpen: (k: string) => void }) {
-  return (
-    <div className="console-scan">
-      <div className="line"><span className="line-label">Консоль</span>
-        {detail.console_scan.length === 0
-          ? <span className="ok-text">распределение и FX: расхождений не найдено; другие типы здесь не проверяются</span>
-          : <span className="bad-text">по открытым данным есть расхождения, которых нет в сдаче:</span>}
-      </div>
-      {detail.console_scan.map((c) => (
-        <div key={c.type + c.subject} className="small">
-          <KeyChip k={c.subject} onOpen={onOpen} /> {c.type}: {money(Math.abs(c.result_minor), c.currency, detail.snapshot.manifest.currency_exponents ?? {})}
-        </div>
-      ))}
-      <div className="line"><span className="line-label">SQL</span>
-        {detail.verifier.connected
-          ? <span className={detail.verifier.findings.length ? "bad-text" : "ok-text"}>
-              {detail.verifier.engine}: найдено расхождений {detail.verifier.findings.length}
-            </span>
-          : <span className="muted">SQL-сверка не подключена в этой сборке</span>}
-      </div>
-      {detail.verifier.findings.map((finding, index) => (
-        <div key={index} className="small">
-          {finding.type}: {money(finding.claimed_amount_minor, finding.currency, detail.snapshot.manifest.currency_exponents ?? {})}
-          {finding.evidence_ids.map((key) => <KeyChip key={key} k={key} onOpen={onOpen} />)}
-        </div>
-      ))}
-    </div>
-  );
+function ConsoleScan({ detail, onOpen, labels }: {
+  detail: RunDetail; onOpen: (key: string) => void; labels: Record<string, string>;
+}) {
+  const exponents = detail.snapshot.manifest.currency_exponents ?? {};
+  return <div className="console-scan">
+    <p>{detail.console_scan.length ? "Расчёт по документам выявил расхождения, которых нет в ответе." :
+      "Расчёт зачёта и валютных оценок не выявил расхождений в пределах этих проверок."}</p>
+    {detail.console_scan.map(row => <div key={row.type + row.subject}>
+      <KeyChip k={row.subject} label={labels[row.subject]} onOpen={onOpen}/>{" "}
+      {findingName(row.type)} · {money(Math.abs(row.result_minor), row.currency, exponents)}
+    </div>)}
+    <p>{detail.verifier.connected ? `Независимая сверка · Расхождений: ${detail.verifier.findings.length}` :
+      "Независимая сверка не выполнена"}</p>
+    {detail.verifier.findings.map((row, index) => <div key={index}>
+      {findingName(row.type)} · {money(row.claimed_amount_minor, row.currency, exponents)}
+      {row.evidence_ids.map(key => <KeyChip key={key} k={key} label={labels[key]} onOpen={onOpen}/>)}
+    </div>)}
+  </div>;
 }
