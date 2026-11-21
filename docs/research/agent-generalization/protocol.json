@@ -1,55 +1,229 @@
 {
   "schema_version": "1.0",
-  "artifact_id": "protocol-agent-generalization-1.0",
-  "protocol_id": "agent-generalization-1.0",
+  "artifact_id": "protocol-agent-generalization-1.1",
+  "protocol_id": "agent-generalization-1.1",
   "source_sha": "611163e75468f4af95cfa115f033e7a9f8c81145",
   "generator_version": "1.6",
   "recorded_before_results": true,
   "family": {
     "definition": "one economic history: generator, profile, seed and configuration without defect switches",
     "error_variant": "generator snapshot with the ordered defects",
-    "clean_variant": "private/source_book of the same snapshot with an empty truth",
+    "clean_variant": "size-matched matched clean variant (amendment 1.1)",
     "same_split": true,
-    "independence": ["distinct canonical whole history", "the defect-bearing counterparty->invoice->payments chain occurs in no other family or split"]
+    "independence": [
+      "distinct canonical whole history",
+      "the defect-bearing counterparty->invoice->payments chain occurs in no other family or split"
+    ]
   },
   "splits": {
-    "dev": {"families": 30, "seeds": [9300, 9329], "public": true},
-    "search_curriculum": {"owner": "GPT Pro 1", "checked_against": ["dev", "holdout"]},
-    "holdout": {"families": 100, "variants_per_family": 2, "seed_source": "os.urandom", "published": ["sha256 of the sealed manifest", "coverage counts"],
-                "strata": {"partial_allocation": 12, "full_omission_allocation": 12, "duplicate_invoice": 12, "fx_conversion": 12, "period_cutoff": 12,
-                           "interaction_allocation_fx": 10, "interaction_cutoff_fx": 10, "multi_issue": 10, "settlement_at_or_after_boundary": 10},
-                "full_omission": "generated as a separate sealed supplement after #40 is accepted; the holdout is not final before that"}
+    "dev": {
+      "families": 30,
+      "seeds": [
+        9300,
+        9329
+      ],
+      "public": true
+    },
+    "search_curriculum": {
+      "owner": "GPT Pro 1",
+      "checked_against": [
+        "dev",
+        "holdout"
+      ]
+    },
+    "holdout": {
+      "families": 100,
+      "variants_per_family": 2,
+      "seed_source": "os.urandom",
+      "published": [
+        "sha256 of the sealed manifest",
+        "coverage counts"
+      ],
+      "strata": {
+        "partial_allocation": 12,
+        "full_omission_allocation": 12,
+        "duplicate_invoice": 12,
+        "fx_conversion": 12,
+        "period_cutoff": 12,
+        "interaction_allocation_fx": 10,
+        "interaction_cutoff_fx": 10,
+        "multi_issue": 10,
+        "settlement_at_or_after_boundary": 10
+      },
+      "full_omission": "generated as a separate sealed supplement after #40 is accepted; the holdout is not final before that",
+      "pending": {
+        "full_omission_allocation": "#40",
+        "settlement_at_or_after_boundary": "randomized boundary history"
+      }
+    }
   },
   "variants": {
-    "baselines": ["empty", "flag_all", "random:1", "random:2", "random:3", "reconcile"],
-    "E1_memory": {"arms": ["model_M_no_memory", "model_M_memory"], "equal": ["model id and version", "base prompt", "temperature", "step and token budget"]},
-    "E2_search": {"arms": ["random_search", "adaptive_search"], "equal": ["candidates", "attempts", "tokens", "validator", "failure criterion"]},
-    "E3_training": {"arms": ["T0", "T_random_weights", "T_adaptive_weights"], "equal": ["base model", "hyperparameters", "training token budget", "examples"],
-                    "required_kind": "weights", "not_training": ["prompt change", "memory", "few_shot"]}
+    "baselines": [
+      "empty",
+      "flag_all",
+      "random:1",
+      "random:2",
+      "random:3",
+      "reconcile"
+    ],
+    "E1_memory": {
+      "arms": [
+        "model_M_no_memory",
+        "model_M_memory"
+      ],
+      "equal": [
+        "model id and version",
+        "base prompt",
+        "temperature",
+        "step and token budget"
+      ]
+    },
+    "E2_search": {
+      "arms": [
+        "random_search",
+        "adaptive_search"
+      ],
+      "equal": [
+        "candidates",
+        "attempts",
+        "tokens",
+        "validator",
+        "failure criterion"
+      ]
+    },
+    "E3_training": {
+      "arms": [
+        "T0",
+        "T_random_weights",
+        "T_adaptive_weights"
+      ],
+      "equal": [
+        "base model",
+        "hyperparameters",
+        "training token budget",
+        "examples"
+      ],
+      "required_kind": "weights",
+      "not_training": [
+        "prompt change",
+        "memory",
+        "few_shot"
+      ]
+    }
   },
-  "repetitions": {"stochastic_agents": 3, "random_policy_seeds": [1, 2, 3], "deterministic_policies": 1},
-  "validator": ["formats", "source_book_consistent", "mutation_explained_by_transition", "own_answer_before_truth", "evidence_available",
-                "witness_trajectory_via_adapter_within_100_actions_and_60s", "no_single_public_feature_separates_clean_from_error"],
-  "failure": {"observed": ["FN", "FP_on_clean", "wrong_amount_currency_or_entities", "incomplete_evidence", "invalid_submit", "timeout"],
-              "persistent": "same failure kind in >=2 of 3 repetitions on a validated episode",
-              "reduction_accepted": "reduced episode validated, same defect kind, same failure kind in >=2 of 3 new repetitions; all repetitions published"},
+  "repetitions": {
+    "stochastic_agents": 3,
+    "random_policy_seeds": [
+      1,
+      2,
+      3
+    ],
+    "deterministic_policies": 1
+  },
+  "validator": [
+    "formats",
+    "source_book_consistent",
+    "mutation_explained_by_transition",
+    "own_answer_before_truth",
+    "evidence_available",
+    "witness_trajectory_via_adapter_within_100_actions_and_60s",
+    "no_single_public_feature_separates_clean_from_error"
+  ],
+  "failure": {
+    "observed": [
+      "FN",
+      "FP_on_clean",
+      "wrong_amount_currency_or_entities",
+      "incomplete_evidence",
+      "invalid_submit",
+      "timeout"
+    ],
+    "persistent": "same failure kind in >=2 of 3 repetitions on a validated episode",
+    "reduction_accepted": "reduced episode validated, same defect kind, same failure kind in >=2 of 3 new repetitions; all repetitions published"
+  },
   "metrics": {
     "micro_f1": "2*sumTP/(2*sumTP+sumFP+sumFN) over all attempts of a variant",
     "mean_reward": "mean of return over all attempts, including timeouts and errors",
     "fp_on_clean": "share of clean-variant attempts with >=1 finding; number of FP findings",
     "completion": "share of attempts with an accepted submit",
-    "operational": ["timeout", "provider_error", "invalid_response", "budget_stop"],
-    "resources": ["actions", "input_tokens", "output_tokens", "wall_time_s", "cost_usd"],
+    "operational": [
+      "timeout",
+      "provider_error",
+      "invalid_response",
+      "budget_stop"
+    ],
+    "resources": [
+      "actions",
+      "input_tokens",
+      "output_tokens",
+      "wall_time_s",
+      "cost_usd"
+    ],
     "scoring_rules": "official fintech-checks 2026-11-20; reviewer reference scorer; evidence availability; tau from policy"
   },
   "exclusions": "only reviewer-side infrastructure failure before the agent's first action; one retry; both recorded. Timeouts, provider errors and invalid answers are agent results scored by the official rule.",
-  "statistics": {"unit": "family", "family_value": "mean over its episodes and repetitions",
-                 "primary": {"E1": "mean_reward(memory) - mean_reward(no_memory)", "E2": "accepted persistent failures per unit budget",
-                             "E3": ["T_adaptive - T0", "T_random - T0", "T_adaptive - T_random"]},
-                 "secondary": ["micro_f1", "fp_on_clean", "completion"],
-                 "interval": {"method": "cluster bootstrap over families, percentile", "level": 0.95, "resamples": 10000, "seed": 20261121},
-                 "test": {"method": "paired sign-flip permutation over families", "permutations": 10000, "sided": "two"},
-                 "decision": "effect not shown if the interval contains 0; null and negative effects are published"},
-  "cost_estimate": {"attempts": {"E1": 1200, "E3": 1800, "dev_tuning_max": 720}, "per_attempt_tokens": {"input": [120000, 240000], "output": [8000, 20000]},
-                    "formula": "attempts * (input_tokens*price_in + output_tokens*price_out)", "status": "estimate; prices and limit fixed by the integrator before any paid run"}
+  "statistics": {
+    "unit": "family",
+    "family_value": "mean over its episodes and repetitions",
+    "primary": {
+      "E1": "mean_reward(memory) - mean_reward(no_memory)",
+      "E2": "accepted persistent failures per unit budget",
+      "E3": [
+        "T_adaptive - T0",
+        "T_random - T0",
+        "T_adaptive - T_random"
+      ]
+    },
+    "secondary": [
+      "micro_f1",
+      "fp_on_clean",
+      "completion"
+    ],
+    "interval": {
+      "method": "cluster bootstrap over families, percentile",
+      "level": 0.95,
+      "resamples": 10000,
+      "seed": 20261121
+    },
+    "test": {
+      "method": "paired sign-flip permutation over families",
+      "permutations": 10000,
+      "sided": "two"
+    },
+    "decision": "effect not shown if the interval contains 0; null and negative effects are published"
+  },
+  "cost_estimate": {
+    "attempts": {
+      "E1": 1200,
+      "E3": 1800,
+      "dev_tuning_max": 720
+    },
+    "per_attempt_tokens": {
+      "input": [
+        120000,
+        240000
+      ],
+      "output": [
+        8000,
+        20000
+      ]
+    },
+    "formula": "attempts * (input_tokens*price_in + output_tokens*price_out)",
+    "status": "estimate; prices and limit fixed by the integrator before any paid run"
+  },
+  "amendments": [
+    {
+      "version": "1.1",
+      "recorded_before": [
+        "holdout generation",
+        "any agent result"
+      ],
+      "evidence": "dev only, local baseline policies",
+      "changes": [
+        "clean variant: source book if ledger size equals the error variant; otherwise the defect-off generator episode with identical commercial chains; otherwise reject",
+        "multi_issue never combines duplicate_invoice with period_cutoff",
+        "settlement_at_or_after_boundary is not_checked: fixed template chain shared with published train"
+      ]
+    }
+  ]
 }
