@@ -148,7 +148,7 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
     else:
         manifest_path.write_text(json.dumps({"schema_version": ARTIFACT_SCHEMA_VERSION, "plan_artifact_id": plan["artifact_id"],
                                              "plan_sha256": plan_sha, "plan": plan}, indent=2, ensure_ascii=False),
-                                 encoding="utf-8")
+                                 encoding="utf-8", newline="\n")
     interrupted = finalize_interrupted(out)
     if interrupted:
         log(f"finalized {len(interrupted)} interrupted attempt(s); their slots are retried with new ids")
@@ -179,7 +179,7 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
         log(f"{attempt_id}: {record['status']} actions={record['totals']['environment_actions']} "
             f"cost={record['totals']['cost_usd']}")
     summary = summarize(out, plan, plan_sha)
-    (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+    (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8", newline="\n")
     return summary
 
 
@@ -317,11 +317,11 @@ def export_for_review(out: str | Path, target: str | Path, plan: dict, compariso
                    "live": bool(agent.get("provider")) and not record.get("test_double"),
                    "test_double": bool(record.get("test_double")), "protocol_id": record.get("protocol_id"),
                    "model": (agent.get("provider") or {}).get("model"), "prompt_hash": agent.get("prompt_hash")}
-        (target / "attempts" / f"{record['attempt_id']}.json").write_text(json.dumps(attempt, ensure_ascii=False), encoding="utf-8")
+        (target / "attempts" / f"{record['attempt_id']}.json").write_text(json.dumps(attempt, ensure_ascii=False), encoding="utf-8", newline="\n")
         written += 1
     pairs = comparisons if comparisons is not None else [
         {"name": f"{a}_vs_{b}", "a": a, "b": b} for a, b in (plan.get("analysis") or {}).get("pairs", [])]
     experiment = {"protocol_id": "agent-generalization-1.1", "auditlab_protocol_id": plan["protocol_id"],
                   "source_sha": source_sha(), "plan_artifact_id": plan["artifact_id"], "comparisons": pairs, "episodes": episodes}
-    (target / "experiment.json").write_text(json.dumps(experiment, indent=1, ensure_ascii=False), encoding="utf-8")
+    (target / "experiment.json").write_text(json.dumps(experiment, indent=1, ensure_ascii=False), encoding="utf-8", newline="\n")
     return {"attempts": written, "episodes": len(episodes), "target": str(target)}

@@ -90,7 +90,7 @@ def _write_scrubbed(path: Path, data: dict) -> None:
             text = text.replace(value, "[redacted]")
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_name(path.name + ".tmp")
-    temp.write_text(text, encoding="utf-8")
+    temp.write_text(text, encoding="utf-8", newline="\n")
     os.replace(temp, path)
 
 

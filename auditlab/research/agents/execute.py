@@ -52,11 +52,11 @@ def public_digest(episode_dir: Path) -> str:
 
 
 def _write_json(path: Path, value) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
 
 
 def _append(path: Path, rows) -> None:
-    with path.open("a", encoding="utf-8") as stream:
+    with path.open("a", encoding="utf-8", newline="\n") as stream:
         for row in rows:
             stream.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 

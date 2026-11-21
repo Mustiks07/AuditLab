@@ -55,7 +55,7 @@ for episode in episodes:
     run_demonstration(episode, out / "demonstrations")
 (out / "curriculum.json").write_text(json.dumps({"schema_version": "1.0", "artifact_id": "published-train-2026-11-21",
     "kind": "published_train", "note": "all 10 published train episodes; NOT a random or adaptive curriculum arm",
-    "episodes": episodes}, indent=1), encoding="utf-8")
+    "episodes": episodes}, indent=1), encoding="utf-8", newline="\n")
 EOF
 $PY -m auditlab.research.training build-sft --roots "$T/demonstrations" --out "$T/dataset" --splits train \
     --curriculum "$T/curriculum.json" > "$T/build-sft.json"

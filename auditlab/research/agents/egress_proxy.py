@@ -286,7 +286,7 @@ def main(argv: list[str] | None = None) -> int:
     host, _, port = args.listen.rpartition(":")
     if not host or not port.isdigit():
         parser.error("--listen must be HOST:PORT")
-    log = open(args.log, "a", encoding="utf-8") if args.log else sys.stderr
+    log = open(args.log, "a", encoding="utf-8", newline="\n") if args.log else sys.stderr
     try:
         server = EgressProxy((host.strip("[]"), int(port)), args.allow or DEFAULT_ALLOW, log=log,
                              max_tunnels=args.max_tunnels, max_header_bytes=args.max_header_bytes,

@@ -76,7 +76,7 @@ def smoke(config: dict, budget_usd: float, confirm_paid: bool, out: Path) -> dic
     result.update(provider=provider.describe(), tries=caller.records, spent_usd=caller.guard.spent_usd,
                   wall_seconds=round(time.monotonic() - started, 3), network_calls=len(caller.records))
     out.mkdir(parents=True, exist_ok=True)
-    (out / "smoke.json").write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+    (out / "smoke.json").write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
     return result
 
 
@@ -124,7 +124,7 @@ def main(argv: list[str]) -> int:
     if args.command == "plan":
         plan = make_plan(args)
         experiment.validate_plan(plan)
-        Path(args.out).write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
+        Path(args.out).write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
         print(f"{args.out}: {len(plan['episodes'])} episodes x {len(plan['arms'])} arms x {plan['repetitions']}")
         return 0
     if args.command == "export":
