@@ -177,7 +177,7 @@ def verify(args):
               "started_at": datetime.now(timezone.utc).isoformat(), "commit": git_value("rev-parse", "HEAD"),
               "run_id": uuid.uuid4().hex,
               "external_acceptance": {"organizer_adapter": {"status": "not_checked",
-                  "detail": "Official adapter not supplied; internal stdlib adapter evidence is separate."}},
+                  "detail": "Genesis judge_adapter.py is supplied; organizer-run acceptance is not checked. Local published-definition checks are separate."}},
               "dirty": (None if git_value("status", "--porcelain") is None else
                         bool(git_value("status", "--porcelain"))),
               "python": platform.python_version(), "platform": platform.platform(),
