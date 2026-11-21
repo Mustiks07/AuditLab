@@ -232,7 +232,8 @@ def oracle(truth):
              "evidence_ids": i["evidence_sets"][0], "explanation": "oracle"} for i in truth["issues"]]
 
 
-def phase_pairs(work: Path, make_env, make_policy, open_session, evaluate) -> list[dict]:
+def phase_pairs(work: Path, make_env, make_policy, open_session, evaluate, adapter=None) -> list[dict]:
+    from .adapter_transport import pair_transport
     rows = []
     if (work / "runs").exists():  # the internal runner requires new export directories
         shutil.rmtree(work / "runs")
@@ -276,5 +277,7 @@ def phase_pairs(work: Path, make_env, make_policy, open_session, evaluate) -> li
                  "4_evidence_available_no_new_channel": refs_ok, "reviewer_calc_invariant": calc_ok}
         rows.append({"id": pid, "block": "pairs", "base": did, "transform": PAIR_KIND[pid], "conditions": conds, "score": {k: s0[k] for k in ("tp", "fp", "fn", "reward")},
                      "status": "passed" if all(conds.values()) else "failed",
-                     "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"})
+                     "adapter_transport": pair_transport(adapter, src, dst)})
+        if adapter is not None and rows[-1]["adapter_transport"]["status"] != "passed":
+            rows[-1]["status"] = "failed"
     return rows

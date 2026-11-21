@@ -57,6 +57,27 @@ def deadline_origin(make_env, episode: Path) -> dict:
             "cause": "AuditEnvironment.reset sets _started after generation/loading/validate_truth/session opening (auditlab/runner/env.py)"}
 
 
+def deadline_origin_adapter(adapter, episode: Path) -> dict:
+    """Same 61 s controlled-clock stimulus through the jury adapter's make_env (its documented test
+    options clock/session_opener; the official entry point is still make_env())."""
+    if adapter is None:
+        return {"status": "not_checked", "reason": "judge_adapter.py is not importable at this commit"}
+    from auditlab.environment import open_session
+    now = [1000.0]
+
+    def slow_opener(public_dir):
+        now[0] += 61.0
+        return open_session(public_dir)
+    try:
+        env = adapter.make_env(clock=lambda: now[0], session_opener=slow_opener, evaluator="inprocess")
+    except TypeError as error:
+        return {"status": "not_checked", "reason": f"adapter make_env does not accept test clock options: {error}"}
+    env.reset(1, {"mode": "closed", "episode_dir": str(episode), "team_config": {}})
+    obs, r, term, trunc, info = env.step({"name": "get_record", "args": {"table": "ledger", "id": "NO_SUCH_ROW"}})
+    return {"status": "passed" if trunc else "failed", "stimulus": "fake clock; 61 s inside reset (session opener); then one step",
+            "expected": "truncated=true", "actual": {"truncated": trunc, "terminated": term, "error": obs.get("error")}}
+
+
 def reset_wall_time(make_env, episode: Path) -> dict:
     env = make_env("closed", evaluator="inprocess")
     t0 = time.perf_counter(); env.reset(1, {"snapshot_dir": str(episode), "policy_name": "probe"}); dt = time.perf_counter() - t0

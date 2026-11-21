@@ -133,7 +133,7 @@ def run(work: Path, policy: dict, evaluate, max_matching, adapter) -> list[dict]
         reference_ok = _compare(refscore, exp, True)
         core = _core(evaluate, truth, findings, steps, 0)
         core_ok = _compare(core, exp, True)
-        official = _official(adapter, dirs[tkey] if tkey != "-" else None, truth, findings, steps, exp, work, rid)
+        official = _official(adapter, dirs[tkey], truth, findings, steps, exp, work, rid)  # "-": _official empties truth in a copy
         out.append({"id": rid, "block": "reward", "expectation_source": "fintech-checks.txt, block 3, test " + rid[1:],
                     "stimulus": f"{text}; inspection_steps={steps}", "expected": _plain(exp),
                     "expectation_checks": {"published_reward_equals_formula": derived_ok, "reference_scorer_agrees": reference_ok},
