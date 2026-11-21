@@ -1,0 +1,435 @@
+{
+ "schema_version": "1.0",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "5a43c0844047d0982c60551381dc8a70f1ffd8ca",
+ "split": "dev",
+ "summary": {
+  "families_built": 25,
+  "pending": {
+   "full_omission_allocation": 4,
+   "settlement_at_or_after_boundary": 3
+  },
+  "rejected": [],
+  "clean_kind": {
+   "source_book": 20,
+   "defect_off_episode": 5
+  },
+  "strata": {
+   "partial_allocation": 4,
+   "duplicate_invoice": 4,
+   "fx_conversion": 4,
+   "period_cutoff": 4,
+   "interaction_allocation_fx": 3,
+   "interaction_cutoff_fx": 3,
+   "multi_issue": 3
+  },
+  "validation": {
+   "error": {
+    "passed": 25
+   },
+   "clean": {
+    "passed": 25
+   }
+  },
+  "failed_checks": {},
+  "currencies": {
+   "KZT": 14,
+   "JPY": 7,
+   "KWD": 4
+  },
+  "zones": {
+   "Asia/Almaty": 14,
+   "Europe/Berlin": 11
+  },
+  "sizes": {
+   "200": 7,
+   "400": 7,
+   "800": 7,
+   "1200": 4
+  },
+  "truth_issues_error_variants": 34,
+  "replaced_before_any_agent_run": 0
+ },
+ "separation": {
+  "families": 25,
+  "whole_history_duplicates": 0,
+  "whole_history_equal_to_other_split": [],
+  "defect_chain_reused": [],
+  "clean_template_chains_shared_with_other_splits": 0
+ },
+ "shortcut_audit": {
+  "ledger_rows": {
+   "perfectly_separates": false,
+   "clean_range": [
+    200,
+    1200
+   ],
+   "error_range": [
+    200,
+    1200
+   ],
+   "clean_distinct": 4,
+   "error_distinct": 4
+  },
+  "document_count": {
+   "perfectly_separates": false,
+   "clean_range": [
+    51,
+    150
+   ],
+   "error_range": [
+    51,
+    150
+   ],
+   "clean_distinct": 8,
+   "error_distinct": 8
+  },
+  "ledger_rows_is_a_size_target": {
+   "perfectly_separates": false,
+   "clean_range": [
+    1,
+    1
+   ],
+   "error_range": [
+    1,
+    1
+   ],
+   "clean_distinct": 1,
+   "error_distinct": 1
+  },
+  "fx_valuation_rows": {
+   "perfectly_separates": false,
+   "clean_range": [
+    9,
+    11
+   ],
+   "error_range": [
+    9,
+    11
+   ],
+   "clean_distinct": 3,
+   "error_distinct": 3
+  },
+  "archive_groups": {
+   "perfectly_separates": false,
+   "clean_range": [
+    6,
+    6
+   ],
+   "error_range": [
+    6,
+    6
+   ],
+   "clean_distinct": 1,
+   "error_distinct": 1
+  }
+ },
+ "baselines": {
+  "schema_version": "1.0",
+  "artifact_id": "comparison-baselines",
+  "protocol_id": "agent-generalization-1.1",
+  "source_sha": null,
+  "arms": {
+   "empty": {
+    "attempts": 50,
+    "scored": 50,
+    "excluded_infra": 0,
+    "micro_f1": {
+     "value": 0.0,
+     "tp": 0,
+     "fp": 0,
+     "fn": 34
+    },
+    "mean_reward": {
+     "value": 0.0,
+     "n": 50
+    },
+    "fp_on_clean": {
+     "attempts_with_findings": 0,
+     "clean_attempts": 25,
+     "fp_findings": 0
+    },
+    "status": {
+     "completed": 50,
+     "timeout": 0,
+     "provider_error": 0,
+     "invalid_response": 0,
+     "budget_stop": 0,
+     "infra_error_before_first_action": 0
+    },
+    "completion": {
+     "submitted": 50,
+     "attempts": 50
+    },
+    "actions": {
+     "n": 50,
+     "mean": 1.0,
+     "median": 1.0,
+     "p90": 1
+    },
+    "input_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "output_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "wall_time_s": {
+     "n": 50,
+     "mean": 0.0225,
+     "median": 0.016,
+     "p90": 0.032
+    },
+    "cost_usd": {
+     "n": 50,
+     "mean": 0.0,
+     "median": 0.0,
+     "p90": 0.0
+    },
+    "live_attempts": 0
+   },
+   "flag_all": {
+    "attempts": 50,
+    "scored": 50,
+    "excluded_infra": 0,
+    "micro_f1": {
+     "value": 0.0,
+     "tp": 0,
+     "fp": 1500,
+     "fn": 34
+    },
+    "mean_reward": {
+     "value": -1.0,
+     "n": 50
+    },
+    "fp_on_clean": {
+     "attempts_with_findings": 25,
+     "clean_attempts": 25,
+     "fp_findings": 750
+    },
+    "status": {
+     "completed": 50,
+     "timeout": 0,
+     "provider_error": 0,
+     "invalid_response": 0,
+     "budget_stop": 0,
+     "infra_error_before_first_action": 0
+    },
+    "completion": {
+     "submitted": 50,
+     "attempts": 50
+    },
+    "actions": {
+     "n": 50,
+     "mean": 3.6,
+     "median": 3.0,
+     "p90": 5
+    },
+    "input_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "output_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "wall_time_s": {
+     "n": 50,
+     "mean": 0.026539999999999998,
+     "median": 0.031,
+     "p90": 0.032
+    },
+    "cost_usd": {
+     "n": 50,
+     "mean": 0.0,
+     "median": 0.0,
+     "p90": 0.0
+    },
+    "live_attempts": 0
+   },
+   "random": {
+    "attempts": 150,
+    "scored": 150,
+    "excluded_infra": 0,
+    "micro_f1": {
+     "value": 0.0,
+     "tp": 0,
+     "fp": 100,
+     "fn": 102
+    },
+    "mean_reward": {
+     "value": -0.6686666666666666,
+     "n": 150
+    },
+    "fp_on_clean": {
+     "attempts_with_findings": 50,
+     "clean_attempts": 75,
+     "fp_findings": 50
+    },
+    "status": {
+     "completed": 150,
+     "timeout": 0,
+     "provider_error": 0,
+     "invalid_response": 0,
+     "budget_stop": 0,
+     "infra_error_before_first_action": 0
+    },
+    "completion": {
+     "submitted": 150,
+     "attempts": 150
+    },
+    "actions": {
+     "n": 150,
+     "mean": 6.666666666666667,
+     "median": 7.0,
+     "p90": 8
+    },
+    "input_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "output_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "wall_time_s": {
+     "n": 150,
+     "mean": 0.024773333333333335,
+     "median": 0.031,
+     "p90": 0.032
+    },
+    "cost_usd": {
+     "n": 150,
+     "mean": 0.0,
+     "median": 0.0,
+     "p90": 0.0
+    },
+    "live_attempts": 0
+   },
+   "reconcile": {
+    "attempts": 50,
+    "scored": 50,
+    "excluded_infra": 0,
+    "micro_f1": {
+     "value": 1.0,
+     "tp": 34,
+     "fp": 0,
+     "fn": 0
+    },
+    "mean_reward": {
+     "value": 0.96744,
+     "n": 50
+    },
+    "fp_on_clean": {
+     "attempts_with_findings": 0,
+     "clean_attempts": 25,
+     "fp_findings": 0
+    },
+    "status": {
+     "completed": 50,
+     "timeout": 0,
+     "provider_error": 0,
+     "invalid_response": 0,
+     "budget_stop": 0,
+     "infra_error_before_first_action": 0
+    },
+    "completion": {
+     "submitted": 50,
+     "attempts": 50
+    },
+    "actions": {
+     "n": 50,
+     "mean": 17.28,
+     "median": 13.0,
+     "p90": 31
+    },
+    "input_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "output_tokens": {
+     "n": 0,
+     "mean": null,
+     "median": null,
+     "p90": null
+    },
+    "wall_time_s": {
+     "n": 50,
+     "mean": 0.0382,
+     "median": 0.032,
+     "p90": 0.063
+    },
+    "cost_usd": {
+     "n": 50,
+     "mean": 0.0,
+     "median": 0.0,
+     "p90": 0.0
+    },
+    "live_attempts": 0
+   }
+  },
+  "paired_by_family": {
+   "reconcile_vs_empty": {
+    "a": "reconcile",
+    "b": "empty",
+    "families": 25,
+    "difference": 0.96744,
+    "ci95": [
+     0.96112,
+     0.97344
+    ],
+    "p_value": 9.999000099990002e-05,
+    "missing_in_a": [],
+    "missing_in_b": [],
+    "shown": true
+   },
+   "reconcile_vs_flag_all": {
+    "a": "reconcile",
+    "b": "flag_all",
+    "families": 25,
+    "difference": 1.96744,
+    "ci95": [
+     1.96112,
+     1.9734399999999999
+    ],
+    "p_value": 9.999000099990002e-05,
+    "missing_in_a": [],
+    "missing_in_b": [],
+    "shown": true
+   },
+   "random_vs_empty": {
+    "a": "random",
+    "b": "empty",
+    "families": 25,
+    "difference": -0.6686666666666667,
+    "ci95": [
+     -0.6686666666666667,
+     -0.6686666666666667
+    ],
+    "p_value": 9.999000099990002e-05,
+    "missing_in_a": [],
+    "missing_in_b": [],
+    "shown": true
+   }
+  },
+  "families": 25,
+  "episodes": 50,
+  "attempts": 300,
+  "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+ }
+}

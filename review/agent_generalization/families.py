@@ -48,7 +48,7 @@ def matched_clean(adapter, error_dir: Path, seed: int, config: dict, out: Path) 
 
 
 def stratum_config(stratum: str, k: int) -> dict | None:
-    cur = CURRENCIES[k % len(CURRENCIES)]; zone, period = ZONES[(k // 2) % len(ZONES)]; rows, docs = SIZES[(k // 3) % len(SIZES)]
+    cur = CURRENCIES[k % len(CURRENCIES)]; zone, period = ZONES[(k // 2) % len(ZONES)]; rows, docs = SIZES[k % len(SIZES)]  # fixed 21.11: (k // 3) never reached 2000 rows for k <= 11
     c = {"config_version": "1.1", "company_size": {"ledger_rows_target": rows, "documents_target": docs}, "base_currency": cur[0], "currencies": cur,
          "timezone": zone, "target_period": period, "interaction": None, "clean_distractors": list(ALL), "issue_counts": dict(Z)}
     if stratum in PENDING:

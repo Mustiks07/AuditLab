@@ -1,0 +1,34 @@
+{
+ "schema_version": "1.0",
+ "artifact_id": "manifest-agent-generalization-stage1",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "611163e75468f4af95cfa115f033e7a9f8c81145",
+ "status": "stage 1: protocol, validator, splits, baselines; no agent, search, reduction or training artifacts exist",
+ "holdout_commitment": "dcd56b939e6967e199087d1759802e264fc7d4efa4af52f4ad2cf57df959bc65",
+ "superseded_holdout_commitments": [
+  "077b3a19882f7e48df3c5e7e15eed2578cd3eeecf578f38e3a93822072c13de2"
+ ],
+ "protocol_commits": {
+  "1.0": "f711911fa33e6c3d8e3988ee69a8b610c5d2092e",
+  "1.1": "5a43c08"
+ },
+ "files": {
+  "docs/research/agent-generalization/dev-manifest.json": "bca247296d5ec72ccc0abd09cf43d736524fe3e5f2f5b6daa9518bcc9cda0cc6",
+  "docs/research/agent-generalization/dev-report.json": "39010796fdae49cc31e1f3506d191035ddc26ee65f0b2035ebb479386904fa09",
+  "docs/research/agent-generalization/holdout-public-summary.json": "22ec425ea839cba73d375ad07cace4ee65525bc8b1163507fc32154f6d100552",
+  "docs/research/agent-generalization/protocol.json": "f3c4fa54aa21808261623cd744895b63d82631948f0106256505ec640a7f3c98",
+  "docs/research/agent-generalization/PROTOCOL.md": "266547c771367ccd67a4555fe3cd260811a81330167b6b8320d8aeedaca0461c",
+  "docs/research/agent-generalization/REPORT.md": "8077a80399766831a0c85a13b61474769793e9e51e46161387ea317a1986a82e",
+  "docs/research/agent-generalization/repro_defects.py": "bd091426442adff71b3a9edb76a83841a4845f8d8cc474a28e20e365dc8cf064",
+  "review/agent_generalization/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review/agent_generalization/artifact_checks.py": "ab56d647255787f4ee0659d52c106bba2a15fac528e518a2bf9f04956094ed5c",
+  "review/agent_generalization/baselines.py": "873a5b1b76e73e71c8f7cad1cb2f2e32899db331297423016d4840a763791fc6",
+  "review/agent_generalization/canonical.py": "048ed8f5b1b0d9d668e0b6b177ff05d2c94e82d24ef7c0c150435cc8158dbebe",
+  "review/agent_generalization/compare.py": "c37972f96d1f3576bcbd5cc938d9176bd57551a50f6982f691609dab8b8a6ba2",
+  "review/agent_generalization/families.py": "15cd5adb3ae8f5a9ad9b68fcc28ef884fb08118c7df4bc3543fb7677db99bb48",
+  "review/agent_generalization/run.py": "0719e97928ebdffa0188cd633cf24d96739a8f5ec7fd22395ccaf5c45f33254f",
+  "review/agent_generalization/validator.py": "815dfdb0d42c86b8420709bff85fa8985b0e0205effdd341061d5987a047c91a",
+  "tests/research_acceptance/test_artifact_checks.py": "a1ab8c389b417743d8cbfa55c9e06ee91f91cbcf383d9e2649b25921bc966947",
+  "tests/research_acceptance/test_reviewer_checks.py": "56eee02025b6730daf6653e26b10e7d32a884ef9c781e3405d18b4aeb6304463"
+ }
+}
