@@ -310,7 +310,7 @@ def attempt_problem(row: dict) -> str | None:
     reward = result.get("reward")
     if type(reward) not in (int, float):
         return f"нет числового reward: {reward!r}"
-    if not math.isfinite(reward):
+    if type(reward) is float and not math.isfinite(reward):
         return f"reward не конечное число: {reward!r}"
     if not -1 <= reward <= 1:
         return f"reward {reward} вне диапазона [-1, 1] (SPEC §9)"

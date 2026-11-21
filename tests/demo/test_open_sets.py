@@ -176,6 +176,13 @@ class InputValues(unittest.TestCase):
         self.assertIn("1e309", raw[0])
         self.assert_rejected(None, reason="не конечное", raw=raw)
 
+    def test_huge_json_integer_reward_is_rejected_without_float_overflow(self):
+        for value in (10 ** 400, -(10 ** 400)):
+            with self.subTest(value=value):
+                rows = copy.deepcopy(self.base)
+                rows[0]["result"]["reward"] = value
+                self.assert_rejected(rows, reason="вне диапазона")
+
     def test_negative_and_boolean_counts(self):
         for name, value, reason in (("tp", -10, "отрицательное"), ("fp", -1, "отрицательное"),
                                     ("fn", True, "не целое"), ("tp", 1.0, "не целое")):
