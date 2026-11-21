@@ -528,7 +528,7 @@ export function ComparisonScreen({ id }: { id: string }) {
   const label = (variant: string) => c.variants?.find(v => v.variant_id === variant)?.label ?? "Вариант";
   const links = stageLinks(view.value.links);
   return <>
-    <WorkspaceHeader title={c.title ?? "Сравнение версий"} subtitle="Версии агента на новых компаниях, не участвовавших в отборе задач."
+    <WorkspaceHeader title={c.title ?? "Сравнение версий"} subtitle="Сопоставление сохранённых попыток на одной выборке."
       action={<Origin provenance={c._provenance}/>}/>
     <ResearchPath current="comparison" links={links}/>
     <FixtureNote provenance={c._provenance}/>
@@ -567,8 +567,8 @@ export function ComparisonScreen({ id }: { id: string }) {
       })}</ul>}
     </section>
     {(c.missing ?? []).length > 0 && <section className="research-panel"><h2>Нет результата</h2>
-      <ul>{c.missing!.map(row => <li key={row.variant_id}>{label(row.variant_id)}: {researchError(row.reason) === researchError(undefined)
-        ? "результат не получен" : researchError(row.reason)}</li>)}</ul></section>}
+      <ul>{c.missing!.map((row, index) => <li key={row.variant_id + index}>{label(row.variant_id)}: {row.message ?? (researchError(row.reason) === researchError(undefined)
+        ? "результат не получен" : researchError(row.reason))}</li>)}</ul></section>}
     <NextStep href="#/research" label="К экспериментам"/>
     <TechDetails data={c}/>
   </>;

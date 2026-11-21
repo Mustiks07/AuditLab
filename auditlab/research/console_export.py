@@ -82,6 +82,10 @@ def publish(plan, output, target, *, comparison=None, state=None):
     planned = len(plan['arms'])*len(plan['episodes'])*plan['repetitions']
     agents = [{'variant_id':a['name'], 'label':a.get('label',a['name']), 'kind':a.get('agent',{}).get('kind','llm'),
                'model':{'provider':a.get('provider',{}).get('provider'), 'model_id':a.get('provider',{}).get('model')}} for a in plan['arms']]
+    for entry,arm in zip(agents,plan['arms']):
+        if not arm.get('label') and arm.get('agent',{}).get('kind')=='llm':
+            suffix={'tools':'без заметок','memory':'с заметками'}.get(arm['agent'].get('variant'),'аудитор')
+            entry['label']=str(arm.get('provider',{}).get('model','ИИ'))+' · '+suffix
     spent = None if any(r['totals'].get('cost_usd') is None for r in rows) else sum(r['totals']['cost_usd'] for r in rows)
     write(target/'experiment.json', artifact('experiment',eid,title=plan.get('title','Проверка финансовых аудиторов'),
         status=state or ('completed' if len(rows)>=planned else 'incomplete'), agents=agents,
@@ -94,22 +98,27 @@ def publish(plan, output, target, *, comparison=None, state=None):
     if comparison is not None:
         variants=[]
         for name, m in comparison['arms'].items():
-            variants.append({'variant_id':name,'label':name,'metrics':{
+            variants.append({'variant_id':name,'label':next((a['label'] for a in agents if a['variant_id']==name),name),'metrics':{
                 'micro_f1':m['micro_f1']['value'], 'mean_reward':m['mean_reward']['value'],
                 'clean_fp':{'count':m['fp_on_clean']['attempts_with_findings'],'denominator':m['fp_on_clean']['clean_attempts']},
                 'completion':{'completed':m['completion']['submitted'],'total':m['completion']['attempts']},
+                'timeouts':m['status'].get('timeout',0),
+                'errors':sum(n for status,n in m['status'].items() if status not in ('completed','timeout')),
                 'actions_mean':m['actions']['mean'],'time_s':m['wall_time_s']['mean'],
                 'cost_usd':None if m['cost_usd']['n']!=m['attempts'] else (m['cost_usd']['mean'] or 0)*m['attempts']}})
-        pairs=[{'a':v['a'],'b':v['b'],'metric':'mean_reward','difference':v['difference'],'interval':v['ci95'],
+        # The console convention is b-a; the independent scorer reports a-b.
+        pairs=[{'a':v['b'],'b':v['a'],'metric':'mean_reward','difference':v['difference'],'interval':v['ci95'],
                 'method':'Парный bootstrap по экономическим семействам'} for v in comparison['paired_by_family'].values() if v['difference'] is not None and v['ci95'] is not None]
-        missing=[{'variant_id':name,'reason':f"Завершено {m['completion']['submitted']} из {m['attempts']} попыток; сбои сервиса не доказывают качество модели."}
+        missing=[{'variant_id':name,'reason':'incomplete_runs','message':f"Завершено {m['completion']['submitted']} из {m['attempts']} попыток; сбои сервиса не доказывают качество модели."}
                  for name,m in comparison['arms'].items() if m['completion']['submitted'] < m['attempts']]
-        missing += [{'variant_id':v['a'],'reason':'Недостаточно независимых семейств для оценки неопределённости сравнения.'}
+        missing += [{'variant_id':v['a'],'reason':'insufficient_families','message':'Недостаточно независимых семейств для оценки неопределённости сравнения.'}
                     for v in comparison['paired_by_family'].values() if v['ci95'] is None]
         write(target/'comparison.json',artifact('comparison',f'comparison-{eid}', experiment_id=eid,
             title='Независимое сравнение аудиторов',status='incomplete' if missing else 'completed', verification={'status':'passed'},
             verified_by='review.agent_generalization.compare', sample={'families':comparison['families'],
-            'episodes':comparison['episodes'],'repetitions':plan['repetitions'],'note':'Внутренняя открытая проверка, не конкурсный балл.'},
+            'episodes':comparison['episodes'],'repetitions':plan['repetitions'],
+            'split':plan['episodes'][0]['split'] if len({e['split'] for e in plan['episodes']})==1 else None,
+            'note':'Внутренняя открытая проверка, не конкурсный балл.'},
             variants=variants,paired=pairs,missing=missing))
     return {'experiment_id':eid,'attempts':len(rows),'target':str(target)}
 

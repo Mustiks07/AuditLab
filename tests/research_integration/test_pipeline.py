@@ -36,6 +36,10 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual(published['paired'],[])
             self.assertEqual(published['status'],'incomplete')
             self.assertTrue(published['missing'])
+            c['paired_by_family']['direction-control']={'a':'reconcile','b':'empty','difference':.5,'ci95':[.2,.8]}
+            publish(p,base/'run',base/'direction',comparison=c)
+            pair=json.loads((base/'direction/comparison.json').read_text())['paired'][0]
+            self.assertEqual((pair['a'],pair['b'],pair['difference']),('empty','reconcile',.5))
             store=ResearchStore([base/'console']);self.assertEqual(store.incompatible,[])
             view=Projection(store);self.assertEqual(len(view.experiment(p['artifact_id'])['attempts']),4)
             self.assertEqual(len(store.artifacts['comparison']),1)
