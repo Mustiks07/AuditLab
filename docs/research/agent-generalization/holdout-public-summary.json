@@ -1,0 +1,143 @@
+{
+ "schema_version": "1.0",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "5a43c0844047d0982c60551381dc8a70f1ffd8ca",
+ "split": "holdout",
+ "summary": {
+  "families_built": 78,
+  "pending": {
+   "full_omission_allocation": 12,
+   "settlement_at_or_after_boundary": 10
+  },
+  "rejected": [],
+  "clean_kind": {
+   "source_book": 62,
+   "defect_off_episode": 16
+  },
+  "strata": {
+   "partial_allocation": 12,
+   "duplicate_invoice": 12,
+   "fx_conversion": 12,
+   "period_cutoff": 12,
+   "interaction_allocation_fx": 10,
+   "interaction_cutoff_fx": 10,
+   "multi_issue": 10
+  },
+  "validation": {
+   "error": {
+    "passed": 78
+   },
+   "clean": {
+    "passed": 78
+   }
+  },
+  "failed_checks": {},
+  "currencies": {
+   "KZT": 28,
+   "JPY": 14,
+   "KWD": 14,
+   "USD": 11,
+   "EUR": 11
+  },
+  "zones": {
+   "Asia/Almaty": 14,
+   "Europe/Berlin": 22,
+   "America/New_York": 14,
+   "UTC": 14,
+   "Asia/Kathmandu": 14
+  },
+  "sizes": {
+   "200": 18,
+   "400": 18,
+   "800": 14,
+   "1200": 14,
+   "2000": 14
+  },
+  "truth_issues_error_variants": 112,
+  "replaced_before_any_agent_run": 0
+ },
+ "separation": {
+  "families": 78,
+  "whole_history_duplicates": 0,
+  "whole_history_equal_to_other_split": [],
+  "defect_chain_reused": [],
+  "clean_template_chains_shared_with_other_splits": 0
+ },
+ "shortcut_audit": {
+  "ledger_rows": {
+   "perfectly_separates": false,
+   "clean_range": [
+    200,
+    2000
+   ],
+   "error_range": [
+    200,
+    2000
+   ],
+   "clean_distinct": 5,
+   "error_distinct": 5
+  },
+  "document_count": {
+   "perfectly_separates": false,
+   "clean_range": [
+    49,
+    200
+   ],
+   "error_range": [
+    49,
+    200
+   ],
+   "clean_distinct": 10,
+   "error_distinct": 10
+  },
+  "ledger_rows_is_a_size_target": {
+   "perfectly_separates": false,
+   "clean_range": [
+    1,
+    1
+   ],
+   "error_range": [
+    1,
+    1
+   ],
+   "clean_distinct": 1,
+   "error_distinct": 1
+  },
+  "fx_valuation_rows": {
+   "perfectly_separates": false,
+   "clean_range": [
+    9,
+    12
+   ],
+   "error_range": [
+    9,
+    12
+   ],
+   "clean_distinct": 4,
+   "error_distinct": 4
+  },
+  "archive_groups": {
+   "perfectly_separates": false,
+   "clean_range": [
+    6,
+    6
+   ],
+   "error_range": [
+    6,
+    6
+   ],
+   "clean_distinct": 1,
+   "error_distinct": 1
+  }
+ },
+ "commitment": {
+  "file": "holdout-sealed.json (trusted side only)",
+  "sha256": "dcd56b939e6967e199087d1759802e264fc7d4efa4af52f4ad2cf57df959bc65"
+ },
+ "superseded_commitments": [
+  {
+   "sha256": "077b3a19882f7e48df3c5e7e15eed2578cd3eeecf578f38e3a93822072c13de2",
+   "reason": "reviewer size schedule (k // 3) never produced 2000-row companies; rebuilt with new os.urandom seeds before delivery and before any agent run"
+  }
+ ]
+}

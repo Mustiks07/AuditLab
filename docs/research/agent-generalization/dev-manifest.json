@@ -1,0 +1,1307 @@
+{
+ "split": "dev",
+ "families": [
+  {
+   "family_id": "dev-8443763abf",
+   "stratum": "partial_allocation",
+   "seed": 9300,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "53dcdbf76242ad9b583c6baaac92ba56c6cba8e0db34d2e665e39c176b310d2c",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "45ceb8bfb5024b71c94f098e2bfff0403f79fcf3009409bf9d89a35c1db29ddb",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-884e789e91",
+   "stratum": "partial_allocation",
+   "seed": 9301,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "2723a7e8e6e4c0c28b5e1d2b4f0af9b3f8efe00899f5e9a3854ae472b59f728d",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "5613e81ebd06a12cc1f084a7c53cb770d66a47429a814f080efe5c6082d897dc",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-0638892504",
+   "stratum": "partial_allocation",
+   "seed": 9302,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "ddea8a5c9dd181815f01b93e2ca478e7cd154c3d9ad8cfcfbc1f6e4e61b1705d",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "1e996c1b7b459fcf2cc489669f7708d654892d39bffa47ffffdffe86eedccf5d",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-44e081556e",
+   "stratum": "partial_allocation",
+   "seed": 9303,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 1200,
+     "documents_target": 150
+    },
+    "base_currency": "KWD",
+    "currencies": [
+     "KWD",
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "de722cff4a40d43407a20369f06cc07bbd0b091c58e928937a24c7c886697ed5",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "bf92bc10d5859c45d9b1d525cde70384e792cd04a34e85bfc971286e6d39f2d4",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "stratum": "full_omission_allocation",
+   "status": "not_checked",
+   "reason": "generator 1.6 has no documented full-omission setting; waits for #40"
+  },
+  {
+   "stratum": "full_omission_allocation",
+   "status": "not_checked",
+   "reason": "generator 1.6 has no documented full-omission setting; waits for #40"
+  },
+  {
+   "stratum": "full_omission_allocation",
+   "status": "not_checked",
+   "reason": "generator 1.6 has no documented full-omission setting; waits for #40"
+  },
+  {
+   "stratum": "full_omission_allocation",
+   "status": "not_checked",
+   "reason": "generator 1.6 has no documented full-omission setting; waits for #40"
+  },
+  {
+   "family_id": "dev-8d5dd23bf2",
+   "stratum": "duplicate_invoice",
+   "seed": 9304,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 1,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "defect_off_episode",
+    "reason": "source book is smaller than the error variant (row-count shortcut)"
+   },
+   "variants": {
+    "error": {
+     "sha256": "78c923990c68b69feeb4f1de59ca5c5c01369fff3d8dc7cc07267329e999e966",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "5ec621cda83b4f34e9d1e2eaa2dac762c4106203379debfc0552f8ea16906540",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-3c426aafbf",
+   "stratum": "duplicate_invoice",
+   "seed": 9305,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 1,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "defect_off_episode",
+    "reason": "source book is smaller than the error variant (row-count shortcut)"
+   },
+   "variants": {
+    "error": {
+     "sha256": "6ee6d13505e4eb354e32c5246e14a8403aa9ef56f3acf4ec92bf8c91f0f1079a",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "10ee362925f33f29679451f3b2727ea1ffd8c1af0f1715e15601bd6a2b1a991c",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-33cdd76179",
+   "stratum": "duplicate_invoice",
+   "seed": 9306,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 1,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "defect_off_episode",
+    "reason": "source book is smaller than the error variant (row-count shortcut)"
+   },
+   "variants": {
+    "error": {
+     "sha256": "20939f551a65bb465dfe2a24911be3dcd7f629b0fff1021de10d93a9f3551ca0",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "19f5450a35fbf4d03d3f9623d420e8e40a562a1b4945742fccbd8f44d924ebda",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-969d5bc849",
+   "stratum": "duplicate_invoice",
+   "seed": 9307,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 1200,
+     "documents_target": 150
+    },
+    "base_currency": "KWD",
+    "currencies": [
+     "KWD",
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 1,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "defect_off_episode",
+    "reason": "source book is smaller than the error variant (row-count shortcut)"
+   },
+   "variants": {
+    "error": {
+     "sha256": "59f10b79e7d9fbd05f0c654d3e9e789795fb9e1a7a04cdc9c87613c9a5c144fb",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "7204f217c6931fe3e51f1866e8bf8fbcb37cf9475ceaf4d49c71dd55a5194e3d",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-132f6e904a",
+   "stratum": "fx_conversion",
+   "seed": 9308,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "b1ac59d24d80f7839ddc8165383b337594e9e40bea5c1e2fac15276514c6aec8",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "a1a4bdd537b6b98eac09a0e0dc23d7f05e96fece7464349b72c24f936dec44f3",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-717205bc7f",
+   "stratum": "fx_conversion",
+   "seed": 9309,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "be58f45f34c29b0ab29a45a21667742f607e6fd419b22e93af651054647f2852",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "1a5b353e8ac1cdcb501540af3a731a07571b93bcbd8652929550ccc1dad8868e",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-b3ce9f4027",
+   "stratum": "fx_conversion",
+   "seed": 9310,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "f7aa2e21ccb7604c6899c77830c434385260546e83ea84cdbd39a25bea9156e3",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "61dbaf7da4313744882b5d1b47aa0535f7cf654b90352fee35fce7400ef1243f",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-c9ea9e7c6f",
+   "stratum": "fx_conversion",
+   "seed": 9311,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 1200,
+     "documents_target": 150
+    },
+    "base_currency": "KWD",
+    "currencies": [
+     "KWD",
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "a361677159f085112f7f78b20d7ab12bb8bbffb672226c0061d93364f5714119",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "7900ed8a9a04774b2094cb993162751e4efc260dbcfa5e9d8fd8418376c3b1fc",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-ebd412f127",
+   "stratum": "period_cutoff",
+   "seed": 9312,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "184388d26787051eba14afae56632a8c4238b24771bcafa71ea1f513d057d6b8",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "67eafda5b94fce9e7f81785e073af8eb2d99bb13f7fc40f2cd645b11b47f5eea",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-ebc643b3a5",
+   "stratum": "period_cutoff",
+   "seed": 9313,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "f93e81b1d434fd727c7069da0b39e53f04d5c5fe87e1eca348a3be45460357f4",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "0577f945f17a7d7eefe189c2bd6a4bf40c3750898e24f2aec2df4eaa4a778a8c",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-a5c7586b7f",
+   "stratum": "period_cutoff",
+   "seed": 9314,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "2180c5814bf785b4cf6294262785ca806a688a7d959b1af32a44e8369ac794d0",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "e2383f1a07efe35b90c675a000bef9e5a5806a7a880a61370a512f699dcc3c0f",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-527fda157e",
+   "stratum": "period_cutoff",
+   "seed": 9315,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 1200,
+     "documents_target": 150
+    },
+    "base_currency": "KWD",
+    "currencies": [
+     "KWD",
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 0,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "8436c8968e13bd00364f3f412ce68e29254e9e92d90654e9e57eb7139b80e14c",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 1
+    },
+    "clean": {
+     "sha256": "b543900aa8d12bea7cd1455dba58780981a49ef6a984f7e060f0df6f67b0fbe0",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-38a8a3d768",
+   "stratum": "interaction_allocation_fx",
+   "seed": 9316,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": "allocation_fx_same_payment",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "5aff3f22c61777b3e415f41c1d0134f5426476758e7edb1692568762e57fee85",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "735c74ddb9690a0627ce888ea5ec7cecd1400d5de36699dc5d309aa672c401bd",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-5076c7de3c",
+   "stratum": "interaction_allocation_fx",
+   "seed": 9317,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": "allocation_fx_same_payment",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "ea3d7bdcb723726a51243fde2ba21340dff30f580b15d748137f5c6bbe4de56f",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "d0741bc63a8c5e0a0e373f9ce2e9ce1e4d4b16d9c9893b1b0b6f94c1c35721be",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-95247ada49",
+   "stratum": "interaction_allocation_fx",
+   "seed": 9318,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": "allocation_fx_same_payment",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "d5c33358b97925de393797ccdc8b1ea194fb4be4cbb64625b406ec56df7e40d6",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "8eb467866b40f663c03a85f659f1300223bd5788033be0977019d078d5066d94",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-318ab1cb8e",
+   "stratum": "interaction_cutoff_fx",
+   "seed": 9319,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": "cutoff_fx_same_invoice",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "cdeda876ff38eb25c98017d6ae27df71279ef6ba453a1e5bb80e7a9a34623cd9",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "190869690fd505d69ce79f5ef0e684a256c3f594874e6fd86a93d50e48bbddbb",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-e5f957560a",
+   "stratum": "interaction_cutoff_fx",
+   "seed": 9320,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": "cutoff_fx_same_invoice",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "5f42b78ef168ab259b9d5aa69c9a11df121bdc8e1874c134b6ca7b51b2785132",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "9f500c5a5220422328374f6946833a811fe7b34c9665b2dbdb07f103e29d8d52",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-a879f98b2a",
+   "stratum": "interaction_cutoff_fx",
+   "seed": 9321,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": "cutoff_fx_same_invoice",
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "025b5bbb216f08cf50c47df2c021e9ffb5298a2c3234d7befb9f934609d501c9",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "ca8299ce6e25f88d3ae6b2849a5fb531521194b3fffd70603beb009412e9715c",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-2f6a1b6f56",
+   "stratum": "multi_issue",
+   "seed": 9322,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 200,
+     "documents_target": 40
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 1,
+     "fx_conversion": 1,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "62a4cd62d2a22fa3f49d477ee9449977cdae6b7ca029a8dd45fc4da11b94579b",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "99c5f42c4833133735ac40aec8291471b1cb52cb3bbfc66264d52e47e15760e1",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-944854c2ee",
+   "stratum": "multi_issue",
+   "seed": 9323,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 400,
+     "documents_target": 65
+    },
+    "base_currency": "KZT",
+    "currencies": [
+     "KZT",
+     "JPY",
+     "KWD"
+    ],
+    "timezone": "Asia/Almaty",
+    "target_period": "2026-11",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 1,
+     "payment_allocation": 1,
+     "fx_conversion": 0,
+     "period_cutoff": 0
+    }
+   },
+   "clean_kind": {
+    "kind": "defect_off_episode",
+    "reason": "source book is smaller than the error variant (row-count shortcut)"
+   },
+   "variants": {
+    "error": {
+     "sha256": "66232c781f215e00d595bce04456912477c9f7dc39465581cc690c92035305c5",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "a78a11d55411e431187d27371ec8345c1c712c6ba289d4045f7c0f8dcd25d972",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "family_id": "dev-76cf2aaa3d",
+   "stratum": "multi_issue",
+   "seed": 9324,
+   "config": {
+    "config_version": "1.1",
+    "company_size": {
+     "ledger_rows_target": 800,
+     "documents_target": 100
+    },
+    "base_currency": "JPY",
+    "currencies": [
+     "JPY",
+     "USD"
+    ],
+    "timezone": "Europe/Berlin",
+    "target_period": "2026-10",
+    "interaction": null,
+    "clean_distractors": [
+     "split_payment",
+     "equal_amount_different_supplier",
+     "refund",
+     "archive_copy",
+     "next_day_settlement"
+    ],
+    "issue_counts": {
+     "duplicate_invoice": 0,
+     "payment_allocation": 0,
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "clean_kind": {
+    "kind": "source_book"
+   },
+   "variants": {
+    "error": {
+     "sha256": "d6fc4da8fa38ae17d8aa887997ddabcd644c98f7bc2195a5a098a4d133527604",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 2
+    },
+    "clean": {
+     "sha256": "eea2458c9d137a24792ef9a09e3446ef9d29473ca33f46ca85b42e09f2d3c7ae",
+     "validation": "passed",
+     "failed_checks": [],
+     "truth_issues": 0
+    }
+   }
+  },
+  {
+   "stratum": "settlement_at_or_after_boundary",
+   "status": "not_checked",
+   "reason": "fixed template chain shared with published train; waits for a randomized boundary history"
+  },
+  {
+   "stratum": "settlement_at_or_after_boundary",
+   "status": "not_checked",
+   "reason": "fixed template chain shared with published train; waits for a randomized boundary history"
+  },
+  {
+   "stratum": "settlement_at_or_after_boundary",
+   "status": "not_checked",
+   "reason": "fixed template chain shared with published train; waits for a randomized boundary history"
+  }
+ ],
+ "replaced_before_any_agent_run": []
+}
