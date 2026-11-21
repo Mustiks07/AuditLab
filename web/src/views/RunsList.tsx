@@ -48,12 +48,15 @@ export function RunsList() {
         const rs = [...unordered].sort((a, b) => rank(a).localeCompare(rank(b)) || a.run_id.localeCompare(b.run_id));
         return (
           <div className="pair-hint" key={pid}>
-            Контрольная пара <b>{pid}</b>: A = {rs[0].company ?? rs[0].episode_id}, B = {rs[1].company ?? rs[1].episode_id};
-            компании отличаются одним фактом.
+            <span className="pair-text">
+              Контрольная пара <b className="nowrap">{pid}</b>: A = {rs[0].company ?? rs[0].episode_id}, B = {rs[1].company ?? rs[1].episode_id};
+              компании отличаются одним фактом.
+            </span>
             <a className="btn btn-small" href={`#/compare/${rs[0].run_id}/${rs[1].run_id}`}>Сравнить пару (B − A)</a>
           </div>
         );
       })}
+      <div className="table-wrap">
       <table className="runs-table">
         <thead>
           <tr>
@@ -93,6 +96,7 @@ export function RunsList() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

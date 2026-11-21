@@ -285,6 +285,9 @@ function ScoreBlock({ detail }: { detail: RunDetail }) {
         <div><span>награда</span><b>{reward(s.reward)}</b></div>
       </div>
       <div className="small muted mono">clip(2×F1 − 1 − 0.002×{s.inspection_steps}, −1, 1) = {s.reward}</div>
+      {s.tp === 0 && s.fp === 0 && s.fn === 0 && (
+        <div className="small muted">F1 = 1 по правилу SPEC §9: в эталоне нет ошибок и аудитор не заявил ни одной.</div>
+      )}
     </div>
   );
 }

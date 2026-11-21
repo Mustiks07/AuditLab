@@ -24,3 +24,9 @@ test('minor units keep the same minus sign and grouping as money()', async () =>
   assert.match(opError('unsupported_counterfactual', 'Payment-date changes must stay inside the same target period'), /другой отчётный период.*\[unsupported_counterfactual: Payment-date/);
   assert.match(opError('something_new', undefined), /операция не выполнена \[something_new\]/);
 });
+
+test('API lookup errors of the console are explained in Russian with the original code', async () => {
+  const { opError } = await import('data:text/javascript;base64,' + Buffer.from(emitted).toString('base64'));
+  assert.match(opError('not_found', 'No open completed run with this id.'), /такого открытого завершённого прогона нет.*\[not_found: No open/);
+  assert.match(opError('refused', 'closed'), /закрытый режим/);
+});
