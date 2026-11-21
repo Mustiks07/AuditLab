@@ -1,0 +1,847 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "flag_all",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "flag_all--e3ac1568c369cb49",
+  "attempt_id": "flag_all--e3ac1568c369cb49",
+  "budget_usd": null,
+  "episode": {
+    "episode_ref": "datasets/open/dev/E15BFA18342414E20C536E2F217B94A1A",
+    "episode_sha256": "2e571d7513a8a5d2846bb2fdbf64298ad8fa46e1c8fe3e5012357753c7a3d985",
+    "family_id": "E15BFA18342414E20C536E2F217B94A1A",
+    "split": "dev"
+  },
+  "evaluation_ref": "trusted\\flag_all--e3ac1568c369cb49\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+        "findings": [
+          {
+            "affected_ids": [
+              "payment/P8C546BE8DF8FECBC2BE91E7C",
+              "invoice/IB8D4F6C8797E443816966AD3"
+            ],
+            "claimed_amount_minor": 6800000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D000F891D6E44A6835CCD8163"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PA450A933ECE1D262372A8226",
+              "invoice/I3F8B3F971D8A15A0E2A5F5B8"
+            ],
+            "claimed_amount_minor": 5200000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D053B5A37A4EDB5EEEC174708"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P924F66DF91399F073D3B96A1",
+              "invoice/I7A511D6DD2D7BB0F074D7FD7"
+            ],
+            "claimed_amount_minor": 8160000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D066234D8BAB159A61A07636C"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P708A2CC7872CDDF3A0CB25F5",
+              "invoice/I8A5BD1424E59BA8BB57B6563"
+            ],
+            "claimed_amount_minor": 480000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D13005862DB18C63FF601BB2D"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P8FCB4161AEA3BE8DFB417445",
+              "invoice/IBF89EC46183C999B9379A1DA"
+            ],
+            "claimed_amount_minor": 6100000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D177B3735A18ECD74890480A5"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P9EBD14A9BF33D6CC3DC7685C",
+              "invoice/IEC4D151089AAFC24817751A2"
+            ],
+            "claimed_amount_minor": 9300000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D1D70CCCCB8E777B23235EC2B"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PCD46F02461CEAAFEA72BD79A",
+              "invoice/I1518C9833B79D731F140FAA3"
+            ],
+            "claimed_amount_minor": 12400000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D1E0742829EEAEEAFD7A97469"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P407CE5632B72D7EC6E964CAD",
+              "invoice/IADB2B90BFD7551718A47DC6E"
+            ],
+            "claimed_amount_minor": 5640000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D208C6AA26B1B4FA33686607A"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P43B33360D0A7D3337EC5FDD3",
+              "invoice/I7A511D6DD2D7BB0F074D7FD7"
+            ],
+            "claimed_amount_minor": 5440000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D27DC3E417289A51E045C5747"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PED1D66921F05650D55D9DBDD",
+              "invoice/I0AB14AF92831937AD6E861A8"
+            ],
+            "claimed_amount_minor": 6900000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D2F92F462139D27758C917F3A"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PC96567076A74509EAFD989D6",
+              "invoice/I0377BAEE6B1FCA2737B70B38"
+            ],
+            "claimed_amount_minor": 8580000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D341D048FCF58D25BD867A9D9"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PFDF529C7BA920E2A82968D2C",
+              "invoice/I5199B439CA50C65632492322"
+            ],
+            "claimed_amount_minor": 1700000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D39606F82FF90BCD8DB9A0225"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PF5F18A66CD61E0EC3670C8B2",
+              "invoice/I759E4F30162BF96ED3C7F9DF"
+            ],
+            "claimed_amount_minor": 14500000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D3D5B6DFCC0E78857AB721E1D"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PE40BDECC3CDE9009A6F80B8A",
+              "invoice/ID5AC915D8A9B702E8828855B"
+            ],
+            "claimed_amount_minor": 2900000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D3E29D48508357AA18EE2EE3A"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P433A365049776664EA8B9017",
+              "invoice/IF87E219E0F782F00D2601AF4"
+            ],
+            "claimed_amount_minor": 5580000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D452912E4A641ED5E5D74A417"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P1ABF37CEE8E41754EDA0DCB1",
+              "invoice/I70DA51E4EFE80A9215EBC88F"
+            ],
+            "claimed_amount_minor": 2360000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D4BF56CB7199B3B573B21E9A1"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PEAC485501DC0B705F9CF3970",
+              "invoice/IADB2B90BFD7551718A47DC6E"
+            ],
+            "claimed_amount_minor": 8460000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D508ECAD85BCE1D15E7257414"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PCC9548AE5A8DFF50AA10327B",
+              "invoice/I9AF69408D671B3F5EA31893A"
+            ],
+            "claimed_amount_minor": 9200000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D547BABD85E74E10EE0B44F6A"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PF96042A9EB21DD902B5592F2",
+              "invoice/I1A4EF850E57FF9514CB81FAB"
+            ],
+            "claimed_amount_minor": 6400000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D5C3AD788182221DF0277BCAE"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P0E0C70B06636CAE0D74ADFA4",
+              "invoice/I3EDF5216DE44CCF6E7E21CCA"
+            ],
+            "claimed_amount_minor": 7140000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D62721D760076B5B2D25D5B6D"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PC03F9CDB42C213AD8EC0D921",
+              "invoice/I0377BAEE6B1FCA2737B70B38"
+            ],
+            "claimed_amount_minor": 5720000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D63C821330D38388B39280A71"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PDAAC0A2B8B20EAD9A6263196",
+              "invoice/I295A73B9E16D403D5D08DEDD"
+            ],
+            "claimed_amount_minor": 1380000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D66AA8A6D81287C0BE5D7903F"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P5B238AD995407F1521F7E494"
+            ],
+            "claimed_amount_minor": 600000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D69F7E983CFFB813B8BBA40D4"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PB77D9C559CB51D6966F9FB81",
+              "invoice/I2574721FCA147E96B8B5000E"
+            ],
+            "claimed_amount_minor": 1320000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D6CA872935F2A6D629498E790"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P788D4C994979346C96CA1902",
+              "invoice/I77951C8725CDC8B19EF4277D"
+            ],
+            "claimed_amount_minor": 3040000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D7DC74DD9C84C2EF4BA71FD9E"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P85B5BDA02E5125CF6E6BF4CB",
+              "invoice/I2574721FCA147E96B8B5000E"
+            ],
+            "claimed_amount_minor": 880000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D80D3099D2FE99FAC647EEFEB"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P047906EB11C0E391B5ADB451",
+              "invoice/IC629FED33A4289AEE104ACD7"
+            ],
+            "claimed_amount_minor": 12800000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D83962C772C4DAE6520E8C5CA"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PAFB4B1D85983240CB67C7D23",
+              "invoice/IC1C3ABCBDCEE2929BA498E10"
+            ],
+            "claimed_amount_minor": 8100000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/D944230A282F3C928D93CBFC2"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/PBA2ABB92E04F34FB811C3E0B",
+              "invoice/I43D173F44C9BDBC531CD2255"
+            ],
+            "claimed_amount_minor": 13300000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/DACCCCAF4C499384026BA1C67"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          },
+          {
+            "affected_ids": [
+              "payment/P2FB4D9707C3436A7DB51D7C3",
+              "invoice/I579F67315DDEAD900F00CF6F"
+            ],
+            "claimed_amount_minor": 6600000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/DAE28A044BFB6E9272A8D233B"
+            ],
+            "explanation": "Possible unapplied payment based on its stated amount.",
+            "type": "payment_allocation"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E15BFA18342414E20C536E2F217B94A1A",
+    "findings": [
+      {
+        "affected_ids": [
+          "payment/P8C546BE8DF8FECBC2BE91E7C",
+          "invoice/IB8D4F6C8797E443816966AD3"
+        ],
+        "claimed_amount_minor": 6800000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D000F891D6E44A6835CCD8163"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PA450A933ECE1D262372A8226",
+          "invoice/I3F8B3F971D8A15A0E2A5F5B8"
+        ],
+        "claimed_amount_minor": 5200000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D053B5A37A4EDB5EEEC174708"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P924F66DF91399F073D3B96A1",
+          "invoice/I7A511D6DD2D7BB0F074D7FD7"
+        ],
+        "claimed_amount_minor": 8160000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D066234D8BAB159A61A07636C"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P708A2CC7872CDDF3A0CB25F5",
+          "invoice/I8A5BD1424E59BA8BB57B6563"
+        ],
+        "claimed_amount_minor": 480000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D13005862DB18C63FF601BB2D"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P8FCB4161AEA3BE8DFB417445",
+          "invoice/IBF89EC46183C999B9379A1DA"
+        ],
+        "claimed_amount_minor": 6100000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D177B3735A18ECD74890480A5"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P9EBD14A9BF33D6CC3DC7685C",
+          "invoice/IEC4D151089AAFC24817751A2"
+        ],
+        "claimed_amount_minor": 9300000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D1D70CCCCB8E777B23235EC2B"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PCD46F02461CEAAFEA72BD79A",
+          "invoice/I1518C9833B79D731F140FAA3"
+        ],
+        "claimed_amount_minor": 12400000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D1E0742829EEAEEAFD7A97469"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P407CE5632B72D7EC6E964CAD",
+          "invoice/IADB2B90BFD7551718A47DC6E"
+        ],
+        "claimed_amount_minor": 5640000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D208C6AA26B1B4FA33686607A"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P43B33360D0A7D3337EC5FDD3",
+          "invoice/I7A511D6DD2D7BB0F074D7FD7"
+        ],
+        "claimed_amount_minor": 5440000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D27DC3E417289A51E045C5747"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PED1D66921F05650D55D9DBDD",
+          "invoice/I0AB14AF92831937AD6E861A8"
+        ],
+        "claimed_amount_minor": 6900000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D2F92F462139D27758C917F3A"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PC96567076A74509EAFD989D6",
+          "invoice/I0377BAEE6B1FCA2737B70B38"
+        ],
+        "claimed_amount_minor": 8580000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D341D048FCF58D25BD867A9D9"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PFDF529C7BA920E2A82968D2C",
+          "invoice/I5199B439CA50C65632492322"
+        ],
+        "claimed_amount_minor": 1700000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D39606F82FF90BCD8DB9A0225"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PF5F18A66CD61E0EC3670C8B2",
+          "invoice/I759E4F30162BF96ED3C7F9DF"
+        ],
+        "claimed_amount_minor": 14500000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D3D5B6DFCC0E78857AB721E1D"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PE40BDECC3CDE9009A6F80B8A",
+          "invoice/ID5AC915D8A9B702E8828855B"
+        ],
+        "claimed_amount_minor": 2900000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D3E29D48508357AA18EE2EE3A"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P433A365049776664EA8B9017",
+          "invoice/IF87E219E0F782F00D2601AF4"
+        ],
+        "claimed_amount_minor": 5580000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D452912E4A641ED5E5D74A417"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P1ABF37CEE8E41754EDA0DCB1",
+          "invoice/I70DA51E4EFE80A9215EBC88F"
+        ],
+        "claimed_amount_minor": 2360000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D4BF56CB7199B3B573B21E9A1"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PEAC485501DC0B705F9CF3970",
+          "invoice/IADB2B90BFD7551718A47DC6E"
+        ],
+        "claimed_amount_minor": 8460000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D508ECAD85BCE1D15E7257414"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PCC9548AE5A8DFF50AA10327B",
+          "invoice/I9AF69408D671B3F5EA31893A"
+        ],
+        "claimed_amount_minor": 9200000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D547BABD85E74E10EE0B44F6A"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PF96042A9EB21DD902B5592F2",
+          "invoice/I1A4EF850E57FF9514CB81FAB"
+        ],
+        "claimed_amount_minor": 6400000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D5C3AD788182221DF0277BCAE"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P0E0C70B06636CAE0D74ADFA4",
+          "invoice/I3EDF5216DE44CCF6E7E21CCA"
+        ],
+        "claimed_amount_minor": 7140000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D62721D760076B5B2D25D5B6D"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PC03F9CDB42C213AD8EC0D921",
+          "invoice/I0377BAEE6B1FCA2737B70B38"
+        ],
+        "claimed_amount_minor": 5720000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D63C821330D38388B39280A71"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PDAAC0A2B8B20EAD9A6263196",
+          "invoice/I295A73B9E16D403D5D08DEDD"
+        ],
+        "claimed_amount_minor": 1380000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D66AA8A6D81287C0BE5D7903F"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P5B238AD995407F1521F7E494"
+        ],
+        "claimed_amount_minor": 600000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D69F7E983CFFB813B8BBA40D4"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PB77D9C559CB51D6966F9FB81",
+          "invoice/I2574721FCA147E96B8B5000E"
+        ],
+        "claimed_amount_minor": 1320000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D6CA872935F2A6D629498E790"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P788D4C994979346C96CA1902",
+          "invoice/I77951C8725CDC8B19EF4277D"
+        ],
+        "claimed_amount_minor": 3040000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D7DC74DD9C84C2EF4BA71FD9E"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P85B5BDA02E5125CF6E6BF4CB",
+          "invoice/I2574721FCA147E96B8B5000E"
+        ],
+        "claimed_amount_minor": 880000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D80D3099D2FE99FAC647EEFEB"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P047906EB11C0E391B5ADB451",
+          "invoice/IC629FED33A4289AEE104ACD7"
+        ],
+        "claimed_amount_minor": 12800000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D83962C772C4DAE6520E8C5CA"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PAFB4B1D85983240CB67C7D23",
+          "invoice/IC1C3ABCBDCEE2929BA498E10"
+        ],
+        "claimed_amount_minor": 8100000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/D944230A282F3C928D93CBFC2"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/PBA2ABB92E04F34FB811C3E0B",
+          "invoice/I43D173F44C9BDBC531CD2255"
+        ],
+        "claimed_amount_minor": 13300000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DACCCCAF4C499384026BA1C67"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      },
+      {
+        "affected_ids": [
+          "payment/P2FB4D9707C3436A7DB51D7C3",
+          "invoice/I579F67315DDEAD900F00CF6F"
+        ],
+        "claimed_amount_minor": 6600000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DAE28A044BFB6E9272A8D233B"
+        ],
+        "explanation": "Possible unapplied payment based on its stated amount.",
+        "type": "payment_allocation"
+      }
+    ]
+  },
+  "finished_at": "2026-11-21T11:17:54.790481+00:00",
+  "inspection_steps": 2,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:17:54.351796+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "cost_usd": 0.0,
+    "environment_actions": 3,
+    "inspection_steps": 2,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.438
+  },
+  "variant": "flag_all"
+}

@@ -1,0 +1,15 @@
+{
+  "plan_sha256": "53e0ff3960a42e102e9ad5189fc140ae1df6eb2b90badfef42aa926034366365",
+  "protocol_id": "genesis-official-60s",
+  "attempts": 60,
+  "paid_attempts": 60,
+  "worst_case_usd": null,
+  "max_usd_total": null,
+  "missing_conditions": [
+    "arm claude-tools: secret variable ANTHROPIC_API_KEY must be set in the controller environment (checked at run time, never stored)",
+    "arm claude-memory: secret variable ANTHROPIC_API_KEY must be set in the controller environment (checked at run time, never stored)",
+    "budget.max_usd_total must be a positive spend limit",
+    "budget.max_usd_per_attempt must be positive"
+  ],
+  "network_calls": 0
+}

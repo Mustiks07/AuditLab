@@ -27,13 +27,15 @@ def random_stream(seed, domain):
 
 
 class Company:
-    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents, *, config_version="1.0"):
+    def __init__(self, seed, period_start, period_end, zone, base_currency, exponents, *,
+                 config_version="1.0", allocation_mode="partial"):
         self.period_start = period_start
         self.period_end = period_end
         self.zone = zone
         self.base_currency = base_currency
         self.exponents = exponents
         self.config_version = config_version
+        self.allocation_mode = allocation_mode
         self.money_currency = next((c for c in exponents if c != base_currency), base_currency)
         self.events_rng = random_stream(seed, "events")
         self._scenario_seed = seed
@@ -199,6 +201,9 @@ class Company:
 
     def allocation_case(self, *, enabled=True):
         _, day, hour, minute = self.case_parameters("allocation", 50_000, day=11, hour=10)
+        if self.allocation_mode == "omitted":
+            # Leave room for the scheduled application even in the shortest month.
+            day = 2 + (day - 2) % 13
         receipt_at = self.period_start + timedelta(days=day, hours=hour, minutes=minute)
         scale = 10 ** self.exponents[self.base_currency]
         amount = self.events_rng.randrange(350, 900) * 100 * scale
@@ -227,14 +232,21 @@ class Company:
                             "amount_minor": amount, "receipt_at": receipt_at.isoformat(),
                             "settled_at": settled_at.isoformat()})
         if enabled:
-            applied = amount * 3 // 5
-            self.defer_posting_changes(posting, timestamp=settled_at, amount=applied)
+            omitted = self.allocation_mode == "omitted"
+            if omitted:
+                for row in posting:
+                    self._planned_rows[row["row_id"]] = ()
+                applied = 0
+            else:
+                applied = amount * 3 // 5
+                self.defer_posting_changes(posting, timestamp=settled_at, amount=applied)
             self.mutations.append({
                 "type": "payment_allocation", "affected_ids": affected,
                 "before": {"settled_at": settled_at.isoformat(), "applied_minor": amount},
-                "after": {"settled_at": settled_at.isoformat(), "applied_minor": applied,
+                "after": {"settled_at": None if omitted else settled_at.isoformat(), "applied_minor": applied,
                           "remaining_minor": amount - applied},
-                "effect": "The settlement posted less than the designated payment.",
+                "effect": ("The designated payment was never applied." if omitted
+                           else "The settlement posted less than the designated payment."),
             })
 
     def close_settlement_indexes(self):

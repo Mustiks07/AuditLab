@@ -1,0 +1,95 @@
+{
+ "base": "http://127.0.0.1:8795",
+ "checks": [
+  "full research path on desktop with real amounts and exact evidence",
+  "operational states: stopped by budget, failed attempts, unavailable model, not found",
+  "network failure, server error, timeout and stale data",
+  "empty research data and long names on a phone",
+  "connected controller: refusals, accepted start and live label (intercepted)",
+  "keyboard, focus and reduced motion",
+  "originals unchanged and no external requests"
+ ],
+ "screens": [
+  {
+   "name": "home-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "experiment-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "failure-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "reduction-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "curriculum-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "comparison-1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "budget-1280",
+   "window": 1280,
+   "body": 1280
+  },
+  {
+   "name": "failure-1280",
+   "window": 1280,
+   "body": 1280
+  },
+  {
+   "name": "empty-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "long-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "research-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "research-reduction-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "research-comparison-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "research-curriculum-390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "failure-320",
+   "window": 320,
+   "body": 320
+  }
+ ],
+ "external": [],
+ "errors": [],
+ "original_public_sha256": {
+  "before": "2a72114253bab4ec75e09dc48c8b7d40a8ddc09f626f5334cf26063166ff2568",
+  "after": "2a72114253bab4ec75e09dc48c8b7d40a8ddc09f626f5334cf26063166ff2568"
+ }
+}

@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent
 SUITES = ("foundation", "integration", "simulator", "evaluator", "runner",
           "verifier", "metamorphic", "demo")
+RESEARCH_SUITES = ("genesis_acceptance", "research_agents", "research_training",
+                   "research_acceptance", "curriculum", "research_integration")
 from auditlab.release.acceptance import GROUPS, matrix as acceptance_matrix
 LABELS = {"passed": "пройдено", "failed": "провалено", "not_checked": "не проверено"}
 
@@ -187,7 +189,7 @@ def verify(args):
                                "cpu_limit": None, "release_size_bytes": None}}
     write_json(output / "report.json", report)
     started = time.monotonic()
-    for name in SUITES:
+    for name in SUITES + (RESEARCH_SUITES if getattr(args, "include_research", False) else ()):
         check = run_suite(ROOT, name, output, args.timeout)
         check.update(evidence_revision=report["commit"], evidence_run_id=report["run_id"])
         report["checks"].append(check)
@@ -232,6 +234,7 @@ def main():
     command = commands.add_parser("verify", help="Run available checks and report missing components")
     command.add_argument("--suite", choices=("quick", "rehearsal"), default="quick")
     command.add_argument("--require-complete", action="store_true")
+    command.add_argument("--include-research", action="store_true", help="Include optional research and independent acceptance tests")
     command.add_argument("--output", type=Path, default=ROOT / "artifacts" / ("verify-" + uuid.uuid4().hex))
     command.add_argument("--timeout", type=float, default=180)
     command.add_argument("--policy-image", default=os.environ.get("AUDITLAB_POLICY_IMAGE"),

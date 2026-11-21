@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "baselines-open-dev-2026-11-21",
+  "protocol_id": "genesis-official-60s",
+  "purpose": "selection",
+  "episodes": [
+    {
+      "episode_ref": "datasets/open/dev/E15BFA18342414E20C536E2F217B94A1A",
+      "family_id": "E15BFA18342414E20C536E2F217B94A1A",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+      "family_id": "E1ADBA2ED9E09A7CE01C5B3A8D7CBE13E",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E2C25779161020D87EF54FE3600D099E4",
+      "family_id": "E2C25779161020D87EF54FE3600D099E4",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E406D4C3A8F0D3286AC70149C9F0E1CF9",
+      "family_id": "E406D4C3A8F0D3286AC70149C9F0E1CF9",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E4C30409A2F4E6DFE858E8FF06B8C4436",
+      "family_id": "E4C30409A2F4E6DFE858E8FF06B8C4436",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E509506A67D640282D2FD1D8B154EF4EC",
+      "family_id": "E509506A67D640282D2FD1D8B154EF4EC",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/E7C2CB988BDE6605CEFB48E231F21DFD7",
+      "family_id": "E7C2CB988BDE6605CEFB48E231F21DFD7",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/EAA9D228EE94081E1C02F82DEDCCA190B",
+      "family_id": "EAA9D228EE94081E1C02F82DEDCCA190B",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/EC3F05E92121031C312CBEFA265787AC6",
+      "family_id": "EC3F05E92121031C312CBEFA265787AC6",
+      "split": "dev"
+    },
+    {
+      "episode_ref": "datasets/open/dev/EDA0C3DF206AB95B8490EEFD58F3B292F",
+      "family_id": "EDA0C3DF206AB95B8490EEFD58F3B292F",
+      "split": "dev"
+    }
+  ],
+  "arms": [
+    {
+      "name": "empty",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "empty"
+      }
+    },
+    {
+      "name": "flag_all",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "flag_all"
+      }
+    },
+    {
+      "name": "random",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "random",
+        "seed": 1
+      }
+    },
+    {
+      "name": "reconcile",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "reconcile"
+      }
+    }
+  ],
+  "repetitions": 1,
+  "transport": "in_process",
+  "budget": {},
+  "analysis": {
+    "pairs": [
+      [
+        "reconcile",
+        "empty"
+      ],
+      [
+        "reconcile",
+        "flag_all"
+      ],
+      [
+        "random",
+        "empty"
+      ]
+    ],
+    "bootstrap": 10000,
+    "seed": 20261121
+  },
+  "env_seed": 0,
+  "note": "family_id defaults to the episode id; the independent protocol supplies real economic families."
+}

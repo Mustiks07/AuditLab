@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Mustiks07/AuditLab/schemas/research/comparison-1.0.json",
+  "title": "AuditLab public research comparison",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "artifact_kind",
+    "artifact_id",
+    "source_sha",
+    "protocol_id",
+    "provenance",
+    "experiment_id",
+    "status",
+    "verification",
+    "variants"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "artifact_kind": {
+      "const": "comparison"
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,95}$"
+    },
+    "source_sha": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "measured",
+            "test_double",
+            "dev_fixture"
+          ]
+        }
+      }
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "verification": {
+      "type": "object"
+    },
+    "variants": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,6 @@
+# LLM network bridge dependencies (Python 3.11.14).
+# Pinned input. Regenerate the committed hash lock after an intentional dependency update:
+#   uv pip compile docker/bridge/requirements.in --python-version 3.11.14 --generate-hashes --output-file docker/bridge/requirements.lock
+# (the command documented in docs/TEAM.md) and puts the matching wheels in docker/wheels/bridge/.
+# CI downloads these locked wheels and builds the bridge without network access.
+anthropic==2.12.0

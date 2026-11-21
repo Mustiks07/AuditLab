@@ -253,6 +253,17 @@ class GenesisEnvironment:
         observation, reward, terminated, truncated, info = self._env.expire()
         return self._observation(observation, "", False), reward, terminated, truncated, info
 
+    def abort(self, reason: str) -> tuple[dict, float, bool, bool, dict]:
+        """The judge's driver ends an episode whose policy crashed or broke its channel.
+
+        Recorded as policy_failure (or as a timeout once the deadline has passed), never as an
+        auditor's financial answer. Used by research controllers for provider/bridge failures.
+        """
+        if self._env is None:
+            raise AdapterError("no episode")
+        observation, reward, terminated, truncated, info = self._env.abort(str(reason)[:200])
+        return self._observation(observation, "", False), reward, terminated, truncated, info
+
     def seconds_left(self) -> float:
         return self._env.seconds_left() if self._env is not None else 0.0
 

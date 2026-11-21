@@ -50,7 +50,7 @@ def capture(repo, event, event_name):
             "parents": parents, "dirty": False}
 
 
-def validate(context, report, expected_head, expected_base=None):
+def validate(context, report, expected_head, expected_base=None, include_research=False):
     failures = []
     def require(condition, reason):
         if not condition:
@@ -78,8 +78,9 @@ def validate(context, report, expected_head, expected_base=None):
     require(isinstance(rows, list), "invalid suite list")
     if not isinstance(rows, list):
         rows = []
-    require(len(rows) == len(SUITES) and all(isinstance(row, dict) for row in rows) and
-            {row.get("id") for row in rows if isinstance(row, dict)} == SUITES,
+    expected_suites = SUITES | ({"genesis_acceptance", "research_agents", "research_training", "research_acceptance", "curriculum", "research_integration"} if include_research else set())
+    require(len(rows) == len(expected_suites) and all(isinstance(row, dict) for row in rows) and
+            {row.get("id") for row in rows if isinstance(row, dict)} == expected_suites,
             "functional suite coverage differs")
     count = 0
     for row in rows:
@@ -115,6 +116,7 @@ def main(argv=None):
     verify.add_argument("--report", type=Path, required=True)
     verify.add_argument("--expected-head", required=True)
     verify.add_argument("--expected-base")
+    verify.add_argument("--include-research", action="store_true")
     verify.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
@@ -122,7 +124,7 @@ def main(argv=None):
             result = capture(args.repo, json.loads(args.event.read_text()), args.event_name)
         else:
             result = validate(json.loads(args.context.read_text()), json.loads(args.report.read_text()),
-                              args.expected_head, args.expected_base or None)
+                              args.expected_head, args.expected_base or None, include_research=args.include_research)
             result["report_sha256"] = hashlib.sha256(args.report.read_bytes()).hexdigest()
     except (OSError, ValueError, KeyError, TypeError, AttributeError, subprocess.SubprocessError) as error:
         result = {"status": "failed", "exit_code": 1, "failures": [str(error)]}

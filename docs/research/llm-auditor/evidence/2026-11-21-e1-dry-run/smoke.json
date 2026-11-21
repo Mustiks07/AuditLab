@@ -1,0 +1,9 @@
+{
+  "status": "not_checked",
+  "missing_conditions": [
+    "the 'anthropic' SDK is not installed in the bridge environment",
+    "secret environment variable ANTHROPIC_API_KEY is not set (value never printed)"
+  ],
+  "network_calls": 0
+}
+exit=2

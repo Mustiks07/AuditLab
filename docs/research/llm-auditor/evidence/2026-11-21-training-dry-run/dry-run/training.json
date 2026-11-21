@@ -1,0 +1,196 @@
+{
+  "artifact_id": "training-d21309b10b88458fa105ad94895a342b",
+  "base_model": "Qwen/Qwen2.5-7B-Instruct",
+  "budget": {
+    "actual_basis": null,
+    "actual_unavailable_reason": "no trained_tokens reported yet",
+    "actual_usd": null,
+    "billable_tokens_estimate": 110360,
+    "budget_usd": null,
+    "estimate_method": "tokens: (train + validation chars/3) x n_epochs; local GPU compute is not priced here (record GPU hours separately)",
+    "estimated_usd": null,
+    "n_epochs": 2,
+    "price_per_million_training_tokens": null,
+    "train_tokens_estimate": 55180,
+    "validation_tokens_estimate": 0
+  },
+  "checkpoint_id": null,
+  "checkpoints": [],
+  "claimed_as": "training",
+  "config_sha256": "6b889e1bbdb64bd13b12b9690416b9b1755d68c3912f83935e75be996794ad2d",
+  "curriculum": {
+    "artifact_id": "published-train-2026-11-21",
+    "kind": "published_train",
+    "ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/curriculum.json",
+    "sha256": "a3d41d77e3a0182fac0ba08402c7bd7b6dfa22d8d83ecbee96822a9cc5ae856c"
+  },
+  "dataset": {
+    "examples": 10,
+    "manifest_artifact_id": "sft-8b6a8155fcf1f44e-491e66c0",
+    "manifest_sha256": "18fa15ee39b474a02138eca01a26e1ea3a3d1c6bee9deb904a598dd524188e0e",
+    "ref": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dataset\\dataset.jsonl",
+    "sampling": null,
+    "sha256": "8b6a8155fcf1f44e536bbc5cdeb5d4754c74ba3b02e00a9c0564b0c6812f1fa1",
+    "teachers": [
+      {
+        "model": "oracle-demonstration",
+        "provider": "oracle_demonstration",
+        "source": "oracle_demonstration"
+      }
+    ],
+    "token_estimate": {
+      "max_example": 12396,
+      "method": "estimate: len(json chars) / 3, not a tokenizer count",
+      "total": 55180
+    }
+  },
+  "events": [],
+  "job": {
+    "api_key_env": null,
+    "base_url": null,
+    "job_id": null,
+    "jobs_root": null,
+    "provider": "local_lora",
+    "provider_status": null,
+    "training_file_id": null,
+    "validation_file_id": null
+  },
+  "job_id": null,
+  "kind": "weights",
+  "missing_conditions": [
+    "python module 'torch' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'transformers' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+    "CUDA availability unknown because torch is not importable",
+    "free disk 43.1 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dry-run is below min_free_disk_gb 50.0"
+  ],
+  "mock": false,
+  "planned_requests": [
+    {
+      "action": "copy dataset into the jobs root",
+      "files": [
+        "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dataset\\dataset.jsonl"
+      ]
+    },
+    {
+      "action": "launch detached trainer process",
+      "base_model": "Qwen/Qwen2.5-7B-Instruct",
+      "command": [
+        "python",
+        "-m",
+        "auditlab.research.training.local_lora",
+        "run",
+        "--config",
+        "<job_dir>/run_config.json"
+      ],
+      "job_id": "lora-b3be37e9a6184139f4e4e5e2",
+      "method": {
+        "lora": {
+          "alpha": 32,
+          "r": 16
+        },
+        "supervised": {
+          "hyperparameters": {
+            "batch_size": 1,
+            "learning_rate": 0.0001,
+            "n_epochs": 2
+          }
+        },
+        "type": "supervised_lora"
+      },
+      "seed": 20261121
+    },
+    {
+      "action": "poll job_state.json / checkpoints.json / result.json"
+    }
+  ],
+  "preflight": {
+    "facts": {
+      "base_model_kind": "hub_id (downloaded on the GPU machine at run time)",
+      "cuda_available": null,
+      "free_disk_gb": 43.1,
+      "modules_missing": [
+        "torch",
+        "transformers",
+        "peft",
+        "trl"
+      ]
+    },
+    "jobs_root": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dry-run\\jobs",
+    "missing_conditions": [
+      "python module 'torch' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'transformers' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
+      "CUDA availability unknown because torch is not importable",
+      "free disk 43.1 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\dry-run is below min_free_disk_gb 50.0"
+    ],
+    "provider": "local_lora",
+    "test_double": false,
+    "trainer": [
+      "python",
+      "-m",
+      "auditlab.research.training.local_lora",
+      "run"
+    ]
+  },
+  "protocol_id": "auditlab-research-600s",
+  "provider": "local_lora",
+  "refusal": null,
+  "result": {
+    "error": null,
+    "error_reason": "dry run: no job was created",
+    "fine_tuned_model": null,
+    "trained_tokens": null
+  },
+  "result_model": null,
+  "schema_version": "1.0",
+  "series": "trainable-model series (kind=weights); never pooled with the Claude series into one causal claim",
+  "settings": {
+    "allowed_splits": [
+      "train"
+    ],
+    "job_key": "al-b3be37e9a6184139f4e4e5e2",
+    "method": {
+      "lora": {
+        "alpha": 32,
+        "r": 16
+      },
+      "supervised": {
+        "hyperparameters": {
+          "batch_size": 1,
+          "learning_rate": 0.0001,
+          "n_epochs": 2
+        }
+      },
+      "type": "supervised_lora"
+    },
+    "poll_interval_s": 60,
+    "seed": 20261121,
+    "suffix": "al-8b6a8155fcf1"
+  },
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "status": "dry_run",
+  "teacher": {
+    "allowed_sources": [
+      "oracle_demonstration",
+      "self"
+    ],
+    "dataset_teacher_terms_acknowledged": null,
+    "self_models": [],
+    "sources": {
+      "oracle_demonstration": 10
+    },
+    "teacher_terms_acknowledged": null,
+    "teachers": [
+      {
+        "model": "oracle-demonstration",
+        "provider": "oracle_demonstration",
+        "source": "oracle_demonstration"
+      }
+    ]
+  },
+  "updated_at": "2026-11-21T11:19:06+00:00",
+  "validation_dataset": null
+}

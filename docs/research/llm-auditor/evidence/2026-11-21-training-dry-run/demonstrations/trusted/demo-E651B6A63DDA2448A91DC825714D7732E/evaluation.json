@@ -1,0 +1,47 @@
+{
+  "attempt_id": "demo-E651B6A63DDA2448A91DC825714D7732E",
+  "env_status": "submitted",
+  "inspection_steps": 8,
+  "internal_score": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "reward": 0.984,
+    "tp": 2
+  },
+  "matches": [
+    [
+      0,
+      "X523EBBB212FF43662985F535"
+    ],
+    [
+      1,
+      "X8EE259970BB24724765613FD"
+    ]
+  ],
+  "not_evaluable_reason": null,
+  "official": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.984,
+    "tp": 2
+  },
+  "official_by_rule": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "return": 0.984,
+    "tp": 2
+  },
+  "schema_version": "1.0",
+  "status": "completed",
+  "truth_issue_count": 2,
+  "unmatched": {}
+}

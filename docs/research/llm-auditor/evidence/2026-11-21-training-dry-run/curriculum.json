@@ -1,0 +1,58 @@
+{
+ "schema_version": "1.0",
+ "artifact_id": "published-train-2026-11-21",
+ "kind": "published_train",
+ "note": "all 10 published train episodes; NOT a random or adaptive curriculum arm",
+ "episodes": [
+  {
+   "episode_ref": "datasets/open/train/E04F4ED6D6765D816DF94C62477B6EC4C",
+   "family_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E077255A43F950625D099C4A3E1D26109",
+   "family_id": "E077255A43F950625D099C4A3E1D26109",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E39A14EA0FB98F9BC3E42C3738182D142",
+   "family_id": "E39A14EA0FB98F9BC3E42C3738182D142",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E3C1B04E2DCF07E6D4883BB9CEB56A932",
+   "family_id": "E3C1B04E2DCF07E6D4883BB9CEB56A932",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E6476455CA5F6F7CF4A34F78E68AD54C0",
+   "family_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E651B6A63DDA2448A91DC825714D7732E",
+   "family_id": "E651B6A63DDA2448A91DC825714D7732E",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E73A2954018B6B96D20AD0E9CFD9B9B18",
+   "family_id": "E73A2954018B6B96D20AD0E9CFD9B9B18",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/E9689AB84BDCEA83B6B6558C0DF66C1BB",
+   "family_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/EE66DC47098559362CDB36A9B4107782C",
+   "family_id": "EE66DC47098559362CDB36A9B4107782C",
+   "split": "train"
+  },
+  {
+   "episode_ref": "datasets/open/train/EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+   "family_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
+   "split": "train"
+  }
+ ]
+}
