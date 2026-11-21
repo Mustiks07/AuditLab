@@ -2,7 +2,7 @@
  "meta": {
   "suite": "genesis-local-acceptance-1.0",
   "not_an_official_score": true,
-  "commit": "08810feacd0a590d8a8b430c370e653eb0636f7d",
+  "commit": "aafa10b3144e4335224a655c59ebfbcdba5caa18",
   "product_code_dirty": false,
   "generator_version": "1.6",
   "python": "3.11.14",
@@ -12,17 +12,17 @@
    "sha256": "2a597ebfb94daec700ba9b1b09d62c032366e788c6e992486d444e063be8d870",
    "retrieved_utc": "2026-11-21T03:52:46Z"
   },
-  "started_utc": "2026-11-21T04:03:32.198532Z",
+  "started_utc": "2026-11-21T04:37:28.841009Z",
   "answers": {
-   "path": "..\\genesis-work\\run1\\answers_before_truth.json",
+   "path": "..\\genesis-work\\run-main\\answers_before_truth.json",
    "sha256": "d7dd79b08f435bd5911c728eed0b6cf8747d531eb3fab82ee56db15415bfeecf",
-   "reused": true
+   "written_utc": "2026-11-21T04:37:30.125817Z"
   },
   "adapter": {
    "path": "C:\\Users\\Admin\\Desktop\\genesis\\AuditLab-v6\\judge_adapter.py",
    "state": "judge_adapter.py not present"
   },
-  "finished_utc": "2026-11-21T04:03:43.362912Z"
+  "finished_utc": "2026-11-21T04:37:47.317479Z"
  },
  "summary_official_layer": {
   "reward": {
@@ -1690,6 +1690,7 @@
    },
    "core": {
     "result": {
+     "via": "auditlab.evaluator.matcher._max_matching (graph)",
      "owners_A_B": [
       1,
       0
@@ -1701,7 +1702,7 @@
    },
    "official": {
     "status": "not_checked",
-    "reason": "graph-level example; not expressible through score_episode with a valid AuditLab truth"
+    "reason": "judge_adapter.py is not importable at this commit"
    },
    "status": "not_checked"
   },
@@ -1722,6 +1723,7 @@
    },
    "core": {
     "result": {
+     "via": "auditlab.evaluator.matcher._max_matching (graph)",
      "owners_A_B": [
       1,
       0
@@ -1733,7 +1735,7 @@
    },
    "official": {
     "status": "not_checked",
-    "reason": "graph-level example; not expressible through score_episode with a valid AuditLab truth"
+    "reason": "judge_adapter.py is not importable at this commit"
    },
    "status": "not_checked"
   },
@@ -2533,7 +2535,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P02",
@@ -2554,7 +2559,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P03",
@@ -2575,7 +2583,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P04",
@@ -2596,7 +2607,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P05",
@@ -2617,7 +2631,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P06",
@@ -2638,7 +2655,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P07",
@@ -2659,7 +2679,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P08",
@@ -2680,7 +2703,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P09",
@@ -2701,7 +2727,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P10",
@@ -2722,7 +2751,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P11",
@@ -2743,7 +2775,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P12",
@@ -2764,7 +2799,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P13",
@@ -2785,7 +2823,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P14",
@@ -2806,7 +2847,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P15",
@@ -2827,7 +2871,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P16",
@@ -2848,7 +2895,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P17",
@@ -2869,7 +2919,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P18",
@@ -2890,7 +2943,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P19",
@@ -2911,7 +2967,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   },
   {
    "id": "P20",
@@ -2932,7 +2991,10 @@
     "reward": 0.976
    },
    "status": "passed",
-   "adapter_transport": "not_checked (internal runner snapshot_dir used as the local analog of episode_dir)"
+   "adapter_transport": {
+    "status": "not_checked",
+    "reason": "judge_adapter.py is not importable at this commit"
+   }
   }
  ],
  "diagnostics": {
@@ -2957,9 +3019,13 @@
    },
    "cause": "AuditEnvironment.reset sets _started after generation/loading/validate_truth/session opening (auditlab/runner/env.py)"
   },
+  "deadline_origin_adapter": {
+   "status": "not_checked",
+   "reason": "judge_adapter.py is not importable at this commit"
+  },
   "reset_wall_time_max_size": {
    "ledger_rows": 2000,
-   "reset_wall_s": 0.0105,
+   "reset_wall_s": 0.0145,
    "note": "time currently excluded from the deadline; measured on this machine only"
   }
  }

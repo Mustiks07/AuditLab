@@ -70,12 +70,21 @@ def main(argv=None) -> int:
     team = {"C": data_checks.SCENARIOS["D01"][1], "E": data_checks.SCENARIOS["D12"][1],
             "L": data_checks.SCENARIOS["D02"][1]}
     items += contract_checks.run(adapter, _fresh(out / "contract"), team, args.skip_slow)
-    items += data_checks.phase_compare(out, open_session, verify_report, evaluate)
-    items += data_checks.phase_pairs(out, make_env, make_policy, open_session, evaluate)
+    data_items = data_checks.phase_compare(out, open_session, verify_report, evaluate)
+    from review.genesis_acceptance.adapter_transport import data_transport
+    transport = data_transport(adapter, out)
+    for it in data_items:
+        if it["id"] in transport:
+            it["adapter_transport"] = "generate_episode via adapter byte-identical: " + transport[it["id"]]
+            if transport[it["id"]] != "passed":
+                it["status"] = "failed"
+    items += data_items
+    items += data_checks.phase_pairs(out, make_env, make_policy, open_session, evaluate, adapter)
     diagnostics = {
         "integrator_probe_reproduced": "see probe-results-reproduced.json in the review package",
         "closed_mode_leakage_internal": security_checks.closed_mode_leakage(make_env, make_policy, out / "episodes" / "D16", 987654321),
         "deadline_origin_internal": security_checks.deadline_origin(make_env, out / "episodes" / "D01"),
+        "deadline_origin_adapter": security_checks.deadline_origin_adapter(adapter, out / "episodes" / "D01"),
         "reset_wall_time_max_size": security_checks.reset_wall_time(make_env, out / "episodes" / "D08"),
     }
     summary = {}
