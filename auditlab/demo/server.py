@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
-from . import service
+from . import research, service
 from .paths import PACKAGE, REPO, DemoPaths
 from .store import OP_KEY_RE, ExportStore, NotFound, Refused
 
@@ -61,8 +61,15 @@ def _run_lab(paths: DemoPaths, extra: list[Path], *args: str, timeout: int = 60)
     return json.loads(lines[-1])
 
 
-def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = None, build_samples: bool = True) -> FastAPI:
+def research_roots_from_env() -> list[Path]:
+    value = os.environ.get("AUDITLAB_RESEARCH_ROOT", "")
+    return [Path(p) for p in value.split(os.pathsep) if p]
+
+
+def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = None, build_samples: bool = True,
+               research_roots: list[Path] | None = None) -> FastAPI:
     paths = (paths or DemoPaths.default()).ensure()
+    research_dirs = [Path(p).resolve() for p in (research_roots if research_roots is not None else research_roots_from_env())]
     extra = [Path(p).resolve() for p in (extra_roots or [])]
     store = ExportStore([paths.exports, *extra], paths.ops)
     app = FastAPI(title="AuditLab judge console", docs_url=None, redoc_url=None, openapi_url=None)
@@ -152,9 +159,71 @@ def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = 
             return {"op_key": op_key, "status": "pending"}
         return status
 
+    # ------------------------------------------------------------------ research (read-only projection)
+    def _research(fn, *args):
+        projection = research.Projection(research.ResearchStore(research_dirs))
+        try:
+            return fn(projection, *args)
+        except research.ResearchError as exc:
+            raise HTTPException(404 if exc.code == "not_found" else 409, {"code": exc.code, "message": str(exc)})
+
+    @app.get("/research/status")
+    def research_status():
+        return _research(lambda p: p.status(research.controller_status()))
+
+    @app.get("/research/overview")
+    def research_overview():
+        return _research(lambda p: p.overview())
+
+    @app.get("/research/experiments/{artifact_id}")
+    def research_experiment(artifact_id: str):
+        return _research(lambda p: {**p.experiment(artifact_id), "controller": research.controller_status()})
+
+    @app.get("/research/failures/{artifact_id}")
+    def research_failure(artifact_id: str):
+        return _research(lambda p: p.failure(artifact_id))
+
+    @app.get("/research/attempts/{artifact_id}")
+    def research_attempt(artifact_id: str):
+        return _research(lambda p: p.attempt(artifact_id))
+
+    @app.get("/research/reductions/{artifact_id}")
+    def research_reduction(artifact_id: str):
+        return _research(lambda p: p.reduction(artifact_id))
+
+    @app.get("/research/curricula/{artifact_id}")
+    def research_curriculum(artifact_id: str):
+        return _research(lambda p: p.curriculum(artifact_id))
+
+    @app.get("/research/comparisons/{artifact_id}")
+    def research_comparison(artifact_id: str):
+        return _research(lambda p: p.comparison(artifact_id))
+
+    @app.get("/research/snapshots/{sid}")
+    def research_snapshot(sid: str):
+        return _research(lambda p: p.snapshot_view(sid))
+
+    @app.get("/research/snapshots/{sid}/records/{key:path}")
+    def research_record(sid: str, key: str):
+        view = _research(lambda p: service.snapshot_record_view(p.store.snapshot(sid), key))
+        if view is None:
+            raise HTTPException(404, {"code": "unknown_key", "message": "No public record with this key."})
+        return view
+
+    @app.post("/research/experiments/{artifact_id}/{action}")
+    def research_control(artifact_id: str, action: str):
+        if action not in ("start", "stop"):
+            raise HTTPException(404, {"code": "not_found", "message": "Unknown action."})
+        _research(lambda p: p.store.get("experiment", artifact_id))
+        try:
+            return research.controller_call(action, artifact_id)
+        except research.ResearchError as exc:
+            status = 503 if exc.code in ("controller_not_connected", "controller_error") else 409
+            raise HTTPException(status, {"code": exc.code, "message": str(exc)})
+
     @app.get("/{path:path}")
     def static(path: str):
-        if path.startswith("demo/"):
+        if path.startswith("demo/") or path.startswith("research/"):
             raise HTTPException(404, {"code": "not_found", "message": "Unknown API path."})
         candidate = (STATIC / path).resolve()
         if path and candidate.is_file() and STATIC.resolve() in candidate.parents:

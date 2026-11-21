@@ -15,6 +15,7 @@ const shapes: Record<string, ReactNode> = {
   filter: <path d="M3 4h18l-7 8v8l-4-2v-6Z"/>,
   menu: <path d="M3 6h18M3 12h18M3 18h18"/>,
   close: <path d="m5 5 14 14M19 5 5 19"/>,
+  research: <path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7.5 15h9"/>,
 };
 
 export function Icon({ name }: { name: keyof typeof shapes }) {
