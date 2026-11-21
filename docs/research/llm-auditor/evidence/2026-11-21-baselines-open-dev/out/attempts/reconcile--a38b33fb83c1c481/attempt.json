@@ -60,7 +60,7 @@
       }
     ]
   },
-  "finished_at": "2026-11-21T11:12:40.634326+00:00",
+  "finished_at": "2026-11-21T11:18:36.731602+00:00",
   "inspection_steps": 9,
   "isolated_bridge": false,
   "kind": "attempt",
@@ -76,8 +76,8 @@
   "repetition": 0,
   "schema_version": "1.0",
   "seed": 0,
-  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
-  "started_at": "2026-11-21T11:12:40.209056+00:00",
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
+  "started_at": "2026-11-21T11:18:36.272629+00:00",
   "status": "completed",
   "status_detail": null,
   "test_double": false,
@@ -93,7 +93,7 @@
       "output": 0
     },
     "unpriced_calls": 0,
-    "wall_seconds": 0.425
+    "wall_seconds": 0.458
   },
   "variant": "reconcile"
 }

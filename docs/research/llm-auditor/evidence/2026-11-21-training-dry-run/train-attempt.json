@@ -6,13 +6,13 @@
     "actual_basis": null,
     "actual_unavailable_reason": "no trained_tokens reported yet",
     "actual_usd": null,
-    "billable_tokens_estimate": 110362,
+    "billable_tokens_estimate": 110360,
     "budget_usd": null,
     "estimate_method": "tokens: (train + validation chars/3) x n_epochs; local GPU compute is not priced here (record GPU hours separately)",
     "estimated_usd": null,
     "n_epochs": 2,
     "price_per_million_training_tokens": null,
-    "train_tokens_estimate": 55181,
+    "train_tokens_estimate": 55180,
     "validation_tokens_estimate": 0
   },
   "missing_conditions": [
@@ -21,7 +21,7 @@
     "python module 'peft' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
     "python module 'trl' is not importable (install docker/train-gpu/requirements.in on the GPU training machine)",
     "CUDA availability unknown because torch is not importable",
-    "free disk 43.4 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt is below min_free_disk_gb 50.0"
+    "free disk 43.1 GB at docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\attempt is below min_free_disk_gb 50.0"
   ],
   "planned_requests": null,
   "result_model": null,

@@ -1,5 +1,5 @@
 {
-  "artifact_id": "sft-487544d74ca1da96-bac6d4a1",
+  "artifact_id": "sft-8b6a8155fcf1f44e-491e66c0",
   "counts": {
     "assistant_messages": 54,
     "examples": 10,
@@ -8,11 +8,11 @@
     "rejected": 0,
     "tool_calls": 54
   },
-  "created_at": "2026-11-21T11:13:09+00:00",
+  "created_at": "2026-11-21T11:19:05+00:00",
   "dataset": {
-    "bytes": 162892,
+    "bytes": 162888,
     "path": "dataset.jsonl",
-    "sha256": "487544d74ca1da96c18013b0fcb02a7c178952f3ea22355edcae523b146a96a6"
+    "sha256": "8b6a8155fcf1f44e536bbc5cdeb5d4754c74ba3b02e00a9c0564b0c6812f1fa1"
   },
   "format": "openai_chat_sft_jsonl_with_tools",
   "format_docs": [
@@ -38,7 +38,7 @@
       "artifact_id": "published-train-2026-11-21",
       "kind": "published_train",
       "ref": "docs\\research\\llm-auditor\\evidence\\2026-11-21-training-dry-run\\curriculum.json",
-      "sha256": "8369a853470f058f9493a8a041f5ec58289332ca419b5c0176c8b1e89652ed03"
+      "sha256": "a3d41d77e3a0182fac0ba08402c7bd7b6dfa22d8d83ecbee96822a9cc5ae856c"
     },
     "exclude_test_double": true,
     "max_example_tokens": 65536,
@@ -58,12 +58,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E04F4ED6D6765D816DF94C62477B6EC4C/evaluation.json",
       "family_id": "E04F4ED6D6765D816DF94C62477B6EC4C",
       "files_sha256": {
-        "attempt.json": "55e4158a4c167850739d17220aeed2c0fd68ae25d94e4bc8aeab55e7bf0ad665",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "a997164764cfb3daaea674e38cd3d141c5fffc612a3e663a8154f51d76909b77",
-        "steps.jsonl": "2cb649c69ab84c179ca83554ce40fa5435fdaeb1fa2320438a2728b6d836c6bf",
-        "transcript.jsonl": "d94ceb1fc3aa2f66d5b32136c2903a296f1af9ca2e0665f62630378f420c2530",
-        "trusted/evaluation.json": "cae940578ad382ba9ba9d2f8186152d5de01b1f7fd7705c2ab97569557cb6a85"
+        "attempt.json": "b4b30bd2cf80481ecaa95ad4024c233d8b2fe8f0bb0397774db90b46643801c7",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "fcbf0ad6f087a3b95ac41d8f2f2756340052b350c09f7bde92a19a245e5cb030",
+        "steps.jsonl": "d150e2b27418bef7a6a0a9137f7a7a8f5f02fd99b8138a53bb63792997425d92",
+        "transcript.jsonl": "02f742d39912f6647a99558a27663cb7e194d6cb16fad525c020ef86d78424be",
+        "trusted/evaluation.json": "bba112e798dab49cc578ed78e64801f79d8507cc73cc049474fb1785fbefc34e"
       },
       "index": 0,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -84,12 +84,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E077255A43F950625D099C4A3E1D26109/evaluation.json",
       "family_id": "E077255A43F950625D099C4A3E1D26109",
       "files_sha256": {
-        "attempt.json": "79fe53f25fb2ef520d2e8c523b1308a46e2faab9d093901302cffe491e3255b2",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "eda14794fe25a3daab34a003fbd1dc92c0544e47dfe7a4c84cf1bd2d20aefa23",
-        "steps.jsonl": "4a8f91887e817060f3c10494627778db9c85ec38d1280a724421e0367cbd1979",
-        "transcript.jsonl": "dfdf91124bee7ac605cee2595aa560fa35c06d89c6a49919319f28168e4c733b",
-        "trusted/evaluation.json": "639854441566dd80caf71463bcc046d955f3b6726439b729396e2863a160aa89"
+        "attempt.json": "6acf662acf9cc11867c1c08fdda3339cec2b8e24208c28e5dd727f804e965524",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "c6b29fd78cb03d4fc4079d0cf796aaa7f0788a26a90cb0f024ec15db555465c8",
+        "steps.jsonl": "7f0ecaf27970c7839e3ef068c6a5790c2a3f6abbed588973d3391b6ae31e5c9f",
+        "transcript.jsonl": "57c673b53c5bc91a5d62b970366c7ced9dd1d5496ee6cf42009a1fc7069bdc46",
+        "trusted/evaluation.json": "72ae9c9710bc15357ed070f300a8abc94513ee48dcaff602c053dfee28997485"
       },
       "index": 1,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -97,7 +97,7 @@
       "return": 0.988,
       "split": "train",
       "teacher_source": "oracle_demonstration",
-      "token_estimate": 3948,
+      "token_estimate": 3947,
       "tool_calls": 7
     },
     {
@@ -110,12 +110,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E39A14EA0FB98F9BC3E42C3738182D142/evaluation.json",
       "family_id": "E39A14EA0FB98F9BC3E42C3738182D142",
       "files_sha256": {
-        "attempt.json": "f05a1354578340bf55d887cbbe6b376190e84f98a57f1379ef7fe09de0f8e08a",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "0f0c9e5495639b4790e7d9fd0ff9baecbcf4a4d2513d5ad0c72a85dfc80ba2da",
-        "steps.jsonl": "df26fb99b5727dc98dde805e24db6dd127c64f32f5cd1b4851d79d226c65e523",
-        "transcript.jsonl": "c7aab4d04b9a6fdd4b38b71d9340b5b3c2618893fd3feca1b0d1d9168acf83d1",
-        "trusted/evaluation.json": "26699ad9e78ed03aed5cd29e6ee461ac9ada5629b449451581f5283f08a312ac"
+        "attempt.json": "ca9cc6fc6a72e13980ae512152c8bdf6cd5256c6c369305359f9a8e482780a38",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "86184893b4bd52c07f5a4b38426e7e8e146a821c6ab9cb653794cc6e40d5eddb",
+        "steps.jsonl": "cef073b78218fbbeaefcc2bd85b8942de0c24852fc5492d93fcc3452b9049c7a",
+        "transcript.jsonl": "f0de6ab213307e04d08003d6fe3a6b0928b2e8a62411494f2a7d3193ff032eef",
+        "trusted/evaluation.json": "a118e031cf74cb39706cfdf1e3c5f4dde47787957558ddad7ef358b262540caa"
       },
       "index": 2,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -136,12 +136,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E3C1B04E2DCF07E6D4883BB9CEB56A932/evaluation.json",
       "family_id": "E3C1B04E2DCF07E6D4883BB9CEB56A932",
       "files_sha256": {
-        "attempt.json": "37ad55442cb8847bde4ea2e9e5ccb710d6e8ef66894601ec077b830b06ff2105",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "d3e1f447eae42a98c8a645629df022348dd817e3d0f3c0dc82582b9c07d0d1ac",
-        "steps.jsonl": "26d8086f81dc3763a76a685cb61fc23f1872ad6e301de84c961270d7fe8d7c06",
-        "transcript.jsonl": "fd418b478d5a758f930655a952454a6b1cbf9bb9ec50e27cce2997c708cc3ea1",
-        "trusted/evaluation.json": "9bdba0f7b31a64e0adbd67e30ee4c38a28c731334c62229970f0dac34c2309c5"
+        "attempt.json": "a3ee3c1269285152e8488588de87836d71d35083cd0f7c17cfe08ece3d900bde",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "2b70b3859d0f3a8546a49e2b3ec8fd9b7f28f42357c2d4f20f12cfc1c7245518",
+        "steps.jsonl": "3ff34123c6921aeee47358b785b38e16319f5bbf272f2bd859611ef6020f742c",
+        "transcript.jsonl": "944e917a330908afbc6df3817b31501b860c700358f2cf1e7424981818bc79d4",
+        "trusted/evaluation.json": "d55d2494b42c4961467e693c0bc806419c6cee39ee5514de2eef32d2ea82ea4f"
       },
       "index": 3,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -162,12 +162,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E6476455CA5F6F7CF4A34F78E68AD54C0/evaluation.json",
       "family_id": "E6476455CA5F6F7CF4A34F78E68AD54C0",
       "files_sha256": {
-        "attempt.json": "30947f0ba768bdaa1503cc6265ae9f35947ec539d151d164f23202721295b8ff",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "908ad8312ec7098ec3662dabf58c35b864c3026ddb2004f91a57bcfc6cdd1663",
-        "steps.jsonl": "4413048b056fd4b97e6554cc5502f3164ca5eb0c7c9ab64095da9268a338af9c",
-        "transcript.jsonl": "52866e638af789bcda58f36740dc205e045cf9615e0e75ac8c80b2e548606f89",
-        "trusted/evaluation.json": "ace77aa4eebf3e7d7acacf6b6de5ef5bae8607c7ca510d7236321cc700a533c8"
+        "attempt.json": "b009281cfe2ea523aa6511f0151221892fb9a480fc4690b87ed4e759101525eb",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "a26afc72787d65020d7f7637d0481c5d665423b1fc7d4e120345c7f880f99e87",
+        "steps.jsonl": "d823aa3c7b216da1eaad412843770aa678287e0275d2a84d445a0feac2bb5832",
+        "transcript.jsonl": "221f458b00ba05e928e16de9a7ab995262559a40ecd3b6ad4545d827f6940dc2",
+        "trusted/evaluation.json": "99260939b8eda0d260e09f50ecc027b0cbf495ad7c147f7cedb55845cab8e408"
       },
       "index": 4,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -175,7 +175,7 @@
       "return": 0.992,
       "split": "train",
       "teacher_source": "oracle_demonstration",
-      "token_estimate": 3562,
+      "token_estimate": 3561,
       "tool_calls": 5
     },
     {
@@ -188,12 +188,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E651B6A63DDA2448A91DC825714D7732E/evaluation.json",
       "family_id": "E651B6A63DDA2448A91DC825714D7732E",
       "files_sha256": {
-        "attempt.json": "4d5dc1748917774b22f9bbf7818e3f2c1ad258f7a9bbddfd24d076ab327addf4",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "e8aa427dff37a82db57d6de4cfb3c3b062dd9da70f77f99b054e894a32d279ce",
-        "steps.jsonl": "78ec662903d9bc54f7fde01dda45d9e9e663baed22194c5b403d1af6f202591e",
-        "transcript.jsonl": "1ed90b6fb30a84dcbfd263546a50363ce8fee98e2d5b4a0a3856ed9e31b59fda",
-        "trusted/evaluation.json": "ebdceb7832f52d60814c44af85ac7b6986fc6dc89f8742e62f04723e99c8365f"
+        "attempt.json": "55c66b83df34448f6cf16233239934de08800f6dfab6eb277d793ad860015195",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "f5bf8190f764360b621c787f9601806af1f6cb22c14a1cea43e0db302692b839",
+        "steps.jsonl": "d3c978e5895458becb6c3fad597a12e5a0aa17a92d091c0535190e373909e9ca",
+        "transcript.jsonl": "23e74a088620546a02d3491eca2b8673d866b47f1233bda02da9a23ef0ed5572",
+        "trusted/evaluation.json": "33d8e555c6417e44f688db8d45501a1c1b529685b2bb3521a8bb69be270910e3"
       },
       "index": 5,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -201,7 +201,7 @@
       "return": 0.984,
       "split": "train",
       "teacher_source": "oracle_demonstration",
-      "token_estimate": 4699,
+      "token_estimate": 4698,
       "tool_calls": 9
     },
     {
@@ -214,12 +214,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E73A2954018B6B96D20AD0E9CFD9B9B18/evaluation.json",
       "family_id": "E73A2954018B6B96D20AD0E9CFD9B9B18",
       "files_sha256": {
-        "attempt.json": "b8a06039c1e6a87e9f21d284bf19e97e0cda9e701a73bc0e28ebc249be87fb63",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "5d654075c8cc0aa430a438b29a2a58ec21a203d684a09113e9b8325a37503bb5",
-        "steps.jsonl": "b94570749148b4dcb0d2645ddef63818cb5b9fd71b08a991c3791c4cfc4a534a",
-        "transcript.jsonl": "7048cb3ba00eb8a8f7903af13fe73f89b9eca4441e586f6293a75cf33cc88089",
-        "trusted/evaluation.json": "dfb02f930ca8b5fd02112284b8e837f611dfe11d50149942afba18428cf2eaa0"
+        "attempt.json": "b364ee816ed727741f095c3a1edf4a9d802058571e08d9af37037e481796ade6",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "793e98991119c3535249506d646f14584cd5b5f041ba037ef9d898fd32df0133",
+        "steps.jsonl": "2d39a9bbd8a9d9ac4b955d789b15d4fe77b032a3130eebfb26714424832779ef",
+        "transcript.jsonl": "b6063381aad785af17cf94af3e8c48fd9267746fd19784481469986cb837db72",
+        "trusted/evaluation.json": "383c14d0eee3d480bc2bdb4c045c4199aafa182a2d9e8dc9018d5fe487e65fc8"
       },
       "index": 6,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -227,7 +227,7 @@
       "return": 0.992,
       "split": "train",
       "teacher_source": "oracle_demonstration",
-      "token_estimate": 3560,
+      "token_estimate": 3562,
       "tool_calls": 5
     },
     {
@@ -240,12 +240,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-E9689AB84BDCEA83B6B6558C0DF66C1BB/evaluation.json",
       "family_id": "E9689AB84BDCEA83B6B6558C0DF66C1BB",
       "files_sha256": {
-        "attempt.json": "a5dcacee5acb74dfa12dc9aa0329d22367d60e0fc015d5d31d85ae2fa0717700",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "8527fb02967834988450924fe28f822d44b45cfbbcacf1db3e93a5e8c2207874",
-        "steps.jsonl": "e3c13049a0c52dfc0f2ceac52aa16fb6d124b3d3892da6619a072add5dff0386",
-        "transcript.jsonl": "d3e24ff0e243000360e44885c51465cfe03c15dec4ac787c498bfe1343459aff",
-        "trusted/evaluation.json": "877fead2577311edd749ad5875039dbcb7561bac5ac902eb5292b4978542ae49"
+        "attempt.json": "cff38caa1d3d9bc52d5d5aa35bb7b8b2ea1092b99b795c68099c9f59c75de74d",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "07ee0a93106cafaae690b044603d5b41cf30c842362d0391b800d368e0d08b16",
+        "steps.jsonl": "819c36f16b1e2cda0304e118b25777fc2ce6115c7c0324c36d7b277190712b43",
+        "transcript.jsonl": "923da8f238df70d95320ad1c76f66e2928408f77ee8079598f600d9bebae0a1d",
+        "trusted/evaluation.json": "16e53a014151c845686060f48fc6bb1bc7065de55d9d3395a7302b3028e6d0bd"
       },
       "index": 7,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -266,12 +266,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-EE66DC47098559362CDB36A9B4107782C/evaluation.json",
       "family_id": "EE66DC47098559362CDB36A9B4107782C",
       "files_sha256": {
-        "attempt.json": "63df4efe133c5b8875e4a4c2bea9f39c3770843c544605f5897c73deb6cc0e0e",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "6ee6d4802cef318b75ecf7e05dcd12552df18f020f75bbaeead2277cf7873a1b",
-        "steps.jsonl": "928ab1c6bda1ce7e29ca0389604fd51703f64b7eedfa8315d661de8c72e25b71",
-        "transcript.jsonl": "0e1430d841773b9e457e4ab4c751135fc9889d9fa7418439aae282f693c2919f",
-        "trusted/evaluation.json": "15756aa76f7409857c19d3ceccd11032122a47ba413d06a9e199bf816db85ef2"
+        "attempt.json": "f006f18cac758d2608a3ee640f1986e491d75fb4aad4ce3b47f9ede24cf61b97",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "4204601b55cabb90de54748b41c06f444a868f7028b234904bb00561fa21535f",
+        "steps.jsonl": "0933080ea24f79eef087c9e53d00d625f4adad82bcdf6485f33f2b0655dbddbe",
+        "transcript.jsonl": "7e2f17fd72d798f00900e4a25799afc7b68b0d5905e5225992d45d31cbf4d313",
+        "trusted/evaluation.json": "05e12f317e898e4d238a57eaf2eaf57952d17d2ec082f37f2474045db50d7b22"
       },
       "index": 8,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -292,12 +292,12 @@
       "evaluation_ref": "docs/research/llm-auditor/evidence/2026-11-21-training-dry-run/demonstrations/trusted/demo-EFFAAAA5971F93F3CF54B03F09CAFBDEE/evaluation.json",
       "family_id": "EFFAAAA5971F93F3CF54B03F09CAFBDEE",
       "files_sha256": {
-        "attempt.json": "b1bba295ed48b9d436a8bd8f313e84adde467026ccc1a34dfa5b1a6b5263ef74",
-        "prompt.json": "82cccc6dfcf0f5286135431c65807fc17918d65b0f31279e69f1db65b0175d13",
-        "provider_calls.jsonl": "96be37254218b65faa8e01ec2a2243deca2904bbed42a7f649a64aea5c36ed7d",
-        "steps.jsonl": "2c80095e8ec12df50451a8a73a50f464ff5a83fbeed064a6ed0e5e61174f095e",
-        "transcript.jsonl": "b0b149d5650d57b1c108ea5876f7877cb8367739a58b376fcfa740053026e0d5",
-        "trusted/evaluation.json": "82a3581b35f40aa8638108a8c4a6dc35fc08ed0045915818da00ae88d08e0c5d"
+        "attempt.json": "c72960f4c2f675c84d8384970d4694230c2b45f70721d84e45f6c93052bd21f8",
+        "prompt.json": "6d80bb61507f830869d5db520123b1f6912fd46817a9fcab4e8a3ca6767fea83",
+        "provider_calls.jsonl": "d5e732af5408cd549c996e6e2fd21ae0233389c4e289209c3f21d676b8a0de24",
+        "steps.jsonl": "bfff1a0ec1546e2c5548793b45c3d546572db883111804106cc428039205bc50",
+        "transcript.jsonl": "91fcf8011a069843a8f2eeae2dfc9b6a1855c206934ccaeda98ab0e337d12275",
+        "trusted/evaluation.json": "537dba70e129db211fcc57e9d86d0d98a8e0cb68597bb7d90c9442d0bb2c5d8a"
       },
       "index": 9,
       "prompt_hash": "6847e3584f49f3fbf8440cc8dd28db38084fd09435a1e8303ebb76e427abdf7b",
@@ -309,7 +309,7 @@
       "tool_calls": 3
     }
   ],
-  "source_sha": "9a9790a353e2368a7fc4d6d857de9f2ea87ee301",
+  "source_sha": "7364caf97d58f3bf834795cf95a5c82e74cc1eeb",
   "split_check": {
     "allowed": [
       "train"
@@ -345,6 +345,6 @@
   "token_estimate": {
     "max_example": 12396,
     "method": "estimate: len(json chars) / 3, not a tokenizer count",
-    "total": 55181
+    "total": 55180
   }
 }

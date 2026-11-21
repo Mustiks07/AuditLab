@@ -1,5 +1,5 @@
 {
-  "plan_sha256": "868429c2c87ecbe96cbe01620cbd10e0084ac497e6152b2ca0191b35ed946095",
+  "plan_sha256": "53e0ff3960a42e102e9ad5189fc140ae1df6eb2b90badfef42aa926034366365",
   "protocol_id": "genesis-official-60s",
   "attempts": 60,
   "paid_attempts": 60,

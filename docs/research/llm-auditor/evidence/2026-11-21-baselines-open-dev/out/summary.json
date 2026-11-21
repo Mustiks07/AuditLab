@@ -47,10 +47,10 @@
       },
       "unpriced_calls": 0,
       "wall_seconds": {
-        "max": 0.58,
-        "mean": 0.4237,
-        "median": 0.406,
-        "min": 0.401,
+        "max": 0.449,
+        "mean": 0.4192,
+        "median": 0.416,
+        "min": 0.407,
         "n": 10
       }
     },
@@ -101,10 +101,10 @@
       },
       "unpriced_calls": 0,
       "wall_seconds": {
-        "max": 0.471,
-        "mean": 0.4236,
-        "median": 0.415,
-        "min": 0.401,
+        "max": 0.438,
+        "mean": 0.41689999999999994,
+        "median": 0.4125,
+        "min": 0.407,
         "n": 10
       }
     },
@@ -155,10 +155,10 @@
       },
       "unpriced_calls": 0,
       "wall_seconds": {
-        "max": 0.435,
-        "mean": 0.41790000000000005,
-        "median": 0.414,
-        "min": 0.411,
+        "max": 0.468,
+        "mean": 0.42299999999999993,
+        "median": 0.4175,
+        "min": 0.407,
         "n": 10
       }
     },
@@ -209,10 +209,10 @@
       },
       "unpriced_calls": 0,
       "wall_seconds": {
-        "max": 0.489,
-        "mean": 0.42889999999999995,
-        "median": 0.4225,
-        "min": 0.418,
+        "max": 0.478,
+        "mean": 0.43689999999999996,
+        "median": 0.425,
+        "min": 0.416,
         "n": 10
       }
     }
@@ -260,7 +260,7 @@
     }
   ],
   "plan_artifact_id": "baselines-open-dev-2026-11-21",
-  "plan_sha256": "431018e235344667b60babf33c5e158af359fa99106aa53b55ac4907255664ed",
+  "plan_sha256": "c8b552530350cf0a034bd837aa090157486e32182843ccd47c0d39daef1b8af1",
   "protocol_id": "genesis-official-60s",
   "schema_version": "1.0",
   "test_double": false
