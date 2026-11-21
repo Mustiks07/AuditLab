@@ -3,6 +3,15 @@
   "failed": [],
   "not_checked": [],
   "facts": {
+    "qualification": {
+      "x86_64": true,
+      "two_cpus": true,
+      "mem_total_le_limit": true,
+      "swap_disabled": true,
+      "python_3_11": true,
+      "cgroup_v2": true,
+      "docker_engine_reachable": true
+    },
     "exit_codes": {
       "baseline_idle": 0,
       "check": 0,
@@ -48,18 +57,12 @@
     "memory": {
       "mem_total_bytes": 3803185152,
       "swap_total_bytes": 0,
-      "sampled_peak_used_excluding_reclaimable": {
-        "bytes": 848486400,
-        "at_t": 271.0,
-        "at_utc": "2026-11-20T15:49:10.848+00:00"
-      },
-      "sampled_min_mem_available": {
-        "bytes": 2954698752,
-        "at_t": 271.0,
-        "at_utc": "2026-11-20T15:49:10.848+00:00"
-      },
-      "interval_s": 0.5,
+      "peak_used": 848486400,
+      "min_available": 2954698752,
+      "vmstat_oom_kill_delta": 0,
+      "samples": 1215,
       "duration_s": 607.0,
+      "interval_s": 0.5,
       "max_gap_s": 0.5049999999999955,
       "oom": {
         "vmstat_oom_kill_delta": 0,
@@ -68,12 +71,14 @@
         "init.scope_oom_kill_delta": 0,
         "docker.service_oom_kill_delta": 0,
         "containerd.service_oom_kill_delta": 0
-      }
+      },
+      "allowed_gap_s": 2.0
     }
   },
   "statement_limits": [
-    "confirmed means: this machine (see qualification.json) ran the listed RC3 steps with the documented codes, without OOM kills, swap or image pulls, while the whole guest OS was sampled.",
-    "The sampled host peak is not a continuous maximum; container peaks are reported separately and are not summed into a host figure.",
+    "confirmed means: on the machine described by qualification.json, the listed RC3 steps returned the documented codes without OOM kills, swap or image pulls, while the whole guest operating system was sampled across every step.",
+    "The sampled host peak is not a continuous maximum; per-cgroup and container peaks are reported separately and are never summed into a host figure.",
+    "For a virtual machine it measures the guest OS only, not the hypervisor host.",
     "It does not confirm OPS-02 (independent human acceptance) or the organisers' official adapter."
   ]
 }

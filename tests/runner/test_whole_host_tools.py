@@ -1,11 +1,15 @@
 """OPS-01 whole-host review tooling (docs/reviews/whole-host-resources): summary and verdict rules.
 
+The verdict is tested on copies of the real RC3 review in docs/reviews/whole-host-resources/logs,
+including the negative controls from the PR #32 review.
+
 Run: python -m unittest discover -s tests/runner -p "test_whole_host_tools.py" -v
 The summarizer and judge are checked on synthetic samples with known answers; the collector is run
 for real on Linux (it reads /proc and cgroup v2 only). None of this measures the release itself.
 """
 import importlib.util
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -102,66 +106,153 @@ class Summary(unittest.TestCase):
             self.assertEqual(summarize_tool.main([str(directory)]), 1)
 
 
-def write_review(root: Path, *, qualified=True, codes=None, acceptance=None, evidence=None, pulls=False,
-                 oom=0, skip=()):
-    codes = codes or {"check": 0, "rehearsal": 2, "image_runtime": 0, "evidence_checker": 0, "launch_cleanup": 0,
-                      "demo_start": 0, "demo_health": 0, "demo_runs": 0, "crosscheck_live": 0, "replay_check": 0}
-    (root / "steps").mkdir(parents=True)
-    checks = {"two_cpus": qualified, "mem_total_le_limit": True, "swap_disabled": True}
-    (root / "qualification.json").write_text(json.dumps({"qualified": qualified, "checks": checks}))
-    (root / "preload-images.json").write_text(json.dumps({"present": []}))
-    outputs = {"check": "source b7a1857a51bf47bb36e42699988b38b4d897fa1f ok", "demo_health": '{"ok":true,"runs":6}',
-               "launch_cleanup": ""}
-    with (root / "phases.jsonl").open("w") as stream:
-        for name, code in codes.items():
-            if name in skip:
-                continue
-            stream.write(json.dumps({"phase": name, "exit_code": code, "start_mono": 1, "end_mono": 2}) + "\n")
-            (root / "steps" / f"{name}.out").write_text(f"$ cmd\n{outputs.get(name, '')}")
-    report = root / "bundle" / "results" / "verify-1" / "verify"
-    report.mkdir(parents=True)
-    rows = acceptance or [{"id": "API-01", "status": "passed"}, {"id": "OPS-01", "status": "not_checked"},
-                          {"id": "OPS-02", "status": "not_checked"}]
-    (report / "report.json").write_text(json.dumps({"acceptance": rows}))
-    (root / "evidence-summary.json").write_text(json.dumps(evidence or {"status": "internal_rehearsal_passed",
-                                                                          "failures": [], "missing": []}))
-    (root / "docker-events.log").write_text('{"Type":"image","Action":"pull"}\n' if pulls
-                                           else '{"Type":"container","Action":"start"}\n')
-    (root / "memory").mkdir()
-    summary = summarize_tool.summarize(META, [sample(0.0, 3e9, 3e9), sample(0.5, 2e9, 1e9, oom=oom)], [])
-    (root / "memory" / "summary.json").write_text(json.dumps(summary))
+RUN = TOOLS / "logs" / "2026-11-20-wsl2-rc3"
+SHA = "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+
+
+def rewrite_json(path: Path, mutate):
+    value = json.loads(path.read_text(encoding="utf-8"))
+    result = mutate(value)
+    if isinstance(result, dict):  # in-place mutators may return anything else (e.g. a list of None)
+        value = result
+    path.write_text(json.dumps(value, ensure_ascii=False), encoding="utf-8")
+
+
+def rewrite_samples(run: Path, mutate):
+    """Change the RAW samples and regenerate summary.json from them (consistent, not a stale summary)."""
+    path = run / "memory" / "samples.jsonl"
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    rows = mutate(rows)
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    assert summarize_tool.main([str(run / "memory"), "--phases", str(run / "phases.jsonl"),
+                                "--out", str(run / "memory" / "summary.json")]) == 0
+
+
+def report_path(run: Path) -> Path:
+    return next((run / "bundle" / "results").glob("verify-*")) / "verify" / "report.json"
 
 
 class Verdict(unittest.TestCase):
-    SHA = "b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    """Negative controls on copies of the real RC3 review (docs/reviews/whole-host-resources/logs)."""
 
-    def verdict(self, **options):
-        with tempfile.TemporaryDirectory() as tmp:
-            write_review(Path(tmp), **options)
-            return judge_tool.judge(Path(tmp), self.SHA)
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.run_dir = Path(self._tmp.name) / "run"
+        shutil.copytree(RUN, self.run_dir)
 
-    def test_confirmed_only_with_every_documented_code_and_no_oom(self):
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def verdict(self):
+        return judge_tool.judge(self.run_dir, SHA)
+
+    def test_real_run_stays_confirmed(self):
         result = self.verdict()
         self.assertEqual((result["verdict"], result["failed"], result["not_checked"]), ("confirmed", [], []))
+        self.assertEqual(result["facts"]["memory"]["samples"], 1215)
+        self.assertEqual(len(result["facts"]["acceptance"]), 24)
 
-    def test_unqualified_machine_is_never_confirmed(self):
-        self.assertEqual(self.verdict(qualified=False)["verdict"], "not_checked")
+    # --- the four controls from the PR #32 review ---------------------------------------------------
+    def test_review_control_1_emptied_summary_is_not_confirmed(self):
+        def empty(s):
+            s.update(samples=0, duration_s=0, containers={})
+            s["gaps_s"]["max"] = None
+            for key in ("sampled_peak_used_excluding_reclaimable", "sampled_peak_used_including_cache",
+                        "sampled_min_mem_available", "sampled_peak_swap_used"):
+                s["host"][key] = None
+            s["oom"] = {key: None for key in s["oom"]}
+        rewrite_json(self.run_dir / "memory" / "summary.json", empty)
+        result = self.verdict()
+        self.assertEqual(result["verdict"], "failed")
+        self.assertTrue(any("disagrees with the raw samples" in text for text in result["failed"]))
+        (self.run_dir / "memory" / "samples.jsonl").unlink()  # and without raw samples: nothing to judge
+        self.assertEqual(self.verdict()["verdict"], "not_checked")
 
-    def test_defects_fail(self):
+    def test_review_control_2_memory_above_the_profile(self):
+        def big(s):
+            s["host"]["mem_total_bytes"] = 16_000_000_000
+            s["host"]["sampled_peak_used_excluding_reclaimable"]["bytes"] = 8_000_000_000
+        rewrite_json(self.run_dir / "memory" / "summary.json", big)
+        self.assertEqual(self.verdict()["verdict"], "failed")  # stale summary vs raw samples
+        rewrite_samples(self.run_dir, lambda rows: [
+            {**row, "meminfo": {**row["meminfo"], "MemTotal": 16_000_000_000}} for row in rows])
+        result = self.verdict()  # consistent raw data, but above the limit and unlike qualification.json
+        self.assertEqual(result["verdict"], "failed")
+        self.assertTrue(any("exceeds the 4000000000 B profile" in text for text in result["failed"]))
+        self.assertTrue(any("differs from qualification" in text for text in result["failed"]))
+
+    def test_review_control_3_incomplete_acceptance_matrix(self):
+        rewrite_json(report_path(self.run_dir), lambda r: r.update(acceptance=[{"id": "OPS-02", "status": "not_checked"}]))
+        result = self.verdict()
+        self.assertEqual(result["verdict"], "not_checked")
+        self.assertTrue(any("missing from report.json" in text and "API-01" in text for text in result["not_checked"]))
+
+    def test_review_control_4_evidence_without_the_positive_status(self):
+        (self.run_dir / "evidence-summary.json").write_text('{"status": "not_checked"}', encoding="utf-8")
+        result = self.verdict()
+        self.assertEqual(result["verdict"], "not_checked")
+        self.assertTrue(any("evidence summary fields missing" in text for text in result["not_checked"]))
+
+    def test_recording_that_stops_before_the_rehearsal_is_not_checked(self):
+        meta = json.loads((self.run_dir / "memory" / "meta.json").read_text(encoding="utf-8"))
+        rehearsal = next(json.loads(line) for line in (self.run_dir / "phases.jsonl").read_text().splitlines()
+                         if '"rehearsal"' in line)
+        cut = rehearsal["start_mono"] - meta["monotonic_start"]
+        rewrite_samples(self.run_dir, lambda rows: [row for row in rows if row["t"] < cut])
+        result = self.verdict()
+        self.assertEqual(result["verdict"], "not_checked")
+        self.assertTrue(any("does not cover every step" in text and "rehearsal" in text for text in result["not_checked"]))
+
+    def test_gap_inside_a_step_is_not_checked(self):
+        meta = json.loads((self.run_dir / "memory" / "meta.json").read_text(encoding="utf-8"))
+        rehearsal = next(json.loads(line) for line in (self.run_dir / "phases.jsonl").read_text().splitlines()
+                         if '"rehearsal"' in line)
+        middle = (rehearsal["start_mono"] + rehearsal["end_mono"]) / 2 - meta["monotonic_start"]
+        rewrite_samples(self.run_dir, lambda rows: [row for row in rows if not middle - 30 < row["t"] < middle + 30])
+        self.assertEqual(self.verdict()["verdict"], "not_checked")
+
+    # --- other proven violations and missing data --------------------------------------------------
+    def test_oom_kill_in_raw_samples_fails(self):
+        def kill(rows):
+            rows[-1] = {**rows[-1], "vmstat": {**rows[-1]["vmstat"], "oom_kill": rows[-1]["vmstat"]["oom_kill"] + 1}}
+            return rows
+        rewrite_samples(self.run_dir, kill)
+        result = self.verdict()
+        self.assertEqual(result["verdict"], "failed")
+        self.assertTrue(any("OOM kills recorded" in text for text in result["failed"]))
+
+    def test_qualification_flag_is_not_trusted(self):
+        rewrite_json(self.run_dir / "qualification.json", lambda q: q["facts"].update(affinity_cpus=8))
+        self.assertEqual(self.verdict()["verdict"], "failed")  # flag says qualified, facts say 8 CPUs
+        rewrite_json(self.run_dir / "qualification.json", lambda q: q.update(qualified=False))
+        self.assertEqual(self.verdict()["verdict"], "not_checked")
+
+    def test_other_defects_fail(self):
         cases = {
-            "oom": {"oom": 1},
-            "image_pull": {"pulls": True},
-            "evidence_missing": {"evidence": {"status": "not_checked", "failures": [], "missing": ["x"]}},
-            "extra_open_group": {"acceptance": [{"id": "OPS-01", "status": "not_checked"},
-                                                {"id": "ISO-01", "status": "not_checked"}]},
-            "failed_group": {"acceptance": [{"id": "MAT-01", "status": "failed"}]},
-            "rehearsal_exit_1": {"codes": {"check": 0, "rehearsal": 1, "image_runtime": 0, "evidence_checker": 0,
-                                           "launch_cleanup": 0, "demo_start": 0, "demo_health": 0, "demo_runs": 0,
-                                           "crosscheck_live": 0, "replay_check": 0}},
+            "image_pull": lambda run: (run / "docker-events.log").write_text(
+                (run / "docker-events.log").read_text(encoding="utf-8") + '{"Type":"image","Action":"pull"}\n',
+                encoding="utf-8"),
+            "extra_open_group": lambda run: rewrite_json(report_path(run), lambda r: [
+                row.update(status="not_checked") for row in r["acceptance"] if row["id"] == "ISO-01"]),
+            "failed_group": lambda run: rewrite_json(report_path(run), lambda r: [
+                row.update(status="failed") for row in r["acceptance"] if row["id"] == "MAT-01"]),
+            "wrong_source": lambda run: rewrite_json(run / "evidence-summary.json",
+                                                     lambda e: e.update(source_revision="0" * 40)),
+            "rehearsal_exit_1": lambda run: (run / "phases.jsonl").write_text(
+                (run / "phases.jsonl").read_text().replace('"phase":"rehearsal","exit_code":2',
+                                                           '"phase":"rehearsal","exit_code":1')),
         }
-        for name, options in cases.items():
+        for name, mutate in cases.items():
             with self.subTest(case=name):
-                self.assertEqual(self.verdict(**options)["verdict"], "failed")
+                shutil.rmtree(self.run_dir)
+                shutil.copytree(RUN, self.run_dir)
+                mutate(self.run_dir)
+                self.assertEqual(self.verdict()["verdict"], "failed", name)
+
+    def test_missing_step_is_not_checked(self):
+        path = self.run_dir / "phases.jsonl"
+        path.write_text("".join(line + "\n" for line in path.read_text().splitlines() if '"replay_check"' not in line))
+        self.assertEqual(self.verdict()["verdict"], "not_checked")
 
     def test_docker_events_multiline_and_json(self):
         text_format = ("1795000000 container exec_start: python3 -c \"import json\n"
@@ -170,15 +261,6 @@ class Verdict(unittest.TestCase):
         self.assertEqual(judge_tool.docker_events(text_format), [("container", "exec_start:"), ("network", "connect")])
         json_format = '{"Type":"image","Action":"pull","Actor":{"ID":"x"}}\n{"Type":"container","Action":"start"}\n'
         self.assertEqual(judge_tool.docker_events(json_format), [("image", "pull"), ("container", "start")])
-        with tempfile.TemporaryDirectory() as tmp:
-            write_review(Path(tmp))
-            (Path(tmp) / "docker-events.log").write_text(text_format)  # continuation line mentions " image pull "
-            self.assertEqual(judge_tool.judge(Path(tmp), self.SHA)["verdict"], "confirmed")
-            (Path(tmp) / "docker-events.log").write_text(json_format)
-            self.assertEqual(judge_tool.judge(Path(tmp), self.SHA)["verdict"], "failed")
-
-    def test_missing_step_is_not_checked(self):
-        self.assertEqual(self.verdict(skip=("replay_check",))["verdict"], "not_checked")
 
 
 @unittest.skipUnless(sys.platform.startswith("linux") and Path("/proc/meminfo").is_file(), "не проверено: нужен Linux")
