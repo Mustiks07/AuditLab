@@ -77,9 +77,10 @@ def m_fixture(root: Path, policy: dict):
 
 def public_refs(public: Path) -> set[str]:
     """Every evidence key the fixture's public files can serve (evaluator side, from the data itself)."""
-    refs = {"ledger/" + r["row_id"] for r in csv.DictReader((public / "ledger.csv").open(encoding="utf-8"))}
+    rows = lambda name: csv.DictReader(io.StringIO((public / name).read_text(encoding="utf-8")))
+    refs = {"ledger/" + r["row_id"] for r in rows("ledger.csv")}
     for t in ("invoices", "payments"):
         refs |= {f"{t}/" + json.loads(l)["doc_id"] for l in (public / f"{t}.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()}
-    refs |= {f"fx/{r['date']}/{r['source_currency']}/{r['target_currency']}" for r in csv.DictReader((public / "fx.csv").open(encoding="utf-8"))}
+    refs |= {f"fx/{r['date']}/{r['source_currency']}/{r['target_currency']}" for r in rows("fx.csv")}
     refs |= {"policy/" + k for k in json.loads((public / "policy.json").read_text(encoding="utf-8"))}
     return refs

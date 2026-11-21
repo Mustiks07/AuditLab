@@ -234,6 +234,8 @@ def oracle(truth):
 
 def phase_pairs(work: Path, make_env, make_policy, open_session, evaluate) -> list[dict]:
     rows = []
+    if (work / "runs").exists():  # the internal runner requires new export directories
+        shutil.rmtree(work / "runs")
     for n in range(1, 21):
         pid, did = f"P{n:02d}", f"D{n:02d}"
         src = work / "episodes" / did
