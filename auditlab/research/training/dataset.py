@@ -162,6 +162,15 @@ def load_curriculum(path) -> dict:
             "episodes": episodes}
 
 
+def _shown(path) -> str:
+    """Path as recorded in published artifacts: relative POSIX inside the working directory, never a home path."""
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        return resolved.name
+
+
 def _ref_key(episode_ref) -> str:
     """Episode refs compare as POSIX paths, so a ref written on Windows matches the same ref elsewhere."""
     return PurePath(str(episode_ref).replace("\\", "/")).as_posix()
@@ -390,7 +399,7 @@ def build_sft(roots, output_dir, *, allowed_splits=DEFAULT_SPLITS, min_return: f
         try:
             record = load_attempt(directory, evaluation_path)
         except DatasetError as error:
-            rejected.append({"attempt_dir": str(directory), "attempt_id": directory.name, "reason": str(error)})
+            rejected.append({"attempt_dir": _shown(directory), "attempt_id": directory.name, "reason": str(error)})
             continue
         reason = rejection_reason(record, allowed, min_return, curriculum, sources, self_models)
         if reason is None:
@@ -402,7 +411,7 @@ def build_sft(roots, output_dir, *, allowed_splits=DEFAULT_SPLITS, min_return: f
                 record["example"] = example
                 selected.append(record)
                 continue
-        rejected.append({"attempt_dir": str(directory), "attempt_id": directory.name, "reason": reason})
+        rejected.append({"attempt_dir": _shown(directory), "attempt_id": directory.name, "reason": reason})
     selected.sort(key=lambda r: (str(r["attempt"]["episode"].get("episode_ref")), str(r["attempt"]["attempt_id"])))
     lines = [_example_line(r["example"]) for r in selected]
     path, digest, size = _write_dataset(output_dir, lines)
@@ -414,9 +423,9 @@ def build_sft(roots, output_dir, *, allowed_splits=DEFAULT_SPLITS, min_return: f
                       str(provider.get("model") or "")))
         protocols.add(attempt.get("protocol_id"))
         example = record["example"]
-        entries.append({"index": index, "attempt_dir": str(record["dir"]), "attempt_id": attempt["attempt_id"],
+        entries.append({"index": index, "attempt_dir": _shown(record["dir"]), "attempt_id": attempt["attempt_id"],
                         "artifact_id": attempt.get("artifact_id", attempt["attempt_id"]),
-                        "evaluation_ref": str(record["evaluation_path"]), "protocol_id": attempt.get("protocol_id"),
+                        "evaluation_ref": _shown(record["evaluation_path"]), "protocol_id": attempt.get("protocol_id"),
                         "episode_ref": episode.get("episode_ref"), "episode_sha256": episode.get("episode_sha256"),
                         "family_id": episode.get("family_id"), "split": episode.get("split"),
                         "return": _return_of(record["evaluation"]), "teacher_source": record["teacher_source"],
@@ -430,7 +439,7 @@ def build_sft(roots, output_dir, *, allowed_splits=DEFAULT_SPLITS, min_return: f
         "source_sha": git_source_sha(), "protocol_id": next(iter(protocols)) if len(protocols) == 1 else None,
         "protocol_ids": sorted(str(p) for p in protocols),
         "kind": "weights", "created_at": now_iso(), "format": "openai_chat_sft_jsonl_with_tools",
-        "format_docs": list(DOC_URLS), "roots": [str(Path(r).resolve()) for r in roots],
+        "format_docs": list(DOC_URLS), "roots": [_shown(r) for r in roots],
         "selection_rule": {"status": "completed", "exclude_test_double": True, "allowed_splits": list(allowed),
                            "min_return": min_return, "metric": "ROOT/trusted/<attempt_id>/evaluation.json official.return",
                            "curriculum": curriculum and {k: curriculum[k] for k in ("ref", "sha256", "kind", "artifact_id")},
