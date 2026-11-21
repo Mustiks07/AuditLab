@@ -95,9 +95,7 @@ class _BoundedBridge:
     def close(self):
         self.bridge.close()
 
-    def cost_micros(self):
-        if self.unreported_usage:
-            return None
+    def known_cost_micros(self):
         return int((self.known_cost * _MICROS_PER_USD).to_integral_value(rounding=ROUND_CEILING))
 
 
@@ -205,7 +203,7 @@ class ClaudeAttemptRunner:
                    "artifact_ref": str(output / "attempt.json"), "repetition": repetition, "seed": seed,
                    "status": "interrupted", "raw_status": None, "reason": "attempt_in_progress", "launches": None,
                    "max_elapsed_seconds": limit, "failures": None, "score": None, "cost_micros": None,
-                   "provider_calls": None, "tokens": None, "test_double": None}
+                   "known_cost_micros": None, "provider_calls": None, "tokens": None, "test_double": None}
         write_json(receipt["artifact_ref"], receipt)
         bounded = None
 
@@ -221,11 +219,12 @@ class ClaudeAttemptRunner:
                 raise ValueError("runner record refers to a different episode or attempt")
             totals = record["totals"]
             count = totals.get("provider_calls")
-            known_cost = bounded.cost_micros() if bounded is not None else None
-            accounted = bounded is not None and count == bounded.observed_calls and totals.get("unpriced_calls") == 0
+            known_cost = bounded.known_cost_micros() if bounded is not None else None
+            accounted = (bounded is not None and count == bounded.observed_calls
+                         and not bounded.unreported_usage and totals.get("unpriced_calls") == 0)
             receipt.update(status=record["status"], raw_status=record["status"], reason=record.get("status_detail"),
                            cost_micros=known_cost if accounted else None, reported_cost_usd=totals.get("cost_usd"),
-                           provider_calls=count, tokens=totals.get("tokens"), launches=1,
+                           known_cost_micros=known_cost, provider_calls=count, tokens=totals.get("tokens"), launches=1,
                            actions=totals.get("environment_actions"), test_double=record.get("test_double"))
             evaluation = read_json(evaluation_path)
             receipt.update(env_status=evaluation.get("env_status"), official_score=evaluation.get("official"))

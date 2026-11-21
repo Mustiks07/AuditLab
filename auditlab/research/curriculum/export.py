@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from hashlib import sha256
 from itertools import combinations
 import json
+import os
 from pathlib import Path
 import re
 import stat
@@ -270,14 +271,20 @@ def export_curriculum(plan: FamilyPlan, examples: Iterable[CurriculumExample], o
         root.mkdir()
         seen_books = {}
         results = [_export_example(root, item, example, seen_books) for item, example in candidates]
+        episodes = [{"episode_ref": Path(os.path.relpath(item.member.snapshot, output)).as_posix(),
+                     "family_id": item.member.family_id, "split": "train", "candidate_id": item.member.candidate_id,
+                     "snapshot_sha256": item.public_sha256}
+                    for (item, _), row in zip(candidates, results, strict=True)
+                    if row["status"] == "included" and row["teacher"] is not None]
         manifest = {
             "schema_version": SCHEMA_VERSION, "artifact_id": artifact_id, "source_sha": source_sha,
-            "protocol_id": protocol_id, "partition_sha256": plan.sha256,
+            "protocol_id": protocol_id, "partition_sha256": plan.sha256, "kind": "financial_curriculum",
             "history_fingerprint_version": HISTORY_VERSION,
             "formats": {"snapshots": "auditlab-public-snapshot-v1", "teacher": "auditlab-teacher-json-v1"},
             "planned_counts": {split: sum(row.member.split == split for row in plan._rows) for split in SPLITS},
             "partial_overlap": _partial_overlap(plan._rows),
             "examples": sorted(results, key=lambda row: row["candidate_id"]),
+            "episodes": episodes,
         }
         _write_json(root / "curriculum.json", manifest)
         root.rename(output)

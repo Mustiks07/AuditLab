@@ -176,6 +176,10 @@ class CurriculumExportTests(unittest.TestCase):
         self.assertEqual(sha256(teaching).hexdigest(), ref["sha256"])
         self.assertEqual(json.loads(teaching), teacher)
         self.assertFalse((path.parent / "trusted/dev").exists())
+        self.assertEqual([episode["candidate_id"] for episode in result["episodes"]], ["a-train"])
+        training_source = result["episodes"][0]
+        self.assertEqual((path.parent / training_source["episode_ref"]).resolve(), train_root.resolve())
+        self.assertEqual(training_source["split"], "train")
         second = export_curriculum(plan, reversed(examples), self.path / "second", **META)
         self.assertEqual(second.read_bytes(), path.read_bytes())
         with self.assertRaises(FileExistsError):
