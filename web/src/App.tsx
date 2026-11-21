@@ -8,6 +8,7 @@ import { AppShell, Dialog, Sidebar, WorkspaceHeader } from "./workspace/AppShell
 import { newestFirst, runNames } from "./workspace/model";
 import { useLocal, useResource } from "./workspace/resources";
 import { Catalog, PairCatalog, RunChooser, Workspace, WorkspaceSkeleton } from "./workspace/Workspace";
+import { AttemptScreen, ComparisonScreen, CurriculumScreen, ExperimentScreen, FailureScreen, ReductionScreen, ResearchHome } from "./research/screens";
 
 export { go } from "./navigation";
 
@@ -15,7 +16,19 @@ type Route =
   | { view: "home" | "runs" | "comparisons" | "documents" | "saved" }
   | { view: "run"; id: string; key?: string; documents?: boolean }
   | { view: "replay"; id: string }
-  | { view: "compare"; left: string; right: string };
+  | { view: "compare"; left: string; right: string }
+  | { view: "research"; page: string; id?: string; attempt?: string; side?: string; doc?: string };
+
+function researchRoute(parts: string[]): Route {
+  const [, page = "", id, ...rest] = parts;
+  if (!id || !["experiments", "failures", "attempts", "reductions", "curricula", "comparisons"].includes(page)) {
+    return { view: "research", page: "home" };
+  }
+  const docAt = rest.indexOf("doc");
+  const value = (name: string) => { const at = rest.indexOf(name); return at >= 0 && at < (docAt < 0 ? rest.length : docAt) ? rest[at + 1] : undefined; };
+  return { view: "research", page, id, attempt: value("attempt"), side: value("side"),
+    doc: docAt >= 0 && rest.length > docAt + 1 ? rest.slice(docAt + 1).join("/") : undefined };
+}
 
 function parse(hash: string): Route {
   let parts: string[];
@@ -27,6 +40,7 @@ function parse(hash: string): Route {
     return { view: "run", id: parts[1], documents: parts[2] === "documents" };
   }
   if (parts[0] === "compare" && parts[1] && parts[2]) return { view: "compare", left: parts[1], right: parts[2] };
+  if (parts[0] === "research") return researchRoute(parts);
   const page = parts[0];
   if (page === "runs" || page === "comparisons" || page === "documents" || page === "saved") return { view: page };
   return { view: "home" };
@@ -39,6 +53,7 @@ function section(route: Route): [string, string] {
     case "saved": return ["/saved", "Сохранённое"];
     case "run": return route.documents || route.key ? ["/documents", "Документы"] : ["/runs", "Проверка"];
     case "replay": return ["/runs", "Повтор проверки"];
+    case "research": return ["/research", "Исследование"];
     case "runs": return ["/runs", "Запуски"];
     default: return ["/", "Рабочая область"];
   }
@@ -115,7 +130,7 @@ export function App() {
   }
 
   const listProps = { runs, names, search, clearSearch: () => setSearch("") };
-  const childViews = route.view === "run" || route.view === "compare" || route.view === "replay";
+  const childViews = route.view === "run" || route.view === "compare" || route.view === "replay" || route.view === "research";
   return <>
     <AppShell active={active} title={title} search={search} onSearch={changeSearch} searchRef={searchRef}
       onDialog={setDialog} documentsHref={documentsHref}>
@@ -138,6 +153,13 @@ export function App() {
         saved={saved.includes(route.id)} onSave={() => toggleSaved(route.id)}/>}
       {route.view === "compare" && <Compare key={`${route.left}|${route.right}`} left={route.left} right={route.right} names={names}/>}
       {route.view === "replay" && <Replay key={route.id} runId={route.id} names={names}/>}
+      {route.view === "research" && route.page === "home" && <ResearchHome/>}
+      {route.view === "research" && route.page === "experiments" && <ExperimentScreen key={route.id} id={route.id!}/>}
+      {route.view === "research" && route.page === "failures" && <FailureScreen key={route.id} id={route.id!} attemptId={route.attempt} docKey={route.doc}/>}
+      {route.view === "research" && route.page === "attempts" && <AttemptScreen key={route.id} id={route.id!} docKey={route.doc}/>}
+      {route.view === "research" && route.page === "reductions" && <ReductionScreen key={route.id} id={route.id!} side={route.side} docKey={route.doc}/>}
+      {route.view === "research" && route.page === "curricula" && <CurriculumScreen key={route.id} id={route.id!}/>}
+      {route.view === "research" && route.page === "comparisons" && <ComparisonScreen key={route.id} id={route.id!}/>}
     </AppShell>
     {dialog === "menu" && <Dialog title="Меню" onClose={() => setDialog(null)} drawer>
       <Sidebar active={active} onAbout={() => setDialog("about")} onNavigate={() => setDialog(null)} documentsHref={documentsHref}/>
@@ -148,6 +170,9 @@ export function App() {
     {dialog === "about" && <Dialog title="О данных" onClose={() => setDialog(null)}>
       <p>AuditLab работает с открытыми результатами проверок. В поставке есть примеры с синтетическими компаниями и документами для воспроизведения расчётов.</p>
       <p>Итоги и оценки относятся к конкретной проверке. Они не описывают аудит реального клиента и не являются оценкой конкурса.</p>
+      <h3>Исследование агентов</h3>
+      <p>Раздел показывает результаты экспериментов из подключённого каталога. У каждого результата указано происхождение. «Измерение» — запуск эксперимента. «Фикстура разработки» — данные для проверки интерфейса: компании и документы взяты из открытого набора AuditLab, действия задаёт скрипт, их исполняет настоящий раннер и оценивает настоящий оценщик. Фикстуры не являются ответами модели, а показатели в них — измерениями.</p>
+      <p>Банки, клиенты и платёжные системы не подключены. Ключ доступа к модели хранится только на сервере и в браузер не передаётся.</p>
     </Dialog>}
   </>;
 }

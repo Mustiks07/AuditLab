@@ -3,7 +3,7 @@ import type { CompareView, FindingView, RunMeta } from "../api";
 export const NAV = [
   ["/", "Рабочая область", "workspace"], ["/runs", "Запуски", "play"],
   ["/comparisons", "Сравнения", "compare"], ["/documents", "Документы", "document"],
-  ["/saved", "Сохранённое", "bookmark"],
+  ["/saved", "Сохранённое", "bookmark"], ["/research", "Исследование", "research"],
 ] as const;
 
 const FIXTURES: Record<string, { source: string; title: string; side?: "A" | "B" }> = {

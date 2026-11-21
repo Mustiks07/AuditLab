@@ -187,7 +187,11 @@ def run_detail(store: ExportStore, run_id: str) -> dict:
 
 
 def record_view(store: ExportStore, run_id: str, key: str) -> dict | None:
-    snapshot = Snapshot(store.public_dir(run_id))
+    return snapshot_record_view(Snapshot(store.public_dir(run_id)), key)
+
+
+def snapshot_record_view(snapshot: Snapshot, key: str) -> dict | None:
+    """One public record with its file line and surrounding lines (shared by runs and research snapshots)."""
     record = snapshot.get(key)
     if record is None:
         return None

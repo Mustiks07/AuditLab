@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
 import uuid
 from pathlib import Path
@@ -132,6 +133,12 @@ def main(argv: list[str] | None = None) -> int:
     sv.add_argument("--host", default="127.0.0.1")
     sv.add_argument("--port", type=int, default=8765)
     sv.add_argument("--no-samples", action="store_true", help="do not build the labelled training exports")
+    sv.add_argument("--research", type=Path, action="append", default=[],
+                    help="read-only directory of research artifacts (CONTRACTS.md); repeatable")
+    sv.add_argument("--research-fixtures", action="store_true",
+                    help="also show development fixtures (built into ROOT/research-fixtures; never measurements)")
+    rf = sub.add_parser("research-fixtures", help="build development fixtures for the research screens")
+    rf.add_argument("out", type=Path)
     sub.add_parser("samples")
     sub.add_parser("list")
     sh = sub.add_parser("show")
@@ -173,10 +180,22 @@ def main(argv: list[str] | None = None) -> int:
             print("FastAPI/uvicorn are not installed: pip install -r web/requirements-demo.txt\n"
                   "Fallback without a browser: python -m auditlab.demo show --run TRAIN-S02-reconcile", file=sys.stderr)
             return 3
-        app = create_app(paths, extra, build_samples=not args.no_samples)
+        research_dirs = [p.resolve() for p in args.research]
+        if args.research_fixtures:
+            fixtures = paths.root / "research-fixtures"
+            if not (fixtures / "README.txt").is_file():
+                from . import research_fixtures
+                shutil.rmtree(fixtures, ignore_errors=True)
+                research_fixtures.build(fixtures)
+            research_dirs.append(fixtures.resolve())
+        app = create_app(paths, extra, build_samples=not args.no_samples,
+                         research_roots=research_dirs or None)
         print(f"AuditLab judge console: откройте {browser_url(args.host, args.port)}  (слушает {args.host}; exports: {paths.exports})")
         uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
         return 0
+    if args.cmd == "research-fixtures":
+        from . import research_fixtures
+        return research_fixtures.main([str(args.out)])
     if args.cmd in ("samples", "change", "rescore"):
         lab_args = ["--root", str(paths.root)] + sum((["--exports", str(p)] for p in extra), [])
         if args.cmd == "samples":
