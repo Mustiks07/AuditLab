@@ -96,6 +96,14 @@ def _stable_target(row, goal, minimum):
                                              target.issue_id or ""), default=None)
 
 
+def _choose_representative(found, candidate, row, target):
+    """Retain family order, but export a verified refinement when search found one."""
+    existing = found.get(candidate.family_id)
+    if existing is None or (row["proposal"]["method"] == "refinement"
+                            and existing[1]["proposal"]["method"] != "refinement"):
+        found[candidate.family_id] = (candidate, row, target)
+
+
 def _dimensions(path):
     manifest = read_json(path / "public/manifest.json")
     return [manifest["ledger_rows"], manifest["document_count"]]
@@ -223,7 +231,7 @@ def _study_goal(goal, plan, roots, axes, catalog, validate, investigate, output,
                 continue
             target = _stable_target(row, goal, budget.min_weak_repetitions)
             if target is not None:
-                found.setdefault(candidate.family_id, (candidate, row, target))
+                _choose_representative(found, candidate, row, target)
         selections[name] = list(found.values())
         summary["arms"][name] = {"offered": arm["offered"], "families_offered": len(offered),
                                  "strata": dict(Counter(r["stratum"] for r in arm["candidates"])),

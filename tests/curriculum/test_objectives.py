@@ -7,6 +7,8 @@ from auditlab.evaluator.schema import RULES_GENESIS
 from auditlab.generator import generate_episode
 from auditlab.release.transforms import read_json
 from auditlab.research.curriculum.objectives import assess_failures, objective_failures, OBJECTIVES
+from auditlab.research.curriculum.search import Candidate
+from auditlab.research.curriculum.study import _choose_representative
 
 
 class FinancialObjectiveTests(unittest.TestCase):
@@ -49,3 +51,10 @@ class FinancialObjectiveTests(unittest.TestCase):
         for status in ("timeout", "provider_error", "rate_limited", "invalid_submission"):
             receipt = {"status": status, "reason": "HTTP 429", "failures": [{"reason": goal} for goal in OBJECTIVES]}
             self.assertFalse(any(objective_failures(receipt, goal) for goal in OBJECTIVES))
+
+    def test_export_representative_retains_the_first_stable_refinement(self):
+        found = {}
+        for name, method in (("first", "exploration"), ("second", "refinement"), ("third", "refinement")):
+            candidate = Candidate(name, "family", "train", "allocation", 41, {})
+            _choose_representative(found, candidate, {"proposal": {"method": method}}, "target")
+        self.assertEqual(found["family"][0].candidate_id, "second")
