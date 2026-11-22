@@ -1,0 +1,278 @@
+{
+  "arms": {
+    "empty": {
+      "actions": {
+        "max": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "min": 1,
+        "n": 4
+      },
+      "attempts": 4,
+      "clean_attempts": 2,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 4,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 2,
+        "diagnosed": 4,
+        "error_attempts_with_a_miss": 2,
+        "error_variant_attempts": 2,
+        "finding_labels": {},
+        "issues_missed": 2,
+        "issues_total": 2,
+        "missed_by_type": {
+          "payment_allocation": 2
+        },
+        "submitted": 4
+      },
+      "cost_usd_total": 0.0,
+      "evaluable": 4,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 2,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 4
+      },
+      "return": {
+        "max": 1.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": -1.0,
+        "n": 4
+      },
+      "service_outcomes": {
+        "attempts": 0,
+        "statuses": {}
+      },
+      "statuses": {
+        "completed": 4
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.581,
+        "mean": 0.489,
+        "median": 0.48450000000000004,
+        "min": 0.406,
+        "n": 4
+      }
+    },
+    "flag_all": {
+      "actions": {
+        "max": 3,
+        "mean": 3.0,
+        "median": 3.0,
+        "min": 3,
+        "n": 4
+      },
+      "attempts": 4,
+      "clean_attempts": 2,
+      "clean_with_fp": 2,
+      "content_outcomes": {
+        "attempts": 4,
+        "clean_attempts_with_false_accusation": 2,
+        "clean_variant_attempts": 2,
+        "diagnosed": 4,
+        "error_attempts_with_a_miss": 2,
+        "error_variant_attempts": 2,
+        "finding_labels": {
+          "false_accusation_on_clean": 60,
+          "unrelated_claim": 58,
+          "wrong_amount": 2
+        },
+        "issues_missed": 2,
+        "issues_total": 2,
+        "missed_by_type": {
+          "payment_allocation": 2
+        },
+        "submitted": 4
+      },
+      "cost_usd_total": 0.0,
+      "evaluable": 4,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 2,
+        "fp": 120,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 4
+      },
+      "return": {
+        "max": -1.0,
+        "mean": -1.0,
+        "median": -1.0,
+        "min": -1.0,
+        "n": 4
+      },
+      "service_outcomes": {
+        "attempts": 0,
+        "statuses": {}
+      },
+      "statuses": {
+        "completed": 4
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.613,
+        "mean": 0.54275,
+        "median": 0.5555,
+        "min": 0.447,
+        "n": 4
+      }
+    },
+    "reconcile": {
+      "actions": {
+        "max": 7,
+        "mean": 7.0,
+        "median": 7.0,
+        "min": 7,
+        "n": 4
+      },
+      "attempts": 4,
+      "clean_attempts": 2,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 4,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 2,
+        "diagnosed": 4,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 2,
+        "finding_labels": {
+          "correct": 2
+        },
+        "issues_missed": 0,
+        "issues_total": 2,
+        "missed_by_type": {},
+        "submitted": 4
+      },
+      "cost_usd_total": 0.0,
+      "evaluable": 4,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 1.0,
+        "fn": 0,
+        "fp": 0,
+        "tp": 2
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0,
+        "n": 4
+      },
+      "return": {
+        "max": 0.988,
+        "mean": 0.988,
+        "median": 0.988,
+        "min": 0.988,
+        "n": 4
+      },
+      "service_outcomes": {
+        "attempts": 0,
+        "statuses": {}
+      },
+      "statuses": {
+        "completed": 4
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": 0.659,
+        "mean": 0.61525,
+        "median": 0.6154999999999999,
+        "min": 0.571,
+        "n": 4
+      }
+    }
+  },
+  "attempts_total": 12,
+  "is_experiment": true,
+  "kind": "internal_summary",
+  "last_invocation": {
+    "attempts_started": [
+      "empty--33737e24e268d564",
+      "empty--f7ea4f4d380d9592",
+      "empty--f1cb90c30a986c73",
+      "empty--7b4a6c65bc5a0824",
+      "flag_all--396131f34ebf24c3",
+      "flag_all--9edbc91d05e050e8",
+      "flag_all--6f12913beeaa5a92",
+      "flag_all--8a8f3331acd48c13",
+      "reconcile--bfed80306fb4697a",
+      "reconcile--7c05d8d284d2013e",
+      "reconcile--ee7d00677cfb1652",
+      "reconcile--6f20dcd1b86e23d3"
+    ],
+    "finished_at": "2026-11-22T04:54:49.814861+00:00",
+    "service_waits_s": [],
+    "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+    "started_at": "2026-11-22T04:54:30.301569+00:00",
+    "stop_detail": null,
+    "stop_reason": "plan_finished"
+  },
+  "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. Means over evaluable attempts; not_evaluable attempts are listed, never dropped.",
+  "paired": [
+    {
+      "a": "reconcile",
+      "b": "empty",
+      "ci95": null,
+      "families": 1,
+      "mean_difference": 0.988,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "reconcile",
+      "b": "flag_all",
+      "ci95": null,
+      "families": 1,
+      "mean_difference": 1.988,
+      "metric": "return",
+      "missing_families": []
+    }
+  ],
+  "plan_artifact_id": "baselines-replication-922101",
+  "plan_sha256": "4f4e49f7e371c85e32b9850f30670be8285744ece08f38f6ee3aca74dd2c414c",
+  "protocol_id": "genesis-official-60s",
+  "schema_version": "1.0",
+  "test_double": false
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "baselines-replication-922101",
+  "protocol_id": "genesis-official-60s",
+  "purpose": "selection",
+  "transport": "in_process",
+  "repetitions": 1,
+  "episodes": [
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/corrected_clean",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "clean",
+      "condition": "corrected_clean"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "error",
+      "condition": "original_error"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_clean",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "clean",
+      "condition": "transformed_clean"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_error",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "error",
+      "condition": "transformed_error"
+    }
+  ],
+  "env_seed": 0,
+  "arms": [
+    {
+      "name": "empty",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "empty"
+      }
+    },
+    {
+      "name": "flag_all",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "flag_all"
+      }
+    },
+    {
+      "name": "reconcile",
+      "agent": {
+        "kind": "baseline_policy",
+        "policy": "reconcile"
+      }
+    }
+  ],
+  "analysis": {
+    "pairs": [
+      [
+        "reconcile",
+        "empty"
+      ],
+      [
+        "reconcile",
+        "flag_all"
+      ]
+    ],
+    "bootstrap": 10000,
+    "seed": 20261122
+  },
+  "note": "Local policies on the frozen replication set: checks the set, not a model."
+}

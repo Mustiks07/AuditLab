@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "baselines-replication-922101",
+  "plan_sha256": "4f4e49f7e371c85e32b9850f30670be8285744ece08f38f6ee3aca74dd2c414c",
+  "plan": {
+    "schema_version": "1.0",
+    "artifact_id": "baselines-replication-922101",
+    "protocol_id": "genesis-official-60s",
+    "purpose": "selection",
+    "transport": "in_process",
+    "repetitions": 1,
+    "episodes": [
+      {
+        "episode_ref": "docs/research/agent-improvement-v2/replication-922101/corrected_clean",
+        "family_id": "dev-922101",
+        "split": "dev",
+        "variant": "clean",
+        "condition": "corrected_clean"
+      },
+      {
+        "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+        "family_id": "dev-922101",
+        "split": "dev",
+        "variant": "error",
+        "condition": "original_error"
+      },
+      {
+        "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_clean",
+        "family_id": "dev-922101",
+        "split": "dev",
+        "variant": "clean",
+        "condition": "transformed_clean"
+      },
+      {
+        "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_error",
+        "family_id": "dev-922101",
+        "split": "dev",
+        "variant": "error",
+        "condition": "transformed_error"
+      }
+    ],
+    "env_seed": 0,
+    "arms": [
+      {
+        "name": "empty",
+        "agent": {
+          "kind": "baseline_policy",
+          "policy": "empty"
+        }
+      },
+      {
+        "name": "flag_all",
+        "agent": {
+          "kind": "baseline_policy",
+          "policy": "flag_all"
+        }
+      },
+      {
+        "name": "reconcile",
+        "agent": {
+          "kind": "baseline_policy",
+          "policy": "reconcile"
+        }
+      }
+    ],
+    "analysis": {
+      "pairs": [
+        [
+          "reconcile",
+          "empty"
+        ],
+        [
+          "reconcile",
+          "flag_all"
+        ]
+      ],
+      "bootstrap": 10000,
+      "seed": 20261122
+    },
+    "note": "Local policies on the frozen replication set: checks the set, not a model."
+  },
+  "invocations": [
+    {
+      "started_at": "2026-11-22T04:54:30.301569+00:00",
+      "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+      "attempts_started": [
+        "empty--33737e24e268d564",
+        "empty--f7ea4f4d380d9592",
+        "empty--f1cb90c30a986c73",
+        "empty--7b4a6c65bc5a0824",
+        "flag_all--396131f34ebf24c3",
+        "flag_all--9edbc91d05e050e8",
+        "flag_all--6f12913beeaa5a92",
+        "flag_all--8a8f3331acd48c13",
+        "reconcile--bfed80306fb4697a",
+        "reconcile--7c05d8d284d2013e",
+        "reconcile--ee7d00677cfb1652",
+        "reconcile--6f20dcd1b86e23d3"
+      ],
+      "service_waits_s": [],
+      "stop_reason": "plan_finished",
+      "stop_detail": null,
+      "finished_at": "2026-11-22T04:54:49.814861+00:00"
+    }
+  ]
+}

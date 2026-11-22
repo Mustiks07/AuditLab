@@ -1,0 +1,12 @@
+{
+  "plan_sha256": "db4d0707a5a46f03f496ba4f01f6ed96b2ca5cd74c39f2a0f2456650b108735f",
+  "protocol_id": "auditlab-research-600s",
+  "attempts": 12,
+  "paid_attempts": 12,
+  "worst_case_usd": 0.12,
+  "max_usd_total": 0.25,
+  "missing_conditions": [
+    "arm A-tools: secret variable GEMINI_API_KEY must be set in the controller environment (checked at run time, never stored)"
+  ],
+  "network_calls": 0
+}

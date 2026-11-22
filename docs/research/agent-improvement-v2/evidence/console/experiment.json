@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "experiment",
+  "artifact_id": "baselines-replication-922101",
+  "title": "Проверка финансовых аудиторов",
+  "status": "completed",
+  "agents": [
+    {
+      "variant_id": "empty",
+      "label": "empty",
+      "kind": "baseline_policy",
+      "model": {
+        "provider": null,
+        "model_id": null
+      }
+    },
+    {
+      "variant_id": "flag_all",
+      "label": "flag_all",
+      "kind": "baseline_policy",
+      "model": {
+        "provider": null,
+        "model_id": null
+      }
+    },
+    {
+      "variant_id": "reconcile",
+      "label": "reconcile",
+      "kind": "baseline_policy",
+      "model": {
+        "provider": null,
+        "model_id": null
+      }
+    }
+  ],
+  "mode": {
+    "protocol_id": "genesis-official-60s",
+    "official": true,
+    "action_limit": 100,
+    "time_limit_s": 60.0
+  },
+  "progress": {
+    "planned": 12,
+    "completed": 12,
+    "running": 0,
+    "failed": {}
+  },
+  "repetitions": 1,
+  "attempt_ids": [
+    "empty--33737e24e268d564",
+    "empty--7b4a6c65bc5a0824",
+    "empty--f1cb90c30a986c73",
+    "empty--f7ea4f4d380d9592",
+    "flag_all--396131f34ebf24c3",
+    "flag_all--6f12913beeaa5a92",
+    "flag_all--8a8f3331acd48c13",
+    "flag_all--9edbc91d05e050e8",
+    "reconcile--6f20dcd1b86e23d3",
+    "reconcile--7c05d8d284d2013e",
+    "reconcile--bfed80306fb4697a",
+    "reconcile--ee7d00677cfb1652"
+  ],
+  "budget": {
+    "currency": "USD",
+    "limit": null,
+    "spent": 0.0
+  },
+  "cost": {
+    "usd": 0.0
+  },
+  "split": {
+    "rule": "Исходное разбиение зафиксировано в плане; открытая выборка."
+  }
+}

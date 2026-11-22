@@ -1,0 +1,241 @@
+{
+  "attempt_id": "flag_all--9edbc91d05e050e8",
+  "diagnosis": {
+    "clean": false,
+    "finding_labels": {
+      "unrelated_claim": 29,
+      "wrong_amount": 1
+    },
+    "findings": [
+      {
+        "index": 0,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 1,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 2,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 3,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 4,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 5,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 6,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 7,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 8,
+        "label": "wrong_amount",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 9,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 10,
+        "label": "unrelated_claim",
+        "type": "payment_allocation"
+      },
+      {
+        "index": 11,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 12,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 13,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 14,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 15,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 16,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 17,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 18,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 19,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 20,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 21,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 22,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 23,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 24,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 25,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 26,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 27,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 28,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      },
+      {
+        "index": 29,
+        "label": "unrelated_claim",
+        "type": "duplicate_invoice"
+      }
+    ],
+    "issues": [
+      {
+        "found": false,
+        "issue_id": "X334F79A716F40A58452AD2D4",
+        "type": "payment_allocation"
+      }
+    ],
+    "missed_by_type": {
+      "payment_allocation": 1
+    },
+    "submitted_findings": 30,
+    "truth_issues": 1
+  },
+  "env_status": "submitted",
+  "inspection_steps": 2,
+  "internal_score": {
+    "f1": 0.0,
+    "fn": 1,
+    "fp": 30,
+    "precision": 0.0,
+    "recall": 0.0,
+    "reward": -1.0,
+    "tp": 0
+  },
+  "matches": [],
+  "not_evaluable_reason": null,
+  "official": {
+    "f1": 0.0,
+    "fn": 1,
+    "fp": 30,
+    "precision": 0.0,
+    "recall": 0.0,
+    "return": -1.0,
+    "tp": 0
+  },
+  "official_by_rule": {
+    "f1": 0.0,
+    "fn": 1,
+    "fp": 30,
+    "precision": 0.0,
+    "recall": 0.0,
+    "return": -1.0,
+    "tp": 0
+  },
+  "schema_version": "1.0",
+  "service_outcome": false,
+  "status": "completed",
+  "truth_issue_count": 1,
+  "unmatched": {
+    "0": "no_matching_issue",
+    "1": "no_matching_issue",
+    "10": "no_matching_issue",
+    "11": "no_matching_issue",
+    "12": "no_matching_issue",
+    "13": "no_matching_issue",
+    "14": "no_matching_issue",
+    "15": "no_matching_issue",
+    "16": "no_matching_issue",
+    "17": "no_matching_issue",
+    "18": "no_matching_issue",
+    "19": "no_matching_issue",
+    "2": "no_matching_issue",
+    "20": "no_matching_issue",
+    "21": "no_matching_issue",
+    "22": "no_matching_issue",
+    "23": "no_matching_issue",
+    "24": "no_matching_issue",
+    "25": "no_matching_issue",
+    "26": "no_matching_issue",
+    "27": "no_matching_issue",
+    "28": "no_matching_issue",
+    "29": "no_matching_issue",
+    "3": "no_matching_issue",
+    "4": "no_matching_issue",
+    "5": "no_matching_issue",
+    "6": "no_matching_issue",
+    "7": "no_matching_issue",
+    "8": "no_matching_issue",
+    "9": "no_matching_issue"
+  }
+}

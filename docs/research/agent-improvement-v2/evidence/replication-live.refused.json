@@ -1,0 +1,2 @@
+{"status": "refused", "reason": "paid run refused: arm A-tools: secret variable GEMINI_API_KEY is not set"}
+exit=2

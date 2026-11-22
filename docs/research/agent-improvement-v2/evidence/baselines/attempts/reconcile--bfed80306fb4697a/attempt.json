@@ -1,0 +1,71 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--bfed80306fb4697a",
+  "attempt_id": "reconcile--bfed80306fb4697a",
+  "budget_usd": null,
+  "episode": {
+    "condition": "corrected_clean",
+    "episode_ref": "docs/research/agent-improvement-v2/replication-922101/corrected_clean",
+    "episode_sha256": "1da5d807ad6dab4ee17dd16d8096d8e098f06fc9e45aaabc6b3c6003e3514afe",
+    "family_id": "dev-922101",
+    "split": "dev",
+    "variant": "clean"
+  },
+  "evaluation_ref": "trusted\\reconcile--bfed80306fb4697a\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E051097C27CA8CD986943657C7BE332C3",
+        "findings": []
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E051097C27CA8CD986943657C7BE332C3",
+    "findings": []
+  },
+  "finished_at": "2026-11-22T04:54:44.422772+00:00",
+  "inspection_steps": 6,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "started_at": "2026-11-22T04:54:43.835961+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "budget_debit_usd": 0.0,
+    "cost_usd": 0.0,
+    "environment_actions": 7,
+    "inspection_steps": 6,
+    "known_cost_usd": 0.0,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.586
+  },
+  "variant": "reconcile"
+}
