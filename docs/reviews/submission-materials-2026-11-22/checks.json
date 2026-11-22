@@ -1,0 +1,110 @@
+{
+  "baseline": "c9ce1dfce6855eee431b881fef6c93c623852dd1",
+  "trajectory_episodes": 20,
+  "train": 10,
+  "dev": 10,
+  "trajectory_sha256": "ead82e40d84bfd1e0b6ec4096709c9d79438da70d73976391dfe44e429f72f31",
+  "isolated_regeneration_byte_equal": true,
+  "new_submission_tests": 4,
+  "evaluator_tests": 85,
+  "literal_probe": {
+    "passed": 0,
+    "failed": 5,
+    "interpretation": "incomplete renaming leaves stale composite and nested references; not the organizer transformer"
+  },
+  "mutation_original_reference": {
+    "agree": 299,
+    "total": 299,
+    "disagreements": []
+  },
+  "mutation_controls": {
+    "M1_currency": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M2_amount": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M3_tolerance_plus_one": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M4_affected_ids": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M5_type": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M6_ids_order": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M7_evidence_coverage": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M8_evidence_availability": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M9_duplicates_as_tp": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M10_greedy_matching": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M11_empty_clean_f1_zero": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M12_no_inspection_cost": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M13_no_reward_clip": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "M14_episode_id": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "X1_legacy_helper_unused": {
+      "battery_status": "equivalent_with_proof",
+      "project_tests_killed": true
+    },
+    "X2_same_constant": {
+      "battery_status": "equivalent_with_proof",
+      "project_tests_killed": false
+    },
+    "Y1_dict_tolerance_default": {
+      "battery_status": "survived",
+      "project_tests_killed": true
+    },
+    "Y2_unmatched_reason": {
+      "battery_status": "survived",
+      "project_tests_killed": true
+    },
+    "Y3_tie_break_largest_index": {
+      "battery_status": "killed",
+      "project_tests_killed": true
+    },
+    "Y4_evidence_limit_plus_one": {
+      "battery_status": "survived",
+      "project_tests_killed": true
+    },
+    "Y5_explanation_limit_plus_one": {
+      "battery_status": "survived",
+      "project_tests_killed": true
+    },
+    "Y6_findings_limit_plus_one": {
+      "battery_status": "survived",
+      "project_tests_killed": true
+    }
+  }
+}

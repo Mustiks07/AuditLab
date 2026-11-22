@@ -1,0 +1,342 @@
+{
+  "format_version": "1.0",
+  "dataset": "open-1.3",
+  "mode": "train",
+  "policy": "reconcile",
+  "policy_seed": 0,
+  "transport": "DockerPolicy",
+  "step_zero": "reset observation; excluded from the action budget",
+  "exporter_sha256": "ce3cf6e846263b2deb677ca81562e9bdea8629e6eb9eb2d53438095dc57648c6",
+  "versions": {
+    "runner": "1.2",
+    "evaluator": "1.2",
+    "public_schema": "1.0",
+    "adapter": "1.1",
+    "protocol": "genesis-fintech-checks-2026-11-20",
+    "rules": "genesis-2026-11-20",
+    "default_generator_profile": "1.3"
+  },
+  "episodes": [
+    {
+      "episode_id": "E12538C1A2E24CC1CC9AB1F3958D90C49",
+      "split": "train",
+      "actions": 15,
+      "public_sha256": "aee8740e818602c4396f0c0c47567e1f9b5ccbd7d04cdd76fcc3ceea0e3f6faf",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.972
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E1BAFA78045338C1E75E5F98B905850F7",
+      "split": "train",
+      "actions": 48,
+      "public_sha256": "0ecf8de3dbea65516fcf3525dad335a0a5637d576dd234c77f6f93add79e0862",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 1.0,
+        "return": 0.906
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E57586EB49978B6540D8574A32DC55F16",
+      "split": "train",
+      "actions": 10,
+      "public_sha256": "5a8f2916004bedcd9a60a49e01b579870d0133daeb5697c554a38f731f09d4b4",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 1.0,
+        "return": 0.982
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E640E11842E3F199C5965B2512099FD0F",
+      "split": "train",
+      "actions": 44,
+      "public_sha256": "59f7333a037244c815e1d6b2acd615f38e971ebc71aa4b1ea49de461ba7565e9",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.914
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E7EE2D81933CFD8CE701A9342222828E1",
+      "split": "train",
+      "actions": 17,
+      "public_sha256": "5450d404e3e083385b19034302e8d04872bb0318b4f1bd0c1addc551209a71f9",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.968
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E7FA987357C8CB69C927E1D0EA41CA3F5",
+      "split": "train",
+      "actions": 17,
+      "public_sha256": "5be0438d1eb215adda860ff0df1523e4988920a655de235076405529582b10d3",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.968
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E875C2E94FCCA39ABB06C0F6C4953F04E",
+      "split": "train",
+      "actions": 16,
+      "public_sha256": "526d8f101ffab9e7e7a0d527f9c60e122e7d14eae36b05e8194452dd6e6d59b6",
+      "score": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.97
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E9A5EFBB179B06C43D75CED49E47F564C",
+      "split": "train",
+      "actions": 17,
+      "public_sha256": "19ad01b54a725cc7f4a09ae6a4509830eced78f6c78b338cf1bde30eb29ef8cc",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.968
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "EAAA76B8F14EF559A284B6B66BECAB959",
+      "split": "train",
+      "actions": 12,
+      "public_sha256": "e7b318744ab266303a7e549330f52c952f039e29835e8657558a466b815ff465",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.978
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "ECEEC6A66BB9415222BF6CA87107FC342",
+      "split": "train",
+      "actions": 48,
+      "public_sha256": "109584da9ca8a13f79299e6ccad1fdaf6d6da8e49808daa7004145dceeb0ba65",
+      "score": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.906
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E11D6C20E9193087AF7B7E2732374E6B7",
+      "split": "dev",
+      "actions": 16,
+      "public_sha256": "17d134d07d70639d829583fe3da5b4ffa7cd4f3041d73aa395017a604a809507",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.97
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E",
+      "split": "dev",
+      "actions": 29,
+      "public_sha256": "76a62fb9cda1ae994160400573ffdca01be114ed268afb110af0f2d62b9fc094",
+      "score": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.944
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E4CCB42E1E990E5B738A05A60F58E25EE",
+      "split": "dev",
+      "actions": 16,
+      "public_sha256": "9684644c2873c29005b081a5d9a0a4032ad1c25f62b39c22ad9c6173de88d0d1",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.97
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E7CA1390221438F70974A5BD91113F510",
+      "split": "dev",
+      "actions": 17,
+      "public_sha256": "2b2c508f34d37e3c9e826bf421b31024190431540aa2e6604c92b0a8e886896d",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 1.0,
+        "return": 0.968
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E8F0C01916C9C23B4CBAD22163DF9D621",
+      "split": "dev",
+      "actions": 12,
+      "public_sha256": "c668a542fd71d8787b14977e571c9d8f4774183cae05e382b2a87e884e9de07c",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.978
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "E95103CB90AF570352BA7B6ADA858AE33",
+      "split": "dev",
+      "actions": 48,
+      "public_sha256": "e1e289733d3a9eaebe6fb67ea9ea4cdb894a11c51e1b3dbae1345e539f20d40e",
+      "score": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.906
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "EAB594D6B17D5F8FEFE1122B2CEB9431F",
+      "split": "dev",
+      "actions": 15,
+      "public_sha256": "a73777c78cb49a1f725a6a8e8b1944405f747ec9fc4001b560f13c08010c40a4",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.972
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "EBC9D3A54A2005BB48DF659706CEE2368",
+      "split": "dev",
+      "actions": 14,
+      "public_sha256": "f7427a351438509b5112dcc9f186af040b362bda1904ea402782883993e3d54b",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.974
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "ECA127693E01CAF5D137480EE24312A17",
+      "split": "dev",
+      "actions": 43,
+      "public_sha256": "c00f7581e25619567b453ab05f11f19fbdf326bc7d1bb0da25d34747f70cecd3",
+      "score": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 1.0,
+        "return": 0.916
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    },
+    {
+      "episode_id": "EF141A50FB8D3B9871E85F24D428CD226",
+      "split": "dev",
+      "actions": 12,
+      "public_sha256": "5921ceed349c2d2089e07a47c01356a7b5602ef0652cc09cd58dc47501396aa6",
+      "score": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "return": 0.978
+      },
+      "policy_image_id": "sha256:45811d4455e35eff1d80623cddb80b0c0e7780d1c45575414a6f05b5bbfa59df"
+    }
+  ],
+  "trajectories_sha256": "ead82e40d84bfd1e0b6ec4096709c9d79438da70d73976391dfe44e429f72f31"
+}
