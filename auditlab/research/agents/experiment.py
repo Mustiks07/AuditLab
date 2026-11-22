@@ -32,7 +32,7 @@ FORBIDDEN_SPLITS_FOR_SELECTION = ("final", "test", "holdout")
 # Service outcomes (HTTP 429, provider/bridge failures) are retried at the SLOT level with a new attempt id:
 # finitely, after a cooldown, every failed attempt kept. Defaults are conservative; a plan may override them.
 SERVICE_DEFAULTS = {"max_slot_retries": 2, "cooldown_s": 60.0, "max_cooldown_s": 600.0,
-                    "max_consecutive_service_failures": 3}
+                    "max_consecutive_service_failures": 3, "inter_attempt_cooldown_s": 0.0}
 RETRIED_SERVICE_STATUSES = ("rate_limited", "quota_exhausted", "provider_error", "bridge_failure", "interrupted")
 TRANSPORTS = ("in_process", "subprocess", "docker")
 
@@ -83,6 +83,8 @@ def validate_plan(plan: dict) -> None:
                         "docker for official runs)")
     if type(plan["repetitions"]) is not int or plan["repetitions"] < 1:
         raise PlanError("repetitions must be a positive integer")
+    if plan.get("slot_order", "arm_major") not in ("arm_major", "balanced"):
+        raise PlanError("slot_order must be arm_major or balanced")
 
 
 def is_paid_arm(arm: dict) -> bool:
@@ -92,12 +94,19 @@ def is_paid_arm(arm: dict) -> bool:
 
 def attempt_slots(plan: dict) -> list[dict]:
     slots = []
-    for arm in plan["arms"]:
-        for episode in plan["episodes"]:
-            for repetition in range(plan["repetitions"]):
-                key = hashlib.sha256(json.dumps([plan["artifact_id"], arm["name"], episode["episode_ref"], repetition])
-                                     .encode()).hexdigest()[:16]
-                slots.append({"slot": f"{arm['name']}--{key}", "arm": arm, "episode": episode, "repetition": repetition})
+    arms, episodes = plan["arms"], plan["episodes"]
+    if plan.get("slot_order", "arm_major") == "balanced":
+        # Every case/repetition visits all arms, rotating who goes first. No outcome-dependent order.
+        schedule = ((arms[(offset + index + repetition) % len(arms)], episode, repetition)
+                    for repetition in range(plan["repetitions"])
+                    for index, episode in enumerate(episodes) for offset in range(len(arms)))
+    else:
+        schedule = ((arm, episode, repetition) for arm in arms for episode in episodes
+                    for repetition in range(plan["repetitions"]))
+    for arm, episode, repetition in schedule:
+        key = hashlib.sha256(json.dumps([plan["artifact_id"], arm["name"], episode["episode_ref"], repetition])
+                             .encode()).hexdigest()[:16]
+        slots.append({"slot": f"{arm['name']}--{key}", "arm": arm, "episode": episode, "repetition": repetition})
     return slots
 
 
@@ -149,7 +158,7 @@ def _service_settings(plan: dict) -> dict:
     for key in ("max_slot_retries", "max_consecutive_service_failures"):
         if type(settings[key]) is not int or settings[key] < 0:
             raise PlanError(f"service.{key} must be a non-negative integer")
-    for key in ("cooldown_s", "max_cooldown_s"):
+    for key in ("cooldown_s", "max_cooldown_s", "inter_attempt_cooldown_s"):
         if type(settings[key]) not in (int, float) or not math.isfinite(settings[key]) or settings[key] < 0:
             raise PlanError(f"service.{key} must be a finite non-negative number")
     return settings
@@ -202,7 +211,8 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
                                  encoding="utf-8", newline="\n")
     service = _service_settings(plan)
     invocation = {"started_at": datetime.now(timezone.utc).isoformat(), "source_sha": source_sha(),
-                  "attempts_started": [], "service_waits_s": [], "stop_reason": None, "stop_detail": None}
+                  "attempts_started": [], "service_waits_s": [], "inter_attempt_waits_s": [],
+                  "stop_reason": None, "stop_detail": None}
     interrupted = finalize_interrupted(out)
     if interrupted:
         log(f"finalized {len(interrupted)} interrupted attempt(s); their slots are retried with new ids")
@@ -227,12 +237,22 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
             log(f"{slot['slot']}: {service_failures} service failures; slot left unmeasured (kept in the record)")
             queue.pop(0)
             continue
+        wait = 0.0
+        wait_kind = "service_waits_s"
         if service_failures and evaluated[-1] in invocation["attempts_started"]:
             # cool down before retrying a slot the service refused in THIS run (a later resume starts fresh)
             wait = min(service["max_cooldown_s"], max(service["cooldown_s"], _retry_after_of(out, evaluated[-1]) or 0.0))
-            invocation["service_waits_s"].append(wait)
-            log(f"{slot['slot']}: service failure ({statuses[-1]}); waiting {wait:.0f}s before retry {len(evaluated)}")
+        if invocation["attempts_started"] and service["inter_attempt_cooldown_s"] > wait:
+            wait = service["inter_attempt_cooldown_s"]
+            wait_kind = "inter_attempt_waits_s"
+        if wait:
+            # One actual wait, even when both policies require a cooldown. Do not double-count it.
+            invocation[wait_kind].append(wait)
+            log(f"{slot['slot']}: waiting {wait:.0f}s ({wait_kind}, outside the episode deadline)")
             sleep(wait)
+        if stop_requested and stop_requested():
+            invocation.update(stop_reason="stop_requested", stop_detail="stop requested during cooldown")
+            break
         attempt_id = slot["slot"] if not evaluated else f"{slot['slot']}--retry{len(evaluated)}"
         per_attempt = None
         if is_paid_arm(slot["arm"]):

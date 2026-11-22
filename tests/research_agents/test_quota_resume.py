@@ -192,6 +192,57 @@ class ExperimentService(unittest.TestCase):
         with self.assertRaises(experiment.PlanError):
             self.run_plan(plan, sha, [])
 
+    def test_balanced_order_preserves_slots_and_rotates_first_arm(self):
+        plan, _ = self.plan(repetitions=3)
+        plan["arms"] = [{**plan["arms"][0], "name": name} for name in ("A", "B", "C")]
+        legacy = experiment.attempt_slots(plan)
+        plan["slot_order"] = "balanced"
+        experiment.validate_plan(plan)
+        balanced = experiment.attempt_slots(plan)
+        self.assertEqual({s["slot"] for s in legacy}, {s["slot"] for s in balanced})
+        self.assertEqual([s["arm"]["name"] for s in balanced], list("ABCBCACAB"))
+        plan["slot_order"] = "best_first"
+        with self.assertRaises(experiment.PlanError):
+            experiment.validate_plan(plan)
+
+    def test_successes_cool_down_between_episodes_and_resume_does_not_repeat(self):
+        plan, sha = self.plan(repetitions=3, inter_attempt_cooldown_s=60)
+        summary = self.run_plan(plan, sha, [self.submit()] * 3)
+        self.assertEqual(self.waits, [60, 60])
+        self.assertEqual(summary["last_invocation"]["inter_attempt_waits_s"], [60, 60])
+        before = self.attempts()
+        self.run_plan(plan, sha, [])
+        self.assertEqual(self.attempts(), before)
+        self.assertEqual(self.waits, [60, 60])
+
+    def test_stop_during_cooldown_prevents_another_provider_attempt(self):
+        for service_failure in (False, True):
+            with self.subTest(service_failure=service_failure):
+                self.out = self.tmp / str(service_failure)
+                plan, sha = self.plan(inter_attempt_cooldown_s=60)
+                stopped = []
+                first = ProviderError("rate_limit", "HTTP 429", status=429) if service_failure else self.submit()
+                result = experiment.run_experiment(
+                    plan, sha, self.out, provider_override=ScriptedProvider([first, self.submit()]),
+                    log=lambda _: None, sleep=lambda _: stopped.append(True), stop_requested=lambda: bool(stopped))
+                self.assertEqual(len(self.attempts()), 1)
+                self.assertEqual(result["last_invocation"]["stop_reason"], "stop_requested")
+
+    def test_invalid_inter_attempt_cooldown_refused(self):
+        for delay in (-1, float("inf"), True):
+            plan, sha = self.plan(inter_attempt_cooldown_s=delay)
+            with self.assertRaises(experiment.PlanError):
+                self.run_plan(plan, sha, [])
+
+    def test_overlapping_cooldowns_are_recorded_once(self):
+        plan, sha = self.plan(repetitions=1, inter_attempt_cooldown_s=60)
+        limited = ProviderError("rate_limit", "HTTP 429", status=429, retry_after=45)
+        result = self.run_plan(plan, sha, [limited, self.submit()])
+        invocation = result["last_invocation"]
+        self.assertEqual(self.waits, [60])
+        self.assertEqual(invocation["service_waits_s"], [])
+        self.assertEqual(invocation["inter_attempt_waits_s"], [60])
+
 
 if __name__ == "__main__":
     unittest.main()
