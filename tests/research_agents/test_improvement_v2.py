@@ -32,6 +32,11 @@ def finding(**changes):
 
 
 class Diagnosis(unittest.TestCase):
+    def test_invalid_submission_cannot_crash_diagnostics(self):
+        malformed = [finding(affected_ids=[{}]), finding(evidence_ids=[[]]), None, 1,
+                     finding(claimed_amount_minor=True)]
+        self.assertEqual(self.labels(malformed, {}), ['invalid_structure'] * len(malformed))
+
     def labels(self, findings, evaluation, truth=TRUTH):
         return [f["label"] for f in diagnose({"episode_id": "E", "findings": findings}, truth, evaluation)["findings"]]
 

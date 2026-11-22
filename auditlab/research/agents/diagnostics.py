@@ -18,6 +18,14 @@ def _same_set(a, b) -> bool:
     return set(a or []) == set(b or [])
 
 
+def _well_formed(finding) -> bool:
+    return (isinstance(finding, dict) and isinstance(finding.get('type'), str)
+            and all(isinstance(finding.get(k), list) and all(isinstance(v, str) for v in finding[k])
+                    for k in ('affected_ids', 'evidence_ids'))
+            and isinstance(finding.get('currency'), str)
+            and type(finding.get('claimed_amount_minor')) is int)
+
+
 def diagnose(final_answer: dict | None, truth: dict, evaluation: dict | None) -> dict:
     issues = truth.get("issues") or []
     findings = (final_answer or {}).get("findings") if isinstance(final_answer, dict) else None
@@ -29,7 +37,9 @@ def diagnose(final_answer: dict | None, truth: dict, evaluation: dict | None) ->
                  for issue in issues]
     per_finding = []
     for index, finding in enumerate(findings):
-        if index in matches:
+        if not _well_formed(finding):
+            label = "invalid_structure"
+        elif index in matches:
             label = "correct"
         elif not issues:
             label = "false_accusation_on_clean"

@@ -185,15 +185,26 @@ class Laboratory:
         if not evaluation or evaluation.get("visibility") != "open" or evaluation.get("tp") is None:
             return {"primary": "not_evaluated", "kinds": ["not_evaluated"], "claims": [], "error": error, "status": status}
         tp, fp, fn = evaluation.get("tp", 0), evaluation.get("fp", 0), evaluation.get("fn", 0)
+        if any(type(v) is not int for v in (tp, fp, fn)):
+            return {"primary": "not_evaluated", "kinds": ["not_evaluated"], "claims": [], "error": error, "status": status}
+        diagnosis = {d['index']: d['label'] for d in evaluation.get('finding_diagnostics', [])}
+        labels = {'correct': 'accepted', 'wrong_amount': 'wrong_amount', 'wrong_currency': 'wrong_amount',
+                  'evidence_incomplete': 'wrong_evidence', 'evidence_unavailable': 'wrong_evidence',
+                  'false_accusation_on_clean': 'false_accusation', 'duplicate': 'false_accusation'}
         findings = reference.get("findings") or []
         claims = []
-        for claim in _claims(attempt):
+        for index, claim in enumerate(_claims(attempt)):
             affected = set(claim.get("affected_ids") or [])
             same = [f for f in findings if f.get("type") == claim.get("type")
                     and (not affected or not f.get("affected_ids") or affected & set(f["affected_ids"]))]
             exact = [f for f in same if f.get("claimed_amount_minor") == claim.get("claimed_amount_minor")
                      and f.get("currency") == claim.get("currency")]
-            if fp == 0:
+            if index in diagnosis:
+                kind = labels.get(diagnosis[index], 'unverified')
+            elif tp and fp:
+                # Aggregate counts cannot tell which particular finding matched.
+                kind = 'unverified'
+            elif fp == 0:
                 kind = "accepted"
             elif not same and (reference.get("complete") or claim.get("type") in COVERED_TYPES
                                or reference.get("source") == "independent"
@@ -215,8 +226,7 @@ class Laboratory:
                 kinds.append(kind)
         if fp and not kinds:
             kinds.append("unverified" if any(c["kind"] == "unverified" for c in claims) else "false_accusation")
-        missed = fn - sum(1 for c in claims if c["kind"] in ("wrong_amount", "wrong_evidence"))
-        if missed > 0:
+        if fn > 0:
             kinds.append("miss")
         if not kinds:
             kinds.append("correct")

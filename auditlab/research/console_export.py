@@ -77,6 +77,11 @@ def publish(plan, output, target, *, comparison=None, state=None):
         ev = (row.get('_evaluation') or {}).get('official')
         evaluation = None if ev is None else {'visibility':'open', 'tp':ev['tp'], 'fp':ev['fp'], 'fn':ev['fn'],
                                                'reward':ev['return'], 'inspection_steps':row.get('inspection_steps')}
+        diagnosis = (row.get('_evaluation') or {}).get('diagnosis')
+        if evaluation is not None and diagnosis is not None:
+            # Publish labels by submitted index, never private issue IDs or truth.
+            evaluation['finding_diagnostics'] = [
+                {'index': f['index'], 'label': f['label']} for f in diagnosis.get('findings', [])]
         totals = row.get('totals') or {}; tokens = totals.get('tokens') or {}
         kind = 'test_double' if row.get('test_double') else 'measured'
         attempt = artifact('attempt', aid, experiment_id=eid, variant_id=row.get('variant'),
@@ -111,7 +116,7 @@ def publish(plan, output, target, *, comparison=None, state=None):
         variants=[]
         for name, m in comparison['arms'].items():
             variants.append({'variant_id':name,'label':next((a['label'] for a in agents if a['variant_id']==name),name),'metrics':{
-                'micro_f1':m['micro_f1']['value'], 'mean_reward':m['mean_reward']['value'],
+                'micro_f1':m['micro_f1']['value'], 'mean_reward':m.get('mean_reward_agent_ended',m['mean_reward'])['value'],
                 'clean_fp':{'count':m['fp_on_clean']['attempts_with_findings'],'denominator':m['fp_on_clean']['clean_attempts']},
                 'completion':{'completed':m['completion']['submitted'],'total':m['completion']['attempts']},
                 'timeouts':m['status'].get('timeout',0),
@@ -119,18 +124,19 @@ def publish(plan, output, target, *, comparison=None, state=None):
                 'actions_mean':m['actions']['mean'],'time_s':m['wall_time_s']['mean'],
                 'cost_usd':None if m['cost_usd']['n']!=m['attempts'] else (m['cost_usd']['mean'] or 0)*m['attempts']}})
         # The console convention is b-a; the independent scorer reports a-b.
+        paired = comparison.get('paired_by_family_agent_ended', comparison['paired_by_family'])
         pairs=[{'a':v['b'],'b':v['a'],'metric':'mean_reward','difference':v['difference'],'interval':v['ci95'],
-                'method':'Парный bootstrap по экономическим семействам'} for v in comparison['paired_by_family'].values() if v['difference'] is not None and v['ci95'] is not None]
+                'method':'Парный bootstrap по экономическим семействам; сбои сервиса исключены'} for v in paired.values() if v['difference'] is not None and v['ci95'] is not None]
         missing=[{'variant_id':name,'reason':'incomplete_runs','message':f"Завершено {m['completion']['submitted']} из {m['attempts']} попыток; сбои сервиса не доказывают качество модели."}
                  for name,m in comparison['arms'].items() if m['completion']['submitted'] < m['attempts']]
         missing += [{'variant_id':v['a'],'reason':'insufficient_families','message':'Недостаточно независимых семейств для оценки неопределённости сравнения.'}
-                    for v in comparison['paired_by_family'].values() if v['ci95'] is None]
+                    for v in paired.values() if v['ci95'] is None]
         write(target/'comparison.json',artifact('comparison',f'comparison-{eid}', experiment_id=eid,
             title='Независимое сравнение аудиторов',status='incomplete' if missing else 'completed', verification={'status':'passed'},
             verified_by='review.agent_generalization.compare', sample={'families':comparison['families'],
             'episodes':comparison['episodes'],'repetitions':plan['repetitions'],
             'split':plan['episodes'][0]['split'] if len({e['split'] for e in plan['episodes']})==1 else None,
-            'note':'Внутренняя открытая проверка, не конкурсный балл.'},
+            'note':'Внутренняя открытая проверка, не конкурсный балл. Качество и средняя награда исключают сбои сервиса; все попытки показаны в завершении.'},
             variants=variants,paired=pairs,missing=missing))
     return {'experiment_id':eid,'attempts':len(rows),'target':str(target)}
 

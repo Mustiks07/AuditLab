@@ -34,6 +34,29 @@ def candidate(artifact_id, snapshot, **fields):
             "snapshot_ref": f"snapshots/{snapshot}/public", **fields}
 
 
+class MixedFindingDiagnosis(unittest.TestCase):
+    def test_mixed_correct_and_wrong_claims_use_per_finding_evaluation(self):
+        claim = {'type': 'payment_allocation', 'affected_ids': ['payment/P1'],
+                 'claimed_amount_minor': 100, 'currency': 'KZT', 'evidence_ids': ['payments/D1']}
+        attempt = {'status': 'completed', 'submission': {'findings': [claim, {**claim, 'claimed_amount_minor': 101}]},
+                   'evaluation': {'visibility': 'open', 'tp': 1, 'fp': 1, 'fn': 0,
+                                  'finding_diagnostics': [{'index': 0, 'label': 'correct'},
+                                                          {'index': 1, 'label': 'wrong_amount'}]}}
+        ref = {'findings': [claim], 'complete': True}
+        lab = object.__new__(research_lab.Laboratory)
+        self.assertEqual([c['kind'] for c in lab.outcome(attempt, ref)['claims']], ['accepted', 'wrong_amount'])
+        del attempt['evaluation']['finding_diagnostics']
+        self.assertEqual([c['kind'] for c in lab.outcome(attempt, ref)['claims']], ['unverified', 'unverified'])
+
+    def test_duplicate_wrong_claims_cannot_hide_missed_issues(self):
+        claim = {'type': 'payment_allocation', 'affected_ids': ['payment/P1'],
+                 'claimed_amount_minor': 101, 'currency': 'KZT', 'evidence_ids': []}
+        attempt = {'status': 'completed', 'submission': {'findings': [claim, claim]},
+                   'evaluation': {'visibility': 'open', 'tp': 0, 'fp': 2, 'fn': 2}}
+        ref = {'findings': [{**claim, 'claimed_amount_minor': 100}], 'complete': True}
+        self.assertIn('miss', object.__new__(research_lab.Laboratory).outcome(attempt, ref)['kinds'])
+
+
 def add_lab_artifacts(root: Path) -> None:
     design = {"stratum": "period_boundary", "issue_types": ["payment_allocation"], "clean": False,
               "settlement_timing": "after", "currencies": ["KZT"]}
