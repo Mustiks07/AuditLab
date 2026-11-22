@@ -87,6 +87,16 @@ class Fixture:
 class FixtureCase(unittest.TestCase):
     issues = [issue()]
 
+    def test_unlisted_type_keeps_zero_tolerance(self):
+        fixture = Fixture([issue()], tolerance={'fx_conversion': 1})
+        try:
+            exact = fixture.score(submission(finding()))
+            wrong = fixture.score(submission(finding(amount=10001)))
+            self.assertEqual((exact['tp'], exact['fp'], exact['fn']), (1, 0, 0))
+            self.assertEqual((wrong['tp'], wrong['fp'], wrong['fn']), (0, 1, 1))
+        finally:
+            fixture.close()
+
     def setUp(self):
         self.fixture = Fixture(copy.deepcopy(self.issues))
 

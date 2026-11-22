@@ -1,0 +1,257 @@
+{
+  "config": {
+    "allocation_mode": "partial",
+    "base_currency": "KZT",
+    "config_version": "1.1",
+    "currencies": [
+      "KZT"
+    ],
+    "issue_counts": {
+      "payment_allocation": 1
+    }
+  },
+  "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I90AD84882F0CDF81FEC7E903"
+      ],
+      "documents": [
+        "invoices/DC56EFDEDB6F4B4DEAD62A4D9",
+        "invoices/D1F4605D79E086F1360DC5296"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I0252A31380C75ABC0A1FD3EB"
+      ],
+      "documents": [
+        "invoices/D3E5DAFE35131AAE456AF2D93",
+        "invoices/D11F86261F89FA7F99E02B29F"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I3F0888D3465D4A650328F6DE"
+      ],
+      "documents": [
+        "invoices/DCD40715926729A1691E83680",
+        "invoices/D16C28B97276CC5A779CF11D1"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I623A903DBE0AA328DFB8E04B"
+      ],
+      "documents": [
+        "invoices/DEFA3B06AC21F078A61C5F332",
+        "invoices/D6A203E129895FBB1FC15B25E"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I7EE12C5163DAA0B0C09D8680"
+      ],
+      "documents": [
+        "invoices/D89BC7FA90D670EDCA5A002EE",
+        "invoices/D49D9AC84AAD59BCD84F5AB34"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I07E7A97ED3D960E1FA2F24E4"
+      ],
+      "documents": [
+        "invoices/D14F541DC8D908BE029208595",
+        "invoices/DF4E2D66D0D9829516B16D42A"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I4E5195A9AF192ADDD95BE382",
+        "payment/P6795DA2B1B89BAF03012362C"
+      ],
+      "amount_minor": 7560000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-13T10:58:00+05:00",
+      "settled_at": "2026-11-14T10:58:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I38290BFEE3A120B8F3E53C15",
+        "payment/PDFBC7D95304485A3F1799BF7"
+      ],
+      "amount_minor": 4300000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-10T11:01:00+05:00",
+      "settled_at": "2026-11-11T11:01:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I0C119188C99A67D37B8FE489",
+        "payment/PF45EAF0BEB7522B593EE76DB"
+      ],
+      "amount_minor": 5860000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-19T09:50:00+05:00",
+      "settled_at": "2026-11-20T09:50:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I379BFE122CF3A2F6FAB93291",
+        "payment/P503F9A340A4E581EC54C7FE4"
+      ],
+      "amount_minor": 6150000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-18T08:27:00+05:00",
+      "settled_at": "2026-11-19T08:27:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I6FC8B548D173F896A11DD61E",
+        "payment/P0A18FF9F3BB659F01F99F6A8"
+      ],
+      "amount_minor": 5040000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-09T12:19:00+05:00",
+      "settled_at": "2026-11-10T12:19:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I6EDBFB2CDCEC4BCBD4A4CDBB",
+        "payment/P8EA4902CE380ACBFBCEC3942"
+      ],
+      "amount_minor": 7950000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-11-17T11:51:00+05:00",
+      "settled_at": "2026-11-18T11:51:00+05:00"
+    },
+    {
+      "amount_minor": 7272627,
+      "invoice_id": "IB24CBF9BB27B6F1F8135EFFF",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7272627,
+      "invoice_id": "IA8DF5F10675D058A6F2991EA",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 7272627,
+      "invoice_id": "ICB55353C92BE63DFC5E64C0B",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 600000,
+      "kind": "refund",
+      "payment_id": "P2FE6D724835D44ECF32A5BEE",
+      "returned_at": "2026-11-07T11:20:00+05:00"
+    },
+    {
+      "affected_ids": [
+        "invoice/I7810CA95BC9F86195A35EA9F"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-11-30T14:12:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/D86DDF07B6A06E3251E3E97AA",
+      "total_minor": 3931900
+    },
+    {
+      "affected_ids": [
+        "invoice/I6BA0C71741869FADAD7A5FC1"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-12-01T09:58:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/DA2D3C45A761073DB73D24A81",
+      "total_minor": 3591400
+    },
+    {
+      "affected_ids": [
+        "invoice/I1A946A497BC627CEEFB6E8C5"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-12-01T15:55:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/D23F72CE2660D885060CD0AB8",
+      "total_minor": 1474600
+    },
+    {
+      "affected_ids": [
+        "invoice/IE71C503A3AC86A9FEDFBDD93"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-12-01T15:18:00+05:00",
+      "kind": "invoice_issued",
+      "source": "invoices/DC3C3DEC5475BE2B0E956C436",
+      "total_minor": 4887900
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.7",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/I4E5195A9AF192ADDD95BE382",
+        "payment/P6795DA2B1B89BAF03012362C"
+      ],
+      "after": {
+        "applied_minor": 4536000,
+        "remaining_minor": 3024000,
+        "settled_at": "2026-11-14T10:58:00+05:00"
+      },
+      "before": {
+        "applied_minor": 7560000,
+        "settled_at": "2026-11-14T10:58:00+05:00"
+      },
+      "effect": "The settlement posted less than the designated payment.",
+      "type": "payment_allocation"
+    }
+  ],
+  "seed": 922101,
+  "source_book": {
+    "episode_id": "E051097C27CA8CD986943657C7BE332C3",
+    "files_sha256": {
+      "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+      "invoices.jsonl": "5cfd8f95312ae5e02df89e9494cc9ab7e36df29474bd454cad0f08598df46770",
+      "ledger.csv": "15481aec6c79c3be2ef644ef26373eb6fc8c025232fa2168aafe8888bccbf479",
+      "manifest.json": "e937dffd4b8d686b8043313aaf127395093b3b3b829e86f8bacd7c1a9ebec5d4",
+      "payments.jsonl": "b27d51f350daa2d9b47fba7619e7212c5dfa3aee0c8db85ee174095405eb5ea4",
+      "policy.json": "c284a6830b2163493de4d93423e68577f3461d5771035ddbaccfae1a00863fec"
+    },
+    "path": "source_book",
+    "schema_version": "1.0",
+    "target_files_sha256": {
+      "fx.csv": "2ad04681d97cb8cd6d75843dd262d0dd8bddb932c2ffa53e0ac997da57f49a4c",
+      "invoices.jsonl": "5cfd8f95312ae5e02df89e9494cc9ab7e36df29474bd454cad0f08598df46770",
+      "ledger.csv": "b054c5b2cbc08898418b55c18791c3c85a1dde19a88848049768fe279de8eb62",
+      "manifest.json": "a46d2c257459cb1d9c0b8058ab76fdcd1a1e127176f2dad0b3539f3714183cab",
+      "payments.jsonl": "b27d51f350daa2d9b47fba7619e7212c5dfa3aee0c8db85ee174095405eb5ea4",
+      "policy.json": "c284a6830b2163493de4d93423e68577f3461d5771035ddbaccfae1a00863fec"
+    },
+    "transition_path": "source_transition.json",
+    "transition_sha256": "6a69418ee3285c8f2dedcfc70514b9e05ec5b2ce53ab456d360dd1ff8c5b4246"
+  },
+  "source_book_validation": {
+    "document_count": 36,
+    "issue_count": 0,
+    "ledger_rows": 82
+  },
+  "timezone_database": {
+    "package": "tzdata",
+    "version": "2026.6"
+  }
+}

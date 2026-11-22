@@ -17,7 +17,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
-from . import research, service
+from . import research, research_lab, service
 from .paths import PACKAGE, REPO, DemoPaths
 from .store import OP_KEY_RE, ExportStore, NotFound, Refused
 
@@ -198,6 +198,22 @@ def create_app(paths: DemoPaths | None = None, extra_roots: list[Path] | None = 
     @app.get("/research/comparisons/{artifact_id}")
     def research_comparison(artifact_id: str):
         return _research(lambda p: p.comparison(artifact_id))
+
+    @app.get("/research/lab")
+    def research_lab_overview():
+        return _research(lambda p: research_lab.lab(p).overview())
+
+    @app.get("/research/lab/families/{artifact_id}")
+    def research_lab_family(artifact_id: str):
+        return _research(lambda p: research_lab.lab(p).family(artifact_id))
+
+    @app.get("/research/lab/dossiers/{artifact_id}")
+    def research_lab_dossier(artifact_id: str):
+        return _research(lambda p: research_lab.lab(p).dossier(artifact_id))
+
+    @app.get("/research/lab/map")
+    def research_lab_map(experiment: str | None = None, before: str | None = None, after: str | None = None):
+        return _research(lambda p: research_lab.lab(p).results_map(experiment, before, after))
 
     @app.get("/research/snapshots/{sid}")
     def research_snapshot(sid: str):

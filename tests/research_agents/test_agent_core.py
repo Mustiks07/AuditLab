@@ -225,7 +225,13 @@ class Reliability(unittest.TestCase):
         self.assertEqual(len(caller.records), 3)
 
     def test_retry_never_passes_the_deadline(self):
-        caller, _, run = self.call([ProviderError("rate_limit", "slow", retry_after=50.0)], deadline=20.0)
+        caller, clock, run = self.call([ProviderError("rate_limit", "slow", retry_after=50.0)], deadline=20.0)
+        with self.assertRaises(ProviderError) as caught:
+            run()
+        # Never waits past the deadline, and a provider limit stays a service error (rate_limit), never an
+        # auditor timeout that the official rule would score as an empty answer.
+        self.assertEqual((caught.exception.kind, clock.slept), ("rate_limit", []))
+        caller, _, run = self.call([ProviderError("server", "boom", retry_after=50.0)], deadline=20.0)
         with self.assertRaises(ProviderError) as caught:
             run()
         self.assertEqual(caught.exception.kind, "deadline")

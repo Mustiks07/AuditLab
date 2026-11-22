@@ -8,19 +8,35 @@
       "attempts": 2,
       "scored": 2,
       "excluded_infra": 0,
+      "service_outcomes": 2,
       "micro_f1": {
+        "value": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 0
+      },
+      "micro_f1_by_rule": {
         "value": 0.0,
         "tp": 0,
         "fp": 0,
-        "fn": 1
+        "fn": 1,
+        "basis": "every scored attempt; service failures as empty submissions"
       },
       "mean_reward": {
         "value": 0.0,
-        "n": 2
+        "n": 2,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": null,
+        "n": 0
       },
       "fp_on_clean": {
         "attempts_with_findings": 0,
-        "clean_attempts": 1,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 1,
         "fp_findings": 0
       },
       "status": {
@@ -71,19 +87,35 @@
       "attempts": 2,
       "scored": 2,
       "excluded_infra": 0,
+      "service_outcomes": 1,
       "micro_f1": {
         "value": 0.0,
         "tp": 0,
         "fp": 0,
-        "fn": 1
+        "fn": 1,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 1
+      },
+      "micro_f1_by_rule": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "every scored attempt; service failures as empty submissions"
       },
       "mean_reward": {
         "value": -0.015,
-        "n": 2
+        "n": 2,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": -1.0,
+        "n": 1
       },
       "fp_on_clean": {
         "attempts_with_findings": 0,
-        "clean_attempts": 1,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 1,
         "fp_findings": 0
       },
       "status": {
@@ -141,6 +173,22 @@
       "p_value": null,
       "shown": false,
       "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "paired_by_family_agent_ended": {
+    "gemini-memory_vs_gemini-tools": {
+      "a": "gemini-memory",
+      "b": "gemini-tools",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [
+        "dev-922101"
+      ],
       "missing_in_b": [],
       "reason": "at least two independent families are required for an uncertainty estimate"
     }

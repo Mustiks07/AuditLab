@@ -116,3 +116,78 @@ export function duration(seconds: number | null | undefined): string {
   if (minutes < 60) return `${minutes} мин ${Math.round(seconds % 60)} с`;
   return `${Math.floor(minutes / 60)} ч ${minutes % 60} мин`;
 }
+
+// ------------------------------------------------------------------ financial laboratory
+export const TRANSFORMATION: Record<string, string> = {
+  id_order: "Переименование документов", lawful_refund: "Законная отвлекающая операция",
+  fixed: "Исправление нарушения", currency: "Изменение суммы и валюты", boundary: "Граница периода",
+  amount: "Изменение суммы", interaction: "Исправление одной из двух ошибок",
+};
+export const TRANSFORMATION_NOTE: Record<string, string> = {
+  id_order: "Новые номера документов и другой порядок строк. Деньги не меняются: правильный ответ прежний.",
+  lawful_refund: "Добавлен настоящий независимый возврат депозита. Он законен и не должен попасть в выводы.",
+  fixed: "Нарушение исправлено согласованным изменением документов. Соответствующий вывод должен исчезнуть.",
+  amount: "Изменена денежная величина. Правильный ответ пересчитан по связанным документам.",
+  interaction: "Исправлено одно нарушение. Независимая проверка подтверждает, какая ошибка осталась.",
+  currency: "Договор в иенах (без копеек). Тот же остаток 20 000 единиц меняет валюту и сумму в минимальных единицах.",
+  boundary: "Существенное событие перенесено через границу периода. Сравните правильные ответы по документам.",
+};
+export const transformationName = (kind?: string | null) => pick(TRANSFORMATION, kind, "Исходная компания");
+
+export const OUTCOME: Record<string, string> = {
+  correct: "Верно", miss: "Пропуск нарушения", false_accusation: "Ложное обвинение", wrong_amount: "Неверная сумма",
+  wrong_evidence: "Неверные доказательства", unverified: "Причина не установлена",
+  technical: "Технический сбой", not_evaluated: "Без оценки",
+};
+export const OUTCOME_NOTE: Record<string, string> = {
+  correct: "Оценщик засчитал ответ: лишних и пропущенных выводов нет.",
+  miss: "Нарушение есть в правильном выводе, а в ответе агента его нет.",
+  false_accusation: "Агент заявил нарушение там, где правильный вывод его не содержит.",
+  wrong_amount: "Нарушение названо верно, но сумма или валюта не совпадает с правильным выводом.",
+  wrong_evidence: "Тип и сумма совпадают с правильным выводом, но оценщик не принял вывод: ссылки не подтверждают нарушение.",
+  unverified: "Сохранённых данных недостаточно, чтобы установить причину оценки конкретного вывода.",
+  technical: "Попытка не завершилась: финансовая оценка не выставляется.",
+  not_evaluated: "Оценка недоступна или скрыта.",
+};
+export const outcomeName = (kind?: string) => pick(OUTCOME, kind, "Без оценки");
+export const OUTCOME_TONE: Record<string, string> = {
+  correct: "pass", miss: "fail", false_accusation: "fail", wrong_amount: "fail", wrong_evidence: "mixed",
+  unverified: "mixed", technical: "unknown", not_evaluated: "unknown",
+};
+
+// Provider-specific reasons; attempt statuses keep their established wording (ATTEMPT_STATUS).
+export const TECH_ERRORS: Record<string, string> = {
+  rate_limit: "Провайдер отклонил запрос: превышен лимит запросов",
+};
+export function techError(error?: { code?: string; message?: string } | null, status?: string): string {
+  const base = pick(TECH_ERRORS, error?.code, attemptStatus(status ?? error?.code));
+  return error?.message && /^HTTP \d{3}$/.test(error.message) ? `${base} (${error.message})` : base;
+}
+
+export const DIMENSION: Record<string, string> = {
+  violation: "Тип нарушения", interaction: "Взаимодействие", clean: "Чистые контрпримеры", currency: "Валюты",
+  boundary: "Граница периода", difficulty: "Сложность случая", transformation: "Преобразование",
+};
+const FACET_VALUES: Record<string, Record<string, string>> = {
+  violation: { clean: "Чистая книга (нарушений нет)", unknown: "Состав не опубликован" },
+  interaction: { none: "Без взаимодействия", allocation_fx_same_payment: "Остаток и курс в одном платеже",
+    cutoff_fx_same_invoice: "Граница и курс в одном счёте", unknown: "Состав не опубликован" },
+  clean: { clean: "Чистые контрпримеры", defect: "С нарушением", unknown: "Состав не опубликован" },
+  currency: { unknown: "Не указано" },
+  boundary: { before: "Зачёт до границы", at: "Зачёт ровно на границе", after: "Зачёт после границы",
+    none: "Без пограничного зачёта", unknown: "Состав не опубликован" },
+  difficulty: { clean: "Чистая книга", single: "Одно нарушение", multiple: "Несколько нарушений",
+    interaction: "Взаимодействие нарушений", unknown: "Состав не опубликован" },
+  transformation: { original: "Исходная компания", unknown: "Вне семейств" },
+};
+export function facetName(dimension: string, value: string): string {
+  if (dimension === "violation" && FACET_VALUES.violation[value] === undefined) return named({ payment_allocation: "Нераспределённый платёж",
+    duplicate_invoice: "Дублирующий счёт", fx_conversion: "Валютная оценка", period_cutoff: "Граница периода" }, value) ?? "Другой тип";
+  if (dimension === "transformation" && FACET_VALUES.transformation[value] === undefined) return transformationName(value);
+  if (dimension === "currency" && value !== "unknown") return value.split("+").join(" + ");
+  return FACET_VALUES[dimension]?.[value] ?? "Другое значение";
+}
+export const CHANGE: Record<string, string> = {
+  regression: "Регрессия", improvement: "Улучшение", unchanged_correct: "Верно до и после",
+  unchanged_wrong: "Ошибка до и после", not_comparable: "Нельзя сравнить",
+};

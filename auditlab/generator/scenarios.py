@@ -28,7 +28,7 @@ def add_duplicate(b, *, enabled=True):
     b.events.append({"kind": "invoice_archive", "affected_ids": affected, "documents": records})
     if enabled:
         extra, _ = _recognize(
-            b, archive_copy, issued_at, after=closing_row if b.config_version == "1.1" else None,
+            b, archive_copy, issued_at, after=closing_row if b.uses_source_book else None,
         )
         evidence = [*records, f"ledger/{first['row_id']}", f"ledger/{extra['row_id']}"]
         b.issue("duplicate_invoice", affected, extra["debit_minor"], currency, evidence, deferred=True)
@@ -44,15 +44,21 @@ def add_duplicate(b, *, enabled=True):
         })
 
 
-def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled, next_period=False):
+def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled, next_period=False,
+                      distance_minutes=None, crossing_offset_minutes=None):
     _, _, hour, minute = b.case_parameters("boundary", 100)
-    distance = 1 if b.config_version == "1.0" else hour * 60 + minute + 1
+    distance = distance_minutes if distance_minutes is not None else (
+        hour * 60 + minute + 1 if b.uses_source_book else 1
+    )
     issued_at = b.period_end + timedelta(minutes=distance if next_period else -distance)
     # Recognition batches can run later than issue time without crossing a period.
     recognized_at = issued_at + timedelta(minutes=distance // 2)
-    posted_at = b.period_end + timedelta(minutes=distance) if cutoff_enabled else recognized_at
+    offset = distance if crossing_offset_minutes is None else crossing_offset_minutes
+    if next_period and crossing_offset_minutes is not None:
+        offset = -max(1, offset)
+    posted_at = b.period_end + timedelta(minutes=offset) if cutoff_enabled else recognized_at
     invoice = b.invoice(b.id("entity"), issued_at, currency, total_minor)
-    deferred = b.config_version == "1.1" and cutoff_enabled
+    deferred = b.uses_source_book and cutoff_enabled
     posting = _recognize(b, invoice, recognized_at if deferred else posted_at)
     debit, _ = posting
     if deferred:
@@ -70,7 +76,9 @@ def _boundary_invoice(b, currency, total_minor, *, cutoff_enabled, next_period=F
             "type": "period_cutoff", "affected_ids": affected,
             "before": {"timestamp": recognized_at.isoformat()},
             "after": {"timestamp": posted_at.isoformat(), "journal_id": debit["journal_id"]},
-            "effect": "The invoice was recognized in the following reporting period.",
+            "effect": ("The invoice was recognized before its reporting period."
+                       if next_period and crossing_offset_minutes is not None else
+                       "The invoice was recognized in the following reporting period."),
             "evidence_ids": evidence,
         })
     return invoice, posted_at, recognized_at
@@ -81,6 +89,14 @@ def add_cutoff(b, *, enabled=True, next_period=False):
     units, *_ = b.case_parameters("cutoff", 24_000)
     amount = units * 10 ** b.exponents[b.base_currency]
     _boundary_invoice(b, b.base_currency, amount, cutoff_enabled=enabled, next_period=next_period)
+
+
+def add_configured_cutoff(b, *, enabled, amount_minor, issued_before_minutes,
+                          recognition_offset_minutes, issued_next_period):
+    _boundary_invoice(
+        b, b.base_currency, amount_minor, cutoff_enabled=enabled, next_period=issued_next_period,
+        distance_minutes=issued_before_minutes, crossing_offset_minutes=recognition_offset_minutes,
+    )
 
 
 def _foreign_currency(b, *, prefer_usd=False):
@@ -103,7 +119,7 @@ def _rates(b, currency, expected_date, amount_minor):
         previous_rate, expected_rate, alternate_rate = "1.15", "1.05", "1.25"
     previous_date = expected_date - timedelta(days=1)
     alternate_date = expected_date + timedelta(days=1)
-    if b.config_version == "1.1":
+    if b.uses_source_book:
         # A single rate for a currency/day, even when independently varied events overlap dates.
         step = Decimal({"USD": ".25", "JPY": ".005", "KWD": ".5"}.get(currency, ".01"))
         base = Decimal(expected_rate)
@@ -160,7 +176,7 @@ def _value(b, invoice, posted_at, *, payment=None, fx_enabled, recognized_at=Non
     actual_date, actual_rate = (alternate_date, alternate_rate) if fx_enabled else (expected_date, correct_rate)
     expected = _convert(b, amount, currency, correct_rate)
     actual = _convert(b, amount, currency, actual_rate)
-    deferred = b.config_version == "1.1"
+    deferred = b.uses_source_book
     posting = b.post(
         recognized_at if deferred else posted_at, b.base_currency, expected if deferred else actual,
         "FX_VALUATION", "FX_OFFSET", invoice["entity_id"],
@@ -200,9 +216,10 @@ def add_fx(b, *, enabled=True):
     elif currency == "KWD":
         amount += 10
     received_at = (b.period_start + timedelta(days=day, hours=hour, minutes=minute)).astimezone(UTC)
+    applied, tranches, _ = b.allocation_pattern("fx", amount)
     invoice, payment, *_ = b.allocation(
-        b.id("entity"), currency, amount, amount * 3 // 5, received_at,
-        received_at + timedelta(minutes=1), received_at + timedelta(minutes=2),
+        b.id("entity"), currency, amount, applied, received_at,
+        received_at + timedelta(minutes=1), received_at + timedelta(minutes=2), initial_tranches=tranches,
     )
     _value(b, invoice, received_at, payment=payment, fx_enabled=enabled)
 
@@ -213,10 +230,13 @@ def add_allocation_fx(b, *, allocation_enabled, fx_enabled):
     exponent = b.exponents[currency]
     units, day, hour, minute = b.case_parameters("allocation_fx", 50, day=13, hour=16)
     received_at = b.period_start + timedelta(days=day, hours=hour, minutes=minute)
-    last_at = b.period_end + timedelta(minutes=1 if allocation_enabled else -1)
+    amount = units * 10 ** exponent
+    applied, tranches, distance = b.allocation_pattern("allocation_fx", amount)
+    clean_last_at = b.period_end - timedelta(minutes=max(1, distance))
+    last_at = b.period_end + timedelta(minutes=distance) if allocation_enabled else clean_last_at
     invoice, payment, *_ = b.allocation(
-        b.id("entity"), currency, units * 10 ** exponent, units * 10 ** exponent * 3 // 5,
-        received_at, received_at + timedelta(minutes=1), last_at,
+        b.id("entity"), currency, amount, applied, received_at, received_at + timedelta(minutes=1), last_at,
+        initial_tranches=tranches, clean_last_at=clean_last_at,
     )
     _value(b, invoice, received_at, payment=payment, fx_enabled=fx_enabled)
 

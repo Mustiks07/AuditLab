@@ -1,0 +1,71 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "empty",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "empty--7b4a6c65bc5a0824",
+  "attempt_id": "empty--7b4a6c65bc5a0824",
+  "budget_usd": null,
+  "episode": {
+    "condition": "transformed_error",
+    "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_error",
+    "episode_sha256": "0d7a8ee8ddd818fd6bf893007b52ad1af4d6211d90c446e0b7ccb4fab177eda8",
+    "family_id": "dev-922101",
+    "split": "dev",
+    "variant": "error"
+  },
+  "evaluation_ref": "trusted\\empty--7b4a6c65bc5a0824\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "TF4DA0AAADDF2F98C12C42C500D31D8",
+        "findings": []
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "TF4DA0AAADDF2F98C12C42C500D31D8",
+    "findings": []
+  },
+  "finished_at": "2026-11-22T04:54:35.899120+00:00",
+  "inspection_steps": 0,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "started_at": "2026-11-22T04:54:35.378058+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "budget_debit_usd": 0.0,
+    "cost_usd": 0.0,
+    "environment_actions": 1,
+    "inspection_steps": 0,
+    "known_cost_usd": 0.0,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.52
+  },
+  "variant": "empty"
+}

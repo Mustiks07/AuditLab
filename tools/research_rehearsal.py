@@ -1,6 +1,7 @@
 """Reproduce the integrated research path with real local policies; no API or training charges."""
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -33,7 +34,7 @@ def main():
         prepare_teacher(output/'teacher',output/'search/curriculum/curriculum.json',output/'teacher-preparation')
         publish_curriculum(output/'search',output/'console-search')
         baseline={'schema_version':'1.0','artifact_id':'integrated-open-dev','protocol_id':'genesis-official-60s','purpose':'selection',
-            'transport':'in_process','repetitions':1,'episodes':[{'episode_ref':str(m.parent.parent),'family_id':m.parent.parent.name,'split':'dev'}
+            'transport':'in_process','repetitions':1,'episodes':[{'episode_ref':str(m.parent.parent),'family_id':'origin-'+hashlib.sha256(str(read(m.parent.parent/'private/provenance.json')['seed']).encode()).hexdigest()[:16],'split':'dev'}
             for m in sorted((ROOT/'datasets/open/dev').glob('*/public/manifest.json'))],
             'arms':[{'name':n,'agent':{'kind':'baseline_policy','policy':n}} for n in ['empty','random','flag_all','reconcile']],
             'analysis':{'pairs':[['reconcile','empty']]}}

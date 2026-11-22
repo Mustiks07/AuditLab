@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "kind": "hardware_probe",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.5",
+  "cpu": "AMD64 Family 23 Model 160 Stepping 0, AuthenticAMD",
+  "cpu_count": 8,
+  "memory_gb": 15.3,
+  "display_adapters": [
+    "AMD Radeon(TM) Graphics"
+  ],
+  "nvidia_gpus": [],
+  "packages": {
+    "torch": false,
+    "transformers": false,
+    "peft": false,
+    "trl": false,
+    "datasets": false,
+    "vllm": false
+  },
+  "cuda": null,
+  "weight_training_possible": false,
+  "blockers": [
+    "no NVIDIA GPU visible (nvidia-smi absent or reports none): the local_lora backend needs CUDA",
+    "training packages not installed: torch, transformers, peft, trl, datasets (docker/train-gpu/requirements.in; pinning and lock belong to the integrator)",
+    "vllm not installed: needed to serve the trained adapter for re-evaluation"
+  ],
+  "note": "Facts of this machine only; nothing was installed or downloaded."
+}

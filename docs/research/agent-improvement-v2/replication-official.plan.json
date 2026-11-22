@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "replication-922101-official",
+  "protocol_id": "genesis-official-60s",
+  "purpose": "selection",
+  "transport": "docker",
+  "docker": {
+    "image": "auditlab-llm-bridge:gemini",
+    "allow": [
+      "generativelanguage.googleapis.com:443"
+    ]
+  },
+  "repetitions": 3,
+  "episodes": [
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/corrected_clean",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "clean",
+      "condition": "corrected_clean"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "error",
+      "condition": "original_error"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_clean",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "clean",
+      "condition": "transformed_clean"
+    },
+    {
+      "episode_ref": "docs/research/agent-improvement-v2/replication-922101/transformed_error",
+      "family_id": "dev-922101",
+      "split": "dev",
+      "variant": "error",
+      "condition": "transformed_error"
+    }
+  ],
+  "arms": [
+    {
+      "name": "A-tools",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "A"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        }
+      }
+    }
+  ],
+  "budget": {
+    "max_usd_total": 0.25,
+    "max_usd_per_attempt": 0.01
+  },
+  "service": {
+    "max_slot_retries": 2,
+    "cooldown_s": 60.0,
+    "max_cooldown_s": 600.0,
+    "max_consecutive_service_failures": 3
+  },
+  "env_seed": 0,
+  "analysis": {
+    "pairs": [],
+    "bootstrap": 10000,
+    "seed": 20261122
+  },
+  "note": "Repeat the live pilot miss: same model/settings as the pilot's tools agent, 4 frozen conditions x 3 attempts, official 60 s limit (as in the pilot). Dev only."
+}

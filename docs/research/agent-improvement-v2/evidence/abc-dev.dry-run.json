@@ -1,0 +1,14 @@
+{
+  "plan_sha256": "2d436dec2f52fe6531f03984a699baee64e37c2775d95df638d87bcf0259d53d",
+  "protocol_id": "genesis-official-60s",
+  "attempts": 108,
+  "paid_attempts": 108,
+  "worst_case_usd": 1.08,
+  "max_usd_total": 0.25,
+  "missing_conditions": [
+    "arm A: secret variable GEMINI_API_KEY must be set in the controller environment (checked at run time, never stored)",
+    "arm B: secret variable GEMINI_API_KEY must be set in the controller environment (checked at run time, never stored)",
+    "arm C: secret variable GEMINI_API_KEY must be set in the controller environment (checked at run time, never stored)"
+  ],
+  "network_calls": 0
+}

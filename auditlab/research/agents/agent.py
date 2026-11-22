@@ -104,14 +104,18 @@ def tool_specs(variant: str) -> list[ToolSpec]:
     return ENV_TOOL_SPECS + (MEMORY_TOOL_SPECS if variant == "memory" else [])
 
 
-def system_prompt(variant: str) -> str:
-    return SYSTEM_PROMPT + (MEMORY_PROMPT if variant == "memory" else "")
+def system_prompt(variant: str, prompt_variant: str = "A") -> str:
+    from auditlab.research.agents.prompts import addition
+    return SYSTEM_PROMPT + addition(prompt_variant) + (MEMORY_PROMPT if variant == "memory" else "")
 
 
-def prompt_hash(variant: str, provider_description: dict, max_tokens: int) -> str:
-    payload = {"prompt_version": PROMPT_VERSION, "system": system_prompt(variant),
+def prompt_hash(variant: str, provider_description: dict, max_tokens: int, prompt_variant: str = "A") -> str:
+    payload = {"prompt_version": PROMPT_VERSION, "system": system_prompt(variant, prompt_variant),
                "tools": [(t.name, t.description, t.input_schema) for t in tool_specs(variant)],
                "provider": provider_description, "max_tokens": max_tokens}
+    if prompt_variant != "A":  # variant A keeps the exact hash of the original auditor (pilot comparability)
+        from auditlab.research.agents.prompts import PROMPT_SET_VERSION
+        payload["prompt_variant"] = [PROMPT_SET_VERSION, prompt_variant]
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
 
@@ -166,7 +170,8 @@ class LLMAuditor:
     def __init__(self, provider: Provider, variant: str, *, max_tokens: int = 16000,
                  max_model_calls_per_action: int = 12, max_prechecks: int = 2, max_nudges: int = 2,
                  retry: RetryPolicy | None = None, guard: SpendGuard | None = None,
-                 clock: Callable[[], float] = time.monotonic, sleep: Callable[[float], None] = time.sleep):
+                 clock: Callable[[], float] = time.monotonic, sleep: Callable[[float], None] = time.sleep,
+                 prompt_variant: str = "A"):
         if variant not in VARIANTS:
             raise ValueError(f"variant must be one of {VARIANTS}")
         self.provider, self.variant, self.max_tokens = provider, variant, max_tokens
@@ -177,9 +182,10 @@ class LLMAuditor:
         self.refs = ReferenceIndex()
         self.memory = InvestigationMemory(self.refs) if variant == "memory" else None
         self.transcript: list[dict] = []
-        self.system = system_prompt(variant)
+        self.prompt_variant = prompt_variant
+        self.system = system_prompt(variant, prompt_variant)
         self.tools = tool_specs(variant)
-        self.prompt_hash = prompt_hash(variant, provider.describe(), max_tokens)
+        self.prompt_hash = prompt_hash(variant, provider.describe(), max_tokens, prompt_variant)
         self._pending: dict | None = None  # {"call_id", "action"} awaiting the environment's answer
         self._episode_id: str | None = None
         self._prechecks = 0
@@ -189,6 +195,7 @@ class LLMAuditor:
     # ------------------------------------------------------------------ interface
     def describe(self) -> dict:
         return {"agent_version": AGENT_VERSION, "prompt_version": PROMPT_VERSION, "variant": self.variant,
+                "prompt_variant": self.prompt_variant,
                 "prompt_hash": self.prompt_hash, "max_tokens": self.max_tokens, "limits": self.limits,
                 "provider": self.provider.describe(), "test_double": bool(self.provider.is_test_double)}
 

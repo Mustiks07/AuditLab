@@ -1,0 +1,36 @@
+{
+  "schema_version": "2.0",
+  "protocol_id": "financial-families-v2-local",
+  "episode_protocol_id": "genesis-official-60s",
+  "generator": {"config_version":"1.2","base_currency":"KZT","currencies":["KZT"],"timezone":"UTC","target_period":"2034-03","company_size":{"ledger_rows_target":240,"documents_target":64},"clean_distractors":["split_payment","archive_copy","refund"]},
+  "search": {"seed": 241223071, "candidate_budget": 7, "attempt_budget": 21, "repetitions": 3, "min_weak_repetitions": 2},
+  "reduction": {"repetitions": 3, "min_matches": 2, "max_candidates": 3, "max_runs": 12, "max_seconds": 90},
+  "objectives": ["missed_issue","clean_false_positive","wrong_amount","wrong_evidence"],
+  "examples_per_goal": 2,
+  "roots": [
+    {"candidate_id":"a-late","family_id":"v2-family-221087","split":"train","stratum":"delayed-allocation","seed":241221087,"config":{"financial_case":{"kind":"allocation","amount_minor":1485457,"applied_bps":4217,"tranches":2,"settlement_offset_minutes":0},"issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"b-part","family_id":"v2-family-221121","split":"train","stratum":"interior-allocation","seed":241221121,"config":{"base_currency":"JPY","currencies":["JPY"],"financial_case":{"kind":"allocation","amount_minor":68917,"applied_bps":7731,"tranches":3},"issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"c-omitted","family_id":"v2-family-221153","split":"train","stratum":"full-omission","seed":241221153,"config":{"base_currency":"KWD","currencies":["KWD"],"allocation_mode":"omitted","financial_case":{"kind":"allocation","amount_minor":2818631,"applied_bps":6283,"tranches":2},"issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"d-clean","family_id":"v2-family-221169","split":"train","stratum":"clean-allocation","seed":241221169,"config":{"financial_case":{"kind":"allocation","amount_minor":8335273,"applied_bps":4981,"tranches":1,"settlement_offset_minutes":42},"issue_counts":{"payment_allocation":0}}},
+    {"candidate_id":"e-cutoff","family_id":"v2-family-221207","split":"train","stratum":"invoice-cutoff","seed":241221207,"config":{"financial_case":{"kind":"invoice_cutoff","amount_minor":5892887,"issued_before_minutes":177,"recognition_offset_minutes":29},"issue_counts":{"period_cutoff":1}}},
+    {"candidate_id":"f-clean","family_id":"v2-family-221223","split":"train","stratum":"clean-cutoff","seed":241221223,"config":{"financial_case":{"kind":"invoice_cutoff","amount_minor":6118387,"issued_before_minutes":69,"recognition_offset_minutes":0},"issue_counts":{"period_cutoff":0}}},
+    {"candidate_id":"g-interact","family_id":"v2-family-221259","split":"train","stratum":"allocation-fx","seed":241221259,"config":{"currencies":["KZT","USD"],"interaction":"allocation_fx_same_payment","issue_counts":{"payment_allocation":1,"fx_conversion":1}}},
+    {"candidate_id":"h-interact","family_id":"v2-family-221279","split":"train","stratum":"cutoff-fx","seed":241221279,"config":{"currencies":["KZT","USD"],"interaction":"cutoff_fx_same_invoice","issue_counts":{"period_cutoff":1,"fx_conversion":1}}},
+    {"candidate_id":"i-clean","family_id":"v2-family-221297","split":"train","stratum":"clean-allocation","seed":241221297,"config":{"base_currency":"JPY","currencies":["JPY"],"financial_case":{"kind":"allocation","amount_minor":71287,"applied_bps":3299,"tranches":3},"issue_counts":{"payment_allocation":0}}},
+    {"candidate_id":"dev-late","family_id":"v2-family-221307","split":"dev","stratum":"delayed-allocation","seed":241221307,"config":{"target_period":"2034-04","financial_case":{"kind":"allocation","amount_minor":1234567,"applied_bps":6200,"tranches":2,"settlement_offset_minutes":0},"issue_counts":{"payment_allocation":1}}},
+    {"candidate_id":"dev-cutoff","family_id":"v2-family-221331","split":"dev","stratum":"invoice-cutoff","seed":241221331,"config":{"target_period":"2034-05","financial_case":{"kind":"invoice_cutoff","amount_minor":2468135,"issued_before_minutes":110,"recognition_offset_minutes":0},"issue_counts":{"period_cutoff":1}}},
+    {"candidate_id":"dev-interact","family_id":"v2-family-221353","split":"dev","stratum":"allocation-fx","seed":241221353,"config":{"target_period":"2034-06","currencies":["KZT","USD"],"interaction":"allocation_fx_same_payment","issue_counts":{"payment_allocation":1,"fx_conversion":1}}},
+    {"candidate_id":"partition-fixture","family_id":"v2-family-221389","split":"test","stratum":"reserved","seed":241221389,"config":{"target_period":"2034-07","financial_case":{"kind":"allocation","amount_minor":5371437,"applied_bps":3917,"tranches":3},"issue_counts":{"payment_allocation":1}}}
+  ],
+  "axes": {
+    "a-late":[{"path":["financial_case","amount_minor"],"values":[1199903,1485457,2147389]},{"path":["financial_case","applied_bps"],"values":[2897,4217,8901]}],
+    "b-part":[{"path":["financial_case","amount_minor"],"values":[68917,75967,103681]}],
+    "c-omitted":[{"path":["financial_case","amount_minor"],"values":[1811207,2818631,3087221]}],
+    "d-clean":[{"path":["financial_case","amount_minor"],"values":[7618169,8335273,9700681]}],
+    "e-cutoff":[{"path":["financial_case","recognition_offset_minutes"],"values":[0,29,438]}],
+    "f-clean":[{"path":["financial_case","amount_minor"],"values":[4993971,6118387,7109371]}],
+    "g-interact":[{"path":["company_size","ledger_rows_target"],"values":[240,260,300]}],
+    "h-interact":[{"path":["company_size","ledger_rows_target"],"values":[240,300,360]}],
+    "i-clean":[{"path":["financial_case","amount_minor"],"values":[30317,56701,71287]}]
+  }
+}

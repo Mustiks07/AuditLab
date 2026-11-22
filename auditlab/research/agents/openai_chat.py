@@ -69,6 +69,38 @@ def _error_message(raw: bytes, key: str | None) -> str:
     return _redact(str(message or "")[:300], key)
 
 
+def _quota_details(raw: bytes) -> tuple[float | None, str | None]:
+    """(retry delay in seconds, quota scope "minute" | "day" | None) from a 429 body.
+
+    Google's OpenAI-compatible endpoint returns google.rpc details: RetryInfo.retryDelay ("23s") and
+    QuotaFailure.violations[].quotaId (e.g. "...PerMinute...", "...PerDay..."). Other providers return none.
+    """
+    try:
+        data = json.loads(raw.decode("utf-8", "replace"))
+    except ValueError:
+        return None, None
+    items = data if isinstance(data, list) else [data]
+    delay, scope = None, None
+    for item in items:
+        error = item.get("error") if isinstance(item, dict) else None
+        for detail in (error or {}).get("details") or [] if isinstance(error, dict) else []:
+            if not isinstance(detail, dict):
+                continue
+            text = str(detail.get("retryDelay") or "")
+            if text.endswith("s"):
+                try:
+                    delay = float(text[:-1])
+                except ValueError:
+                    pass
+            for violation in detail.get("violations") or []:
+                quota = str((violation or {}).get("quotaId") or (violation or {}).get("quotaMetric") or "")
+                if "PerDay" in quota or "per_day" in quota.lower():
+                    scope = "day"
+                elif scope is None and ("PerMinute" in quota or "per_minute" in quota.lower()):
+                    scope = "minute"
+    return delay, scope
+
+
 def http_request(method: str, url: str, *, key: str | None, body: bytes | None = None,
                  content_type: str = "application/json", timeout_s: float = 60.0,
                  extra_headers: dict | None = None) -> HttpResult:
@@ -94,15 +126,19 @@ def http_request(method: str, url: str, *, key: str | None, body: bytes | None =
         # 401/403 bodies may echo a masked key fragment, so their text is never kept.
         detail = "" if status in (401, 403) else _error_message(raw_error, key)
         message = f"HTTP {status}" + (f": {detail}" if detail else "")
+        retry_after = _retry_after(error.headers)
         if status == 429:
-            kind = "rate_limit"
+            delay, scope = _quota_details(raw_error)
+            retry_after = retry_after if retry_after is not None else delay
+            kind = "quota_exhausted" if scope == "day" else "rate_limit"
+            message += f" (quota scope: {scope})" if scope else ""
         elif status == 408:
             kind = "timeout"
         elif status >= 500:
             kind = "server"
         else:
             kind = {401: "auth", 403: "permission", 404: "not_found"}.get(status, "bad_request")
-        raise ProviderError(kind, message, status=status, retry_after=_retry_after(error.headers),
+        raise ProviderError(kind, message, status=status, retry_after=retry_after,
                             request_id=request_id) from None
     except urllib.error.URLError as error:
         if isinstance(error.reason, (TimeoutError, socket.timeout)):

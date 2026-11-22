@@ -1,0 +1,24 @@
+{
+ "protocol_id": "independent-assurance-2.0",
+ "rule": "sealed -> used_once after the first final run -> no_longer_sealed after any second use, any disclosure of documents, seeds, IDs or answers, or any tuning on it",
+ "updated": "2026-11-22",
+ "samples": {
+  "holdout-v1": {
+   "commitment_sha256": "dcd56b939e6967e199087d1759802e264fc7d4efa4af52f4ad2cf57df959bc65",
+   "status": "sealed",
+   "superseded_by": "holdout-v2",
+   "families": 78,
+   "final_runs_recorded": 0,
+   "note": "All 78 families are inside v2. A run on v1 counts as a run on those 78 families of v2."
+  },
+  "holdout-v2": {
+   "commitment_sha256": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c",
+   "status": "sealed",
+   "families": 90,
+   "pending_not_checked": {"settlement_at_or_after_boundary": 10},
+   "final_runs_recorded": 0,
+   "handover": "pending: the trusted files stay with the reviewer until GPT Pro 2 receives them over a private channel",
+   "use": "one final run after the agent variants are frozen; the integrator records the run here and the status becomes used_once"
+  }
+ }
+}

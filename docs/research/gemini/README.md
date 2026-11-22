@@ -81,3 +81,12 @@ python -m auditlab.research run --plan docs/research/gemini/plan.json \
 [инструкции интеграции](../INTEGRATION.md). В нашем дополнительном образе CA скопирован
 с `COPY --chmod=644`, заданы `SSL_CERT_FILE` и `REQUESTS_CA_BUNDLE`; проверка TLS включена.
 Адрес конкретного облачного прокси и CA не включены в переносимый план.
+
+### Причина сбоя в консольных попытках
+
+В трёх неуспешных попытках `console/attempts/*.json` есть поле `error`:
+`{"code": "rate_limit", "message": "HTTP 429"}`. Оно перенесено из `status_detail` тех же
+`attempt_id` в `measurement.json` этого пакета функцией `_status_error` из
+`auditlab/research/console_export.py`, которая теперь вызывается в `publish`. Прочие байты попыток не менялись. Консоль
+показывает «Провайдер отклонил запрос: превышен лимит запросов (HTTP 429)» и не выставляет этим
+попыткам финансовую оценку.

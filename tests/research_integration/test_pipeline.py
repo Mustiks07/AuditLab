@@ -23,6 +23,18 @@ def plan():
 
 
 class IntegrationTests(unittest.TestCase):
+    def test_financial_family_export_rejects_sealed_or_escaping_controls(self):
+        from auditlab.research.family_study_export import study_members
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write(root/'study.json', {'pair_validation':[{'root':'case','kind':'amount','status':'passed'}]})
+            write(root/'cases/case/candidate.json', {'candidate':{'split':'holdout'}})
+            with self.assertRaisesRegex(ValueError, 'sealed'):
+                study_members(root)
+            write(root/'study.json', {'pair_validation':[{'root':'../outside','kind':'amount','status':'passed'}]})
+            with self.assertRaisesRegex(ValueError, 'unsafe'):
+                study_members(root)
+
     def test_real_runner_independent_comparison_console_and_documents(self):
         with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp);p=plan();experiment.validate_plan(p)
@@ -36,7 +48,7 @@ class IntegrationTests(unittest.TestCase):
             self.assertEqual(published['paired'],[])
             self.assertEqual(published['status'],'incomplete')
             self.assertTrue(published['missing'])
-            c['paired_by_family']['direction-control']={'a':'reconcile','b':'empty','difference':.5,'ci95':[.2,.8]}
+            c['paired_by_family_agent_ended']['direction-control']={'a':'reconcile','b':'empty','difference':.5,'ci95':[.2,.8]}
             publish(p,base/'run',base/'direction',comparison=c)
             pair=json.loads((base/'direction/comparison.json').read_text())['paired'][0]
             self.assertEqual((pair['a'],pair['b'],pair['difference']),('empty','reconcile',.5))

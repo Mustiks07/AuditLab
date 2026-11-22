@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "attempt",
+  "artifact_id": "empty--33737e24e268d564",
+  "experiment_id": "baselines-replication-922101",
+  "variant_id": "empty",
+  "repetition": 0,
+  "status": "completed",
+  "snapshot_ref": "snapshots/empty--33737e24e268d564/public",
+  "episode": {
+    "family_id": "dev-922101",
+    "split": "dev"
+  },
+  "evaluation": {
+    "visibility": "open",
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 1.0,
+    "inspection_steps": 0
+  },
+  "submission": {
+    "episode_id": "E051097C27CA8CD986943657C7BE332C3",
+    "findings": []
+  },
+  "steps": [
+    {
+      "step": 1,
+      "action": {
+        "action": "submit",
+        "args": {
+          "episode_id": "E051097C27CA8CD986943657C7BE332C3",
+          "findings": []
+        }
+      },
+      "observation": {
+        "ok": true,
+        "result": {
+          "accepted": true
+        },
+        "error": null,
+        "remaining_steps": 99
+      }
+    }
+  ],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": 0.0,
+    "elapsed_s": 0.406
+  },
+  "started_at": "2026-11-22T04:54:30.463743+00:00",
+  "finished_at": "2026-11-22T04:54:30.870310+00:00"
+}

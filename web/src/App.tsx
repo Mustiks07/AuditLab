@@ -9,6 +9,7 @@ import { newestFirst, runNames } from "./workspace/model";
 import { useLocal, useResource } from "./workspace/resources";
 import { Catalog, PairCatalog, RunChooser, Workspace, WorkspaceSkeleton } from "./workspace/Workspace";
 import { AttemptScreen, ComparisonScreen, CurriculumScreen, ExperimentScreen, FailureScreen, ReductionScreen, ResearchHome } from "./research/screens";
+import { DossierScreen, FamilyScreen, LabHome, MapScreen, type MapState } from "./research/lab";
 
 export { go } from "./navigation";
 
@@ -17,16 +18,22 @@ type Route =
   | { view: "run"; id: string; key?: string; documents?: boolean }
   | { view: "replay"; id: string }
   | { view: "compare"; left: string; right: string }
-  | { view: "research"; page: string; id?: string; attempt?: string; side?: string; doc?: string };
+  | { view: "research"; page: string; id?: string; attempt?: string; side?: string; variant?: string; doc?: string; map?: MapState };
 
 function researchRoute(parts: string[]): Route {
   const [, page = "", id, ...rest] = parts;
-  if (!id || !["experiments", "failures", "attempts", "reductions", "curricula", "comparisons"].includes(page)) {
+  if (page === "lab") return { view: "research", page: "lab" };
+  if (page === "map") {
+    const pairs = parts.slice(2);
+    const at = (short: string) => { const i = pairs.indexOf(short); return i >= 0 && i % 2 === 0 ? pairs[i + 1] || undefined : undefined; };
+    return { view: "research", page: "map", map: { dimension: at("d"), experiment: at("e"), before: at("b"), after: at("a"), column: at("c"), value: at("r") } };
+  }
+  if (!id || !["experiments", "failures", "attempts", "reductions", "curricula", "comparisons", "families", "dossiers"].includes(page)) {
     return { view: "research", page: "home" };
   }
   const docAt = rest.indexOf("doc");
   const value = (name: string) => { const at = rest.indexOf(name); return at >= 0 && at < (docAt < 0 ? rest.length : docAt) ? rest[at + 1] : undefined; };
-  return { view: "research", page, id, attempt: value("attempt"), side: value("side"),
+  return { view: "research", page, id, attempt: value("attempt"), side: value("side"), variant: value("v"),
     doc: docAt >= 0 && rest.length > docAt + 1 ? rest.slice(docAt + 1).join("/") : undefined };
 }
 
@@ -160,6 +167,10 @@ export function App() {
       {route.view === "research" && route.page === "reductions" && <ReductionScreen key={route.id} id={route.id!} side={route.side} docKey={route.doc}/>}
       {route.view === "research" && route.page === "curricula" && <CurriculumScreen key={route.id} id={route.id!}/>}
       {route.view === "research" && route.page === "comparisons" && <ComparisonScreen key={route.id} id={route.id!}/>}
+      {route.view === "research" && route.page === "lab" && <LabHome/>}
+      {route.view === "research" && route.page === "families" && <FamilyScreen key={route.id} id={route.id!} variant={route.variant} side={route.side} docKey={route.doc}/>}
+      {route.view === "research" && route.page === "dossiers" && <DossierScreen key={route.id} id={route.id!} docKey={route.doc}/>}
+      {route.view === "research" && route.page === "map" && <MapScreen state={route.map ?? {}}/>}
     </AppShell>
     {dialog === "menu" && <Dialog title="Меню" onClose={() => setDialog(null)} drawer>
       <Sidebar active={active} onAbout={() => setDialog("about")} onNavigate={() => setDialog(null)} documentsHref={documentsHref}/>

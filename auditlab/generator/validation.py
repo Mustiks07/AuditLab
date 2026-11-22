@@ -114,7 +114,7 @@ def _fx_findings(company, invoices, payments):
 
 
 def validate_accounting(company):
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         _validate_treasury(company)
     invoices = defaultdict(list)
     by_invoice = defaultdict(list)

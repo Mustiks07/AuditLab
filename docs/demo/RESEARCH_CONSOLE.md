@@ -122,4 +122,5 @@ node web/tests/research.browser.mjs
 ```
 
 Результаты браузерной приёмки и снимки — в [docs/design/c3/research-evidence](../design/c3/research-evidence/README.md).
+Связанные финансовые ситуации, досье ошибки и карта результатов — [FINANCIAL_LAB.md](FINANCIAL_LAB.md).
 Сценарий видео — [RESEARCH_VIDEO.md](RESEARCH_VIDEO.md).

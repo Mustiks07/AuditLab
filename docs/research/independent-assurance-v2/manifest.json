@@ -1,0 +1,45 @@
+{
+ "protocol_id": "independent-assurance-2.0",
+ "base_main": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+ "protocol_commit": "478f8e3817f53d55c9493d6e9f3f7b3654521dfb",
+ "commitments": {
+  "holdout_v2": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c",
+  "holdout_v1": "dcd56b939e6967e199087d1759802e264fc7d4efa4af52f4ad2cf57df959bc65"
+ },
+ "environment": {
+  "python": "3.11.9 (python.org signed build; 3.11.14 blocked by Windows Smart App Control)",
+  "lock": "requirements.lock --require-hashes"
+ },
+ "files": {
+  "docs/research/independent-assurance-v2/evidence/holdout-public-summary-v2.json": "90e799c7bcd13f7ad2072737abe277e0311071abfe9f4aeb532b98e326263952",
+  "docs/research/independent-assurance-v2/evidence/metamorphic-report.json": "5ff9d1e39fb18711d46c592b59b1018a5f617de465ad47e83e683308fd348449",
+  "docs/research/independent-assurance-v2/evidence/mutation-report.json": "3ddbab72d51f9e7a69e5e59b4186e78b8d04c9e5a08a0d044b9ef73e88a632db",
+  "docs/research/independent-assurance-v2/evidence/passport-dev-report.json": "14da2d0846512f3a898e15d5b012505ddc1e09495cc3a06b8bce21392c345733",
+  "docs/research/independent-assurance-v2/evidence/recompute-claude-pro-1.json": "ba54850b16fe5c3fe98be0857f5089de45df3a42e079b56cea75fb0b887edc43",
+  "docs/research/independent-assurance-v2/evidence/sealed-passport-summary.json": "c6d763193aca8017bc67cc178a31f5d383f179cf924a5144f3c328743f916206",
+  "docs/research/independent-assurance-v2/protocol.json": "8c3e28cfb18d62bc617694e94aa368174d7a23bf0c3c27c53d893d0ef27f7de1",
+  "docs/research/independent-assurance-v2/PROTOCOL.md": "10c9e87c52150ea21b0fc39f2478bf4124e8d49e8e6cc909bc9dd0ee960ab459",
+  "docs/research/independent-assurance-v2/REPORT.md": "02f54dc97260736372a5106431a4bcc07d50bbc7cf533c40145c29cace76b861",
+  "docs/research/independent-assurance-v2/repro_v2.py": "e4fa1b0ffefac21f42d2bd4865bd39a2837c675d0fa315483cec4c39f5f234de",
+  "docs/research/independent-assurance-v2/sealed-status.json": "44b11ac782a79c8b60a75bff504f77baa394be0f911e09e05c1916dfb591cd43",
+  "review/agent_generalization/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review/agent_generalization/artifact_checks.py": "ab56d647255787f4ee0659d52c106bba2a15fac528e518a2bf9f04956094ed5c",
+  "review/agent_generalization/baselines.py": "873a5b1b76e73e71c8f7cad1cb2f2e32899db331297423016d4840a763791fc6",
+  "review/agent_generalization/canonical.py": "048ed8f5b1b0d9d668e0b6b177ff05d2c94e82d24ef7c0c150435cc8158dbebe",
+  "review/agent_generalization/compare.py": "65b2ff185e833a0eed6d8a627b3a7e9c45a252c9554836910f60789d12a888e8",
+  "review/agent_generalization/families.py": "acdcff48f10ff5e3e1d006200055f1363a796dc1d38d5e1b8d6b7f2a631c83cc",
+  "review/agent_generalization/lineage.py": "28893451c5e481773d960b04746fbd6e86732ab0f529c9327694d6d88436611d",
+  "review/agent_generalization/metamorphic.py": "b59bc5f1da2fe06b3407c6b5b06711c5bcb6e9044627c44788ba03a9ed703da6",
+  "review/agent_generalization/mr_study.py": "f64373c110c6a9d1e373e825ec7ec8c82669f78eea0b0bfaff85c176fb4781a7",
+  "review/agent_generalization/mutation_testing.py": "5a9068b03f15643aa9ae49f0b9db0cc3ed476eff91a5d7392152eeb42eee6cbc",
+  "review/agent_generalization/pairs.py": "2ac0a01f7339828b98fb953cb5994c40ad93bea9f04e53d3a98c98a0f38f7d4d",
+  "review/agent_generalization/passport_study.py": "df664f74fe6e3720bdc42713f683b2e7bab3a4bf565c04c45e31226389241c49",
+  "review/agent_generalization/recompute.py": "209b20fad699c940a103ce9c65ca4cff0c111d79f6a6d4e55cc11e03ce205906",
+  "review/agent_generalization/run.py": "b87d5fd1bbcc216295b261491a87c5cd9a7e9b5c5761f2fd0927bd2ac648c96e",
+  "review/agent_generalization/solver.py": "4bcf34d15fd9375ff3c93419beb4acdc08d0ba1e6440740b9b744d10c97f6e06",
+  "review/agent_generalization/validator.py": "a16f08b957f2de73be72fda66dc9f03355e52b183386f3792c2ff757295b88ec",
+  "tests/research_acceptance/test_artifact_checks.py": "a1ab8c389b417743d8cbfa55c9e06ee91f91cbcf383d9e2649b25921bc966947",
+  "tests/research_acceptance/test_assurance_v2.py": "f90f41079d79287cc9708841a5f71bff9c28c7a3737195c0ce34a45234034f5e",
+  "tests/research_acceptance/test_reviewer_checks.py": "01d1234c3c22a4f2b4fcb03f766a38b0a2f242ed14fafac98c506edebb3378e5"
+ }
+}

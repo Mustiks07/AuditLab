@@ -16,6 +16,7 @@ from uuid import uuid4
 
 from auditlab.release.transforms import read_json, write_json
 
+from .objectives import assess_failures
 from .reduce import snapshot_sha256
 
 CLAUDE_RUNNER_SHA = "61136963764f5d35124ea2177bbbe3d45b8ff932"
@@ -108,28 +109,20 @@ def _claude_public_digest(snapshot):
 
 
 def _failure_assessment(snapshot, record, evaluation):
-    truth = read_json(snapshot / "private/truth.json")
-    matches = {issue_id for _, issue_id in evaluation["matches"]}
-    issues = {issue["issue_id"]: issue for issue in truth["issues"]}
-    findings = record["final_answer"]["findings"]
     score = evaluation["internal_score"]
-    if not isinstance(score, dict) or not matches.issubset(issues):
-        raise ValueError("trusted evaluation does not match the snapshot")
-    failures = [{"reason": "missed_issue", "type": issue["type"], "affected_ids": issue["affected_ids"],
-                 "issue_id": issue_id} for issue_id, issue in issues.items() if issue_id not in matches]
-    for index, reason in evaluation["unmatched"].items():
-        finding = findings[int(index)]
-        failures.append({"reason": "false_positive", "type": finding["type"],
-                         "affected_ids": finding["affected_ids"], "diagnostic": reason})
-    return failures, score
+    if not isinstance(score, dict):
+        raise ValueError("Missing trusted score")
+    return assess_failures(snapshot, record["final_answer"]["findings"], evaluation), score
 
 
 class ClaudeAttemptRunner:
     """Adapt a trusted #42 executor to ``investigate(snapshot, out, repetition, seconds)``."""
 
-    def __init__(self, config, source_sha, execute, bridge_factory, env_factory, *, clock=monotonic):
+    def __init__(self, config, source_sha, execute, bridge_factory, env_factory, *, clock=monotonic,
+                 runner_sha=CLAUDE_RUNNER_SHA):
         self.config = deepcopy(config)
         self.source_sha = source_sha
+        self.runner_sha = runner_sha
         self.protocol_id = config["protocol_id"]
         if self.protocol_id not in PROTOCOL_SECONDS:
             raise ValueError("unknown Claude 1 runner protocol")
@@ -160,7 +153,7 @@ class ClaudeAttemptRunner:
         self._families = {}
 
     def metadata(self):
-        return {"kind": "claude_api", "runner_sha": CLAUDE_RUNNER_SHA, "protocol_id": self.protocol_id,
+        return {"kind": "claude_api", "runner_sha": self.runner_sha, "protocol_id": self.protocol_id,
                 **{name: deepcopy(self.config[name]) for name in ("agent", "provider", "docker")},
                 "max_attempt_cost_micros": self.max_cost, "max_provider_calls": self.max_calls,
                 "max_wall_seconds": self.max_seconds, "max_calls_per_observation": self.calls_per_observation,
@@ -199,7 +192,7 @@ class ClaudeAttemptRunner:
         evaluation_path = raw / "trusted" / run_id / "evaluation.json"
         receipt = {"schema_version": "1.0", "artifact_id": run_id, "attempt_id": run_id,
                    "source_sha": self.source_sha, "protocol_id": self.protocol_id, "kind": "claude_api",
-                   "runner_sha": CLAUDE_RUNNER_SHA, "snapshot_sha256": snapshot_hash, "family_id": family,
+                   "runner_sha": self.runner_sha, "snapshot_sha256": snapshot_hash, "family_id": family,
                    "artifact_ref": str(output / "attempt.json"), "repetition": repetition, "seed": seed,
                    "status": "interrupted", "raw_status": None, "reason": "attempt_in_progress", "launches": None,
                    "max_elapsed_seconds": limit, "failures": None, "score": None, "cost_micros": None,
@@ -265,7 +258,7 @@ def _load_claude_checkout(path):
     return modules
 
 
-def make_claude_runner(config, source_sha):
+def make_claude_runner(config, source_sha, *, use_installed=False):
     """Build an explicitly bounded runner without opening a provider connection."""
     provider = config["provider"]
     key_env = provider.get("api_key_env")
@@ -283,8 +276,12 @@ def make_claude_runner(config, source_sha):
     docker = config["docker"]
     if not docker.get("image"):
         raise ValueError("configure a preloaded Claude 1 Docker bridge image")
-    execute, transport = _load_claude_checkout(config["runner_checkout"])
+    if use_installed:
+        from auditlab.research.agents import execute, transport
+    else:
+        execute, transport = _load_claude_checkout(config["runner_checkout"])
     import judge_adapter
 
     return ClaudeAttemptRunner(config, source_sha, execute.run_attempt,
-                               lambda: transport.docker_bridge(docker, provider), judge_adapter.make_env)
+                               lambda: transport.docker_bridge(docker, provider), judge_adapter.make_env,
+                               runner_sha=source_sha if use_installed else CLAUDE_RUNNER_SHA)
