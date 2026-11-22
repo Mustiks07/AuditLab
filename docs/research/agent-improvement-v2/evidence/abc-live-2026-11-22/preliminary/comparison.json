@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "comparison-independent",
+  "protocol_id": "agent-generalization-1.1",
+  "source_sha": "64cbf9711a23c86803797c0fd20ff646c1ccd882",
+  "arms": {
+    "A": {
+      "attempts": 2,
+      "scored": 2,
+      "excluded_infra": 0,
+      "service_outcomes": 2,
+      "micro_f1": {
+        "value": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 0
+      },
+      "micro_f1_by_rule": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "basis": "every scored attempt; service failures as empty submissions"
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 2,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": null,
+        "n": 0
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 0,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 0,
+        "timeout": 0,
+        "provider_error": 2,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 0,
+        "attempts": 2
+      },
+      "actions": {
+        "n": 2,
+        "mean": 7.5,
+        "median": 7.5,
+        "p90": 8
+      },
+      "input_tokens": {
+        "n": 2,
+        "mean": 256619.0,
+        "median": 256619.0,
+        "p90": 290774
+      },
+      "output_tokens": {
+        "n": 2,
+        "mean": 448.5,
+        "median": 448.5,
+        "p90": 588
+      },
+      "wall_time_s": {
+        "n": 2,
+        "mean": 52.2065,
+        "median": 52.2065,
+        "p90": 60.223
+      },
+      "cost_usd": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "live_attempts": 2
+    }
+  },
+  "paired_by_family": {
+    "B_vs_A": {
+      "a": "B",
+      "b": "A",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [
+        "E15BFA18342414E20C536E2F217B94A1A"
+      ],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_A": {
+      "a": "C",
+      "b": "A",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [
+        "E15BFA18342414E20C536E2F217B94A1A"
+      ],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_B": {
+      "a": "C",
+      "b": "B",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "paired_by_family_agent_ended": {
+    "B_vs_A": {
+      "a": "B",
+      "b": "A",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_A": {
+      "a": "C",
+      "b": "A",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_B": {
+      "a": "C",
+      "b": "B",
+      "families": 0,
+      "difference": null,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "families": 1,
+  "episodes": 1,
+  "attempts": 2,
+  "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}

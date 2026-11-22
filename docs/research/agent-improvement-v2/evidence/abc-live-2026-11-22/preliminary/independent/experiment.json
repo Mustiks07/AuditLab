@@ -1,0 +1,30 @@
+{
+  "protocol_id": "agent-generalization-1.1",
+  "auditlab_protocol_id": "genesis-official-60s",
+  "source_sha": "64cbf9711a23c86803797c0fd20ff646c1ccd882",
+  "plan_artifact_id": "abc-dev-balanced-rc5",
+  "comparisons": [
+    {
+      "name": "B_vs_A",
+      "a": "B",
+      "b": "A"
+    },
+    {
+      "name": "C_vs_A",
+      "a": "C",
+      "b": "A"
+    },
+    {
+      "name": "C_vs_B",
+      "a": "C",
+      "b": "B"
+    }
+  ],
+  "episodes": {
+    "E15BFA18342414E20C536E2F217B94A1A:episode:E15BFA18342414E20C536E2F217B94A1A": {
+      "family_id": "E15BFA18342414E20C536E2F217B94A1A",
+      "variant": "error",
+      "episode_dir": "datasets/open/dev/E15BFA18342414E20C536E2F217B94A1A"
+    }
+  }
+}

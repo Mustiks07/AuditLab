@@ -1,0 +1,29 @@
+{
+  "B": {
+    "status": "timeout",
+    "actions": 40,
+    "wall_seconds": 601.17,
+    "provider_calls": 52,
+    "api_latency_seconds": 137.046,
+    "recorded_backoff_seconds": 451.344,
+    "environment_execution_seconds": 0.0102
+  },
+  "A": {
+    "status": "timeout",
+    "actions": 34,
+    "wall_seconds": 601.601,
+    "provider_calls": 45,
+    "api_latency_seconds": 90.965,
+    "recorded_backoff_seconds": 498.0,
+    "environment_execution_seconds": 0.0161
+  },
+  "C": {
+    "status": "timeout",
+    "actions": 47,
+    "wall_seconds": 600.837,
+    "provider_calls": 58,
+    "api_latency_seconds": 109.779,
+    "recorded_backoff_seconds": 478.0,
+    "environment_execution_seconds": 0.0099
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "abc-dev-balanced-no-slot-retry",
+  "plan_sha256": "b7db0ee6c2477fb955cc59ac4acc0edc939143d6b76f705f586f6a3404ba0768",
+  "invocations": [
+    {
+      "started_at": "2026-11-22T13:31:30.541830+00:00",
+      "source_sha": "70a1ee1c0fc17a5183c00cdb50663f885ebd5c21",
+      "attempts_started": [
+        "A--122970cc8915b79d",
+        "B--c8d4842521e5906a",
+        "C--309cd8bec9a30d86"
+      ],
+      "service_waits_s": [],
+      "inter_attempt_waits_s": [
+        60.0,
+        60.0
+      ],
+      "stop_reason": "consecutive_service_failures",
+      "stop_detail": "3 service failures in a row; last C--309cd8bec9a30d86: rate_limit: retry wait 59.0s would pass the attempt deadline after rate_limit",
+      "finished_at": "2026-11-22T13:36:01.274178+00:00"
+    }
+  ],
+  "bridge_image_id": "sha256:f2d77d6261f47f4af435714d7c1cae25550be9f6649a41adbdae9d563601d0c8"
+}
