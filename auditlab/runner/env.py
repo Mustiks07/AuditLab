@@ -204,7 +204,9 @@ class AuditEnvironment:
         self._session = self._opener(self._public_dir)
         self._run_id = options.get("run_id") or uuid.uuid4().hex[:12]
         self._policy_name = str(options.get("policy_name", "unknown"))
-        self._seed = seed if self.mode == "train" and "episode_key" not in config else None
+        # A reused snapshot does not pass its generation config to reset.
+        open_generation = self.mode == "train" and options.get("snapshot_dir") is None and "episode_key" not in config
+        self._seed = seed if open_generation else None
         self._time_limit = time_limit
         self._started = float(started_at) if started_at is not None else self._clock()
         self._deadline = self._started + self._time_limit

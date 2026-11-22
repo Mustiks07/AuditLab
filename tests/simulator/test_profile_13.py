@@ -256,6 +256,19 @@ class KeyedRandomness(Case):
             self.assertNotIn("seed", json.loads(report.read_text(encoding="utf-8")))
             self.assertNotIn(KEY, report.read_text(encoding="utf-8"))
 
+    def test_reused_keyed_snapshot_does_not_serialize_seed_in_train_receipt(self):
+        from auditlab.runner import make_env
+
+        seed = 982334087137
+        episode = self.make(seed, {"episode_key": KEY})
+        out = episode.parent / "snapshot-receipts"
+        env = make_env("train", evaluator="inprocess", trusted_dir=out)
+        self.addCleanup(env.close)
+        _, info = env.reset(seed, {"snapshot_dir": str(episode)})
+        env.step({"action": "submit", "args": {"episode_id": info["episode_id"], "findings": []}})
+        [report] = out.rglob("report.json")
+        self.assertNotIn("seed", json.loads(report.read_text(encoding="utf-8")))
+
     def test_nonce_renames_without_changing_the_economics(self):
         plain = self.make(6, {"issue_counts": {"fx_conversion": 1}})
         renamed = self.make(6, {"issue_counts": {"fx_conversion": 1}, "snapshot_nonce": "copy-b"})
