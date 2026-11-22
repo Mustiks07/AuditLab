@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "artifact_id": "abc-dev-balanced-rc5",
+  "artifact_id": "abc-dev-balanced-no-slot-retry",
   "protocol_id": "genesis-official-60s",
   "purpose": "selection",
   "transport": "docker",
@@ -174,7 +174,7 @@
     "max_usd_per_attempt": 0.01
   },
   "service": {
-    "max_slot_retries": 2,
+    "max_slot_retries": 0,
     "cooldown_s": 60.0,
     "max_cooldown_s": 600.0,
     "max_consecutive_service_failures": 3,
@@ -199,6 +199,6 @@
     "bootstrap": 10000,
     "seed": 20261122
   },
-  "note": "Dev measurement derived before new A/B/C results from abc-dev.plan.json. Same 12 episodes, 3 repetitions, frozen A/B/C prompts and model. Rotate arms per episode/repetition; 60-second cooldown between attempts outside episode deadlines. No fixed client pacing inside an attempt; provider Retry-After is respected. All arms share these settings. Not the original four-second-pacing registration; no holdout use.",
+  "note": "Dev measurement derived before new A/B/C results from abc-dev.plan.json. Same 12 episodes, 3 repetitions, frozen A/B/C prompts and model. Rotate arms per episode/repetition; 60-second cooldown between attempts outside episode deadlines. No fixed client pacing inside an attempt; provider Retry-After is respected. All arms share these settings. Not the original four-second-pacing registration; no holdout use. Slot-level retries disabled before any B/C results: each scheduled repetition is attempted once so an early rate-limited A cannot consume all three consecutive-service-failure slots before B/C. Provider Retry-After and within-attempt retries remain enabled. The preliminary slot-retry run is retained separately.",
   "slot_order": "balanced"
 }
