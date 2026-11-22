@@ -1,0 +1,110 @@
+{
+ "genesis": {
+  "reward": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "m-examples": {
+   "passed": 15,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "extra-negative": {
+   "passed": 13,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "contract": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "data": {
+   "passed": 21,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "pairs": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  }
+ },
+ "ids": {
+  "reorder": {
+   "passed": 24,
+   "total": 24,
+   "by_condition": {
+    "links": 24,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 24
+   }
+  },
+  "discover-grammar": {
+   "passed": 24,
+   "total": 24,
+   "by_condition": {
+    "links": 24,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 24
+   }
+  },
+  "discover-grammar+reorder": {
+   "passed": 24,
+   "total": 24,
+   "by_condition": {
+    "links": 24,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 24
+   }
+  },
+  "discover-neutral+reorder": {
+   "passed": 24,
+   "total": 24,
+   "by_condition": {
+    "links": 24,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 24
+   }
+  },
+  "discover-numeric+reorder": {
+   "passed": 24,
+   "total": 24,
+   "by_condition": {
+    "links": 24,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 24
+   }
+  }
+ },
+ "problems": [],
+ "ids_informative": {
+  "literal+reorder": {
+   "passed": 0,
+   "total": 24,
+   "by_condition": {
+    "links": 0,
+    "evidence": 24,
+    "oracle": 24,
+    "audit": 0
+   }
+  },
+  "literal-opaque-truth": {
+   "passed": 0,
+   "total": 24,
+   "by_condition": {
+    "links": 0,
+    "evidence": 4,
+    "oracle": 4,
+    "audit": 0
+   }
+  }
+ },
+ "status": "passed"
+}

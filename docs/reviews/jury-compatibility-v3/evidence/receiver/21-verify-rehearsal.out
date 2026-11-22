@@ -1,0 +1,16 @@
+Bundle hashes verified; source 858091a41fc8721bb2ae44db8163b39b78785492
+Image archive lists all three tagged images for classic and containerd Docker stores
+Resource limits are not supported by this daemon; functional checks continue, resource acceptance remains not_checked.
+Loaded image: auditlab-runtime:858091a41fc8
+Loaded image: auditlab-verifier:858091a41fc8
+Loaded image: auditlab-policy:858091a41fc8
+Running offline verification on CPUs 0,1; results: /home/user/rc4-receiver/bundle/results/verify-20261122T104048Z-86fb5ed9c598
+foundation: пройдено (3 tests)
+integration: пройдено (87 tests)
+simulator: пройдено (59 tests)
+evaluator: пройдено (83 tests)
+runner: пройдено (139 tests)
+verifier: пройдено (34 tests)
+metamorphic: пройдено (4 tests)
+demo: пройдено (96 tests)
+Report: /results/verify/report.json; status=incomplete; exit=2
