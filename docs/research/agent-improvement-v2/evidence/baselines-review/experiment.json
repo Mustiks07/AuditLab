@@ -1,0 +1,40 @@
+{
+ "protocol_id": "agent-generalization-1.1",
+ "auditlab_protocol_id": "genesis-official-60s",
+ "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+ "plan_artifact_id": "baselines-replication-922101",
+ "comparisons": [
+  {
+   "name": "reconcile_vs_empty",
+   "a": "reconcile",
+   "b": "empty"
+  },
+  {
+   "name": "reconcile_vs_flag_all",
+   "a": "reconcile",
+   "b": "flag_all"
+  }
+ ],
+ "episodes": {
+  "dev-922101:clean:corrected_clean": {
+   "family_id": "dev-922101",
+   "variant": "clean",
+   "episode_dir": "docs/research/agent-improvement-v2/replication-922101/corrected_clean"
+  },
+  "dev-922101:error:transformed_error": {
+   "family_id": "dev-922101",
+   "variant": "error",
+   "episode_dir": "docs/research/agent-improvement-v2/replication-922101/transformed_error"
+  },
+  "dev-922101:clean:transformed_clean": {
+   "family_id": "dev-922101",
+   "variant": "clean",
+   "episode_dir": "docs/research/agent-improvement-v2/replication-922101/transformed_clean"
+  },
+  "dev-922101:error:original_error": {
+   "family_id": "dev-922101",
+   "variant": "error",
+   "episode_dir": "docs/research/agent-improvement-v2/replication-922101/original_error"
+  }
+ }
+}

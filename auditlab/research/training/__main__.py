@@ -56,6 +56,12 @@ def main(argv=None) -> int:
     show = sub.add_parser("status", help="print the stored training record (no network)")
     show.add_argument("--out", required=True)
 
+    sub.add_parser("probe-hardware", help="can this machine train weights? facts and blockers, no installation")
+
+    demo = sub.add_parser("demonstrate", help="oracle demonstrations for every train episode of a curriculum.json")
+    demo.add_argument("--curriculum", required=True)
+    demo.add_argument("--out", required=True)
+
     args = parser.parse_args(argv)
     try:
         if args.command == "build-sft":
@@ -69,6 +75,23 @@ def main(argv=None) -> int:
                                             max_tokens=args.max_tokens))
         elif args.command == "equalize":
             result = [_summary(m) for m in equal_budget(args.datasets, args.outs, seed=args.seed)]
+        elif args.command == "demonstrate":
+            from pathlib import Path
+            from auditlab.research.training.demonstrations import run_demonstration
+            curriculum_path = Path(args.curriculum)
+            curriculum = json.loads(curriculum_path.read_text(encoding="utf-8"))
+            records = []
+            for episode in curriculum.get("episodes") or []:
+                ref = Path(episode["episode_ref"])
+                ref = ref if ref.is_absolute() else (curriculum_path.parent / ref)
+                if not (ref / "public" / "manifest.json").is_file() and (Path(episode["episode_ref"]) / "public").is_dir():
+                    ref = Path(episode["episode_ref"])  # refs written relative to the working directory
+                records.append(run_demonstration({**episode, "episode_ref": ref.as_posix()}, args.out))
+            result = {"demonstrations": len(records), "statuses": sorted({r["status"] for r in records}),
+                      "curriculum": str(curriculum_path)}
+        elif args.command == "probe-hardware":
+            from auditlab.research.training.hardware import probe
+            result = probe()
         elif args.command == "train":
             path = train(args.config, args.curriculum, args.out, dry_run=True if args.dry_run else None,
                          max_wait_s=args.max_wait)

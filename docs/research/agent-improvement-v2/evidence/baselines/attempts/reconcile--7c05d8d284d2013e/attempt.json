@@ -1,0 +1,105 @@
+{
+  "agent": {
+    "kind": "baseline_policy",
+    "policy": "reconcile",
+    "seed": 0,
+    "test_double": false
+  },
+  "artifact_id": "reconcile--7c05d8d284d2013e",
+  "attempt_id": "reconcile--7c05d8d284d2013e",
+  "budget_usd": null,
+  "episode": {
+    "condition": "original_error",
+    "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+    "episode_sha256": "18f18d2c091e686a7f0512fc37b90ea34cebadf4594ed2178b989909737eb12c",
+    "family_id": "dev-922101",
+    "split": "dev",
+    "variant": "error"
+  },
+  "evaluation_ref": "trusted\\reconcile--7c05d8d284d2013e\\evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+        "findings": [
+          {
+            "affected_ids": [
+              "payment/P6795DA2B1B89BAF03012362C",
+              "invoice/I4E5195A9AF192ADDD95BE382"
+            ],
+            "claimed_amount_minor": 3024000,
+            "currency": "KZT",
+            "evidence_ids": [
+              "payments/DBFE7FC4D96971B107B1BC563",
+              "ledger/R703C2F16A6309210DB659191",
+              "ledger/RC99D0B23BCD788CE44A5FED0",
+              "policy/allocation"
+            ],
+            "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+            "type": "payment_allocation"
+          }
+        ]
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+    "findings": [
+      {
+        "affected_ids": [
+          "payment/P6795DA2B1B89BAF03012362C",
+          "invoice/I4E5195A9AF192ADDD95BE382"
+        ],
+        "claimed_amount_minor": 3024000,
+        "currency": "KZT",
+        "evidence_ids": [
+          "payments/DBFE7FC4D96971B107B1BC563",
+          "ledger/R703C2F16A6309210DB659191",
+          "ledger/RC99D0B23BCD788CE44A5FED0",
+          "policy/allocation"
+        ],
+        "explanation": "Credits minus debits in the complete settlement index leave a positive balance.",
+        "type": "payment_allocation"
+      }
+    ]
+  },
+  "finished_at": "2026-11-22T04:54:46.132896+00:00",
+  "inspection_steps": 6,
+  "isolated_bridge": false,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "started_at": "2026-11-22T04:54:45.561264+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "budget_debit_usd": 0.0,
+    "cost_usd": 0.0,
+    "environment_actions": 7,
+    "inspection_steps": 6,
+    "known_cost_usd": 0.0,
+    "provider_calls": 0,
+    "tokens": {
+      "cache_read": 0,
+      "cache_write": 0,
+      "input": 0,
+      "output": 0
+    },
+    "unpriced_calls": 0,
+    "wall_seconds": 0.571
+  },
+  "variant": "reconcile"
+}

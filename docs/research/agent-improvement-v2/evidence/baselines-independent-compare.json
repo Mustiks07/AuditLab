@@ -1,0 +1,227 @@
+{
+ "schema_version": "1.0",
+ "artifact_id": "comparison-baselines-review",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+ "arms": {
+  "empty": {
+   "attempts": 4,
+   "scored": 4,
+   "excluded_infra": 0,
+   "micro_f1": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 2
+   },
+   "mean_reward": {
+    "value": 0.0,
+    "n": 4
+   },
+   "fp_on_clean": {
+    "attempts_with_findings": 0,
+    "clean_attempts": 2,
+    "fp_findings": 0
+   },
+   "status": {
+    "completed": 4,
+    "timeout": 0,
+    "provider_error": 0,
+    "invalid_response": 0,
+    "budget_stop": 0,
+    "infra_error_before_first_action": 0
+   },
+   "completion": {
+    "submitted": 4,
+    "attempts": 4
+   },
+   "actions": {
+    "n": 4,
+    "mean": 1.0,
+    "median": 1.0,
+    "p90": 1
+   },
+   "input_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "output_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "wall_time_s": {
+    "n": 4,
+    "mean": 0.489,
+    "median": 0.48450000000000004,
+    "p90": 0.581
+   },
+   "cost_usd": {
+    "n": 4,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+   },
+   "live_attempts": 0
+  },
+  "flag_all": {
+   "attempts": 4,
+   "scored": 4,
+   "excluded_infra": 0,
+   "micro_f1": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 120,
+    "fn": 2
+   },
+   "mean_reward": {
+    "value": -1.0,
+    "n": 4
+   },
+   "fp_on_clean": {
+    "attempts_with_findings": 2,
+    "clean_attempts": 2,
+    "fp_findings": 60
+   },
+   "status": {
+    "completed": 4,
+    "timeout": 0,
+    "provider_error": 0,
+    "invalid_response": 0,
+    "budget_stop": 0,
+    "infra_error_before_first_action": 0
+   },
+   "completion": {
+    "submitted": 4,
+    "attempts": 4
+   },
+   "actions": {
+    "n": 4,
+    "mean": 3.0,
+    "median": 3.0,
+    "p90": 3
+   },
+   "input_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "output_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "wall_time_s": {
+    "n": 4,
+    "mean": 0.54275,
+    "median": 0.5555,
+    "p90": 0.613
+   },
+   "cost_usd": {
+    "n": 4,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+   },
+   "live_attempts": 0
+  },
+  "reconcile": {
+   "attempts": 4,
+   "scored": 4,
+   "excluded_infra": 0,
+   "micro_f1": {
+    "value": 1.0,
+    "tp": 2,
+    "fp": 0,
+    "fn": 0
+   },
+   "mean_reward": {
+    "value": 0.988,
+    "n": 4
+   },
+   "fp_on_clean": {
+    "attempts_with_findings": 0,
+    "clean_attempts": 2,
+    "fp_findings": 0
+   },
+   "status": {
+    "completed": 4,
+    "timeout": 0,
+    "provider_error": 0,
+    "invalid_response": 0,
+    "budget_stop": 0,
+    "infra_error_before_first_action": 0
+   },
+   "completion": {
+    "submitted": 4,
+    "attempts": 4
+   },
+   "actions": {
+    "n": 4,
+    "mean": 7.0,
+    "median": 7.0,
+    "p90": 7
+   },
+   "input_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "output_tokens": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "wall_time_s": {
+    "n": 4,
+    "mean": 0.61525,
+    "median": 0.6154999999999999,
+    "p90": 0.659
+   },
+   "cost_usd": {
+    "n": 4,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+   },
+   "live_attempts": 0
+  }
+ },
+ "paired_by_family": {
+  "reconcile_vs_empty": {
+   "a": "reconcile",
+   "b": "empty",
+   "families": 1,
+   "difference": 0.988,
+   "ci95": null,
+   "p_value": null,
+   "shown": false,
+   "missing_in_a": [],
+   "missing_in_b": [],
+   "reason": "at least two independent families are required for an uncertainty estimate"
+  },
+  "reconcile_vs_flag_all": {
+   "a": "reconcile",
+   "b": "flag_all",
+   "families": 1,
+   "difference": 1.988,
+   "ci95": null,
+   "p_value": null,
+   "shown": false,
+   "missing_in_a": [],
+   "missing_in_b": [],
+   "reason": "at least two independent families are required for an uncertainty estimate"
+  }
+ },
+ "families": 1,
+ "episodes": 4,
+ "attempts": 12,
+ "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}

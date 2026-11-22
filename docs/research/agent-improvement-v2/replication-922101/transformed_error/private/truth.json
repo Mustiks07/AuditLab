@@ -1,0 +1,23 @@
+{
+  "episode_id": "TF4DA0AAADDF2F98C12C42C500D31D8",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/INV00000012X106f",
+        "payment/PAY00000006X106f"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/DOC00000013X106f",
+          "ledger/ROW00000046X106f",
+          "ledger/ROW00000015X106f",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 3024000,
+      "issue_id": "TRANSFORMED-000",
+      "type": "payment_allocation"
+    }
+  ]
+}

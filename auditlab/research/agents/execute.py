@@ -25,7 +25,12 @@ from typing import Callable, Protocol
 from auditlab.research.agents.protocol import ARTIFACT_SCHEMA_VERSION, get_protocol
 
 OPERATIONAL_STATUSES = ("completed", "action_budget_exhausted", "timeout", "provider_error", "provider_refusal",
-                        "invalid_response", "budget_stop", "bridge_failure", "interrupted")
+                        "invalid_response", "budget_stop", "bridge_failure", "interrupted", "rate_limited",
+                        "quota_exhausted")
+# Outcomes caused by the service or our infrastructure, not by the auditor's financial reasoning. They are kept
+# in every report and denominator, but never counted as a miss or a false accusation of the model.
+SERVICE_STATUSES = ("provider_error", "rate_limited", "quota_exhausted", "bridge_failure", "interrupted",
+                    "budget_stop")
 EVALUABLE = ("completed", "action_budget_exhausted", "timeout")  # the published rules define their result
 
 
@@ -264,6 +269,13 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
                   "matches": (trusted_result.get("evaluation") or {}).get("matches") if trusted_result else None,
                   "unmatched": (trusted_result.get("evaluation") or {}).get("unmatched") if trusted_result else None,
                   "truth_issue_count": _truth_count(trusted_result)}
+    evaluation["service_outcome"] = status in SERVICE_STATUSES
+    if not evaluation["service_outcome"]:
+        # Content diagnosis (trusted side): what the auditor missed and why each finding failed.
+        from auditlab.research.agents.diagnostics import diagnose
+        truth = json.loads((episode_dir / "private" / "truth.json").read_text(encoding="utf-8"))
+        answer = record["final_answer"] if env_status in ("submitted", "invalid_submission") else None
+        evaluation["diagnosis"] = diagnose(answer, truth, evaluation)
     _write_json(trusted / "evaluation.json", evaluation)
     record["inspection_steps"] = evaluation["inspection_steps"]
     if env_status not in ("submitted", "invalid_submission"):

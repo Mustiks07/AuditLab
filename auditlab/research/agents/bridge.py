@@ -25,7 +25,8 @@ from auditlab.research.agents.providers import ProviderError, ProviderResponse, 
 from auditlab.research.agents.reliability import RetryPolicy, SpendGuard
 
 PROVIDER_FAILURE = {"budget": "budget_stop", "deadline": "timeout", "refusal": "provider_refusal",
-                    "invalid_response": "invalid_response"}
+                    "invalid_response": "invalid_response", "rate_limit": "rate_limited",
+                    "quota_exhausted": "quota_exhausted"}
 
 
 def _provider(config: dict):
@@ -76,7 +77,8 @@ class BridgeSession:
                                 max_tokens=int(agent_config.get("max_tokens", 16000)),
                                 max_model_calls_per_action=int(agent_config.get("max_model_calls_per_action", 12)),
                                 max_prechecks=int(agent_config.get("max_prechecks", 2)),
-                                max_nudges=int(agent_config.get("max_nudges", 2)), retry=retry, guard=guard)
+                                max_nudges=int(agent_config.get("max_nudges", 2)), retry=retry, guard=guard,
+                                prompt_variant=str(agent_config.get("prompt_variant", "A")))
         return {"type": "ready", "agent": self.agent.describe(), "prompt": self.agent.prompt_record()}
 
 

@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "source_sha": "526ef53461ce13f875548c600f2ecd21a145586e",
+  "protocol_id": "genesis-official-60s",
+  "provenance": {
+    "kind": "measured",
+    "note": "Фактический запуск; локальные политики и API-модели указаны отдельно."
+  },
+  "artifact_kind": "comparison",
+  "artifact_id": "comparison-baselines-replication-922101",
+  "experiment_id": "baselines-replication-922101",
+  "title": "Независимое сравнение аудиторов",
+  "status": "incomplete",
+  "verification": {
+    "status": "passed"
+  },
+  "verified_by": "review.agent_generalization.compare",
+  "sample": {
+    "families": 1,
+    "episodes": 4,
+    "repetitions": 1,
+    "split": "dev",
+    "note": "Внутренняя открытая проверка, не конкурсный балл."
+  },
+  "variants": [
+    {
+      "variant_id": "empty",
+      "label": "empty",
+      "metrics": {
+        "micro_f1": 0.0,
+        "mean_reward": 0.0,
+        "clean_fp": {
+          "count": 0,
+          "denominator": 2
+        },
+        "completion": {
+          "completed": 4,
+          "total": 4
+        },
+        "timeouts": 0,
+        "errors": 0,
+        "actions_mean": 1.0,
+        "time_s": 0.489,
+        "cost_usd": 0
+      }
+    },
+    {
+      "variant_id": "flag_all",
+      "label": "flag_all",
+      "metrics": {
+        "micro_f1": 0.0,
+        "mean_reward": -1.0,
+        "clean_fp": {
+          "count": 2,
+          "denominator": 2
+        },
+        "completion": {
+          "completed": 4,
+          "total": 4
+        },
+        "timeouts": 0,
+        "errors": 0,
+        "actions_mean": 3.0,
+        "time_s": 0.54275,
+        "cost_usd": 0
+      }
+    },
+    {
+      "variant_id": "reconcile",
+      "label": "reconcile",
+      "metrics": {
+        "micro_f1": 1.0,
+        "mean_reward": 0.988,
+        "clean_fp": {
+          "count": 0,
+          "denominator": 2
+        },
+        "completion": {
+          "completed": 4,
+          "total": 4
+        },
+        "timeouts": 0,
+        "errors": 0,
+        "actions_mean": 7.0,
+        "time_s": 0.61525,
+        "cost_usd": 0
+      }
+    }
+  ],
+  "paired": [],
+  "missing": [
+    {
+      "variant_id": "reconcile",
+      "reason": "insufficient_families",
+      "message": "Недостаточно независимых семейств для оценки неопределённости сравнения."
+    },
+    {
+      "variant_id": "reconcile",
+      "reason": "insufficient_families",
+      "message": "Недостаточно независимых семейств для оценки неопределённости сравнения."
+    }
+  ]
+}

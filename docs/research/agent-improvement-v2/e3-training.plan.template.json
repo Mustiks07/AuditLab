@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "e3-weights-template",
+  "protocol_id": "auditlab-research-600s",
+  "purpose": "final",
+  "transport": "subprocess",
+  "repetitions": 3,
+  "episodes": [],
+  "arms": [
+    {
+      "name": "T0",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "A"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:8000/v1",
+        "api_key_env": null,
+        "strict_tools": false,
+        "prices": {
+          "base": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        },
+        "model": "base",
+        "pricing_basis": "local GPU; GPU hours are recorded separately by the training records"
+      }
+    },
+    {
+      "name": "T_random",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "A"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:8000/v1",
+        "api_key_env": null,
+        "strict_tools": false,
+        "prices": {
+          "auditlab-lora-uniform": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        },
+        "model": "auditlab-lora-uniform",
+        "pricing_basis": "local GPU; GPU hours are recorded separately by the training records"
+      }
+    },
+    {
+      "name": "T_adaptive",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "A"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "base_url": "http://127.0.0.1:8000/v1",
+        "api_key_env": null,
+        "strict_tools": false,
+        "prices": {
+          "auditlab-lora-adaptive": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        },
+        "model": "auditlab-lora-adaptive",
+        "pricing_basis": "local GPU; GPU hours are recorded separately by the training records"
+      }
+    }
+  ],
+  "budget": {
+    "max_usd_total": 0.25,
+    "max_usd_per_attempt": 0.01
+  },
+  "service": {
+    "max_slot_retries": 2,
+    "cooldown_s": 60.0,
+    "max_cooldown_s": 600.0,
+    "max_consecutive_service_failures": 3
+  },
+  "env_seed": 0,
+  "analysis": {
+    "pairs": [
+      [
+        "T_random",
+        "T0"
+      ],
+      [
+        "T_adaptive",
+        "T0"
+      ],
+      [
+        "T_adaptive",
+        "T_random"
+      ]
+    ],
+    "bootstrap": 10000,
+    "seed": 20261122
+  },
+  "note": "TEMPLATE for a CUDA host: fill episodes (dev for checks, then the sealed holdout once). Transport is subprocess on the GPU host because the model server is local; it is a research-protocol result."
+}
