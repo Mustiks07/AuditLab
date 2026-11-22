@@ -25,7 +25,12 @@ from typing import Callable, Protocol
 from auditlab.research.agents.protocol import ARTIFACT_SCHEMA_VERSION, get_protocol
 
 OPERATIONAL_STATUSES = ("completed", "action_budget_exhausted", "timeout", "provider_error", "provider_refusal",
-                        "invalid_response", "budget_stop", "bridge_failure", "interrupted")
+                        "invalid_response", "budget_stop", "bridge_failure", "interrupted", "rate_limited",
+                        "quota_exhausted")
+# Outcomes caused by the service or our infrastructure, not by the auditor's financial reasoning. They are kept
+# in every report and denominator, but never counted as a miss or a false accusation of the model.
+SERVICE_STATUSES = ("provider_error", "rate_limited", "quota_exhausted", "bridge_failure", "interrupted",
+                    "budget_stop")
 EVALUABLE = ("completed", "action_budget_exhausted", "timeout")  # the published rules define their result
 
 

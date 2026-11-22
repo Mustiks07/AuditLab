@@ -27,6 +27,7 @@ class RetryPolicy:
     max_delay_s: float = 20.0
     per_call_timeout_s: float = 45.0
     deadline_margin_s: float = 1.0  # keep this much of the attempt deadline for the environment step
+    min_interval_s: float = 0.0     # client-side pacing between call starts (e.g. 60/RPM of a free tier)
 
 
 class SpendGuard:
@@ -80,6 +81,7 @@ class ModelCaller:
         self.rng = rng or random.Random(0)
         self.records: list[dict] = []
         self.logical_calls = 0
+        self._last_start: float | None = None
 
     def call(self, request: ProviderRequest, deadline: float) -> ProviderResponse:
         self.logical_calls += 1
@@ -89,9 +91,18 @@ class ModelCaller:
             remaining = deadline - self.clock() - self.policy.deadline_margin_s
             if remaining <= 0:
                 raise ProviderError("deadline", "no time left for a model call before the attempt deadline")
+            if self.policy.min_interval_s and self._last_start is not None:
+                pause = self._last_start + self.policy.min_interval_s - self.clock()
+                if pause > 0:
+                    if self.clock() + pause >= deadline - self.policy.deadline_margin_s:
+                        raise ProviderError("rate_limit", f"client pacing ({self.policy.min_interval_s:.1f}s between "
+                                                          f"calls) leaves no time before the attempt deadline")
+                    self.sleep(pause)
+                remaining = deadline - self.clock() - self.policy.deadline_margin_s
             request.timeout_s = min(self.policy.per_call_timeout_s, remaining)
             self.guard.check(self.provider.model, request)
             started = self.clock()
+            self._last_start = started
             record = {"logical_call": self.logical_calls, "try": try_index + 1, "request_sha256": digest,
                       "model_requested": self.provider.model, "timeout_s": round(request.timeout_s, 3)}
             try:
@@ -110,8 +121,11 @@ class ModelCaller:
                 wait = error.retry_after if error.retry_after is not None else min(
                     self.policy.max_delay_s, self.policy.base_delay_s * 2 ** try_index) * (0.5 + self.rng.random())
                 if self.clock() + wait >= deadline - self.policy.deadline_margin_s:
-                    raise ProviderError("deadline", f"retry wait {wait:.1f}s would pass the attempt deadline "
-                                                    f"after {error.kind}") from error
+                    # A provider limit is a service outcome, not the auditor running out of time.
+                    kind = "rate_limit" if error.kind == "rate_limit" else "deadline"
+                    raise ProviderError(kind, f"retry wait {wait:.1f}s would pass the attempt deadline "
+                                              f"after {error.kind}", status=error.status,
+                                        retry_after=error.retry_after) from error
                 record["waited_s"] = wait
                 self.sleep(wait)
                 continue

@@ -18,15 +18,22 @@ import random
 import re
 import math
 import statistics
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
-from auditlab.research.agents.execute import (InProcessBridge, PolicyBridge, ensure_safe_output, finalize_interrupted,
-                                              run_attempt, source_sha)
+from auditlab.research.agents.execute import (SERVICE_STATUSES, InProcessBridge, PolicyBridge, ensure_safe_output,
+                                              finalize_interrupted, run_attempt, source_sha)
 from auditlab.research.agents.pricing import price_for
 from auditlab.research.agents.protocol import ARTIFACT_SCHEMA_VERSION, get_protocol
 
 FORBIDDEN_SPLITS_FOR_SELECTION = ("final", "test", "holdout")
+# Service outcomes (HTTP 429, provider/bridge failures) are retried at the SLOT level with a new attempt id:
+# finitely, after a cooldown, every failed attempt kept. Defaults are conservative; a plan may override them.
+SERVICE_DEFAULTS = {"max_slot_retries": 2, "cooldown_s": 60.0, "max_cooldown_s": 600.0,
+                    "max_consecutive_service_failures": 3}
+RETRIED_SERVICE_STATUSES = ("rate_limited", "quota_exhausted", "provider_error", "bridge_failure", "interrupted")
 TRANSPORTS = ("in_process", "subprocess", "docker")
 
 
@@ -137,8 +144,41 @@ def _spent(out: Path) -> float:
     return total
 
 
+def _service_settings(plan: dict) -> dict:
+    settings = {**SERVICE_DEFAULTS, **(plan.get("service") or {})}
+    for key in ("max_slot_retries", "max_consecutive_service_failures"):
+        if type(settings[key]) is not int or settings[key] < 0:
+            raise PlanError(f"service.{key} must be a non-negative integer")
+    for key in ("cooldown_s", "max_cooldown_s"):
+        if type(settings[key]) not in (int, float) or not math.isfinite(settings[key]) or settings[key] < 0:
+            raise PlanError(f"service.{key} must be a finite non-negative number")
+    return settings
+
+
+def _retry_after_of(out: Path, attempt_id: str) -> float | None:
+    """Largest provider Retry-After seen in the attempt's failed calls (None if the provider gave none)."""
+    path = out / "attempts" / attempt_id / "provider_calls.jsonl"
+    waits = []
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                value = ((json.loads(line).get("error") or {}).get("retry_after"))
+                if isinstance(value, (int, float)):
+                    waits.append(float(value))
+    return max(waits) if waits else None
+
+
+def _record_invocation(out: Path, entry: dict) -> None:
+    """Every run invocation (with its stop reason) is appended to run_manifest.json; nothing is overwritten."""
+    path = out / "run_manifest.json"
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    manifest.setdefault("invocations", []).append(entry)
+    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8", newline="\n")
+
+
 def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: bool = False, provider_override=None,
-                   env_factory=None, log: Callable[[str], None] = print, stop_requested: Callable[[], bool] | None = None) -> dict:
+                   env_factory=None, log: Callable[[str], None] = print, stop_requested: Callable[[], bool] | None = None,
+                   sleep: Callable[[float], None] = time.sleep) -> dict:
     out = Path(out)
     ensure_safe_output(out.resolve())
     slots = attempt_slots(plan)
@@ -160,19 +200,39 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
         manifest_path.write_text(json.dumps({"schema_version": ARTIFACT_SCHEMA_VERSION, "plan_artifact_id": plan["artifact_id"],
                                              "plan_sha256": plan_sha, "plan": plan}, indent=2, ensure_ascii=False),
                                  encoding="utf-8", newline="\n")
+    service = _service_settings(plan)
+    invocation = {"started_at": datetime.now(timezone.utc).isoformat(), "source_sha": source_sha(),
+                  "attempts_started": [], "service_waits_s": [], "stop_reason": None, "stop_detail": None}
     interrupted = finalize_interrupted(out)
     if interrupted:
         log(f"finalized {len(interrupted)} interrupted attempt(s); their slots are retried with new ids")
+        invocation["interrupted_finalized"] = interrupted
     budget = plan.get("budget") or {}
     done = {path.parent.name for path in (out / "attempts").glob("*/attempt.json")} if (out / "attempts").exists() else set()
-    for slot in slots:
+    consecutive_service = 0
+    queue = list(slots)
+    while queue and invocation["stop_reason"] is None:
+        slot = queue[0]
         if stop_requested and stop_requested():
+            invocation.update(stop_reason="stop_requested", stop_detail="stop requested by the controller")
             break
-        evaluated = [name for name in done if name == slot["slot"] or name.startswith(slot["slot"] + "--retry")]
+        evaluated = sorted(name for name in done if name == slot["slot"] or name.startswith(slot["slot"] + "--retry"))
         statuses = [json.loads((out / "attempts" / name / "attempt.json").read_text(encoding="utf-8"))["status"]
                     for name in evaluated]
-        if any(status != "interrupted" for status in statuses):
+        if any(status not in RETRIED_SERVICE_STATUSES for status in statuses):
+            queue.pop(0)  # an auditor outcome exists: never re-run (and never pay again for) a finished slot
             continue
+        service_failures = sum(status != "interrupted" for status in statuses)
+        if service_failures > service["max_slot_retries"]:
+            log(f"{slot['slot']}: {service_failures} service failures; slot left unmeasured (kept in the record)")
+            queue.pop(0)
+            continue
+        if service_failures and evaluated[-1] in invocation["attempts_started"]:
+            # cool down before retrying a slot the service refused in THIS run (a later resume starts fresh)
+            wait = min(service["max_cooldown_s"], max(service["cooldown_s"], _retry_after_of(out, evaluated[-1]) or 0.0))
+            invocation["service_waits_s"].append(wait)
+            log(f"{slot['slot']}: service failure ({statuses[-1]}); waiting {wait:.0f}s before retry {len(evaluated)}")
+            sleep(wait)
         attempt_id = slot["slot"] if not evaluated else f"{slot['slot']}--retry{len(evaluated)}"
         per_attempt = None
         if is_paid_arm(slot["arm"]):
@@ -180,6 +240,7 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
             per_attempt = min(float(budget["max_usd_per_attempt"]), remaining)
             if per_attempt <= 0:
                 log("spend limit reached; stopping before the next paid attempt")
+                invocation.update(stop_reason="spend_limit", stop_detail="budget.max_usd_total is used up")
                 break
         arm, episode = slot["arm"], slot["episode"]
         spec = {"attempt_id": attempt_id, "episode_ref": episode["episode_ref"],
@@ -189,9 +250,27 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
         record = run_attempt(spec, out, _bridge_factory(plan, arm, slot["repetition"], provider_override),
                              env_factory=env_factory)
         done.add(attempt_id)
+        invocation["attempts_started"].append(attempt_id)
         log(f"{attempt_id}: {record['status']} actions={record['totals']['environment_actions']} "
             f"cost={record['totals']['cost_usd']}")
+        if record["status"] == "quota_exhausted":
+            invocation.update(stop_reason="provider_quota_exhausted",
+                              stop_detail=f"{attempt_id}: {record.get('status_detail')}")
+        elif record["status"] in SERVICE_STATUSES:
+            consecutive_service += 1
+            if consecutive_service >= service["max_consecutive_service_failures"] > 0:
+                invocation.update(stop_reason="consecutive_service_failures",
+                                  stop_detail=f"{consecutive_service} service failures in a row; last {attempt_id}: "
+                                              f"{record.get('status_detail')}")
+        else:
+            consecutive_service = 0
+    if invocation["stop_reason"] is None:
+        invocation["stop_reason"] = "plan_finished" if not queue else "stopped"
+    invocation["finished_at"] = datetime.now(timezone.utc).isoformat()
+    _record_invocation(out, invocation)
+    log(f"stop reason: {invocation['stop_reason']}" + (f" ({invocation['stop_detail']})" if invocation["stop_detail"] else ""))
     summary = summarize(out, plan, plan_sha)
+    summary["last_invocation"] = invocation
     (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8", newline="\n")
     return summary
 
@@ -294,7 +373,8 @@ def export_attempts(out: str | Path, target: str | Path) -> int:
 
 REVIEW_STATUS = {"completed": "completed", "timeout": "timeout", "action_budget_exhausted": "timeout",
                  "budget_stop": "budget_stop", "provider_error": "provider_error", "provider_refusal": "provider_error",
-                 "invalid_response": "invalid_response"}
+                 "invalid_response": "invalid_response", "rate_limited": "provider_error",
+                 "quota_exhausted": "provider_error"}
 
 
 def export_for_review(out: str | Path, target: str | Path, plan: dict, comparisons: list[dict] | None = None) -> dict:

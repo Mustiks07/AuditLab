@@ -20,8 +20,10 @@ import time
 from dataclasses import asdict, dataclass, field
 from typing import Callable, Protocol
 
-ERROR_KINDS = ("rate_limit", "timeout", "server", "connection", "auth", "permission", "bad_request",
-               "not_found", "invalid_response", "refusal", "budget", "deadline", "configuration")
+ERROR_KINDS = ("rate_limit", "quota_exhausted", "timeout", "server", "connection", "auth", "permission",
+               "bad_request", "not_found", "invalid_response", "refusal", "budget", "deadline", "configuration")
+# rate_limit: a short-window limit (per minute); waiting helps. quota_exhausted: a long-window quota (per day,
+# or the provider says so); waiting inside an attempt cannot help, so it is never retried and stops the run.
 RETRYABLE = frozenset({"rate_limit", "timeout", "server", "connection"})
 
 

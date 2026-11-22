@@ -25,7 +25,8 @@ from auditlab.research.agents.providers import ProviderError, ProviderResponse, 
 from auditlab.research.agents.reliability import RetryPolicy, SpendGuard
 
 PROVIDER_FAILURE = {"budget": "budget_stop", "deadline": "timeout", "refusal": "provider_refusal",
-                    "invalid_response": "invalid_response"}
+                    "invalid_response": "invalid_response", "rate_limit": "rate_limited",
+                    "quota_exhausted": "quota_exhausted"}
 
 
 def _provider(config: dict):
