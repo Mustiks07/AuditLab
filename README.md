@@ -261,6 +261,26 @@ python run.py verify --suite rehearsal
 
 [Матрица требований](docs/release/ACCEPTANCE_MAPPING.md) · [Стресс-проверка 1 000 компаний](docs/release/GENERALIZATION.md) · [Внутренняя репетиция](docs/REHEARSAL.md)
 
+## Материалы для жюри
+
+**Сдаваемый открытый набор — [open-1.3](datasets/open-1.3): 10 train и 10 dev.**
+В корне опубликованы [trajectories.jsonl](trajectories.jsonl) и [манифест прогонов](trajectories.manifest.json):
+обычный аудитор `reconcile`, официальный адаптер, отдельный Docker-контейнер на компанию.
+
+```sh
+python tools/export_trajectories.py check
+```
+
+Команда повторяет все 20 записанных траекторий и сравнивает наблюдения и награды.
+Для общей офлайн-проверки готового RC5: `python3.11 offline.py verify --suite quick --output-root ./results`
+после подготовки Linux/Docker по [HANDOFF](docs/demo/HANDOFF.md).
+
+**[Инструкция для жюри](docs/JURY.md)** собирает материалы §09, команды и коды выхода,
+настройку приватного ключа для закрытой генерации и **полную таблицу переименования ID**.
+Составные ссылки (`ledger/R1`, `invoice/I1` и другие) и вложенные ссылки индекса
+зачётов переименовываются вместе с исходными ID; [самопроверка копии](docs/JURY.md#каталог-эпизода-и-переименование-id)
+обнаруживает разорванные связи до сравнения награды.
+
 ## Интеграция с внешним аудитором
 
 В корне находится **`judge_adapter.py`** с точками входа `generate_episode`, `make_env` и `score_episode` по [определениям GENESIS](https://genesis-exe.com/fintech-checks.html). В runtime-образе адаптер доступен из `/app`.
