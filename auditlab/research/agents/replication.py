@@ -88,8 +88,9 @@ def build(out: str | Path) -> dict:
             "truth_issues": [{"type": i["type"], "expected_amount_minor": i["expected_amount_minor"],
                               "currency": i["currency"]} for i in truth["issues"]],
             "validation": {"status": validation.get("status"),
-                           "failed_checks": sorted(k for k, v in (validation.get("checks") or {}).items()
-                                                   if isinstance(v, dict) and v.get("status") == "failed")},
+                           "checks": {k: v.get("status") for k, v in sorted((validation.get("checks") or {}).items())
+                                      if isinstance(v, dict)},
+                           "notes": [str(n)[:300] for n in (validation.get("notes") or [])][:10]},
             "derived_from": {"transformed_error": "original_error", "transformed_clean": "corrected_clean"}.get(name),
             "transform": transforms.get(name)}
     shutil.rmtree(out / ".validation", ignore_errors=True)
@@ -122,7 +123,7 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     result = build(args.out) if args.command == "build" else check(args.out)
     print(json.dumps({k: result[k] for k in ("artifact_id", "set_sha256")} | (
-        {"conditions": {n: {k: r[k] for k in ("variant", "validation", "public_sha256")} for n, r in result["conditions"].items()}}
+        {"conditions": {n: {k: r[k] for k in ("variant", "validation")} for n, r in result["conditions"].items()}}
         if args.command == "build" else {"status": result["status"], "changed": result["changed"]}), indent=1))
     return 0 if args.command == "build" or result["status"] == "passed" else 1
 
