@@ -7,6 +7,7 @@ from auditlab.evaluator.schema import RULES_GENESIS
 from auditlab.generator import generate_episode
 from auditlab.release.transforms import read_json
 from auditlab.research.curriculum.objectives import assess_failures, objective_failures, OBJECTIVES
+from auditlab.research.curriculum.reduce import FailureTarget
 from auditlab.research.curriculum.search import Candidate
 from auditlab.research.curriculum.study import _choose_representative
 
@@ -51,6 +52,12 @@ class FinancialObjectiveTests(unittest.TestCase):
         for status in ("timeout", "provider_error", "rate_limited", "invalid_submission"):
             receipt = {"status": status, "reason": "HTTP 429", "failures": [{"reason": goal} for goal in OBJECTIVES]}
             self.assertFalse(any(objective_failures(receipt, goal) for goal in OBJECTIVES))
+
+    def test_semantically_bad_accusation_on_clean_book_is_still_a_valid_target(self):
+        self.assertEqual(self.objectives(self.clean, [{**self.finding, "type": "", "affected_ids": [""]}]),
+                         {"clean_false_positive"})
+        target = FailureTarget("clean_false_positive", "", ("",))
+        self.assertTrue(target.matches({"reason": "clean_false_positive", "type": "", "affected_ids": [""]}))
 
     def test_export_representative_retains_the_first_stable_refinement(self):
         found = {}

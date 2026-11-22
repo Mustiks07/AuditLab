@@ -264,10 +264,17 @@ def run_study(plan, source_sha, validate, output, *, external=None, exclusions=(
     ids = [c.candidate_id for c in candidates]
     if len(set(ids)) != len(ids) or any(not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,47}", key) for key in ids):
         raise ValueError("Candidate IDs must be unique and portable")
-    if not set(plan["objectives"]) <= set(OBJECTIVES) or len(set(plan["objectives"])) != len(plan["objectives"]):
+    if (not plan["objectives"] or not set(plan["objectives"]) <= set(OBJECTIVES)
+            or len(set(plan["objectives"])) != len(plan["objectives"])):
         raise ValueError("Study objectives must be supported and unique")
     reserved = [row for row in candidates if row.split in ("dev", "test")]
     roots = [row for row in candidates if row.split == "train"]
+    SearchConfig(tuple(roots), source_sha=source_sha, protocol_id=protocol, **plan["search"])
+    ReductionBudget(**plan["reduction"])
+    if type(plan["examples_per_goal"]) is not int or plan["examples_per_goal"] < 0:
+        raise ValueError("The number of training families per goal must be a nonnegative integer")
+    if len({root.family_id for root in roots}) != len(roots):
+        raise ValueError("Each train family requires exactly one configuration root")
     blocked = ({row.family_id for row in reserved} | {row["family_id"] for row in exclusions},
                {row.seed for row in reserved} | {row["seed"] for row in exclusions})
     if any(c.family_id in blocked[0] or c.seed in blocked[1] for c in roots):
