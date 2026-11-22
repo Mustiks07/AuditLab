@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "source_sha": "045f4dced18485262193a334bc1a09de5a6922b2",
+  "source_sha": "f73330637dc8bec746c750a381d61c31d8963641",
   "protocol_id": "genesis-official-60s",
   "provenance": {
     "kind": "measured",
@@ -20,18 +20,18 @@
     "episodes": 2,
     "repetitions": 1,
     "split": "dev",
-    "note": "Внутренняя открытая проверка, не конкурсный балл."
+    "note": "Внутренняя открытая проверка, не конкурсный балл. Качество и средняя награда исключают сбои сервиса; все попытки показаны в завершении."
   },
   "variants": [
     {
       "variant_id": "gemini-memory",
       "label": "gemini-3.1-flash-lite · с заметками",
       "metrics": {
-        "micro_f1": 0.0,
-        "mean_reward": 0.0,
+        "micro_f1": null,
+        "mean_reward": null,
         "clean_fp": {
           "count": 0,
-          "denominator": 1
+          "denominator": 0
         },
         "completion": {
           "completed": 0,
@@ -49,10 +49,10 @@
       "label": "gemini-3.1-flash-lite · без заметок",
       "metrics": {
         "micro_f1": 0.0,
-        "mean_reward": -0.015,
+        "mean_reward": -1.0,
         "clean_fp": {
           "count": 0,
-          "denominator": 1
+          "denominator": 0
         },
         "completion": {
           "completed": 1,

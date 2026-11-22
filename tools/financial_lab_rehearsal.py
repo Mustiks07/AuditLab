@@ -25,6 +25,10 @@ ARMS = {'empty': 'Пустой ответ · встроенная политик
 
 
 def episodes(search: Path) -> list[dict]:
+    if (search/'study.json').is_file():
+        from auditlab.research.family_study_export import study_members
+        return [{'episode_ref': str(m['snapshot']), 'family_id': m['candidate']['family_id'],
+                 'split': m['candidate']['split']} for m in study_members(search)]
     exp = read(search/'experiment.json')
     members = {m['candidate_id']: m for m in exp['partition']['members']}
     rows = []

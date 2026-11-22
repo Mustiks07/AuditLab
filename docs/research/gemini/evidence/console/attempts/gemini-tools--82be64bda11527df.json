@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "source_sha": "045f4dced18485262193a334bc1a09de5a6922b2",
+  "source_sha": "f73330637dc8bec746c750a381d61c31d8963641",
   "protocol_id": "genesis-official-60s",
   "provenance": {
     "kind": "measured",
@@ -13,6 +13,7 @@
   "repetition": 0,
   "status": "completed",
   "snapshot_ref": "snapshots/gemini-tools--82be64bda11527df/public",
+  "error": null,
   "episode": {
     "family_id": "dev-922101",
     "split": "dev"

@@ -247,6 +247,9 @@ def publish_families(output, target):
     root, target = Path(output).resolve(), Path(target).resolve()
     if target == root or root in target.parents:
         raise ValueError('console export must be separate from trusted output')
+    if (root/'study.json').is_file():
+        from .family_study_export import publish_study
+        return publish_study(root, target)
     exp = read(root/'experiment.json')
     members = {m['candidate_id']: m for m in exp['partition']['members']}
     base = {'schema_version':'1.0', 'source_sha':exp['source_sha'], 'protocol_id':exp['protocol_id'],

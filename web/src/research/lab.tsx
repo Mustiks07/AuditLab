@@ -244,7 +244,7 @@ export function FamilyScreen({ id, variant, side: sideName, docKey }: { id: stri
       <section className="research-panel" aria-labelledby="change-title">
         <h2 id="change-title">Измените допустимый факт</h2>
         <p className="muted small">Варианты созданы генератором и проверены независимым расчётом. Выбор показывает сохранённый результат; новый запуск отсюда не выполняется.</p>
-        <ul className="transform-list">{SLOTS.map(kind => {
+        <ul className="transform-list">{[...new Set<string>([...SLOTS, ...variants.map(v => v.transformation).filter((v): v is string => !!v)])].map(kind => {
           const card = byKind.get(kind);
           const selected = card && card.candidate_id === chosen?.candidate_id;
           return <li key={kind}>
