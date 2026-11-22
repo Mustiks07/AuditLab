@@ -2,6 +2,7 @@
 from __future__ import annotations
 import copy
 import json
+import re
 import shutil
 from pathlib import Path
 from auditlab.research.agents.experiment import _load_attempts
@@ -22,6 +23,16 @@ def write(path, value):
     temp = path.with_suffix('.tmp')
     temp.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False)+'\n', encoding='utf-8')
     temp.replace(path)
+
+
+def _status_error(row):
+    """Public reason of an unsuccessful attempt, e.g. ``rate_limit: HTTP 429``; never provider payloads."""
+    detail = row.get('status_detail')
+    if row.get('status') == 'completed' or not isinstance(detail, str) or not detail.strip():
+        return None
+    code, _, message = detail.partition(':')
+    code = code.strip() if re.fullmatch(r'[a-z][a-z0-9_]{0,39}', code.strip()) else row.get('status')
+    return {'code': code, 'message': (message.strip() or detail.strip())[:160]}
 
 
 def publish(plan, output, target, *, comparison=None, state=None):
@@ -70,6 +81,7 @@ def publish(plan, output, target, *, comparison=None, state=None):
         kind = 'test_double' if row.get('test_double') else 'measured'
         attempt = artifact('attempt', aid, experiment_id=eid, variant_id=row.get('variant'),
                            repetition=row.get('repetition'), status=row['status'], snapshot_ref=ref,
+                           error=_status_error(row),
                            episode={k:ep.get(k) for k in ('family_id','split')}, evaluation=evaluation,
                            submission=row.get('final_answer'), steps=steps,
                            usage={'input_tokens':tokens.get('input'), 'output_tokens':tokens.get('output'),
@@ -209,3 +221,122 @@ def publish_curriculum(output, target):
         status='not_checked',verification={'status':'not_checked','reason':'Нет обученных моделей и финального эксперимента.'},
         variants=[],paired=[],missing=[{'variant_id':'weights','reason':'Обучение весов и независимый финальный прогон не выполнены.'}]))
     return {'experiment_id':eid,'attempts':len(attempt_ids),'target':str(target)}
+
+
+# Public facets of a generated company. They describe the design of open train/dev cases
+# (already evaluated), never seeds, private paths or generator internals.
+_FACETS = ('settlement_timing', 'interaction', 'currencies', 'base_currency', 'allocation_mode')
+_CHANGE = {'id_order': 'ids_and_order', 'lawful_refund': 'clean_distractors', 'fixed': 'settlement_timing',
+           'currency': 'base_currency'}
+
+
+def publish_families(output, target):
+    """Project the searched candidates and their paired financial variants to console candidates.
+
+    Every train/dev candidate becomes a ``candidate`` artifact with its public design facets and, when the
+    independent reviewer checked it, a ``validation``. Each paired variant (rename, lawful distractor,
+    fixed defect, changed currency) references its parent and carries the expected answer that the
+    trusted pipeline compared with the independent calculation. Sealed partitions are never exported.
+    """
+    root, target = Path(output).resolve(), Path(target).resolve()
+    if target == root or root in target.parents:
+        raise ValueError('console export must be separate from trusted output')
+    exp = read(root/'experiment.json')
+    members = {m['candidate_id']: m for m in exp['partition']['members']}
+    base = {'schema_version':'1.0', 'source_sha':exp['source_sha'], 'protocol_id':exp['protocol_id'],
+            'provenance':{'kind':'measured', 'note':'Генератор и независимая проверка выполнены; это не ответы ИИ-модели.'}}
+
+    def make(kind, ident, **fields):
+        return {**copy.deepcopy(base), 'artifact_kind':kind, 'artifact_id':ident, **fields}
+
+    def safe(path):
+        p = Path(path).resolve()
+        if root not in p.parents:
+            raise ValueError('reference outside experiment')
+        return p
+
+    def snapshot(path, label):
+        public = safe(path)/'public'
+        dest = target/'snapshots'/label/'public'
+        dest.mkdir(parents=True, exist_ok=True)
+        for name in ('manifest.json','policy.json','ledger.csv','invoices.jsonl','payments.jsonl','fx.csv'):
+            src = public/name
+            if src.is_symlink() or public not in src.resolve().parents:
+                raise ValueError('unsafe public snapshot')
+            shutil.copyfile(src, dest/name)
+        return f'snapshots/{label}/public'
+
+    def validation(directory, ident, ref):
+        directory = safe(directory)
+        if not (directory/'validation.json').exists():
+            return None
+        receipt = read(directory/'validation.json')
+        answer = read(directory/'answer_before_truth.json') if (directory/'answer_before_truth.json').exists() else None
+        checks = receipt.get('checks') or {}
+        def status(name):
+            item = checks.get(name) or {}
+            return {'status': item.get('status', 'not_checked')}
+        findings = [{k: f[k] for k in ('type','claimed_amount_minor','currency','affected_ids','evidence_ids') if k in f}
+                    for f in (answer or {}).get('findings') or []]
+        vid = f'{ident}-validation'
+        write(target/'validations'/f'{vid}.json', make('validation', vid, snapshot_ref=ref,
+            independent={'engine':'Независимый финансовый расчёт', 'status':receipt.get('status', 'not_checked'),
+                         'findings':findings, 'arithmetic':(answer or {}).get('arithmetic') or []},
+            source_book=status('source_book_consistent'), witness=status('witness_trajectory')))
+        return vid
+
+    checked = {}
+    search_rows = read(root/'search/search.json')['arms'].values() if (root/'search/search.json').exists() else []
+    for arm in search_rows:
+        for row in arm['candidates']:
+            ref = (row.get('validation') or {}).get('artifact_ref')
+            if ref and (row.get('validation') or {}).get('status') == 'passed':
+                checked.setdefault(row['candidate_id'], safe(ref).parent)
+    for item in exp.get('clean_calibration') or []:
+        checked.setdefault(item['candidate_id'], safe(item['validation_ref']).parent)
+    for key in {p['parent'] for p in exp.get('paired') or []}:
+        checked[key] = root/'pairs'/key/'baseline-validation'
+
+    written = []
+    for receipt_path in sorted((root/'candidates').glob('*/candidate.json')):
+        receipt = read(receipt_path)
+        candidate = receipt['candidate']
+        key = candidate['candidate_id']
+        member = members.get(key)
+        if member is None or member['split'] not in ('train', 'dev') or receipt.get('status') == 'generation_failed':
+            continue
+        config = candidate['config']
+        ref = snapshot(receipt_path.parent/'snapshot', key)
+        counts = config.get('issue_counts') or {}
+        design = {k: config[k] for k in _FACETS if k in config}
+        design.update(stratum=candidate.get('stratum'), issue_types=sorted(t for t, n in counts.items() if n),
+                      clean=not any(counts.values()))
+        vid = validation(checked[key], key, ref) if key in checked else None
+        write(target/'candidates'/f'{key}.json', make('candidate', key, family_id=member['family_id'],
+              split=member['split'], snapshot_ref=ref, role='original', design=design, validation_id=vid))
+        written.append(key)
+    for pair in exp.get('paired') or []:
+        key, parent = pair['candidate_id'], pair['parent']
+        if members[parent]['split'] not in ('train', 'dev'):
+            raise ValueError('sealed paired example')
+        ref = snapshot(root/'pairs'/parent/'snapshots'/pair['kind'], key)
+        vid = validation(root/'pairs'/parent/pair['kind'], key, ref)
+        parameter = _CHANGE.get(pair['kind'])
+        before = read(root/'candidates'/parent/'candidate.json')['candidate']['config']
+        after = pair['config']
+        change = {'parameter': parameter}
+        if parameter in ('settlement_timing', 'base_currency'):
+            change.update({'from': before.get(parameter), 'to': after.get(parameter)})
+        elif parameter == 'clean_distractors':
+            change.update({'added': sorted(set(after.get(parameter) or []) - set(before.get(parameter) or []))})
+        counts = after.get('issue_counts') or {}
+        design = {k: after[k] for k in _FACETS if k in after}
+        design.update(stratum=read(root/'candidates'/parent/'candidate.json')['candidate'].get('stratum'),
+                      issue_types=sorted(t for t, n in counts.items() if n), clean=not any(counts.values()))
+        write(target/'candidates'/f'{key}.json', make('candidate', key, family_id=members[parent]['family_id'],
+              split=members[parent]['split'], snapshot_ref=ref, role='variant', parent_id=parent,
+              transformation=pair['kind'], reason=pair['reason'], change=change, design=design,
+              expected=[{k: f[k] for k in ('type','claimed_amount_minor','currency')} for f in pair['expected']],
+              expected_check=pair['status'], validation_id=vid))
+        written.append(key)
+    return {'candidates': len(written), 'target': str(target)}
