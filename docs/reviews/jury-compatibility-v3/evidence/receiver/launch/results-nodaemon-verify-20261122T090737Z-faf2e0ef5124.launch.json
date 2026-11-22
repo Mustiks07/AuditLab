@@ -1,0 +1,39 @@
+{
+  "status": "failed",
+  "phase": "docker_preflight",
+  "source_revision": "858091a41fc8721bb2ae44db8163b39b78785492",
+  "images": {
+    "runtime": {
+      "id": "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6",
+      "tag": "auditlab-runtime:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 359888144,
+      "oci_manifest_digest": "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d"
+    },
+    "verifier": {
+      "id": "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490",
+      "tag": "auditlab-verifier:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 234908032,
+      "oci_manifest_digest": "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb"
+    },
+    "policy": {
+      "id": "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f",
+      "tag": "auditlab-policy:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 130557825,
+      "oci_manifest_digest": "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72"
+    }
+  },
+  "cpu_set": "0,1",
+  "controller_memory_limit": "1536m",
+  "network": "none",
+  "suite": "quick",
+  "started_at": "2026-11-22T09:07:37.962898+00:00",
+  "exit_code": 1,
+  "error": "Command '['docker', '--host', 'unix:///var/run/docker.sock', 'info', '--format', '{{json .}}']' returned non-zero exit status 1.",
+  "elapsed_seconds": 0.41687736000000086
+}

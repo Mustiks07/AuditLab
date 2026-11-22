@@ -4,7 +4,7 @@
 
 Адаптер — тонкая доверенная обёртка над генератором, runner и evaluator AuditLab. Он только переводит конверт действий, наблюдения и результаты. Действия за политику он не выбирает и ничего в них не меняет. Бюджет, срок и оценку по-прежнему ведут `AuditEnvironment` и отдельный процесс оценщика.
 
-Версии: адаптер `1.0`, протокол `genesis-fintech-checks-2026-11-20`, правила matcher `genesis-2026-11-20`, runner `1.2`, evaluator `1.2`, публичная схема AuditLab `1.0` не меняется.
+Версии: адаптер `1.1` (профиль генерации по умолчанию `1.3`, генератор `1.9`), протокол `genesis-fintech-checks-2026-11-20`, правила matcher `genesis-2026-11-20`, runner `1.2`, evaluator `1.2`, публичная схема AuditLab `1.0` не меняется.
 
 ## Запуск
 
@@ -31,7 +31,7 @@ print(judge_adapter.score_episode("/judge/ep1", {"episode_id": info["episode_id"
 
 | Функция | Поведение AuditLab |
 |---|---|
-| `generate_episode(seed, config, output_dir)` | Вызывает генератор AuditLab. `config` — конфигурация генератора, напрямую или как `{"team_config": {...}}`. `output_dir` новый или пустой; существующий эпизод не перезаписывается. Одинаковые seed и config дают побайтно одинаковые файлы. |
+| `generate_episode(seed, config, output_dir)` | Вызывает генератор AuditLab. `config` — конфигурация генератора, напрямую или как `{"team_config": {...}}`. Без `config_version` адаптер 1.1 подставляет `"1.3"`; явная версия, в том числе `"1.0"`, передаётся без изменений. `output_dir` новый или пустой; существующий эпизод не перезаписывается. Одинаковые seed и config дают побайтно одинаковые файлы. |
 | `make_env()` | Объект с `reset(seed, config)` и `step(action)`. Каждое окружение оценивается правилами `genesis-2026-11-20`. Оценщик — отдельный процесс `python -m auditlab.evaluator`. |
 | `reset(seed, {"mode", "episode_dir", "team_config"})` | `mode` — `closed` (по умолчанию) или `train`. С `episode_dir` загружает именно этот каталог, без генерации и смены ID; повторный reset начинает эпизод заново. Без `episode_dir` генерирует эпизод из `seed` и `team_config`. Срок 60 с отсчитывается от входа в reset, до загрузки. |
 | `step({"name", "args"})` | Переводит в `{"action", "args"}` runner. Возвращает `(observation, reward, terminated, truncated, info)`. |
@@ -39,7 +39,7 @@ print(judge_adapter.score_episode("/judge/ep1", {"episode_id": info["episode_id"
 
 Только для жюри, политике не передаются: `env.trusted_result()` (статус, шаги, официальный результат, диагностика сопоставления), `env.expire()` (остановка по сроку с пустыми findings), `env.seconds_left()`, `env.versions()`.
 
-Журнал оценщика: логгер `auditlab.judge_adapter`. Если задан `AUDITLAB_JUDGE_LOG=<файл>`, записи дополнительно пишутся туда построчно в JSONL: reset (mode, seed, episode_dir, team_config, версии) и каждый `score_episode` (статус, причина структурной ошибки, сопоставления).
+Журнал оценщика: логгер `auditlab.judge_adapter`. Если задан `AUDITLAB_JUDGE_LOG=<файл>`, записи дополнительно пишутся туда построчно в JSONL: `generate_episode` (версия профиля и режим `keyed`/`unkeyed`), reset (mode, episode_dir, team_config с маркером редактирования `episode_key`, версии) и каждый `score_episode` (статус, причина структурной ошибки, сопоставления). Seed и значение ключа остаются в доверенной конфигурации воспроизведения. Квитанция раннера сохраняет seed только при новой генерации открытого эпизода без ключа.
 
 ## Каталог эпизода
 
@@ -92,7 +92,29 @@ print(judge_adapter.score_episode("/judge/ep1", {"episode_id": info["episode_id"
 
 Сценарии взаимодействия (`interaction`): `allocation_fx_same_payment`, `cutoff_fx_same_invoice`. Чистые отвлекающие случаи (`clean_distractors`): `split_payment`, `equal_amount_different_supplier`, `refund`, `archive_copy`, в профиле 1.1 также `next_day_settlement`.
 
-Ключи конфигурации генератора: `config_version` (`"1.0"` по умолчанию, рекомендуется `"1.1"`), `company_size` (`ledger_rows_target` 0–2000, `documents_target`), `base_currency`, `currencies`, `timezone`, `target_period` (`YYYY-MM`), `issue_counts` (каждый тип 0–5, в профиле 1.1 всего до 12), `interaction`, `clean_distractors`, `settlement_timing` (`before`/`at`/`after`), `snapshot_nonce`. Чистая компания: все `issue_counts` равны 0.
+Ключи конфигурации генератора: `config_version` (у генератора по умолчанию `"1.0"`, у адаптера 1.1 — `"1.3"`), `company_size` (`ledger_rows_target` 0–2000, `documents_target`), `base_currency`, `currencies`, `timezone`, `target_period` (`YYYY-MM`), `issue_counts` (каждый тип 0–5, в профиле 1.1 всего до 12), `interaction`, `clean_distractors`, `settlement_timing` (`before`/`at`/`after`), `snapshot_nonce`, `allocation_mode`, `financial_case` (1.2/1.3), `episode_key` (только 1.3). Чистая компания: все `issue_counts` равны 0.
+
+### Профиль 1.3 (генератор 1.9)
+
+- **Незаданные поля.** Их выбирает seed+config: часовой пояс из шести без перехода на летнее время (в том числе +05:30 и −05:00), месяц 2025–2026, иностранная валюта USD, JPY или KWD при базе KZT, размер 200–2000 проводок, отвлекающие случаи.
+- **Явные поля** сохраняют смысл. Фактические значения записаны в закрытом `provenance.resolved_config`.
+- **Чистые двойники.** Добавлены одна-две полностью зачтённые назначенные оплаты, последний транш которых проходит за 0–24 ч до исключающей границы.
+- **Ночные оценки.** FX-оценки бывают ночью, когда UTC-дата и локальная дата различаются.
+- **Случайность** выводится из всего входа, а не из одного seed: `SHA-256(seed+config)`. С ключом `episode_key` (32–128 символов hex в нижнем регистре, не меньше 128 бит) — `HMAC-SHA256(ключ, seed+config)`.
+- **`snapshot_nonce`** меняет только ID и порядок записей, экономику не меняет.
+
+**Ограничение без ключа.** Генератор открытый и детерминированный. Если пространство seed мало, а config угадываем, seed восстанавливается перебором, и эталон вместе с ним. Без ключа профиль 1.3 защиты от перебора **не обещает**.
+
+**Ключ для закрытых эпизодов.**
+- Ключ создаёт доверенная сторона (жюри) и хранит его вместе с seed и config эпизода.
+- Ключ передаётся только в `generate_episode`. Закрытый прогон загружает готовый `episode_dir`, и ключ в `reset` не нужен.
+- Восстановить эпизод можно по тем же seed+config с ключом или по `private/provenance.json`.
+
+**Куда ключ не попадает.** В `public/`, наблюдениях и ответах инструментов его нет. В журнале жюри вместо ключа пишется префикс его SHA-256.
+
+**Без ключа эпизод не восстановить.** Это и есть защита.
+
+Замеры атаки и защиты: [generator-hardening-v3](reviews/generator-hardening-v3/REPORT.md).
 
 Формы ссылок:
 - `affected_ids` — `invoice/<invoice_id>` и `payment/<payment_id>`;

@@ -122,11 +122,17 @@ class RehearsalTests(unittest.TestCase):
             trajectory = [json.loads(line) for line in (output / "oracle/trusted/attempt/trajectory.jsonl").read_text().splitlines()]
             self.assertTrue(all(row["reward"] == 0 for row in trajectory))
             source = output / "oracle/trusted/attempt/trajectory.jsonl"
+            original_report = read_json(source.with_name("report.json"))
+            self.assertNotIn("seed", original_report)
             pair = run_pair(FIXTURE, answer, oracle, output / "pair", selection, None, None, source)
             self.assertEqual(pair["status"], "passed", pair)
             self.assertTrue(pair["oracle_score_agrees"])
             self.assertTrue(pair["transformed_answer_agrees"])
             self.assertEqual(pair["replay"]["status"], "passed")
+            historical = output / "historical-report.json"
+            historical.write_text(json.dumps({**original_report, "seed": selection["seed"]}), encoding="utf-8")
+            replay = replay_actions(FIXTURE, source, output / "historical-replay", selection, source_report=historical)
+            self.assertEqual(replay["status"], "passed", replay)
             trajectory[0]["observation"]["remaining_steps"] = 73
             tampered = output / "tampered.jsonl"
             tampered.write_text("\n".join(json.dumps(row) for row in trajectory), encoding="utf-8")

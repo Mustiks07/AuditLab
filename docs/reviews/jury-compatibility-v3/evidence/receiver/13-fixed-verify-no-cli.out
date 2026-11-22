@@ -1,0 +1,4 @@
+Bundle hashes verified; source 858091a41fc8721bb2ae44db8163b39b78785492
+Image archive lists all three tagged images for classic and containerd Docker stores
+Offline launch failed: Docker is not available: Docker CLI is not installed or not on PATH. Install Docker Engine for Linux, then check: docker --host unix:///var/run/docker.sock info (docker said: [Errno 2] No such file or directory: 'docker')
+Only the bundle hashes and image catalog were checked. No tests, isolation or resource checks ran; this is not an acceptance result.

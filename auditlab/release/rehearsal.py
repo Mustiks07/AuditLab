@@ -280,7 +280,8 @@ def replay_actions(snapshot, source, destination, selection, source_report=None)
             actual_report = read_json(Path(destination) / "replay" / "report.json")
             # Closed public rewards are always zero: public replay alone cannot certify grades.
             # Run IDs, policy names and elapsed time intentionally differ in a fresh replay.
-            for key in ("episode_id", "mode", "status", "versions", "seed", "inspection_steps",
+            # The snapshot already fixes the episode; current closed receipts omit generation seeds.
+            for key in ("episode_id", "mode", "status", "versions", "inspection_steps",
                         "evaluation", "infra", "true_reward", "completed"):
                 if key not in original_report or original_report[key] != actual_report.get(key):
                     trusted_mismatches.append(key)

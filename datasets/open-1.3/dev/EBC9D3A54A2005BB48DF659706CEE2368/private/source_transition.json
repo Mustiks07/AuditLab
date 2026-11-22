@@ -1,0 +1,113 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "AR",
+        "credit_minor": 947844311,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "CB83DB4A7619D915ACD8F00A6",
+        "invoice_id": "I8A4EBB0DF14F07072C70B367",
+        "journal_id": "JD11A508D761F86C7FC59CD2D",
+        "payment_id": "P7CDFB9452618D04258319515",
+        "row_id": "R748D2AE461CE895CB93FB254",
+        "timestamp": "2026-07-01T00:00:00+00:00"
+      },
+      "before": {
+        "account": "AR",
+        "credit_minor": 947844311,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "CB83DB4A7619D915ACD8F00A6",
+        "invoice_id": "I8A4EBB0DF14F07072C70B367",
+        "journal_id": "JD11A508D761F86C7FC59CD2D",
+        "payment_id": "P7CDFB9452618D04258319515",
+        "row_id": "R748D2AE461CE895CB93FB254",
+        "timestamp": "2026-06-30T23:59:00+00:00"
+      },
+      "id": "R748D2AE461CE895CB93FB254",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 947844311,
+        "entity_id": "CB83DB4A7619D915ACD8F00A6",
+        "invoice_id": "I8A4EBB0DF14F07072C70B367",
+        "journal_id": "JD11A508D761F86C7FC59CD2D",
+        "payment_id": "P7CDFB9452618D04258319515",
+        "row_id": "RCDA570D02A9AC54BA30E791A",
+        "timestamp": "2026-07-01T00:00:00+00:00"
+      },
+      "before": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 947844311,
+        "entity_id": "CB83DB4A7619D915ACD8F00A6",
+        "invoice_id": "I8A4EBB0DF14F07072C70B367",
+        "journal_id": "JD11A508D761F86C7FC59CD2D",
+        "payment_id": "P7CDFB9452618D04258319515",
+        "row_id": "RCDA570D02A9AC54BA30E791A",
+        "timestamp": "2026-06-30T23:59:00+00:00"
+      },
+      "id": "RCDA570D02A9AC54BA30E791A",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "amount_minor": 1618033988,
+        "currency": "KZT",
+        "doc_id": "D37FDE5C9BAE4E0D906220266",
+        "invoice_refs": [
+          "I8A4EBB0DF14F07072C70B367"
+        ],
+        "payment_id": "P7CDFB9452618D04258319515",
+        "settlement_index": {
+          "before": "2026-07-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "RE47FBB862A5D28454610D13B",
+            "R741ED1D72BDBEF8AE222DEB8",
+            "RFDFED68DC2B28396E9BC233B"
+          ]
+        },
+        "timestamp": "2026-06-11T16:24:00+00:00"
+      },
+      "before": {
+        "amount_minor": 1618033988,
+        "currency": "KZT",
+        "doc_id": "D37FDE5C9BAE4E0D906220266",
+        "invoice_refs": [
+          "I8A4EBB0DF14F07072C70B367"
+        ],
+        "payment_id": "P7CDFB9452618D04258319515",
+        "settlement_index": {
+          "before": "2026-07-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "RE47FBB862A5D28454610D13B",
+            "R741ED1D72BDBEF8AE222DEB8",
+            "RFDFED68DC2B28396E9BC233B",
+            "RCDA570D02A9AC54BA30E791A"
+          ]
+        },
+        "timestamp": "2026-06-11T16:24:00+00:00"
+      },
+      "id": "D37FDE5C9BAE4E0D906220266",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "payments"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "EF8D5C663BE5D96CC9B895584AC3D50E0",
+  "target_episode_id": "EBC9D3A54A2005BB48DF659706CEE2368"
+}

@@ -1,0 +1,69 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "FX_OFFSET",
+        "credit_minor": 58853,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C0F850776DB0022FB50FCC94D",
+        "invoice_id": "IE89F4E3D73307379C9A3844C",
+        "journal_id": "J957C44EEA1E723E74882F74D",
+        "payment_id": null,
+        "row_id": "R485B17625ACA6153EFD7544E",
+        "timestamp": "2025-06-30T16:17:00+09:00"
+      },
+      "before": {
+        "account": "FX_OFFSET",
+        "credit_minor": 58739,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C0F850776DB0022FB50FCC94D",
+        "invoice_id": "IE89F4E3D73307379C9A3844C",
+        "journal_id": "J957C44EEA1E723E74882F74D",
+        "payment_id": null,
+        "row_id": "R485B17625ACA6153EFD7544E",
+        "timestamp": "2025-06-30T16:17:00+09:00"
+      },
+      "id": "R485B17625ACA6153EFD7544E",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 58853,
+        "entity_id": "C0F850776DB0022FB50FCC94D",
+        "invoice_id": "IE89F4E3D73307379C9A3844C",
+        "journal_id": "J957C44EEA1E723E74882F74D",
+        "payment_id": null,
+        "row_id": "REE5E8AC40B3FB02365E1CA5B",
+        "timestamp": "2025-06-30T16:17:00+09:00"
+      },
+      "before": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 58739,
+        "entity_id": "C0F850776DB0022FB50FCC94D",
+        "invoice_id": "IE89F4E3D73307379C9A3844C",
+        "journal_id": "J957C44EEA1E723E74882F74D",
+        "payment_id": null,
+        "row_id": "REE5E8AC40B3FB02365E1CA5B",
+        "timestamp": "2025-06-30T16:17:00+09:00"
+      },
+      "id": "REE5E8AC40B3FB02365E1CA5B",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "E60F8D8C7F23790188EE0A8A2EEC6CB4A",
+  "target_episode_id": "E7EE2D81933CFD8CE701A9342222828E1"
+}

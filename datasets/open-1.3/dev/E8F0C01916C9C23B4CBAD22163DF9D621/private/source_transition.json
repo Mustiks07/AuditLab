@@ -1,0 +1,87 @@
+{
+  "changes": [
+    {
+      "after": null,
+      "before": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 4840000,
+        "entity_id": "C7C834DD6EDCFE22F7D7AA859",
+        "invoice_id": "I7043FB6BF3E12D7B760B5B8D",
+        "journal_id": "J6CC53550C2D73F955B98BC8F",
+        "payment_id": "PB379D3B86BEE1F88AE9A8FA6",
+        "row_id": "R226F36B9197BE62694B53DE5",
+        "timestamp": "2026-05-06T11:54:00+05:30"
+      },
+      "id": "R226F36B9197BE62694B53DE5",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": null,
+      "before": {
+        "account": "AR",
+        "credit_minor": 4840000,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C7C834DD6EDCFE22F7D7AA859",
+        "invoice_id": "I7043FB6BF3E12D7B760B5B8D",
+        "journal_id": "J6CC53550C2D73F955B98BC8F",
+        "payment_id": "PB379D3B86BEE1F88AE9A8FA6",
+        "row_id": "R78279183CE61FAE004178142",
+        "timestamp": "2026-05-06T11:54:00+05:30"
+      },
+      "id": "R78279183CE61FAE004178142",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "amount_minor": 4840000,
+        "currency": "KZT",
+        "doc_id": "D12C16313F714C34E3F3499B4",
+        "invoice_refs": [
+          "I7043FB6BF3E12D7B760B5B8D"
+        ],
+        "payment_id": "PB379D3B86BEE1F88AE9A8FA6",
+        "settlement_index": {
+          "before": "2026-06-01T00:00:00+05:30",
+          "unapplied_row_ids": [
+            "RC00997C30912ABD0EA470AA0"
+          ]
+        },
+        "timestamp": "2026-05-05T11:54:00+05:30"
+      },
+      "before": {
+        "amount_minor": 4840000,
+        "currency": "KZT",
+        "doc_id": "D12C16313F714C34E3F3499B4",
+        "invoice_refs": [
+          "I7043FB6BF3E12D7B760B5B8D"
+        ],
+        "payment_id": "PB379D3B86BEE1F88AE9A8FA6",
+        "settlement_index": {
+          "before": "2026-06-01T00:00:00+05:30",
+          "unapplied_row_ids": [
+            "RC00997C30912ABD0EA470AA0",
+            "R226F36B9197BE62694B53DE5"
+          ]
+        },
+        "timestamp": "2026-05-05T11:54:00+05:30"
+      },
+      "id": "D12C16313F714C34E3F3499B4",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "payments"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "EC2E58A7278322F47651E3F260EB1EAA2",
+  "target_episode_id": "E8F0C01916C9C23B4CBAD22163DF9D621"
+}

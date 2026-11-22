@@ -1,0 +1,8158 @@
+{
+ "rows": [
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 800000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 700000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 3900000,
+   "amount_min": 100000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 900000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 900000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 4800000,
+   "amount_min": 300000,
+   "config": {},
+   "config_name": "empty",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 800000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 700000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 3900000,
+   "amount_min": 100000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 4800000,
+   "amount_min": 300000,
+   "config": {
+    "issue_counts": {}
+   },
+   "config_name": "clean@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 5,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 28,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 800000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 700000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 3900000,
+   "amount_min": 100000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 4800000,
+   "amount_min": 300000,
+   "config": {
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 5,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 2,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 7,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1200000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 800000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2008000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 700000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2064000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 100000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3528000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3528000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3072000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6400000,
+   "amount_min": 300000,
+   "config": {
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 34,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2560000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 5100000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 5100000,
+   "amount_min": 4000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4,
+    "3": 1
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 800000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 700000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 3900000,
+   "amount_min": 100000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 900000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 4800000,
+   "amount_min": 300000,
+   "config": {
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@default",
+   "currencies_used": [
+    "KZT"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 6,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 30,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2400000
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 3900000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 4800000,
+   "amount_min": 2000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 5
+   },
+   "distinct_amounts": 9,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 1,
+    "invoice_archive": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 38,
+   "manifest_rows_match": true,
+   "payments": 6,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2000,
+    50000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 9500000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8400000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 5100000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 6600000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 7900000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 5100000,
+   "amount_min": 10000,
+   "config": {
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@default",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 4
+   },
+   "distinct_amounts": 7,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "invoice_archive": 1,
+    "invoice_issued": 1,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 1
+   },
+   "generator_version": "1.1",
+   "invoices": 6,
+   "ledger_pages_at_50": 1,
+   "ledger_rows": 32,
+   "manifest_rows_match": true,
+   "payments": 5,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    10000,
+    100000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 48,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 32,
+   "ledger_pages_at_50": 3,
+   "ledger_rows": 150,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 37,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    601000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 48,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3460600
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3417000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 37,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1951600
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 156,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3095400
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2090400
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3300000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 32,
+   "ledger_pages_at_50": 3,
+   "ledger_rows": 150,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1416000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2088000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 37,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2132000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1708000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1988000
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    5400
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14378650,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 48,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 32,
+   "ledger_pages_at_50": 3,
+   "ledger_rows": 150,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    7150
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3700
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 37,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3975
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    5425
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4375
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4312900
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2017800
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4626600
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6930900
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 156,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1683400
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6719300
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2075,
+    3320
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3275,
+    5240
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.7",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 168,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2625,
+    4200
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.7",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 172,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2450,
+    3920
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1500,
+    2400
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1160,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 6
+   },
+   "distinct_amounts": 56,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.7",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 168,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    725,
+    1160
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 3080,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 49,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 152,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4300,
+    17200
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 2040,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 48,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 32,
+   "ledger_pages_at_50": 3,
+   "ledger_rows": 150,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4225,
+    16900
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 2600,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3225,
+    12900
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 2320,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 37,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3075,
+    12300
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1440,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.7",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 154,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6025,
+    24100
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 1640,
+   "config": {
+    "config_version": "1.1",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.1",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 6
+   },
+   "distinct_amounts": 52,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.7",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3000,
+    12000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 174,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {}
+   },
+   "config_name": "clean@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [],
+   "truth_types": {}
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    601000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3460600
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 168,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3417000
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 176,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1951600
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3095400
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "duplicate_invoice": 1
+    }
+   },
+   "config_name": "duplicate@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 180,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2090400
+   ],
+   "truth_types": {
+    "duplicate_invoice": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1837275
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2148780
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1357200
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 174,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2690051
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3120089
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 59,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1651531
+   ],
+   "truth_types": {
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    5400
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14378650,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    7150
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3700
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 174,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3975
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    5425
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "issue_counts": {
+     "fx_conversion": 1
+    }
+   },
+   "config_name": "fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4375
+   ],
+   "truth_types": {
+    "fx_conversion": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 160,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4312900
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 51,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2017800
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 168,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4626600
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 176,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6930900
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1683400
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "issue_counts": {
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 59,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 12,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 39,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 180,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6719300
+   ],
+   "truth_types": {
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1140,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 3
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 172,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2075,
+    4878
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 55,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 33,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 176,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3275,
+    5569
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.8",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2625,
+    8409
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 889,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 3
+   },
+   "distinct_amounts": 59,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.8",
+   "invoices": 36,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 188,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    2450,
+    7131
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 934,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 4,
+    "5": 1
+   },
+   "distinct_amounts": 57,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    1500,
+    3198
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "allocation_fx_same_payment",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "payment_allocation": 1
+    }
+   },
+   "config_name": "allocation_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 11,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 62,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11
+   },
+   "generator_version": "1.8",
+   "invoices": 39,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 188,
+   "manifest_rows_match": true,
+   "payments": 18,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    725,
+    1001
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14241000,
+   "amount_min": 1949,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 4,
+    "4": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 158,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 1,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4300,
+    17200
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14371500,
+   "amount_min": 959,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 2,
+    "5": 2
+   },
+   "distinct_amounts": 50,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 32,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 162,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 2,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    4225,
+    16900
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 8820000,
+   "amount_min": 590,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 3,
+    "4": 2,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 166,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 3,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3225,
+    12900
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 13456800,
+   "amount_min": 1045,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 2,
+    "5": 3
+   },
+   "distinct_amounts": 54,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 35,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 174,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 4,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3075,
+    12300
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 12221000,
+   "amount_min": 1029,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 2,
+    "4": 3,
+    "5": 1
+   },
+   "distinct_amounts": 53,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 9
+   },
+   "generator_version": "1.8",
+   "invoices": 34,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 164,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 5,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    6025,
+    24100
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  {
+   "accounts": [
+    "AR",
+    "CASH",
+    "FX_OFFSET",
+    "FX_VALUATION",
+    "REVENUE",
+    "UNAPPLIED"
+   ],
+   "amount_max": 14478900,
+   "amount_min": 435,
+   "config": {
+    "config_version": "1.2",
+    "currencies": [
+     "KZT",
+     "USD"
+    ],
+    "interaction": "cutoff_fx_same_invoice",
+    "issue_counts": {
+     "fx_conversion": 1,
+     "period_cutoff": 1
+    }
+   },
+   "config_name": "cutoff_fx@1.2",
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "designated_payment_unapplied_movements": {
+    "2": 10,
+    "3": 1,
+    "4": 3,
+    "5": 2
+   },
+   "distinct_amounts": 58,
+   "document_pages_at_50": 2,
+   "event_kinds": {
+    "designated_payment": 12,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10
+   },
+   "generator_version": "1.8",
+   "invoices": 38,
+   "ledger_pages_at_50": 4,
+   "ledger_rows": 178,
+   "manifest_rows_match": true,
+   "payments": 17,
+   "period": [
+    "2026-11-01T00:00:00+05:00",
+    "2026-12-01T00:00:00+05:00"
+   ],
+   "seed": 6,
+   "timezone": "Asia/Almaty",
+   "truth_amounts": [
+    3000,
+    12000
+   ],
+   "truth_types": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  }
+ ],
+ "seeds": "1-6",
+ "summary": {
+  "allocation@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    54
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    150,
+    162
+   ],
+   "median_distinct_amounts": 51.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "allocation@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    158,
+    178
+   ],
+   "median_distinct_amounts": 54.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "allocation@default": {
+   "currencies_used": [
+    "KZT"
+   ],
+   "documents": [
+    12,
+    12
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "paid_invoice",
+    "refund"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    34,
+    34
+   ],
+   "median_distinct_amounts": 7.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "allocation_fx@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    51,
+    56
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    160,
+    172
+   ],
+   "median_distinct_amounts": 54.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "allocation_fx@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    51,
+    57
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    172,
+    188
+   ],
+   "median_distinct_amounts": 57.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "allocation_fx@default": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    12,
+    12
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    38,
+    38
+   ],
+   "median_distinct_amounts": 9.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "payment_allocation": 6
+   },
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "clean@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    54
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    150,
+    162
+   ],
+   "median_distinct_amounts": 50.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {},
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "clean@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    158,
+    178
+   ],
+   "median_distinct_amounts": 53.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {},
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "clean@default": {
+   "currencies_used": [
+    "KZT"
+   ],
+   "documents": [
+    10,
+    10
+   ],
+   "event_kinds": [
+    "invoice_archive",
+    "paid_invoice",
+    "refund"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    28,
+    28
+   ],
+   "median_distinct_amounts": 5.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {},
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "cutoff@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    50,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    152,
+    164
+   ],
+   "median_distinct_amounts": 51.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "cutoff@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    50,
+    56
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    160,
+    180
+   ],
+   "median_distinct_amounts": 54.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "cutoff@default": {
+   "currencies_used": [
+    "KZT"
+   ],
+   "documents": [
+    11,
+    11
+   ],
+   "event_kinds": [
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    30,
+    30
+   ],
+   "median_distinct_amounts": 6.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "cutoff_fx@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    54
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    150,
+    162
+   ],
+   "median_distinct_amounts": 50.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "cutoff_fx@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    158,
+    178
+   ],
+   "median_distinct_amounts": 53.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "cutoff_fx@default": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    11,
+    11
+   ],
+   "event_kinds": [
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    32,
+    32
+   ],
+   "median_distinct_amounts": 7.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6,
+    "period_cutoff": 6
+   },
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "duplicate@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    54
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    152,
+    164
+   ],
+   "median_distinct_amounts": 50.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "duplicate_invoice": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "duplicate@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    160,
+    180
+   ],
+   "median_distinct_amounts": 53.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "duplicate_invoice": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "duplicate@default": {
+   "currencies_used": [
+    "KZT"
+   ],
+   "documents": [
+    12,
+    12
+   ],
+   "event_kinds": [
+    "invoice_archive",
+    "paid_invoice",
+    "refund"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    32,
+    32
+   ],
+   "median_distinct_amounts": 5.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "duplicate_invoice": 6
+   },
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "empty": {
+   "currencies_used": [
+    "KZT"
+   ],
+   "documents": [
+    10,
+    10
+   ],
+   "event_kinds": [
+    "invoice_archive",
+    "paid_invoice",
+    "refund"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    28,
+    28
+   ],
+   "median_distinct_amounts": 5.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {},
+   "unapplied_movement_counts": [
+    2
+   ]
+  },
+  "fx@1.1": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    54
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.7"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    150,
+    162
+   ],
+   "median_distinct_amounts": 50.5,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  },
+  "fx@1.2": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    49,
+    55
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "invoice_issued",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.8"
+   ],
+   "ledger_pages_max": 4,
+   "ledger_rows": [
+    158,
+    178
+   ],
+   "median_distinct_amounts": 53.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "fx@default": {
+   "currencies_used": [
+    "KZT",
+    "USD"
+   ],
+   "documents": [
+    12,
+    12
+   ],
+   "event_kinds": [
+    "designated_payment",
+    "invoice_archive",
+    "paid_invoice",
+    "refund",
+    "reporting_valuation"
+   ],
+   "generated": 6,
+   "generator_versions": [
+    "1.1"
+   ],
+   "ledger_pages_max": 1,
+   "ledger_rows": [
+    38,
+    38
+   ],
+   "median_distinct_amounts": 9.0,
+   "periods": [
+    [
+     "2026-11-01T00:00:00+05:00",
+     "2026-12-01T00:00:00+05:00"
+    ]
+   ],
+   "truth_types": {
+    "fx_conversion": 6
+   },
+   "unapplied_movement_counts": [
+    2,
+    3
+   ]
+  }
+ }
+}

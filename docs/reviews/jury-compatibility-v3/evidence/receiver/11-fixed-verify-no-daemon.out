@@ -1,0 +1,4 @@
+Bundle hashes verified; source 858091a41fc8721bb2ae44db8163b39b78785492
+Image archive lists all three tagged images for classic and containerd Docker stores
+Offline launch failed: Docker is not available: no Docker daemon answers at unix:///var/run/docker.sock. Start the local daemon (for example: sudo systemctl start docker), then check: docker --host unix:///var/run/docker.sock info (docker said: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?)
+Only the bundle hashes and image catalog were checked. No tests, isolation or resource checks ran; this is not an acceptance result.

@@ -1,0 +1,197 @@
+{
+ "fixture": "fixtures/foundation/S02",
+ "original": {
+  "oracle_score": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "return": 0.98
+  },
+  "reconcile_score": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "reward": 0.99
+  }
+ },
+ "A_value_based_rename_compatible": {
+  "transform": {
+   "profile": "discover",
+   "style": "neutral",
+   "truth_mode": "composite",
+   "reorder": true
+  },
+  "public_payment": {
+   "amount_minor": 5000000,
+   "currency": "KZT",
+   "doc_id": "doc-000002",
+   "invoice_refs": [
+    "invoice-000004"
+   ],
+   "payment_id": "payment-000005",
+   "settlement_index": {
+    "before": "2026-12-01T00:00:00+05:00",
+    "unapplied_row_ids": [
+     "row-000009",
+     "row-000011"
+    ]
+   },
+   "timestamp": "2026-11-14T16:00:00+05:00"
+  },
+  "ledger_row_ids": [
+   "row-000006",
+   "row-000007",
+   "row-000008",
+   "row-000009",
+   "row-000010",
+   "row-000011",
+   "row-000012",
+   "row-000013"
+  ],
+  "truth_evidence": [
+   "payments/doc-000002",
+   "ledger/row-000009",
+   "ledger/row-000011",
+   "policy/allocation"
+  ],
+  "link_problems": [],
+  "evidence_unavailable": [],
+  "oracle_score": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "return": 0.98
+  },
+  "reconcile_score": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "reward": 0.99
+  }
+ },
+ "B_field_list_rename_leaves_settlement_index": {
+  "transform": {
+   "profile": "literal",
+   "style": "neutral",
+   "truth_mode": "composite",
+   "reorder": true
+  },
+  "public_payment": {
+   "amount_minor": 5000000,
+   "currency": "KZT",
+   "doc_id": "doc-000002",
+   "invoice_refs": [
+    "invoice-000004"
+   ],
+   "payment_id": "payment-000005",
+   "settlement_index": {
+    "before": "2026-12-01T00:00:00+05:00",
+    "unapplied_row_ids": [
+     "R4",
+     "R5"
+    ]
+   },
+   "timestamp": "2026-11-14T16:00:00+05:00"
+  },
+  "ledger_row_ids": [
+   "row-000006",
+   "row-000007",
+   "row-000008",
+   "row-000009",
+   "row-000010",
+   "row-000011",
+   "row-000012",
+   "row-000013"
+  ],
+  "truth_evidence": [
+   "payments/doc-000002",
+   "ledger/row-000009",
+   "ledger/row-000011",
+   "policy/allocation"
+  ],
+  "link_problems": [
+   "payments/doc-000002.settlement_index.unapplied_row_ids → missing ledger row R4",
+   "payments/doc-000002.settlement_index.unapplied_row_ids → missing ledger row R5"
+  ],
+  "evidence_unavailable": [],
+  "oracle_score": {
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "return": 0.98
+  },
+  "reconcile_score": {
+   "tp": 0,
+   "fp": 0,
+   "fn": 1,
+   "reward": -1.0
+  }
+ },
+ "C_opaque_truth_references": {
+  "transform": {
+   "profile": "literal",
+   "style": "neutral",
+   "truth_mode": "opaque",
+   "reorder": false
+  },
+  "public_payment": {
+   "amount_minor": 5000000,
+   "currency": "KZT",
+   "doc_id": "doc-000002",
+   "invoice_refs": [
+    "invoice-000004"
+   ],
+   "payment_id": "payment-000005",
+   "settlement_index": {
+    "before": "2026-12-01T00:00:00+05:00",
+    "unapplied_row_ids": [
+     "R4",
+     "R5"
+    ]
+   },
+   "timestamp": "2026-11-14T16:00:00+05:00"
+  },
+  "ledger_row_ids": [
+   "row-000006",
+   "row-000007",
+   "row-000008",
+   "row-000009",
+   "row-000010",
+   "row-000011",
+   "row-000012",
+   "row-000013"
+  ],
+  "truth_evidence": [
+   "payments/D9",
+   "ledger/R4",
+   "ledger/R5",
+   "policy/allocation"
+  ],
+  "link_problems": [
+   "payments/doc-000002.settlement_index.unapplied_row_ids → missing ledger row R4",
+   "payments/doc-000002.settlement_index.unapplied_row_ids → missing ledger row R5",
+   "truth X1 → unknown reference invoice/I4",
+   "truth X1 → unknown reference payment/P9",
+   "truth X1 → unknown reference payments/D9",
+   "truth X1 → unknown reference ledger/R4",
+   "truth X1 → unknown reference ledger/R5"
+  ],
+  "evidence_unavailable": [
+   "ledger/R4: not_found",
+   "ledger/R5: not_found",
+   "payments/D9: not_found"
+  ],
+  "oracle_score": {
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "return": -1.0
+  },
+  "reconcile_score": {
+   "tp": 0,
+   "fp": 0,
+   "fn": 1,
+   "reward": -1.0
+  }
+ }
+}

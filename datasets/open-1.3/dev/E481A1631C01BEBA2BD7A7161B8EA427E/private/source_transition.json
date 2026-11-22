@@ -1,0 +1,133 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 15422400,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "J1F1175C7BFDE01C86390B2B8",
+        "payment_id": null,
+        "row_id": "R31B7C4D392E97F54634242F3",
+        "timestamp": "2025-11-01T11:17:00+09:00"
+      },
+      "before": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 15417600,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "J1F1175C7BFDE01C86390B2B8",
+        "payment_id": null,
+        "row_id": "R31B7C4D392E97F54634242F3",
+        "timestamp": "2025-10-31T18:21:00+09:00"
+      },
+      "id": "R31B7C4D392E97F54634242F3",
+      "mutation_indexes": [
+        0,
+        1
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "REVENUE",
+        "credit_minor": 96000,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "JC96858E29302A989DAE91154",
+        "payment_id": null,
+        "row_id": "R678DD20545B106C98DB76942",
+        "timestamp": "2025-11-01T11:17:00+09:00"
+      },
+      "before": {
+        "account": "REVENUE",
+        "credit_minor": 96000,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "JC96858E29302A989DAE91154",
+        "payment_id": null,
+        "row_id": "R678DD20545B106C98DB76942",
+        "timestamp": "2025-10-31T18:21:00+09:00"
+      },
+      "id": "R678DD20545B106C98DB76942",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "FX_OFFSET",
+        "credit_minor": 15422400,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "J1F1175C7BFDE01C86390B2B8",
+        "payment_id": null,
+        "row_id": "R6E6E784B6F4AC981D4219879",
+        "timestamp": "2025-11-01T11:17:00+09:00"
+      },
+      "before": {
+        "account": "FX_OFFSET",
+        "credit_minor": 15417600,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "J1F1175C7BFDE01C86390B2B8",
+        "payment_id": null,
+        "row_id": "R6E6E784B6F4AC981D4219879",
+        "timestamp": "2025-10-31T18:21:00+09:00"
+      },
+      "id": "R6E6E784B6F4AC981D4219879",
+      "mutation_indexes": [
+        0,
+        1
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "AR",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 96000,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "JC96858E29302A989DAE91154",
+        "payment_id": null,
+        "row_id": "RAC3FDCC8CD81483F45F2AFE2",
+        "timestamp": "2025-11-01T11:17:00+09:00"
+      },
+      "before": {
+        "account": "AR",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 96000,
+        "entity_id": "CCA34049FD2CBC1388C9EFA41",
+        "invoice_id": "I291D6BF9AD504BA9D8D0141C",
+        "journal_id": "JC96858E29302A989DAE91154",
+        "payment_id": null,
+        "row_id": "RAC3FDCC8CD81483F45F2AFE2",
+        "timestamp": "2025-10-31T18:21:00+09:00"
+      },
+      "id": "RAC3FDCC8CD81483F45F2AFE2",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "EE4BD800190935465500C8FE44295A386",
+  "target_episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E"
+}

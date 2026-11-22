@@ -1,0 +1,1192 @@
+{
+  "config": {
+    "allocation_mode": "omitted",
+    "config_version": "1.3",
+    "issue_counts": {
+      "payment_allocation": 1
+    }
+  },
+  "episode_id": "E8F0C01916C9C23B4CBAD22163DF9D621",
+  "events": [
+    {
+      "affected_ids": [
+        "invoice/I6E92FEAC4E6E3CF97FDFC75E"
+      ],
+      "currency": "KWD",
+      "issued_at": "2026-05-31T10:15:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/DF6732B8151DB00CA9637E8D7",
+      "total_minor": 52000
+    },
+    {
+      "affected_ids": [
+        "invoice/I6E92FEAC4E6E3CF97FDFC75E"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-31",
+      "source": "invoices/DF6732B8151DB00CA9637E8D7",
+      "source_currency": "KWD",
+      "source_minor": 52000
+    },
+    {
+      "affected_ids": [
+        "invoice/I82270D149345F5AE5C7A2FBD"
+      ],
+      "currency": "KWD",
+      "issued_at": "2026-05-31T09:48:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/DF93AACC4D636F0A1B62546C0",
+      "total_minor": 185000
+    },
+    {
+      "affected_ids": [
+        "invoice/I82270D149345F5AE5C7A2FBD"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-31",
+      "source": "invoices/DF93AACC4D636F0A1B62546C0",
+      "source_currency": "KWD",
+      "source_minor": 185000
+    },
+    {
+      "affected_ids": [
+        "invoice/IC55CB6DEC48A0CF6E95FB189"
+      ],
+      "currency": "KWD",
+      "issued_at": "2026-06-01T11:44:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/D473AB557494053671DE4DF4A",
+      "total_minor": 282000
+    },
+    {
+      "affected_ids": [
+        "invoice/IC55CB6DEC48A0CF6E95FB189"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-06-01",
+      "source": "invoices/D473AB557494053671DE4DF4A",
+      "source_currency": "KWD",
+      "source_minor": 282000
+    },
+    {
+      "affected_ids": [
+        "invoice/I08E1C693D446BDC9033D8BB8"
+      ],
+      "currency": "KWD",
+      "issued_at": "2026-06-01T16:13:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/D516FAF5933DECEF04C5C6E8E",
+      "total_minor": 204000
+    },
+    {
+      "affected_ids": [
+        "invoice/I08E1C693D446BDC9033D8BB8"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-06-01",
+      "source": "invoices/D516FAF5933DECEF04C5C6E8E",
+      "source_currency": "KWD",
+      "source_minor": 204000
+    },
+    {
+      "affected_ids": [
+        "invoice/IE10D05DCAE13896BE3F1E869"
+      ],
+      "currency": "KWD",
+      "issued_at": "2026-06-01T13:34:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/D630F7711E875A05F89FF6C90",
+      "total_minor": 216000
+    },
+    {
+      "affected_ids": [
+        "invoice/IE10D05DCAE13896BE3F1E869"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-06-01",
+      "source": "invoices/D630F7711E875A05F89FF6C90",
+      "source_currency": "KWD",
+      "source_minor": 216000
+    },
+    {
+      "affected_ids": [
+        "invoice/I179FAB31E7ACD1801AAE1551"
+      ],
+      "documents": [
+        "invoices/D53D6E996B47BD1BA77B97AE8",
+        "invoices/D2B42DF1431D4A80439B4FA20"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I45A365032CDE3D0A88052CEC"
+      ],
+      "documents": [
+        "invoices/D40CBD0F8E61B9BFFFBE3D47A",
+        "invoices/D84FD377A3368CE9CFF5187F0"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/IEDEE963288B7E9AB3052F158"
+      ],
+      "documents": [
+        "invoices/D9E42C02AB2916377EA3213A9",
+        "invoices/D26ADBC2970136FEFADA57921"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/IFB9DDEC342155F08C87515F8"
+      ],
+      "documents": [
+        "invoices/DA22075A2C91D9004B5C3AC88",
+        "invoices/D8917101F9687F6C195EF0A41"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I977A968CDBC4E7A53A372DF9"
+      ],
+      "documents": [
+        "invoices/D9891C117F344C69A97558316",
+        "invoices/DD69C54F09AF4898C99823F98"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/I56DFA95A28AFA2A4E85C5673"
+      ],
+      "documents": [
+        "invoices/D1F4E81FABEB1557941570D70",
+        "invoices/D64DAA612629E5965C863A79A"
+      ],
+      "kind": "invoice_archive"
+    },
+    {
+      "affected_ids": [
+        "invoice/IE35C7732AEBDF7E260A06CE9",
+        "payment/P41096D05C134A45B12B54859"
+      ],
+      "amount_minor": 6610000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-03T09:04:00+05:30",
+      "settled_at": "2026-05-04T09:04:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/I479CC4E77019A5BC446E463A",
+        "payment/PB7C83D491BE9454F18F27DBE"
+      ],
+      "amount_minor": 8150000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-12T15:54:00+05:30",
+      "settled_at": "2026-05-13T15:54:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/ID44A68BE3695A87EDB064EAE",
+        "payment/P0220531CC3868CDD35A3FEE9"
+      ],
+      "amount_minor": 5420000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-13T14:31:00+05:30",
+      "settled_at": "2026-05-14T14:31:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/I68AD87410B09498B63372FBD",
+        "payment/PA53ACE18999AF5AED9D6E323"
+      ],
+      "amount_minor": 4980000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-06T11:32:00+05:30",
+      "settled_at": "2026-05-07T11:32:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/IFAF98D4D77F45523E2F45527",
+        "payment/PB8239E1130B0BECFF4421A34"
+      ],
+      "amount_minor": 8050000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-08T08:02:00+05:30",
+      "settled_at": "2026-05-09T08:02:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/I7043FB6BF3E12D7B760B5B8D",
+        "payment/PB379D3B86BEE1F88AE9A8FA6"
+      ],
+      "amount_minor": 4840000,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-05T11:54:00+05:30",
+      "settled_at": "2026-05-06T11:54:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/IDFDCE6F747DB56BE65488089",
+        "payment/P549834FE1B6B2B0445FB4AF2"
+      ],
+      "amount_minor": 85010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-02T19:08:00+00:00",
+      "scheduled_tranches_minor": [
+        36291,
+        36290,
+        12429
+      ],
+      "settled_at": "2026-05-02T19:10:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P549834FE1B6B2B0445FB4AF2"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-03",
+      "source": "payments/D2007791E00724F80EB044A97",
+      "source_currency": "KWD",
+      "source_minor": 85010
+    },
+    {
+      "affected_ids": [
+        "invoice/ID09902B27572CB769749622E",
+        "payment/PAC65C8122FB529374F54A563"
+      ],
+      "amount_minor": 117010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-11T21:59:00+00:00",
+      "scheduled_tranches_minor": [
+        16397,
+        16397,
+        16397,
+        67819
+      ],
+      "settled_at": "2026-05-11T22:01:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/PAC65C8122FB529374F54A563"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-12",
+      "source": "payments/D7591C237DFFD28BBA7C67772",
+      "source_currency": "KWD",
+      "source_minor": 117010
+    },
+    {
+      "affected_ids": [
+        "invoice/I70443231686FDAD3B9740D88",
+        "payment/P3CEAC282826D040386976392"
+      ],
+      "amount_minor": 79010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-12T14:50:00+00:00",
+      "scheduled_tranches_minor": [
+        6977,
+        6976,
+        65057
+      ],
+      "settled_at": "2026-05-12T14:52:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P3CEAC282826D040386976392"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-12",
+      "source": "payments/DB3F2CA0BEE2112052CDC17D8",
+      "source_currency": "KWD",
+      "source_minor": 79010
+    },
+    {
+      "affected_ids": [
+        "invoice/I5BA3DDCDB19DBE7E41ADB80E",
+        "payment/P44A7616CA0D38954A8BC4BCA"
+      ],
+      "amount_minor": 125010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-21T14:07:00+00:00",
+      "scheduled_tranches_minor": [
+        45353,
+        79657
+      ],
+      "settled_at": "2026-05-21T14:09:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P44A7616CA0D38954A8BC4BCA"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-21",
+      "source": "payments/D1719D1768791225A15334237",
+      "source_currency": "KWD",
+      "source_minor": 125010
+    },
+    {
+      "affected_ids": [
+        "invoice/ICEF9B1F04B7948A50BF3EB07",
+        "payment/PFB4F0F4DA76CE41C37209ADF"
+      ],
+      "amount_minor": 119010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-07T02:55:00+00:00",
+      "scheduled_tranches_minor": [
+        37018,
+        37018,
+        44974
+      ],
+      "settled_at": "2026-05-07T02:57:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/PFB4F0F4DA76CE41C37209ADF"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-07",
+      "source": "payments/D17A5FB891F4FA12076C3D6C0",
+      "source_currency": "KWD",
+      "source_minor": 119010
+    },
+    {
+      "affected_ids": [
+        "invoice/I17ABD722CD82E80BAE564AEB",
+        "payment/P26B347CA257B5913B5C7E3C2"
+      ],
+      "amount_minor": 96010,
+      "currency": "KWD",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-04T12:25:00+00:00",
+      "scheduled_tranches_minor": [
+        11003,
+        11003,
+        11002,
+        63002
+      ],
+      "settled_at": "2026-05-04T12:27:00+00:00"
+    },
+    {
+      "affected_ids": [
+        "payment/P26B347CA257B5913B5C7E3C2"
+      ],
+      "base_currency": "KZT",
+      "kind": "reporting_valuation",
+      "local_date": "2026-05-04",
+      "source": "payments/DF636E8DB388658C79D515168",
+      "source_currency": "KWD",
+      "source_minor": 96010
+    },
+    {
+      "amount_minor": 1837222,
+      "invoice_id": "I4A4EE89606961CFC603AF5CC",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 1837222,
+      "invoice_id": "I022366ABCD933C3752131BEA",
+      "kind": "paid_invoice"
+    },
+    {
+      "amount_minor": 1837222,
+      "invoice_id": "I0E75906DD7FD69B3ACA3C64A",
+      "kind": "paid_invoice"
+    },
+    {
+      "affected_ids": [
+        "invoice/IF32144DEB763309CBA68EFF7",
+        "payment/P4049B6608C7C691AB18C10C3"
+      ],
+      "amount_minor": 10578276,
+      "currency": "KZT",
+      "kind": "designated_payment",
+      "receipt_at": "2026-05-07T09:20:00+05:30",
+      "scheduled_tranches_minor": [
+        7697811,
+        2880465
+      ],
+      "settled_at": "2026-05-31T13:17:00+05:30"
+    },
+    {
+      "affected_ids": [
+        "invoice/I9F035303A68E823EB1FA0D9D"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-05-31T07:25:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/D0413F76AA8B487F16FF15AAA",
+      "total_minor": 5581800
+    },
+    {
+      "affected_ids": [
+        "invoice/I01EA014B9B5F8A15133617E3"
+      ],
+      "currency": "KZT",
+      "issued_at": "2026-06-01T13:32:00+05:30",
+      "kind": "invoice_issued",
+      "source": "invoices/DBF35DD109B068ADBCBB15E54",
+      "total_minor": 2998800
+    },
+    {
+      "amount_minor": 6868679,
+      "kind": "refund",
+      "payment_id": "PBAC52933EC9CC692D9F3A84B",
+      "returned_at": "2026-05-10T09:29:00+05:30"
+    },
+    {
+      "amount_minor": 1900,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JEA8EE8B54AE966F26A4F2E2B",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:00+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 1900,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JA53C80D308F19CE001C03BEF",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:02+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 3000,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J2393C84FF343875853C54E07",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:04+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 3000,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J57E1DCC9C193756C041B78D1",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:06+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8800,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J7886FC3E658BAB4E77D88842",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:08+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8800,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J2AEE588A516558F5BA701F9A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:10+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8800,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JD593BAE537407E6F9B413161",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:12+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8800,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J92E199EDF71F09693DD73C57",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:14+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JC8A2D1965655FEBC16CBC077",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:16+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JC3128567486A13082A08794F",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:18+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 6200,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J8C0FFA23B475DDCAA1300D8C",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:20+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 6200,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JE2A938C7F2AEE3D2F9DE1574",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:22+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J31AB6FFA419B35DC9A5AA005",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:24+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JC2399336BADB8EFF8A0A0BCC",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:26+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J4C34564FE3A8A3BEC800EFF8",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:28+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JC76721E639672D508F8D6FCC",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:30+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 9100,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J0FF1F0CCCC52204B397C407A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:32+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 9100,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J830EC4ED391E59A6FB74F395",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:34+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 1800,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JDB8B9C81526AB148F72B6F98",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:36+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 1800,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J5C80EA39D60428B50ECE29AF",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:38+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 3200,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J2AA0D0D271AA16FB03CE5436",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:40+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 3200,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J0BC4A8BAE3D7D04135AC4DBD",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:42+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 7600,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J2D179DBC9016D0DD8E970452",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:44+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 7600,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J5B8E25127A15436F6C649330",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:46+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 4400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J35B8285B1E2E24345A9A2E1E",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:48+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 4400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JD8CD638433401A6738E3BD19",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:50+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 9200,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JE67663780426F11A7F748BEB",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:52+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 9200,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J261ABB747E3A7C8C2A97710C",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:54+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J2DA640F23506C87E6E496F96",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:56+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JCC61E26700C5B0FE54FA0ACE",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:00:58+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 9300,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J188DCD49A82C7A85535B487A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:00+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 9300,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JFAD9D5156281C80355422E75",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:02+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 1000,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J6DDBE136A0321B011E4B7D80",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:04+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 1000,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JDAD2CB894D65B6FDCF75F6EA",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:06+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8300,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J5118C7CDA874406FCFF210FC",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:08+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8300,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JED27B9A15D14D554D20AFC8A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:10+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 1500,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JF4CF91F68EDB4671462C1D16",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:12+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 1500,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JBBC7B4711F5E15F5EC194669",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:14+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 3800,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JD1510F9CC76376D0DA7772B6",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:16+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 3800,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J6DE0DC812FCFB27CA452BFFE",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:18+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J1F8E1EF27D2D3BA4E9F91BCE",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:20+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JFE65927EC430241563B59B20",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:22+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JB4ED52AF734FA699B2AE5394",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:24+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J158978970221D5E5085FBFD2",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:26+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JB885E4E36A2F4D5E7DCED4A8",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:28+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J9BB9AB83497C0C7B4350C332",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:30+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 6600,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J7A1376744445D6872B92651F",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:32+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 6600,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JB0A56B288B982AA9424F82D5",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:34+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JE07150F751EBF909C7E47282",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:36+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 2900,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J77C2F537CCD7CD8D7D5B067A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:38+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8300,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JEBBF1404E0ADD8BBED98A983",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:40+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8300,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J69FAAB7780C6BBFE212CDB6C",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:42+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 5600,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J9BE2D4F20C0836C7B9B0D9B9",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:44+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 5600,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J7B68E8E2DBFD6122B54F7A17",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:46+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 2400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JD3902E4D444486089DFE7213",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:48+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 2400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JA9E35813624BDD487C8A1562",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:50+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 2100,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JC3408A7FCD3A1E17556FA1D7",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:52+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 2100,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J6066B16A7BB3419F898B9FA9",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:54+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 6400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JC3A24F76D80D339124E25DCA",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:56+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 6400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J0E8E4D4453F5C265871A14D7",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:01:58+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 4500,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J02591FAE2A5DF69B7CF2FB54",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:00+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 4500,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J5DA68D75D5145CA0E4526420",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:02+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 7400,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J018B29675E6D7154968BB71A",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:04+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 7400,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JE1CE4466A01DE5752AE9C740",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:06+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 3000,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J6807F588A01B8F69160CE42E",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:08+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 3000,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J6EBB3ED731A25EAC0CFA4E5F",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:10+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 6900,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J0CABEF0F395720CBD36F34AB",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:12+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 6900,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "JFC43A104B785E4F73147DCDE",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:14+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 4000,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "JFF5992DAF0B0E9FD25F2C9CF",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:16+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 4000,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J3AF693CEED3A0B0A9FED3CC7",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:18+05:30",
+      "to_account": "CASH"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH",
+      "journal_id": "J332338ACC948663E45DB8162",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:20+05:30",
+      "to_account": "CASH_RESERVE"
+    },
+    {
+      "amount_minor": 8100,
+      "currency": "KZT",
+      "from_account": "CASH_RESERVE",
+      "journal_id": "J147299DFAC752C01DAEFD887",
+      "kind": "treasury_transfer",
+      "timestamp": "2026-05-31T21:02:22+05:30",
+      "to_account": "CASH"
+    }
+  ],
+  "generation_attempts": 1,
+  "generator_version": "1.9",
+  "mutations": [
+    {
+      "affected_ids": [
+        "invoice/I7043FB6BF3E12D7B760B5B8D",
+        "payment/PB379D3B86BEE1F88AE9A8FA6"
+      ],
+      "after": {
+        "applied_minor": 0,
+        "remaining_minor": 4840000,
+        "settled_at": null
+      },
+      "before": {
+        "applied_minor": 4840000,
+        "settled_at": "2026-05-06T11:54:00+05:30"
+      },
+      "effect": "The designated payment was never applied.",
+      "type": "payment_allocation"
+    }
+  ],
+  "randomness": {
+    "brute_force_resistance": "none beyond the size of the seed and config space",
+    "derivation": "SHA-256(seed+config)",
+    "mode": "unkeyed",
+    "profile": "1.3"
+  },
+  "resolved_config": {
+    "allocation_mode": "omitted",
+    "clean_distractors": [
+      "split_payment",
+      "equal_amount_different_supplier",
+      "archive_copy"
+    ],
+    "company_size": {
+      "documents_target": 53,
+      "ledger_rows_target": 321
+    },
+    "config_version": "1.3",
+    "currencies": [
+      "KZT",
+      "KWD"
+    ],
+    "issue_counts": {
+      "payment_allocation": 1
+    },
+    "target_period": "2026-05",
+    "timezone": "Asia/Kolkata"
+  },
+  "seed": 156470873458916067488078063076236699176,
+  "source_book": {
+    "episode_id": "EC2E58A7278322F47651E3F260EB1EAA2",
+    "files_sha256": {
+      "fx.csv": "c80f3e7c9504c42482d0e7c7b3706799234fcc89ecf210715b208f115043a60a",
+      "invoices.jsonl": "a3e11020925b3bc64e0ae5eab8ef292e51841a3e79fed60c66aa20cd9f173dfd",
+      "ledger.csv": "021a0d783eaf66794aae8010f770a6b4a04e75aa4d34c3299466b45951b61f82",
+      "manifest.json": "16e76f3d79c461223c5c7b20d9d85c1995befba6626fe9d50222f257fd2dde18",
+      "payments.jsonl": "6a1271ba0c200556c1c45a6d91da18730f88fc8a6b14b4304a55ca74a266e955",
+      "policy.json": "eca278eedf11e9f43ccc8cf6add50a3ae434665988864a9f88d4b3a6ae06d133"
+    },
+    "path": "source_book",
+    "schema_version": "1.0",
+    "target_files_sha256": {
+      "fx.csv": "c80f3e7c9504c42482d0e7c7b3706799234fcc89ecf210715b208f115043a60a",
+      "invoices.jsonl": "a3e11020925b3bc64e0ae5eab8ef292e51841a3e79fed60c66aa20cd9f173dfd",
+      "ledger.csv": "e75e9166b7156a5160c5693dad945d19f007bb07d6fe4840b91c33a5e8577f63",
+      "manifest.json": "bb4e9ff11a1eb24248386d0795415a3f28f5ee7e3acbc679a05ab53a0a77c944",
+      "payments.jsonl": "010723a4ac70bfe3aef62eee9a27d4ca909cee78b13e6427f001ad8f08a36c02",
+      "policy.json": "eca278eedf11e9f43ccc8cf6add50a3ae434665988864a9f88d4b3a6ae06d133"
+    },
+    "transition_path": "source_transition.json",
+    "transition_sha256": "16c0dd8d2041de2361770947554f96680c142aca59e21e6d32743753ce1e826c"
+  },
+  "source_book_validation": {
+    "document_count": 53,
+    "issue_count": 0,
+    "ledger_rows": 324
+  },
+  "timezone_database": {
+    "package": "tzdata",
+    "version": "2026.6"
+  }
+}

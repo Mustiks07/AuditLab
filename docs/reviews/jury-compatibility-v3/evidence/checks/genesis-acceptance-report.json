@@ -1,0 +1,3956 @@
+{
+ "meta": {
+  "suite": "genesis-local-acceptance-1.0",
+  "not_an_official_score": true,
+  "commit": "d0efe7f2bf91bc912545be4ffbc022db3452a6cb",
+  "product_code_dirty": false,
+  "generator_version": "1.7",
+  "python": "3.11.18",
+  "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+  "definitions": {
+   "url": "https://genesis-exe.com/docs/fintech-checks.txt",
+   "sha256": "2a597ebfb94daec700ba9b1b09d62c032366e788c6e992486d444e063be8d870",
+   "retrieved_utc": "2026-11-21T03:52:46Z"
+  },
+  "started_utc": "2026-11-22T10:45:14.732254Z",
+  "answers": {
+   "path": "/home/user/jury3-art/genesis-acceptance/answers_before_truth.json",
+   "sha256": "fc67b871758dc46c5d95d670b803a0551f0f32570ba630c869d26f4803961d3b",
+   "written_utc": "2026-11-22T10:45:15.491039Z"
+  },
+  "adapter": {
+   "path": "/home/user/AuditLab-jury3/judge_adapter.py",
+   "state": "importable"
+  },
+  "finished_utc": "2026-11-22T10:46:28.742464Z"
+ },
+ "summary_official_layer": {
+  "reward": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "m-examples": {
+   "passed": 15,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "extra-negative": {
+   "passed": 13,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "contract": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "data": {
+   "passed": 21,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "pairs": {
+   "passed": 20,
+   "failed": 0,
+   "not_checked": 0
+  }
+ },
+ "summary_core_evaluator": {
+  "reward": {
+   "passed": 20,
+   "failed": 0
+  },
+  "m-examples": {
+   "passed": 14,
+   "failed": 1
+  },
+  "extra-negative": {
+   "passed": 11,
+   "failed": 2
+  }
+ },
+ "items": [
+  {
+   "id": "R01",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 01",
+   "stimulus": "one correct F; inspection_steps=10",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": "1",
+    "recall": "1",
+    "f1": "1",
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R02",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 02",
+   "stimulus": "empty findings; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R03",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 03",
+   "stimulus": "empty truth, empty findings; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "precision": "0",
+    "recall": "0",
+    "f1": "1",
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R04",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 04",
+   "stimulus": "empty truth, one false finding; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 0,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R05",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 05",
+   "stimulus": "two identical F; inspection_steps=10",
+   "expected": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "precision": "1/2",
+    "recall": "1",
+    "f1": "2/3",
+    "return": "47/150"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.5,
+     "recall": 1.0,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.5,
+     "recall": 1.0,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R06",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 06",
+   "stimulus": "wrong type; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R07",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 07",
+   "stimulus": "other existing, unaffected record; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R08",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 08",
+   "stimulus": "amount 10001, tau 0; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R09",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 09",
+   "stimulus": "other currency; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R10",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 10",
+   "stimulus": "only D1; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R11",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 11",
+   "stimulus": "missing evidence id instead of D2; inspection_steps=10",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "precision": "0",
+    "recall": "0",
+    "f1": "0",
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R12",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 12",
+   "stimulus": "5 records x 4 types = 20 findings; inspection_steps=10",
+   "expected": {
+    "tp": 1,
+    "fp": 19,
+    "fn": 0,
+    "precision": "1/20",
+    "recall": "1",
+    "f1": "2/21",
+    "return": "-871/1050"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 19,
+     "fn": 0,
+     "precision": 0.05,
+     "recall": 1.0,
+     "f1": 0.09523809523809523,
+     "return": -0.8295238095238096
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 19,
+     "fn": 0,
+     "precision": 0.05,
+     "recall": 1.0,
+     "f1": 0.09523809523809523,
+     "return": -0.8295238095238096
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R13",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 13",
+   "stimulus": "A and B; only F for A; inspection_steps=10",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 1,
+    "precision": "1",
+    "recall": "1/2",
+    "f1": "2/3",
+    "return": "47/150"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 1,
+     "precision": 1.0,
+     "recall": 0.5,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 1,
+     "precision": 1.0,
+     "recall": 0.5,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R14",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 14",
+   "stimulus": "A and B; F for A plus a false finding; inspection_steps=10",
+   "expected": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 1,
+    "precision": "1/2",
+    "recall": "1/2",
+    "f1": "1/2",
+    "return": "-1/50"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.5,
+     "recall": 0.5,
+     "f1": 0.5,
+     "return": -0.02
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.5,
+     "recall": 0.5,
+     "f1": 0.5,
+     "return": -0.02
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R15",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 15",
+   "stimulus": "inspection_steps=0; inspection_steps=0",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": "1",
+    "recall": "1",
+    "f1": "1",
+    "return": "1"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R16",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 16",
+   "stimulus": "inspection_steps=50; inspection_steps=50",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": "1",
+    "recall": "1",
+    "f1": "1",
+    "return": "9/10"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.9
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.9
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R17",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 17",
+   "stimulus": "inspection_steps=100; inspection_steps=100",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "precision": "1",
+    "recall": "1",
+    "f1": "1",
+    "return": "4/5"
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.8
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.8
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R18",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 18",
+   "stimulus": "31 findings; inspection_steps=10",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "too_many_findings",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R19",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 19",
+   "stimulus": "11 distinct evidence ids; inspection_steps=10",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "too_many_evidence_ids",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "R20",
+   "block": "reward",
+   "expectation_source": "fintech-checks.txt, block 3, test 20",
+   "stimulus": "explanation of 1001 ASCII characters; inspection_steps=10",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "published_reward_equals_formula": true,
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_explanation",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M01",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "affected_ids=[R2,R1,R1]",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M02",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "affected_ids=[R1,R2,R3]",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M03",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "evidence=[D2,D1,D3] (D3 available)",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M04",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "evidence=[D1,D2,U]",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "failed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M05",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "11 evidence ids, 10 repeat D1",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "too_many_evidence_ids",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M06a",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "currency 'kzt'",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M06b",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "currency 'KZT '",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M07",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "amount 10001, tau 0",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M08a",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "tau=1, amount 10001; tau=1",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M08b",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "tau=1, amount 10002; tau=1",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M09a",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "amount '10000'",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_amount",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M09b",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "amount true",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_amount",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M12",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples",
+   "stimulus": "two identical correct findings",
+   "expected": {
+    "tp": 1,
+    "fp": 1,
+    "fn": 0,
+    "return": "47/150"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.5,
+     "recall": 1.0,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 1,
+     "fn": 0,
+     "precision": 0.5,
+     "recall": 1.0,
+     "f1": 0.6666666666666666,
+     "return": 0.31333333333333335
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X01",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "available extra evidence (D3) beside the full set",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X02",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "unavailable extra evidence beside the full set",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "failed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X03",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "31 identical findings (limit before de-duplication)",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "too_many_findings",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X04a",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "affected id with different case",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X04b",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "affected id with trailing space",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X04c",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "evidence id with trailing space",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X05",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "amount 10000.0 (fraction/float)",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_amount",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X06a",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "explanation 1000 emoji code points",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X06b",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "explanation 1001 Cyrillic code points",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_explanation",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X06c",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "explanation 500 x (e + combining acute) = 1000 code points",
+   "expected": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "return": "49/50"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "scored",
+     "reason": null,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.98
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X06d",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "explanation 1001 code points with combining marks",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_explanation",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X07",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "unknown string type",
+   "expected": {
+    "tp": 0,
+    "fp": 1,
+    "fn": 1,
+    "return": "-1"
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_type",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "failed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": 0,
+     "fp": 1,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "X08",
+   "block": "extra-negative",
+   "expectation_source": "fintech-checks.txt, task brief, matcher rules 1-8",
+   "stimulus": "missing required field (explanation)",
+   "expected": {
+    "invalid": true
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "status": "invalid_submission",
+     "reason": "bad_finding_keys",
+     "tp": 0,
+     "fp": 0,
+     "fn": 1,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 0.0,
+     "return": -1.0
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "tp": null,
+     "fp": null,
+     "fn": null,
+     "precision": null,
+     "recall": null,
+     "f1": null,
+     "return": -1.0
+    }
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M10",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples + tie-break rule",
+   "stimulus": "F0 fits A and B, F1 fits only A: expect F1->A, F0->B (graph level; AuditLab validate_truth rejects two issues with equal type+affected_ids, so this graph cannot be built from a valid AuditLab truth)",
+   "expected": {
+    "owners_A_B": [
+     1,
+     0
+    ],
+    "tp": 2
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "via": "evaluate(rules='genesis-2026-11-20') pairs",
+     "owners_A_B": [
+      1,
+      0
+     ],
+     "tp": 2,
+     "tp_after_permutation": 2
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "order": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "return": 0.98
+     },
+     "reversed": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "return": 0.98
+     }
+    },
+    "note": "score_episode exposes counts, not the chosen pairs; the pairing rule is checked on the graph level (core)"
+   },
+   "status": "passed"
+  },
+  {
+   "id": "M11",
+   "block": "m-examples",
+   "expectation_source": "fintech-checks.txt, M-examples + tie-break rule",
+   "stimulus": "F0 and F1 fit both: expect A->F0, B->F1 (graph level; AuditLab validate_truth rejects two issues with equal type+affected_ids, so this graph cannot be built from a valid AuditLab truth)",
+   "expected": {
+    "owners_A_B": [
+     0,
+     1
+    ],
+    "tp": 2
+   },
+   "expectation_checks": {
+    "reference_scorer_agrees": true
+   },
+   "core": {
+    "result": {
+     "via": "evaluate(rules='genesis-2026-11-20') pairs",
+     "owners_A_B": [
+      0,
+      1
+     ],
+     "tp": 2,
+     "tp_after_permutation": 2
+    },
+    "status": "passed"
+   },
+   "official": {
+    "status": "passed",
+    "result": {
+     "order": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "return": 0.98
+     },
+     "reversed": {
+      "tp": 2,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "return": 0.98
+     }
+    },
+    "note": "score_episode exposes counts, not the chosen pairs; the pairing rule is checked on the graph level (core)"
+   },
+   "status": "passed"
+  },
+  {
+   "id": "C01",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "obs_keys": [
+     "manifest",
+     "policy",
+     "remaining_steps",
+     "task"
+    ],
+    "info": {
+     "episode_id": "E478CCB49DBC4CEF48339DA4C7A389142",
+     "max_steps": 100,
+     "mode": "closed"
+    }
+   }
+  },
+  {
+   "id": "C02",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "keys": [
+     "manifest",
+     "policy",
+     "remaining_steps",
+     "task"
+    ],
+    "remaining": 100
+   }
+  },
+  {
+   "id": "C03",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "manifest": {
+     "base_currency": "KZT",
+     "currency_exponents": {
+      "KZT": 2,
+      "USD": 2
+     },
+     "document_count": 65,
+     "episode_id": "E478CCB49DBC4CEF48339DA4C7A389142",
+     "ledger_rows": 400,
+     "period_end": "2026-12-01T00:00:00+05:00",
+     "period_end_exclusive": true,
+     "period_start": "2026-11-01T00:00:00+05:00",
+     "rounding": "ROUND_HALF_UP",
+     "schema_version": "1.0",
+     "timezone": "Asia/Almaty"
+    }
+   }
+  },
+  {
+   "id": "C04",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "types": [
+     "dict",
+     "float",
+     "bool",
+     "bool",
+     "dict"
+    ],
+    "remaining": 99
+   }
+  },
+  {
+   "id": "C05",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "rows": 400,
+    "pages": 8,
+    "seen": 400
+   }
+  },
+  {
+   "id": "C06",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "page_len": 50
+   }
+  },
+  {
+   "id": "C07",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "record": {
+     "row_id": "R5952B47422112D3F4D7304C6",
+     "timestamp": "2026-11-13T15:00:00+05:00",
+     "account": "REVENUE",
+     "debit_minor": 0,
+     "credit_minor": 1422290,
+     "currency": "KZT",
+     "entity_id": "C9E3C8790B44150C349DB08B3",
+     "invoice_id": "IDFC6048D48C7F57A54B171A7",
+     "payment_id": null,
+     "journal_id": "J6F5792394C6D891AB3E784F2"
+    }
+   }
+  },
+  {
+   "id": "C08",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "doc_id": "D99945D535462EA160EDA43FA"
+   }
+  },
+  {
+   "id": "C09",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "result": "0.3"
+   }
+  },
+  {
+   "id": "C10",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "errors": [
+     {
+      "code": "invalid_expression",
+      "message": "Invalid decimal expression."
+     },
+     {
+      "code": "invalid_expression",
+      "message": "Invalid decimal expression."
+     },
+     {
+      "code": "invalid_expression",
+      "message": "Invalid decimal expression."
+     }
+    ]
+   }
+  },
+  {
+   "id": "C11",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "error": {
+     "code": "not_found",
+     "message": "Public record not found."
+    }
+   }
+  },
+  {
+   "id": "C12",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "error": {
+     "code": "not_found",
+     "message": "Public record not found."
+    }
+   }
+  },
+  {
+   "id": "C13",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "error": {
+     "code": "unknown_action",
+     "message": "Unknown action."
+    }
+   }
+  },
+  {
+   "id": "C14",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "remaining": [
+     99,
+     98,
+     97
+    ]
+   }
+  },
+  {
+   "id": "C15",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "after": {
+     "result": null,
+     "error": {
+      "code": "episode_finished",
+      "message": "The episode is already finished."
+     },
+     "remaining_steps": 99
+    }
+   }
+  },
+  {
+   "id": "C16",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "result": {
+     "accepted": true
+    }
+   }
+  },
+  {
+   "id": "C17",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "last": 0
+   }
+  },
+  {
+   "id": "C18",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "waited_s": 60.57,
+    "truncated": true
+   }
+  },
+  {
+   "id": "C19",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "rewards": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "id": "C20",
+   "block": "contract",
+   "status": "passed",
+   "evidence": {
+    "leaks": [],
+    "note": "a clean run does not prove isolation; see code review notes in the report"
+   }
+  },
+  {
+   "id": "D01",
+   "block": "data",
+   "meaning": "clean: ordinary reconciliation",
+   "seed": 9101,
+   "size": 400,
+   "truth_issues": 0,
+   "answer_findings": 0,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 0,
+    "entries": 0,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    0,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D02",
+   "block": "data",
+   "meaning": "clean: correctly split payment",
+   "seed": 9102,
+   "size": 400,
+   "truth_issues": 0,
+   "answer_findings": 0,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 0,
+    "entries": 0,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    0,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D03",
+   "block": "data",
+   "meaning": "clean: correct refund",
+   "seed": 9103,
+   "size": 400,
+   "truth_issues": 0,
+   "answer_findings": 0,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 0,
+    "entries": 0,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    0,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D04",
+   "block": "data",
+   "meaning": "clean: legitimate repeated amounts",
+   "seed": 9104,
+   "size": 400,
+   "truth_issues": 0,
+   "answer_findings": 0,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 0,
+    "entries": 0,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    0,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D05",
+   "block": "data",
+   "meaning": "clean: currency/period boundary per policy",
+   "seed": 9105,
+   "size": 400,
+   "truth_issues": 0,
+   "answer_findings": 0,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 0,
+    "entries": 0,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    0,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D06",
+   "block": "data",
+   "meaning": "duplicate invoice",
+   "seed": 9106,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D07",
+   "block": "data",
+   "meaning": "duplicate invoice",
+   "seed": 9107,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D08",
+   "block": "data",
+   "meaning": "duplicate invoice (max size)",
+   "seed": 9108,
+   "size": 2000,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D09",
+   "block": "data",
+   "meaning": "allocation: full omission",
+   "seed": 9109,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 3,
+    "entries": 3,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D10",
+   "block": "data",
+   "meaning": "allocation: remainder settled after the boundary",
+   "seed": 9110,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 3,
+    "entries": 3,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D11",
+   "block": "data",
+   "meaning": "allocation: remainder settled exactly at the boundary",
+   "seed": 9111,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 3,
+    "entries": 3,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D12",
+   "block": "data",
+   "meaning": "FX date/rate",
+   "seed": 9112,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D13",
+   "block": "data",
+   "meaning": "FX date/rate (3/0 decimals)",
+   "seed": 9113,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D14",
+   "block": "data",
+   "meaning": "period cutoff",
+   "seed": 9114,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D15",
+   "block": "data",
+   "meaning": "period cutoff (DST zone)",
+   "seed": 9115,
+   "size": 400,
+   "truth_issues": 1,
+   "answer_findings": 1,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 2,
+    "entries": 2,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    1,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D16",
+   "block": "data",
+   "meaning": "interaction A",
+   "seed": 9116,
+   "size": 400,
+   "truth_issues": 2,
+   "answer_findings": 2,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 5,
+    "entries": 5,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    2,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D17",
+   "block": "data",
+   "meaning": "interaction A (JPY base)",
+   "seed": 9117,
+   "size": 400,
+   "truth_issues": 2,
+   "answer_findings": 2,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 5,
+    "entries": 5,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    2,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D18",
+   "block": "data",
+   "meaning": "interaction A (NY, more issues)",
+   "seed": 9118,
+   "size": 400,
+   "truth_issues": 4,
+   "answer_findings": 4,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 9,
+    "entries": 9,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    4,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D19",
+   "block": "data",
+   "meaning": "interaction B",
+   "seed": 9119,
+   "size": 400,
+   "truth_issues": 2,
+   "answer_findings": 2,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 4,
+    "entries": 4,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    2,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D20",
+   "block": "data",
+   "meaning": "interaction B (KWD, Berlin spring)",
+   "seed": 9120,
+   "size": 400,
+   "truth_issues": 2,
+   "answer_findings": 2,
+   "conditions": {
+    "1_source_book_consistent": true,
+    "2_injection_is_declared_change": true,
+    "3_truth_matches_change": true,
+    "4_evidence_available": true,
+    "5_formats": true,
+    "6_no_contradictions": true
+   },
+   "transition": {
+    "ok": true,
+    "changed": 4,
+    "entries": 4,
+    "fx_same_lines": true,
+    "policy_same": true
+   },
+   "format_problems": [],
+   "verifier_tp_fp_fn": [
+    2,
+    0,
+    0
+   ],
+   "status": "passed",
+   "adapter_transport": "generate_episode via adapter byte-identical: passed"
+  },
+  {
+   "id": "D09-D11-matrix",
+   "block": "data",
+   "status": "passed",
+   "reason": "Classified from public payment amounts, actual pre-boundary settlement rows and the independently frozen answer.",
+   "allocation_modes": {
+    "D09": "omitted",
+    "D10": "partial",
+    "D11": "partial"
+   }
+  },
+  {
+   "id": "P01",
+   "block": "pairs",
+   "base": "D01",
+   "transform": "permute",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P02",
+   "block": "pairs",
+   "base": "D02",
+   "transform": "permute",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P03",
+   "block": "pairs",
+   "base": "D03",
+   "transform": "permute",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P04",
+   "block": "pairs",
+   "base": "D04",
+   "transform": "permute",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P05",
+   "block": "pairs",
+   "base": "D05",
+   "transform": "permute",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 0,
+     "fp": 0,
+     "fn": 0,
+     "precision": 0.0,
+     "recall": 0.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P06",
+   "block": "pairs",
+   "base": "D06",
+   "transform": "rename",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P07",
+   "block": "pairs",
+   "base": "D07",
+   "transform": "rename",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P08",
+   "block": "pairs",
+   "base": "D08",
+   "transform": "rename",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P09",
+   "block": "pairs",
+   "base": "D09",
+   "transform": "rename",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P10",
+   "block": "pairs",
+   "base": "D10",
+   "transform": "rename",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P11",
+   "block": "pairs",
+   "base": "D11",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P12",
+   "block": "pairs",
+   "base": "D12",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P13",
+   "block": "pairs",
+   "base": "D13",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P14",
+   "block": "pairs",
+   "base": "D14",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P15",
+   "block": "pairs",
+   "base": "D15",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 1,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 1,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P16",
+   "block": "pairs",
+   "base": "D16",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P17",
+   "block": "pairs",
+   "base": "D17",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P18",
+   "block": "pairs",
+   "base": "D18",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 4,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 4,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P19",
+   "block": "pairs",
+   "base": "D19",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  },
+  {
+   "id": "P20",
+   "block": "pairs",
+   "base": "D20",
+   "transform": "both",
+   "conditions": {
+    "1_exact_replay_original": true,
+    "2_oracle_maps_back": true,
+    "3_scores_equal_same_steps": true,
+    "4_evidence_available_no_new_channel": true,
+    "reviewer_calc_invariant": true
+   },
+   "score": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "reward": 0.976
+   },
+   "status": "passed",
+   "adapter_transport": {
+    "status": "passed",
+    "exact_replay": true,
+    "transformed_loads": true,
+    "score_original": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    },
+    "score_transformed": {
+     "tp": 2,
+     "fp": 0,
+     "fn": 0,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "return": 0.976
+    }
+   }
+  }
+ ],
+ "diagnostics": {
+  "integrator_probe_reproduced": "see probe-results-reproduced.json in the review package",
+  "closed_mode_leakage_internal": {
+   "status": "passed",
+   "leaks": [],
+   "rewards_all_zero": true,
+   "steps": 17,
+   "trusted_result_kept": true,
+   "scope": "internal AuditEnvironment closed mode; not the jury adapter (C19/C20 stay not_checked)"
+  },
+  "deadline_origin_internal": {
+   "status": "failed",
+   "stimulus": "fake clock; session_opener inside reset advances it by 61 s; then one step",
+   "expected": "truncated=true (61 s since the start of reset > 60 s)",
+   "actual": {
+    "truncated": false,
+    "terminated": false,
+    "elapsed_since_reset_entry_s": 61.0,
+    "remaining_steps": 99
+   },
+   "cause": "AuditEnvironment.reset sets _started after generation/loading/validate_truth/session opening (auditlab/runner/env.py)"
+  },
+  "deadline_origin_adapter": {
+   "status": "passed",
+   "stimulus": "fake clock; 61 s inside reset (session opener); then one step",
+   "expected": "truncated=true",
+   "actual": {
+    "truncated": true,
+    "terminated": false,
+    "error": {
+     "code": "time_limit",
+     "message": "Time limit exceeded."
+    }
+   }
+  },
+  "reset_wall_time_max_size": {
+   "ledger_rows": 2000,
+   "reset_wall_s": 0.0121,
+   "note": "time currently excluded from the deadline; measured on this machine only"
+  }
+ }
+}
