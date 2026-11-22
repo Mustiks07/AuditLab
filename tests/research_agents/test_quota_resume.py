@@ -234,6 +234,15 @@ class ExperimentService(unittest.TestCase):
             with self.assertRaises(experiment.PlanError):
                 self.run_plan(plan, sha, [])
 
+    def test_overlapping_cooldowns_are_recorded_once(self):
+        plan, sha = self.plan(repetitions=1, inter_attempt_cooldown_s=60)
+        limited = ProviderError("rate_limit", "HTTP 429", status=429, retry_after=45)
+        result = self.run_plan(plan, sha, [limited, self.submit()])
+        invocation = result["last_invocation"]
+        self.assertEqual(self.waits, [60])
+        self.assertEqual(invocation["service_waits_s"], [])
+        self.assertEqual(invocation["inter_attempt_waits_s"], [60])
+
 
 if __name__ == "__main__":
     unittest.main()

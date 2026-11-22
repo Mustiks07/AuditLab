@@ -238,16 +238,17 @@ def run_experiment(plan: dict, plan_sha: str, out: str | Path, *, confirm_paid: 
             queue.pop(0)
             continue
         wait = 0.0
+        wait_kind = "service_waits_s"
         if service_failures and evaluated[-1] in invocation["attempts_started"]:
             # cool down before retrying a slot the service refused in THIS run (a later resume starts fresh)
             wait = min(service["max_cooldown_s"], max(service["cooldown_s"], _retry_after_of(out, evaluated[-1]) or 0.0))
-            invocation["service_waits_s"].append(wait)
-            log(f"{slot['slot']}: service failure ({statuses[-1]}); waiting {wait:.0f}s before retry {len(evaluated)}")
         if invocation["attempts_started"] and service["inter_attempt_cooldown_s"] > wait:
             wait = service["inter_attempt_cooldown_s"]
-            invocation["inter_attempt_waits_s"].append(wait)
-            log(f"waiting {wait:.0f}s between attempts (outside the episode deadline)")
+            wait_kind = "inter_attempt_waits_s"
         if wait:
+            # One actual wait, even when both policies require a cooldown. Do not double-count it.
+            invocation[wait_kind].append(wait)
+            log(f"{slot['slot']}: waiting {wait:.0f}s ({wait_kind}, outside the episode deadline)")
             sleep(wait)
         if stop_requested and stop_requested():
             invocation.update(stop_reason="stop_requested", stop_detail="stop requested during cooldown")
