@@ -1,0 +1,1966 @@
+{
+ "open_1_1_rebuild": {
+  "byte_identical": 20,
+  "snapshots": 20
+ },
+ "open_1_3": {
+  "rebuild": {
+   "differing": [],
+   "snapshots": 20,
+   "status": "passed",
+   "unexpected": []
+  },
+  "snapshots": 20,
+  "source_books_passed": 20,
+  "validator_passed": 20
+ },
+ "organizer_scenarios_1_3": {
+  "snapshots": 20,
+  "source_books_passed": 20,
+  "validator_passed": 20
+ },
+ "scenarios": [
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 182,
+   "event_kinds": {
+    "paid_invoice": 27,
+    "treasury_transfer": 97
+   },
+   "id": "D01",
+   "invoices": 27,
+   "ledger_rows": 400,
+   "meaning": "clean: ordinary reconciliation",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 38,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 214,
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_issued": 10,
+    "paid_invoice": 10,
+    "refund": 1,
+    "reporting_valuation": 10,
+    "treasury_transfer": 76
+   },
+   "id": "D02",
+   "invoices": 34,
+   "ledger_rows": 400,
+   "meaning": "clean: correctly split payment",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 31,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 220,
+   "event_kinds": {
+    "designated_payment": 8,
+    "invoice_issued": 12,
+    "paid_invoice": 14,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 74
+   },
+   "id": "D03",
+   "invoices": 34,
+   "ledger_rows": 400,
+   "meaning": "clean: correct refund",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 31,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 206,
+   "event_kinds": {
+    "designated_payment": 8,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 12,
+    "reporting_valuation": 10,
+    "treasury_transfer": 91
+   },
+   "id": "D04",
+   "invoices": 40,
+   "ledger_rows": 400,
+   "meaning": "clean: legitimate repeated amounts",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 25,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "JPY",
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 188,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 25,
+    "treasury_transfer": 95
+   },
+   "id": "D05",
+   "invoices": 26,
+   "ledger_rows": 400,
+   "meaning": "clean: currency/period boundary per policy",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 39,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 212,
+   "event_kinds": {
+    "designated_payment": 7,
+    "invoice_archive": 1,
+    "invoice_issued": 11,
+    "paid_invoice": 15,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 79
+   },
+   "id": "D06",
+   "invoices": 35,
+   "ledger_rows": 400,
+   "meaning": "duplicate invoice",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 30,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "duplicate_invoice": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "JPY",
+    "USD"
+   ],
+   "distinct_amounts": 212,
+   "event_kinds": {
+    "designated_payment": 7,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 12,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 92
+   },
+   "id": "D07",
+   "invoices": 41,
+   "ledger_rows": 400,
+   "meaning": "duplicate invoice",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 24,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "duplicate_invoice": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 548,
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 5,
+    "paid_invoice": 62,
+    "refund": 1,
+    "reporting_valuation": 9,
+    "treasury_transfer": 672
+   },
+   "id": "D08",
+   "invoices": 92,
+   "ledger_rows": 2000,
+   "meaning": "duplicate invoice (max size)",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 40,
+    "payments": 3
+   },
+   "payments": 108,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "duplicate_invoice": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 172,
+   "event_kinds": {
+    "designated_payment": 6,
+    "paid_invoice": 21,
+    "treasury_transfer": 98
+   },
+   "id": "D09",
+   "invoices": 27,
+   "ledger_rows": 400,
+   "meaning": "allocation: full omission",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 38,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 184,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 24,
+    "refund": 1,
+    "treasury_transfer": 94
+   },
+   "id": "D10",
+   "invoices": 25,
+   "ledger_rows": 400,
+   "meaning": "allocation: remainder settled after the boundary",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 40,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 182,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 25,
+    "refund": 1,
+    "treasury_transfer": 95
+   },
+   "id": "D11",
+   "invoices": 26,
+   "ledger_rows": 400,
+   "meaning": "allocation: remainder settled exactly at the boundary",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 39,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 192,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 24,
+    "reporting_valuation": 1,
+    "treasury_transfer": 91
+   },
+   "id": "D12",
+   "invoices": 25,
+   "ledger_rows": 400,
+   "meaning": "FX date/rate",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 40,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "JPY",
+    "KWD"
+   ],
+   "distinct_amounts": 178,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 25,
+    "reporting_valuation": 1,
+    "treasury_transfer": 94
+   },
+   "id": "D13",
+   "invoices": 26,
+   "ledger_rows": 400,
+   "meaning": "FX date/rate (3/0 decimals)",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 39,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 176,
+   "event_kinds": {
+    "invoice_issued": 1,
+    "paid_invoice": 26,
+    "treasury_transfer": 97
+   },
+   "id": "D14",
+   "invoices": 27,
+   "ledger_rows": 400,
+   "meaning": "period cutoff",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 38,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "EUR",
+    "USD"
+   ],
+   "distinct_amounts": 178,
+   "event_kinds": {
+    "invoice_issued": 1,
+    "paid_invoice": 27,
+    "treasury_transfer": 98
+   },
+   "id": "D15",
+   "invoices": 28,
+   "ledger_rows": 400,
+   "meaning": "period cutoff (DST zone)",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 37,
+   "period": "2026-10",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Europe/Berlin",
+   "truth": {
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 192,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 24,
+    "reporting_valuation": 1,
+    "treasury_transfer": 93
+   },
+   "id": "D16",
+   "invoices": 25,
+   "ledger_rows": 400,
+   "meaning": "interaction A",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 40,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "JPY",
+    "KWD",
+    "USD"
+   ],
+   "distinct_amounts": 186,
+   "event_kinds": {
+    "designated_payment": 1,
+    "paid_invoice": 25,
+    "refund": 1,
+    "reporting_valuation": 1,
+    "treasury_transfer": 93
+   },
+   "id": "D17",
+   "invoices": 26,
+   "ledger_rows": 400,
+   "meaning": "interaction A (JPY base)",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 39,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "EUR",
+    "USD"
+   ],
+   "distinct_amounts": 188,
+   "event_kinds": {
+    "designated_payment": 3,
+    "paid_invoice": 23,
+    "reporting_valuation": 2,
+    "treasury_transfer": 90
+   },
+   "id": "D18",
+   "invoices": 26,
+   "ledger_rows": 400,
+   "meaning": "interaction A (NY, more issues)",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 39,
+   "period": "2026-03",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "America/New_York",
+   "truth": {
+    "fx_conversion": 2,
+    "payment_allocation": 2
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 182,
+   "event_kinds": {
+    "invoice_issued": 5,
+    "paid_invoice": 25,
+    "reporting_valuation": 5,
+    "treasury_transfer": 95
+   },
+   "id": "D19",
+   "invoices": 30,
+   "ledger_rows": 400,
+   "meaning": "interaction B",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 35,
+   "period": "2026-11",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  },
+  {
+   "currencies": [
+    "KWD",
+    "USD"
+   ],
+   "distinct_amounts": 188,
+   "event_kinds": {
+    "invoice_issued": 5,
+    "paid_invoice": 24,
+    "reporting_valuation": 5,
+    "treasury_transfer": 94
+   },
+   "id": "D20",
+   "invoices": 29,
+   "ledger_rows": 400,
+   "meaning": "interaction B (KWD, Berlin spring)",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 8,
+    "payments": 1
+   },
+   "payments": 36,
+   "period": "2026-03",
+   "randomness": "keyed",
+   "source_books": "passed",
+   "timezone": "Europe/Berlin",
+   "truth": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   }
+  }
+ ],
+ "snapshots": [
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 216,
+   "episode_id": "E12538C1A2E24CC1CC9AB1F3958D90C49",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "reporting_valuation": 11,
+    "treasury_transfer": 134
+   },
+   "invoices": 39,
+   "ledger_rows": 464,
+   "name": "duplicate",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 10,
+    "payments": 1
+   },
+   "payments": 18,
+   "period": "2026-04",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 15,
+    "elapsed_s": 0.203,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "duplicate_invoice": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 15
+  },
+  {
+   "category": "clean",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 536,
+   "episode_id": "E1BAFA78045338C1E75E5F98B905850F7",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 61,
+    "refund": 2,
+    "reporting_valuation": 10,
+    "treasury_transfer": 677
+   },
+   "invoices": 96,
+   "ledger_rows": 2000,
+   "name": "clean-large",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 40,
+    "payments": 3
+   },
+   "payments": 104,
+   "period": "2025-09",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 48,
+    "elapsed_s": 0.25,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "UTC",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 48
+  },
+  {
+   "category": "clean",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 140,
+   "episode_id": "E57586EB49978B6540D8574A32DC55F16",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 10,
+    "treasury_transfer": 17
+   },
+   "invoices": 37,
+   "ledger_rows": 222,
+   "name": "clean-sampled",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 5,
+    "payments": 1
+   },
+   "payments": 18,
+   "period": "2025-11",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 10,
+    "elapsed_s": 0.469,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Europe/Moscow",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 10
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 508,
+   "episode_id": "E640E11842E3F199C5965B2512099FD0F",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 52,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 624
+   },
+   "invoices": 85,
+   "ledger_rows": 1834,
+   "name": "cutoff",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 37,
+    "payments": 2
+   },
+   "payments": 95,
+   "period": "2026-11",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 44,
+    "elapsed_s": 0.531,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "America/Bogota",
+   "truth": {
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 44
+  },
+  {
+   "category": "interaction",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 252,
+   "episode_id": "E7EE2D81933CFD8CE701A9342222828E1",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 6,
+    "paid_invoice": 29,
+    "refund": 1,
+    "reporting_valuation": 9,
+    "treasury_transfer": 48
+   },
+   "invoices": 60,
+   "ledger_rows": 476,
+   "name": "cutoff-fx-fx-only",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 10,
+    "payments": 2
+   },
+   "payments": 58,
+   "period": "2025-06",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 17,
+    "elapsed_s": 0.282,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Asia/Tokyo",
+   "truth": {
+    "fx_conversion": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 17
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 280,
+   "episode_id": "E7FA987357C8CB69C927E1D0EA41CA3F5",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 13,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 154
+   },
+   "invoices": 48,
+   "ledger_rows": 584,
+   "name": "allocation-partial",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 12,
+    "payments": 1
+   },
+   "payments": 35,
+   "period": "2026-04",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 17,
+    "elapsed_s": 0.266,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 17
+  },
+  {
+   "category": "interaction",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 264,
+   "episode_id": "E875C2E94FCCA39ABB06C0F6C4953F04E",
+   "event_kinds": {
+    "designated_payment": 15,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 12,
+    "reporting_valuation": 12,
+    "treasury_transfer": 137
+   },
+   "invoices": 47,
+   "ledger_rows": 548,
+   "name": "allocation-fx-both",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 11,
+    "payments": 1
+   },
+   "payments": 31,
+   "period": "2026-03",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 16,
+    "elapsed_s": 0.25,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "UTC",
+   "truth": {
+    "fx_conversion": 1,
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 16
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 254,
+   "episode_id": "E9A5EFBB179B06C43D75CED49E47F564C",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 5,
+    "reporting_valuation": 11,
+    "treasury_transfer": 179
+   },
+   "invoices": 41,
+   "ledger_rows": 560,
+   "name": "fx",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 12,
+    "payments": 1
+   },
+   "payments": 21,
+   "period": "2025-03",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 17,
+    "elapsed_s": 0.188,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 17
+  },
+  {
+   "category": "boundary",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 180,
+   "episode_id": "EAAA76B8F14EF559A284B6B66BECAB959",
+   "event_kinds": {
+    "designated_payment": 16,
+    "invoice_archive": 6,
+    "invoice_issued": 12,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 51
+   },
+   "invoices": 43,
+   "ledger_rows": 328,
+   "name": "allocation-late-tranche",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 7,
+    "payments": 1
+   },
+   "payments": 21,
+   "period": "2026-10",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 12,
+    "elapsed_s": 0.203,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "UTC",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 12
+  },
+  {
+   "category": "mixed",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 546,
+   "episode_id": "ECEEC6A66BB9415222BF6CA87107FC342",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 61,
+    "reporting_valuation": 10,
+    "treasury_transfer": 675
+   },
+   "invoices": 98,
+   "ledger_rows": 2000,
+   "name": "mixed-large",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 40,
+    "payments": 3
+   },
+   "payments": 102,
+   "period": "2026-04",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 48,
+    "elapsed_s": 0.391,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "train",
+   "timezone": "Europe/Moscow",
+   "truth": {
+    "duplicate_invoice": 1,
+    "fx_conversion": 1,
+    "payment_allocation": 2,
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 48
+  },
+  {
+   "category": "interaction",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 244,
+   "episode_id": "E11D6C20E9193087AF7B7E2732374E6B7",
+   "event_kinds": {
+    "designated_payment": 15,
+    "invoice_archive": 6,
+    "invoice_issued": 11,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 12,
+    "treasury_transfer": 170
+   },
+   "invoices": 41,
+   "ledger_rows": 550,
+   "name": "allocation-fx-allocation-only",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 11,
+    "payments": 1
+   },
+   "payments": 20,
+   "period": "2025-11",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 16,
+    "elapsed_s": 0.25,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "UTC",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 16
+  },
+  {
+   "category": "interaction",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 452,
+   "episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 9,
+    "paid_invoice": 53,
+    "refund": 1,
+    "reporting_valuation": 9,
+    "treasury_transfer": 246
+   },
+   "invoices": 87,
+   "ledger_rows": 1076,
+   "name": "cutoff-fx-both",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 22,
+    "payments": 2
+   },
+   "payments": 93,
+   "period": "2025-10",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 29,
+    "elapsed_s": 0.344,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Asia/Tokyo",
+   "truth": {
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 29
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 270,
+   "episode_id": "E4CCB42E1E990E5B738A05A60F58E25EE",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 17,
+    "refund": 1,
+    "reporting_valuation": 10,
+    "treasury_transfer": 120
+   },
+   "invoices": 49,
+   "ledger_rows": 542,
+   "name": "duplicate",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 11,
+    "payments": 1
+   },
+   "payments": 41,
+   "period": "2025-07",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 16,
+    "elapsed_s": 0.312,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Asia/Tokyo",
+   "truth": {
+    "duplicate_invoice": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 16
+  },
+  {
+   "category": "clean",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 240,
+   "episode_id": "E7CA1390221438F70974A5BD91113F510",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 3,
+    "refund": 2,
+    "reporting_valuation": 9,
+    "treasury_transfer": 192
+   },
+   "invoices": 37,
+   "ledger_rows": 580,
+   "name": "clean-boundary-twin",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 12,
+    "payments": 1
+   },
+   "payments": 20,
+   "period": "2026-07",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 17,
+    "elapsed_s": 0.25,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Asia/Kolkata",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 17
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "KWD",
+    "KZT"
+   ],
+   "distinct_amounts": 172,
+   "episode_id": "E8F0C01916C9C23B4CBAD22163DF9D621",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 3,
+    "refund": 1,
+    "reporting_valuation": 11,
+    "treasury_transfer": 72
+   },
+   "invoices": 35,
+   "ledger_rows": 322,
+   "name": "allocation-omitted",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 7,
+    "payments": 1
+   },
+   "payments": 18,
+   "period": "2026-05",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 12,
+    "elapsed_s": 0.203,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Asia/Kolkata",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 12
+  },
+  {
+   "category": "mixed",
+   "currencies": [
+    "KZT",
+    "USD"
+   ],
+   "distinct_amounts": 552,
+   "episode_id": "E95103CB90AF570352BA7B6ADA858AE33",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 59,
+    "reporting_valuation": 10,
+    "treasury_transfer": 674
+   },
+   "invoices": 95,
+   "ledger_rows": 2000,
+   "name": "mixed-large",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 40,
+    "payments": 3
+   },
+   "payments": 105,
+   "period": "2025-01",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 48,
+    "elapsed_s": 0.422,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Europe/Moscow",
+   "truth": {
+    "duplicate_invoice": 2,
+    "fx_conversion": 2,
+    "payment_allocation": 1,
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 48
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 240,
+   "episode_id": "EAB594D6B17D5F8FEFE1122B2CEB9431F",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 11,
+    "refund": 1,
+    "reporting_valuation": 9,
+    "treasury_transfer": 109
+   },
+   "invoices": 46,
+   "ledger_rows": 470,
+   "name": "fx",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 10,
+    "payments": 1
+   },
+   "payments": 32,
+   "period": "2025-09",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 15,
+    "elapsed_s": 0.172,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Asia/Almaty",
+   "truth": {
+    "fx_conversion": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 15
+  },
+  {
+   "category": "boundary",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 208,
+   "episode_id": "EBC9D3A54A2005BB48DF659706CEE2368",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 10,
+    "paid_invoice": 3,
+    "reporting_valuation": 9,
+    "treasury_transfer": 107
+   },
+   "invoices": 39,
+   "ledger_rows": 402,
+   "name": "allocation-at-boundary",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 9,
+    "payments": 1
+   },
+   "payments": 18,
+   "period": "2026-06",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 14,
+    "elapsed_s": 0.25,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "UTC",
+   "truth": {
+    "payment_allocation": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 14
+  },
+  {
+   "category": "clean",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 500,
+   "episode_id": "ECA127693E01CAF5D137480EE24312A17",
+   "event_kinds": {
+    "designated_payment": 13,
+    "invoice_archive": 6,
+    "invoice_issued": 7,
+    "paid_invoice": 55,
+    "refund": 1,
+    "reporting_valuation": 10,
+    "treasury_transfer": 587
+   },
+   "invoices": 87,
+   "ledger_rows": 1758,
+   "name": "clean-sampled",
+   "pages_at_50": {
+    "invoices": 2,
+    "ledger": 36,
+    "payments": 2
+   },
+   "payments": 93,
+   "period": "2026-02",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 43,
+    "elapsed_s": 0.39,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "America/Bogota",
+   "truth": {},
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 43
+  },
+  {
+   "category": "single",
+   "currencies": [
+    "JPY",
+    "KZT"
+   ],
+   "distinct_amounts": 180,
+   "episode_id": "EF141A50FB8D3B9871E85F24D428CD226",
+   "event_kinds": {
+    "designated_payment": 14,
+    "invoice_archive": 6,
+    "invoice_issued": 8,
+    "paid_invoice": 12,
+    "reporting_valuation": 10,
+    "treasury_transfer": 27
+   },
+   "invoices": 46,
+   "ledger_rows": 310,
+   "name": "cutoff-next-period",
+   "pages_at_50": {
+    "invoices": 1,
+    "ledger": 7,
+    "payments": 1
+   },
+   "payments": 31,
+   "period": "2026-02",
+   "randomness": "unkeyed",
+   "solver": {
+    "actions": 12,
+    "elapsed_s": 0.234,
+    "status": "passed"
+   },
+   "source_books": "passed",
+   "split": "dev",
+   "timezone": "Europe/Moscow",
+   "truth": {
+    "period_cutoff": 1
+   },
+   "validator": "passed",
+   "validator_checks": {
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "formats": "passed",
+    "independent_solver": "passed",
+    "mutation_declared": "passed",
+    "mutation_explained": "passed",
+    "no_contradictions": "passed",
+    "reproducible_generation": "passed",
+    "source_book_consistent": "passed",
+    "witness_trajectory": "passed"
+   },
+   "witness_actions": 12
+  }
+ ]
+}
