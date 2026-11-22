@@ -134,3 +134,30 @@ class ContentBreakdown(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TrainingPreparation(unittest.TestCase):
+    def test_hardware_probe_reports_facts_and_ignores_repository_folders(self):
+        import importlib.util
+        from auditlab.research.training.hardware import REPOSITORY, _installed, probe
+        result = probe()
+        self.assertIn("weight_training_possible", result)
+        spec = importlib.util.find_spec("datasets")
+        if spec is not None and spec.origin and Path(spec.origin).resolve().is_relative_to(REPOSITORY):
+            self.assertFalse(_installed("datasets"))  # AuditLab's own datasets/ folder is not Hugging Face datasets
+        if not result["nvidia_gpus"]:
+            self.assertFalse(result["weight_training_possible"])
+            self.assertTrue(any("NVIDIA" in b for b in result["blockers"]))
+
+    def test_demonstrate_a_curriculum(self):
+        from auditlab.research.training.__main__ import main as training_main
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            episode = tmp / "episodes" / "S02"
+            shutil.copytree(ROOT / "fixtures" / "foundation" / "S02", episode)
+            curriculum = tmp / "curriculum.json"
+            curriculum.write_text(json.dumps({"schema_version": "1.0", "artifact_id": "c", "kind": "test",
+                                              "episodes": [{"episode_ref": "episodes/S02", "family_id": "S02", "split": "train"}]}))
+            self.assertEqual(training_main(["demonstrate", "--curriculum", str(curriculum), "--out", str(tmp / "demo")]), 0)
+            attempt = json.loads(next((tmp / "demo" / "attempts").glob("*/attempt.json")).read_text())
+            self.assertEqual((attempt["status"], attempt["agent"]["kind"]), ("completed", "oracle_demonstration"))

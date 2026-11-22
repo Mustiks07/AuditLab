@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "abc-final-holdout",
+  "protocol_id": "genesis-official-60s",
+  "purpose": "final",
+  "transport": "docker",
+  "docker": {
+    "image": "auditlab-llm-bridge:gemini",
+    "allow": [
+      "generativelanguage.googleapis.com:443"
+    ]
+  },
+  "repetitions": 3,
+  "episodes": [],
+  "arms": [
+    {
+      "name": "A",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "A"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "B",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "B"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "C",
+      "agent": {
+        "kind": "llm",
+        "variant": "tools",
+        "max_tokens": 4096,
+        "max_model_calls_per_action": 3,
+        "retry": {
+          "max_tries": 3,
+          "min_interval_s": 4.0
+        },
+        "prompt_variant": "C"
+      },
+      "provider": {
+        "provider": "openai_compatible",
+        "model": "gemini-3.1-flash-lite",
+        "api_key_env": "GEMINI_API_KEY",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "reasoning_effort": "minimal",
+        "strict_tools": false,
+        "prices": {
+          "gemini-3.1-flash-lite": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          }
+        }
+      }
+    }
+  ],
+  "budget": {
+    "max_usd_total": 0.25,
+    "max_usd_per_attempt": 0.01
+  },
+  "service": {
+    "max_slot_retries": 2,
+    "cooldown_s": 60.0,
+    "max_cooldown_s": 600.0,
+    "max_consecutive_service_failures": 3
+  },
+  "env_seed": 0,
+  "analysis": {
+    "pairs": [
+      [
+        "B",
+        "A"
+      ],
+      [
+        "C",
+        "A"
+      ],
+      [
+        "C",
+        "B"
+      ]
+    ],
+    "bootstrap": 10000,
+    "seed": 20261122
+  },
+  "note": "TEMPLATE. The integrator fills episodes from Claude Pro 2's sealed holdout (both variants of each family, split=holdout) and runs it once, after this protocol is frozen."
+}

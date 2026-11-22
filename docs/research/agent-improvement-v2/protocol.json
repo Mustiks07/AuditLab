@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "agent-improvement-v2-protocol-1.0",
+  "issue": 42,
+  "recorded_before_results": true,
+  "question": "Does an improvement developed on AuditLab material help an API auditor solve NEW financial cases without more false accusations? A positive result is not assumed.",
+  "arms": {
+    "A": "original auditor",
+    "B": "A + general audit-method instruction",
+    "C": "A + AuditLab-derived designated-payment procedure and one worked train example"
+  },
+  "held_equal": {
+    "provider": {
+      "provider": "openai_compatible",
+      "model": "gemini-3.1-flash-lite",
+      "api_key_env": "GEMINI_API_KEY",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "reasoning_effort": "minimal",
+      "strict_tools": false,
+      "prices": {
+        "gemini-3.1-flash-lite": {
+          "input": 0,
+          "output": 0,
+          "cache_read": 0,
+          "cache_write": 0
+        }
+      }
+    },
+    "agent": {
+      "kind": "llm",
+      "variant": "tools",
+      "max_tokens": 4096,
+      "max_model_calls_per_action": 3,
+      "retry": {
+        "max_tries": 3,
+        "min_interval_s": 4.0
+      }
+    },
+    "tools": "five official actions (tools variant)",
+    "limits": "genesis-official-60s: 60 s from reset incl. API latency, 100 actions",
+    "context_budget": "B and C additions within 10% characters (test); token use measured per call"
+  },
+  "prompts": {
+    "version": "agent-improvement-v2-prompts-1.0",
+    "variants": {
+      "A": {
+        "addition_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "addition_chars": 0,
+        "addition_words": 0,
+        "provenance": "agent.SYSTEM_PROMPT of PROMPT_VERSION llm-auditor-prompt-1.0, unchanged"
+      },
+      "B": {
+        "addition_sha256": "b02093ac0400c0975b02bf8791a0835e9008d3e10d9b7988d5b703c242ae24dd",
+        "addition_chars": 1689,
+        "addition_words": 277,
+        "provenance": "written from general audit practice; no AuditLab failure, trajectory or truth was consulted"
+      },
+      "C": {
+        "addition_sha256": "2c3947c9b1484f50d1ad04cc4fb0afa5825972c91fcd2e0cdf121fd7db2a578d",
+        "addition_chars": 1579,
+        "addition_words": 181,
+        "provenance": {
+          "observed_weakness": [
+            "live Gemini 3.1 Flash-Lite pilot, dev family 922101: empty submission on a partial allocation of 3 024 000 minor KZT (one completed attempt; docs/research/gemini)",
+            "GPT Pro 1 local curriculum (docs/research/financial-curriculum): the random policy missed a payment_allocation 3/3 before and after reduction on a train family"
+          ],
+          "rule_source": "public policy.allocation text and settlement_index field of the public payments table",
+          "worked_example": "datasets/open/train/E39A14EA0FB98F9BC3E42C3738182D142 (train split): public records only; its truth was read only to confirm the example's amount (2000 USD)",
+          "not_used": "dev family 922101 values, any holdout, any final family"
+        }
+      }
+    }
+  },
+  "tuning": {
+    "allowed_splits": [
+      "train",
+      "dev"
+    ],
+    "dev_plan": "abc-dev.plan.json",
+    "status": "no live dev tuning was possible before freeze (no provider key in this environment); prompts are first versions frozen here"
+  },
+  "final": {
+    "episodes": "Claude Pro 2 sealed holdout (agent-generalization-1.1), via the integrator",
+    "plan_template": "abc-final.plan.template.json",
+    "runs_once": true
+  },
+  "repetitions": 3,
+  "metrics": {
+    "primary": "mean official return per family (family = mean over its clean and error variants and repetitions), paired differences B-A, C-A, C-B with Claude Pro 2's cluster bootstrap (10000, seed 20261121) and sign-flip test",
+    "secondary": [
+      "micro F1",
+      "issues missed by type",
+      "clean attempts with a false accusation",
+      "finding labels: wrong amount / currency / entities / evidence",
+      "completion",
+      "actions",
+      "wall time",
+      "input/output tokens",
+      "cost"
+    ],
+    "service": "rate_limited, quota_exhausted, provider_error, bridge_failure, interrupted, budget_stop are reported with their counts and never counted as model misses or FPs; Claude Pro 2's official-rule scoring of every attempt is reported separately"
+  },
+  "decision": {
+    "improvement_shown_only_if": "the 95% interval of the primary difference excludes 0 AND the clean-accusation rate does not increase beyond its interval",
+    "null_and_negative_results": "published"
+  },
+  "replication": {
+    "set": "docs/research/agent-improvement-v2/replication-922101/replication-set.json",
+    "plans": [
+      "replication-official.plan.json",
+      "replication-research.plan.json"
+    ],
+    "criterion": "the miss is called repeatable only if >= 2 of 3 COMPLETED attempts on each error condition miss it; denominators include unfinished attempts"
+  },
+  "plans_sha256": {
+    "replication-official.plan.json": "9f21eddcbbfb41f302af7c3d88e87c9d4cdaf908367990959c59eaaacbe6f907",
+    "replication-research.plan.json": "db4d0707a5a46f03f496ba4f01f6ed96b2ca5cd74c39f2a0f2456650b108735f",
+    "abc-dev.plan.json": "2d436dec2f52fe6531f03984a699baee64e37c2775d95df638d87bcf0259d53d",
+    "abc-final.plan.template.json": "2e426303351ac8feef7853f93729bacdfb653a4f53fb7f0a943ccc693c3fb9f1",
+    "e3-training.plan.template.json": "2c4b7f948d0b7a0de34fafaa24ea3bbe636c9a107c3ad6cdd9e68e7ae0fd8936"
+  }
+}
