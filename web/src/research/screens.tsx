@@ -12,7 +12,7 @@ import {
 } from "./api";
 import {
   attemptStatus, checkStatus, count, decimal, duration, experimentStatus, FAILURE_KINDS, HIGHER_IS_BETTER, metricName, originName,
-  relationName, researchError, share, signed, splitName, TRAINING_KIND_NOTE, trainingKind, trainingState, usd,
+  relationName, researchError, share, signed, splitName, techError, TRAINING_KIND_NOTE, trainingKind, trainingState, usd,
 } from "./copy";
 import {
   ActionList, claimText, DocButton, docLink, DocumentPanel, Failed, FixtureNote, labelsFor, Loading, NextStep,
@@ -105,6 +105,14 @@ export function ResearchHome() {
       </details>
     </div>}
     {fixtures && <FixtureNote provenance={data.experiments.find(e => e._provenance.kind !== "measured")?._provenance}/>}
+    <section className="research-panel lab-entry" aria-labelledby="lab-entry-title">
+      <h2 id="lab-entry-title">Финансовая лаборатория</h2>
+      <p>Связанные финансовые ситуации, досье ошибок и карта результатов по всем сохранённым прогонам.</p>
+      <div className="control-actions">
+        <a className="primary-action" href="#/research/lab">Открыть лабораторию<Icon name="arrow"/></a>
+        <a className="secondary-action" href="#/research/map">Карта результатов</a>
+      </div>
+    </section>
     {status.value?.controller && <p className="controller-line">{status.value.controller.connected
       ? <><Icon name="check"/>Контроллер экспериментов подключён</>
       : <><Icon name="help"/>Контроллер экспериментов не подключён: доступен просмотр сохранённых результатов</>}</p>}
@@ -200,9 +208,10 @@ function AttemptsTable({ attempts, experiment }: { attempts: AttemptSummary[]; e
           <td data-label="Компания">{a.company_label ?? "Компания"}</td>
           <td data-label="Вариант">{variant(a.variant_id)}</td>
           <td data-label="Повтор">{count(a.repetition)}</td>
-          <td data-label="Состояние">{attemptStatus(a.status)}</td>
+          <td data-label="Состояние">{a.status === "completed" ? attemptStatus(a.status) : techError(a.error, a.status)}</td>
           <td data-label="Итог оценки"><Verdict attempt={a}/></td>
-          <td><a className="text-link" href={rlink("attempts", a.artifact_id)}>Траектория<Icon name="arrow"/></a></td>
+          <td><a className="text-link" href={rlink("dossiers", a.artifact_id)}>Досье<Icon name="arrow"/></a>{" "}
+            <a className="text-link" href={rlink("attempts", a.artifact_id)}>Траектория<Icon name="arrow"/></a></td>
         </tr>)}</tbody>
       </table>}
   </section>;
@@ -330,7 +339,7 @@ export function AttemptScreen({ id, docKey }: { id: string; docKey?: string }) {
     <WorkspaceHeader title={attempt.company_label ?? "Траектория попытки"} subtitle={`Повтор ${count(attempt.repetition)} · ${attemptStatus(attempt.status)}`}
       action={<Origin provenance={attempt._provenance}/>}/>
     <FixtureNote provenance={attempt._provenance}/>
-    {attempt.status !== "completed" && <p className="inline-error" role="status">{attemptStatus(attempt.status)}. {attempt.error?.message ?? "Причина не указана."} Финансовой оценки у этой попытки нет.</p>}
+    {attempt.status !== "completed" && <p className="inline-error" role="status">{techError(attempt.error, attempt.status)}. Финансовой оценки у этой попытки нет.</p>}
     <div className="investigation-grid">
       <section className="research-panel"><h2>Действия агента</h2>
         <p className="run-kind"><Icon name="document"/>Сохранённая траектория</p>

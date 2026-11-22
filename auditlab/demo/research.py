@@ -325,6 +325,8 @@ class Projection:
                 "claims": [{k: f.get(k) for k in ("type", "claimed_amount_minor", "currency")}
                            for f in ((attempt.get("submission") or {}).get("findings") or []) if isinstance(f, dict)],
                 "usage": attempt.get("usage"), "steps": len(attempt.get("steps") or []),
+                "error": {k: v for k, v in attempt["error"].items() if k in ("code", "message")}
+                if isinstance(attempt.get("error"), dict) else None,
                 "_provenance": attempt["_provenance"]}
 
     def status(self, controller: dict) -> dict:
