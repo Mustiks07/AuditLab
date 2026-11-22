@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# OPS-01 whole-host review of the published RC3 offline bundle (docs/demo/HANDOFF.md, sections 1-8).
+# OPS-01 whole-host review of a pinned published offline bundle (default: historical RC3) (docs/demo/HANDOFF.md, sections 1-8).
 #
 #   bash run_review.sh --work DIR [--download | --zip ZIP --sums SUMS] [--interval 0.5]
+#                      [--release v0.1.0-rc.3|v0.1.0-rc.5] [--print-release]
 #                      [--baseline-seconds 30] [--python python3.11] [--allow-unqualified]
 #
 # Runs on the machine under test (Linux x86_64, Python 3.11, local Docker Engine, cgroup v2).
@@ -18,11 +19,7 @@ set -u -o pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TAG="v0.1.0-rc.3"
-SOURCE_SHA="b7a1857a51bf47bb36e42699988b38b4d897fa1f"
-ZIP_SHA256="a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81"
-ZIP_NAME="AuditLab-${TAG}-offline.zip"
-SUMS_NAME="AuditLab-${TAG}-SHA256SUMS.txt"
-BASE_URL="https://github.com/Mustiks07/AuditLab/releases/download/${TAG}"
+PRINT_RELEASE=0
 LIMIT_BYTES=4000000000
 PY=python3.11
 DOCKER=(docker --host unix:///var/run/docker.sock)
@@ -30,6 +27,8 @@ DOCKER=(docker --host unix:///var/run/docker.sock)
 WORK="" ZIP="" SUMS="" DOWNLOAD=0 INTERVAL=0.5 BASELINE=30 ALLOW_UNQUALIFIED=0
 while [ $# -gt 0 ]; do
   case "$1" in
+    --release) [ $# -ge 2 ] || { echo "--release requires a tag" >&2; exit 64; }; TAG="$2"; shift 2 ;;
+    --print-release) PRINT_RELEASE=1; shift ;;
     --work) WORK="$2"; shift 2 ;;
     --zip) ZIP="$2"; shift 2 ;;
     --sums) SUMS="$2"; shift 2 ;;
@@ -41,6 +40,23 @@ while [ $# -gt 0 ]; do
     *) echo "unknown argument: $1" >&2; exit 64 ;;
   esac
 done
+# Only reviewed immutable candidates are accepted. Unknown tags must not silently select RC3.
+case "$TAG" in
+  v0.1.0-rc.3)
+    SOURCE_SHA="b7a1857a51bf47bb36e42699988b38b4d897fa1f"
+    ZIP_SHA256="a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81" ;;
+  v0.1.0-rc.5)
+    SOURCE_SHA="920b251ee3b1c12f9bc5ffe0eca3b5cb1bf8d78a"
+    ZIP_SHA256="d2cb2723ab2b493376c9d9b8620e7d29968d8c56318fcace5f6eaacdc4578641" ;;
+  *) echo "unsupported release: $TAG (supported: v0.1.0-rc.3, v0.1.0-rc.5)" >&2; exit 64 ;;
+esac
+ZIP_NAME="AuditLab-${TAG}-offline.zip"
+SUMS_NAME="AuditLab-${TAG}-SHA256SUMS.txt"
+BASE_URL="https://github.com/Mustiks07/AuditLab/releases/download/${TAG}"
+if [ "$PRINT_RELEASE" -eq 1 ]; then
+  printf '{"tag":"%s","source_sha":"%s","archive":"%s","sha256":"%s"}\n' "$TAG" "$SOURCE_SHA" "$ZIP_NAME" "$ZIP_SHA256"
+  exit 0
+fi
 [ -n "$WORK" ] || { echo "--work DIR is required" >&2; exit 64; }
 command -v "$PY" >/dev/null || { echo "$PY not found; python3.11 is required (HANDOFF section 1)" >&2; exit 64; }
 
@@ -123,7 +139,7 @@ fi
 { sha256sum "$ZIP_NAME"; sha256sum -c "$SUMS_NAME" --ignore-missing; echo "exit=$?"; } > "$RUN/archive-hash.txt" 2>&1
 cat "$RUN/archive-hash.txt"
 grep -q "^${ZIP_SHA256}  ${ZIP_NAME}\$" "$RUN/archive-hash.txt" && grep -q "^${ZIP_NAME}: OK\$" "$RUN/archive-hash.txt" \
-  || { echo "archive hash does not match the published RC3"; exit 1; }
+  || { echo "archive hash does not match the published $TAG"; exit 1; }
 mkdir bundle && unzip -q "$ZIP_NAME" -d bundle || { echo "unzip failed"; exit 1; }
 cd bundle
 
