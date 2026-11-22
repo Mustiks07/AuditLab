@@ -1,0 +1,32 @@
+[ОТКРЫТЫЕ ДАННЫЕ] 08c731b7c447  Сгенерированная компания · последний зачёт 30.11 23:59
+  эпизод E6476455CA5F6F7CF4A34F78E68AD54C0 · политика reconcile · режим train · статус completed
+  движок: runner=auditlab.runner, session=auditlab.runner, policy=auditlab.policies, evaluator=auditlab.runner, generator=auditlab.generator 1.1, verifier=auditlab.verifier
+
+ПОВТОР ЗАПИСИ — действия аудитора:
+    1. ok  list_records policy  (осталось 99)
+    2. ok  list_records payments  (осталось 98)
+    3. ok  list_records invoices  (осталось 97)
+    4. ok  list_records ledger  (осталось 96)
+    5. ok  list_records ledger (далее)  (осталось 95)
+    6. ok  list_records ledger (далее)  (осталось 94)
+    7. ok  list_records ledger (далее)  (осталось 93)
+    8. ok  list_records ledger (далее)  (осталось 92)
+    9. ok  list_records fx  (осталось 91)
+   10. ok  submit · выводов: 1  (осталось 90)
+
+Вывод #0: Дублирующий счёт · invoice/IE1AA509B3457554062C97F19
+  Агент:    12 000,00 ₸ (1200000 мин. ед.)
+    доказательство invoices/D3DA6071040B70FA2D90C18D0 public/invoices.jsonl:27   на странице шага 3
+    доказательство invoices/D7534210C633A07D8851B8F7E public/invoices.jsonl:14   на странице шага 3
+    доказательство ledger/R765F277C72A53DF193243B58 public/ledger.csv:231      на странице шага 6
+    доказательство ledger/RBFFE41AEECFF5B82D6F4BF3C public/ledger.csv:117      на странице шага 7
+  Консоль:  пересчитывает только распределение и FX; для этого типа независимый расчёт — SQL
+  Оценщик:  засчитан (TP) (выведено из итога TP/FP/FN)
+  SQL:      12 000,00 ₸ (1200000 мин. ед.) (auditlab.verifier)
+            invoice canonical key: one recognition per commercial invoice: 2 documents of IE1AA509B3457554062C97F19 (C5958843CDD2186B3FB872E9C), 2 recognitions: 2400000 - 1200000 = 1200000 KZT minor units recognised in excess
+
+Оценка: TP 1 / FP 0 / FN 0 · F1 1.0000 · инспекций 9 · награда 0.982000
+
+ЖИВОЙ ПЕРЕСЧЁТ, выполнен 2026-11-22T10:49:04+00:00 за 34.1 мс (среда auditlab.environment, оценщик auditlab.evaluator):
+Повтор действий: 9 шагов, наблюдения совпали
+Повтор оценки: совпала {'tp': 1, 'fp': 0, 'fn': 0, 'reward': 0.982}
