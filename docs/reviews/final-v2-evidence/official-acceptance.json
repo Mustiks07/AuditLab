@@ -1,0 +1,93 @@
+{
+  "source_sha": "858091a41fc8721bb2ae44db8163b39b78785492",
+  "product_code_dirty": false,
+  "not_an_official_score": true,
+  "report_sha256": "88d611635ccdf526d74b2484c342fa435c2ed90f3e405bc25b972893b1acfef1",
+  "official_adapter": {
+    "reward": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "m-examples": {
+      "passed": 15,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "extra-negative": {
+      "passed": 13,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "contract": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "data": {
+      "passed": 21,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "pairs": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    }
+  },
+  "internal_legacy_evaluator": {
+    "reward": {
+      "passed": 20,
+      "failed": 0
+    },
+    "m-examples": {
+      "passed": 14,
+      "failed": 1
+    },
+    "extra-negative": {
+      "passed": 11,
+      "failed": 2
+    }
+  },
+  "diagnostics": {
+    "integrator_probe_reproduced": "see probe-results-reproduced.json in the review package",
+    "closed_mode_leakage_internal": {
+      "status": "passed",
+      "leaks": [],
+      "rewards_all_zero": true,
+      "steps": 17,
+      "trusted_result_kept": true,
+      "scope": "internal AuditEnvironment closed mode; not the jury adapter (C19/C20 stay not_checked)"
+    },
+    "deadline_origin_internal": {
+      "status": "failed",
+      "stimulus": "fake clock; session_opener inside reset advances it by 61 s; then one step",
+      "expected": "truncated=true (61 s since the start of reset > 60 s)",
+      "actual": {
+        "truncated": false,
+        "terminated": false,
+        "elapsed_since_reset_entry_s": 61.0,
+        "remaining_steps": 99
+      },
+      "cause": "AuditEnvironment.reset sets _started after generation/loading/validate_truth/session opening (auditlab/runner/env.py)"
+    },
+    "deadline_origin_adapter": {
+      "status": "passed",
+      "stimulus": "fake clock; 61 s inside reset (session opener); then one step",
+      "expected": "truncated=true",
+      "actual": {
+        "truncated": true,
+        "terminated": false,
+        "error": {
+          "code": "time_limit",
+          "message": "Time limit exceeded."
+        }
+      }
+    },
+    "reset_wall_time_max_size": {
+      "ledger_rows": 2000,
+      "reset_wall_s": 0.0077,
+      "note": "time currently excluded from the deadline; measured on this machine only"
+    }
+  }
+}

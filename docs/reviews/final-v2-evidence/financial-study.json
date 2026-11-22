@@ -1,0 +1,588 @@
+{
+  "agent_kind": "local_policies_and_positive_controls",
+  "artifact_id": "financial-families-v2-summary",
+  "exports": {
+    "adaptive": {
+      "examples": {
+        "dev/included": 3,
+        "train/included": 3
+      },
+      "manifest": "adaptive/curriculum.json",
+      "train_families": 3
+    },
+    "uniform": {
+      "examples": {
+        "dev/included": 3,
+        "train/included": 3
+      },
+      "manifest": "uniform/curriculum.json",
+      "train_families": 3
+    }
+  },
+  "financial_pairs": {
+    "kinds": {
+      "amount": 2,
+      "fixed": 1,
+      "id_order": 3,
+      "interaction": 1,
+      "lawful_distractor": 3,
+      "period_crossing": 2
+    },
+    "solver_actions": [
+      10
+    ],
+    "status": {
+      "passed": 12
+    }
+  },
+  "goals": [
+    {
+      "admissible_coordinates": 33,
+      "agent": "random",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.14393606899994893,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.012469791000000896,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.985934702999998
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.18692409800001997,
+          "clean_submissions": 6,
+          "clean_with_accusation": 6,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.03415059899998596,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 2.012904143000071
+        }
+      },
+      "matched_train_examples_relating_to_goal": 2,
+      "objective": "missed_issue",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "missed_issue"
+      },
+      "wall_seconds": 6.537428892999998
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "flag_all",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.13314140900004645,
+          "clean_submissions": 9,
+          "clean_with_accusation": 9,
+          "cost_micros": 0,
+          "families_offered": 4,
+          "families_stable": 1,
+          "independently_confirmed_pairs": 1,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.017709338999992497,
+          "paired_matches": 0,
+          "paired_submitted": 1,
+          "refinements": 2,
+          "stable_goals": {
+            "duplicate_invoice": 1
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 3,
+            "delayed-allocation": 1,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.6043498749999685
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.12706209699993565,
+          "clean_submissions": 6,
+          "clean_with_accusation": 6,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.012255516999999827,
+          "paired_matches": 0,
+          "paired_submitted": 2,
+          "refinements": 0,
+          "stable_goals": {
+            "duplicate_invoice": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.3366188630000124
+        }
+      },
+      "matched_train_examples_relating_to_goal": 1,
+      "objective": "clean_false_positive",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221297",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 2
+        },
+        "selected_snapshot_sha256": "4cc0c12f73801e3e9147edec762ce2783149156bf3e449628c2763ac6c1c3514",
+        "status": "reduced",
+        "target": "clean_false_positive"
+      },
+      "wall_seconds": 4.492087746999999
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "reconcile_control_wrong_amount",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.19343884900007424,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.01795095699998228,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.3971138519999897
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.2141427760000454,
+          "clean_submissions": 6,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.03216764799998373,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.5181280990000232
+        }
+      },
+      "matched_train_examples_relating_to_goal": 0,
+      "objective": "wrong_amount",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "wrong_amount"
+      },
+      "wall_seconds": 5.021331432000011
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "reconcile_control_wrong_evidence",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.181052127000072,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.023383791000014753,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.3825799530000324
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.19898448900002563,
+          "clean_submissions": 6,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.036517594000031295,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 1.4424868099999912
+        }
+      },
+      "matched_train_examples_relating_to_goal": 0,
+      "objective": "wrong_evidence",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "wrong_evidence"
+      },
+      "wall_seconds": 4.962770502999973
+    }
+  ],
+  "partition_sha256": "54b6dcf02c51553caa86b17ad889bd636609d3d38f85bfbd5242c202e80cf132",
+  "plan_sha256": "ecbb15fbb47d76985d519cc32eb059218214b49225db5eaddac4977dfa992372",
+  "protocol_id": "financial-families-v2-local",
+  "public_allocation_shapes": {
+    "applied_tranche_counts": [
+      0,
+      1,
+      2
+    ],
+    "currencies": [
+      "KWD",
+      "KZT",
+      "USD"
+    ],
+    "distinct_outstanding_shapes": 8,
+    "exact_3_over_5": 0,
+    "fixed_50000_30000_kzt": 0,
+    "independently_accepted_candidates": 12,
+    "outstanding_examples": 8
+  },
+  "schema_version": "2.0",
+  "source_sha": "b03886d11ebeed9bbcad782f053e2d381a3f3975",
+  "status": "completed"
+}

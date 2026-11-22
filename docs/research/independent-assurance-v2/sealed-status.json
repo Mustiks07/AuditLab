@@ -15,10 +15,14 @@
    "commitment_sha256": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c",
    "status": "sealed",
    "families": 90,
-   "pending_not_checked": {"settlement_at_or_after_boundary": 10},
+   "pending_not_checked": {
+    "settlement_at_or_after_boundary": 10
+   },
    "final_runs_recorded": 0,
-   "handover": "pending: the trusted files stay with the reviewer until GPT Pro 2 receives them over a private channel",
-   "use": "one final run after the agent variants are frozen; the integrator records the run here and the status becomes used_once"
+   "handover": "received privately by the integrator on 2026-11-22; archive and all 2640 file hashes verified; no final model runs",
+   "use": "one final run after the agent variants are frozen; the integrator records the run here and the status becomes used_once",
+   "archive_sha256": "ddb06ef206ac3f875c44c130a80a9f6a7a825ad8da7235ccb97d583ad4858192",
+   "receipt": "../../reviews/final-v2-evidence/holdout-receipt.json"
   }
  }
 }

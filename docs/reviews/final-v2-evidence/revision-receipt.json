@@ -1,0 +1,11 @@
+{
+  "status": "tests_verified",
+  "exit_code": 0,
+  "head_sha": "858091a41fc8721bb2ae44db8163b39b78785492",
+  "base_sha": null,
+  "checkout_sha": "858091a41fc8721bb2ae44db8163b39b78785492",
+  "tests": 698,
+  "failures": [],
+  "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+  "report_sha256": "7e042df65d384d9fc3eb786e4714510b8b3b63d5780e9693ae9ec485bab4772e"
+}
