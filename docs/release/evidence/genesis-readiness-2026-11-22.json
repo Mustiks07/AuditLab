@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-11-22T12:47:38.658966+00:00",
+  "main_sha": "ba085f0456ffb8993553ed8c5e3c29dbd8f4f5ab",
+  "release_source_sha": "920b251ee3b1c12f9bc5ffe0eca3b5cb1bf8d78a",
+  "definitions_url": "https://genesis-exe.com/docs/fintech-checks.txt",
+  "definitions_sha256": "2a597ebfb94daec700ba9b1b09d62c032366e788c6e992486d444e063be8d870",
+  "definitions_changed_since_test": false,
+  "ci_run": "https://github.com/Mustiks07/AuditLab/actions/runs/45022687206",
+  "ci_receipt": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+    "base_sha": "1ae0cdee39d1b00f0327b158b22b5754dde39673",
+    "checkout_sha": "5750951a5b9cc32b38a46a4ebba6de47d6a3d19e",
+    "tests": 721,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "7b465527d9a8cee352793a70b3c9896caa861cfb51b0f2925186bd5e9f38d429"
+  },
+  "official_definition_local_checks": {
+    "reward": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "m-examples": {
+      "passed": 15,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "extra-negative": {
+      "passed": 13,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "contract": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "data": {
+      "passed": 21,
+      "failed": 0,
+      "not_checked": 0
+    },
+    "pairs": {
+      "passed": 20,
+      "failed": 0,
+      "not_checked": 0
+    }
+  },
+  "official_jury_score": null,
+  "scope": "Local implementation of published definitions; not an organizer run. CI evidence verified at recorded revisions. No tests rerun merely because documentation changed.",
+  "public_release": "https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.5",
+  "source_code_matches_release": true
+}
