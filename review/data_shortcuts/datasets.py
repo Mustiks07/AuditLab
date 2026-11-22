@@ -134,7 +134,7 @@ def plan_c(work: Path, per_cell: int = 6) -> list[dict]:
                 if version:
                     c["config_version"] = version
                 fam = f"C{n:03d}"
-                plan.append({"set": "C", "family": fam, "stratum": f"{version or '1.0-default'}:{label}", "seed": seed, "config": c,
+                plan.append({"set": "C", "family": fam, "stratum": f"{version or 'adapter-default'}:{label}", "seed": seed, "config": c,
                              "variant": "case", "dir": str(work / fam / "case")})
                 seed += 1; n += 1
     return plan

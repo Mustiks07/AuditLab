@@ -18,12 +18,12 @@ SEEDS = [9360001, 9360002, 9360003]
 B12 = {"config_version": "1.2", "company_size": {"ledger_rows_target": 400, "documents_target": 65}, "currencies": ["KZT", "USD"]}
 ALLOC = {"kind": "allocation", "amount_minor": 1234567, "applied_bps": 5000, "tranches": 2}
 CASES = {
-    "CE1_profile_1.0_duplicate": {"issue_counts": {"duplicate_invoice": 1}},
-    "CE1_profile_1.0_clean": {},
-    "CE2_profile_1.0_allocation": {"issue_counts": {"payment_allocation": 1}},
+    "CE1_profile_1.0_duplicate": {"config_version": "1.0", "issue_counts": {"duplicate_invoice": 1}},
+    "CE1_profile_1.0_clean": {"config_version": "1.0"},
+    "CE2_profile_1.0_allocation": {"config_version": "1.0", "issue_counts": {"payment_allocation": 1}},
     "CE2_profile_1.1_allocation": {"config_version": "1.1", "issue_counts": {"payment_allocation": 1}},
     "CE2_profile_1.2_allocation": {**B12, "issue_counts": {"payment_allocation": 1}},
-    "CE3_profile_1.0_cutoff": {"issue_counts": {"period_cutoff": 1}},
+    "CE3_profile_1.0_cutoff": {"config_version": "1.0", "issue_counts": {"period_cutoff": 1}},
     "CE4_profile_1.2_omitted_error": {**B12, "allocation_mode": "omitted", "issue_counts": {"payment_allocation": 1}, "financial_case": ALLOC},
     "CE4_profile_1.2_omitted_zero": {**B12, "allocation_mode": "omitted", "issue_counts": {"payment_allocation": 0}, "financial_case": ALLOC},
     "CE4_profile_1.2_duplicate_error": {**B12, "issue_counts": {"duplicate_invoice": 1}},

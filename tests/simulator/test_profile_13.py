@@ -187,6 +187,13 @@ class VariedDefaults(Case):
 
 
 class KeyedRandomness(Case):
+    def test_synthetic_keyed_recipe_has_a_host_independent_digest(self):
+        # A published test vector. Deployment keys are never part of this fixture.
+        episode = self.make(610022, {"episode_key": "0123456789abcdef" * 2,
+                                     "issue_counts": {"payment_allocation": 1}})
+        self.assertEqual(build_13.tree_sha256(episode),
+                         "f0634da6ca8e6458a937e4cbc8ac631a66a6454a2b406e303bf55f07cca28295")
+
     def test_same_key_reproduces_and_other_keys_rename_and_reprice(self):
         first, again = self.make(42, {"episode_key": KEY}), self.make(42, {"episode_key": KEY})
         self.assertEqual(build_13.tree_sha256(first), build_13.tree_sha256(again))

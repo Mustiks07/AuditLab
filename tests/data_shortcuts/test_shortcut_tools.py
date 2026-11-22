@@ -68,6 +68,19 @@ class Heuristics(unittest.TestCase):
 
 
 @unittest.skipUnless(HAVE_GEN, "not_checked: generator unavailable")
+class PlanProfiles(unittest.TestCase):
+    def test_default_study_and_historical_counterexamples_do_not_share_a_profile_label(self):
+        from review.data_shortcuts import datasets
+        from review.data_shortcuts.counterexamples import CASES
+
+        rows = datasets.plan_c(Path("unused"), per_cell=1)
+        self.assertTrue(any(row["stratum"].startswith("adapter-default:") for row in rows))
+        for row in rows:
+            if row["stratum"].startswith("adapter-default:"):
+                self.assertNotIn("config_version", row["config"])
+        self.assertTrue(all(case["config_version"] == "1.0" for name, case in CASES.items() if "profile_1.0" in name))
+
+
 class OnGeneratedEpisodes(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

@@ -90,7 +90,7 @@ def main(argv=None) -> int:
     # ---------------------------------------------------------------- reproduction on other data, rules unchanged
     by_c_version = lambda v: [r for r in rows["C_fresh"] if r["stratum"].startswith(v)]
     sel = lambda k: [r for r in report["sets"][k]["rules"] if r["status"] in ("confirmed", "hypothesis") and r["class"] != "financial"]
-    report["transfer"]["A_rules_on_fresh_profile_1.0_adapter"] = transfer(sel("A"), by_c_version("1.0-default"), "C_fresh profile 1.0")
+    report["transfer"]["A_rules_on_fresh_adapter_default"] = transfer(sel("A"), by_c_version("adapter-default"), "C_fresh adapter default")
     report["transfer"]["A_rules_on_fresh_profile_1.1_adapter"] = transfer(sel("A"), by_c_version("1.1"), "C_fresh profile 1.1")
     report["transfer"]["A_rules_on_profile_1.2"] = transfer(sel("A"), rows["B"], "B profile 1.2")
     report["transfer"]["C_rules_on_fresh_seeds"] = transfer(sel("C"), rows["C_fresh"], "C_fresh")
@@ -143,7 +143,7 @@ def _ce_defect(report, ce):
 def findings(report: dict) -> None:
     """Confirmed = protocol thresholds on the evaluation part AND its minimal counterexample reproduces on fresh seeds
     (or, without a counterexample, the unchanged rule is strong again on fresh seeds)."""
-    fresh = {"A": report["transfer"]["A_rules_on_fresh_profile_1.0_adapter"], "C": report["transfer"]["C_rules_on_fresh_seeds"],
+    fresh = {"A": report["transfer"]["A_rules_on_fresh_adapter_default"], "C": report["transfer"]["C_rules_on_fresh_seeds"],
              "B": report["transfer"]["B_rules_on_fresh_seeds"]}
     implied = set(report["financial_adjudication"])
     for k in ("A", "B", "C"):
