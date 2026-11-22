@@ -1,0 +1,104 @@
+[
+ {
+  "seed": 3,
+  "config": {},
+  "tree_sha256": "bf209d43aa44f2768dabce97b7fc1d63bde12a832aefe7afe67b3fa141b35f1b"
+ },
+ {
+  "seed": 817,
+  "config": {
+   "settlement_timing": "after",
+   "clean_distractors": []
+  },
+  "tree_sha256": "25256c16217786e9560a625096fc845bba173ce47171254cabe3aeea318755e6"
+ },
+ {
+  "seed": 11,
+  "config": {
+   "config_version": "1.1",
+   "issue_counts": {
+    "duplicate_invoice": 1,
+    "payment_allocation": 1,
+    "fx_conversion": 1,
+    "period_cutoff": 1
+   }
+  },
+  "tree_sha256": "255ab2c1581ce00ac2fdbd1bd2569e8fe5c9e910dcc898b98761a834155dd355"
+ },
+ {
+  "seed": 12,
+  "config": {
+   "config_version": "1.1",
+   "currencies": [
+    "KZT",
+    "JPY"
+   ],
+   "interaction": "cutoff_fx_same_invoice",
+   "issue_counts": {
+    "period_cutoff": 1,
+    "fx_conversion": 1
+   },
+   "company_size": {
+    "ledger_rows_target": 600,
+    "documents_target": 90
+   }
+  },
+  "tree_sha256": "1404bf6a35b02337a561fe49479d47d31ba164c61b6c3d7a648789716b4b9f11"
+ },
+ {
+  "seed": 13,
+  "config": {
+   "config_version": "1.1",
+   "allocation_mode": "omitted",
+   "issue_counts": {
+    "payment_allocation": 2
+   },
+   "clean_distractors": [
+    "split_payment",
+    "next_day_settlement"
+   ]
+  },
+  "tree_sha256": "c79131d30d8e22a17917e54f5b40e11229c4257d3910b738342e390904daedd1"
+ },
+ {
+  "seed": 21,
+  "config": {
+   "config_version": "1.2",
+   "issue_counts": {
+    "payment_allocation": 1,
+    "fx_conversion": 1
+   },
+   "interaction": "allocation_fx_same_payment"
+  },
+  "tree_sha256": "7e4326922a9f455002d375c555fc13a8f1ccb7a6bd34e25a8701824fd37d1f9c"
+ },
+ {
+  "seed": 22,
+  "config": {
+   "config_version": "1.2",
+   "financial_case": {
+    "kind": "allocation",
+    "amount_minor": 1234567,
+    "settlement_offset_minutes": 0
+   },
+   "issue_counts": {
+    "payment_allocation": 1
+   }
+  },
+  "tree_sha256": "a40069eb4847d37bc43527152060141f4566ef4b77f55e417d1c4d9f33ed4310"
+ },
+ {
+  "seed": 23,
+  "config": {
+   "config_version": "1.2",
+   "financial_case": {
+    "kind": "invoice_cutoff",
+    "amount_minor": 777700
+   },
+   "issue_counts": {},
+   "timezone": "Asia/Tokyo",
+   "target_period": "2025-02"
+  },
+  "tree_sha256": "8353637bef81a5ffe11e2ff62a6f2a12bcc5e91c0163a1a2b57487b5422a225b"
+ }
+]
