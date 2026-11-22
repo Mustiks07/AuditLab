@@ -204,7 +204,7 @@ class AuditEnvironment:
         self._session = self._opener(self._public_dir)
         self._run_id = options.get("run_id") or uuid.uuid4().hex[:12]
         self._policy_name = str(options.get("policy_name", "unknown"))
-        self._seed = seed
+        self._seed = seed if self.mode == "train" and "episode_key" not in config else None
         self._time_limit = time_limit
         self._started = float(started_at) if started_at is not None else self._clock()
         self._deadline = self._started + self._time_limit
@@ -392,7 +392,8 @@ class AuditEnvironment:
     def _persist_trusted(self, status: str, graded: dict | None, true_reward: float | None) -> None:
         if self.trusted_dir is None:
             return
-        report = {**self._run_record(status), "versions": VERSIONS, "seed": self._seed,
+        report = {**self._run_record(status), "versions": VERSIONS,
+                  **({"seed": self._seed} if self._seed is not None else {}),
                   "inspection_steps": self._inspections, "elapsed_s": self._clock() - self._started,
                   "evaluation": graded, "events": self._events, "infra": self._infra,
                   "true_reward": true_reward, "completed": status in COMPLETED and not self._infra}

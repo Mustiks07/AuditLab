@@ -39,7 +39,7 @@ print(judge_adapter.score_episode("/judge/ep1", {"episode_id": info["episode_id"
 
 Только для жюри, политике не передаются: `env.trusted_result()` (статус, шаги, официальный результат, диагностика сопоставления), `env.expire()` (остановка по сроку с пустыми findings), `env.seconds_left()`, `env.versions()`.
 
-Журнал оценщика: логгер `auditlab.judge_adapter`. Если задан `AUDITLAB_JUDGE_LOG=<файл>`, записи дополнительно пишутся туда построчно в JSONL: `generate_episode` (версия профиля, режим `keyed`/`unkeyed`, без seed), reset (mode, seed, episode_dir, team_config с заменой `episode_key` на префикс SHA-256, версии) и каждый `score_episode` (статус, причина структурной ошибки, сопоставления).
+Журнал оценщика: логгер `auditlab.judge_adapter`. Если задан `AUDITLAB_JUDGE_LOG=<файл>`, записи дополнительно пишутся туда построчно в JSONL: `generate_episode` (версия профиля и режим `keyed`/`unkeyed`), reset (mode, episode_dir, team_config с маркером редактирования `episode_key`, версии) и каждый `score_episode` (статус, причина структурной ошибки, сопоставления). Seed и значение ключа остаются в доверенной конфигурации воспроизведения. Квитанция закрытого раннера также не сериализует seed.
 
 ## Каталог эпизода
 

@@ -120,8 +120,10 @@ def main(argv=None) -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: v for k, v in report.items() if k not in ("snapshots", "scenarios")}, indent=1))
-    return 0 if (report["open_1_3"]["validator_passed"] == report["open_1_3"]["source_books_passed"] == len(snapshots)
-                 and rebuilt_13["status"] == "passed" and len(old_equal) == len(old_names)) else 1
+    return 0 if (report["open_1_3"]["validator_passed"] == report["open_1_3"]["source_books_passed"] == len(snapshots) == 20
+                 and rebuilt_13["status"] == "passed" and len(old_equal) == len(old_names) == 20
+                 and report["organizer_scenarios_1_3"]["validator_passed"] ==
+                 report["organizer_scenarios_1_3"]["source_books_passed"] == len(scenarios) == 20) else 1
 
 
 if __name__ == "__main__":

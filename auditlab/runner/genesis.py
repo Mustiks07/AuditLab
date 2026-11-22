@@ -26,7 +26,6 @@ import json
 import logging
 import os
 import time
-from hashlib import sha256
 from pathlib import Path
 from typing import Callable
 
@@ -82,11 +81,7 @@ def _redacted(team: object) -> object:
     """Trusted journal copy of a team_config: the episode key itself is never written."""
     if not isinstance(team, dict) or "episode_key" not in team:
         return team
-    key = team["episode_key"]
-    marker = {"redacted": True}
-    if isinstance(key, str):
-        marker["sha256_prefix"] = sha256(key.encode("utf-8")).hexdigest()[:16]
-    return {**team, "episode_key": marker}
+    return {**team, "episode_key": {"redacted": True}}
 
 
 def _team_config(config: object) -> dict:
@@ -245,7 +240,7 @@ class GenesisEnvironment:
         self.mode = mode
         observation, info = self._env.reset(seed, internal)  # a repeated reset starts the episode again
         self._remaining = observation["remaining_steps"]
-        _trusted_log({"event": "reset", "mode": mode, "seed": seed, "episode_dir": episode_dir,
+        _trusted_log({"event": "reset", "mode": mode, "episode_dir": episode_dir,
                       "team_config": _redacted(team) if episode_dir is None else None,
                       "ignored_config_keys": unknown,
                       "episode_id": info["episode_id"], "versions": self.versions()})

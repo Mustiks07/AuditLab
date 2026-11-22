@@ -9,7 +9,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from review.jury_compatibility_v3 import check_ids, external_transform as ext
+from review.jury_compatibility_v3 import check_ids, external_transform as ext, gate
 
 ROOT = Path(__file__).resolve().parents[2]
 S02 = ROOT / "fixtures" / "foundation" / "S02"
@@ -101,19 +101,50 @@ class LinkSelfCheck(unittest.TestCase):
 
 
 class Gate(unittest.TestCase):
+    def setUp(self):
+        counts = {"contract": 20, "data": 21, "pairs": 20, "reward": 20, "m-examples": 15, "extra-negative": 13}
+        self.genesis = {
+            "meta": {"commit": "abc", "product_code_dirty": False, "suite": "genesis-local-acceptance-1.0"},
+            "summary_official_layer": {block: {"passed": total, "failed": 0, "not_checked": 0}
+                                       for block, total in counts.items()},
+            "items": [{"block": block, "id": str(index), "status": "passed"}
+                      for block, total in counts.items() for index in range(total)],
+        }
+        self.ids = {
+            "commit": "abc", "suite": "jury-compatibility-v3/id-transform", "episodes": 24,
+            "replay_identical": {"passed": 24, "total": 24},
+            "summary": {**{name: {"passed": 24, "total": 24} for name in gate.GATED_ID_PROFILES},
+                        "literal+reorder": {"passed": 0, "total": 24}},
+            "rows": [{"profile": name, "episode": str(index), "status": "passed"}
+                     for name in gate.GATED_ID_PROFILES for index in range(24)],
+        }
+
     def test_gate_requires_complete_official_layer_and_compatible_profiles(self):
-        from review.jury_compatibility_v3 import gate
-        genesis = {"meta": {"commit": "abc", "product_code_dirty": False},
-                   "summary_official_layer": {"contract": {"passed": 20, "failed": 0, "not_checked": 0}}}
-        ids = {"commit": "abc", "replay_identical": {"passed": 2, "total": 2},
-               "summary": {**{n: {"passed": 2, "total": 2} for n in gate.GATED_ID_PROFILES},
-                           "literal+reorder": {"passed": 0, "total": 2}}}
-        self.assertEqual(gate.check(genesis, ids, "abc")[0], 0, "informative profiles never fail the gate")
-        self.assertEqual(gate.check(genesis, ids, "other")[0], 2)
-        skipped = json.loads(json.dumps(genesis)); skipped["summary_official_layer"]["contract"]["not_checked"] = 1
-        self.assertEqual(gate.check(skipped, ids, "abc")[0], 1, "not_checked is not a pass")
-        broken = json.loads(json.dumps(ids)); broken["summary"]["reorder"]["passed"] = 1
-        self.assertEqual(gate.check(genesis, broken, "abc")[0], 1)
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 0,
+                         "informative profiles never fail the gate")
+        self.assertEqual(gate.check(self.genesis, self.ids, "other", 24)[0], 2)
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 20)[0], 1)
+        self.assertEqual(gate.check(self.genesis, None, "abc", 24)[0], 2)
+        self.genesis["summary_official_layer"]["contract"].update(passed=19, not_checked=1)
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 1, "not_checked is not a pass")
+
+    def test_rejects_truncated_reports_even_with_passing_summary_counts(self):
+        last = self.genesis["items"].pop()
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 1)
+        self.genesis["items"].append(last)
+        last = self.ids["rows"].pop()
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 1)
+        self.ids["rows"].append({**last, "episode": "unrelated-episode"})
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 1)
+
+    def test_rejects_old_or_unbound_report_metadata(self):
+        self.ids["commit"] = "old"
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 2)
+        self.ids["commit"] = "abc"
+        del self.ids["suite"]
+        self.assertEqual(gate.check(self.genesis, self.ids, "abc", 24)[0], 2)
+        del self.genesis["meta"]["product_code_dirty"]
+        self.assertEqual(gate.check(self.genesis, None, "abc")[0], 2)
 
 
 if __name__ == "__main__":

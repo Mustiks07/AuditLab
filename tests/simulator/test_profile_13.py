@@ -220,16 +220,34 @@ class KeyedRandomness(Case):
         handler = logging.StreamHandler(stream)
         logger = logging.getLogger("auditlab.judge_adapter")
         logger.addHandler(handler)
+        self.addCleanup(logger.setLevel, logger.level)
         logger.setLevel(logging.INFO)
         self.addCleanup(logger.removeHandler, handler)
         generated = judge_adapter.make_env()
         self.addCleanup(generated.close)
         texts.append(json.dumps(generated.reset(42, {"mode": "train", "team_config": {"episode_key": KEY}})))
         log = stream.getvalue()
-        self.assertIn("sha256_prefix", log)
+        reset_log = [json.loads(line) for line in log.splitlines() if json.loads(line)["event"] == "reset"]
+        self.assertEqual(len(reset_log), 1)
+        self.assertEqual(reset_log[0]["team_config"]["episode_key"], {"redacted": True})
+        self.assertNotIn("seed", reset_log[0])
         for text in (*texts, log):
             self.assertNotIn(KEY, text)
             self.assertNotIn(KEY.upper(), text)
+
+    def test_closed_run_report_does_not_serialize_seed_or_key(self):
+        from auditlab.runner import make_env
+
+        with tempfile.TemporaryDirectory() as directory:
+            out = Path(directory)
+            env = make_env("closed", evaluator="inprocess", trusted_dir=out / "receipts")
+            self.addCleanup(env.close)
+            seed = 982334087137
+            _, info = env.reset(seed, {"config_version": "1.3", "episode_key": KEY})
+            env.step({"action": "submit", "args": {"episode_id": info["episode_id"], "findings": []}})
+            [report] = (out / "receipts").rglob("report.json")
+            self.assertNotIn("seed", json.loads(report.read_text(encoding="utf-8")))
+            self.assertNotIn(KEY, report.read_text(encoding="utf-8"))
 
     def test_nonce_renames_without_changing_the_economics(self):
         plain = self.make(6, {"issue_counts": {"fx_conversion": 1}})
