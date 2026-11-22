@@ -1,0 +1,13 @@
+{
+  "archive_sha256": "ddb06ef206ac3f875c44c130a80a9f6a7a825ad8da7235ccb97d583ad4858192",
+  "manifest_sha256": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c",
+  "files_checked": 2640,
+  "built_families": 90,
+  "variants": 180,
+  "pending_families": 10,
+  "status": "received_integrity_verified",
+  "final_runs_recorded": 0,
+  "financial_revalidation": "not_checked",
+  "model_evaluation": "not_checked",
+  "private_content_published": false
+}

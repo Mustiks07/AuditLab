@@ -151,7 +151,7 @@ docker --host unix:///var/run/docker.sock events --format '{{.Type}} {{.Action}}
 Сводка нового прогона — внутренний диагностический результат, не конкурсный балл. Для каждой политики
 нужно `planned = measured = 20`, `score_status = complete`, `failed = not_checked = 0`.
 При недостающих измерениях сводные `micro` и `mean_reward` равны `null`; `measured_only` содержит
-только частичную выборку и не заменяет полный результат. Не подставляйте числа RC2 вместо измерений RC3.
+только частичную выборку и не заменяет полный результат. Не подставляйте числа прежних кандидатов вместо измерений RC4.
 
 ```sh
 python3.11 - "$RESULTS/verify/report.json" <<'PYCODE'
@@ -166,7 +166,7 @@ for policy, row in report["rehearsal"]["summary"].items():
 PYCODE
 ```
 
-Сравните результат с опубликованным evidence RC3 **для этого source SHA и вашего хранилища**.
+Сравните результат с опубликованным evidence RC4 **для этого source SHA и вашего хранилища**.
 Самостоятельные финансовые результаты и показатели ресурса не заменяются статусом CI.
 
 ## 5а. Обязательные политики на 10 train и 10 dev
@@ -186,14 +186,15 @@ mkdir -p source && tar -xzf source.tar.gz -C source
 cp source/auditlab/demo/open_sets.py open_sets.py
 ```
 
-В опубликованном `v0.1.0-rc.4` его нет. Для RC3 создайте файл командой ниже: это тот же текст, байт в байт,
+RC4 уже содержит этот инструмент в исходниках. В историческом RC3 его нет;
+только при проверке RC3 создайте файл командой ниже: это тот же текст, байт в байт,
 что проверяет тест репозитория. Сам архив RC3 при этом не меняется.
 
 ```sh
 cat > open_sets.py <<'OPEN_SETS_PY'
 """Mandatory policies on the open train/dev sets for the receiver (OPS-02), with a strict summary.
 
-Standard library only. The same file works with an unchanged v0.1.0-rc.4 bundle (copy it from
+Standard library only. The same file works with an unchanged v0.1.0-rc.3 bundle (copy it from
 docs/demo/HANDOFF.md, section 5a) and with later bundles (``source/auditlab/demo/open_sets.py``).
 
 Inside the runtime image (policies run as sibling containers without network, like ``verify``)::
