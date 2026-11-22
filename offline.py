@@ -137,6 +137,52 @@ def local_docker_environment():
     return environment
 
 
+class DockerUnavailable(ValueError):
+    """The local Docker daemon cannot be used; nothing beyond the bundle hashes was checked."""
+
+    def __init__(self, code, message, detail=""):
+        super().__init__(message)
+        self.code, self.detail = code, detail
+
+
+DOCKER_NEXT_STEPS = {
+    "docker_cli_missing": "Docker CLI is not installed or not on PATH. Install Docker Engine for Linux, "
+                          "then check: docker --host unix:///var/run/docker.sock info",
+    "docker_socket_permission": "this user cannot open /var/run/docker.sock. Run as a user in the socket's "
+                                "group (ls -l /var/run/docker.sock), then check: docker --host unix:///var/run/docker.sock info",
+    "docker_daemon_unreachable": "no Docker daemon answers at unix:///var/run/docker.sock. Start the local "
+                                 "daemon (for example: sudo systemctl start docker), then check: "
+                                 "docker --host unix:///var/run/docker.sock info",
+    "docker_daemon_error": "docker info failed. Run docker --host unix:///var/run/docker.sock info "
+                           "as this user and fix the reported problem",
+}
+
+
+def docker_preflight(environment):
+    """Return `docker info` of the local socket or explain why Docker cannot be used and what to do."""
+    try:
+        info = subprocess.run(["docker", "--host", "unix:///var/run/docker.sock", "info", "--format", "{{json .}}"],
+                              text=True, capture_output=True, env=environment, timeout=60)
+    except FileNotFoundError as error:
+        raise DockerUnavailable("docker_cli_missing", DOCKER_NEXT_STEPS["docker_cli_missing"], str(error)) from None
+    except subprocess.TimeoutExpired:
+        raise DockerUnavailable("docker_daemon_unreachable", DOCKER_NEXT_STEPS["docker_daemon_unreachable"],
+                                "docker info did not answer within 60 s") from None
+    detail = " ".join((info.stderr or "").split())[:300]
+    if info.returncode:
+        lowered = detail.lower()
+        code = ("docker_socket_permission" if "permission denied" in lowered else
+                "docker_daemon_unreachable" if any(text in lowered for text in (
+                    "cannot connect", "is the docker daemon running", "no such file or directory",
+                    "connection refused")) else "docker_daemon_error")
+        raise DockerUnavailable(code, DOCKER_NEXT_STEPS[code], detail)
+    try:
+        return json.loads(info.stdout)
+    except ValueError:
+        raise DockerUnavailable("docker_daemon_error", DOCKER_NEXT_STEPS["docker_daemon_error"],
+                                "docker info returned no JSON") from None
+
+
 def loaded_image(image, environment):
     """Classic storage addresses configs; containerd addresses OCI manifests.
 
@@ -307,7 +353,9 @@ def main(argv=None):
         # Complete every payload check before the first Docker command, especially docker load.
         manifest = verify_bundle(args.bundle)
         if args.command == "image":
-            print(loaded_image(manifest["images"][args.role], local_docker_environment())["id"])
+            environment = local_docker_environment()
+            docker_preflight(environment)  # a missing daemon is not reported as a missing image
+            print(loaded_image(manifest["images"][args.role], environment)["id"])
             return 0
         print(f"Bundle hashes verified; source {manifest['source_revision']}", flush=True)
         validate_image_archive(args.bundle.resolve() / "images.tar", manifest["images"])
@@ -324,9 +372,7 @@ def main(argv=None):
                   "network": "none", "suite": args.suite, "started_at": datetime.now(timezone.utc).isoformat()}
         write_report(report_path, report)
         environment = local_docker_environment()
-        info = subprocess.run(["docker", "--host", "unix:///var/run/docker.sock", "info", "--format", "{{json .}}"],
-                              check=True, text=True, capture_output=True, env=environment)
-        daemon = json.loads(info.stdout)
+        daemon = docker_preflight(environment)
         if daemon.get("OSType") != "linux":
             raise ValueError("a local Linux Docker daemon is required")
         report["resource_controls"] = resource_preflight(daemon)
@@ -375,6 +421,16 @@ def main(argv=None):
         report.update(status="completed" if code == 0 else "incomplete" if code == 2 else "failed",
                       exit_code=code)
         return code
+    except DockerUnavailable as error:
+        print(f"Offline launch failed: Docker is not available: {error}"
+              + (f" (docker said: {error.detail})" if error.detail else ""), file=sys.stderr)
+        print("Only the bundle hashes and image catalog were checked. No tests, isolation or resource checks ran; "
+              "this is not an acceptance result.", file=sys.stderr)
+        if report is not None:
+            report.update(status="failed", exit_code=1, error=str(error), error_code=error.code,
+                          docker_detail=error.detail, checks_run=["bundle_hashes", "image_catalog"],
+                          not_checked=["verification_suites", "policy_isolation", "resource_limits"])
+        return 1
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         print(f"Offline launch failed: {error}", file=sys.stderr)
         if report is not None:
