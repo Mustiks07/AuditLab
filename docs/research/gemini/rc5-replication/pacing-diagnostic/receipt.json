@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "rc5-dev-pacing-diagnostic",
+  "plan_sha256": "07208b3693d2353370e59f718da146e47f65d553d6a0a645c582d0ca37a0ceba",
+  "invocations": [
+    {
+      "started_at": "2026-11-22T13:03:15.775063+00:00",
+      "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+      "attempts_started": [
+        "A-tools--a20c531bd0451f40"
+      ],
+      "service_waits_s": [],
+      "stop_reason": "plan_finished",
+      "stop_detail": null,
+      "finished_at": "2026-11-22T13:04:11.185109+00:00"
+    }
+  ],
+  "source_code_equivalent_to_rc5": true,
+  "bridge_image_id": "sha256:0db994176ccb42bae9d5f77e38bb6fae5669e700270ea9e659bee5a2e2d9c32e",
+  "public_recipe_is_not_executed_plan": true
+}

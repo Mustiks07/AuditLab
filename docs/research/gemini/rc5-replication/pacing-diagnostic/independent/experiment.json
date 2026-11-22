@@ -1,0 +1,14 @@
+{
+ "protocol_id": "agent-generalization-1.1",
+ "auditlab_protocol_id": "genesis-official-60s",
+ "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+ "plan_artifact_id": "rc5-dev-pacing-diagnostic",
+ "comparisons": [],
+ "episodes": {
+  "dev-922101:error:original_error": {
+   "family_id": "dev-922101",
+   "variant": "error",
+   "episode_dir": "docs/research/agent-improvement-v2/replication-922101/original_error"
+  }
+ }
+}

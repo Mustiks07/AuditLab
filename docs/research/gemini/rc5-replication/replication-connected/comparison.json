@@ -1,0 +1,93 @@
+{
+ "schema_version": "1.0",
+ "artifact_id": "comparison-replication-independent",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+ "arms": {
+  "A-tools": {
+   "attempts": 11,
+   "scored": 11,
+   "excluded_infra": 0,
+   "service_outcomes": 6,
+   "micro_f1": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 1,
+    "fn": 2,
+    "basis": "attempts ended by the agent (service failures excluded)",
+    "n": 5
+   },
+   "micro_f1_by_rule": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 1,
+    "fn": 7,
+    "basis": "every scored attempt; service failures as empty submissions"
+   },
+   "mean_reward": {
+    "value": -0.2801818181818182,
+    "n": 11,
+    "basis": "official rule over every scored attempt"
+   },
+   "mean_reward_agent_ended": {
+    "value": 0.1888,
+    "n": 5
+   },
+   "fp_on_clean": {
+    "attempts_with_findings": 0,
+    "clean_attempts": 3,
+    "clean_attempts_service_failed": 1,
+    "fp_findings": 0
+   },
+   "status": {
+    "completed": 3,
+    "timeout": 2,
+    "provider_error": 6,
+    "invalid_response": 0,
+    "budget_stop": 0,
+    "infra_error_before_first_action": 0
+   },
+   "completion": {
+    "submitted": 3,
+    "attempts": 11
+   },
+   "actions": {
+    "n": 11,
+    "mean": 10.090909090909092,
+    "median": 11,
+    "p90": 12
+   },
+   "input_tokens": {
+    "n": 11,
+    "mean": 230468.72727272726,
+    "median": 243354,
+    "p90": 296824
+   },
+   "output_tokens": {
+    "n": 11,
+    "mean": 503.6363636363636,
+    "median": 413,
+    "p90": 754
+   },
+   "wall_time_s": {
+    "n": 11,
+    "mean": 57.20427272727272,
+    "median": 57.829,
+    "p90": 60.0
+   },
+   "cost_usd": {
+    "n": 3,
+    "mean": 0.0,
+    "median": 0.0,
+    "p90": 0.0
+   },
+   "live_attempts": 11
+  }
+ },
+ "paired_by_family": {},
+ "paired_by_family_agent_ended": {},
+ "families": 1,
+ "episodes": 2,
+ "attempts": 11,
+ "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}

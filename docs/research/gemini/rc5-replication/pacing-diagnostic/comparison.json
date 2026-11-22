@@ -1,0 +1,93 @@
+{
+ "schema_version": "1.0",
+ "artifact_id": "comparison-pacing-independent",
+ "protocol_id": "agent-generalization-1.1",
+ "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+ "arms": {
+  "A-tools": {
+   "attempts": 1,
+   "scored": 1,
+   "excluded_infra": 0,
+   "service_outcomes": 0,
+   "micro_f1": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 1,
+    "basis": "attempts ended by the agent (service failures excluded)",
+    "n": 1
+   },
+   "micro_f1_by_rule": {
+    "value": 0.0,
+    "tp": 0,
+    "fp": 0,
+    "fn": 1,
+    "basis": "every scored attempt; service failures as empty submissions"
+   },
+   "mean_reward": {
+    "value": -1.0,
+    "n": 1,
+    "basis": "official rule over every scored attempt"
+   },
+   "mean_reward_agent_ended": {
+    "value": -1.0,
+    "n": 1
+   },
+   "fp_on_clean": {
+    "attempts_with_findings": 0,
+    "clean_attempts": 0,
+    "clean_attempts_service_failed": 0,
+    "fp_findings": 0
+   },
+   "status": {
+    "completed": 1,
+    "timeout": 0,
+    "provider_error": 0,
+    "invalid_response": 0,
+    "budget_stop": 0,
+    "infra_error_before_first_action": 0
+   },
+   "completion": {
+    "submitted": 1,
+    "attempts": 1
+   },
+   "actions": {
+    "n": 1,
+    "mean": 17.0,
+    "median": 17,
+    "p90": 17
+   },
+   "input_tokens": {
+    "n": 1,
+    "mean": 493453.0,
+    "median": 493453,
+    "p90": 493453
+   },
+   "output_tokens": {
+    "n": 1,
+    "mean": 574.0,
+    "median": 574,
+    "p90": 574
+   },
+   "wall_time_s": {
+    "n": 1,
+    "mean": 55.369,
+    "median": 55.369,
+    "p90": 55.369
+   },
+   "cost_usd": {
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "p90": null
+   },
+   "live_attempts": 1
+  }
+ },
+ "paired_by_family": {},
+ "paired_by_family_agent_ended": {},
+ "families": 1,
+ "episodes": 1,
+ "attempts": 1,
+ "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}
