@@ -1,0 +1,894 @@
+{
+  "agent_kind": "local_policies_and_positive_controls",
+  "artifact_id": "financial-families-v2-summary",
+  "exports": {
+    "adaptive": {
+      "examples": {
+        "dev/included": 3,
+        "train/included": 3
+      },
+      "manifest": "adaptive/curriculum.json",
+      "train_families": 3
+    },
+    "uniform": {
+      "examples": {
+        "dev/included": 3,
+        "train/included": 3
+      },
+      "manifest": "uniform/curriculum.json",
+      "train_families": 3
+    }
+  },
+  "financial_pairs": {
+    "kinds": {
+      "amount": 2,
+      "fixed": 1,
+      "id_order": 3,
+      "interaction": 1,
+      "lawful_distractor": 3,
+      "period_crossing": 2
+    },
+    "solver_actions": [
+      10
+    ],
+    "status": {
+      "passed": 12
+    }
+  },
+  "goals": [
+    {
+      "admissible_coordinates": 33,
+      "agent": "random",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.32800000032875687,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.030000000027939677,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 6.795999999972992
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.3139999997802079,
+          "clean_submissions": 6,
+          "clean_with_accusation": 6,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.047999999835155904,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.344000000040978
+        }
+      },
+      "matched_train_examples_relating_to_goal": 2,
+      "objective": "missed_issue",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "missed_issue"
+      },
+      "wall_seconds": 19.719000000040978
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "flag_all",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.2829999999376014,
+          "clean_submissions": 9,
+          "clean_with_accusation": 9,
+          "cost_micros": 0,
+          "families_offered": 4,
+          "families_stable": 1,
+          "independently_confirmed_pairs": 1,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.01600000006146729,
+          "paired_matches": 0,
+          "paired_submitted": 1,
+          "refinements": 2,
+          "stable_goals": {
+            "duplicate_invoice": 1
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 3,
+            "delayed-allocation": 1,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.703999999910593
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.2930000004125759,
+          "clean_submissions": 6,
+          "clean_with_accusation": 6,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.031999999890103936,
+          "paired_matches": 0,
+          "paired_submitted": 2,
+          "refinements": 0,
+          "stable_goals": {
+            "duplicate_invoice": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.0799999999580905
+        }
+      },
+      "matched_train_examples_relating_to_goal": 1,
+      "objective": "clean_false_positive",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221297",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 2
+        },
+        "selected_snapshot_sha256": "4cc0c12f73801e3e9147edec762ce2783149156bf3e449628c2763ac6c1c3514",
+        "status": "reduced",
+        "target": "clean_false_positive"
+      },
+      "wall_seconds": 16.67200000002049
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "reconcile_control_wrong_amount",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.2950000000419095,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.03100000007543713,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 4.968000000109896
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.3430000002263114,
+          "clean_submissions": 6,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.047999999835155904,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.047999999951571
+        }
+      },
+      "matched_train_examples_relating_to_goal": 0,
+      "objective": "wrong_amount",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "wrong_amount"
+      },
+      "wall_seconds": 17.171999999904074
+    },
+    {
+      "admissible_coordinates": 33,
+      "agent": "reconcile_control_wrong_evidence",
+      "arms": {
+        "adaptive": {
+          "agent_runs": 21,
+          "audit_seconds": 0.3139999998966232,
+          "clean_submissions": 0,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 2,
+          "families_stable": 2,
+          "independently_confirmed_pairs": 2,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.030999999959021807,
+          "paired_matches": 2,
+          "paired_submitted": 2,
+          "refinements": 5,
+          "stable_goals": {
+            "payment_allocation": 2
+          },
+          "strata": {
+            "delayed-allocation": 4,
+            "full-omission": 3
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.203000000095926
+        },
+        "uniform": {
+          "agent_runs": 21,
+          "audit_seconds": 0.3139999998966232,
+          "clean_submissions": 6,
+          "clean_with_accusation": 0,
+          "cost_micros": 0,
+          "families_offered": 5,
+          "families_stable": 3,
+          "independently_confirmed_pairs": 3,
+          "offered": 7,
+          "operational": {},
+          "paired_elapsed_seconds": 0.04700000013690442,
+          "paired_matches": 3,
+          "paired_submitted": 3,
+          "refinements": 0,
+          "stable_goals": {
+            "fx_conversion": 1,
+            "payment_allocation": 2
+          },
+          "strata": {
+            "allocation-fx": 1,
+            "clean-allocation": 2,
+            "delayed-allocation": 2,
+            "full-omission": 2
+          },
+          "submitted": 21,
+          "validation": {
+            "passed": 7
+          },
+          "validation_api_cost_micros": 0,
+          "validation_seconds": 5.157000000122935
+        }
+      },
+      "matched_train_examples_relating_to_goal": 0,
+      "objective": "wrong_evidence",
+      "reduction": {
+        "baseline_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "baseline_sizes": {
+          "documents": 64,
+          "fx_rows": 0,
+          "ledger_rows": 240
+        },
+        "cost": {
+          "cost_micros": 0,
+          "known_cost_micros": 0,
+          "unknown_attempt_costs": 0
+        },
+        "family_id": "v2-family-221087",
+        "reason": "no_more_proposals",
+        "runs_used": 6,
+        "selected_frequency": {
+          "assessed": 3,
+          "attempted": 3,
+          "matched": 3,
+          "per_assessed": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          },
+          "per_attempt": {
+            "observed": 1.0,
+            "wilson_95": [
+              0.4385029682449546,
+              1.0
+            ]
+          }
+        },
+        "selected_sizes": {
+          "documents": 2,
+          "fx_rows": 0,
+          "ledger_rows": 10
+        },
+        "selected_snapshot_sha256": "2aa99389b40c00fc7df965cbe88b016cb7c943e1963262f973f440506be87c8c",
+        "status": "reduced",
+        "target": "wrong_evidence"
+      },
+      "wall_seconds": 17.641000000061467
+    }
+  ],
+  "partition_sha256": "54b6dcf02c51553caa86b17ad889bd636609d3d38f85bfbd5242c202e80cf132",
+  "plan_sha256": "ecbb15fbb47d76985d519cc32eb059218214b49225db5eaddac4977dfa992372",
+  "proposal_orders": {
+    "clean_false_positive": {
+      "adaptive": [
+        [
+          4,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          13,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          12,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          32,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          24,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          31,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          30,
+          "accepted",
+          "weakness_threshold_met"
+        ]
+      ],
+      "uniform": [
+        [
+          4,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          13,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          12,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          32,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          24,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          1,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          16,
+          "accepted",
+          "weakness_threshold_met"
+        ]
+      ]
+    },
+    "missed_issue": {
+      "adaptive": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          5,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          2,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          14,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ]
+      ],
+      "uniform": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          32,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          24,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          16,
+          "rejected",
+          "no_weakness_observed"
+        ]
+      ]
+    },
+    "wrong_amount": {
+      "adaptive": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          5,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          2,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          14,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ]
+      ],
+      "uniform": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          32,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          24,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          16,
+          "rejected",
+          "no_weakness_observed"
+        ]
+      ]
+    },
+    "wrong_evidence": {
+      "adaptive": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          5,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          2,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          14,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ]
+      ],
+      "uniform": [
+        [
+          4,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          13,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          12,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          32,
+          "rejected",
+          "no_weakness_observed"
+        ],
+        [
+          24,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          1,
+          "accepted",
+          "weakness_threshold_met"
+        ],
+        [
+          16,
+          "rejected",
+          "no_weakness_observed"
+        ]
+      ]
+    }
+  },
+  "protocol_id": "financial-families-v2-local",
+  "public_allocation_shapes": {
+    "applied_tranche_counts": [
+      0,
+      1,
+      2
+    ],
+    "currencies": [
+      "KWD",
+      "KZT",
+      "USD"
+    ],
+    "distinct_outstanding_shapes": 8,
+    "exact_3_over_5": 0,
+    "fixed_50000_30000_kzt": 0,
+    "independently_accepted_candidates": 12,
+    "outstanding_examples": 8
+  },
+  "schema_version": "2.0",
+  "source_sha": "75b877664ae37bc0800dd19023ad7df28a1ac1fd",
+  "status": "completed"
+}

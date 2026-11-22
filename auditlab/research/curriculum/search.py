@@ -9,7 +9,8 @@ import random
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Callable
+from time import monotonic
+from typing import Any, Callable, Protocol
 from uuid import uuid4
 
 
@@ -154,9 +155,10 @@ class _Arm:
     unknown_costs: int = 0
     attempt_in_progress: bool = False
     stop_reason: str | None = None
+    validation_seconds: float | None = None
 
     def summary(self) -> dict[str, Any]:
-        return {
+        result = {
             "candidates": self.candidates,
             "offered": len(self.candidates),
             "accepted": sum(row["status"] == "accepted" for row in self.candidates),
@@ -172,6 +174,9 @@ class _Arm:
             "attempt_in_progress": self.attempt_in_progress,
             "stop_reason": self.stop_reason,
         }
+        if self.validation_seconds is not None:
+            result["validation_seconds"] = self.validation_seconds
+        return result
 
     def record(self, attempt: Attempt) -> None:
         self.attempt_in_progress = False
@@ -228,6 +233,12 @@ def _select(pool: list[Candidate], adaptive: bool, strata: dict[str, _Stratum], 
     return max(range(len(pool)), key=lambda index: priorities[pool[index].stratum])
 
 
+class _ProposalPicker(Protocol):
+    def __bool__(self) -> bool: ...
+
+    def offer(self, rows: list[dict[str, Any]]) -> tuple[Candidate, dict[str, Any]]: ...
+
+
 def _run_arm(
     config: SearchConfig,
     arm: _Arm,
@@ -237,12 +248,14 @@ def _run_arm(
     validate_candidate: ValidateCandidate,
     folder: Path,
     save: Callable[[], None],
+    proposals: _ProposalPicker | None = None,
 ) -> None:
     strata: dict[str, _Stratum] = defaultdict(_Stratum)
     for candidate in pool:
         strata[candidate.stratum]
 
-    while pool and len(arm.candidates) < config.candidate_budget:
+    remaining = pool if proposals is None else proposals
+    while remaining and len(arm.candidates) < config.candidate_budget:
         if arm.attempts + config.repetitions > config.attempt_budget:
             arm.stop_reason = "attempt_budget"
             break
@@ -254,10 +267,13 @@ def _run_arm(
                 arm.stop_reason = "cost_budget"
                 break
 
-        index = _select(pool, adaptive, strata, len(arm.candidates))
-        candidate = pool.pop(index)
+        if proposals is None:
+            index = _select(pool, adaptive, strata, len(arm.candidates))
+            candidate, proposal = pool.pop(index), None
+        else:
+            candidate, proposal = proposals.offer(arm.candidates)
         history = strata[candidate.stratum]
-        priority = history.priority(len(arm.candidates)) if adaptive else None
+        priority = history.priority(len(arm.candidates)) if adaptive and proposals is None else None
         history.offered += 1
         candidate_folder = folder / f"{len(arm.candidates) + 1:04d}"
         candidate_folder.mkdir(parents=True)
@@ -270,10 +286,18 @@ def _run_arm(
             "validation": None,
             "attempts": [],
         }
+        if proposal is not None:
+            row["proposal"] = proposal
+            row["validation_seconds"] = None
         arm.candidates.append(row)
         save()
 
+        validation_started = monotonic() if proposal is not None else None
         validation = _validate(validate_candidate, candidate, candidate_folder / "validation")
+        if validation_started is not None:
+            elapsed = monotonic() - validation_started
+            row["validation_seconds"] = elapsed
+            arm.validation_seconds += elapsed
         row["validation"] = asdict(validation)
         if validation.status != "passed":
             row["status"] = "rejected" if validation.status == "failed" else "not_checked"
@@ -310,7 +334,7 @@ def _run_arm(
             break
 
     if arm.stop_reason is None:
-        arm.stop_reason = "candidate_budget" if pool else "pool_exhausted"
+        arm.stop_reason = "candidate_budget" if remaining else "pool_exhausted"
     save()
 
 
@@ -327,14 +351,31 @@ def search(
     Unscored runs are kept as operational results. An interrupted output directory is
     deliberately never replayed, since the last in-flight callback might have been billed.
     """
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=False)
     config = search_config
     pool = sorted(config.candidates, key=lambda candidate: candidate.candidate_id)
     plan = asdict(config)
     plan["candidates"] = [asdict(candidate) for candidate in pool]
     random.Random(config.seed).shuffle(pool)
-    arms = {"adaptive": _Arm(), "uniform": _Arm()}
+    return _compare(config, run_attempt, validate_candidate, Path(output_dir), pool, plan, {
+        "adaptive": "smoothed_scored_weakness_rate_plus_stratum_exploration",
+        "uniform": "seeded_candidate_permutation_without_replacement",
+        "adaptive_tie_break": "same_seeded_candidate_permutation_as_uniform",
+    })
+
+
+def _compare(
+    config: SearchConfig,
+    run_attempt: RunAttempt,
+    validate_candidate: ValidateCandidate,
+    output_dir: Path,
+    pool: list[Candidate],
+    plan: dict[str, Any],
+    method: dict[str, Any],
+    make_proposals: Callable[[bool], _ProposalPicker] | None = None,
+) -> dict[str, Any]:
+    output_dir.mkdir(parents=True, exist_ok=False)
+    arms = {name: _Arm(validation_seconds=0.0 if make_proposals is not None else None)
+            for name in ("adaptive", "uniform")}
     receipt = {
         "schema_version": "1.0",
         "artifact_id": f"search-{uuid4().hex}",
@@ -344,10 +385,8 @@ def search(
         "plan": plan,
         "plan_sha256": hashlib.sha256(_json(plan).encode("utf-8")).hexdigest(),
         "method": {
-            "adaptive": "smoothed_scored_weakness_rate_plus_stratum_exploration",
-            "uniform": "seeded_candidate_permutation_without_replacement",
+            **method,
             "arm_order": list(arms),
-            "adaptive_tie_break": "same_seeded_candidate_permutation_as_uniform",
             "budget_scope": "per_arm",
         },
         "arms": {},
@@ -356,12 +395,14 @@ def search(
     def save() -> None:
         receipt["arms"] = {name: arm.summary() for name, arm in arms.items()}
         staged = output_dir / "search.json.tmp"
-        staged.write_text(_json(receipt) + "\n", encoding="utf-8")
+        staged.write_text(_json(receipt) + "\n", encoding="utf-8", newline="\n")
         staged.replace(output_dir / "search.json")
 
     save()
     for name, arm in arms.items():
-        _run_arm(config, arm, pool.copy(), name == "adaptive", run_attempt, validate_candidate, output_dir / name, save)
+        adaptive = name == "adaptive"
+        proposals = make_proposals(adaptive) if make_proposals is not None else None
+        _run_arm(config, arm, pool.copy(), adaptive, run_attempt, validate_candidate, output_dir / name, save, proposals)
         if arm.stop_reason in {"unreported_attempt_cost", "attempt_cost_exceeded_reservation"}:
             receipt["status"] = "stopped_cost_contract"
             if name == "adaptive":

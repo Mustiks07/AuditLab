@@ -40,8 +40,9 @@ class FailureTarget:
     def __post_init__(self):
         if not isinstance(self.affected_ids, (list, tuple)):
             raise ValueError("affected_ids must contain public entity IDs")
-        if not all(type(value) is str and value for value in (self.reason, self.issue_type, *self.affected_ids)):
-            raise ValueError("failure target requires nonempty strings")
+        if (type(self.reason) is not str or not self.reason or type(self.issue_type) is not str
+                or not all(type(value) is str for value in self.affected_ids)):
+            raise ValueError("failure target requires a reason and string issue type and IDs")
         if self.issue_id is not None and (type(self.issue_id) is not str or not self.issue_id):
             raise ValueError("issue_id must be a nonempty string or null")
         object.__setattr__(self, "affected_ids", tuple(sorted(set(self.affected_ids))))
