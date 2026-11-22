@@ -18,11 +18,12 @@ from auditlab.runner.episode import run_episode
 
 from .export import CurriculumExample, FamilyMember, export_curriculum, extend_family_plan, plan_splits
 from .families import answers_match, boundary_variants
+from .objectives import assess_failures
 from .reduce import FailureTarget, ReductionBudget, ReductionCandidate, reduce, snapshot_sha256
 from .search import Attempt, Candidate, SearchConfig, Validation, search
 
 
-def local_runner(name: str, source_sha: str, protocol_id: str):
+def local_runner(name: str, source_sha: str, protocol_id: str, *, policy_factory=make_policy):
     """Run a real bundled policy using the closed runner and Genesis scoring rules."""
     def investigate(snapshot: Path, output: Path, repetition: int, seconds: float) -> dict:
         output.mkdir(parents=True, exist_ok=False)
@@ -30,7 +31,7 @@ def local_runner(name: str, source_sha: str, protocol_id: str):
         env = make_env("closed", rules=RULES_GENESIS, evaluator="inprocess", trusted_dir=output / "runner")
         start = monotonic()
         policy_seed = 41000 + repetition
-        _, _, _, _, _ = run_episode(env, make_policy(name, policy_seed), policy_seed, {
+        run_episode(env, policy_factory(name, policy_seed), policy_seed, {
             "snapshot_dir": snapshot, "run_id": run_id, "policy_name": name,
             "time_limit_s": min(60.0, seconds),
         })
@@ -46,15 +47,8 @@ def local_runner(name: str, source_sha: str, protocol_id: str):
         }
         graded = final["graded"]
         if final["status"] == "submitted" and final["completed"] and graded is not None:
-            truth = read_json(snapshot / "private/truth.json")
-            matched = {issue_id for _, issue_id in graded["matches"]}
-            failures = [{"reason": "missed_issue", "type": issue["type"], "affected_ids": issue["affected_ids"],
-                         "issue_id": issue["issue_id"]} for issue in truth["issues"] if issue["issue_id"] not in matched]
-            findings = final["submission"]["findings"]
-            failures.extend({"reason": "false_positive", "type": findings[int(index)]["type"],
-                             "affected_ids": findings[int(index)]["affected_ids"], "diagnostic": reason}
-                            for index, reason in graded["unmatched"].items() if int(index) < len(findings))
-            receipt.update(failures=failures, score=graded["score"])
+            receipt.update(failures=assess_failures(snapshot, final["submission"]["findings"], graded),
+                           score=graded["score"])
         else:
             receipt.update(status="infra_error" if final["infra"] else final["status"],
                            reason=", ".join(final["infra"]) or final["status"])
@@ -72,7 +66,7 @@ def _candidate_receipt(candidate, snapshot, source_sha, protocol_id):
             "files_sha256": file_hashes(snapshot)}
 
 
-def _search_attempt(receipt, output, digest, seen):
+def _search_attempt(receipt, output, digest, seen, *, is_weak=None):
     status = receipt.get("status")
     cost, launches = receipt.get("cost_micros"), receipt.get("launches", 1)
     reference = str(output / "attempt.json")
@@ -83,9 +77,11 @@ def _search_attempt(receipt, output, digest, seen):
             return Attempt("invalid_response", cost_micros=cost, artifact_ref=reference,
                            reason="stale or unbound submission receipt", launches=launches)
         seen.add(identifier)
-        return Attempt("completed", any(item["reason"] == "missed_issue" for item in receipt["failures"]),
+        weak = (is_weak(receipt) if is_weak else any(item["reason"] == "missed_issue" for item in receipt["failures"]))
+        return Attempt("completed", weak,
                        cost, reference, launches=launches)
-    category = {"timeout": "timeout", "budget_stop": "budget_stopped", "action_budget_exhausted": "budget_stopped",
+    category = {"timeout": "timeout", "truncated_timeout": "timeout", "budget_stop": "budget_stopped",
+                "action_budget_exhausted": "budget_stopped", "truncated_budget": "budget_stopped",
                 "invalid_submission": "invalid_response", "invalid_response": "invalid_response"}
     return Attempt(category.get(status, "provider_error"), cost_micros=cost, artifact_ref=reference,
                    reason=receipt.get("reason") or status or "unknown_runner_status", launches=launches)

@@ -55,6 +55,10 @@ class Company:
         self.events = []
         self.mutations = []
 
+    @property
+    def uses_source_book(self):
+        return self.config_version != "1.0"
+
     def case_parameters(self, kind, units, *, day=6, hour=10, minute=0):
         """Independent event stream: toggling another defect does not change this case."""
         if self.config_version == "1.0":
@@ -63,6 +67,14 @@ class Company:
         self._case_counts[kind] += 1
         return (rng.randrange(max(1, units // 3), units * 3 + 1),
                 rng.randrange(2, 21), rng.randrange(8, 18), rng.randrange(60))
+
+    def allocation_pattern(self, kind, amount):
+        """Return the initial amount, tranche count and delay around period end."""
+        if self.config_version != "1.2":
+            return amount * 3 // 5, 1, 1
+        rng = random_stream(self._scenario_seed, f"financial-allocation/{kind}/{self._case_counts[kind]}")
+        applied = max(1, amount * rng.randrange(1_700, 8_701) // 10_000)
+        return applied, rng.randint(1, min(3, applied)), rng.randrange(0, 1_441)
 
     def id(self, kind):
         return f"{PREFIXES[kind]}{self._id_streams[kind].getrandbits(96):024X}"
@@ -119,6 +131,10 @@ class Company:
                 replacement[amount_key] = amount
             self._planned_rows[row["row_id"]] = (replacement,)
 
+    def defer_posting_omission(self, rows):
+        for row in rows:
+            self._planned_rows[row["row_id"]] = ()
+
     @property
     def planned_ledger_rows(self):
         return len(self.ledger) + sum(len(replacements) - 1 for replacements in self._planned_rows.values())
@@ -135,7 +151,7 @@ class Company:
         return changed
 
     def issue(self, issue_type, affected_ids, amount_minor, currency, evidence_ids, *, deferred=False):
-        issues = self._planned_issues if deferred and self.config_version == "1.1" else self.issues
+        issues = self._planned_issues if deferred and self.uses_source_book else self.issues
         issues.append({
             "issue_id": self.id("issue"), "type": issue_type, "affected_ids": sorted(affected_ids),
             "expected_amount_minor": amount_minor, "currency": currency,
@@ -154,18 +170,25 @@ class Company:
         return payment, credit
 
     def allocation(self, entity_id, currency, amount, first_amount, receipt_at, first_at, last_at,
-                   *, leave_remainder=False):
+                   *, leave_remainder=False, initial_tranches=1, clean_last_at=None):
         issued_at = receipt_at - timedelta(days=1)
         invoice = self.invoice(entity_id, issued_at, currency, amount)
         invoice_id = invoice["invoice_id"]
         self.post(issued_at, currency, amount, "AR", "REVENUE", entity_id, invoice_id=invoice_id)
         payment, receipt = self.payment(entity_id, receipt_at, currency, amount, invoice_id)
         payment_id = payment["payment_id"]
-        first, _ = self.post(first_at, currency, first_amount, "UNAPPLIED", "AR", entity_id,
-                             invoice_id=invoice_id, payment_id=payment_id)
+        each, extra = divmod(first_amount, initial_tranches)
+        parts = [each + int(index < extra) for index in range(initial_tranches)]
+        initial = [
+            self.post(first_at + timedelta(seconds=index) if index else first_at, currency, part,
+                      "UNAPPLIED", "AR", entity_id,
+                      invoice_id=invoice_id, payment_id=payment_id)
+            for index, part in enumerate(parts)
+        ]
         defective = leave_remainder or last_at >= self.period_end
-        deferred = self.config_version == "1.1" and defective
-        source_last_at = min(last_at, self.period_end - timedelta(minutes=1)) if deferred else last_at
+        deferred = self.uses_source_book and defective
+        scheduled_at = clean_last_at or min(last_at, self.period_end - timedelta(minutes=1))
+        source_last_at = scheduled_at if deferred else last_at
         last = None
         if deferred or not leave_remainder:
             posting = self.post(source_last_at, currency, amount - first_amount, "UNAPPLIED", "AR", entity_id,
@@ -177,19 +200,19 @@ class Company:
         affected = [f"invoice/{invoice_id}", f"payment/{payment_id}"]
         self.events.append({
             "kind": "designated_payment", "affected_ids": affected, "currency": currency,
-            "amount_minor": amount, "scheduled_tranches_minor": [first_amount, amount - first_amount],
+            "amount_minor": amount, "scheduled_tranches_minor": [*parts, amount - first_amount],
             "receipt_at": receipt_at.isoformat(), "settled_at": source_last_at.isoformat() if deferred or last else None,
         })
         if defective:
             self.mutations.append({
                 "type": "payment_allocation", "affected_ids": affected,
                 "before": {"second_tranche_minor": amount - first_amount,
-                           "settled_at": min(last_at, self.period_end - timedelta(minutes=1)).isoformat()},
+                           "settled_at": scheduled_at.isoformat()},
                 "after": {"settled_at": last_at.isoformat() if last else None,
                           "remaining_minor": amount - first_amount},
                 "effect": "Part of the designated payment is outstanding at the reporting boundary.",
             })
-        return invoice, payment, receipt, first, last
+        return invoice, payment, receipt, initial[0][0], last
 
     def boundary_pair_member(self, minute):
         receipt_at = self.period_start + timedelta(days=13, hours=16)
@@ -207,7 +230,7 @@ class Company:
         receipt_at = self.period_start + timedelta(days=day, hours=hour, minutes=minute)
         scale = 10 ** self.exponents[self.base_currency]
         amount = self.events_rng.randrange(350, 900) * 100 * scale
-        if self.config_version == "1.1":
+        if self.uses_source_book:
             self._single_settlement(amount, receipt_at, enabled=enabled)
             return
         self.allocation(
@@ -234,11 +257,10 @@ class Company:
         if enabled:
             omitted = self.allocation_mode == "omitted"
             if omitted:
-                for row in posting:
-                    self._planned_rows[row["row_id"]] = ()
+                self.defer_posting_omission(posting)
                 applied = 0
             else:
-                applied = amount * 3 // 5
+                applied, _, _ = self.allocation_pattern("allocation", amount)
                 self.defer_posting_changes(posting, timestamp=settled_at, amount=applied)
             self.mutations.append({
                 "type": "payment_allocation", "affected_ids": affected,

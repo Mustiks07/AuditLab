@@ -14,11 +14,14 @@ from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .core import FX_FIELDS, LEDGER_FIELDS, Company
+from .financial_cases import AllocationCase, parse_financial_case
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
 GENERATOR_VERSION = "1.7"
-SUPPORTED_GENERATOR_VERSIONS = {"1.1", "1.6", GENERATOR_VERSION}
+FINANCIAL_FAMILY_GENERATOR_VERSION = "1.8"
+GENERATOR_VERSIONS = {"1.0": "1.1", "1.1": GENERATOR_VERSION, "1.2": FINANCIAL_FAMILY_GENERATOR_VERSION}
+SUPPORTED_GENERATOR_VERSIONS = {"1.6", *GENERATOR_VERSIONS.values()}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
 ISSUE_TYPES = ("duplicate_invoice", "payment_allocation", "fx_conversion", "period_cutoff")
@@ -29,7 +32,7 @@ MAX_ISSUES_PER_TYPE = 5
 CONFIG_FIELDS = {
     "config_version", "company_size", "base_currency", "currencies", "timezone", "target_period",
     "issue_counts", "interaction", "clean_distractors", "settlement_timing", "snapshot_nonce",
-    "allocation_mode",
+    "allocation_mode", "financial_case",
 }
 
 
@@ -43,7 +46,7 @@ def _period(value, zone_name, config_version="1.0"):
     year, month = map(int, value.split("-"))
     if not isinstance(zone_name, str) or not zone_name:
         raise ValueError("invalid_timezone: expected an IANA zone name")
-    if config_version == "1.1":
+    if config_version != "1.0":
         parts = zone_name.split("/")
         if any(part in {"", ".", ".."} for part in parts):
             raise ValueError("invalid_timezone: expected an IANA zone name")
@@ -73,8 +76,9 @@ def _configuration(seed, config):
     if not isinstance(config, dict) or config.keys() - CONFIG_FIELDS:
         raise ValueError("invalid_config: unsupported configuration fields")
     config_version = config.get("config_version", "1.0")
-    if not isinstance(config_version, str) or config_version not in {"1.0", "1.1"}:
+    if not isinstance(config_version, str) or config_version not in GENERATOR_VERSIONS:
         raise ValueError("unsupported_config_version")
+    modern = config_version != "1.0"
     base = config.get("base_currency", "KZT")
     currencies = config.get("currencies", [base, *(["USD"] if base != "USD" else ["KZT"])])
     if (not isinstance(currencies, list) or not currencies
@@ -94,27 +98,41 @@ def _configuration(seed, config):
     timing = config.get("settlement_timing")
     allocation_mode = config.get("allocation_mode", "partial")
     if allocation_mode not in ("partial", "omitted") or (
-        "allocation_mode" in config and config_version != "1.1"
+        "allocation_mode" in config and not modern
     ):
-        raise ValueError("invalid_allocation_mode: profile 1.1 supports partial or omitted")
+        raise ValueError("invalid_allocation_mode: profiles 1.1 and 1.2 support partial or omitted")
     if allocation_mode == "omitted" and (timing is not None or interaction == "allocation_fx_same_payment"):
         raise ValueError("incompatible_allocation_mode: omission requires a standalone settlement")
     if timing is not None:
+        if config_version == "1.2":
+            raise ValueError("invalid_settlement_timing: profile 1.2 cannot combine with legacy timing; "
+                             "set financial_case.settlement_offset_minutes")
         if not isinstance(timing, str) or timing not in TIMINGS:
             raise ValueError("invalid_settlement_timing: expected before, at or after")
         if "payment_allocation" not in config.get("issue_counts", {}):
             counts["payment_allocation"] = int(timing != "before")
         elif timing != "before" and counts["payment_allocation"] < 1:
             raise ValueError("contradictory_settlement_timing")
-    if config_version == "1.1" and sum(counts.values()) > 12:
-        raise ValueError("invalid_issue_counts: profile 1.1 supports at most 12 issues")
+    if modern and sum(counts.values()) > 12:
+        raise ValueError("invalid_issue_counts: profiles 1.1 and 1.2 support at most 12 issues")
+    financial_case = None
+    if "financial_case" in config:
+        if config_version != "1.2":
+            raise ValueError("invalid_financial_case: requires config_version 1.2")
+        if timing is not None or interaction is not None:
+            raise ValueError("invalid_financial_case: cannot combine with settlement_timing or interaction")
+        financial_case = parse_financial_case(config["financial_case"], allocation_mode, seed)
+        if any(count > (1 if kind == financial_case.issue_type else 0) for kind, count in counts.items()):
+            raise ValueError("invalid_issue_counts: financial_case supports zero or one issue of its own type")
+        if allocation_mode == "omitted" and not isinstance(financial_case, AllocationCase):
+            raise ValueError("incompatible_allocation_mode: omission requires an allocation case")
     distractors = config.get("clean_distractors", list(DISTRACTORS))
-    supported_distractors = (*DISTRACTORS, "next_day_settlement") if config_version == "1.1" else DISTRACTORS
+    supported_distractors = (*DISTRACTORS, "next_day_settlement") if modern else DISTRACTORS
     if (not isinstance(distractors, list) or any(item not in supported_distractors for item in distractors)
             or len(distractors) != len(set(distractors))):
         raise ValueError("invalid_clean_distractors")
     size = config.get("company_size", {})
-    document_limit = 200 if config_version == "1.1" else 600
+    document_limit = 200 if modern else 600
     if (not isinstance(size, dict) or size.keys() - {"ledger_rows_target", "documents_target"}
             or not _bounded_int(size.get("ledger_rows_target", 0), 0, 2_000)
             or not _bounded_int(size.get("documents_target", 0), 0, document_limit)):
@@ -127,7 +145,7 @@ def _configuration(seed, config):
     exponents = {code: CURRENCY_EXPONENTS[code] for code in currencies}
     company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents,
                       config_version=config_version, allocation_mode=allocation_mode)
-    return company, counts, timing, interaction, distractors, size, nonce
+    return company, counts, timing, interaction, distractors, size, nonce, financial_case
 
 
 def _add_clean_invoice(company, amount, issued_at):
@@ -143,7 +161,12 @@ def _add_paid_invoices(company, amount, issued_at, *, split=False):
     entity, currency = invoice["entity_id"], invoice["currency"]
     invoice_id = invoice["invoice_id"]
     received = issued_at + timedelta(days=2)
-    parts = (amount * 2 // 5, amount - amount * 2 // 5) if split else (amount,)
+    if split:
+        first = (amount * company.noise_rng.randrange(1_700, 8_701) // 10_000
+                 if company.config_version == "1.2" else amount * 2 // 5)
+        parts = (first, amount - first)
+    else:
+        parts = (amount,)
     for offset, part in enumerate(parts):
         timestamp = received + timedelta(days=offset)
         payment, _ = company.payment(entity, timestamp, currency, part, invoice_id)
@@ -156,7 +179,7 @@ def _add_clean_history(company, distractors, size):
     rng = company.noise_rng
     at = company.period_start + timedelta(days=rng.randrange(1, 10), hours=rng.randrange(8, 18))
     scale = 10 ** company.exponents[company.base_currency]
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         at += timedelta(minutes=rng.randrange(60))
         amount = rng.randrange(10_000 * scale, 100_000 * scale)
     else:
@@ -177,7 +200,7 @@ def _add_clean_history(company, distractors, size):
                                "amount_minor": deposit, "returned_at": returned.isoformat()})
     if "archive_copy" in distractors and company.config_version == "1.0":
         add_duplicate(company, enabled=False)
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         if distractors:
             add_cutoff(company, enabled=False)
             # Neighboring-period evidence also contains valid recognition outside the target.
@@ -221,7 +244,8 @@ def _add_bounded_filler(company, size, rng, scale, duplicate_capacity):
                 split = minimum_rows <= rows_target
             _add_paid_invoices(company, amount, at, split=split)
     if company.allocation_mode == "omitted":
-        # Use the clean book as the size floor for both members of the pair.
+        # The omitted settlement and its clean control share a public size
+        # floor. A shorter target is padded only by real treasury journals.
         rows_target = max(rows_target, len(company.ledger) + extra_rows)
     # Treasury cash transfers are real balanced internal events, without extra external invoices.
     # They do not change designated-payment settlement indexes or financial issue evidence.
@@ -269,8 +293,13 @@ def _add_filler(company, size, rng, scale):
         _add_paid_invoices(company, amount, at, split=split)
 
 
-def _add_audit_cases(company, counts, timing, interaction, distractors):
+def _add_audit_cases(company, counts, timing, interaction, distractors, financial_case):
     remaining = counts.copy()
+    if financial_case is not None:
+        financial_case.build(company, enabled=bool(remaining[financial_case.issue_type]))
+        remaining[financial_case.issue_type] = 0
+        if isinstance(financial_case, AllocationCase) and "next_day_settlement" in distractors:
+            financial_case.build(company, enabled=False)
     if timing is not None:
         company.boundary_pair_member(TIMINGS[timing])
         remaining["payment_allocation"] -= int(timing != "before")
@@ -287,7 +316,7 @@ def _add_audit_cases(company, counts, timing, interaction, distractors):
         remaining["fx_conversion"] -= fx
     else:
         cutoff = fx = False
-    if company.config_version == "1.1" and (
+    if company.uses_source_book and (
         interaction == "cutoff_fx_same_invoice" or (distractors and len(company.exponents) > 1)
     ):
         [focus] = company.sample_fault_slots("cutoff_fx", 2, 1)
@@ -302,13 +331,14 @@ def _add_audit_cases(company, counts, timing, interaction, distractors):
     builders = (add_duplicate, Company.allocation_case, add_fx, add_cutoff)
     matched_controls = (
         "archive_copy" in distractors,
-        "split_payment" in distractors or "next_day_settlement" in distractors or company.allocation_mode == "omitted",
+        "split_payment" in distractors or "next_day_settlement" in distractors
+        or (financial_case is None and company.allocation_mode == "omitted"),
         bool(distractors) and len(company.exponents) > 1,
         False,
     )
     for issue_type, build, controls in zip(ISSUE_TYPES, builders, matched_controls, strict=True):
         requested = remaining[issue_type]
-        if controls and company.config_version == "1.1":
+        if controls and company.uses_source_book:
             capacity = MAX_ISSUES_PER_TYPE + 1
             faulty_slots = company.sample_fault_slots(issue_type, capacity, requested)
             for slot in range(capacity):
@@ -343,7 +373,7 @@ def _policy(company):
             "FX_OFFSET": "Offset to the reporting valuation memorandum account",
         },
     }
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         policy["accounts"]["version"] = "1.1"
         policy["accounts"]["CASH_RESERVE"] = (
             "Treasury reserve cash in the base currency. A CASH/CASH_RESERVE journal is an internal "
@@ -395,7 +425,7 @@ def _write_snapshot_records(directory, company, order):
     _write_records(directory, "payments", company.payments, order)
     _write_records(directory, "fx", sorted(company.fx, key=lambda row: tuple(row[key] for key in FX_FIELDS)),
                    order, FX_FIELDS)
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         # A change in the ledger row count must not reshuffle otherwise identical documents.
         _write_records(directory, "ledger", company.ledger, order, LEDGER_FIELDS)
 
@@ -452,15 +482,15 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
     output = Path(output_dir).absolute()
     if os.path.lexists(output):
         raise FileExistsError(output)
-    company, counts, timing, interaction, distractors, size, nonce = _configuration(seed, config)
-    _add_audit_cases(company, counts, timing, interaction, distractors)
+    company, counts, timing, interaction, distractors, size, nonce, financial_case = _configuration(seed, config)
+    _add_audit_cases(company, counts, timing, interaction, distractors, financial_case)
     _add_clean_history(company, distractors, size)
     if not company.invoices and not company.payments:
         _add_paid_invoices(company, 10_000 * 10 ** company.exponents[company.base_currency],
                            company.period_start + timedelta(days=3))
     company.close_settlement_indexes()
     policy = _policy(company)
-    if company.config_version == "1.1":
+    if company.uses_source_book:
         company.validate({}, policy)
         source_book_validation = {
             "ledger_rows": len(company.ledger),
@@ -486,7 +516,7 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
             "ledger_rows": len(company.ledger), "document_count": len(company.invoices) + len(company.payments),
             "currency_exponents": company.exponents, "rounding": "ROUND_HALF_UP",
         }
-        if company.config_version == "1.1":
+        if company.uses_source_book:
             manifest["period_end_exclusive"] = True
         episode_id = _episode_id(company, manifest, policy, nonce)
         manifest["episode_id"] = episode_id
@@ -495,12 +525,11 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         _write_snapshot_records(public, company, company.order_rng)
         _write_json(private / "truth.json", {"episode_id": episode_id, "issues": company.issues})
         provenance = {
-            "episode_id": episode_id, "generator_version": (
-                GENERATOR_VERSION if company.config_version == "1.1" else "1.1"),
+            "episode_id": episode_id, "generator_version": GENERATOR_VERSIONS[company.config_version],
             "seed": seed, "config": config, "events": company.events, "mutations": company.mutations,
             "generation_attempts": 1,
         }
-        if company.config_version == "1.1":
+        if company.uses_source_book:
             provenance["timezone_database"] = {"package": "tzdata", "version": version("tzdata")}
             provenance["source_book_validation"] = source_book_validation
             provenance["source_book"] = _write_source_book(
