@@ -1,0 +1,25 @@
+{
+  "episode_id": "EAAA76B8F14EF559A284B6B66BECAB959",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/ID08157C6BC7A8A7404499093",
+        "payment/P3FBBE57243A90D81A50EE958"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/DEA2A239BB609F4132CAE4062",
+          "ledger/R87EE6988DADC8A1619997D39",
+          "ledger/R4BDCCA8E7DA806DC5332EC80",
+          "ledger/RF866655D0747E1BA3D12E572",
+          "ledger/R7E33B31A91FBE88879C6A011",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 1839392015,
+      "issue_id": "X53FC65E782F3AAAB9553F2AF",
+      "type": "payment_allocation"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "episode_id": "E7EE2D81933CFD8CE701A9342222828E1",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/IE89F4E3D73307379C9A3844C"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/D726CFF453207E0A28F7D3E63",
+          "fx/2025-06-30/JPY/KZT",
+          "ledger/REE5E8AC40B3FB02365E1CA5B",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 114,
+      "issue_id": "XCEAA803F80181BB0DBEBF475",
+      "type": "fx_conversion"
+    }
+  ]
+}

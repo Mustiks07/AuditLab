@@ -1,0 +1,177 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 8560,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "JED6785B1D2007D713540783D",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "R6E51FC7A7CD620CCBB3867E6",
+        "timestamp": "2026-04-01T11:41:00+00:00"
+      },
+      "before": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 8560,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "JED6785B1D2007D713540783D",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "R6E51FC7A7CD620CCBB3867E6",
+        "timestamp": "2026-03-31T12:19:00+00:00"
+      },
+      "id": "R6E51FC7A7CD620CCBB3867E6",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "FX_OFFSET",
+        "credit_minor": 4498200,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "J30ADCCB023D5474E2B181218",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "R8E8EE351DE3AAD829FE488C9",
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "before": {
+        "account": "FX_OFFSET",
+        "credit_minor": 4496800,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "J30ADCCB023D5474E2B181218",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "R8E8EE351DE3AAD829FE488C9",
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "id": "R8E8EE351DE3AAD829FE488C9",
+      "mutation_indexes": [
+        1
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "AR",
+        "credit_minor": 8560,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "JED6785B1D2007D713540783D",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "RAF13B5C5EE8B2DD8D1AC37CF",
+        "timestamp": "2026-04-01T11:41:00+00:00"
+      },
+      "before": {
+        "account": "AR",
+        "credit_minor": 8560,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "JED6785B1D2007D713540783D",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "RAF13B5C5EE8B2DD8D1AC37CF",
+        "timestamp": "2026-03-31T12:19:00+00:00"
+      },
+      "id": "RAF13B5C5EE8B2DD8D1AC37CF",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 4498200,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "J30ADCCB023D5474E2B181218",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "REA73E6E02292C35249902EF1",
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "before": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 4496800,
+        "entity_id": "C9112BB6F4C6329C2045F1808",
+        "invoice_id": "I1926B43568A2227C8603AB20",
+        "journal_id": "J30ADCCB023D5474E2B181218",
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "row_id": "REA73E6E02292C35249902EF1",
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "id": "REA73E6E02292C35249902EF1",
+      "mutation_indexes": [
+        1
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "amount_minor": 28000,
+        "currency": "KWD",
+        "doc_id": "DF46D2B70E47C3CA715A9DEDD",
+        "invoice_refs": [
+          "I1926B43568A2227C8603AB20"
+        ],
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "settlement_index": {
+          "before": "2026-04-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "R89EBE468EF7277A781BF636F",
+            "R9468FCCC07205945BBF3F70D",
+            "R5983C1138417937C6B186847",
+            "RDA46227161930E0E93CAFF42"
+          ]
+        },
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "before": {
+        "amount_minor": 28000,
+        "currency": "KWD",
+        "doc_id": "DF46D2B70E47C3CA715A9DEDD",
+        "invoice_refs": [
+          "I1926B43568A2227C8603AB20"
+        ],
+        "payment_id": "P0FFEDBF8205CCEC340067CB2",
+        "settlement_index": {
+          "before": "2026-04-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "R89EBE468EF7277A781BF636F",
+            "R9468FCCC07205945BBF3F70D",
+            "R5983C1138417937C6B186847",
+            "RDA46227161930E0E93CAFF42",
+            "R6E51FC7A7CD620CCBB3867E6"
+          ]
+        },
+        "timestamp": "2026-03-04T15:10:00+00:00"
+      },
+      "id": "DF46D2B70E47C3CA715A9DEDD",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "payments"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "E7D708AE8868F14D87425A5F9350AA2A0",
+  "target_episode_id": "E875C2E94FCCA39ABB06C0F6C4953F04E"
+}

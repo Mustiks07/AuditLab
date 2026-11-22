@@ -1,0 +1,38 @@
+{
+  "episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/I291D6BF9AD504BA9D8D0141C"
+      ],
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "invoices/DA7F45AABFFF89B296CC8DE13",
+          "ledger/RAC3FDCC8CD81483F45F2AFE2",
+          "policy/period"
+        ]
+      ],
+      "expected_amount_minor": 96000,
+      "issue_id": "X885D2FE0B452BABE8649215C",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "invoice/I291D6BF9AD504BA9D8D0141C"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/DA7F45AABFFF89B296CC8DE13",
+          "fx/2025-10-31/KWD/KZT",
+          "ledger/R31B7C4D392E97F54634242F3",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 4800,
+      "issue_id": "X79C2AB2C66D4DB6FE9B43740",
+      "type": "fx_conversion"
+    }
+  ]
+}

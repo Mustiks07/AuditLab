@@ -1,0 +1,16 @@
+{
+  "base_currency": "KZT",
+  "currency_exponents": {
+    "JPY": 0,
+    "KZT": 2
+  },
+  "document_count": 77,
+  "episode_id": "EF141A50FB8D3B9871E85F24D428CD226",
+  "ledger_rows": 310,
+  "period_end": "2026-03-01T00:00:00+03:00",
+  "period_end_exclusive": true,
+  "period_start": "2026-02-01T00:00:00+03:00",
+  "rounding": "ROUND_HALF_UP",
+  "schema_version": "1.0",
+  "timezone": "Europe/Moscow"
+}

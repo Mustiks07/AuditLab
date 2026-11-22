@@ -1,0 +1,91 @@
+{
+  "episode_id": "ECEEC6A66BB9415222BF6CA87107FC342",
+  "issues": [
+    {
+      "affected_ids": [
+        "invoice/I756E5D6595DB5200C23052F6"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/DE0A0A8A0FB85FD8F2D1D3FB8",
+          "invoices/D1CBC8503EA88168307621410",
+          "ledger/RAFA4F75F504F8C8D386EE73C",
+          "ledger/RB775D834B0FD6200EBB8B9E9"
+        ]
+      ],
+      "expected_amount_minor": 3458500,
+      "issue_id": "X8CEB592615AB7CD7E14DE89E",
+      "type": "duplicate_invoice"
+    },
+    {
+      "affected_ids": [
+        "payment/P59CC4A77C37FC4CAEB57B937"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/DFC10EC51B4BD4DA026E2E8A6",
+          "fx/2026-04-17/USD/KZT",
+          "ledger/RF7B3942E73AA8431D2D98059",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 3750,
+      "issue_id": "X82FA1BE69963AACFF647B591",
+      "type": "fx_conversion"
+    },
+    {
+      "affected_ids": [
+        "invoice/I7D294C0F0668D4C961EDF2DF"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "invoices/D7FA7B929D3FAE36DADA24BCA",
+          "ledger/R46D483EFD42B2FEF11962157",
+          "policy/period"
+        ]
+      ],
+      "expected_amount_minor": 7045400,
+      "issue_id": "XB70525448FF5466A81B8CFB0",
+      "type": "period_cutoff"
+    },
+    {
+      "affected_ids": [
+        "invoice/ICCA5DD20003F78EA3158E77C",
+        "payment/PF11E94F9C1E500922F0D2C8F"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/D09C32407BA49A79A7A3638F4",
+          "ledger/R3A87106FA8627D2C0EA08C3F",
+          "ledger/R8D4387540560B39FCF5AC75B",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 4882545,
+      "issue_id": "XAA68D05B6C40895EF8F42A5F",
+      "type": "payment_allocation"
+    },
+    {
+      "affected_ids": [
+        "invoice/I18DFBCB37685B95D3896767D",
+        "payment/PB33F96A60E135D22B5AB4473"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/D826AC33F217F059934942075",
+          "ledger/RB5051CE7DF11601FC5DB5D06",
+          "ledger/R8E8BAA739F3FAEF2F203B3BF",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 3480750,
+      "issue_id": "X4541002B72FE6F74F829A6D3",
+      "type": "payment_allocation"
+    }
+  ]
+}
