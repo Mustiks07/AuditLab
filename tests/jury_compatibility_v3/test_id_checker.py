@@ -88,5 +88,33 @@ class Transformations(unittest.TestCase):
             self.assertIn("policy/allocation", truth["issues"][0]["evidence_sets"][0])
 
 
+class LinkSelfCheck(unittest.TestCase):
+    def test_cli_exit_codes(self):
+        from review.jury_compatibility_v3 import check_links
+        with tempfile.TemporaryDirectory() as root:
+            ext.transform(S02, Path(root) / "ok", profile="discover", seed=5, style="neutral")
+            ext.transform(S02, Path(root) / "stale", profile="literal", seed=5, style="neutral")
+            self.assertEqual(check_links.main([str(S02)]), 0)
+            self.assertEqual(check_links.main([str(Path(root) / "ok")]), 0)
+            self.assertEqual(check_links.main([str(Path(root) / "stale")]), 1)
+            self.assertEqual(check_links.main([str(Path(root) / "missing")]), 2)
+
+
+class Gate(unittest.TestCase):
+    def test_gate_requires_complete_official_layer_and_compatible_profiles(self):
+        from review.jury_compatibility_v3 import gate
+        genesis = {"meta": {"commit": "abc", "product_code_dirty": False},
+                   "summary_official_layer": {"contract": {"passed": 20, "failed": 0, "not_checked": 0}}}
+        ids = {"commit": "abc", "replay_identical": {"passed": 2, "total": 2},
+               "summary": {**{n: {"passed": 2, "total": 2} for n in gate.GATED_ID_PROFILES},
+                           "literal+reorder": {"passed": 0, "total": 2}}}
+        self.assertEqual(gate.check(genesis, ids, "abc")[0], 0, "informative profiles never fail the gate")
+        self.assertEqual(gate.check(genesis, ids, "other")[0], 2)
+        skipped = json.loads(json.dumps(genesis)); skipped["summary_official_layer"]["contract"]["not_checked"] = 1
+        self.assertEqual(gate.check(skipped, ids, "abc")[0], 1, "not_checked is not a pass")
+        broken = json.loads(json.dumps(ids)); broken["summary"]["reorder"]["passed"] = 1
+        self.assertEqual(gate.check(genesis, broken, "abc")[0], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
