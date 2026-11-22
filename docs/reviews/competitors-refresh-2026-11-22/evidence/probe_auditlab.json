@@ -1,0 +1,340 @@
+{
+ "defaults": [
+  {
+   "seed": 1,
+   "rows": 496,
+   "docs": 99,
+   "tz": "UTC",
+   "base": "KZT",
+   "period": "2025-12",
+   "issues": 0
+  },
+  {
+   "seed": 2,
+   "rows": 1708,
+   "docs": 180,
+   "tz": "America/Bogota",
+   "base": "KZT",
+   "period": "2026-01",
+   "issues": 0
+  },
+  {
+   "seed": 3,
+   "rows": 522,
+   "docs": 65,
+   "tz": "UTC",
+   "base": "KZT",
+   "period": "2026-04",
+   "issues": 0
+  },
+  {
+   "seed": 4,
+   "rows": 518,
+   "docs": 73,
+   "tz": "Europe/Moscow",
+   "base": "KZT",
+   "period": "2026-03",
+   "issues": 0
+  },
+  {
+   "seed": 5,
+   "rows": 1600,
+   "docs": 177,
+   "tz": "Europe/Moscow",
+   "base": "KZT",
+   "period": "2026-12",
+   "issues": 0
+  },
+  {
+   "seed": 6,
+   "rows": 412,
+   "docs": 58,
+   "tz": "Asia/Kolkata",
+   "base": "KZT",
+   "period": "2025-08",
+   "issues": 0
+  },
+  {
+   "seed": 7,
+   "rows": 1758,
+   "docs": 180,
+   "tz": "Europe/Moscow",
+   "base": "KZT",
+   "period": "2026-05",
+   "issues": 0
+  },
+  {
+   "seed": 8,
+   "rows": 428,
+   "docs": 106,
+   "tz": "America/Bogota",
+   "base": "KZT",
+   "period": "2026-09",
+   "issues": 0
+  }
+ ],
+ "amounts": {
+  "duplicate_invoice": [
+   {
+    "seed": 100,
+    "amount": 882300,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 101,
+    "amount": 2096200,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 102,
+    "amount": 2107800,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 103,
+    "amount": 2992900,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 104,
+    "amount": 3474300,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 105,
+    "amount": 3577800,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 106,
+    "amount": 2641800,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 107,
+    "amount": 1601800,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 108,
+    "amount": 3597900,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 109,
+    "amount": 3056600,
+    "currency": "KZT",
+    "applied_share": null
+   }
+  ],
+  "payment_allocation": [
+   {
+    "seed": 100,
+    "amount": 1926806,
+    "currency": "KZT",
+    "applied_share": 0.6794
+   },
+   {
+    "seed": 101,
+    "amount": 3365950,
+    "currency": "KZT",
+    "applied_share": 0.4295
+   },
+   {
+    "seed": 102,
+    "amount": 5424374,
+    "currency": "KZT",
+    "applied_share": 0.3527
+   },
+   {
+    "seed": 103,
+    "amount": 4095960,
+    "currency": "KZT",
+    "applied_share": 0.4115
+   },
+   {
+    "seed": 104,
+    "amount": 2774431,
+    "currency": "KZT",
+    "applied_share": 0.6579
+   },
+   {
+    "seed": 105,
+    "amount": 6147810,
+    "currency": "KZT",
+    "applied_share": 0.177
+   },
+   {
+    "seed": 106,
+    "amount": 2517504,
+    "currency": "KZT",
+    "applied_share": 0.5083
+   },
+   {
+    "seed": 107,
+    "amount": 5298730,
+    "currency": "KZT",
+    "applied_share": 0.3965
+   },
+   {
+    "seed": 108,
+    "amount": 5285308,
+    "currency": "KZT",
+    "applied_share": 0.1793
+   },
+   {
+    "seed": 109,
+    "amount": 1445780,
+    "currency": "KZT",
+    "applied_share": 0.839
+   }
+  ],
+  "fx_conversion": [
+   {
+    "seed": 100,
+    "amount": 6400,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 101,
+    "amount": 7150,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 102,
+    "amount": 121,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 103,
+    "amount": 9801,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 104,
+    "amount": 12351,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 105,
+    "amount": 8001,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 106,
+    "amount": 2850,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 107,
+    "amount": 47,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 108,
+    "amount": 130,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 109,
+    "amount": 14351,
+    "currency": "KZT",
+    "applied_share": null
+   }
+  ],
+  "period_cutoff": [
+   {
+    "seed": 100,
+    "amount": 5825500,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 101,
+    "amount": 2561300,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 102,
+    "amount": 1595300,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 103,
+    "amount": 830600,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 104,
+    "amount": 3800600,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 105,
+    "amount": 4562200,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 106,
+    "amount": 3179900,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 107,
+    "amount": 2248600,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 108,
+    "amount": 3170600,
+    "currency": "KZT",
+    "applied_share": null
+   },
+   {
+    "seed": 109,
+    "amount": 1353200,
+    "currency": "KZT",
+    "applied_share": null
+   }
+  ]
+ },
+ "attack": {
+  "unkeyed_default": {
+   "true_seed": 412907,
+   "recovered": 412907,
+   "seconds": 9.7,
+   "searched": "0..999999 with attacker-guessed config {}"
+  },
+  "keyed": {
+   "true_seed": 412907,
+   "recovered": null,
+   "seconds": 23.0,
+   "searched": "0..999999 with attacker-guessed config {}"
+  }
+ }
+}

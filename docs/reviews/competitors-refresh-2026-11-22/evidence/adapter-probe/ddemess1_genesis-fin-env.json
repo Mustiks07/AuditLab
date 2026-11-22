@@ -1,0 +1,69 @@
+{
+ "repo": "repo",
+ "rows": {
+  "C01_reset_pair_json": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C02_first_observation": {
+   "status": "failed",
+   "detail": "['manifest', 'policy', 'steps_left', 'task']"
+  },
+  "C03_manifest_fields": {
+   "status": "passed",
+   "detail": "[]"
+  },
+  "C04_step_tuple_types": {
+   "status": "passed",
+   "detail": "pages=6"
+  },
+  "C05_pagination_complete": {
+   "status": "passed",
+   "detail": "rows=252 pages=6 dup=0"
+  },
+  "C06_stable_cursor": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C09_calculator_decimal": {
+   "status": "failed",
+   "detail": "{'value': '0.3'}"
+  },
+  "C10_calculator_rejects_code": {
+   "status": "passed",
+   "detail": "{'code': 'CALC_ERROR', 'message': 'Expression rejected.'}"
+  },
+  "R1_oracle_full_credit": {
+   "status": "not_checked",
+   "detail": "default episodes had no issues"
+  },
+  "R2_silence_on_errors": {
+   "status": "not_checked",
+   "detail": "default episodes had no issues"
+  },
+  "R5_duplicate_is_fp": {
+   "status": "not_checked",
+   "detail": "default episodes had no issues"
+  },
+  "R18_31_findings_invalid": {
+   "status": "failed",
+   "detail": "{'reward': -1.0, 'structural_error': 'TOO_MANY_FINDINGS', 'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None}"
+  },
+  "R20_explanation_1001_invalid": {
+   "status": "failed",
+   "detail": "{'reward': -1.0, 'structural_error': 'EXPLANATION_TOO_LONG', 'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None}"
+  }
+ },
+ "notes": [
+  "contract probe crashed: TypeError: unsupported operand type(s) for -: 'NoneType' and 'int'"
+ ],
+ "import_s": 0.07,
+ "generate_errors": [],
+ "episode_issues": 0,
+ "ledger_rows_seen": 252,
+ "summary": {
+  "passed": 6,
+  "failed": 4,
+  "not_checked": 3
+ }
+}
