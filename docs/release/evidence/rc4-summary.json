@@ -1,0 +1,3811 @@
+{
+  "source_revision": "858091a41fc8721bb2ae44db8163b39b78785492",
+  "workflow_run": "https://github.com/Mustiks07/AuditLab/actions/runs/45003233442",
+  "ci_receipt": {
+    "repository": "Mustiks07/AuditLab",
+    "source_revision": "858091a41fc8721bb2ae44db8163b39b78785492",
+    "run_id": 45003233442,
+    "run_attempt": 1,
+    "artifacts": {
+      "offline-bundle-858091a41fc8721bb2ae44db8163b39b78785492": {
+        "id": 14746518581,
+        "size_in_bytes": 403483891,
+        "digest": "sha256:33747de4ce19e2d2125f38f17c6d00a45d58f9793107747ea331361b4009108d"
+      },
+      "offline-evidence-classic-858091a41fc8721bb2ae44db8163b39b78785492": {
+        "id": 14746738649,
+        "size_in_bytes": 11607674,
+        "digest": "sha256:decfc59cd7b36accb5b77f7f74e676932e091c27a405e9441a0a2af32cc23318"
+      },
+      "offline-evidence-containerd-858091a41fc8721bb2ae44db8163b39b78785492": {
+        "id": 14746788579,
+        "size_in_bytes": 11609207,
+        "digest": "sha256:40b4ac2f09316a4cdbccd78acd33742a0dcc74fe8a400218d8e39f687bde2335"
+      }
+    }
+  },
+  "payload_size_bytes": 403479533,
+  "images": {
+    "runtime": {
+      "id": "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6",
+      "tag": "auditlab-runtime:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 359888144,
+      "oci_manifest_digest": "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d"
+    },
+    "verifier": {
+      "id": "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490",
+      "tag": "auditlab-verifier:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 234908032,
+      "oci_manifest_digest": "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb"
+    },
+    "policy": {
+      "id": "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f",
+      "tag": "auditlab-policy:858091a41fc8",
+      "os": "linux",
+      "architecture": "amd64",
+      "uncompressed_size_bytes": 130557825,
+      "oci_manifest_digest": "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72"
+    }
+  },
+  "scope": "Measured internal candidate evidence; organizer acceptance, human handoff and whole-host 4GB memory remain unverified",
+  "stores": {
+    "classic": {
+      "tests": 505,
+      "summary": {
+        "scope": "Internal functional rehearsal and resource evidence only; 24 acceptance groups and official score not certified",
+        "source_revision": "858091a41fc8721bb2ae44db8163b39b78785492",
+        "memory_budget": {
+          "per_container_bytes": 1610612736,
+          "combined_container_limit_bytes": 3221225472,
+          "decimal_4gb_headroom_bytes": 778774528,
+          "whole_host_status": "not_checked"
+        },
+        "payload_size_bytes": 403479533,
+        "datasets": 20,
+        "attempts": 80,
+        "pairs": 20,
+        "ordinary_resource_runs": 60,
+        "verifier_resource_runs": 40,
+        "failures": [],
+        "missing": [],
+        "status": "internal_rehearsal_passed",
+        "exit_code": 0
+      },
+      "acceptance": [
+        {
+          "id": "API-01",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api01_concurrent_real_environments_and_reset_do_not_cross",
+            "runner/test_public_schemas.RealPolicies.test_public_policies_and_oracle_in_both_modes"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api01_concurrent_real_environments_and_reset_do_not_cross",
+            "runner/test_public_schemas.RealPolicies.test_public_policies_and_oracle_in_both_modes"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-02",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_environment.PublicSessionTests.test_pages_are_stable_complete_and_bound_to_table_and_episode",
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "runner/test_env.Lifecycle.test_remaining_steps_counts_every_inspection_once",
+            "runner/test_env.Termination.test_tool_with_bad_args_costs_a_step"
+          ],
+          "evidence": [
+            "simulator/test_environment.PublicSessionTests.test_pages_are_stable_complete_and_bound_to_table_and_episode",
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "runner/test_env.Lifecycle.test_remaining_steps_counts_every_inspection_once",
+            "runner/test_env.Termination.test_tool_with_bad_args_costs_a_step"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-03",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api03_submit_steps_1_99_100_real_session_and_evaluator",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_env.Termination.test_hundredth_inspection_failing_is_still_truncation",
+            "runner/test_env.Termination.test_repeat_after_finish_changes_nothing",
+            "runner/test_env.Timeout.test_deadline_before_action_truncates_with_accepted_count",
+            "runner/test_env.Timeout.test_time_exactly_at_limit_and_custom_limit",
+            "runner/test_finalization.DepthBoundary.test_issue_23_example_both_modes_direct_api",
+            "runner/test_finalization.DepthBoundary.test_budget_and_timeout_finalize_once_with_hostile_last_action"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api03_submit_steps_1_99_100_real_session_and_evaluator",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_env.Termination.test_hundredth_inspection_failing_is_still_truncation",
+            "runner/test_env.Termination.test_repeat_after_finish_changes_nothing",
+            "runner/test_env.Timeout.test_deadline_before_action_truncates_with_accepted_count",
+            "runner/test_env.Timeout.test_time_exactly_at_limit_and_custom_limit",
+            "runner/test_finalization.DepthBoundary.test_issue_23_example_both_modes_direct_api",
+            "runner/test_finalization.DepthBoundary.test_budget_and_timeout_finalize_once_with_hostile_last_action"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-04",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "simulator/test_environment.PublicSessionTests.test_calculator_uses_bounded_decimal_arithmetic",
+            "runner/test_env.Leaks.test_session_exception_and_extra_fields_do_not_leak",
+            "runner/test_public_schemas.SchemaAndGolden.test_every_reachable_error_code_is_exercised_and_messages_match_the_code"
+          ],
+          "evidence": [
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "simulator/test_environment.PublicSessionTests.test_calculator_uses_bounded_decimal_arithmetic",
+            "runner/test_env.Leaks.test_session_exception_and_extra_fields_do_not_leak",
+            "runner/test_public_schemas.SchemaAndGolden.test_every_reachable_error_code_is_exercised_and_messages_match_the_code"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-05",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api05_external_stdlib_adapter_all_actions_and_golden_files",
+            "runner/test_public_schemas.ExternalAdapter.test_adapter_source_imports_only_the_standard_library",
+            "runner/test_public_schemas.ExternalAdapter.test_isolated_adapter_validates_the_live_protocol_in_both_modes",
+            "runner/test_public_schemas.SchemaAndGolden.test_golden_examples_are_reproduced_by_the_real_components",
+            "runner/test_public_schemas.SchemaAndGolden.test_valid_examples_pass_and_each_invalid_one_fails_only_because_of_its_defect"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api05_external_stdlib_adapter_all_actions_and_golden_files",
+            "runner/test_public_schemas.ExternalAdapter.test_adapter_source_imports_only_the_standard_library",
+            "runner/test_public_schemas.ExternalAdapter.test_isolated_adapter_validates_the_live_protocol_in_both_modes",
+            "runner/test_public_schemas.SchemaAndGolden.test_golden_examples_are_reproduced_by_the_real_components",
+            "runner/test_public_schemas.SchemaAndGolden.test_valid_examples_pass_and_each_invalid_one_fails_only_because_of_its_defect"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-01",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_docker_boundary.RealDockerBoundary.test_canary_files_network_and_trusted_code_are_unavailable",
+            "runner/test_isolation_export.Isolation.test_child_gets_clean_env_and_empty_cwd",
+            "runner/test_isolation_export.Isolation.test_docker_profile_has_no_network_volumes_or_caps",
+            "runner/test_transport_limits.TransportRegressions.test_closed_cli_refuses_unsafe_backend"
+          ],
+          "evidence": [
+            "runner/test_docker_boundary.RealDockerBoundary.test_canary_files_network_and_trusted_code_are_unavailable",
+            "runner/test_isolation_export.Isolation.test_child_gets_clean_env_and_empty_cwd",
+            "runner/test_isolation_export.Isolation.test_docker_profile_has_no_network_volumes_or_caps",
+            "runner/test_transport_limits.TransportRegressions.test_closed_cli_refuses_unsafe_backend"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-02",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Leaks.test_iso02_no_closed_marker_in_any_agent_channel",
+            "runner/test_public_schemas.ClosedMode.test_closed_data_injected_at_any_depth_of_real_messages_is_rejected",
+            "runner/test_public_schemas.Exports.test_fresh_train_export_and_closed_trusted_trajectory",
+            "demo/test_console.Isolation.test_web_side_never_returns_truth_or_closed_runs",
+            "demo/test_console.Isolation.test_web_modules_do_not_touch_truth"
+          ],
+          "evidence": [
+            "runner/test_env.Leaks.test_iso02_no_closed_marker_in_any_agent_channel",
+            "runner/test_public_schemas.ClosedMode.test_closed_data_injected_at_any_depth_of_real_messages_is_rejected",
+            "runner/test_public_schemas.Exports.test_fresh_train_export_and_closed_trusted_trajectory",
+            "demo/test_console.Isolation.test_web_side_never_returns_truth_or_closed_runs",
+            "demo/test_console.Isolation.test_web_modules_do_not_touch_truth"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-03",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Leaks.test_iso03_same_public_snapshot_different_truth_same_messages",
+            "runner/test_public_schemas.ClosedMode.test_same_public_different_truth_gives_identical_valid_messages"
+          ],
+          "evidence": [
+            "runner/test_env.Leaks.test_iso03_same_public_snapshot_different_truth_same_messages",
+            "runner/test_public_schemas.ClosedMode.test_same_public_different_truth_gives_identical_valid_messages"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-01",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_source_book.SourceBookTests.test_source_book_precedes_all_eight_interaction_states",
+            "simulator/test_source_book.SourceBookTests.test_source_book_contains_clean_replacement_for_each_defect",
+            "simulator/test_source_book.SourceBookTests.test_balanced_but_incorrect_source_is_rejected_before_application",
+            "simulator/test_generator_15.Generator15Tests.test_full_clean_book_hashes_transition_and_private_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_missing_transition_change_is_rejected_even_with_updated_hash",
+            "verifier/test_verifier.ControlPairTests.test_pair_matches_committed_manual_answer",
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_same_document_shortcut_can_mean_clean_or_unallocated"
+          ],
+          "evidence": [
+            "simulator/test_source_book.SourceBookTests.test_source_book_precedes_all_eight_interaction_states",
+            "simulator/test_source_book.SourceBookTests.test_source_book_contains_clean_replacement_for_each_defect",
+            "simulator/test_source_book.SourceBookTests.test_balanced_but_incorrect_source_is_rejected_before_application",
+            "simulator/test_generator_15.Generator15Tests.test_full_clean_book_hashes_transition_and_private_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_missing_transition_change_is_rejected_even_with_updated_hash",
+            "verifier/test_verifier.ControlPairTests.test_pair_matches_committed_manual_answer",
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_same_document_shortcut_can_mean_clean_or_unallocated",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-02",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_scenarios.ScenarioTests.test_both_interaction_matrices",
+            "simulator/test_profile_11.Profile11Tests.test_interaction_four_states_share_sources_and_independent_effects",
+            "simulator/test_generator_15.Generator15Tests.test_all_interaction_toggles_share_identical_complete_clean_book",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_conversion",
+            "verifier/test_verifier.SingleClassTests.test_period_cutoff_next_month_payment_alone_is_clean",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.InteractionTests.test_interaction_a_four_states",
+            "verifier/test_verifier.InteractionTests.test_interaction_b_four_states"
+          ],
+          "evidence": [
+            "simulator/test_scenarios.ScenarioTests.test_both_interaction_matrices",
+            "simulator/test_profile_11.Profile11Tests.test_interaction_four_states_share_sources_and_independent_effects",
+            "simulator/test_generator_15.Generator15Tests.test_all_interaction_toggles_share_identical_complete_clean_book",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_conversion",
+            "verifier/test_verifier.SingleClassTests.test_period_cutoff_next_month_payment_alone_is_clean",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.InteractionTests.test_interaction_a_four_states",
+            "verifier/test_verifier.InteractionTests.test_interaction_b_four_states"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-03",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_repeated_dst_hour_and_half_up_in_zero_two_three_decimal_bases",
+            "verifier/test_verifier.SingleClassTests.test_currency_exponents_and_rounding_point",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_rate_date_is_company_local_date",
+            "verifier/test_verifier.BoundaryTests.test_allocation_boundary_local_and_utc",
+            "verifier/test_verifier.BoundaryTests.test_invoice_cutoff_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_observable_fx_across_forty_seeds_and_three_minor_unit_exponents"
+          ],
+          "evidence": [
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_repeated_dst_hour_and_half_up_in_zero_two_three_decimal_bases",
+            "verifier/test_verifier.SingleClassTests.test_currency_exponents_and_rounding_point",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_rate_date_is_company_local_date",
+            "verifier/test_verifier.BoundaryTests.test_allocation_boundary_local_and_utc",
+            "verifier/test_verifier.BoundaryTests.test_invoice_cutoff_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_observable_fx_across_forty_seeds_and_three_minor_unit_exponents"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-04",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_components.ComponentPairTests.test_public_session_reads_pair_evidence",
+            "integration/test_components.ComponentPairTests.test_generated_auditor_score_trajectory_and_verifier",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "simulator/test_policies.PublicPolicyTests.test_largest_supported_snapshot_fits_reconcile_budget",
+            "runner/test_public_schemas.RealSnapshots.test_every_record_of_every_shipped_snapshot"
+          ],
+          "evidence": [
+            "integration/test_components.ComponentPairTests.test_public_session_reads_pair_evidence",
+            "integration/test_components.ComponentPairTests.test_generated_auditor_score_trajectory_and_verifier",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "simulator/test_policies.PublicPolicyTests.test_largest_supported_snapshot_fits_reconcile_budget",
+            "runner/test_public_schemas.RealSnapshots.test_every_record_of_every_shipped_snapshot",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-05",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_control_pair.PublicControlPairTests.test_boundary_order_and_timezone",
+            "integration/test_control_pair.PublicControlPairTests.test_public_index_proves_completeness_on_each_side",
+            "simulator/test_clean_counterpart.CleanCounterpartTests.test_shortcut_fires_on_clean_and_defective_but_financial_auditors_distinguish",
+            "simulator/test_scenarios.ScenarioTests.test_archive_copies_need_two_recognitions_to_be_a_duplicate",
+            "simulator/test_generation.GenerationTests.test_clean_history_has_refunds_split_payments_and_equal_amounts",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund"
+          ],
+          "evidence": [
+            "integration/test_control_pair.PublicControlPairTests.test_boundary_order_and_timezone",
+            "integration/test_control_pair.PublicControlPairTests.test_public_index_proves_completeness_on_each_side",
+            "simulator/test_clean_counterpart.CleanCounterpartTests.test_shortcut_fires_on_clean_and_defective_but_financial_auditors_distinguish",
+            "simulator/test_scenarios.ScenarioTests.test_archive_copies_need_two_recognitions_to_be_a_duplicate",
+            "simulator/test_generation.GenerationTests.test_clean_history_has_refunds_split_payments_and_equal_amounts",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "VER-01",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "verifier/test_crosscheck.CrosscheckTests.test_controlled_truth_distortions_are_detected_by_kind",
+            "verifier/test_crosscheck.CrosscheckTests.test_counterexample_is_reduced_on_a_copy",
+            "integration/test_evaluator_mutation.EvaluatorMutationTests.test_manual_counterexample_kills_double_credit_mutant"
+          ],
+          "evidence": [
+            "verifier/test_crosscheck.CrosscheckTests.test_controlled_truth_distortions_are_detected_by_kind",
+            "verifier/test_crosscheck.CrosscheckTests.test_counterexample_is_reduced_on_a_copy",
+            "integration/test_evaluator_mutation.EvaluatorMutationTests.test_manual_counterexample_kills_double_credit_mutant"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-01",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_components.ComponentPairTests.test_evaluator_six_numerical_examples",
+            "evaluator/test_scoring.SectionNineTable.test_alternative_complete_set",
+            "evaluator/test_scoring.SectionNineTable.test_foreign_document_replaces_required_evidence",
+            "evaluator/test_scoring.SectionNineTable.test_extra_evidence_is_harmless"
+          ],
+          "evidence": [
+            "integration/test_components.ComponentPairTests.test_evaluator_six_numerical_examples",
+            "evaluator/test_scoring.SectionNineTable.test_alternative_complete_set",
+            "evaluator/test_scoring.SectionNineTable.test_foreign_document_replaces_required_evidence",
+            "evaluator/test_scoring.SectionNineTable.test_extra_evidence_is_harmless"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-02",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.MatchingOptimality.test_greedy_first_choice_loses_a_match",
+            "evaluator/test_scoring.MatchingOptimality.test_permutation_stable",
+            "evaluator/test_scoring.SectionNineTable.test_duplicate_is_false_positive",
+            "evaluator/test_scoring.SectionNineTable.test_permuted_duplicate_is_false_positive",
+            "evaluator/test_scoring.SemanticAndStructural.test_flag_all_scores_by_quality"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.MatchingOptimality.test_greedy_first_choice_loses_a_match",
+            "evaluator/test_scoring.MatchingOptimality.test_permutation_stable",
+            "evaluator/test_scoring.SectionNineTable.test_duplicate_is_false_positive",
+            "evaluator/test_scoring.SectionNineTable.test_permuted_duplicate_is_false_positive",
+            "evaluator/test_scoring.SemanticAndStructural.test_flag_all_scores_by_quality"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-03",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.SemanticAndStructural.test_one_unit_off_is_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_wrong_currency_and_lowercase_are_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_structural_failures_give_minus_one",
+            "evaluator/test_scoring.SemanticAndStructural.test_size_limits_boundaries",
+            "runner/test_env.Termination.test_structurally_bad_submit_ends_with_minus_one",
+            "runner/test_env.Termination.test_recognised_submit_with_broken_body_terminates_minus_one"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.SemanticAndStructural.test_one_unit_off_is_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_wrong_currency_and_lowercase_are_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_structural_failures_give_minus_one",
+            "evaluator/test_scoring.SemanticAndStructural.test_size_limits_boundaries",
+            "runner/test_env.Termination.test_structurally_bad_submit_ends_with_minus_one",
+            "runner/test_env.Termination.test_recognised_submit_with_broken_body_terminates_minus_one"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-04",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.SectionNineTable.test_mat04_costs",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_golden_exports.GoldenExports.test_layout_status_and_scores"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.SectionNineTable.test_mat04_costs",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_golden_exports.GoldenExports.test_layout_status_and_scores"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-01",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Lifecycle.test_rep01_same_actions_same_trajectory",
+            "simulator/test_profile_11.Profile11Tests.test_seed_changes_case_nominals_and_dates_without_breaking_replay",
+            "simulator/test_datasets.DatasetTests.test_fresh_build_reproduces_every_shipped_file",
+            "integration/test_rehearsal.RehearsalTests.test_closed_replay_detects_changed_trusted_reward_without_public_change"
+          ],
+          "evidence": [
+            "runner/test_env.Lifecycle.test_rep01_same_actions_same_trajectory",
+            "simulator/test_profile_11.Profile11Tests.test_seed_changes_case_nominals_and_dates_without_breaking_replay",
+            "simulator/test_datasets.DatasetTests.test_fresh_build_reproduces_every_shipped_file",
+            "integration/test_rehearsal.RehearsalTests.test_closed_replay_detects_changed_trusted_reward_without_public_change",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-02",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_rehearsal.RehearsalTests.test_real_oracle_closed_trajectory_and_transformed_pair",
+            "metamorphic/test_transforms.TransformTests.test_rename_and_permute_preserve_answer"
+          ],
+          "evidence": [
+            "integration/test_rehearsal.RehearsalTests.test_real_oracle_closed_trajectory_and_transformed_pair",
+            "metamorphic/test_transforms.TransformTests.test_rename_and_permute_preserve_answer",
+            "rehearsal.pairs: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-03",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_families.EconomicsFamilyTests.test_published_internal_split_reports_known_twins_only_inside_their_split",
+            "simulator/test_families.EconomicsFamilyTests.test_transformed_twin_crosses_split_and_late_variant_stays_in_family",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_frozen_internal_selection_has_no_cross_split_complete_chains",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_copied_story_survives_different_background_and_id_permutation",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_posting_defect_changes_book_but_not_primary_story",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_same_rule_and_structure_with_different_terms_is_not_a_copy",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_open_train_and_dev_pairs",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_frozen_internal_pairs",
+            "simulator/test_generated_pair.GeneratedPairTests.test_same_seed_snapshots_bind_cursors_to_public_content"
+          ],
+          "evidence": [
+            "simulator/test_families.EconomicsFamilyTests.test_published_internal_split_reports_known_twins_only_inside_their_split",
+            "simulator/test_families.EconomicsFamilyTests.test_transformed_twin_crosses_split_and_late_variant_stays_in_family",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_frozen_internal_selection_has_no_cross_split_complete_chains",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_copied_story_survives_different_background_and_id_permutation",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_posting_defect_changes_book_but_not_primary_story",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_same_rule_and_structure_with_different_terms_is_not_a_copy",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_open_train_and_dev_pairs",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_frozen_internal_pairs",
+            "simulator/test_generated_pair.GeneratedPairTests.test_same_seed_snapshots_bind_cursors_to_public_content"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "OPS-01",
+          "criterion": "engineering",
+          "status": "not_checked",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_offline_bundle.OfflineBundleTests.test_check_mode_needs_no_docker_and_checks_every_payload",
+            "integration/test_offline_bundle.OfflineBundleTests.test_runtime_is_networkless_and_uses_only_result_and_trusted_socket_mounts",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_unrelated_revision_cannot_pass",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_skip_or_missing_evidence_cannot_pass"
+          ],
+          "evidence": [
+            "integration/test_offline_bundle.OfflineBundleTests.test_check_mode_needs_no_docker_and_checks_every_payload",
+            "integration/test_offline_bundle.OfflineBundleTests.test_runtime_is_networkless_and_uses_only_result_and_trusted_socket_mounts",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_unrelated_revision_cannot_pass",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_skip_or_missing_evidence_cannot_pass"
+          ],
+          "missing": [
+            "Final offline launch, controller limits and bundle receipt must be checked after this process exits; clean-host/whole-host memory evidence is separate."
+          ],
+          "failures": [],
+          "detail": "Final offline launch, controller limits and bundle receipt must be checked after this process exits; clean-host/whole-host memory evidence is separate."
+        },
+        {
+          "id": "OPS-02",
+          "criterion": "engineering",
+          "status": "not_checked",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [],
+          "evidence": [],
+          "missing": [
+            "Independent human receiver must verify the exact candidate archive on a clean host."
+          ],
+          "failures": [],
+          "detail": "Independent human receiver must verify the exact candidate archive on a clean host."
+        },
+        {
+          "id": "UI-01",
+          "criterion": "engineering",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "demo/test_console.LabEndToEnd.test_samples_live_change_rescore_replay",
+            "demo/test_console.Api.test_empty_state",
+            "demo/test_console.Api.test_api_equals_cli_and_pair_flow",
+            "integration/test_cli.ReleaseCliTests.test_replay_checks_real_export_and_rejects_unknown_run"
+          ],
+          "evidence": [
+            "demo/test_console.LabEndToEnd.test_samples_live_change_rescore_replay",
+            "demo/test_console.Api.test_empty_state",
+            "demo/test_console.Api.test_api_equals_cli_and_pair_flow",
+            "integration/test_cli.ReleaseCliTests.test_replay_checks_real_export_and_rejects_unknown_run"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        }
+      ],
+      "acceptance_counts": {
+        "passed": 22,
+        "not_checked": 2
+      },
+      "source_book_receipts": {
+        "internal-01": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "6f7e5b810efed86e7a299c42983224581c9528da46f8b2250a7387bb8bce0e0b",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-01",
+          "source_episode_id": "E208F706B9A7CE485597C9F18158DD54A",
+          "source_files_sha256": {
+            "fx.csv": "1e34fe265ab45ee1f129a348865d22a8349a7bb295862ff057a60556fc89e840",
+            "invoices.jsonl": "2195647bd4229e000df6c8bca739b70505f82fd9037d4b4055e6e7dc235acf74",
+            "ledger.csv": "e3925fec1b62a60b8931aa67c1ee1df5862238bfd748525394630881dd5ae20e",
+            "manifest.json": "4f65bf5a4d6c4a7c04c3d755172efbf3687b0ea70180abf5c9de3537498d10d9",
+            "payments.jsonl": "f2d6edb84c858c9968a4812bd4d4a7b89f80da39843ff76ed6292c2e91541da1",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E208F706B9A7CE485597C9F18158DD54A",
+          "target_files_sha256": {
+            "fx.csv": "1e34fe265ab45ee1f129a348865d22a8349a7bb295862ff057a60556fc89e840",
+            "invoices.jsonl": "2195647bd4229e000df6c8bca739b70505f82fd9037d4b4055e6e7dc235acf74",
+            "ledger.csv": "e3925fec1b62a60b8931aa67c1ee1df5862238bfd748525394630881dd5ae20e",
+            "manifest.json": "4f65bf5a4d6c4a7c04c3d755172efbf3687b0ea70180abf5c9de3537498d10d9",
+            "payments.jsonl": "f2d6edb84c858c9968a4812bd4d4a7b89f80da39843ff76ed6292c2e91541da1",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 0,
+          "transition_sha256": "ad7a70938e950b12a12413bab9e0f03fb2c8117d1cf219d629e0db42bfb0007e",
+          "truth_sha256": "49e73b0e0912f13b36308535976b059a5f78a166aaaf6eef4df6336f4b689620",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-02": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "d20d84d2d5aa9aeeecaf34e80fbc6e6760f88bcf6b7e51457680fbc6559da8d5",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-02",
+          "source_episode_id": "E85CF3BDE9105E6857D263FDA654176D2",
+          "source_files_sha256": {
+            "fx.csv": "ad7ef75cd41e521cb237976d0c2a60ba86fc3ab72c245369326b7af0e326c8de",
+            "invoices.jsonl": "b45baf1190aa37abb81202ec5711753d16a9ea54912e4b68db216cd578ea3881",
+            "ledger.csv": "b687141ed69a748330fcc635859aa0c2f09bac3a42fc2cd301ac3cb28e9116cb",
+            "manifest.json": "e4c4a9504385a90b308baeefb3efd8e2052b45f5fe4166ff833b48c6174d3008",
+            "payments.jsonl": "c907d1cf5da4ac3bca9b952dacf659745d3208210f526a35f5ed764f199a100e",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E85CF3BDE9105E6857D263FDA654176D2",
+          "target_files_sha256": {
+            "fx.csv": "ad7ef75cd41e521cb237976d0c2a60ba86fc3ab72c245369326b7af0e326c8de",
+            "invoices.jsonl": "b45baf1190aa37abb81202ec5711753d16a9ea54912e4b68db216cd578ea3881",
+            "ledger.csv": "b687141ed69a748330fcc635859aa0c2f09bac3a42fc2cd301ac3cb28e9116cb",
+            "manifest.json": "e4c4a9504385a90b308baeefb3efd8e2052b45f5fe4166ff833b48c6174d3008",
+            "payments.jsonl": "c907d1cf5da4ac3bca9b952dacf659745d3208210f526a35f5ed764f199a100e",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 0,
+          "transition_sha256": "051085e48ac1faf6564f5743d88d94f364bd4059b14547d78c8f7b307dba1bd4",
+          "truth_sha256": "945b86ccf3a41cb7687bc0025c6e86a925a9b68cb1016c925a8fc2745f3c8c58",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-03": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "3f5254bd37feff6348fff76d3b11a5f5f97e9848df34f66614da0f86da479c4c",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-03",
+          "source_episode_id": "E478B02187FC39A14E723AF8505EE18C8",
+          "source_files_sha256": {
+            "fx.csv": "6ceaa46f8f20274e743d9a241ee0685fc6a866c975b0c4d6e2fbcb02710cde5a",
+            "invoices.jsonl": "82abbfe23fbe49a9dcaa0eefe63b97ceef20f8f5f0dd7e0e8fedb3cea4fde474",
+            "ledger.csv": "7dfd8f185fd326da0ea9ef2bc7f18dfdaf96c42f309a27017523c9f0f2caf4a1",
+            "manifest.json": "9ea7603c1197eaf759ffb47ea441c71676aa3791acca17b0a1abfc24656a426a",
+            "payments.jsonl": "8a8ac4c3a53c30e44184215c8ab5d7cdf4076a8cca862e66bd8197ffd339dc01",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E478B02187FC39A14E723AF8505EE18C8",
+          "target_files_sha256": {
+            "fx.csv": "6ceaa46f8f20274e743d9a241ee0685fc6a866c975b0c4d6e2fbcb02710cde5a",
+            "invoices.jsonl": "82abbfe23fbe49a9dcaa0eefe63b97ceef20f8f5f0dd7e0e8fedb3cea4fde474",
+            "ledger.csv": "7dfd8f185fd326da0ea9ef2bc7f18dfdaf96c42f309a27017523c9f0f2caf4a1",
+            "manifest.json": "9ea7603c1197eaf759ffb47ea441c71676aa3791acca17b0a1abfc24656a426a",
+            "payments.jsonl": "8a8ac4c3a53c30e44184215c8ab5d7cdf4076a8cca862e66bd8197ffd339dc01",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 0,
+          "transition_sha256": "8c4cc0820fc48d4dadedb9c663e850c1899dea4d60ef4629e1a36dc36ec12675",
+          "truth_sha256": "b9662d80f8612d3f0fe7ebd4727e0c3fb2f0769150eec136d6d5ac37058d31e5",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-04": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "4baed7cc8c70b7ca8bdaba2817cdcdafe049c4ea43f0a45008a93cee8b3f3db4",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-04",
+          "source_episode_id": "E8A1300B042DFD703C48E98BF897086BF",
+          "source_files_sha256": {
+            "fx.csv": "5b3a0504160dd9e80aa58c54f2afa79bc2f67acf72a19ae775f236e4023b6165",
+            "invoices.jsonl": "8eff44f8e3d8ad1addd4fc10105caade552c81810da8334d2150acbae691815d",
+            "ledger.csv": "0eb4abbe3e6cd5cd9666a4e2945f9c1a415da2f1c18d3e7e61d71ffdaf11cbaa",
+            "manifest.json": "7790632cd1661a51c5bee3581fdde05e8425915e0a830f6010e978b56de54b6e",
+            "payments.jsonl": "e71b7c218492f4d7beab4561f3e8c88562f91389f6f7fabce16a4e29066e8e7e",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E8A1300B042DFD703C48E98BF897086BF",
+          "target_files_sha256": {
+            "fx.csv": "5b3a0504160dd9e80aa58c54f2afa79bc2f67acf72a19ae775f236e4023b6165",
+            "invoices.jsonl": "8eff44f8e3d8ad1addd4fc10105caade552c81810da8334d2150acbae691815d",
+            "ledger.csv": "0eb4abbe3e6cd5cd9666a4e2945f9c1a415da2f1c18d3e7e61d71ffdaf11cbaa",
+            "manifest.json": "7790632cd1661a51c5bee3581fdde05e8425915e0a830f6010e978b56de54b6e",
+            "payments.jsonl": "e71b7c218492f4d7beab4561f3e8c88562f91389f6f7fabce16a4e29066e8e7e",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 0,
+          "transition_sha256": "32ee51e81a2235e2d7ed354820f8e60665c465b2a5df7e0a2ad95669c00b4ca8",
+          "truth_sha256": "c1a32e4b28234ba6a3a44e97e344fe21bc703cab36ea42ea66326c338538e266",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-05": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "faa97f7c96ec1c8aa3d71ec0dda2b6c686d4fc621c8697e328a3593f61c65fb8",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-05",
+          "source_episode_id": "EDEEC53CB871399C3E422E5CAE8126063",
+          "source_files_sha256": {
+            "fx.csv": "59bb9c72fcfeb1606c79c1d5fc266ce11f9f55e2e74a49c7de72c5166f37a46c",
+            "invoices.jsonl": "5af04de789bd1a6000283b0ea10cc7b19369c334dca291c51fa71f473a4072a7",
+            "ledger.csv": "6aa2b2271a2c99c3edd9966a7276d0283bda3df02d5c3a35d790ec576f0f7816",
+            "manifest.json": "bf3bf9a4312302e692c68fe9ea869164bf83229a9e970ca58e599113a9ec29bd",
+            "payments.jsonl": "44b8d518d98c84a3d1bbfe65a863563cb68bfe28a162f605d91f4e87caf95e6e",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EDEEC53CB871399C3E422E5CAE8126063",
+          "target_files_sha256": {
+            "fx.csv": "59bb9c72fcfeb1606c79c1d5fc266ce11f9f55e2e74a49c7de72c5166f37a46c",
+            "invoices.jsonl": "5af04de789bd1a6000283b0ea10cc7b19369c334dca291c51fa71f473a4072a7",
+            "ledger.csv": "6aa2b2271a2c99c3edd9966a7276d0283bda3df02d5c3a35d790ec576f0f7816",
+            "manifest.json": "bf3bf9a4312302e692c68fe9ea869164bf83229a9e970ca58e599113a9ec29bd",
+            "payments.jsonl": "44b8d518d98c84a3d1bbfe65a863563cb68bfe28a162f605d91f4e87caf95e6e",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 0,
+          "transition_sha256": "483b77c92df9339f04de0941f5924ecb5b5e0f67473eaabb0d03a2dbaafc4091",
+          "truth_sha256": "ec1cc8ebfbda675400aff6c914d1f4fab60725268da3037cacb62580f470bff9",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-06": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "a59eaf71f5a0ddd7c16d40878895b6a6153e7b0da15709f8f7e48ead37f61cdc",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-06",
+          "source_episode_id": "ED386AB644EF1EE4505E1383A3AAD4DC2",
+          "source_files_sha256": {
+            "fx.csv": "46a9584411e288935ca14546e3a6fc8eceb2601d0604b384ee3267e488541d77",
+            "invoices.jsonl": "d460a894df5210ece3dc62527f22eafe30aa796864cace022074aeffec6e490a",
+            "ledger.csv": "45ea59dacc786b95289303b28d07eebe41b52fdf76e20a8b439c7f68dcf9d673",
+            "manifest.json": "8b6ba6c8a21d2dabd9e50731a71cb0bbc68fad1ecb57cc86ef6637f7fe37b82f",
+            "payments.jsonl": "d619a373ebe23bb149467436436802bb62f86558c04d5471c2dca02744bbc112",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EBF0FB1B5FD0F2983BFF3234F1A8B30BF",
+          "target_files_sha256": {
+            "fx.csv": "46a9584411e288935ca14546e3a6fc8eceb2601d0604b384ee3267e488541d77",
+            "invoices.jsonl": "d460a894df5210ece3dc62527f22eafe30aa796864cace022074aeffec6e490a",
+            "ledger.csv": "2bd6c9395bd681c3c87adf314329bc2093ab5a849dd1298947597823a0f20433",
+            "manifest.json": "c6cd555b77b65142fd66378dbcfe67394caa7b1710b66262ad35de2cdc8674c9",
+            "payments.jsonl": "5c6d86e21786122e860ba6e60cfd8825b77925de2b04ba17978f5a48ee481515",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 2,
+          "transition_sha256": "1e8c2a7150b9baf44ce19bc563754eb50ce894528770e3e7b6839e4a6ad582d7",
+          "truth_sha256": "13225c15deff0aad9915026e8fbdace3780af666001a45e2dcb902eeb665bffd",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-07": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "9bc8ba8b925fcac1470cc5f11a5633cf224b869c648f8734ff7dc99cb00bfc22",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-07",
+          "source_episode_id": "E757C771E01F6A653D87D3F147E80DE95",
+          "source_files_sha256": {
+            "fx.csv": "c4c3ff9558b630c27c73e30095fedb6ecaf2dd0e374ea7a46a3f821874c89dc7",
+            "invoices.jsonl": "eb7c743bdca3de729e5185e5eb948803263e05c78694ec06633a89a1522f9644",
+            "ledger.csv": "02f252acb5851ccd10cb72f6c66b99113faaa18110a73d75864c90a438824ace",
+            "manifest.json": "80250a51d408006a9d6592e3347effbfd9234a16ffe1888cd3f1ad23794b588b",
+            "payments.jsonl": "5b6c2a19c311a69ba2e8ebb196434cc9785ce00599ac1f7d74c8b93cc57e5ed8",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E6E4F1D07076876EE2E0643CB43E0AA10",
+          "target_files_sha256": {
+            "fx.csv": "c4c3ff9558b630c27c73e30095fedb6ecaf2dd0e374ea7a46a3f821874c89dc7",
+            "invoices.jsonl": "eb7c743bdca3de729e5185e5eb948803263e05c78694ec06633a89a1522f9644",
+            "ledger.csv": "439e2f4e5ad1c89320503e9688f97a1c40021bdd9d300b17b691545889040bf9",
+            "manifest.json": "02973eae87b98e5dc4e9cdb3f76da4dd5440599f3af484c4921aa55778e1db10",
+            "payments.jsonl": "5b6c2a19c311a69ba2e8ebb196434cc9785ce00599ac1f7d74c8b93cc57e5ed8",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 2,
+          "transition_sha256": "9ab80bed01062bddff2986cbc2bc0713b589de9f9a5787d07597f85ca83962b3",
+          "truth_sha256": "2964ce1b103bc55ab42ddc844f86384caabf291291fa82122957529b6ef82932",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-08": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "7b6e8ae8bc493b924d5a584efe350d1a3a71da1b3b6cef39a65f2099d70172ab",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-08",
+          "source_episode_id": "E79785227F95DBE81041538C8464128B9",
+          "source_files_sha256": {
+            "fx.csv": "9cf8d72bb5e3bdca5f4323c9a910203a78a492aabd96f8d6735f2bf4d5ae3af2",
+            "invoices.jsonl": "91b28c0caa2100441562e949f352475f3c6ddf505577f25f476cf95c50fbd486",
+            "ledger.csv": "08949322ebf7d34858bc5da31a1a1f68c7f14318bf07c69eb04d52888da3e546",
+            "manifest.json": "bace0338e1314ec48049ec74e7aa5033bbac88b25cfc1d0e473aa7ad2bc0182a",
+            "payments.jsonl": "45c1da00c51779b9346a78bb856c7928be5bc3fe5dfbe541fc8ed4f1617a8f40",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E264CECF065565C62E6F2A29C88D8492E",
+          "target_files_sha256": {
+            "fx.csv": "9cf8d72bb5e3bdca5f4323c9a910203a78a492aabd96f8d6735f2bf4d5ae3af2",
+            "invoices.jsonl": "91b28c0caa2100441562e949f352475f3c6ddf505577f25f476cf95c50fbd486",
+            "ledger.csv": "f35f30e251f36b31661198a582840c5efee1e9574a5dc7b4ef5a98d5845eb8c6",
+            "manifest.json": "2341a001b1e9dbdf4c24599f777302030e16878fa413b301e502427d23bc5ac6",
+            "payments.jsonl": "283105fd13a99f31cd9bddfaff2c0b1e4903bf80b023d3ab7f047ad7487a853f",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 2,
+          "transition_sha256": "3e69a8ffa3b1351880144de45f433a8d51aa138bbd73db252e356807618935bb",
+          "truth_sha256": "ea38307ca5e56f8d32aff30d4dadfecebaa2d13330e904bb35ca38f7198f36c0",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-09": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "f8a54a950ba3394cb98e08da2b0cc111a9a470ae3f81bb3942696cae12e24663",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-09",
+          "source_episode_id": "EF1291346EE07EC6EC8702C8093B2594E",
+          "source_files_sha256": {
+            "fx.csv": "f51fe814fb72e23cad39332c62dff5d3130803f3466273cfb02b80d119420647",
+            "invoices.jsonl": "915d6fcc0ceee27a13b1d18fa38d15adbf862eb026a22b663b54d5d28cac15bf",
+            "ledger.csv": "b51d4a4c378cf10ddad5b7f0b03078a21153bb962c4f91930a0439487800c261",
+            "manifest.json": "6a984c508bb75968f9a01dc899485bacce7e1a018d3d617263f6d0cd694cd063",
+            "payments.jsonl": "0063e1d1a5dd5b905b4468c8ae3ea23388f12da28bfa231519a2b806ac4dd12a",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E997065575DFB32F7BE27C8FB70F014E6",
+          "target_files_sha256": {
+            "fx.csv": "f51fe814fb72e23cad39332c62dff5d3130803f3466273cfb02b80d119420647",
+            "invoices.jsonl": "915d6fcc0ceee27a13b1d18fa38d15adbf862eb026a22b663b54d5d28cac15bf",
+            "ledger.csv": "a6a300f424308b1fa58269ffda0544684d4d7d23028c2ec233ab925c6c775b65",
+            "manifest.json": "b2fbea071a5e82398d77c554e5d05092a00140b0c706448816b997722e1aa1dc",
+            "payments.jsonl": "0063e1d1a5dd5b905b4468c8ae3ea23388f12da28bfa231519a2b806ac4dd12a",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 2,
+          "transition_sha256": "7c0f1fbb7823325c896ffa668bd5c72614e28e7829c5186952f7d8993af5beb7",
+          "truth_sha256": "d6b281d04a164001f27d16671ec6d5a5b7c4d8d41e249aed5aa112ab9f1feb1d",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-10": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "12ee529fe6a33eaa5b80cacbfe7d703ac707bed2daf8776febb00e651f1749f5",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-10",
+          "source_episode_id": "EE58C2B9B93BDB167CA638EEC22441526",
+          "source_files_sha256": {
+            "fx.csv": "8ca2ece07ac29efbc05680c1db50ffa9f1861334dc431a5b1d19b5ed3cee871e",
+            "invoices.jsonl": "0122a92a21a24ec5bc013f141a24b985db6a31da8c1d909d3b9b5b91086e980c",
+            "ledger.csv": "2cc1c60cde62f59e75df816e66e2c1841fa9905247d3983a3a26e809e64a29c9",
+            "manifest.json": "a478954c1d0cc311f37ece02f010b628d627f67ab46ef52572093781bd2b79ed",
+            "payments.jsonl": "22be65486a8613f9a58fe992417234158ba5703321201402ab9049a466c991f6",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E14A18F35E89A10A7FDD3DC8B932EDCAE",
+          "target_files_sha256": {
+            "fx.csv": "8ca2ece07ac29efbc05680c1db50ffa9f1861334dc431a5b1d19b5ed3cee871e",
+            "invoices.jsonl": "0122a92a21a24ec5bc013f141a24b985db6a31da8c1d909d3b9b5b91086e980c",
+            "ledger.csv": "9271120ef059c6c2cbc974f2da9ebda01006ba5f8fa8d4593a43052a44ec9c1f",
+            "manifest.json": "ce2abe71c121bc3cf9c98f71d15db70e1e3f9b20b6f82a446741452dd0bd71a2",
+            "payments.jsonl": "3b1fdf17d30e5b17c396d4b53d0776f693b346d07db7fc01b2d91a9a64420e4c",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 2,
+          "transition_sha256": "e508509de773d2c2f48e99447196ff2547c62918e323396afaeb6f22e81cff97",
+          "truth_sha256": "064a7d6831bb6eab757253be703af0c6645d02a08a35b52cfb4cb88de1447f43",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-11": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "b0e029df2a2e5f68086f75e8b98b45f58eada4101c0074b1ae909e2b01edf3f2",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-11",
+          "source_episode_id": "E8F8F4E860311CE3C62EEB600E21A5B34",
+          "source_files_sha256": {
+            "fx.csv": "9f56d258c0427784e71aa10d85a6b129b20bee660852cc62486e5801724f1ed1",
+            "invoices.jsonl": "722b8f7886ff111baf76f163f6004213f791de283b9194ee51b7c1cdefbd0e6c",
+            "ledger.csv": "ecd8d34cdd69720b7a613c2a74025e2dead1033bda10806248ca2316eb7c83fc",
+            "manifest.json": "ede7869b71b3f48e2378d044846e8f38c288ad6d55890c18ecfe0f1c5a9992bf",
+            "payments.jsonl": "1a8933ac4968690aaa96e7e5132aaf0c526523c570170fa8eed08f9cf8c187e6",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "ECCE604C0FA0963A10979908D459AC161",
+          "target_files_sha256": {
+            "fx.csv": "9f56d258c0427784e71aa10d85a6b129b20bee660852cc62486e5801724f1ed1",
+            "invoices.jsonl": "722b8f7886ff111baf76f163f6004213f791de283b9194ee51b7c1cdefbd0e6c",
+            "ledger.csv": "182742abd2839af7493c00cda92a4bb7ab5972769aec11115bc14a3e2cd5ba40",
+            "manifest.json": "7848c7ad1b576fea2f78b7899c9d9f14dcc4abe224e817413dc63f6b37337533",
+            "payments.jsonl": "1a8933ac4968690aaa96e7e5132aaf0c526523c570170fa8eed08f9cf8c187e6",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 1,
+          "transition_sha256": "83788da0a7b17daf5188710a107d7c995782ff577c98c719e207ee0a281d927e",
+          "truth_sha256": "f24e3964781b070d88b017b6890ce64bb2c0ef755acea969c56babdd275db6ca",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-12": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "a2c55b0992e76a3fddc66d4f5c46b92ac85a78aeb512bbb93bf02d23c6725bbc",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-12",
+          "source_episode_id": "EE22C30E1EBC66D10EE0F22C518875C67",
+          "source_files_sha256": {
+            "fx.csv": "f15cf8c791aa6281bd534191e9ea0d3843903b69731ca0f3694c3e0dbed5769f",
+            "invoices.jsonl": "cb5bd4fe983e7101333ae9a942af1eeed68673fdfdd17dbf51dac911eb96b012",
+            "ledger.csv": "5b11994124b40899123690f235afca5b0c8cf3ec09283ea3eec1bb4fcdce0c7d",
+            "manifest.json": "72232c22550fc2ad0b51401dc2ac97708577d947c5c2f060725a57550d591b53",
+            "payments.jsonl": "c241068b82ac83227e98ac2d0a1abc501f2ad30c1116da9afdbd1963d0b8093f",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E237D941915A92F65551B938FD643DF07",
+          "target_files_sha256": {
+            "fx.csv": "f15cf8c791aa6281bd534191e9ea0d3843903b69731ca0f3694c3e0dbed5769f",
+            "invoices.jsonl": "cb5bd4fe983e7101333ae9a942af1eeed68673fdfdd17dbf51dac911eb96b012",
+            "ledger.csv": "4dc93c14534d519c064f3e1066258e6f1ad45b5a087ff214b79f1d5f2cf45998",
+            "manifest.json": "08e37003c21ce661140e48df3a8a65221454900d005f1fd2b1afa473187e885a",
+            "payments.jsonl": "c241068b82ac83227e98ac2d0a1abc501f2ad30c1116da9afdbd1963d0b8093f",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 1,
+          "transition_sha256": "06e4becdf501bca261686dec4983e195cad569f6ce0a8cfc27f8978b2b02f8ea",
+          "truth_sha256": "2ae68d38f0a00da73de240e785386b610a2020f106f4ab388b5e7aa6c8cd01b9",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-13": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "98eba6fe2f099a7012c9a9033ec5b5ceaed2c98d57b00504a3a8cd99e6427692",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-13",
+          "source_episode_id": "E8BE866F349C5991923C8F51B39FCBE10",
+          "source_files_sha256": {
+            "fx.csv": "6b1405dee61a5da229cecb46f85e03b7086b0132dcb41c3bff1ba47486b15417",
+            "invoices.jsonl": "e27e2fecec2b001a4512360c6d70e4043e4e3b7f28409bb89f76a51c5dd54861",
+            "ledger.csv": "84d5393890b9fb67260c9866bc30a253b1c1f641e2157f35bdd6b639526a97d7",
+            "manifest.json": "ab678cde6259a92f1dd221c0dce7e6456dff486620dff7009e8253dc5766aaee",
+            "payments.jsonl": "25522fb49334e8dfb6509d5143c3ab28d2ed48612ea906fefde799c52f410d4a",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E68BE2E5D183D053F004B78EF227F499E",
+          "target_files_sha256": {
+            "fx.csv": "6b1405dee61a5da229cecb46f85e03b7086b0132dcb41c3bff1ba47486b15417",
+            "invoices.jsonl": "e27e2fecec2b001a4512360c6d70e4043e4e3b7f28409bb89f76a51c5dd54861",
+            "ledger.csv": "b2ddb25171b38feeb42cf937c7fd439080d98d91396fefc90de4ff1f1b7f7369",
+            "manifest.json": "b1b9db6a3f0bffc661fec80a9a165751a3b4dc9a75eb436762358e5ce5565dda",
+            "payments.jsonl": "25522fb49334e8dfb6509d5143c3ab28d2ed48612ea906fefde799c52f410d4a",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 1,
+          "transition_sha256": "1f43b74eb2a38a5b9660cd115a51f3eead87a02d6db0d36b31a7895b38a6d52f",
+          "truth_sha256": "ee02bf304ff4f3fb1e14af8f5d321f00d585b46e9ac3ed80f4614d9844c9aa26",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-14": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "8f418d4814d6343db3ecfe96e7df2a4a9f7ea4a843a1962a3b52ea28a0de92cb",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-14",
+          "source_episode_id": "E9A44379FF451B397F77B92F75BC6902C",
+          "source_files_sha256": {
+            "fx.csv": "1a93009c57dfa89249c90a8f2bb1c053840f04a9a0bc8ebe422843946d84f2a9",
+            "invoices.jsonl": "1cb7b323dc0106da3e65868b37bfbce137c07138ff897346c4ae940535248da9",
+            "ledger.csv": "ed34aa6b2fe38f0f70874b2221ee685e01be64d95ec755fd98000e8f32fa0d7b",
+            "manifest.json": "5827c65046732d041d025cad1ce4cdeb73b9014c902c14fe1b2f91d61bc125e6",
+            "payments.jsonl": "7cf76c7ea39a900bc14ea63467e4d1d28b8e11531441f17987b41b96907c7f76",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E5A17FBCC47DFC3D9A77FAC21837EDFF8",
+          "target_files_sha256": {
+            "fx.csv": "1a93009c57dfa89249c90a8f2bb1c053840f04a9a0bc8ebe422843946d84f2a9",
+            "invoices.jsonl": "1cb7b323dc0106da3e65868b37bfbce137c07138ff897346c4ae940535248da9",
+            "ledger.csv": "c0edf4fd5ac3e237cfa37d7269c9ec17d13fc0b78a698a26d1c62f20da40cee8",
+            "manifest.json": "40f9e14c644c43552bb5b25979a42376ea0d117f961ba3d32696d42e56b4a16e",
+            "payments.jsonl": "7cf76c7ea39a900bc14ea63467e4d1d28b8e11531441f17987b41b96907c7f76",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 1,
+          "transition_sha256": "507a8fc2a77bf5ff8b27e8ab2209ebdb44415a76c83d1e077c6fdbe840e52f6a",
+          "truth_sha256": "ce398a972f7b217076e47f9172b6eb60d96217e743d1b9d3e28b491ebd42cd43",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-15": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "7fd7d4aaf8cbe7d18f0b2ca12b9757487b4e66e462f4564932f7c9d69ab00a1b",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-15",
+          "source_episode_id": "EA40EAEA798085045B64125C1750A1AED",
+          "source_files_sha256": {
+            "fx.csv": "a8551174f1b527b271fead8123b99405aa7e86f19e41dd8329b3c524fa6995d1",
+            "invoices.jsonl": "342008102f1f168ec99ebc658ac453ea2f72dde53a83b3e51d0d03df084bd197",
+            "ledger.csv": "1bcff7575dfe2cba0a38d57e3354e25b4b32dfd746c349cca966da96c72c6450",
+            "manifest.json": "fc35cf9ca0d9024c535551d1c090214892f42f6513232f1fd9c556e3577bffd8",
+            "payments.jsonl": "5d0cdfad843a1d10fa90a8d570272aefbd3fdb1b383101d19555fe3bbaf3b3ef",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E82D67E90B9C6089873D05F83895ADFE6",
+          "target_files_sha256": {
+            "fx.csv": "a8551174f1b527b271fead8123b99405aa7e86f19e41dd8329b3c524fa6995d1",
+            "invoices.jsonl": "342008102f1f168ec99ebc658ac453ea2f72dde53a83b3e51d0d03df084bd197",
+            "ledger.csv": "92acf61971b58daca6f8aaad0a5d842f61ec0122283558e2ada2340a3e907945",
+            "manifest.json": "f78002cbf884c559765481800b46ecf17b8c14451f018609d5b60cbd314d0c05",
+            "payments.jsonl": "5d0cdfad843a1d10fa90a8d570272aefbd3fdb1b383101d19555fe3bbaf3b3ef",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 2,
+          "transition_sha256": "26e0268f4d98ab11164b2c8280ec448e11eaaeb3f74d7ef64a75c4c96f034bc5",
+          "truth_sha256": "5a69aab08aa91aa3a7f6050b81335ff1215ac2e0407bed9368f70da16efca468",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-16": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "9ec781f48a4f7df5bf2fc3a155ed13bfe6dfc760d2155e2432b0f42301ee1ff6",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-16",
+          "source_episode_id": "EF54177C5CEA1EADA74BE630EA99A2788",
+          "source_files_sha256": {
+            "fx.csv": "e68890c12b33dc763e097ec9dcd26174e1608449fa1e084b9f452a8691c1b9eb",
+            "invoices.jsonl": "6772670ded79fd48385412775dc9a9aa6db9779dcc862534f59355c1932157c4",
+            "ledger.csv": "7746676fd6af4a7f333d11bbe5e72c3f0e7ccd5a632bcc64ac6ac73add43927c",
+            "manifest.json": "e849921fa18cc8037a88ef936118645e93d67c8b9b8e27a56b857aeff398442a",
+            "payments.jsonl": "cc39bd9baa20b4ed1ccf213455656fbdc336cd78f84579d9d10d31e998190ed7",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E33F856D7D160FA95DB53853E7E442E73",
+          "target_files_sha256": {
+            "fx.csv": "e68890c12b33dc763e097ec9dcd26174e1608449fa1e084b9f452a8691c1b9eb",
+            "invoices.jsonl": "6772670ded79fd48385412775dc9a9aa6db9779dcc862534f59355c1932157c4",
+            "ledger.csv": "cbbbb30e0026e63b602ca2be8203d960b5f68c0aa7d90f84164c1a2f42708e67",
+            "manifest.json": "51b88445e663b4894b81174be0f9f3ae53417cc1b2973fe197039abb5b37475f",
+            "payments.jsonl": "cc39bd9baa20b4ed1ccf213455656fbdc336cd78f84579d9d10d31e998190ed7",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 2,
+          "transition_sha256": "74cd86a467384a0c219f843b8d2af60f5dc13e4cfd94dea11844209dbb5e05c1",
+          "truth_sha256": "e710cdf14aa674c4f1d9f6da05cd6cf943310098865597ecb77c3ac83d215bbd",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-17": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "d09ef31a146855b626c5b41ca5055d2ea7b5863dff953b97a0322f7da8688e8f",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-17",
+          "source_episode_id": "EC666CE86A96EE1815D455E482A0B8326",
+          "source_files_sha256": {
+            "fx.csv": "f0b64eecb688a9fb7a74bf7b489a695ecee892defe2193acf6d5002818d2b672",
+            "invoices.jsonl": "00d9ff8d18c9545df987589df8bbe5d3f1307ca40e7b396e1df010bbd86dbc90",
+            "ledger.csv": "34110dfa54b6528a41165af45b04a0a1052c48a04588894d7b54438fe042276e",
+            "manifest.json": "3bb1d9f53aa21c2046efd8577aac5ce83d5bfa75f1e5d074ba561cbdb311f0a8",
+            "payments.jsonl": "fe7b04e5fb148ab3c2d9e88bde4c5d4319d2730f8b98624e07659de5ce9d694a",
+            "policy.json": "56296670e83a5b04aa32a8b4ff65236c7233d2bea62dd27d525f7bee54d963e5"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EB4F9157E669919F12A8D4570A8F2750C",
+          "target_files_sha256": {
+            "fx.csv": "f0b64eecb688a9fb7a74bf7b489a695ecee892defe2193acf6d5002818d2b672",
+            "invoices.jsonl": "00d9ff8d18c9545df987589df8bbe5d3f1307ca40e7b396e1df010bbd86dbc90",
+            "ledger.csv": "11d2118a0fd2f762a59b16c78b3f1c468ab14c972f610696a609de9f77439741",
+            "manifest.json": "d47b02316d733595a06578ccc0c9194f2919dbb5baa7d0e2cf61deae1a9ec820",
+            "payments.jsonl": "fe7b04e5fb148ab3c2d9e88bde4c5d4319d2730f8b98624e07659de5ce9d694a",
+            "policy.json": "56296670e83a5b04aa32a8b4ff65236c7233d2bea62dd27d525f7bee54d963e5"
+          },
+          "target_findings": 2,
+          "transition_sha256": "f6ea46eff3bb651d6257587bcb7f98604f181786ce3260d1a43a251b8b3d0f21",
+          "truth_sha256": "5ef93b263b2f8847bfc14148ab0f4ed03f63422bbb922c086302f1a53aea7c8e",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-18": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "c59b748322f2f291495a362eeaa35754c44c373677a8890506cc81399af9082f",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-18",
+          "source_episode_id": "E8C94EBA9613336E8CCCDDB323DD4EE5F",
+          "source_files_sha256": {
+            "fx.csv": "31d02cc824853edd5af0beaed68a4d569f28d73b377cb830c05ac2ab31b0ac70",
+            "invoices.jsonl": "0e32fad74b53ba3e6832a27ca6466f7c1aac3bfd00e61efd9ea353c203f163cb",
+            "ledger.csv": "b46828f69b3a25d70fbfad2def98f6d481cbe6966aebc80a8bfb8f22d4651431",
+            "manifest.json": "66f2bb5edbccae9e95bd58b1d324232d3dca970830f062bf05c7ac50f9987139",
+            "payments.jsonl": "db069a6316b63feb669da25115e7ac1bdfa8c75cccfa9ea4de210428e187f074",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EC3F64F1DAF5180FC56BDDECAF618F963",
+          "target_files_sha256": {
+            "fx.csv": "31d02cc824853edd5af0beaed68a4d569f28d73b377cb830c05ac2ab31b0ac70",
+            "invoices.jsonl": "0e32fad74b53ba3e6832a27ca6466f7c1aac3bfd00e61efd9ea353c203f163cb",
+            "ledger.csv": "672b3ed082ca356d6b274ed0d69ec5addaede97496786b864f2ab09690ed7af4",
+            "manifest.json": "f29bf962fbc677ea165b3e8e603c285f9a48f1ea69599dee97a2daf853618130",
+            "payments.jsonl": "db069a6316b63feb669da25115e7ac1bdfa8c75cccfa9ea4de210428e187f074",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 2,
+          "transition_sha256": "4a8b9497c7c46bad8a380881700860269f94c74bec7dcafe0d86c13d75a03687",
+          "truth_sha256": "12f462dbf4c7350a1e61dd1347b89195aa85bb82e6e91c1c3807883e3ba4708d",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-19": {
+          "changed_records": 8,
+          "generator_version": "1.7",
+          "provenance_sha256": "6d0d726603bd7bf8332226fb19f72193e2acd581505573bcf017660eb1471103",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-19",
+          "source_episode_id": "ECF2D795DCAD6162FA6E4D3CAA1591722",
+          "source_files_sha256": {
+            "fx.csv": "f0810d888188fa3e22dd215aab5d6f5209129c6fe4e2c8cc5fc9cafe9a95d5c1",
+            "invoices.jsonl": "c224c9a017600795a79e6ba77d6763b0bb4f057d5e66bde656a7457b684c6007",
+            "ledger.csv": "f718f6d649c58da06d31e6fc3167613b40d5cab1637097c497981fb5f32acd6a",
+            "manifest.json": "bbfdb8a097639b96d4c1637e231ad0fcee7620b3dcd96b257ad0ec3de7589e2a",
+            "payments.jsonl": "6af5a2e76451fb5ea163fa1fd8a5fb04054ba96cb8fb7bdf61e15ddd499d1df2",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E8C5D256A8F0D5B1E92024259E0E3FFE7",
+          "target_files_sha256": {
+            "fx.csv": "f0810d888188fa3e22dd215aab5d6f5209129c6fe4e2c8cc5fc9cafe9a95d5c1",
+            "invoices.jsonl": "c224c9a017600795a79e6ba77d6763b0bb4f057d5e66bde656a7457b684c6007",
+            "ledger.csv": "36586bc91af1a1c4716c6e992a30e2003addd60e67d71254af212bb7c31796e2",
+            "manifest.json": "9aaa8c383fde225c73500c1ab10dd5cee3b22531882c1508bab9c5439769d29b",
+            "payments.jsonl": "6af5a2e76451fb5ea163fa1fd8a5fb04054ba96cb8fb7bdf61e15ddd499d1df2",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 4,
+          "transition_sha256": "a152a42dbd12df3938c479e0e128f7a700c9044a7e0743eef7a1fbbbbec06b45",
+          "truth_sha256": "4dde9b4a6130d727a7b9c19fd90b2a6d9b58a9f821ce01afc153a3e1ed93cc23",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-20": {
+          "changed_records": 24,
+          "generator_version": "1.7",
+          "provenance_sha256": "5a686426099859625f7dc4ef5945eae503c50f44ff167193047068cf493785eb",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-20",
+          "source_episode_id": "E6D1BECCB251767624A5455FD3BDB0754",
+          "source_files_sha256": {
+            "fx.csv": "d443fa82115bec97b9e3a4a6f1c9e12303d7bc602fd27a6c17fcc23f631224e8",
+            "invoices.jsonl": "ee9247100a6d4b04c9f2a40e67502bb87689fcbaa2f882a1881bff50974a5d4b",
+            "ledger.csv": "218e0c6aeb713fd7431480e7c905ec2bb7a9511ceb3851504cd20ac56d579d65",
+            "manifest.json": "1068b2638c51d81421c7ecfa5417aa7714cb5b7e80f6b962bbf48722d6e7bd29",
+            "payments.jsonl": "9c36fa214fb68ad6375d42deacc2de5338cb96eeb64ab670cf5b6bdb6f607cd9",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EE8EB006EE901FCFC39FAA2B39FB2D81F",
+          "target_files_sha256": {
+            "fx.csv": "d443fa82115bec97b9e3a4a6f1c9e12303d7bc602fd27a6c17fcc23f631224e8",
+            "invoices.jsonl": "ee9247100a6d4b04c9f2a40e67502bb87689fcbaa2f882a1881bff50974a5d4b",
+            "ledger.csv": "f6ef0218a95322bee17b8be99893c532a3c2e95ede006600e4384aaf890699f6",
+            "manifest.json": "bc48b13dbfb41339590b0f758daa19921ba31c261b9ff50616c7ae42c1bcd975",
+            "payments.jsonl": "9c36fa214fb68ad6375d42deacc2de5338cb96eeb64ab670cf5b6bdb6f607cd9",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 12,
+          "transition_sha256": "b122b056d8d7a36cf22f3fa71772b6188d7f3ba528e7639a791b666024857926",
+          "truth_sha256": "9f504115a811aba430d18a4f0460b2414185dbaf86488e4d7b03ebb8f3ff59dc",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        }
+      },
+      "preload": {
+        "images_present_before_load": {
+          "runtime": false,
+          "verifier": false,
+          "policy": false
+        },
+        "checked_identities": {
+          "runtime": {
+            "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6": false,
+            "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d": false,
+            "auditlab-runtime:858091a41fc8": false
+          },
+          "verifier": {
+            "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490": false,
+            "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb": false,
+            "auditlab-verifier:858091a41fc8": false
+          },
+          "policy": {
+            "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f": false,
+            "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72": false,
+            "auditlab-policy:858091a41fc8": false
+          }
+        },
+        "status": "passed"
+      },
+      "docker_version": "28.0.4",
+      "loaded_images": {
+        "runtime": {
+          "id": "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6",
+          "tag": "auditlab-runtime:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 359888144,
+          "oci_manifest_digest": "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d",
+          "source_id": "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6"
+        },
+        "verifier": {
+          "id": "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490",
+          "tag": "auditlab-verifier:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 234908032,
+          "oci_manifest_digest": "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb",
+          "source_id": "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490"
+        },
+        "policy": {
+          "id": "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f",
+          "tag": "auditlab-policy:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 130557825,
+          "oci_manifest_digest": "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72",
+          "source_id": "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f"
+        }
+      },
+      "strict_exit_code": 2,
+      "controller_peak_bytes": 232710144,
+      "policy_peak_bytes": 25321472,
+      "verifier_peak_bytes": 152109056,
+      "max_episode_seconds": 0.5705697789999817,
+      "image_load_seconds": 2.251736070000007,
+      "verification_container_seconds": 269.573249335,
+      "policies": {
+        "flag_all": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 7,
+              "fp": 8,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "fx_conversion": {
+              "fn": 12,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "payment_allocation": {
+              "fn": 10,
+              "fp": 592,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "period_cutoff": {
+              "fn": 9,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 5,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 1.0
+          },
+          "elapsed_seconds": [
+            0.47098997500000905,
+            0.48351617200000874,
+            0.46890019500000335,
+            0.46931048100003636,
+            0.47968623200000593,
+            0.46733032400004504,
+            0.47334085299996786,
+            0.4712941710000109,
+            0.4805334769999945,
+            0.48056544999997186,
+            0.5002780130000133,
+            0.4687303999999699,
+            0.47951257699997996,
+            0.5065267769999764,
+            0.5120837960000131,
+            0.4745215489999737,
+            0.4711547899999573,
+            0.471651952000002,
+            0.505922365999993,
+            0.4903676320000159
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "macro_f1": 0.0,
+          "mean_inspection_steps": 3.6,
+          "mean_reward": -1.0,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 7,
+                "fp": 8,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "fx_conversion": {
+                "fn": 12,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "payment_allocation": {
+                "fn": 10,
+                "fp": 592,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "period_cutoff": {
+                "fn": 9,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 0.0,
+            "mean_reward": -1.0,
+            "micro": {
+              "f1": 0.0,
+              "fn": 38,
+              "fp": 600,
+              "precision": 0.0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 600,
+            "precision": 0.0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 22523904,
+          "score_status": "complete"
+        },
+        "oracle": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 7
+            },
+            "fx_conversion": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 12
+            },
+            "payment_allocation": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 10
+            },
+            "period_cutoff": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 9
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.1401238459999945,
+            0.14148362999998199,
+            0.14130879700002197,
+            0.1444230249999805,
+            0.15008832799998117,
+            0.14032188800001677,
+            0.14058800500004054,
+            0.1427600380000058,
+            0.1449655849999658,
+            0.1519004120000318,
+            0.1391733329999738,
+            0.1454507359999866,
+            0.14382910300003005,
+            0.14728206099999852,
+            0.1523677459999817,
+            0.13918879499999548,
+            0.13999629800002822,
+            0.14381385300004013,
+            0.14572246799997401,
+            0.15104956300001504
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "macro_f1": 1.0,
+          "mean_inspection_steps": 0,
+          "mean_reward": 1.0,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 7
+              },
+              "fx_conversion": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 12
+              },
+              "payment_allocation": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 10
+              },
+              "period_cutoff": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 9
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 1.0,
+            "mean_reward": 1.0,
+            "micro": {
+              "f1": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "tp": 38
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": null,
+          "score_status": "complete"
+        },
+        "random": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 7,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "fx_conversion": {
+              "fn": 12,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "payment_allocation": {
+              "fn": 10,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "period_cutoff": {
+              "fn": 9,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.46444246599997996,
+            0.5087708870000256,
+            0.473453821000021,
+            0.46920417899997346,
+            0.4733974929999931,
+            0.4656051439999942,
+            0.4682956679999961,
+            0.47715964500002883,
+            0.4739027849999502,
+            0.5080942429999595,
+            0.4634562139999616,
+            0.47084863499998164,
+            0.4744530540000369,
+            0.4710656130000075,
+            0.5080923550000307,
+            0.5006935609999914,
+            0.4670272129999944,
+            0.47030912399998215,
+            0.5066072790000362,
+            0.4743128069999898
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
+          ],
+          "macro_f1": 0.25,
+          "mean_inspection_steps": 7,
+          "mean_reward": -0.5035000000000001,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 7,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "fx_conversion": {
+                "fn": 12,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "payment_allocation": {
+                "fn": 10,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "period_cutoff": {
+                "fn": 9,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 0.25,
+            "mean_reward": -0.5035000000000001,
+            "micro": {
+              "f1": 0.0,
+              "fn": 38,
+              "fp": 0,
+              "precision": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 0,
+            "precision": 0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 22466560,
+          "score_status": "complete"
+        },
+        "reconcile": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 7
+            },
+            "fx_conversion": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 12
+            },
+            "payment_allocation": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 10
+            },
+            "period_cutoff": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 9
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.47519125999997414,
+            0.49181285100002015,
+            0.4936955090000197,
+            0.5023982999999816,
+            0.5335459850000461,
+            0.4737737859999811,
+            0.47961016100003917,
+            0.5018317249999882,
+            0.5083367280000175,
+            0.5471585770000047,
+            0.46994070000005195,
+            0.48812778100000287,
+            0.5394959980000067,
+            0.5143937359999882,
+            0.5705697789999817,
+            0.47272569700004397,
+            0.48220884699998123,
+            0.49394428400000834,
+            0.5093121559999645,
+            0.5313511820000372
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47
+          ],
+          "macro_f1": 1.0,
+          "mean_inspection_steps": 24.2,
+          "mean_reward": 0.9516,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 7
+              },
+              "fx_conversion": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 12
+              },
+              "payment_allocation": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 10
+              },
+              "period_cutoff": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 9
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 1.0,
+            "mean_reward": 0.9516,
+            "micro": {
+              "f1": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "tp": 38
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 25321472,
+          "score_status": "complete"
+        }
+      }
+    },
+    "containerd": {
+      "tests": 505,
+      "summary": {
+        "scope": "Internal functional rehearsal and resource evidence only; 24 acceptance groups and official score not certified",
+        "source_revision": "858091a41fc8721bb2ae44db8163b39b78785492",
+        "memory_budget": {
+          "per_container_bytes": 1610612736,
+          "combined_container_limit_bytes": 3221225472,
+          "decimal_4gb_headroom_bytes": 778774528,
+          "whole_host_status": "not_checked"
+        },
+        "payload_size_bytes": 403479533,
+        "datasets": 20,
+        "attempts": 80,
+        "pairs": 20,
+        "ordinary_resource_runs": 60,
+        "verifier_resource_runs": 40,
+        "failures": [],
+        "missing": [],
+        "status": "internal_rehearsal_passed",
+        "exit_code": 0
+      },
+      "acceptance": [
+        {
+          "id": "API-01",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api01_concurrent_real_environments_and_reset_do_not_cross",
+            "runner/test_public_schemas.RealPolicies.test_public_policies_and_oracle_in_both_modes"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api01_concurrent_real_environments_and_reset_do_not_cross",
+            "runner/test_public_schemas.RealPolicies.test_public_policies_and_oracle_in_both_modes"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-02",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_environment.PublicSessionTests.test_pages_are_stable_complete_and_bound_to_table_and_episode",
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "runner/test_env.Lifecycle.test_remaining_steps_counts_every_inspection_once",
+            "runner/test_env.Termination.test_tool_with_bad_args_costs_a_step"
+          ],
+          "evidence": [
+            "simulator/test_environment.PublicSessionTests.test_pages_are_stable_complete_and_bound_to_table_and_episode",
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "runner/test_env.Lifecycle.test_remaining_steps_counts_every_inspection_once",
+            "runner/test_env.Termination.test_tool_with_bad_args_costs_a_step"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-03",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api03_submit_steps_1_99_100_real_session_and_evaluator",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_env.Termination.test_hundredth_inspection_failing_is_still_truncation",
+            "runner/test_env.Termination.test_repeat_after_finish_changes_nothing",
+            "runner/test_env.Timeout.test_deadline_before_action_truncates_with_accepted_count",
+            "runner/test_env.Timeout.test_time_exactly_at_limit_and_custom_limit",
+            "runner/test_finalization.DepthBoundary.test_issue_23_example_both_modes_direct_api",
+            "runner/test_finalization.DepthBoundary.test_budget_and_timeout_finalize_once_with_hostile_last_action"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api03_submit_steps_1_99_100_real_session_and_evaluator",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_env.Termination.test_hundredth_inspection_failing_is_still_truncation",
+            "runner/test_env.Termination.test_repeat_after_finish_changes_nothing",
+            "runner/test_env.Timeout.test_deadline_before_action_truncates_with_accepted_count",
+            "runner/test_env.Timeout.test_time_exactly_at_limit_and_custom_limit",
+            "runner/test_finalization.DepthBoundary.test_issue_23_example_both_modes_direct_api",
+            "runner/test_finalization.DepthBoundary.test_budget_and_timeout_finalize_once_with_hostile_last_action"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-04",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "simulator/test_environment.PublicSessionTests.test_calculator_uses_bounded_decimal_arithmetic",
+            "runner/test_env.Leaks.test_session_exception_and_extra_fields_do_not_leak",
+            "runner/test_public_schemas.SchemaAndGolden.test_every_reachable_error_code_is_exercised_and_messages_match_the_code"
+          ],
+          "evidence": [
+            "simulator/test_environment.PublicSessionTests.test_bad_requests_have_stable_errors_without_echoing_input",
+            "simulator/test_environment.PublicSessionTests.test_calculator_uses_bounded_decimal_arithmetic",
+            "runner/test_env.Leaks.test_session_exception_and_extra_fields_do_not_leak",
+            "runner/test_public_schemas.SchemaAndGolden.test_every_reachable_error_code_is_exercised_and_messages_match_the_code"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "API-05",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api05_external_stdlib_adapter_all_actions_and_golden_files",
+            "runner/test_public_schemas.ExternalAdapter.test_adapter_source_imports_only_the_standard_library",
+            "runner/test_public_schemas.ExternalAdapter.test_isolated_adapter_validates_the_live_protocol_in_both_modes",
+            "runner/test_public_schemas.SchemaAndGolden.test_golden_examples_are_reproduced_by_the_real_components",
+            "runner/test_public_schemas.SchemaAndGolden.test_valid_examples_pass_and_each_invalid_one_fails_only_because_of_its_defect"
+          ],
+          "evidence": [
+            "runner/test_acceptance_api.AcceptanceApi.test_api05_external_stdlib_adapter_all_actions_and_golden_files",
+            "runner/test_public_schemas.ExternalAdapter.test_adapter_source_imports_only_the_standard_library",
+            "runner/test_public_schemas.ExternalAdapter.test_isolated_adapter_validates_the_live_protocol_in_both_modes",
+            "runner/test_public_schemas.SchemaAndGolden.test_golden_examples_are_reproduced_by_the_real_components",
+            "runner/test_public_schemas.SchemaAndGolden.test_valid_examples_pass_and_each_invalid_one_fails_only_because_of_its_defect"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-01",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_docker_boundary.RealDockerBoundary.test_canary_files_network_and_trusted_code_are_unavailable",
+            "runner/test_isolation_export.Isolation.test_child_gets_clean_env_and_empty_cwd",
+            "runner/test_isolation_export.Isolation.test_docker_profile_has_no_network_volumes_or_caps",
+            "runner/test_transport_limits.TransportRegressions.test_closed_cli_refuses_unsafe_backend"
+          ],
+          "evidence": [
+            "runner/test_docker_boundary.RealDockerBoundary.test_canary_files_network_and_trusted_code_are_unavailable",
+            "runner/test_isolation_export.Isolation.test_child_gets_clean_env_and_empty_cwd",
+            "runner/test_isolation_export.Isolation.test_docker_profile_has_no_network_volumes_or_caps",
+            "runner/test_transport_limits.TransportRegressions.test_closed_cli_refuses_unsafe_backend"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-02",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Leaks.test_iso02_no_closed_marker_in_any_agent_channel",
+            "runner/test_public_schemas.ClosedMode.test_closed_data_injected_at_any_depth_of_real_messages_is_rejected",
+            "runner/test_public_schemas.Exports.test_fresh_train_export_and_closed_trusted_trajectory",
+            "demo/test_console.Isolation.test_web_side_never_returns_truth_or_closed_runs",
+            "demo/test_console.Isolation.test_web_modules_do_not_touch_truth"
+          ],
+          "evidence": [
+            "runner/test_env.Leaks.test_iso02_no_closed_marker_in_any_agent_channel",
+            "runner/test_public_schemas.ClosedMode.test_closed_data_injected_at_any_depth_of_real_messages_is_rejected",
+            "runner/test_public_schemas.Exports.test_fresh_train_export_and_closed_trusted_trajectory",
+            "demo/test_console.Isolation.test_web_side_never_returns_truth_or_closed_runs",
+            "demo/test_console.Isolation.test_web_modules_do_not_touch_truth"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "ISO-03",
+          "criterion": "contract_and_isolation",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Leaks.test_iso03_same_public_snapshot_different_truth_same_messages",
+            "runner/test_public_schemas.ClosedMode.test_same_public_different_truth_gives_identical_valid_messages"
+          ],
+          "evidence": [
+            "runner/test_env.Leaks.test_iso03_same_public_snapshot_different_truth_same_messages",
+            "runner/test_public_schemas.ClosedMode.test_same_public_different_truth_gives_identical_valid_messages"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-01",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_source_book.SourceBookTests.test_source_book_precedes_all_eight_interaction_states",
+            "simulator/test_source_book.SourceBookTests.test_source_book_contains_clean_replacement_for_each_defect",
+            "simulator/test_source_book.SourceBookTests.test_balanced_but_incorrect_source_is_rejected_before_application",
+            "simulator/test_generator_15.Generator15Tests.test_full_clean_book_hashes_transition_and_private_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_missing_transition_change_is_rejected_even_with_updated_hash",
+            "verifier/test_verifier.ControlPairTests.test_pair_matches_committed_manual_answer",
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_same_document_shortcut_can_mean_clean_or_unallocated"
+          ],
+          "evidence": [
+            "simulator/test_source_book.SourceBookTests.test_source_book_precedes_all_eight_interaction_states",
+            "simulator/test_source_book.SourceBookTests.test_source_book_contains_clean_replacement_for_each_defect",
+            "simulator/test_source_book.SourceBookTests.test_balanced_but_incorrect_source_is_rejected_before_application",
+            "simulator/test_generator_15.Generator15Tests.test_full_clean_book_hashes_transition_and_private_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_missing_transition_change_is_rejected_even_with_updated_hash",
+            "verifier/test_verifier.ControlPairTests.test_pair_matches_committed_manual_answer",
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_same_document_shortcut_can_mean_clean_or_unallocated",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-02",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_scenarios.ScenarioTests.test_both_interaction_matrices",
+            "simulator/test_profile_11.Profile11Tests.test_interaction_four_states_share_sources_and_independent_effects",
+            "simulator/test_generator_15.Generator15Tests.test_all_interaction_toggles_share_identical_complete_clean_book",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_conversion",
+            "verifier/test_verifier.SingleClassTests.test_period_cutoff_next_month_payment_alone_is_clean",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.InteractionTests.test_interaction_a_four_states",
+            "verifier/test_verifier.InteractionTests.test_interaction_b_four_states"
+          ],
+          "evidence": [
+            "simulator/test_scenarios.ScenarioTests.test_both_interaction_matrices",
+            "simulator/test_profile_11.Profile11Tests.test_interaction_four_states_share_sources_and_independent_effects",
+            "simulator/test_generator_15.Generator15Tests.test_all_interaction_toggles_share_identical_complete_clean_book",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_conversion",
+            "verifier/test_verifier.SingleClassTests.test_period_cutoff_next_month_payment_alone_is_clean",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.InteractionTests.test_interaction_a_four_states",
+            "verifier/test_verifier.InteractionTests.test_interaction_b_four_states"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-03",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_repeated_dst_hour_and_half_up_in_zero_two_three_decimal_bases",
+            "verifier/test_verifier.SingleClassTests.test_currency_exponents_and_rounding_point",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_rate_date_is_company_local_date",
+            "verifier/test_verifier.BoundaryTests.test_allocation_boundary_local_and_utc",
+            "verifier/test_verifier.BoundaryTests.test_invoice_cutoff_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_observable_fx_across_forty_seeds_and_three_minor_unit_exponents"
+          ],
+          "evidence": [
+            "verifier/test_public_edge_cases.PublicFinancialEdgeTests.test_repeated_dst_hour_and_half_up_in_zero_two_three_decimal_bases",
+            "verifier/test_verifier.SingleClassTests.test_currency_exponents_and_rounding_point",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund",
+            "verifier/test_verifier.SingleClassTests.test_fx_rate_date_is_company_local_date",
+            "verifier/test_verifier.BoundaryTests.test_allocation_boundary_local_and_utc",
+            "verifier/test_verifier.BoundaryTests.test_invoice_cutoff_boundary",
+            "simulator/test_generator_15.Generator15Tests.test_observable_fx_across_forty_seeds_and_three_minor_unit_exponents"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-04",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_components.ComponentPairTests.test_public_session_reads_pair_evidence",
+            "integration/test_components.ComponentPairTests.test_generated_auditor_score_trajectory_and_verifier",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "simulator/test_policies.PublicPolicyTests.test_largest_supported_snapshot_fits_reconcile_budget",
+            "runner/test_public_schemas.RealSnapshots.test_every_record_of_every_shipped_snapshot"
+          ],
+          "evidence": [
+            "integration/test_components.ComponentPairTests.test_public_session_reads_pair_evidence",
+            "integration/test_components.ComponentPairTests.test_generated_auditor_score_trajectory_and_verifier",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "simulator/test_policies.PublicPolicyTests.test_largest_supported_snapshot_fits_reconcile_budget",
+            "runner/test_public_schemas.RealSnapshots.test_every_record_of_every_shipped_snapshot",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "DAT-05",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_control_pair.PublicControlPairTests.test_boundary_order_and_timezone",
+            "integration/test_control_pair.PublicControlPairTests.test_public_index_proves_completeness_on_each_side",
+            "simulator/test_clean_counterpart.CleanCounterpartTests.test_shortcut_fires_on_clean_and_defective_but_financial_auditors_distinguish",
+            "simulator/test_scenarios.ScenarioTests.test_archive_copies_need_two_recognitions_to_be_a_duplicate",
+            "simulator/test_generation.GenerationTests.test_clean_history_has_refunds_split_payments_and_equal_amounts",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund"
+          ],
+          "evidence": [
+            "integration/test_control_pair.PublicControlPairTests.test_boundary_order_and_timezone",
+            "integration/test_control_pair.PublicControlPairTests.test_public_index_proves_completeness_on_each_side",
+            "simulator/test_clean_counterpart.CleanCounterpartTests.test_shortcut_fires_on_clean_and_defective_but_financial_auditors_distinguish",
+            "simulator/test_scenarios.ScenarioTests.test_archive_copies_need_two_recognitions_to_be_a_duplicate",
+            "simulator/test_generation.GenerationTests.test_clean_history_has_refunds_split_payments_and_equal_amounts",
+            "verifier/test_verifier.SingleClassTests.test_duplicate_invoice",
+            "verifier/test_verifier.SingleClassTests.test_payment_allocation_and_clean_tranches_and_refund"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "VER-01",
+          "criterion": "data_and_truth",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "verifier/test_crosscheck.CrosscheckTests.test_controlled_truth_distortions_are_detected_by_kind",
+            "verifier/test_crosscheck.CrosscheckTests.test_counterexample_is_reduced_on_a_copy",
+            "integration/test_evaluator_mutation.EvaluatorMutationTests.test_manual_counterexample_kills_double_credit_mutant"
+          ],
+          "evidence": [
+            "verifier/test_crosscheck.CrosscheckTests.test_controlled_truth_distortions_are_detected_by_kind",
+            "verifier/test_crosscheck.CrosscheckTests.test_counterexample_is_reduced_on_a_copy",
+            "integration/test_evaluator_mutation.EvaluatorMutationTests.test_manual_counterexample_kills_double_credit_mutant"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-01",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_components.ComponentPairTests.test_evaluator_six_numerical_examples",
+            "evaluator/test_scoring.SectionNineTable.test_alternative_complete_set",
+            "evaluator/test_scoring.SectionNineTable.test_foreign_document_replaces_required_evidence",
+            "evaluator/test_scoring.SectionNineTable.test_extra_evidence_is_harmless"
+          ],
+          "evidence": [
+            "integration/test_components.ComponentPairTests.test_evaluator_six_numerical_examples",
+            "evaluator/test_scoring.SectionNineTable.test_alternative_complete_set",
+            "evaluator/test_scoring.SectionNineTable.test_foreign_document_replaces_required_evidence",
+            "evaluator/test_scoring.SectionNineTable.test_extra_evidence_is_harmless"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-02",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.MatchingOptimality.test_greedy_first_choice_loses_a_match",
+            "evaluator/test_scoring.MatchingOptimality.test_permutation_stable",
+            "evaluator/test_scoring.SectionNineTable.test_duplicate_is_false_positive",
+            "evaluator/test_scoring.SectionNineTable.test_permuted_duplicate_is_false_positive",
+            "evaluator/test_scoring.SemanticAndStructural.test_flag_all_scores_by_quality"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.MatchingOptimality.test_greedy_first_choice_loses_a_match",
+            "evaluator/test_scoring.MatchingOptimality.test_permutation_stable",
+            "evaluator/test_scoring.SectionNineTable.test_duplicate_is_false_positive",
+            "evaluator/test_scoring.SectionNineTable.test_permuted_duplicate_is_false_positive",
+            "evaluator/test_scoring.SemanticAndStructural.test_flag_all_scores_by_quality"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-03",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.SemanticAndStructural.test_one_unit_off_is_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_wrong_currency_and_lowercase_are_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_structural_failures_give_minus_one",
+            "evaluator/test_scoring.SemanticAndStructural.test_size_limits_boundaries",
+            "runner/test_env.Termination.test_structurally_bad_submit_ends_with_minus_one",
+            "runner/test_env.Termination.test_recognised_submit_with_broken_body_terminates_minus_one"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.SemanticAndStructural.test_one_unit_off_is_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_wrong_currency_and_lowercase_are_fp",
+            "evaluator/test_scoring.SemanticAndStructural.test_structural_failures_give_minus_one",
+            "evaluator/test_scoring.SemanticAndStructural.test_size_limits_boundaries",
+            "runner/test_env.Termination.test_structurally_bad_submit_ends_with_minus_one",
+            "runner/test_env.Termination.test_recognised_submit_with_broken_body_terminates_minus_one"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "MAT-04",
+          "criterion": "reward",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "evaluator/test_scoring.SectionNineTable.test_mat04_costs",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_golden_exports.GoldenExports.test_layout_status_and_scores"
+          ],
+          "evidence": [
+            "evaluator/test_scoring.SectionNineTable.test_mat04_costs",
+            "integration/test_components.ComponentPairTests.test_runner_control_pair_submit_after_four_inspections",
+            "runner/test_env.Termination.test_hundredth_inspection_is_truncation_with_empty_answer",
+            "runner/test_golden_exports.GoldenExports.test_layout_status_and_scores"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-01",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "runner/test_env.Lifecycle.test_rep01_same_actions_same_trajectory",
+            "simulator/test_profile_11.Profile11Tests.test_seed_changes_case_nominals_and_dates_without_breaking_replay",
+            "simulator/test_datasets.DatasetTests.test_fresh_build_reproduces_every_shipped_file",
+            "integration/test_rehearsal.RehearsalTests.test_closed_replay_detects_changed_trusted_reward_without_public_change"
+          ],
+          "evidence": [
+            "runner/test_env.Lifecycle.test_rep01_same_actions_same_trajectory",
+            "simulator/test_profile_11.Profile11Tests.test_seed_changes_case_nominals_and_dates_without_breaking_replay",
+            "simulator/test_datasets.DatasetTests.test_fresh_build_reproduces_every_shipped_file",
+            "integration/test_rehearsal.RehearsalTests.test_closed_replay_detects_changed_trusted_reward_without_public_change",
+            "rehearsal.datasets: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-02",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_rehearsal.RehearsalTests.test_real_oracle_closed_trajectory_and_transformed_pair",
+            "metamorphic/test_transforms.TransformTests.test_rename_and_permute_preserve_answer"
+          ],
+          "evidence": [
+            "integration/test_rehearsal.RehearsalTests.test_real_oracle_closed_trajectory_and_transformed_pair",
+            "metamorphic/test_transforms.TransformTests.test_rename_and_permute_preserve_answer",
+            "rehearsal.pairs: 20 detailed passed receipts"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "REP-03",
+          "criterion": "reproducibility",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "simulator/test_families.EconomicsFamilyTests.test_published_internal_split_reports_known_twins_only_inside_their_split",
+            "simulator/test_families.EconomicsFamilyTests.test_transformed_twin_crosses_split_and_late_variant_stays_in_family",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_frozen_internal_selection_has_no_cross_split_complete_chains",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_copied_story_survives_different_background_and_id_permutation",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_posting_defect_changes_book_but_not_primary_story",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_same_rule_and_structure_with_different_terms_is_not_a_copy",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_open_train_and_dev_pairs",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_frozen_internal_pairs",
+            "simulator/test_generated_pair.GeneratedPairTests.test_same_seed_snapshots_bind_cursors_to_public_content"
+          ],
+          "evidence": [
+            "simulator/test_families.EconomicsFamilyTests.test_published_internal_split_reports_known_twins_only_inside_their_split",
+            "simulator/test_families.EconomicsFamilyTests.test_transformed_twin_crosses_split_and_late_variant_stays_in_family",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_frozen_internal_selection_has_no_cross_split_complete_chains",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_copied_story_survives_different_background_and_id_permutation",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_posting_defect_changes_book_but_not_primary_story",
+            "simulator/test_subhistories.CommercialSubhistoryTests.test_same_rule_and_structure_with_different_terms_is_not_a_copy",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_open_train_and_dev_pairs",
+            "simulator/test_transformed_policy.TransformedPolicyTests.test_reconcile_rediscovers_evidence_on_frozen_internal_pairs",
+            "simulator/test_generated_pair.GeneratedPairTests.test_same_seed_snapshots_bind_cursors_to_public_content"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        },
+        {
+          "id": "OPS-01",
+          "criterion": "engineering",
+          "status": "not_checked",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "integration/test_offline_bundle.OfflineBundleTests.test_check_mode_needs_no_docker_and_checks_every_payload",
+            "integration/test_offline_bundle.OfflineBundleTests.test_runtime_is_networkless_and_uses_only_result_and_trusted_socket_mounts",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_unrelated_revision_cannot_pass",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_skip_or_missing_evidence_cannot_pass"
+          ],
+          "evidence": [
+            "integration/test_offline_bundle.OfflineBundleTests.test_check_mode_needs_no_docker_and_checks_every_payload",
+            "integration/test_offline_bundle.OfflineBundleTests.test_runtime_is_networkless_and_uses_only_result_and_trusted_socket_mounts",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_unrelated_revision_cannot_pass",
+            "integration/test_rehearsal_evidence.EvidenceTests.test_skip_or_missing_evidence_cannot_pass"
+          ],
+          "missing": [
+            "Final offline launch, controller limits and bundle receipt must be checked after this process exits; clean-host/whole-host memory evidence is separate."
+          ],
+          "failures": [],
+          "detail": "Final offline launch, controller limits and bundle receipt must be checked after this process exits; clean-host/whole-host memory evidence is separate."
+        },
+        {
+          "id": "OPS-02",
+          "criterion": "engineering",
+          "status": "not_checked",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [],
+          "evidence": [],
+          "missing": [
+            "Independent human receiver must verify the exact candidate archive on a clean host."
+          ],
+          "failures": [],
+          "detail": "Independent human receiver must verify the exact candidate archive on a clean host."
+        },
+        {
+          "id": "UI-01",
+          "criterion": "engineering",
+          "status": "passed",
+          "scope": "internal SPEC §14; not organizer acceptance",
+          "required_tests": [
+            "demo/test_console.LabEndToEnd.test_samples_live_change_rescore_replay",
+            "demo/test_console.Api.test_empty_state",
+            "demo/test_console.Api.test_api_equals_cli_and_pair_flow",
+            "integration/test_cli.ReleaseCliTests.test_replay_checks_real_export_and_rejects_unknown_run"
+          ],
+          "evidence": [
+            "demo/test_console.LabEndToEnd.test_samples_live_change_rescore_replay",
+            "demo/test_console.Api.test_empty_state",
+            "demo/test_console.Api.test_api_equals_cli_and_pair_flow",
+            "integration/test_cli.ReleaseCliTests.test_replay_checks_real_export_and_rejects_unknown_run"
+          ],
+          "missing": [],
+          "failures": [],
+          "detail": "All explicitly required internal checks executed successfully on this source revision."
+        }
+      ],
+      "acceptance_counts": {
+        "passed": 22,
+        "not_checked": 2
+      },
+      "source_book_receipts": {
+        "internal-01": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "6f7e5b810efed86e7a299c42983224581c9528da46f8b2250a7387bb8bce0e0b",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-01",
+          "source_episode_id": "E208F706B9A7CE485597C9F18158DD54A",
+          "source_files_sha256": {
+            "fx.csv": "1e34fe265ab45ee1f129a348865d22a8349a7bb295862ff057a60556fc89e840",
+            "invoices.jsonl": "2195647bd4229e000df6c8bca739b70505f82fd9037d4b4055e6e7dc235acf74",
+            "ledger.csv": "e3925fec1b62a60b8931aa67c1ee1df5862238bfd748525394630881dd5ae20e",
+            "manifest.json": "4f65bf5a4d6c4a7c04c3d755172efbf3687b0ea70180abf5c9de3537498d10d9",
+            "payments.jsonl": "f2d6edb84c858c9968a4812bd4d4a7b89f80da39843ff76ed6292c2e91541da1",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E208F706B9A7CE485597C9F18158DD54A",
+          "target_files_sha256": {
+            "fx.csv": "1e34fe265ab45ee1f129a348865d22a8349a7bb295862ff057a60556fc89e840",
+            "invoices.jsonl": "2195647bd4229e000df6c8bca739b70505f82fd9037d4b4055e6e7dc235acf74",
+            "ledger.csv": "e3925fec1b62a60b8931aa67c1ee1df5862238bfd748525394630881dd5ae20e",
+            "manifest.json": "4f65bf5a4d6c4a7c04c3d755172efbf3687b0ea70180abf5c9de3537498d10d9",
+            "payments.jsonl": "f2d6edb84c858c9968a4812bd4d4a7b89f80da39843ff76ed6292c2e91541da1",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 0,
+          "transition_sha256": "ad7a70938e950b12a12413bab9e0f03fb2c8117d1cf219d629e0db42bfb0007e",
+          "truth_sha256": "49e73b0e0912f13b36308535976b059a5f78a166aaaf6eef4df6336f4b689620",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-02": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "d20d84d2d5aa9aeeecaf34e80fbc6e6760f88bcf6b7e51457680fbc6559da8d5",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-02",
+          "source_episode_id": "E85CF3BDE9105E6857D263FDA654176D2",
+          "source_files_sha256": {
+            "fx.csv": "ad7ef75cd41e521cb237976d0c2a60ba86fc3ab72c245369326b7af0e326c8de",
+            "invoices.jsonl": "b45baf1190aa37abb81202ec5711753d16a9ea54912e4b68db216cd578ea3881",
+            "ledger.csv": "b687141ed69a748330fcc635859aa0c2f09bac3a42fc2cd301ac3cb28e9116cb",
+            "manifest.json": "e4c4a9504385a90b308baeefb3efd8e2052b45f5fe4166ff833b48c6174d3008",
+            "payments.jsonl": "c907d1cf5da4ac3bca9b952dacf659745d3208210f526a35f5ed764f199a100e",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E85CF3BDE9105E6857D263FDA654176D2",
+          "target_files_sha256": {
+            "fx.csv": "ad7ef75cd41e521cb237976d0c2a60ba86fc3ab72c245369326b7af0e326c8de",
+            "invoices.jsonl": "b45baf1190aa37abb81202ec5711753d16a9ea54912e4b68db216cd578ea3881",
+            "ledger.csv": "b687141ed69a748330fcc635859aa0c2f09bac3a42fc2cd301ac3cb28e9116cb",
+            "manifest.json": "e4c4a9504385a90b308baeefb3efd8e2052b45f5fe4166ff833b48c6174d3008",
+            "payments.jsonl": "c907d1cf5da4ac3bca9b952dacf659745d3208210f526a35f5ed764f199a100e",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 0,
+          "transition_sha256": "051085e48ac1faf6564f5743d88d94f364bd4059b14547d78c8f7b307dba1bd4",
+          "truth_sha256": "945b86ccf3a41cb7687bc0025c6e86a925a9b68cb1016c925a8fc2745f3c8c58",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-03": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "3f5254bd37feff6348fff76d3b11a5f5f97e9848df34f66614da0f86da479c4c",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-03",
+          "source_episode_id": "E478B02187FC39A14E723AF8505EE18C8",
+          "source_files_sha256": {
+            "fx.csv": "6ceaa46f8f20274e743d9a241ee0685fc6a866c975b0c4d6e2fbcb02710cde5a",
+            "invoices.jsonl": "82abbfe23fbe49a9dcaa0eefe63b97ceef20f8f5f0dd7e0e8fedb3cea4fde474",
+            "ledger.csv": "7dfd8f185fd326da0ea9ef2bc7f18dfdaf96c42f309a27017523c9f0f2caf4a1",
+            "manifest.json": "9ea7603c1197eaf759ffb47ea441c71676aa3791acca17b0a1abfc24656a426a",
+            "payments.jsonl": "8a8ac4c3a53c30e44184215c8ab5d7cdf4076a8cca862e66bd8197ffd339dc01",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E478B02187FC39A14E723AF8505EE18C8",
+          "target_files_sha256": {
+            "fx.csv": "6ceaa46f8f20274e743d9a241ee0685fc6a866c975b0c4d6e2fbcb02710cde5a",
+            "invoices.jsonl": "82abbfe23fbe49a9dcaa0eefe63b97ceef20f8f5f0dd7e0e8fedb3cea4fde474",
+            "ledger.csv": "7dfd8f185fd326da0ea9ef2bc7f18dfdaf96c42f309a27017523c9f0f2caf4a1",
+            "manifest.json": "9ea7603c1197eaf759ffb47ea441c71676aa3791acca17b0a1abfc24656a426a",
+            "payments.jsonl": "8a8ac4c3a53c30e44184215c8ab5d7cdf4076a8cca862e66bd8197ffd339dc01",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 0,
+          "transition_sha256": "8c4cc0820fc48d4dadedb9c663e850c1899dea4d60ef4629e1a36dc36ec12675",
+          "truth_sha256": "b9662d80f8612d3f0fe7ebd4727e0c3fb2f0769150eec136d6d5ac37058d31e5",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-04": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "4baed7cc8c70b7ca8bdaba2817cdcdafe049c4ea43f0a45008a93cee8b3f3db4",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-04",
+          "source_episode_id": "E8A1300B042DFD703C48E98BF897086BF",
+          "source_files_sha256": {
+            "fx.csv": "5b3a0504160dd9e80aa58c54f2afa79bc2f67acf72a19ae775f236e4023b6165",
+            "invoices.jsonl": "8eff44f8e3d8ad1addd4fc10105caade552c81810da8334d2150acbae691815d",
+            "ledger.csv": "0eb4abbe3e6cd5cd9666a4e2945f9c1a415da2f1c18d3e7e61d71ffdaf11cbaa",
+            "manifest.json": "7790632cd1661a51c5bee3581fdde05e8425915e0a830f6010e978b56de54b6e",
+            "payments.jsonl": "e71b7c218492f4d7beab4561f3e8c88562f91389f6f7fabce16a4e29066e8e7e",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E8A1300B042DFD703C48E98BF897086BF",
+          "target_files_sha256": {
+            "fx.csv": "5b3a0504160dd9e80aa58c54f2afa79bc2f67acf72a19ae775f236e4023b6165",
+            "invoices.jsonl": "8eff44f8e3d8ad1addd4fc10105caade552c81810da8334d2150acbae691815d",
+            "ledger.csv": "0eb4abbe3e6cd5cd9666a4e2945f9c1a415da2f1c18d3e7e61d71ffdaf11cbaa",
+            "manifest.json": "7790632cd1661a51c5bee3581fdde05e8425915e0a830f6010e978b56de54b6e",
+            "payments.jsonl": "e71b7c218492f4d7beab4561f3e8c88562f91389f6f7fabce16a4e29066e8e7e",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 0,
+          "transition_sha256": "32ee51e81a2235e2d7ed354820f8e60665c465b2a5df7e0a2ad95669c00b4ca8",
+          "truth_sha256": "c1a32e4b28234ba6a3a44e97e344fe21bc703cab36ea42ea66326c338538e266",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-05": {
+          "changed_records": 0,
+          "generator_version": "1.7",
+          "provenance_sha256": "faa97f7c96ec1c8aa3d71ec0dda2b6c686d4fc621c8697e328a3593f61c65fb8",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-05",
+          "source_episode_id": "EDEEC53CB871399C3E422E5CAE8126063",
+          "source_files_sha256": {
+            "fx.csv": "59bb9c72fcfeb1606c79c1d5fc266ce11f9f55e2e74a49c7de72c5166f37a46c",
+            "invoices.jsonl": "5af04de789bd1a6000283b0ea10cc7b19369c334dca291c51fa71f473a4072a7",
+            "ledger.csv": "6aa2b2271a2c99c3edd9966a7276d0283bda3df02d5c3a35d790ec576f0f7816",
+            "manifest.json": "bf3bf9a4312302e692c68fe9ea869164bf83229a9e970ca58e599113a9ec29bd",
+            "payments.jsonl": "44b8d518d98c84a3d1bbfe65a863563cb68bfe28a162f605d91f4e87caf95e6e",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EDEEC53CB871399C3E422E5CAE8126063",
+          "target_files_sha256": {
+            "fx.csv": "59bb9c72fcfeb1606c79c1d5fc266ce11f9f55e2e74a49c7de72c5166f37a46c",
+            "invoices.jsonl": "5af04de789bd1a6000283b0ea10cc7b19369c334dca291c51fa71f473a4072a7",
+            "ledger.csv": "6aa2b2271a2c99c3edd9966a7276d0283bda3df02d5c3a35d790ec576f0f7816",
+            "manifest.json": "bf3bf9a4312302e692c68fe9ea869164bf83229a9e970ca58e599113a9ec29bd",
+            "payments.jsonl": "44b8d518d98c84a3d1bbfe65a863563cb68bfe28a162f605d91f4e87caf95e6e",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 0,
+          "transition_sha256": "483b77c92df9339f04de0941f5924ecb5b5e0f67473eaabb0d03a2dbaafc4091",
+          "truth_sha256": "ec1cc8ebfbda675400aff6c914d1f4fab60725268da3037cacb62580f470bff9",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-06": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "a59eaf71f5a0ddd7c16d40878895b6a6153e7b0da15709f8f7e48ead37f61cdc",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-06",
+          "source_episode_id": "ED386AB644EF1EE4505E1383A3AAD4DC2",
+          "source_files_sha256": {
+            "fx.csv": "46a9584411e288935ca14546e3a6fc8eceb2601d0604b384ee3267e488541d77",
+            "invoices.jsonl": "d460a894df5210ece3dc62527f22eafe30aa796864cace022074aeffec6e490a",
+            "ledger.csv": "45ea59dacc786b95289303b28d07eebe41b52fdf76e20a8b439c7f68dcf9d673",
+            "manifest.json": "8b6ba6c8a21d2dabd9e50731a71cb0bbc68fad1ecb57cc86ef6637f7fe37b82f",
+            "payments.jsonl": "d619a373ebe23bb149467436436802bb62f86558c04d5471c2dca02744bbc112",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EBF0FB1B5FD0F2983BFF3234F1A8B30BF",
+          "target_files_sha256": {
+            "fx.csv": "46a9584411e288935ca14546e3a6fc8eceb2601d0604b384ee3267e488541d77",
+            "invoices.jsonl": "d460a894df5210ece3dc62527f22eafe30aa796864cace022074aeffec6e490a",
+            "ledger.csv": "2bd6c9395bd681c3c87adf314329bc2093ab5a849dd1298947597823a0f20433",
+            "manifest.json": "c6cd555b77b65142fd66378dbcfe67394caa7b1710b66262ad35de2cdc8674c9",
+            "payments.jsonl": "5c6d86e21786122e860ba6e60cfd8825b77925de2b04ba17978f5a48ee481515",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 2,
+          "transition_sha256": "1e8c2a7150b9baf44ce19bc563754eb50ce894528770e3e7b6839e4a6ad582d7",
+          "truth_sha256": "13225c15deff0aad9915026e8fbdace3780af666001a45e2dcb902eeb665bffd",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-07": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "9bc8ba8b925fcac1470cc5f11a5633cf224b869c648f8734ff7dc99cb00bfc22",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-07",
+          "source_episode_id": "E757C771E01F6A653D87D3F147E80DE95",
+          "source_files_sha256": {
+            "fx.csv": "c4c3ff9558b630c27c73e30095fedb6ecaf2dd0e374ea7a46a3f821874c89dc7",
+            "invoices.jsonl": "eb7c743bdca3de729e5185e5eb948803263e05c78694ec06633a89a1522f9644",
+            "ledger.csv": "02f252acb5851ccd10cb72f6c66b99113faaa18110a73d75864c90a438824ace",
+            "manifest.json": "80250a51d408006a9d6592e3347effbfd9234a16ffe1888cd3f1ad23794b588b",
+            "payments.jsonl": "5b6c2a19c311a69ba2e8ebb196434cc9785ce00599ac1f7d74c8b93cc57e5ed8",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E6E4F1D07076876EE2E0643CB43E0AA10",
+          "target_files_sha256": {
+            "fx.csv": "c4c3ff9558b630c27c73e30095fedb6ecaf2dd0e374ea7a46a3f821874c89dc7",
+            "invoices.jsonl": "eb7c743bdca3de729e5185e5eb948803263e05c78694ec06633a89a1522f9644",
+            "ledger.csv": "439e2f4e5ad1c89320503e9688f97a1c40021bdd9d300b17b691545889040bf9",
+            "manifest.json": "02973eae87b98e5dc4e9cdb3f76da4dd5440599f3af484c4921aa55778e1db10",
+            "payments.jsonl": "5b6c2a19c311a69ba2e8ebb196434cc9785ce00599ac1f7d74c8b93cc57e5ed8",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 2,
+          "transition_sha256": "9ab80bed01062bddff2986cbc2bc0713b589de9f9a5787d07597f85ca83962b3",
+          "truth_sha256": "2964ce1b103bc55ab42ddc844f86384caabf291291fa82122957529b6ef82932",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-08": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "7b6e8ae8bc493b924d5a584efe350d1a3a71da1b3b6cef39a65f2099d70172ab",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-08",
+          "source_episode_id": "E79785227F95DBE81041538C8464128B9",
+          "source_files_sha256": {
+            "fx.csv": "9cf8d72bb5e3bdca5f4323c9a910203a78a492aabd96f8d6735f2bf4d5ae3af2",
+            "invoices.jsonl": "91b28c0caa2100441562e949f352475f3c6ddf505577f25f476cf95c50fbd486",
+            "ledger.csv": "08949322ebf7d34858bc5da31a1a1f68c7f14318bf07c69eb04d52888da3e546",
+            "manifest.json": "bace0338e1314ec48049ec74e7aa5033bbac88b25cfc1d0e473aa7ad2bc0182a",
+            "payments.jsonl": "45c1da00c51779b9346a78bb856c7928be5bc3fe5dfbe541fc8ed4f1617a8f40",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E264CECF065565C62E6F2A29C88D8492E",
+          "target_files_sha256": {
+            "fx.csv": "9cf8d72bb5e3bdca5f4323c9a910203a78a492aabd96f8d6735f2bf4d5ae3af2",
+            "invoices.jsonl": "91b28c0caa2100441562e949f352475f3c6ddf505577f25f476cf95c50fbd486",
+            "ledger.csv": "f35f30e251f36b31661198a582840c5efee1e9574a5dc7b4ef5a98d5845eb8c6",
+            "manifest.json": "2341a001b1e9dbdf4c24599f777302030e16878fa413b301e502427d23bc5ac6",
+            "payments.jsonl": "283105fd13a99f31cd9bddfaff2c0b1e4903bf80b023d3ab7f047ad7487a853f",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 2,
+          "transition_sha256": "3e69a8ffa3b1351880144de45f433a8d51aa138bbd73db252e356807618935bb",
+          "truth_sha256": "ea38307ca5e56f8d32aff30d4dadfecebaa2d13330e904bb35ca38f7198f36c0",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-09": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "f8a54a950ba3394cb98e08da2b0cc111a9a470ae3f81bb3942696cae12e24663",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-09",
+          "source_episode_id": "EF1291346EE07EC6EC8702C8093B2594E",
+          "source_files_sha256": {
+            "fx.csv": "f51fe814fb72e23cad39332c62dff5d3130803f3466273cfb02b80d119420647",
+            "invoices.jsonl": "915d6fcc0ceee27a13b1d18fa38d15adbf862eb026a22b663b54d5d28cac15bf",
+            "ledger.csv": "b51d4a4c378cf10ddad5b7f0b03078a21153bb962c4f91930a0439487800c261",
+            "manifest.json": "6a984c508bb75968f9a01dc899485bacce7e1a018d3d617263f6d0cd694cd063",
+            "payments.jsonl": "0063e1d1a5dd5b905b4468c8ae3ea23388f12da28bfa231519a2b806ac4dd12a",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E997065575DFB32F7BE27C8FB70F014E6",
+          "target_files_sha256": {
+            "fx.csv": "f51fe814fb72e23cad39332c62dff5d3130803f3466273cfb02b80d119420647",
+            "invoices.jsonl": "915d6fcc0ceee27a13b1d18fa38d15adbf862eb026a22b663b54d5d28cac15bf",
+            "ledger.csv": "a6a300f424308b1fa58269ffda0544684d4d7d23028c2ec233ab925c6c775b65",
+            "manifest.json": "b2fbea071a5e82398d77c554e5d05092a00140b0c706448816b997722e1aa1dc",
+            "payments.jsonl": "0063e1d1a5dd5b905b4468c8ae3ea23388f12da28bfa231519a2b806ac4dd12a",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 2,
+          "transition_sha256": "7c0f1fbb7823325c896ffa668bd5c72614e28e7829c5186952f7d8993af5beb7",
+          "truth_sha256": "d6b281d04a164001f27d16671ec6d5a5b7c4d8d41e249aed5aa112ab9f1feb1d",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-10": {
+          "changed_records": 5,
+          "generator_version": "1.7",
+          "provenance_sha256": "12ee529fe6a33eaa5b80cacbfe7d703ac707bed2daf8776febb00e651f1749f5",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-10",
+          "source_episode_id": "EE58C2B9B93BDB167CA638EEC22441526",
+          "source_files_sha256": {
+            "fx.csv": "8ca2ece07ac29efbc05680c1db50ffa9f1861334dc431a5b1d19b5ed3cee871e",
+            "invoices.jsonl": "0122a92a21a24ec5bc013f141a24b985db6a31da8c1d909d3b9b5b91086e980c",
+            "ledger.csv": "2cc1c60cde62f59e75df816e66e2c1841fa9905247d3983a3a26e809e64a29c9",
+            "manifest.json": "a478954c1d0cc311f37ece02f010b628d627f67ab46ef52572093781bd2b79ed",
+            "payments.jsonl": "22be65486a8613f9a58fe992417234158ba5703321201402ab9049a466c991f6",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E14A18F35E89A10A7FDD3DC8B932EDCAE",
+          "target_files_sha256": {
+            "fx.csv": "8ca2ece07ac29efbc05680c1db50ffa9f1861334dc431a5b1d19b5ed3cee871e",
+            "invoices.jsonl": "0122a92a21a24ec5bc013f141a24b985db6a31da8c1d909d3b9b5b91086e980c",
+            "ledger.csv": "9271120ef059c6c2cbc974f2da9ebda01006ba5f8fa8d4593a43052a44ec9c1f",
+            "manifest.json": "ce2abe71c121bc3cf9c98f71d15db70e1e3f9b20b6f82a446741452dd0bd71a2",
+            "payments.jsonl": "3b1fdf17d30e5b17c396d4b53d0776f693b346d07db7fc01b2d91a9a64420e4c",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 2,
+          "transition_sha256": "e508509de773d2c2f48e99447196ff2547c62918e323396afaeb6f22e81cff97",
+          "truth_sha256": "064a7d6831bb6eab757253be703af0c6645d02a08a35b52cfb4cb88de1447f43",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-11": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "b0e029df2a2e5f68086f75e8b98b45f58eada4101c0074b1ae909e2b01edf3f2",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-11",
+          "source_episode_id": "E8F8F4E860311CE3C62EEB600E21A5B34",
+          "source_files_sha256": {
+            "fx.csv": "9f56d258c0427784e71aa10d85a6b129b20bee660852cc62486e5801724f1ed1",
+            "invoices.jsonl": "722b8f7886ff111baf76f163f6004213f791de283b9194ee51b7c1cdefbd0e6c",
+            "ledger.csv": "ecd8d34cdd69720b7a613c2a74025e2dead1033bda10806248ca2316eb7c83fc",
+            "manifest.json": "ede7869b71b3f48e2378d044846e8f38c288ad6d55890c18ecfe0f1c5a9992bf",
+            "payments.jsonl": "1a8933ac4968690aaa96e7e5132aaf0c526523c570170fa8eed08f9cf8c187e6",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "ECCE604C0FA0963A10979908D459AC161",
+          "target_files_sha256": {
+            "fx.csv": "9f56d258c0427784e71aa10d85a6b129b20bee660852cc62486e5801724f1ed1",
+            "invoices.jsonl": "722b8f7886ff111baf76f163f6004213f791de283b9194ee51b7c1cdefbd0e6c",
+            "ledger.csv": "182742abd2839af7493c00cda92a4bb7ab5972769aec11115bc14a3e2cd5ba40",
+            "manifest.json": "7848c7ad1b576fea2f78b7899c9d9f14dcc4abe224e817413dc63f6b37337533",
+            "payments.jsonl": "1a8933ac4968690aaa96e7e5132aaf0c526523c570170fa8eed08f9cf8c187e6",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 1,
+          "transition_sha256": "83788da0a7b17daf5188710a107d7c995782ff577c98c719e207ee0a281d927e",
+          "truth_sha256": "f24e3964781b070d88b017b6890ce64bb2c0ef755acea969c56babdd275db6ca",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-12": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "a2c55b0992e76a3fddc66d4f5c46b92ac85a78aeb512bbb93bf02d23c6725bbc",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-12",
+          "source_episode_id": "EE22C30E1EBC66D10EE0F22C518875C67",
+          "source_files_sha256": {
+            "fx.csv": "f15cf8c791aa6281bd534191e9ea0d3843903b69731ca0f3694c3e0dbed5769f",
+            "invoices.jsonl": "cb5bd4fe983e7101333ae9a942af1eeed68673fdfdd17dbf51dac911eb96b012",
+            "ledger.csv": "5b11994124b40899123690f235afca5b0c8cf3ec09283ea3eec1bb4fcdce0c7d",
+            "manifest.json": "72232c22550fc2ad0b51401dc2ac97708577d947c5c2f060725a57550d591b53",
+            "payments.jsonl": "c241068b82ac83227e98ac2d0a1abc501f2ad30c1116da9afdbd1963d0b8093f",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E237D941915A92F65551B938FD643DF07",
+          "target_files_sha256": {
+            "fx.csv": "f15cf8c791aa6281bd534191e9ea0d3843903b69731ca0f3694c3e0dbed5769f",
+            "invoices.jsonl": "cb5bd4fe983e7101333ae9a942af1eeed68673fdfdd17dbf51dac911eb96b012",
+            "ledger.csv": "4dc93c14534d519c064f3e1066258e6f1ad45b5a087ff214b79f1d5f2cf45998",
+            "manifest.json": "08e37003c21ce661140e48df3a8a65221454900d005f1fd2b1afa473187e885a",
+            "payments.jsonl": "c241068b82ac83227e98ac2d0a1abc501f2ad30c1116da9afdbd1963d0b8093f",
+            "policy.json": "495c4c206876efefc6b3c52ecdc4592fae024aa3c68121fa1896966035a9f726"
+          },
+          "target_findings": 1,
+          "transition_sha256": "06e4becdf501bca261686dec4983e195cad569f6ce0a8cfc27f8978b2b02f8ea",
+          "truth_sha256": "2ae68d38f0a00da73de240e785386b610a2020f106f4ab388b5e7aa6c8cd01b9",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-13": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "98eba6fe2f099a7012c9a9033ec5b5ceaed2c98d57b00504a3a8cd99e6427692",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-13",
+          "source_episode_id": "E8BE866F349C5991923C8F51B39FCBE10",
+          "source_files_sha256": {
+            "fx.csv": "6b1405dee61a5da229cecb46f85e03b7086b0132dcb41c3bff1ba47486b15417",
+            "invoices.jsonl": "e27e2fecec2b001a4512360c6d70e4043e4e3b7f28409bb89f76a51c5dd54861",
+            "ledger.csv": "84d5393890b9fb67260c9866bc30a253b1c1f641e2157f35bdd6b639526a97d7",
+            "manifest.json": "ab678cde6259a92f1dd221c0dce7e6456dff486620dff7009e8253dc5766aaee",
+            "payments.jsonl": "25522fb49334e8dfb6509d5143c3ab28d2ed48612ea906fefde799c52f410d4a",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E68BE2E5D183D053F004B78EF227F499E",
+          "target_files_sha256": {
+            "fx.csv": "6b1405dee61a5da229cecb46f85e03b7086b0132dcb41c3bff1ba47486b15417",
+            "invoices.jsonl": "e27e2fecec2b001a4512360c6d70e4043e4e3b7f28409bb89f76a51c5dd54861",
+            "ledger.csv": "b2ddb25171b38feeb42cf937c7fd439080d98d91396fefc90de4ff1f1b7f7369",
+            "manifest.json": "b1b9db6a3f0bffc661fec80a9a165751a3b4dc9a75eb436762358e5ce5565dda",
+            "payments.jsonl": "25522fb49334e8dfb6509d5143c3ab28d2ed48612ea906fefde799c52f410d4a",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 1,
+          "transition_sha256": "1f43b74eb2a38a5b9660cd115a51f3eead87a02d6db0d36b31a7895b38a6d52f",
+          "truth_sha256": "ee02bf304ff4f3fb1e14af8f5d321f00d585b46e9ac3ed80f4614d9844c9aa26",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-14": {
+          "changed_records": 2,
+          "generator_version": "1.7",
+          "provenance_sha256": "8f418d4814d6343db3ecfe96e7df2a4a9f7ea4a843a1962a3b52ea28a0de92cb",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-14",
+          "source_episode_id": "E9A44379FF451B397F77B92F75BC6902C",
+          "source_files_sha256": {
+            "fx.csv": "1a93009c57dfa89249c90a8f2bb1c053840f04a9a0bc8ebe422843946d84f2a9",
+            "invoices.jsonl": "1cb7b323dc0106da3e65868b37bfbce137c07138ff897346c4ae940535248da9",
+            "ledger.csv": "ed34aa6b2fe38f0f70874b2221ee685e01be64d95ec755fd98000e8f32fa0d7b",
+            "manifest.json": "5827c65046732d041d025cad1ce4cdeb73b9014c902c14fe1b2f91d61bc125e6",
+            "payments.jsonl": "7cf76c7ea39a900bc14ea63467e4d1d28b8e11531441f17987b41b96907c7f76",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E5A17FBCC47DFC3D9A77FAC21837EDFF8",
+          "target_files_sha256": {
+            "fx.csv": "1a93009c57dfa89249c90a8f2bb1c053840f04a9a0bc8ebe422843946d84f2a9",
+            "invoices.jsonl": "1cb7b323dc0106da3e65868b37bfbce137c07138ff897346c4ae940535248da9",
+            "ledger.csv": "c0edf4fd5ac3e237cfa37d7269c9ec17d13fc0b78a698a26d1c62f20da40cee8",
+            "manifest.json": "40f9e14c644c43552bb5b25979a42376ea0d117f961ba3d32696d42e56b4a16e",
+            "payments.jsonl": "7cf76c7ea39a900bc14ea63467e4d1d28b8e11531441f17987b41b96907c7f76",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 1,
+          "transition_sha256": "507a8fc2a77bf5ff8b27e8ab2209ebdb44415a76c83d1e077c6fdbe840e52f6a",
+          "truth_sha256": "ce398a972f7b217076e47f9172b6eb60d96217e743d1b9d3e28b491ebd42cd43",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-15": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "7fd7d4aaf8cbe7d18f0b2ca12b9757487b4e66e462f4564932f7c9d69ab00a1b",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-15",
+          "source_episode_id": "EA40EAEA798085045B64125C1750A1AED",
+          "source_files_sha256": {
+            "fx.csv": "a8551174f1b527b271fead8123b99405aa7e86f19e41dd8329b3c524fa6995d1",
+            "invoices.jsonl": "342008102f1f168ec99ebc658ac453ea2f72dde53a83b3e51d0d03df084bd197",
+            "ledger.csv": "1bcff7575dfe2cba0a38d57e3354e25b4b32dfd746c349cca966da96c72c6450",
+            "manifest.json": "fc35cf9ca0d9024c535551d1c090214892f42f6513232f1fd9c556e3577bffd8",
+            "payments.jsonl": "5d0cdfad843a1d10fa90a8d570272aefbd3fdb1b383101d19555fe3bbaf3b3ef",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E82D67E90B9C6089873D05F83895ADFE6",
+          "target_files_sha256": {
+            "fx.csv": "a8551174f1b527b271fead8123b99405aa7e86f19e41dd8329b3c524fa6995d1",
+            "invoices.jsonl": "342008102f1f168ec99ebc658ac453ea2f72dde53a83b3e51d0d03df084bd197",
+            "ledger.csv": "92acf61971b58daca6f8aaad0a5d842f61ec0122283558e2ada2340a3e907945",
+            "manifest.json": "f78002cbf884c559765481800b46ecf17b8c14451f018609d5b60cbd314d0c05",
+            "payments.jsonl": "5d0cdfad843a1d10fa90a8d570272aefbd3fdb1b383101d19555fe3bbaf3b3ef",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 2,
+          "transition_sha256": "26e0268f4d98ab11164b2c8280ec448e11eaaeb3f74d7ef64a75c4c96f034bc5",
+          "truth_sha256": "5a69aab08aa91aa3a7f6050b81335ff1215ac2e0407bed9368f70da16efca468",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-16": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "9ec781f48a4f7df5bf2fc3a155ed13bfe6dfc760d2155e2432b0f42301ee1ff6",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-16",
+          "source_episode_id": "EF54177C5CEA1EADA74BE630EA99A2788",
+          "source_files_sha256": {
+            "fx.csv": "e68890c12b33dc763e097ec9dcd26174e1608449fa1e084b9f452a8691c1b9eb",
+            "invoices.jsonl": "6772670ded79fd48385412775dc9a9aa6db9779dcc862534f59355c1932157c4",
+            "ledger.csv": "7746676fd6af4a7f333d11bbe5e72c3f0e7ccd5a632bcc64ac6ac73add43927c",
+            "manifest.json": "e849921fa18cc8037a88ef936118645e93d67c8b9b8e27a56b857aeff398442a",
+            "payments.jsonl": "cc39bd9baa20b4ed1ccf213455656fbdc336cd78f84579d9d10d31e998190ed7",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E33F856D7D160FA95DB53853E7E442E73",
+          "target_files_sha256": {
+            "fx.csv": "e68890c12b33dc763e097ec9dcd26174e1608449fa1e084b9f452a8691c1b9eb",
+            "invoices.jsonl": "6772670ded79fd48385412775dc9a9aa6db9779dcc862534f59355c1932157c4",
+            "ledger.csv": "cbbbb30e0026e63b602ca2be8203d960b5f68c0aa7d90f84164c1a2f42708e67",
+            "manifest.json": "51b88445e663b4894b81174be0f9f3ae53417cc1b2973fe197039abb5b37475f",
+            "payments.jsonl": "cc39bd9baa20b4ed1ccf213455656fbdc336cd78f84579d9d10d31e998190ed7",
+            "policy.json": "f95f1d031578f9af986f823b36027bdeceb9f0965099dbb8f5cdfd2849246210"
+          },
+          "target_findings": 2,
+          "transition_sha256": "74cd86a467384a0c219f843b8d2af60f5dc13e4cfd94dea11844209dbb5e05c1",
+          "truth_sha256": "e710cdf14aa674c4f1d9f6da05cd6cf943310098865597ecb77c3ac83d215bbd",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-17": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "d09ef31a146855b626c5b41ca5055d2ea7b5863dff953b97a0322f7da8688e8f",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-17",
+          "source_episode_id": "EC666CE86A96EE1815D455E482A0B8326",
+          "source_files_sha256": {
+            "fx.csv": "f0b64eecb688a9fb7a74bf7b489a695ecee892defe2193acf6d5002818d2b672",
+            "invoices.jsonl": "00d9ff8d18c9545df987589df8bbe5d3f1307ca40e7b396e1df010bbd86dbc90",
+            "ledger.csv": "34110dfa54b6528a41165af45b04a0a1052c48a04588894d7b54438fe042276e",
+            "manifest.json": "3bb1d9f53aa21c2046efd8577aac5ce83d5bfa75f1e5d074ba561cbdb311f0a8",
+            "payments.jsonl": "fe7b04e5fb148ab3c2d9e88bde4c5d4319d2730f8b98624e07659de5ce9d694a",
+            "policy.json": "56296670e83a5b04aa32a8b4ff65236c7233d2bea62dd27d525f7bee54d963e5"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EB4F9157E669919F12A8D4570A8F2750C",
+          "target_files_sha256": {
+            "fx.csv": "f0b64eecb688a9fb7a74bf7b489a695ecee892defe2193acf6d5002818d2b672",
+            "invoices.jsonl": "00d9ff8d18c9545df987589df8bbe5d3f1307ca40e7b396e1df010bbd86dbc90",
+            "ledger.csv": "11d2118a0fd2f762a59b16c78b3f1c468ab14c972f610696a609de9f77439741",
+            "manifest.json": "d47b02316d733595a06578ccc0c9194f2919dbb5baa7d0e2cf61deae1a9ec820",
+            "payments.jsonl": "fe7b04e5fb148ab3c2d9e88bde4c5d4319d2730f8b98624e07659de5ce9d694a",
+            "policy.json": "56296670e83a5b04aa32a8b4ff65236c7233d2bea62dd27d525f7bee54d963e5"
+          },
+          "target_findings": 2,
+          "transition_sha256": "f6ea46eff3bb651d6257587bcb7f98604f181786ce3260d1a43a251b8b3d0f21",
+          "truth_sha256": "5ef93b263b2f8847bfc14148ab0f4ed03f63422bbb922c086302f1a53aea7c8e",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-18": {
+          "changed_records": 4,
+          "generator_version": "1.7",
+          "provenance_sha256": "c59b748322f2f291495a362eeaa35754c44c373677a8890506cc81399af9082f",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-18",
+          "source_episode_id": "E8C94EBA9613336E8CCCDDB323DD4EE5F",
+          "source_files_sha256": {
+            "fx.csv": "31d02cc824853edd5af0beaed68a4d569f28d73b377cb830c05ac2ab31b0ac70",
+            "invoices.jsonl": "0e32fad74b53ba3e6832a27ca6466f7c1aac3bfd00e61efd9ea353c203f163cb",
+            "ledger.csv": "b46828f69b3a25d70fbfad2def98f6d481cbe6966aebc80a8bfb8f22d4651431",
+            "manifest.json": "66f2bb5edbccae9e95bd58b1d324232d3dca970830f062bf05c7ac50f9987139",
+            "payments.jsonl": "db069a6316b63feb669da25115e7ac1bdfa8c75cccfa9ea4de210428e187f074",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EC3F64F1DAF5180FC56BDDECAF618F963",
+          "target_files_sha256": {
+            "fx.csv": "31d02cc824853edd5af0beaed68a4d569f28d73b377cb830c05ac2ab31b0ac70",
+            "invoices.jsonl": "0e32fad74b53ba3e6832a27ca6466f7c1aac3bfd00e61efd9ea353c203f163cb",
+            "ledger.csv": "672b3ed082ca356d6b274ed0d69ec5addaede97496786b864f2ab09690ed7af4",
+            "manifest.json": "f29bf962fbc677ea165b3e8e603c285f9a48f1ea69599dee97a2daf853618130",
+            "payments.jsonl": "db069a6316b63feb669da25115e7ac1bdfa8c75cccfa9ea4de210428e187f074",
+            "policy.json": "0b6eb605eb3023737b2d93b3c9e34d46f40b6bc06c9e4c25dd8c3f322a72ffb4"
+          },
+          "target_findings": 2,
+          "transition_sha256": "4a8b9497c7c46bad8a380881700860269f94c74bec7dcafe0d86c13d75a03687",
+          "truth_sha256": "12f462dbf4c7350a1e61dd1347b89195aa85bb82e6e91c1c3807883e3ba4708d",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-19": {
+          "changed_records": 8,
+          "generator_version": "1.7",
+          "provenance_sha256": "6d0d726603bd7bf8332226fb19f72193e2acd581505573bcf017660eb1471103",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-19",
+          "source_episode_id": "ECF2D795DCAD6162FA6E4D3CAA1591722",
+          "source_files_sha256": {
+            "fx.csv": "f0810d888188fa3e22dd215aab5d6f5209129c6fe4e2c8cc5fc9cafe9a95d5c1",
+            "invoices.jsonl": "c224c9a017600795a79e6ba77d6763b0bb4f057d5e66bde656a7457b684c6007",
+            "ledger.csv": "f718f6d649c58da06d31e6fc3167613b40d5cab1637097c497981fb5f32acd6a",
+            "manifest.json": "bbfdb8a097639b96d4c1637e231ad0fcee7620b3dcd96b257ad0ec3de7589e2a",
+            "payments.jsonl": "6af5a2e76451fb5ea163fa1fd8a5fb04054ba96cb8fb7bdf61e15ddd499d1df2",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "E8C5D256A8F0D5B1E92024259E0E3FFE7",
+          "target_files_sha256": {
+            "fx.csv": "f0810d888188fa3e22dd215aab5d6f5209129c6fe4e2c8cc5fc9cafe9a95d5c1",
+            "invoices.jsonl": "c224c9a017600795a79e6ba77d6763b0bb4f057d5e66bde656a7457b684c6007",
+            "ledger.csv": "36586bc91af1a1c4716c6e992a30e2003addd60e67d71254af212bb7c31796e2",
+            "manifest.json": "9aaa8c383fde225c73500c1ab10dd5cee3b22531882c1508bab9c5439769d29b",
+            "payments.jsonl": "6af5a2e76451fb5ea163fa1fd8a5fb04054ba96cb8fb7bdf61e15ddd499d1df2",
+            "policy.json": "d8ed633cbedb061e2b4ed86dd1be2d2849ca52a3dac784c501d5bf6bc3d6c6e2"
+          },
+          "target_findings": 4,
+          "transition_sha256": "a152a42dbd12df3938c479e0e128f7a700c9044a7e0743eef7a1fbbbbec06b45",
+          "truth_sha256": "4dde9b4a6130d727a7b9c19fd90b2a6d9b58a9f821ce01afc153a3e1ed93cc23",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        },
+        "internal-20": {
+          "changed_records": 24,
+          "generator_version": "1.7",
+          "provenance_sha256": "5a686426099859625f7dc4ef5945eae503c50f44ff167193047068cf493785eb",
+          "snapshot": "/results/verify/rehearsal/snapshots/internal-20",
+          "source_episode_id": "E6D1BECCB251767624A5455FD3BDB0754",
+          "source_files_sha256": {
+            "fx.csv": "d443fa82115bec97b9e3a4a6f1c9e12303d7bc602fd27a6c17fcc23f631224e8",
+            "invoices.jsonl": "ee9247100a6d4b04c9f2a40e67502bb87689fcbaa2f882a1881bff50974a5d4b",
+            "ledger.csv": "218e0c6aeb713fd7431480e7c905ec2bb7a9511ceb3851504cd20ac56d579d65",
+            "manifest.json": "1068b2638c51d81421c7ecfa5417aa7714cb5b7e80f6b962bbf48722d6e7bd29",
+            "payments.jsonl": "9c36fa214fb68ad6375d42deacc2de5338cb96eeb64ab670cf5b6bdb6f607cd9",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "source_findings": 0,
+          "status": "passed",
+          "target_episode_id": "EE8EB006EE901FCFC39FAA2B39FB2D81F",
+          "target_files_sha256": {
+            "fx.csv": "d443fa82115bec97b9e3a4a6f1c9e12303d7bc602fd27a6c17fcc23f631224e8",
+            "invoices.jsonl": "ee9247100a6d4b04c9f2a40e67502bb87689fcbaa2f882a1881bff50974a5d4b",
+            "ledger.csv": "f6ef0218a95322bee17b8be99893c532a3c2e95ede006600e4384aaf890699f6",
+            "manifest.json": "bc48b13dbfb41339590b0f758daa19921ba31c261b9ff50616c7ae42c1bcd975",
+            "payments.jsonl": "9c36fa214fb68ad6375d42deacc2de5338cb96eeb64ab670cf5b6bdb6f607cd9",
+            "policy.json": "47d666f21e6db5b00d904f472ecc50d9f0ab0a396fb5dfc487c3f3c7ceea1812"
+          },
+          "target_findings": 12,
+          "transition_sha256": "b122b056d8d7a36cf22f3fa71772b6188d7f3ba528e7639a791b666024857926",
+          "truth_sha256": "9f504115a811aba430d18a4f0460b2414185dbaf86488e4d7b03ebb8f3ff59dc",
+          "verifier": {
+            "engine": "duckdb",
+            "engine_version": "1.1.3",
+            "rules_version": "verifier-rules-1.1"
+          }
+        }
+      },
+      "preload": {
+        "images_present_before_load": {
+          "runtime": false,
+          "verifier": false,
+          "policy": false
+        },
+        "checked_identities": {
+          "runtime": {
+            "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6": false,
+            "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d": false,
+            "auditlab-runtime:858091a41fc8": false
+          },
+          "verifier": {
+            "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490": false,
+            "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb": false,
+            "auditlab-verifier:858091a41fc8": false
+          },
+          "policy": {
+            "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f": false,
+            "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72": false,
+            "auditlab-policy:858091a41fc8": false
+          }
+        },
+        "status": "passed"
+      },
+      "docker_version": "29.10.0",
+      "loaded_images": {
+        "runtime": {
+          "id": "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d",
+          "tag": "auditlab-runtime:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 359888144,
+          "oci_manifest_digest": "sha256:f684a3743da43ac56b4539d99e3cd193ecbe806302c69e41b81b689e5e4b414d",
+          "source_id": "sha256:30d25c71e44050de6f9a7f162703133e0bd6180e677b39e512e1ae6a04b1efe6"
+        },
+        "verifier": {
+          "id": "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb",
+          "tag": "auditlab-verifier:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 234908032,
+          "oci_manifest_digest": "sha256:fa6e11faa2a5e73053b166ceb1b4cef60867c83fc4f35eb5ca660d983ff5ffeb",
+          "source_id": "sha256:94fa647706cec368d9d874579b33c79d1a4b6435370f71dd8b00053c1eb2d490"
+        },
+        "policy": {
+          "id": "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72",
+          "tag": "auditlab-policy:858091a41fc8",
+          "os": "linux",
+          "architecture": "amd64",
+          "uncompressed_size_bytes": 130557825,
+          "oci_manifest_digest": "sha256:845631b3f11fcb48f9f0aceb246d74208ded00367beb3c66430847b507e6ca72",
+          "source_id": "sha256:ae6ded09bec08b9ce1e7664e16c520ea83862aaecd7d4f7237eaeab1c3ff5c0f"
+        }
+      },
+      "strict_exit_code": 2,
+      "controller_peak_bytes": 231968768,
+      "policy_peak_bytes": 25530368,
+      "verifier_peak_bytes": 152018944,
+      "max_episode_seconds": 0.6452615219999984,
+      "image_load_seconds": 2.2235937009999986,
+      "verification_container_seconds": 279.27410055800004,
+      "policies": {
+        "flag_all": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 7,
+              "fp": 8,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "fx_conversion": {
+              "fn": 12,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "payment_allocation": {
+              "fn": 10,
+              "fp": 592,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "period_cutoff": {
+              "fn": 9,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 5,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 1.0
+          },
+          "elapsed_seconds": [
+            0.573808764999967,
+            0.5757998860000271,
+            0.5738451990000044,
+            0.5750998390000177,
+            0.5851207659999886,
+            0.5677529049999634,
+            0.5752384479999932,
+            0.5685084670000151,
+            0.5781502689999911,
+            0.5833647279999923,
+            0.5671377379999853,
+            0.5770569710000473,
+            0.5766371779999986,
+            0.5840951280000013,
+            0.5819711310000457,
+            0.5760250220000103,
+            0.5658889190000309,
+            0.5712816729999872,
+            0.5807456100000081,
+            0.5856091990000323
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "macro_f1": 0.0,
+          "mean_inspection_steps": 3.6,
+          "mean_reward": -1.0,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 7,
+                "fp": 8,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "fx_conversion": {
+                "fn": 12,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "payment_allocation": {
+                "fn": 10,
+                "fp": 592,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "period_cutoff": {
+                "fn": 9,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 0.0,
+            "mean_reward": -1.0,
+            "micro": {
+              "f1": 0.0,
+              "fn": 38,
+              "fp": 600,
+              "precision": 0.0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 600,
+            "precision": 0.0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 22462464,
+          "score_status": "complete"
+        },
+        "oracle": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 7
+            },
+            "fx_conversion": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 12
+            },
+            "payment_allocation": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 10
+            },
+            "period_cutoff": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 9
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.14181322600001067,
+            0.14360515800001394,
+            0.14677052100000765,
+            0.1492607620000399,
+            0.1543234590000111,
+            0.14204120499999817,
+            0.14364435799996045,
+            0.14661016000002292,
+            0.14962008800000604,
+            0.15436799300005077,
+            0.14227820199999996,
+            0.14798189200001843,
+            0.1478662070000496,
+            0.1497398150000322,
+            0.15543475099997295,
+            0.14235128299998223,
+            0.14403264199995647,
+            0.14643042900002,
+            0.15223658499996873,
+            0.15745758100001694
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "macro_f1": 1.0,
+          "mean_inspection_steps": 0,
+          "mean_reward": 1.0,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 7
+              },
+              "fx_conversion": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 12
+              },
+              "payment_allocation": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 10
+              },
+              "period_cutoff": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 9
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 1.0,
+            "mean_reward": 1.0,
+            "micro": {
+              "f1": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "tp": 38
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": null,
+          "score_status": "complete"
+        },
+        "random": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 7,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "fx_conversion": {
+              "fn": 12,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "payment_allocation": {
+              "fn": 10,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            },
+            "period_cutoff": {
+              "fn": 9,
+              "fp": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.5675950940000121,
+            0.5620329650000144,
+            0.5697210400000472,
+            0.5730320559999882,
+            0.5763961540000082,
+            0.5623620169999981,
+            0.5644214469999724,
+            0.5728220059999671,
+            0.5723842110000419,
+            0.5713840079999954,
+            0.5601624939999965,
+            0.5658422789999804,
+            0.5680869849999794,
+            0.5737375420000035,
+            0.5772518069999819,
+            0.5643358699999794,
+            0.5705460719999564,
+            0.5674757880000243,
+            0.574396886000045,
+            0.571012603999975
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7,
+            7
+          ],
+          "macro_f1": 0.25,
+          "mean_inspection_steps": 7,
+          "mean_reward": -0.5035000000000001,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 7,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "fx_conversion": {
+                "fn": 12,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "payment_allocation": {
+                "fn": 10,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              },
+              "period_cutoff": {
+                "fn": 9,
+                "fp": 0,
+                "recall": 0.0,
+                "tp": 0
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 0.25,
+            "mean_reward": -0.5035000000000001,
+            "micro": {
+              "f1": 0.0,
+              "fn": 38,
+              "fp": 0,
+              "precision": 0,
+              "recall": 0.0,
+              "tp": 0
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 0.0,
+            "fn": 38,
+            "fp": 0,
+            "precision": 0,
+            "recall": 0.0,
+            "tp": 0
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 22310912,
+          "score_status": "complete"
+        },
+        "reconcile": {
+          "by_class": {
+            "duplicate_invoice": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 7
+            },
+            "fx_conversion": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 12
+            },
+            "payment_allocation": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 10
+            },
+            "period_cutoff": {
+              "fn": 0,
+              "fp": 0,
+              "recall": 1.0,
+              "tp": 9
+            }
+          },
+          "clean": {
+            "false_accusation_episodes": 0,
+            "measured": 5,
+            "planned": 5,
+            "rate_over_measured": 0.0
+          },
+          "elapsed_seconds": [
+            0.5666699109999627,
+            0.5902806990000045,
+            0.5982675390000054,
+            0.607521021000025,
+            0.6375562270000046,
+            0.5469164309999996,
+            0.5878079029999981,
+            0.5931710870000302,
+            0.6168727190000141,
+            0.6388717410000027,
+            0.5665155039999945,
+            0.5860443539999665,
+            0.5993881320000014,
+            0.6155776890000197,
+            0.6452615219999984,
+            0.570876496999972,
+            0.5920181609999986,
+            0.5979819670000097,
+            0.6190459560000363,
+            0.6291306530000043
+          ],
+          "failed": 0,
+          "failure_kinds": {},
+          "inspection_steps": [
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47,
+            9,
+            13,
+            22,
+            30,
+            47
+          ],
+          "macro_f1": 1.0,
+          "mean_inspection_steps": 24.2,
+          "mean_reward": 0.9516,
+          "measured": 20,
+          "measured_only": {
+            "by_class": {
+              "duplicate_invoice": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 7
+              },
+              "fx_conversion": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 12
+              },
+              "payment_allocation": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 10
+              },
+              "period_cutoff": {
+                "fn": 0,
+                "fp": 0,
+                "recall": 1.0,
+                "tp": 9
+              }
+            },
+            "denominator": 20,
+            "macro_f1": 1.0,
+            "mean_reward": 0.9516,
+            "micro": {
+              "f1": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "tp": 38
+            }
+          },
+          "measurement_coverage": 1.0,
+          "micro": {
+            "f1": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 38
+          },
+          "not_checked": 0,
+          "outcomes": {
+            "submitted": 20
+          },
+          "planned": 20,
+          "policy_peak_memory_bytes": 25530368,
+          "score_status": "complete"
+        }
+      }
+    }
+  }
+}

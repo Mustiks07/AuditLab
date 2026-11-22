@@ -2,10 +2,10 @@
 
 Документ для человека, который получает архив AuditLab и проверяет его **без помощи авторов**.
 
-**Опубликованный кандидат:** [v0.1.0-rc.3](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.3),
-исходный SHA `b7a1857a51bf47bb36e42699988b38b4d897fa1f`.
-Архив `AuditLab-v0.1.0-rc.3-offline.zip`: **330 616 243 B**, SHA-256
-`a5363412f4509b7ae39aa21aa9eee27154e2af5357347f7d02d7dc31ddb52b81`.
+**Опубликованный кандидат:** [v0.1.0-rc.4](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.4),
+исходный SHA `858091a41fc8721bb2ae44db8163b39b78785492`.
+Архив `AuditLab-v0.1.0-rc.4-offline.zip`: **403 483 795 B**, SHA-256
+`dc93e183680615b6da4154b5cd1afd0a7f2c71ed32985c7c85571d65a6bedd78`.
 Публикация и хеши проверены через GitHub; повторите сверку файла после скачивания.
 
 RC2 — исторический кандидат. Его результаты и обнаруженные тогда дефекты сохранены без изменения в
@@ -27,7 +27,7 @@ RC2 — исторический кандидат. Его результаты �
 | Docker | Локальный Docker Engine с Linux-контейнерами и сокетом `/var/run/docker.sock`. Удалённые contexts и `DOCKER_HOST` launcher игнорирует. Пользователь должен иметь доступ к сокету | `docker --host unix:///var/run/docker.sock version`, `docker --host unix:///var/run/docker.sock info` |
 | cgroup | **v2** для подтверждения лимитов ресурсов. На v1 проверка функциональная, ресурсы остаются «не проверено», коды 2 | `docker --host unix:///var/run/docker.sock info --format '{{.CgroupVersion}}'` |
 | CPU | Минимум 2 CPU в affinity процесса (берутся первые два, или явно `--cpu-set 0,1`) | `nproc` |
-| Диск | Место для ZIP, распакованного комплекта, загруженных Docker-слоёв и результатов. Размер ZIP берите со страницы RC3, payload — из `manifest.json`; они не равны суммарному месту на диске | `df -h .`, `docker --host unix:///var/run/docker.sock system df` |
+| Диск | Место для ZIP, распакованного комплекта, загруженных Docker-слоёв и результатов. Размер ZIP берите со страницы RC4, payload — из `manifest.json`; они не равны суммарному месту на диске | `df -h .`, `docker --host unix:///var/run/docker.sock system df` |
 | Сеть | Не нужна для проверки. Все контейнеры проверки запускаются с `--network none`. Демо использует bridge только для порта на `127.0.0.1` | |
 
 Контроллер и один одновременно работающий контейнер политики либо verifier ограничены суммарно **3 GiB**.
@@ -59,11 +59,11 @@ docker --host unix:///var/run/docker.sock info --format '{{.Driver}} {{.DriverSt
 
 ## 3. Получение и проверка хеша архива
 
-Скачайте в новый пустой каталог архив и файл контрольных сумм со страницы RC3.
+Скачайте в новый пустой каталог архив и файл контрольных сумм со страницы RC4.
 Скачивание выполняется **до** отключения сети; сам запуск не требует интернета.
 
 ```sh
-TAG=v0.1.0-rc.3
+TAG=v0.1.0-rc.4
 ZIP="AuditLab-${TAG}-offline.zip"
 SUMS="AuditLab-${TAG}-SHA256SUMS.txt"
 ```
@@ -74,7 +74,7 @@ SUMS="AuditLab-${TAG}-SHA256SUMS.txt"
 test -f "$ZIP" && sha256sum -c "$SUMS" --ignore-missing
 ```
 
-Ожидается именно `AuditLab-v0.1.0-rc.3-offline.zip: OK`, exit 0. Отсутствие файла, ошибка проверки
+Ожидается именно `AuditLab-v0.1.0-rc.4-offline.zip: OK`, exit 0. Отсутствие файла, ошибка проверки
 или строка о том, что ни один файл не проверен, не являются успехом. Не используйте checksum RC2.
 
 Архив **не содержит общего каталога**: шесть файлов лежат в корне. Распаковывайте в новый пустой каталог:
@@ -93,7 +93,7 @@ cd bundle
 
 | № | Команда | Ожидаемый вывод и код |
 |---|---|---|
-| 1 | `python3.11 offline.py check` | Проверка payload и каталога образов, **exit 0**, Docker не нужен. Source должен быть `b7a1857a51bf47bb36e42699988b38b4d897fa1f` |
+| 1 | `python3.11 offline.py check` | Проверка payload и каталога образов, **exit 0**, Docker не нужен. Source должен быть `858091a41fc8721bb2ae44db8163b39b78785492` |
 | 2 | `python3.11 offline.py verify --suite quick --output-root ./results` | **347 тестов** в 8 наборах, без пропусков. **Exit 0**, если все исполненные проверки и фактические лимиты контроллера подтверждены; **exit 2**, если ресурсы не подтверждены. Это быстрые проверки, не полная приёмка |
 | 3 | `python3.11 offline.py verify --suite rehearsal --output-root ./results` | Те же тесты, 20 снимков, 4 политики × 20 попыток, 20 пар и независимые проверки исходных книг. Ожидаемая строгая приёмка — **exit 2**, пока OPS-01 / OPS-02 остаются «не проверено» |
 | 4 | evidence checker (ниже) | При полном внутреннем прогоне и подтверждённых ресурсах: `internal_rehearsal_passed`, `failures: []`, `missing: []`, **exit 0**. Недостающие ресурсные свидетельства — `not_checked`, **exit 2**; обнаруженная ошибка — **exit 1** |
@@ -186,14 +186,14 @@ mkdir -p source && tar -xzf source.tar.gz -C source
 cp source/auditlab/demo/open_sets.py open_sets.py
 ```
 
-В опубликованном `v0.1.0-rc.3` его нет. Для RC3 создайте файл командой ниже: это тот же текст, байт в байт,
+В опубликованном `v0.1.0-rc.4` его нет. Для RC3 создайте файл командой ниже: это тот же текст, байт в байт,
 что проверяет тест репозитория. Сам архив RC3 при этом не меняется.
 
 ```sh
 cat > open_sets.py <<'OPEN_SETS_PY'
 """Mandatory policies on the open train/dev sets for the receiver (OPS-02), with a strict summary.
 
-Standard library only. The same file works with an unchanged v0.1.0-rc.3 bundle (copy it from
+Standard library only. The same file works with an unchanged v0.1.0-rc.4 bundle (copy it from
 docs/demo/HANDOFF.md, section 5a) and with later bundles (``source/auditlab/demo/open_sets.py``).
 
 Inside the runtime image (policies run as sibling containers without network, like ``verify``)::

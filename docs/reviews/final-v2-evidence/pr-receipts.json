@@ -1,0 +1,57 @@
+{
+  "52": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "6903323e786d6dacc73d041457511fa727429d78",
+    "base_sha": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+    "checkout_sha": "031d62dc756b5e37070b95c7c859a8d2c6ad08bd",
+    "tests": 647,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "786de600dd4a555186ee14f1234e7ea8a851591e634dc80b7eeaf561c621d0ad"
+  },
+  "53": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "2613a8af01da093ebdd7d1fd45f57b7f3c21edff",
+    "base_sha": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+    "checkout_sha": "1ec3728fe76da3e56a586107a0bcdb0bcd985afa",
+    "tests": 638,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "7df2d0398d84284623738d121423c11c72b12990b9ec452597148f19c5bec76c"
+  },
+  "54": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "85ac6c81ff9b39710e9753c7a5bc38fe2897ae82",
+    "base_sha": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+    "checkout_sha": "763330f1e22007db2ace2ca9cd5e52a0c4eac51b",
+    "tests": 643,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "3a6b512b3d6897c04f0dfba1655e26c05f4588de0987ca135a927d2d5ec5f402"
+  },
+  "55": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "f46830f8e2874bfb6620c87594064604ace413c4",
+    "base_sha": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+    "checkout_sha": "f05b433253b15989dfb51c0a05302e83a70a2941",
+    "tests": 646,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "b750599f6b6f8e848f2e5ec238153eb28022ed3b52de169add7e2531bf5b8817"
+  },
+  "56": {
+    "status": "tests_verified",
+    "exit_code": 0,
+    "head_sha": "858091a41fc8721bb2ae44db8163b39b78785492",
+    "base_sha": "988a5dbb46886d88d811e059965d893dd9fef6f7",
+    "checkout_sha": "c6df854ad68517a26285404a7cd6acde4de0f247",
+    "tests": 698,
+    "failures": [],
+    "scope": "CI tests for these revisions only; Issue acceptance and merge decision require review",
+    "report_sha256": "eaed186c519d0378051662688000cc2f5fb8f1af55b2e6f8de82118647cef971"
+  }
+}

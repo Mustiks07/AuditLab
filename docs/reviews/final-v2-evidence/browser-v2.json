@@ -1,0 +1,221 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-cutoff"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-amount",
+      "transformation": "amount"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-interact"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-fixed",
+      "transformation": "fixed"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-interaction",
+      "transformation": "interaction"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-late"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 1440,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-amount",
+      "transformation": "amount"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-cutoff"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-amount",
+      "transformation": "amount"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-interact"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-fixed",
+      "transformation": "fixed"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-interaction",
+      "transformation": "interaction"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-late"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 390,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-amount",
+      "transformation": "amount"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-cutoff"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-cutoff/v/v2-dev-cutoff-amount",
+      "transformation": "amount"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-interact"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-fixed",
+      "transformation": "fixed"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-interact/v/v2-dev-interact-interaction",
+      "transformation": "interaction"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-late"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-id_order",
+      "transformation": "id_order"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-lawful_distractor",
+      "transformation": "lawful_refund"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-period_crossing",
+      "transformation": "boundary"
+    },
+    {
+      "width": 320,
+      "route": "#/research/families/v2-dev-late/v/v2-dev-late-amount",
+      "transformation": "amount"
+    }
+  ],
+  "errors": []
+}

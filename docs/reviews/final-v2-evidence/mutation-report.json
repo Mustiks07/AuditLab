@@ -1,0 +1,332 @@
+{
+  "protocol_id": "independent-assurance-2.0",
+  "cases": 298,
+  "episodes": 10,
+  "original_vs_reference": {
+    "agree": 298,
+    "total": 298,
+    "disagreements": []
+  },
+  "original_project_tests": [
+    "Ran 83 tests in 0.091s",
+    "OK"
+  ],
+  "mutants": {
+    "M1_currency": {
+      "status": "killed",
+      "battery_killing_cases": 38,
+      "examples": [
+        "affected_reversed+currency",
+        "amount_plus_1+currency",
+        "currency",
+        "currency+affected_reversed",
+        "currency+amount_plus_1",
+        "currency+currency"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.095s",
+        "FAILED (failures=5)"
+      ],
+      "proof": null
+    },
+    "M2_amount": {
+      "status": "killed",
+      "battery_killing_cases": 60,
+      "examples": [
+        "affected_reversed+amount_plus_1",
+        "amount_minus_1",
+        "amount_plus_1",
+        "amount_plus_1+affected_reversed",
+        "amount_plus_1+amount_plus_1",
+        "amount_plus_1+currency"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.093s",
+        "FAILED (failures=12)"
+      ],
+      "proof": null
+    },
+    "M3_tolerance_plus_one": {
+      "status": "killed",
+      "battery_killing_cases": 60,
+      "examples": [
+        "affected_reversed+amount_plus_1",
+        "amount_minus_1",
+        "amount_plus_1",
+        "amount_plus_1+affected_reversed",
+        "amount_plus_1+amount_plus_1",
+        "amount_plus_1+currency"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.120s",
+        "FAILED (failures=11)"
+      ],
+      "proof": null
+    },
+    "M4_affected_ids": {
+      "status": "killed",
+      "battery_killing_cases": 14,
+      "examples": [
+        "affected_drop_one",
+        "affected_extra"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.093s",
+        "FAILED (failures=6)"
+      ],
+      "proof": null
+    },
+    "M5_type": {
+      "status": "killed",
+      "battery_killing_cases": 11,
+      "examples": [
+        "wrong_type"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.093s",
+        "FAILED (failures=3)"
+      ],
+      "proof": null
+    },
+    "M6_ids_order": {
+      "status": "killed",
+      "battery_killing_cases": 13,
+      "examples": [
+        "affected_reversed",
+        "affected_reversed+affected_reversed",
+        "amount_plus_1+affected_reversed",
+        "currency+affected_reversed",
+        "evidence_drop_one+affected_reversed",
+        "exact+affected_reversed"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.094s",
+        "FAILED (failures=11)"
+      ],
+      "proof": null
+    },
+    "M7_evidence_coverage": {
+      "status": "killed",
+      "battery_killing_cases": 46,
+      "examples": [
+        "affected_reversed+evidence_drop_one",
+        "amount_plus_1+evidence_drop_one",
+        "currency+evidence_drop_one",
+        "evidence_drop_one",
+        "evidence_drop_one+affected_reversed",
+        "evidence_drop_one+amount_plus_1"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.093s",
+        "FAILED (failures=5)"
+      ],
+      "proof": null
+    },
+    "M8_evidence_availability": {
+      "status": "killed",
+      "battery_killing_cases": 11,
+      "examples": [
+        "evidence_unavailable_extra"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.126s",
+        "FAILED (failures=2)"
+      ],
+      "proof": null
+    },
+    "M9_duplicates_as_tp": {
+      "status": "killed",
+      "battery_killing_cases": 8,
+      "examples": [
+        "oracle_duplicated"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.092s",
+        "FAILED (failures=5)"
+      ],
+      "proof": null
+    },
+    "M10_greedy_matching": {
+      "status": "killed",
+      "battery_killing_cases": 8,
+      "examples": [
+        "synthetic_nested_sets"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.094s",
+        "FAILED (failures=1)"
+      ],
+      "proof": null
+    },
+    "M11_empty_clean_f1_zero": {
+      "status": "killed",
+      "battery_killing_cases": 10,
+      "examples": [
+        "empty",
+        "empty_10_steps",
+        "oracle",
+        "oracle_100_steps",
+        "oracle_duplicated"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.091s",
+        "FAILED (failures=5)"
+      ],
+      "proof": null
+    },
+    "M12_no_inspection_cost": {
+      "status": "killed",
+      "battery_killing_cases": 190,
+      "examples": [
+        "affected_drop_one",
+        "affected_extra",
+        "affected_reversed",
+        "affected_reversed+affected_reversed",
+        "affected_reversed+amount_plus_1",
+        "affected_reversed+currency"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.099s",
+        "FAILED (failures=23)"
+      ],
+      "proof": null
+    },
+    "M13_no_reward_clip": {
+      "status": "killed",
+      "battery_killing_cases": 88,
+      "examples": [
+        "affected_drop_one",
+        "affected_extra",
+        "amount_minus_1",
+        "amount_plus_1",
+        "amount_plus_1+amount_plus_1",
+        "amount_plus_1+currency"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.108s",
+        "FAILED (failures=27)"
+      ],
+      "proof": null
+    },
+    "M14_episode_id": {
+      "status": "killed",
+      "battery_killing_cases": 10,
+      "examples": [
+        "wrong_episode_id"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.098s",
+        "FAILED (failures=2)"
+      ],
+      "proof": null
+    },
+    "X1_legacy_helper_unused": {
+      "status": "equivalent_with_proof",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.097s",
+        "FAILED (failures=3)"
+      ],
+      "proof": "evaluate() and service.handle() never call _max_matching (only _lexmin_matching); the copy's call graph is checked with grep below"
+    },
+    "X2_same_constant": {
+      "status": "equivalent_with_proof",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": false,
+      "project_tests": [
+        "Ran 83 tests in 0.097s",
+        "OK"
+      ],
+      "proof": "Fraction(1, 500) == Fraction(2, 1000) exactly; checked by evaluation"
+    },
+    "Y1_dict_tolerance_default": {
+      "status": "survived",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.101s",
+        "FAILED (failures=7)"
+      ],
+      "proof": null
+    },
+    "Y2_unmatched_reason": {
+      "status": "survived",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": false,
+      "project_tests": [
+        "Ran 83 tests in 0.098s",
+        "OK"
+      ],
+      "proof": null
+    },
+    "Y3_tie_break_largest_index": {
+      "status": "killed",
+      "battery_killing_cases": 8,
+      "examples": [
+        "oracle_duplicated"
+      ],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.090s",
+        "FAILED (failures=4)"
+      ],
+      "proof": null
+    },
+    "Y4_evidence_limit_plus_one": {
+      "status": "survived",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.100s",
+        "FAILED (failures=4)"
+      ],
+      "proof": null
+    },
+    "Y5_explanation_limit_plus_one": {
+      "status": "survived",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.100s",
+        "FAILED (failures=3)"
+      ],
+      "proof": null
+    },
+    "Y6_findings_limit_plus_one": {
+      "status": "survived",
+      "battery_killing_cases": 0,
+      "examples": [],
+      "project_tests_killed": true,
+      "project_tests": [
+        "Ran 83 tests in 0.101s",
+        "FAILED (failures=3)"
+      ],
+      "proof": null
+    }
+  },
+  "x1_call_sites_of_max_matching": [
+    "auditlab/evaluator/matcher.py:109:def _max_matching(adjacency: list[list[int]], right_count: int) -> list[int | None]:"
+  ],
+  "working_tree_untouched": true
+}
