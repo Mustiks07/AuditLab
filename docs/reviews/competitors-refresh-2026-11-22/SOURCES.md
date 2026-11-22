@@ -14,17 +14,17 @@
 
 ## AuditLab
 
-- `main`: `c9ce1dfce6855eee431b881fef6c93c623852dd1`.
+- `main`: `6c56e09be8c9643b6e31283534bcd5a46839168b` (merge PR #69 в 16:32 UTC).
 - RC5: [`v0.1.0-rc.5`](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.5),
   commit `920b251`.
 - CI продукта: [run 45028606259](https://github.com/Mustiks07/AuditLab/actions/runs/45028606259),
   success на `5ced9b9`; ядро продукта совпадает с текущим `main`.
 - Этот обзор: [PR #68](https://github.com/Mustiks07/AuditLab/pull/68), ветка
   `review/competitors-refresh-2026-11-22`.
-- Отдельный submission-аудит: [PR #69](https://github.com/Mustiks07/AuditLab/pull/69), SHA
-  `5baad3d69dc0e421c3da3835d33e65f27b6f3072`; на финальной сверке открыт, CI
-  [45043703599](https://github.com/Mustiks07/AuditLab/actions/runs/45043703599) зелёный, изменения не
-  входят в `main`/RC5.
+- Submission-аудит: [PR #69](https://github.com/Mustiks07/AuditLab/pull/69), head
+  `5baad3d69dc0e421c3da3835d33e65f27b6f3072`; CI
+  [45043703599](https://github.com/Mustiks07/AuditLab/actions/runs/45043703599) зелёный; влит в
+  `main` как `6c56e09`, но изменения не входят в RC5.
 - Полностью прочитаны: `README.md`, `docs/SPEC.md`, `docs/INTERFACES.md`,
   `docs/GENESIS_ADAPTER.md`, `docs/release/{READINESS,VALIDATION,ACCEPTANCE_MAPPING,
   CANDIDATE_PUBLICATION,GENERALIZATION,MEASUREMENT_SEMANTICS,PR_REVIEW}.md`, offline-инструкции,
