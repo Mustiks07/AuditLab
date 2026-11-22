@@ -1,0 +1,16 @@
+{
+  "base_currency": "KZT",
+  "currency_exponents": {
+    "KWD": 3,
+    "KZT": 2
+  },
+  "document_count": 180,
+  "episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E",
+  "ledger_rows": 1076,
+  "period_end": "2025-11-01T00:00:00+09:00",
+  "period_end_exclusive": true,
+  "period_start": "2025-10-01T00:00:00+09:00",
+  "rounding": "ROUND_HALF_UP",
+  "schema_version": "1.0",
+  "timezone": "Asia/Tokyo"
+}

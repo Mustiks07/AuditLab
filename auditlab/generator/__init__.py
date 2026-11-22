@@ -14,13 +14,16 @@ from tempfile import TemporaryDirectory
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .core import FX_FIELDS, LEDGER_FIELDS, Company
+from . import profile13
 from .financial_cases import AllocationCase, parse_financial_case
 from .scenarios import add_allocation_fx, add_cutoff, add_cutoff_fx, add_duplicate, add_fx
 
 
 GENERATOR_VERSION = "1.7"
 FINANCIAL_FAMILY_GENERATOR_VERSION = "1.8"
-GENERATOR_VERSIONS = {"1.0": "1.1", "1.1": GENERATOR_VERSION, "1.2": FINANCIAL_FAMILY_GENERATOR_VERSION}
+HARDENED_GENERATOR_VERSION = "1.9"
+GENERATOR_VERSIONS = {"1.0": "1.1", "1.1": GENERATOR_VERSION, "1.2": FINANCIAL_FAMILY_GENERATOR_VERSION,
+                      "1.3": HARDENED_GENERATOR_VERSION}
 SUPPORTED_GENERATOR_VERSIONS = {"1.6", *GENERATOR_VERSIONS.values()}
 SCHEMA_VERSION = "1.0"
 CURRENCY_EXPONENTS = {"KZT": 2, "USD": 2, "EUR": 2, "JPY": 0, "KWD": 3}
@@ -32,7 +35,7 @@ MAX_ISSUES_PER_TYPE = 5
 CONFIG_FIELDS = {
     "config_version", "company_size", "base_currency", "currencies", "timezone", "target_period",
     "issue_counts", "interaction", "clean_distractors", "settlement_timing", "snapshot_nonce",
-    "allocation_mode", "financial_case",
+    "allocation_mode", "financial_case", "episode_key",
 }
 
 
@@ -78,6 +81,13 @@ def _configuration(seed, config):
     config_version = config.get("config_version", "1.0")
     if not isinstance(config_version, str) or config_version not in GENERATOR_VERSIONS:
         raise ValueError("unsupported_config_version")
+    scenario_seed, id_seed = seed, None
+    if config_version == profile13.PROFILE:
+        profile13.episode_key(config)
+        scenario_seed, id_seed = profile13.materials(seed, config)
+        config = profile13.resolve(config, scenario_seed)
+    elif profile13.KEY_FIELD in config:
+        raise ValueError("invalid_episode_key: requires config_version 1.3")
     modern = config_version != "1.0"
     base = config.get("base_currency", "KZT")
     currencies = config.get("currencies", [base, *(["USD"] if base != "USD" else ["KZT"])])
@@ -100,7 +110,7 @@ def _configuration(seed, config):
     if allocation_mode not in ("partial", "omitted") or (
         "allocation_mode" in config and not modern
     ):
-        raise ValueError("invalid_allocation_mode: profiles 1.1 and 1.2 support partial or omitted")
+        raise ValueError("invalid_allocation_mode: profiles 1.1-1.3 support partial or omitted")
     if allocation_mode == "omitted" and (timing is not None or interaction == "allocation_fx_same_payment"):
         raise ValueError("incompatible_allocation_mode: omission requires a standalone settlement")
     if timing is not None:
@@ -114,14 +124,14 @@ def _configuration(seed, config):
         elif timing != "before" and counts["payment_allocation"] < 1:
             raise ValueError("contradictory_settlement_timing")
     if modern and sum(counts.values()) > 12:
-        raise ValueError("invalid_issue_counts: profiles 1.1 and 1.2 support at most 12 issues")
+        raise ValueError("invalid_issue_counts: profiles 1.1-1.3 support at most 12 issues")
     financial_case = None
     if "financial_case" in config:
-        if config_version != "1.2":
-            raise ValueError("invalid_financial_case: requires config_version 1.2")
+        if config_version not in ("1.2", "1.3"):
+            raise ValueError("invalid_financial_case: requires config_version 1.2 or 1.3")
         if timing is not None or interaction is not None:
             raise ValueError("invalid_financial_case: cannot combine with settlement_timing or interaction")
-        financial_case = parse_financial_case(config["financial_case"], allocation_mode, seed)
+        financial_case = parse_financial_case(config["financial_case"], allocation_mode, scenario_seed)
         if any(count > (1 if kind == financial_case.issue_type else 0) for kind, count in counts.items()):
             raise ValueError("invalid_issue_counts: financial_case supports zero or one issue of its own type")
         if allocation_mode == "omitted" and not isinstance(financial_case, AllocationCase):
@@ -143,9 +153,9 @@ def _configuration(seed, config):
     zone_name = config.get("timezone", "Asia/Almaty")
     period_start, period_end = _period(config.get("target_period", "2026-11"), zone_name, config_version)
     exponents = {code: CURRENCY_EXPONENTS[code] for code in currencies}
-    company = Company(seed, period_start, period_end, period_start.tzinfo, base, exponents,
-                      config_version=config_version, allocation_mode=allocation_mode)
-    return company, counts, timing, interaction, distractors, size, nonce, financial_case
+    company = Company(scenario_seed, period_start, period_end, period_start.tzinfo, base, exponents,
+                      config_version=config_version, allocation_mode=allocation_mode, id_seed=id_seed)
+    return company, counts, timing, interaction, distractors, size, nonce, financial_case, config
 
 
 def _add_clean_invoice(company, amount, issued_at):
@@ -163,7 +173,7 @@ def _add_paid_invoices(company, amount, issued_at, *, split=False):
     received = issued_at + timedelta(days=2)
     if split:
         first = (amount * company.noise_rng.randrange(1_700, 8_701) // 10_000
-                 if company.config_version == "1.2" else amount * 2 // 5)
+                 if company.financial_variants else amount * 2 // 5)
         parts = (first, amount - first)
     else:
         parts = (amount,)
@@ -200,6 +210,11 @@ def _add_clean_history(company, distractors, size):
                                "amount_minor": deposit, "returned_at": returned.isoformat()})
     if "archive_copy" in distractors and company.config_version == "1.0":
         add_duplicate(company, enabled=False)
+    if company.config_version == profile13.PROFILE and distractors:
+        # Correctly settled designated payments whose last tranche lands minutes before the
+        # exclusive boundary: the clean counterpart of a late or partial settlement.
+        for index in range(profile13.lookalike_count(company)):
+            profile13.lookalike_case(company, index).build(company, enabled=False)
     if company.uses_source_book:
         if distractors:
             add_cutoff(company, enabled=False)
@@ -482,7 +497,8 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
     output = Path(output_dir).absolute()
     if os.path.lexists(output):
         raise FileExistsError(output)
-    company, counts, timing, interaction, distractors, size, nonce, financial_case = _configuration(seed, config)
+    company, counts, timing, interaction, distractors, size, nonce, financial_case, resolved = _configuration(
+        seed, config)
     _add_audit_cases(company, counts, timing, interaction, distractors, financial_case)
     _add_clean_history(company, distractors, size)
     if not company.invoices and not company.payments:
@@ -512,7 +528,7 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
         manifest = {
             "schema_version": SCHEMA_VERSION,
             "base_currency": company.base_currency, "period_start": company.period_start.isoformat(),
-            "period_end": company.period_end.isoformat(), "timezone": config.get("timezone", "Asia/Almaty"),
+            "period_end": company.period_end.isoformat(), "timezone": resolved.get("timezone", "Asia/Almaty"),
             "ledger_rows": len(company.ledger), "document_count": len(company.invoices) + len(company.payments),
             "currency_exponents": company.exponents, "rounding": "ROUND_HALF_UP",
         }
@@ -529,6 +545,11 @@ def generate_episode(seed: int, config: dict[str, object], output_dir: Path) -> 
             "seed": seed, "config": config, "events": company.events, "mutations": company.mutations,
             "generation_attempts": 1,
         }
+        if company.config_version == profile13.PROFILE:
+            # The input config (with any key) stays the reproduction recipe; the resolved
+            # defaults and the derivation are recorded for verifiers, all on the trusted side.
+            provenance["resolved_config"] = resolved
+            provenance["randomness"] = profile13.randomness_record(config)
         if company.uses_source_book:
             provenance["timezone_database"] = {"package": "tzdata", "version": version("tzdata")}
             provenance["source_book_validation"] = source_book_validation

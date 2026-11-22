@@ -26,6 +26,7 @@ import json
 import logging
 import os
 import time
+from hashlib import sha256
 from pathlib import Path
 from typing import Callable
 
@@ -35,7 +36,11 @@ from auditlab.runner.env import TOOLS, AuditEnvironment
 from auditlab.runner.wire import json_snapshot, rejected_marker
 
 PROTOCOL = "genesis-fintech-checks-2026-11-20"
-ADAPTER_VERSION = "1.0"
+ADAPTER_VERSION = "1.1"
+# Generator profile for a team_config that names no config_version (adapter 1.0 fell back to the
+# generator's historical default 1.0: 28 ledger rows, one page, the same structure for every seed).
+# An explicit config_version, including "1.0", is passed through unchanged.
+DEFAULT_PROFILE = "1.3"
 TIME_LIMIT_S = 60.0
 ACTIONS = (*TOOLS, "submit")
 OFFICIAL_TABLES = ("ledger", "invoices", "payments", "fx")  # plus the documented extra table "policy"
@@ -66,6 +71,24 @@ def _trusted_log(event: dict) -> None:
 
 
 # ------------------------------------------------------------------------------------- generate
+def generator_config(team: dict) -> dict:
+    """The adapter's generation profile: fill config_version only when the caller left it out."""
+    if "config_version" in team:
+        return dict(team)
+    return {**team, "config_version": DEFAULT_PROFILE}
+
+
+def _redacted(team: object) -> object:
+    """Trusted journal copy of a team_config: the episode key itself is never written."""
+    if not isinstance(team, dict) or "episode_key" not in team:
+        return team
+    key = team["episode_key"]
+    marker = {"redacted": True}
+    if isinstance(key, str):
+        marker["sha256_prefix"] = sha256(key.encode("utf-8")).hexdigest()[:16]
+    return {**team, "episode_key": marker}
+
+
 def _team_config(config: object) -> dict:
     if config is None:
         return {}
@@ -92,8 +115,13 @@ def generate_episode(seed: int, config: dict, output_dir: str) -> None:
     """
     from auditlab.generator import generate_episode as generate
 
-    team = _team_config(config)
+    team = generator_config(_team_config(config))
     output = Path(output_dir)
+    keyed = "episode_key" in team
+    _trusted_log({"event": "generate_episode", "output_dir": str(output_dir), "config_version": team["config_version"],
+                  "randomness": "keyed" if keyed else "unkeyed",
+                  **({} if keyed else {"note": "without episode_key a small seed space with a guessable config "
+                                               "is recoverable by enumeration (docs/GENESIS_ADAPTER.md)"})})
     if not output.exists():
         generate(seed, team, output)
         return
@@ -208,7 +236,7 @@ class GenesisEnvironment:
                                         "started_at"})
             if clash:
                 raise AdapterError(f"team_config may not set runner keys: {clash}")
-            internal.update(team)
+            internal.update(generator_config(team))
         if self._env is None or self._env.mode != mode:
             if self._env is not None:
                 self._env.close()
@@ -218,7 +246,8 @@ class GenesisEnvironment:
         observation, info = self._env.reset(seed, internal)  # a repeated reset starts the episode again
         self._remaining = observation["remaining_steps"]
         _trusted_log({"event": "reset", "mode": mode, "seed": seed, "episode_dir": episode_dir,
-                      "team_config": team if episode_dir is None else None, "ignored_config_keys": unknown,
+                      "team_config": _redacted(team) if episode_dir is None else None,
+                      "ignored_config_keys": unknown,
                       "episode_id": info["episode_id"], "versions": self.versions()})
         first = {"task": TASK, "manifest": observation["manifest"], "policy": observation["policy"],
                  "remaining_steps": observation["remaining_steps"]}
@@ -279,7 +308,8 @@ class GenesisEnvironment:
     @staticmethod
     def versions() -> dict:
         from auditlab.runner.env import VERSIONS
-        return {**VERSIONS, "adapter": ADAPTER_VERSION, "protocol": PROTOCOL, "rules": RULES_GENESIS}
+        return {**VERSIONS, "adapter": ADAPTER_VERSION, "protocol": PROTOCOL, "rules": RULES_GENESIS,
+                "default_generator_profile": DEFAULT_PROFILE}
 
     def close(self) -> None:
         if self._env is not None:

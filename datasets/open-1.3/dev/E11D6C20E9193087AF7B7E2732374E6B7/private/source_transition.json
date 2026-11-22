@@ -1,0 +1,115 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "AR",
+        "credit_minor": 28548,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "CCCEBF93FBC4319F961860161",
+        "invoice_id": "I41802D818214C9A7423A4449",
+        "journal_id": "J8EC4560F6C617AE1B7A766EB",
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "row_id": "RE766D03B73718168DE608797",
+        "timestamp": "2025-12-01T01:54:00+00:00"
+      },
+      "before": {
+        "account": "AR",
+        "credit_minor": 28548,
+        "currency": "KWD",
+        "debit_minor": 0,
+        "entity_id": "CCCEBF93FBC4319F961860161",
+        "invoice_id": "I41802D818214C9A7423A4449",
+        "journal_id": "J8EC4560F6C617AE1B7A766EB",
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "row_id": "RE766D03B73718168DE608797",
+        "timestamp": "2025-11-30T22:06:00+00:00"
+      },
+      "id": "RE766D03B73718168DE608797",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 28548,
+        "entity_id": "CCCEBF93FBC4319F961860161",
+        "invoice_id": "I41802D818214C9A7423A4449",
+        "journal_id": "J8EC4560F6C617AE1B7A766EB",
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "row_id": "REEB7F3C2FBBD7ECB34C078A1",
+        "timestamp": "2025-12-01T01:54:00+00:00"
+      },
+      "before": {
+        "account": "UNAPPLIED",
+        "credit_minor": 0,
+        "currency": "KWD",
+        "debit_minor": 28548,
+        "entity_id": "CCCEBF93FBC4319F961860161",
+        "invoice_id": "I41802D818214C9A7423A4449",
+        "journal_id": "J8EC4560F6C617AE1B7A766EB",
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "row_id": "REEB7F3C2FBBD7ECB34C078A1",
+        "timestamp": "2025-11-30T22:06:00+00:00"
+      },
+      "id": "REEB7F3C2FBBD7ECB34C078A1",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "amount_minor": 72000,
+        "currency": "KWD",
+        "doc_id": "D65E2D07823EAE30445DD1944",
+        "invoice_refs": [
+          "I41802D818214C9A7423A4449"
+        ],
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "settlement_index": {
+          "before": "2025-12-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "RD327C66B7FDF78DA71EA06DB",
+            "R7D1D7CBA8656D8FF612B9A38",
+            "R95B6059BF6767AD7A8E7B377",
+            "R8FD3919E6BDBC802EC2C51FE"
+          ]
+        },
+        "timestamp": "2025-11-08T10:48:00+00:00"
+      },
+      "before": {
+        "amount_minor": 72000,
+        "currency": "KWD",
+        "doc_id": "D65E2D07823EAE30445DD1944",
+        "invoice_refs": [
+          "I41802D818214C9A7423A4449"
+        ],
+        "payment_id": "P46E8ED902C70F5E1B102B99B",
+        "settlement_index": {
+          "before": "2025-12-01T00:00:00+00:00",
+          "unapplied_row_ids": [
+            "RD327C66B7FDF78DA71EA06DB",
+            "R7D1D7CBA8656D8FF612B9A38",
+            "R95B6059BF6767AD7A8E7B377",
+            "R8FD3919E6BDBC802EC2C51FE",
+            "REEB7F3C2FBBD7ECB34C078A1"
+          ]
+        },
+        "timestamp": "2025-11-08T10:48:00+00:00"
+      },
+      "id": "D65E2D07823EAE30445DD1944",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "payments"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "E681BB13A83BE4BBDDA89609AF3AEB859",
+  "target_episode_id": "E11D6C20E9193087AF7B7E2732374E6B7"
+}

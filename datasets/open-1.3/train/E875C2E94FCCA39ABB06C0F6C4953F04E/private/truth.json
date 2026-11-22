@@ -1,0 +1,42 @@
+{
+  "episode_id": "E875C2E94FCCA39ABB06C0F6C4953F04E",
+  "issues": [
+    {
+      "affected_ids": [
+        "payment/P0FFEDBF8205CCEC340067CB2"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/DF46D2B70E47C3CA715A9DEDD",
+          "fx/2026-03-04/KWD/KZT",
+          "ledger/REA73E6E02292C35249902EF1",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 1400,
+      "issue_id": "X36D42ED5833BE56E95074EB1",
+      "type": "fx_conversion"
+    },
+    {
+      "affected_ids": [
+        "invoice/I1926B43568A2227C8603AB20",
+        "payment/P0FFEDBF8205CCEC340067CB2"
+      ],
+      "currency": "KWD",
+      "evidence_sets": [
+        [
+          "payments/DF46D2B70E47C3CA715A9DEDD",
+          "ledger/R89EBE468EF7277A781BF636F",
+          "ledger/R9468FCCC07205945BBF3F70D",
+          "ledger/R5983C1138417937C6B186847",
+          "ledger/RDA46227161930E0E93CAFF42",
+          "policy/allocation"
+        ]
+      ],
+      "expected_amount_minor": 8560,
+      "issue_id": "X01F978069621AFE6A3881771",
+      "type": "payment_allocation"
+    }
+  ]
+}

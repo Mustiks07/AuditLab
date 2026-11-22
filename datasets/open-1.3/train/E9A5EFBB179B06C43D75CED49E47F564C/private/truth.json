@@ -1,0 +1,22 @@
+{
+  "episode_id": "E9A5EFBB179B06C43D75CED49E47F564C",
+  "issues": [
+    {
+      "affected_ids": [
+        "payment/P5BA5AF08483C831272CFD029"
+      ],
+      "currency": "KZT",
+      "evidence_sets": [
+        [
+          "payments/DE48332B7459951664F46E48E",
+          "fx/2025-03-17/JPY/KZT",
+          "ledger/RBF85433DD208C0CE90FE9EF4",
+          "policy/fx_date"
+        ]
+      ],
+      "expected_amount_minor": 136,
+      "issue_id": "X41AC827A1D44B462DA29775A",
+      "type": "fx_conversion"
+    }
+  ]
+}

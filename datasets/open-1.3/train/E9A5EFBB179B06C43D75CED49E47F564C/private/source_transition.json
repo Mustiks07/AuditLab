@@ -1,0 +1,69 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 68272,
+        "entity_id": "C479C1E07A1193C624D7E9C70",
+        "invoice_id": "I0C5F200C16EC1ED07F7FD135",
+        "journal_id": "JF38788375C28D76CEE5F622E",
+        "payment_id": "P5BA5AF08483C831272CFD029",
+        "row_id": "RBF85433DD208C0CE90FE9EF4",
+        "timestamp": "2025-03-16T21:31:00+00:00"
+      },
+      "before": {
+        "account": "FX_VALUATION",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 68136,
+        "entity_id": "C479C1E07A1193C624D7E9C70",
+        "invoice_id": "I0C5F200C16EC1ED07F7FD135",
+        "journal_id": "JF38788375C28D76CEE5F622E",
+        "payment_id": "P5BA5AF08483C831272CFD029",
+        "row_id": "RBF85433DD208C0CE90FE9EF4",
+        "timestamp": "2025-03-16T21:31:00+00:00"
+      },
+      "id": "RBF85433DD208C0CE90FE9EF4",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "FX_OFFSET",
+        "credit_minor": 68272,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C479C1E07A1193C624D7E9C70",
+        "invoice_id": "I0C5F200C16EC1ED07F7FD135",
+        "journal_id": "JF38788375C28D76CEE5F622E",
+        "payment_id": "P5BA5AF08483C831272CFD029",
+        "row_id": "RCE668B5FB8D9455620A2530A",
+        "timestamp": "2025-03-16T21:31:00+00:00"
+      },
+      "before": {
+        "account": "FX_OFFSET",
+        "credit_minor": 68136,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C479C1E07A1193C624D7E9C70",
+        "invoice_id": "I0C5F200C16EC1ED07F7FD135",
+        "journal_id": "JF38788375C28D76CEE5F622E",
+        "payment_id": "P5BA5AF08483C831272CFD029",
+        "row_id": "RCE668B5FB8D9455620A2530A",
+        "timestamp": "2025-03-16T21:31:00+00:00"
+      },
+      "id": "RCE668B5FB8D9455620A2530A",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "EA25BB5B512BDBB025B556F7A75642C7E",
+  "target_episode_id": "E9A5EFBB179B06C43D75CED49E47F564C"
+}

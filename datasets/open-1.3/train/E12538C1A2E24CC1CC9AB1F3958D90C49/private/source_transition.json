@@ -1,0 +1,47 @@
+{
+  "changes": [
+    {
+      "after": {
+        "account": "AR",
+        "credit_minor": 0,
+        "currency": "KZT",
+        "debit_minor": 3333800,
+        "entity_id": "C8F81CFB5BEF25A7FED744F89",
+        "invoice_id": "I82046DF91CCD4D3353E0AF05",
+        "journal_id": "J898A79F77B547935AC747402",
+        "payment_id": null,
+        "row_id": "RBFBBD8A574DB1564578908C0",
+        "timestamp": "2026-04-06T16:09:00+05:00"
+      },
+      "before": null,
+      "id": "RBFBBD8A574DB1564578908C0",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    },
+    {
+      "after": {
+        "account": "REVENUE",
+        "credit_minor": 3333800,
+        "currency": "KZT",
+        "debit_minor": 0,
+        "entity_id": "C8F81CFB5BEF25A7FED744F89",
+        "invoice_id": "I82046DF91CCD4D3353E0AF05",
+        "journal_id": "J898A79F77B547935AC747402",
+        "payment_id": null,
+        "row_id": "RDDBDF740BA49D5F54EE79783",
+        "timestamp": "2026-04-06T16:09:00+05:00"
+      },
+      "before": null,
+      "id": "RDDBDF740BA49D5F54EE79783",
+      "mutation_indexes": [
+        0
+      ],
+      "table": "ledger"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_episode_id": "E7DA5A5A500BF367861F712EC41DAEE5B",
+  "target_episode_id": "E12538C1A2E24CC1CC9AB1F3958D90C49"
+}

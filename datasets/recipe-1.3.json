@@ -1,0 +1,360 @@
+{
+ "dataset_version": "open-1.3",
+ "config_version": "1.3",
+ "generator_version": "1.9",
+ "schema_version": "1.0",
+ "note": "Open set: seeds and configs are public. Fields absent from a config are drawn by profile 1.3 from seed+config.",
+ "splits": {
+  "train": [
+   {
+    "family": "68c9f308483bd6477385fedb",
+    "category": "clean",
+    "name": "clean-sampled",
+    "seed_hex": "771397914ade6e95bccc76b70939bf76",
+    "config": {},
+    "lock": {
+     "episode_id": "E57586EB49978B6540D8574A32DC55F16",
+     "tree_sha256": "ae3d0370bfdb9645f6a6f5d188c26a3d8f6fd8305b051cc1b63f78e4b74c22ab"
+    }
+   },
+   {
+    "family": "d2ad65194d154002383057fa",
+    "category": "clean",
+    "name": "clean-large",
+    "seed_hex": "b8f181040fe05ed81e5c564913ea21f1",
+    "config": {
+     "company_size": {
+      "ledger_rows_target": 2000,
+      "documents_target": 200
+     }
+    },
+    "lock": {
+     "episode_id": "E1BAFA78045338C1E75E5F98B905850F7",
+     "tree_sha256": "51b8322884751c17dc9db880d7f4f997720561e06d32b081a124b4cf0eed4f15"
+    }
+   },
+   {
+    "family": "da70cbf1b1e6afcae2aa1c01",
+    "category": "single",
+    "name": "duplicate",
+    "seed_hex": "a6f45811b73c463945469b5d633d318f",
+    "config": {
+     "issue_counts": {
+      "duplicate_invoice": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E12538C1A2E24CC1CC9AB1F3958D90C49",
+     "tree_sha256": "06e173dd9781727543fab33b172e77fc3eaabf3cf7bcacd81bd128b003f7581a"
+    }
+   },
+   {
+    "family": "5c6c5cbf47dd6401270de93b",
+    "category": "single",
+    "name": "allocation-partial",
+    "seed_hex": "3c1873a7857f2b7784cb0d48e3874334",
+    "config": {
+     "issue_counts": {
+      "payment_allocation": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E7FA987357C8CB69C927E1D0EA41CA3F5",
+     "tree_sha256": "af75eac6ba074b7b9162f2d20ced73547398b3651cd4454a198f9d3de0392616"
+    }
+   },
+   {
+    "family": "02532edd914b32049ad44b87",
+    "category": "single",
+    "name": "fx",
+    "seed_hex": "d282795a76c651c151320b3c26697cf6",
+    "config": {
+     "issue_counts": {
+      "fx_conversion": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E9A5EFBB179B06C43D75CED49E47F564C",
+     "tree_sha256": "b6d188ae1b4cc93e46041db6f66858f0e7cb883c5296ee692b9481ac09713c51"
+    }
+   },
+   {
+    "family": "127a325d9735bc9d00368fc3",
+    "category": "single",
+    "name": "cutoff",
+    "seed_hex": "c37a11bdfd2e952ad1aea173888d7174",
+    "config": {
+     "issue_counts": {
+      "period_cutoff": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E640E11842E3F199C5965B2512099FD0F",
+     "tree_sha256": "e9bf6b5ef455f66cf262c5d8b6259f8bbc4618d602e66f67284beb0c25add74c"
+    }
+   },
+   {
+    "family": "b357cdcaf47fe679c2b1f1d4",
+    "category": "interaction",
+    "name": "allocation-fx-both",
+    "seed_hex": "b3971a982189cca34e405f6210682bd7",
+    "config": {
+     "interaction": "allocation_fx_same_payment",
+     "issue_counts": {
+      "payment_allocation": 1,
+      "fx_conversion": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E875C2E94FCCA39ABB06C0F6C4953F04E",
+     "tree_sha256": "c0e1b2800e3a7b0ab3fa6893f96651df6dfc5d902163283e430ec8de8732ec2b"
+    }
+   },
+   {
+    "family": "470bf9ab825b7bf4320e1105",
+    "category": "interaction",
+    "name": "cutoff-fx-fx-only",
+    "seed_hex": "fc4885c657393489d176e28ff99e8028",
+    "config": {
+     "interaction": "cutoff_fx_same_invoice",
+     "issue_counts": {
+      "fx_conversion": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E7EE2D81933CFD8CE701A9342222828E1",
+     "tree_sha256": "6a78c1920dff7c1780132b0ad357929e3315bbe76fed00e7ee88887a5b2a97c3"
+    }
+   },
+   {
+    "family": "2b44d526d4819dbada2f3afd",
+    "category": "boundary",
+    "name": "allocation-late-tranche",
+    "seed_hex": "a87cfcebeca3ae36321c2f6e3c0aa119",
+    "config": {
+     "financial_case": {
+      "kind": "allocation",
+      "amount_minor": 4815162342,
+      "applied_bps": 6180,
+      "tranches": 3,
+      "settlement_offset_minutes": 1
+     },
+     "issue_counts": {
+      "payment_allocation": 1
+     }
+    },
+    "lock": {
+     "episode_id": "EAAA76B8F14EF559A284B6B66BECAB959",
+     "tree_sha256": "519cdee588e0eb24c15499ec69f6c1fd2e1e65ea3a62bb3bcc772dc1e5820669"
+    }
+   },
+   {
+    "family": "f83e0f0236384cf37eda5f44",
+    "category": "mixed",
+    "name": "mixed-large",
+    "seed_hex": "6a448ee38df8c458da66a52bfb44725f",
+    "config": {
+     "company_size": {
+      "ledger_rows_target": 2000,
+      "documents_target": 200
+     },
+     "issue_counts": {
+      "duplicate_invoice": 1,
+      "payment_allocation": 2,
+      "fx_conversion": 1,
+      "period_cutoff": 1
+     }
+    },
+    "lock": {
+     "episode_id": "ECEEC6A66BB9415222BF6CA87107FC342",
+     "tree_sha256": "6f7b2586894bce0c48178412a5550b33c7f0d0dd9084ad9e7d74f49d5d410326"
+    }
+   }
+  ],
+  "dev": [
+   {
+    "family": "2589525147b95638bbaaecab",
+    "category": "clean",
+    "name": "clean-sampled",
+    "seed_hex": "146d827c34c5f013f8e3a8024ac720f5",
+    "config": {},
+    "lock": {
+     "episode_id": "ECA127693E01CAF5D137480EE24312A17",
+     "tree_sha256": "0f8e643cac8e35ec659d8cd5092ce79c132f9ee7d4e47eb1de9f9d3acd5d60d8"
+    }
+   },
+   {
+    "family": "fbe76e9a027027512d0af02a",
+    "category": "clean",
+    "name": "clean-boundary-twin",
+    "seed_hex": "ff0f296239cfd976c39a1766a8c4dd9c",
+    "config": {
+     "financial_case": {
+      "kind": "invoice_cutoff",
+      "amount_minor": 271828182,
+      "issued_before_minutes": 7,
+      "recognition_offset_minutes": 3
+     },
+     "issue_counts": {}
+    },
+    "lock": {
+     "episode_id": "E7CA1390221438F70974A5BD91113F510",
+     "tree_sha256": "b57fc4042e427067c1aaed2a9a6779838014e07710912e1a3afa1814bad0bc27"
+    }
+   },
+   {
+    "family": "076034569d6e3d8c42595632",
+    "category": "single",
+    "name": "duplicate",
+    "seed_hex": "885f9a727bc2f005cd952f07ccdab813",
+    "config": {
+     "issue_counts": {
+      "duplicate_invoice": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E4CCB42E1E990E5B738A05A60F58E25EE",
+     "tree_sha256": "b16295728614a181195931e14b60e01934e6c4299d8050eddb7ff1dcc87d4e1f"
+    }
+   },
+   {
+    "family": "415a3a30ac6b1037192b54f9",
+    "category": "single",
+    "name": "allocation-omitted",
+    "seed_hex": "75b731ae0a55790fae062c6007a9a628",
+    "config": {
+     "allocation_mode": "omitted",
+     "issue_counts": {
+      "payment_allocation": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E8F0C01916C9C23B4CBAD22163DF9D621",
+     "tree_sha256": "78a2247c52f574bbfa869b38be257447bb0d43938e4f4a026796fc728d48bbfe"
+    }
+   },
+   {
+    "family": "aab61cbca9b53e4c82457d58",
+    "category": "single",
+    "name": "fx",
+    "seed_hex": "029236b7e5164be52ada786918963fec",
+    "config": {
+     "currencies": [
+      "KZT",
+      "JPY"
+     ],
+     "issue_counts": {
+      "fx_conversion": 1
+     }
+    },
+    "lock": {
+     "episode_id": "EAB594D6B17D5F8FEFE1122B2CEB9431F",
+     "tree_sha256": "8e536f0dd9f8b98f4bd0c567044a74acdbaa6fd26fcb28f0893fb359f44f3281"
+    }
+   },
+   {
+    "family": "404773587172b799bb74d077",
+    "category": "single",
+    "name": "cutoff-next-period",
+    "seed_hex": "2fde5d4a1e8680e0d10ef06596042414",
+    "config": {
+     "financial_case": {
+      "kind": "invoice_cutoff",
+      "amount_minor": 314159265,
+      "issued_before_minutes": 30,
+      "recognition_offset_minutes": 45,
+      "issued_next_period": true
+     },
+     "issue_counts": {
+      "period_cutoff": 1
+     }
+    },
+    "lock": {
+     "episode_id": "EF141A50FB8D3B9871E85F24D428CD226",
+     "tree_sha256": "759b93cea805374410139978f8eda32039538bfd832571ebeb6010eb228ee950"
+    }
+   },
+   {
+    "family": "3e7bfb509b1bd6b7e4dfc1a7",
+    "category": "interaction",
+    "name": "allocation-fx-allocation-only",
+    "seed_hex": "f4d092382ede26222516999bd28aa129",
+    "config": {
+     "interaction": "allocation_fx_same_payment",
+     "issue_counts": {
+      "payment_allocation": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E11D6C20E9193087AF7B7E2732374E6B7",
+     "tree_sha256": "996dc64acb0f937d48ae282f7e858a18bbb5a1077a9769608ee99d039f66f9f3"
+    }
+   },
+   {
+    "family": "8570625c1796a42e428112df",
+    "category": "interaction",
+    "name": "cutoff-fx-both",
+    "seed_hex": "593c39ac274b6cf32afe841e9cfe6188",
+    "config": {
+     "currencies": [
+      "KZT",
+      "KWD"
+     ],
+     "interaction": "cutoff_fx_same_invoice",
+     "issue_counts": {
+      "period_cutoff": 1,
+      "fx_conversion": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E481A1631C01BEBA2BD7A7161B8EA427E",
+     "tree_sha256": "a2961fe2c140276de1312d83c7d0cd8fb05c7b2cadbc8b3805f7b5a4f0f93893"
+    }
+   },
+   {
+    "family": "350e68cb4eb7424baecce048",
+    "category": "boundary",
+    "name": "allocation-at-boundary",
+    "seed_hex": "ade6457bdb7394db0b14f7fa6c1961cd",
+    "config": {
+     "financial_case": {
+      "kind": "allocation",
+      "amount_minor": 1618033988,
+      "applied_bps": 4142,
+      "tranches": 2,
+      "settlement_offset_minutes": 0
+     },
+     "issue_counts": {
+      "payment_allocation": 1
+     }
+    },
+    "lock": {
+     "episode_id": "EBC9D3A54A2005BB48DF659706CEE2368",
+     "tree_sha256": "975b6c581e9a18b291b08afe1df9b46a005f1d78042876742962b1ce5bfc5e58"
+    }
+   },
+   {
+    "family": "99b0c91fc838232fb3082928",
+    "category": "mixed",
+    "name": "mixed-large",
+    "seed_hex": "6af92170015894ff513fe531a155db1a",
+    "config": {
+     "company_size": {
+      "ledger_rows_target": 2000,
+      "documents_target": 200
+     },
+     "issue_counts": {
+      "duplicate_invoice": 2,
+      "payment_allocation": 1,
+      "fx_conversion": 2,
+      "period_cutoff": 1
+     }
+    },
+    "lock": {
+     "episode_id": "E95103CB90AF570352BA7B6ADA858AE33",
+     "tree_sha256": "dfec8816f7e983aee7ec158eb6d203f5af2194bb48c88f5636ba408672561a67"
+    }
+   }
+  ]
+ }
+}

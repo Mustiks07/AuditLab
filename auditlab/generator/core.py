@@ -28,7 +28,7 @@ def random_stream(seed, domain):
 
 class Company:
     def __init__(self, seed, period_start, period_end, zone, base_currency, exponents, *,
-                 config_version="1.0", allocation_mode="partial"):
+                 config_version="1.0", allocation_mode="partial", id_seed=None):
         self.period_start = period_start
         self.period_end = period_end
         self.zone = zone
@@ -41,10 +41,13 @@ class Company:
         self._scenario_seed = seed
         self._case_counts = Counter()
         self.noise_rng = random_stream(seed, "distractors")
-        self.order_rng = random_stream(seed, "order")
-        self._id_streams = {kind: random_stream(seed, "ids/" + kind) for kind in PREFIXES}
-        self._source_id_stream = random_stream(seed, "source-only-ids")
-        self._mutation_id_stream = random_stream(seed, "mutation-only-ids")
+        # Profiles 1.0-1.2 use the seed for every stream; profile 1.3 passes separate opaque
+        # materials so identifiers and record order can be renamed independently of the economics.
+        ids = seed if id_seed is None else id_seed
+        self.order_rng = random_stream(ids, "order")
+        self._id_streams = {kind: random_stream(ids, "ids/" + kind) for kind in PREFIXES}
+        self._source_id_stream = random_stream(ids, "source-only-ids")
+        self._mutation_id_stream = random_stream(ids, "mutation-only-ids")
         self._planned_rows = {}
         self._planned_issues = []
         self.invoices = []
@@ -59,18 +62,25 @@ class Company:
     def uses_source_book(self):
         return self.config_version != "1.0"
 
+    @property
+    def financial_variants(self):
+        """Seed-dependent shares, tranches and settlement times (profiles 1.2 and 1.3)."""
+        return self.config_version in ("1.2", "1.3")
+
     def case_parameters(self, kind, units, *, day=6, hour=10, minute=0):
         """Independent event stream: toggling another defect does not change this case."""
         if self.config_version == "1.0":
             return units, day, hour, minute
         rng = random_stream(self._scenario_seed, f"case/{kind}/{self._case_counts[kind]}")
         self._case_counts[kind] += 1
+        # Profile 1.3 also values foreign payments at night, where the UTC and local dates differ.
+        hours = (0, 24) if self.config_version == "1.3" and kind == "fx" else (8, 18)
         return (rng.randrange(max(1, units // 3), units * 3 + 1),
-                rng.randrange(2, 21), rng.randrange(8, 18), rng.randrange(60))
+                rng.randrange(2, 21), rng.randrange(*hours), rng.randrange(60))
 
     def allocation_pattern(self, kind, amount):
         """Return the initial amount, tranche count and delay around period end."""
-        if self.config_version != "1.2":
+        if not self.financial_variants:
             return amount * 3 // 5, 1, 1
         rng = random_stream(self._scenario_seed, f"financial-allocation/{kind}/{self._case_counts[kind]}")
         applied = max(1, amount * rng.randrange(1_700, 8_701) // 10_000)
