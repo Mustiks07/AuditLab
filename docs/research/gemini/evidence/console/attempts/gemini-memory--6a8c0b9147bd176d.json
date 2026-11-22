@@ -13,6 +13,10 @@
   "repetition": 0,
   "status": "provider_error",
   "snapshot_ref": "snapshots/gemini-memory--6a8c0b9147bd176d/public",
+  "error": {
+    "code": "rate_limit",
+    "message": "HTTP 429"
+  },
   "episode": {
     "family_id": "dev-922101",
     "split": "dev"

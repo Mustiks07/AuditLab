@@ -1,0 +1,163 @@
+{
+ "base": "http://127.0.0.1:8795",
+ "checks": [
+  "full path 1440: task → allowed change → agent answer → documents → dossier",
+  "outcome kinds on real attempts: wrong amount and false accusation",
+  "Gemini scenario: one miss, three HTTP 429, no comparison claim, saved record",
+  "results map: dimensions, not checked, drill-down, regressions",
+  "states: cancel, service error, offline, stale, empty, budget stop",
+  "phone 390 and 320: no horizontal overflow",
+  "keyboard, focus and reduced motion",
+  "no external requests and no page errors"
+ ],
+ "screens": [
+  {
+   "name": "lab home 1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "family 1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "dossier 1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "map 1440",
+   "window": 1440,
+   "body": 1440
+  },
+  {
+   "name": "home 390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "family 390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "dossier 390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "map 390",
+   "window": 390,
+   "body": 390
+  },
+  {
+   "name": "home 320",
+   "window": 320,
+   "body": 320
+  },
+  {
+   "name": "family 320",
+   "window": 320,
+   "body": 320
+  },
+  {
+   "name": "dossier 320",
+   "window": 320,
+   "body": 320
+  },
+  {
+   "name": "map 320",
+   "window": 320,
+   "body": 320
+  }
+ ],
+ "timings": [
+  {
+   "hash": "/research",
+   "ms": 456
+  },
+  {
+   "hash": "/research/families/train-boundary-a/v/train-boundary-a-id_order",
+   "ms": 454
+  },
+  {
+   "hash": "/research/families/train-boundary-a/v/train-boundary-a-fixed",
+   "ms": 388
+  },
+  {
+   "hash": "/research/experiments/gemini-live-official-v2",
+   "ms": 390
+  },
+  {
+   "hash": "/research/comparisons/comparison-gemini-live-official-v2",
+   "ms": 300
+  },
+  {
+   "hash": "/research/map/e/gemini-live-official-v2/b/gemini-live-official-v2%2Fgemini-memory/a/gemini-live-official-v2%2Fgemini-tools",
+   "ms": 364
+  },
+  {
+   "hash": "/research/experiments/gemini-live-official-v2",
+   "ms": 333
+  },
+  {
+   "hash": "/research/map",
+   "ms": 901
+  },
+  {
+   "hash": "/research/map",
+   "ms": 277
+  },
+  {
+   "hash": "/research/families/train-boundary-a",
+   "ms": 282
+  },
+  {
+   "hash": "/research/lab",
+   "ms": 376
+  },
+  {
+   "hash": "/research/experiments/gemini-live-official-v2",
+   "ms": 371
+  },
+  {
+   "hash": "/research/lab",
+   "ms": 455
+  },
+  {
+   "hash": "/research/families/train-boundary-a/v/train-boundary-a-currency",
+   "ms": 393
+  },
+  {
+   "hash": "/research/dossiers/gemini-tools--82be64bda11527df",
+   "ms": 395
+  },
+  {
+   "hash": "/research/map",
+   "ms": 753
+  },
+  {
+   "hash": "/research/lab",
+   "ms": 577
+  },
+  {
+   "hash": "/research/families/train-boundary-a/v/train-boundary-a-currency",
+   "ms": 403
+  },
+  {
+   "hash": "/research/dossiers/gemini-tools--82be64bda11527df",
+   "ms": 370
+  },
+  {
+   "hash": "/research/map",
+   "ms": 844
+  },
+  {
+   "hash": "/research/families/train-boundary-a",
+   "ms": 441
+  }
+ ],
+ "external": [],
+ "errors": []
+}
