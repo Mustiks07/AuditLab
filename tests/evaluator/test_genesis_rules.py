@@ -185,6 +185,15 @@ class RewardVectors(FixtureCase):
         self.assertEqual(len(set(eleven)), 11)
         self.assertInvalid(submission(finding(evidence=eleven)))
 
+    def test_ten_available_evidence_ids_are_valid_at_boundary(self):
+        ten = [D1, D2, "invoices/D4"] + [f"ledger/R{i}" for i in (1, 2, 3, 5, 6, 7, 8)]
+        self.assertEqual(len(set(ten)), 10)
+        self.assertScore(submission(finding(evidence=ten)), 1, 0, 0)
+
+    def test_duplicate_diagnostic_is_not_missing_evidence(self):
+        result = self.fixture.detail(submission(finding(), finding()))
+        self.assertEqual(result["unmatched"], {"1": "duplicate"})
+
     def test_20_explanation_of_1001_ascii_characters(self):
         self.assertInvalid(submission(finding(explanation="x" * 1001)))
         self.assertScore(submission(finding(explanation="x" * 1000)), 1, 0, 0)
