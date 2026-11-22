@@ -17,6 +17,7 @@ python -m unittest discover -s tests/research_acceptance -v                     
 python review/agent_generalization/mr_study.py OUT --seeds 3                     # MR1–MR5, 16 страт × 3 seed, ожидания GPT Pro 1
 python review/agent_generalization/passport_study.py OUT/episodes PASSPORT_DIR   # паспорт P1–P11 и P9 на тех же эпизодах
 python review/agent_generalization/mutation_testing.py OUT/episodes MUT_DIR      # мутанты оценщика в изолированных копиях
+git fetch origin pull/52/head:pr52                                                # для источника PR #52 (иначе он not_checked)
 python review/agent_generalization/recompute.py RECOMPUTE.json --work DIR        # пересчёт экспериментов Claude Pro 1
 python review/agent_generalization/run.py validate EPISODE_DIR                   # паспорт одного снимка
 python review/agent_generalization/run.py sealed-v2 --v1 V1 --work V2 --public-dev ...   # только доверенная сторона
