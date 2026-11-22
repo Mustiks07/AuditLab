@@ -1,0 +1,120 @@
+{
+  "arms": {
+    "A-tools": {
+      "actions": {
+        "max": 13,
+        "mean": 10.090909090909092,
+        "median": 11,
+        "min": 5,
+        "n": 11
+      },
+      "attempts": 11,
+      "clean_attempts": 3,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 5,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 3,
+        "diagnosed": 5,
+        "error_attempts_with_a_miss": 2,
+        "error_variant_attempts": 2,
+        "finding_labels": {
+          "unrelated_claim": 1
+        },
+        "issues_missed": 2,
+        "issues_total": 2,
+        "missed_by_type": {
+          "payment_allocation": 2
+        },
+        "submitted": 3
+      },
+      "cost_usd_total": null,
+      "evaluable": 5,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": 0.0,
+        "fn": 2,
+        "fp": 1,
+        "tp": 0
+      },
+      "not_evaluable": 6,
+      "provider_calls": {
+        "max": 13,
+        "mean": 10.909090909090908,
+        "median": 12,
+        "min": 7,
+        "n": 11
+      },
+      "return": {
+        "max": 0.99,
+        "mean": 0.1888,
+        "median": 0.976,
+        "min": -1.0,
+        "n": 5
+      },
+      "service_outcomes": {
+        "attempts": 6,
+        "statuses": {
+          "rate_limited": 6
+        }
+      },
+      "statuses": {
+        "completed": 3,
+        "rate_limited": 6,
+        "timeout": 2
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 2047280,
+        "cache_write": 0,
+        "input": 487876,
+        "output": 5540
+      },
+      "unpriced_calls": 9,
+      "wall_seconds": {
+        "max": 60.329,
+        "mean": 57.20427272727272,
+        "median": 57.829,
+        "min": 47.054,
+        "n": 11
+      }
+    }
+  },
+  "attempts_total": 11,
+  "is_experiment": true,
+  "kind": "internal_summary",
+  "last_invocation": {
+    "attempts_started": [
+      "A-tools--2b457c8e1fb87e78",
+      "A-tools--2b457c8e1fb87e78--retry1",
+      "A-tools--561f32433a97a26c",
+      "A-tools--aa093c05bb2c09d2",
+      "A-tools--9505de8fe5ee9714",
+      "A-tools--9505de8fe5ee9714--retry1",
+      "A-tools--f1cb2e8876fa55c6",
+      "A-tools--f1cb2e8876fa55c6--retry1",
+      "A-tools--2d091fb49dee5d00",
+      "A-tools--2d091fb49dee5d00--retry1",
+      "A-tools--2d091fb49dee5d00--retry2"
+    ],
+    "finished_at": "2026-11-22T13:02:42.731062+00:00",
+    "service_waits_s": [
+      60.0,
+      60.0,
+      60.0,
+      60.0,
+      60.0
+    ],
+    "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+    "started_at": "2026-11-22T12:47:13.388180+00:00",
+    "stop_detail": "3 service failures in a row; last A-tools--2d091fb49dee5d00--retry2: rate_limit: retry wait 18.0s would pass the attempt deadline after rate_limit",
+    "stop_reason": "consecutive_service_failures"
+  },
+  "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. Means over evaluable attempts; not_evaluable attempts are listed, never dropped.",
+  "paired": [],
+  "plan_artifact_id": "rc5-replication-connected",
+  "plan_sha256": "cccb238b739b25727eda2d880e2286eea1696e1f30468bd70428a6728dad5c9f",
+  "protocol_id": "genesis-official-60s",
+  "schema_version": "1.0",
+  "test_double": false
+}

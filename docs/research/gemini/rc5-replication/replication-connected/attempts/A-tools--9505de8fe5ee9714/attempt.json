@@ -1,0 +1,95 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "limits": {
+      "max_model_calls_per_action": 3,
+      "max_nudges": 2,
+      "max_prechecks": 2
+    },
+    "max_tokens": 4096,
+    "prompt_hash": "35d2f0381e47947b90977aeac92c2f0c2a78f395d989c02956a3844efec047c1",
+    "prompt_variant": "A",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "api_key_env": "GEMINI_API_KEY",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "client_retries": 0,
+      "max_tokens_param": "max_completion_tokens",
+      "model": "gemini-3.1-flash-lite",
+      "parallel_tool_calls": false,
+      "prices": {
+        "gemini-3.1-flash-lite": {
+          "cache_read": 0,
+          "cache_write": 0,
+          "input": 0,
+          "output": 0
+        }
+      },
+      "provider": "openai_compatible",
+      "reasoning_effort": "minimal",
+      "strict_tools": false,
+      "system_role": "system"
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "A-tools--9505de8fe5ee9714",
+  "attempt_id": "A-tools--9505de8fe5ee9714",
+  "budget_usd": 0.01,
+  "episode": {
+    "condition": "original_error",
+    "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+    "episode_sha256": "18f18d2c091e686a7f0512fc37b90ea34cebadf4594ed2178b989909737eb12c",
+    "family_id": "dev-922101",
+    "split": "dev",
+    "variant": "error"
+  },
+  "evaluation_ref": "trusted/A-tools--9505de8fe5ee9714/evaluation.json",
+  "final_action": {
+    "args": {
+      "cursor": null,
+      "limit": 50,
+      "table": "fx"
+    },
+    "name": "list_records"
+  },
+  "final_answer": null,
+  "finished_at": "2026-11-22T12:53:10.688949+00:00",
+  "inspection_steps": 8,
+  "isolated_bridge": true,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+  "started_at": "2026-11-22T12:52:10.759539+00:00",
+  "status": "rate_limited",
+  "status_detail": "rate_limit: client pacing (4.0s between calls) leaves no time before the attempt deadline",
+  "test_double": false,
+  "totals": {
+    "budget_debit_usd": 0.01,
+    "cost_usd": null,
+    "environment_actions": 8,
+    "inspection_steps": 8,
+    "known_cost_usd": 0.0,
+    "provider_calls": 9,
+    "tokens": {
+      "cache_read": 79547,
+      "cache_write": 0,
+      "input": 81780,
+      "output": 248
+    },
+    "unpriced_calls": 1,
+    "wall_seconds": 59.929
+  },
+  "variant": "A-tools"
+}

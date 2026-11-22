@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "rc5-replication-connected",
+  "plan_sha256": "cccb238b739b25727eda2d880e2286eea1696e1f30468bd70428a6728dad5c9f",
+  "invocations": [
+    {
+      "started_at": "2026-11-22T12:47:13.388180+00:00",
+      "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+      "attempts_started": [
+        "A-tools--2b457c8e1fb87e78",
+        "A-tools--2b457c8e1fb87e78--retry1",
+        "A-tools--561f32433a97a26c",
+        "A-tools--aa093c05bb2c09d2",
+        "A-tools--9505de8fe5ee9714",
+        "A-tools--9505de8fe5ee9714--retry1",
+        "A-tools--f1cb2e8876fa55c6",
+        "A-tools--f1cb2e8876fa55c6--retry1",
+        "A-tools--2d091fb49dee5d00",
+        "A-tools--2d091fb49dee5d00--retry1",
+        "A-tools--2d091fb49dee5d00--retry2"
+      ],
+      "service_waits_s": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "stop_reason": "consecutive_service_failures",
+      "stop_detail": "3 service failures in a row; last A-tools--2d091fb49dee5d00--retry2: rate_limit: retry wait 18.0s would pass the attempt deadline after rate_limit",
+      "finished_at": "2026-11-22T13:02:42.731062+00:00"
+    }
+  ],
+  "source_code_equivalent_to_rc5": true,
+  "bridge_image_id": "sha256:0db994176ccb42bae9d5f77e38bb6fae5669e700270ea9e659bee5a2e2d9c32e",
+  "public_recipe_is_not_executed_plan": true
+}

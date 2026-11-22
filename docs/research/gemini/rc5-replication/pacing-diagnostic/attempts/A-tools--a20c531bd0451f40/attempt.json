@@ -1,0 +1,99 @@
+{
+  "agent": {
+    "agent_version": "1.0",
+    "limits": {
+      "max_model_calls_per_action": 3,
+      "max_nudges": 2,
+      "max_prechecks": 2
+    },
+    "max_tokens": 4096,
+    "prompt_hash": "35d2f0381e47947b90977aeac92c2f0c2a78f395d989c02956a3844efec047c1",
+    "prompt_variant": "A",
+    "prompt_version": "llm-auditor-prompt-1.0",
+    "provider": {
+      "api_key_env": "GEMINI_API_KEY",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "client_retries": 0,
+      "max_tokens_param": "max_completion_tokens",
+      "model": "gemini-3.1-flash-lite",
+      "parallel_tool_calls": false,
+      "prices": {
+        "gemini-3.1-flash-lite": {
+          "cache_read": 0,
+          "cache_write": 0,
+          "input": 0,
+          "output": 0
+        }
+      },
+      "provider": "openai_compatible",
+      "reasoning_effort": "minimal",
+      "strict_tools": false,
+      "system_role": "system"
+    },
+    "test_double": false,
+    "variant": "tools"
+  },
+  "artifact_id": "A-tools--a20c531bd0451f40",
+  "attempt_id": "A-tools--a20c531bd0451f40",
+  "budget_usd": 0.01,
+  "episode": {
+    "condition": "original_error",
+    "episode_ref": "docs/research/agent-improvement-v2/replication-922101/original_error",
+    "episode_sha256": "18f18d2c091e686a7f0512fc37b90ea34cebadf4594ed2178b989909737eb12c",
+    "family_id": "dev-922101",
+    "split": "dev",
+    "variant": "error"
+  },
+  "evaluation_ref": "trusted/A-tools--a20c531bd0451f40/evaluation.json",
+  "final_action": {
+    "args": {
+      "findings": {
+        "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+        "findings": []
+      }
+    },
+    "name": "submit"
+  },
+  "final_answer": {
+    "episode_id": "E724A737E63F8B0E2FE3F85DA8CA136E7",
+    "findings": []
+  },
+  "finished_at": "2026-11-22T13:04:11.179342+00:00",
+  "inspection_steps": 16,
+  "isolated_bridge": true,
+  "kind": "attempt",
+  "protocol": {
+    "description": "Published fintech-checks limits: 60 s from reset including the policy, API latency and retries; 100 actions including submit. AuditLab measurement, not the organizers' acceptance.",
+    "max_actions": 100,
+    "official": true,
+    "protocol_id": "genesis-official-60s",
+    "resumable": false,
+    "time_limit_s": 60.0
+  },
+  "protocol_id": "genesis-official-60s",
+  "repetition": 0,
+  "schema_version": "1.0",
+  "seed": 0,
+  "source_sha": "38448d386cb13c97872a7fc774371fbb8643c760",
+  "started_at": "2026-11-22T13:03:15.809900+00:00",
+  "status": "completed",
+  "status_detail": null,
+  "test_double": false,
+  "totals": {
+    "budget_debit_usd": 0.0,
+    "cost_usd": null,
+    "environment_actions": 17,
+    "inspection_steps": 16,
+    "known_cost_usd": 0.0,
+    "provider_calls": 18,
+    "tokens": {
+      "cache_read": 426098,
+      "cache_write": 0,
+      "input": 67355,
+      "output": 574
+    },
+    "unpriced_calls": 1,
+    "wall_seconds": 55.369
+  },
+  "variant": "A-tools"
+}
