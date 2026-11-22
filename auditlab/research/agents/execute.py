@@ -269,6 +269,13 @@ def run_attempt(spec: dict, output_root: str | Path, bridge_factory: Callable[[]
                   "matches": (trusted_result.get("evaluation") or {}).get("matches") if trusted_result else None,
                   "unmatched": (trusted_result.get("evaluation") or {}).get("unmatched") if trusted_result else None,
                   "truth_issue_count": _truth_count(trusted_result)}
+    evaluation["service_outcome"] = status in SERVICE_STATUSES
+    if not evaluation["service_outcome"]:
+        # Content diagnosis (trusted side): what the auditor missed and why each finding failed.
+        from auditlab.research.agents.diagnostics import diagnose
+        truth = json.loads((episode_dir / "private" / "truth.json").read_text(encoding="utf-8"))
+        answer = record["final_answer"] if env_status in ("submitted", "invalid_submission") else None
+        evaluation["diagnosis"] = diagnose(answer, truth, evaluation)
     _write_json(trusted / "evaluation.json", evaluation)
     record["inspection_steps"] = evaluation["inspection_steps"]
     if env_status not in ("submitted", "invalid_submission"):

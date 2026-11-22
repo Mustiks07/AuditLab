@@ -77,7 +77,8 @@ class BridgeSession:
                                 max_tokens=int(agent_config.get("max_tokens", 16000)),
                                 max_model_calls_per_action=int(agent_config.get("max_model_calls_per_action", 12)),
                                 max_prechecks=int(agent_config.get("max_prechecks", 2)),
-                                max_nudges=int(agent_config.get("max_nudges", 2)), retry=retry, guard=guard)
+                                max_nudges=int(agent_config.get("max_nudges", 2)), retry=retry, guard=guard,
+                                prompt_variant=str(agent_config.get("prompt_variant", "A")))
         return {"type": "ready", "agent": self.agent.describe(), "prompt": self.agent.prompt_record()}
 
 

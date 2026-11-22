@@ -324,6 +324,7 @@ def summarize(out: str | Path, plan: dict, plan_sha: str) -> dict:
             "cost_usd_total": None if any(a["totals"].get("unpriced_calls", 0) for a in rows) else round(sum(a["totals"].get("cost_usd") or 0.0 for a in rows), 6),
             "unpriced_calls": sum(a["totals"].get("unpriced_calls", 0) for a in rows),
             "test_double": any(a.get("test_double") for a in rows),
+            **_content_breakdown(rows),
         }
     comparisons = [paired_by_family(attempts, pair[0], pair[1], seed=int((plan.get("analysis") or {}).get("seed", 0)),
                                     resamples=int((plan.get("analysis") or {}).get("bootstrap", 2000)))
@@ -334,6 +335,41 @@ def summarize(out: str | Path, plan: dict, plan_sha: str) -> dict:
             "attempts_total": len(attempts), "test_double": test_double, "is_experiment": not test_double,
             "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. "
                     "Means over evaluable attempts; not_evaluable attempts are listed, never dropped."}
+
+
+def _content_breakdown(rows: list[dict]) -> dict:
+    """Service outcomes vs content outcomes, and what the content errors were (from trusted diagnoses)."""
+    service = [a for a in rows if a["status"] in SERVICE_STATUSES]
+    content = [a for a in rows if a["status"] not in SERVICE_STATUSES]
+    diagnoses = [(a["_evaluation"] or {}).get("diagnosis") for a in content]
+    diagnoses = [d for d in diagnoses if d]
+    missed, labels = {}, {}
+    for d in diagnoses:
+        for key, value in d["missed_by_type"].items():
+            missed[key] = missed.get(key, 0) + value
+        for key, value in d["finding_labels"].items():
+            labels[key] = labels.get(key, 0) + value
+    clean = [d for d in diagnoses if d["clean"]]
+    error = [d for d in diagnoses if not d["clean"]]
+    return {"service_outcomes": {"attempts": len(service), "statuses": _count_statuses(service)},
+            "content_outcomes": {"attempts": len(content), "diagnosed": len(diagnoses),
+                                 "submitted": sum(1 for a in content if a["status"] == "completed"),
+                                 "error_variant_attempts": len(error),
+                                 "error_attempts_with_a_miss": sum(1 for d in error if any(not i["found"] for i in d["issues"])),
+                                 "issues_total": sum(d["truth_issues"] for d in error),
+                                 "issues_missed": sum(1 for d in error for i in d["issues"] if not i["found"]),
+                                 "missed_by_type": dict(sorted(missed.items())),
+                                 "clean_variant_attempts": len(clean),
+                                 "clean_attempts_with_false_accusation": sum(
+                                     1 for d in clean if d["finding_labels"].get("false_accusation_on_clean")),
+                                 "finding_labels": dict(sorted(labels.items()))}}
+
+
+def _count_statuses(rows: list[dict]) -> dict:
+    counts: dict = {}
+    for row in rows:
+        counts[row["status"]] = counts.get(row["status"], 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def paired_by_family(attempts: list[dict], arm_a: str, arm_b: str, *, seed: int = 0, resamples: int = 2000) -> dict:

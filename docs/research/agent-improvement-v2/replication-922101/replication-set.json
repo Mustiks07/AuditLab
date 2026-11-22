@@ -1,0 +1,150 @@
+{
+  "artifact_id": "replication-922101-1.0",
+  "clean_variant": {
+    "kind": "source_book"
+  },
+  "conditions": {
+    "corrected_clean": {
+      "derived_from": null,
+      "episode_ref": "corrected_clean",
+      "episode_sha256": "7549ef458bf14c9cc12a0a1cc492e70a4ba9320ff650b7c55afa4af1c87428a8",
+      "family_id": "dev-922101",
+      "public_sha256": "1da5d807ad6dab4ee17dd16d8096d8e098f06fc9e45aaabc6b3c6003e3514afe",
+      "split": "dev",
+      "transform": null,
+      "truth_issues": [],
+      "validation": {
+        "checks": {
+          "answer_matches_truth": "passed",
+          "evidence_available": "passed",
+          "formats": "passed",
+          "mutation_explained": "passed",
+          "no_contradictions": "passed",
+          "source_book_consistent": "passed",
+          "witness_trajectory": "passed"
+        },
+        "notes": [],
+        "status": "passed"
+      },
+      "variant": "clean"
+    },
+    "original_error": {
+      "derived_from": null,
+      "episode_ref": "original_error",
+      "episode_sha256": "35fd5f93be641e1cc7ab159983053feb8de7cae25eaf0e746bd50467e7f54aaa",
+      "family_id": "dev-922101",
+      "public_sha256": "18f18d2c091e686a7f0512fc37b90ea34cebadf4594ed2178b989909737eb12c",
+      "split": "dev",
+      "transform": null,
+      "truth_issues": [
+        {
+          "currency": "KZT",
+          "expected_amount_minor": 3024000,
+          "type": "payment_allocation"
+        }
+      ],
+      "validation": {
+        "checks": {
+          "answer_matches_truth": "passed",
+          "evidence_available": "passed",
+          "formats": "passed",
+          "mutation_explained": "passed",
+          "no_contradictions": "passed",
+          "source_book_consistent": "passed",
+          "witness_trajectory": "passed"
+        },
+        "notes": [],
+        "status": "passed"
+      },
+      "variant": "error"
+    },
+    "transformed_clean": {
+      "derived_from": "corrected_clean",
+      "episode_ref": "transformed_clean",
+      "episode_sha256": "f8d18aaf0d8e4403c76c95cacd046d80b3f05a26407de671c374f397aba8fd63",
+      "family_id": "dev-922101",
+      "public_sha256": "7a8c328d9d8762c586e33237e45c6db270a6e005ba6b70efef221145701c9707",
+      "split": "dev",
+      "transform": {
+        "new_episode_id": "T0BC3ECFF255A2A49AABEAA26C2421E",
+        "renamed_ids": 209,
+        "seed": 4207,
+        "version": "id-order-1.0"
+      },
+      "truth_issues": [],
+      "validation": {
+        "checks": {
+          "answer_matches_truth": "passed",
+          "evidence_available": "passed",
+          "formats": "passed",
+          "mutation_explained": "not_checked",
+          "no_contradictions": "passed",
+          "source_book_consistent": "not_checked",
+          "witness_trajectory": "passed"
+        },
+        "notes": [],
+        "status": "not_checked"
+      },
+      "variant": "clean"
+    },
+    "transformed_error": {
+      "derived_from": "original_error",
+      "episode_ref": "transformed_error",
+      "episode_sha256": "a01fe997481efcae0897b48c6d1b3144fef34e37c3d5be1a90a3ddb5befeb1c9",
+      "family_id": "dev-922101",
+      "public_sha256": "0d7a8ee8ddd818fd6bf893007b52ad1af4d6211d90c446e0b7ccb4fab177eda8",
+      "split": "dev",
+      "transform": {
+        "new_episode_id": "TF4DA0AAADDF2F98C12C42C500D31D8",
+        "renamed_ids": 209,
+        "seed": 4207,
+        "version": "id-order-1.0"
+      },
+      "truth_issues": [
+        {
+          "currency": "KZT",
+          "expected_amount_minor": 3024000,
+          "type": "payment_allocation"
+        }
+      ],
+      "validation": {
+        "checks": {
+          "answer_matches_truth": "passed",
+          "evidence_available": "passed",
+          "formats": "passed",
+          "mutation_explained": "not_checked",
+          "no_contradictions": "passed",
+          "source_book_consistent": "not_checked",
+          "witness_trajectory": "passed"
+        },
+        "notes": [],
+        "status": "not_checked"
+      },
+      "variant": "error"
+    }
+  },
+  "family_id": "dev-922101",
+  "generator": {
+    "config": {
+      "allocation_mode": "partial",
+      "base_currency": "KZT",
+      "config_version": "1.1",
+      "currencies": [
+        "KZT"
+      ],
+      "issue_counts": {
+        "payment_allocation": 1
+      }
+    },
+    "seed": 922101
+  },
+  "purpose": "replication of one observed live miss; dev only, never a holdout",
+  "schema_version": "1.0",
+  "set_sha256": "3453bb2a507cfb863c676bd50ebe1bb6fa67751943093de99f7c2e7d08fbfabe",
+  "split": "dev",
+  "transform": {
+    "module": "auditlab.release.transforms",
+    "seed": 4207
+  },
+  "validator": "review.agent_generalization.validator.validate_candidate (Claude Pro 2)"
+}
