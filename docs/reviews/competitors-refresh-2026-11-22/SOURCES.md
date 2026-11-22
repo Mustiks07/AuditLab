@@ -1,65 +1,103 @@
-# Источники обновлённого разбора — 22.11.2026
+# Источники и фиксация среза
 
-Все SHA — ветки по умолчанию на момент клонирования (13:56–15:50 UTC 22.11.2026). Код конкурентов
-выполнялся только в изоляции: `nobody`, `unshare -n`, `env -i`. CI конкурентов не проверен:
-GitHub API для чужих репозиториев в этой среде закрыт.
+Срез закрыт **22.11.2026 в 16:22 UTC / 21:22 Asia/Qyzylorda**. Репозитории сравнивались на
+зафиксированных SHA, а не по изменяемой странице `main`. GitHub API и Actions в финальном проходе
+были доступны. Скрытые и приватные проекты в каталог не входят.
+
+## Официальная база
+
+- [Genesis fintech checks](https://genesis-exe.com/fintech-checks.html), версия от 20.11.2026.
+- Текстовая версия `https://genesis-exe.com/docs/fintech-checks.txt`, SHA-256
+  `2a597ebfb94daec700ba9b1b09d62c032366e788c6e992486d444e063be8d870`.
+- HTML SHA-256 `3d95db8e1509f3724fc4d1246a262e766b427ff0bcf6d55c0bf484882ee6f4a6`.
+- Повторная загрузка в финальном проходе изменений не обнаружила.
 
 ## AuditLab
 
-| Что | Ссылка |
-|---|---|
-| `main`, исследованный код | [`5ced9b9`](https://github.com/Mustiks07/AuditLab/commit/5ced9b948b27c9306e788e62d99179d49852771a); итоговый `main` [`c9ce1df`](https://github.com/Mustiks07/AuditLab/commit/c9ce1dfce6855eee431b881fef6c93c623852dd1), код продукта тот же |
-| CI | [run 45028606259](https://github.com/Mustiks07/AuditLab/actions/runs/45028606259) (success, `5ced9b9`) |
-| Релиз | [v0.1.0-rc.5](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.5), код `920b251ee3b1c12f9bc5ffe0eca3b5cb1bf8d78a` |
-| Профиль 1.3 и ключ | [`auditlab/generator/profile13.py`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/auditlab/generator/profile13.py), [`auditlab/runner/genesis.py` L42](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/auditlab/runner/genesis.py#L42) |
-| Формы ссылок | [`docs/GENESIS_ADAPTER.md`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/docs/GENESIS_ADAPTER.md) («Формы ссылок») |
-| Измерение N2 (оракул 4/24) | [`docs/reviews/jury-compatibility-v3/README.md`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/docs/reviews/jury-compatibility-v3/README.md) |
-| Мутанты оценщика (22: 15 убито, 5 выжило) | [`mutation-report.json`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/docs/research/independent-assurance-v2/evidence/mutation-report.json) |
-| A/B/C | [`ABC_LIVE_REPORT.md`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/docs/research/agent-improvement-v2/ABC_LIVE_REPORT.md) |
-| Единственный `trajectories.jsonl` в дереве (вне тестов) | [`docs/demo/sample_export/TRAIN-S02-reconcile/trajectories.jsonl`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/docs/demo/sample_export/TRAIN-S02-reconcile/trajectories.jsonl) (7 строк) |
-| Описание наборов | [`datasets/README.md`](https://github.com/Mustiks07/AuditLab/blob/c9ce1dfce6855eee431b881fef6c93c623852dd1/datasets/README.md) — заголовок «Открытые наборы AuditLab 1.1», 240 строк; про `open-1.3` отдельно |
+- `main`: `c9ce1dfce6855eee431b881fef6c93c623852dd1`.
+- RC5: [`v0.1.0-rc.5`](https://github.com/Mustiks07/AuditLab/releases/tag/v0.1.0-rc.5),
+  commit `920b251`.
+- CI продукта: [run 45028606259](https://github.com/Mustiks07/AuditLab/actions/runs/45028606259),
+  success на `5ced9b9`; ядро продукта совпадает с текущим `main`.
+- Этот обзор: [PR #68](https://github.com/Mustiks07/AuditLab/pull/68), ветка
+  `review/competitors-refresh-2026-11-22`.
+- Отдельный submission-аудит: [PR #69](https://github.com/Mustiks07/AuditLab/pull/69), SHA
+  `5baad3d69dc0e421c3da3835d33e65f27b6f3072`; на финальной сверке открыт, `verify` выполняется и
+  изменения не входят в `main`/RC5.
+- Полностью прочитаны: `README.md`, `docs/SPEC.md`, `docs/INTERFACES.md`,
+  `docs/GENESIS_ADAPTER.md`, `docs/release/{READINESS,VALIDATION,ACCEPTANCE_MAPPING,
+  CANDIDATE_PUBLICATION,GENERALIZATION,MEASUREMENT_SEMANTICS,PR_REVIEW}.md`, offline-инструкции,
+  отчёты `jury-compatibility-v3`, `generator-hardening-v3`, `data-shortcuts-v3` и A/B/C.
 
-## Главные конкуренты (глубокий разбор)
+## Основные конкуренты
 
-| Проект | Кат. | Ветка, SHA, последнее изменение | Ключевые свидетельства |
-|---|---|---|---|
-| [madiyar-abi/genesis](https://github.com/madiyar-abi/genesis) | A (README: Genesis 2026 FinTech) | `main` [`911845ff`](https://github.com/madiyar-abi/genesis/tree/911845ff6b90c30add9906575e2e7d57e6049e86), 22.11 13:22 +05 | `python3.11 -m auditenv.check` → ALL CHECKS PASSED, 162,7 с [изм.] ([лог](evidence/madiyar-auditenv-check.log)); ключ жюри — README «For the jury», `auditenv/grader_key.py`; [`trajectories.jsonl`](https://github.com/madiyar-abi/genesis/blob/911845ff6b90c30add9906575e2e7d57e6049e86/trajectories.jsonl) |
-| [amirlankalm/genesis-fintech-intuition](https://github.com/amirlankalm/genesis-fintech-intuition) | A (Team Intuition) | `main` [`5c460aea`](https://github.com/amirlankalm/genesis-fintech-intuition/tree/5c460aea5241613c708a17b4acd5da88f4790c6f), 21.11 18:30 +05 (без изменений) | Зонд 26/26, пары 5/5 [изм.]; [`src/genesis_audit/sandbox.py`](https://github.com/amirlankalm/genesis-fintech-intuition/blob/5c460aea5241613c708a17b4acd5da88f4790c6f/src/genesis_audit/sandbox.py); `tests/jury/` |
-| [itsaibarr/auditgym](https://github.com/itsaibarr/auditgym) | A (Team tryHard) | `master` [`2fabb0df`](https://github.com/itsaibarr/auditgym/tree/2fabb0df0be37c7307863a71d938cbe707de7dfa), 22.11 18:50 +05 | Адаптер с коммита `02f4e3e`; зонд 25/26, пары 5/5 [изм.]; [`training/README.md`](https://github.com/itsaibarr/auditgym/blob/2fabb0df0be37c7307863a71d938cbe707de7dfa/training/README.md) (раунды 1–4, наборы A–D, бутстрап) [авт.]; нужны `msgspec`, `tzdata` |
-| [MaratelloMaJo/letro](https://github.com/MaratelloMaJo/letro) | A (README: REC Genesis Hackathon) | `master` [`c04c0f03`](https://github.com/MaratelloMaJo/letro/tree/c04c0f03ddb00b168b454f9fb830aa376fb69006), 22.11 18:34 +05 | Зонд 25/26 (`amount_tolerance_minor` по умолчанию 1, [`judge_adapter.py` L287](https://github.com/MaratelloMaJo/letro/blob/c04c0f03ddb00b168b454f9fb830aa376fb69006/judge_adapter.py#L287)), пары 5/5 [изм.]; `letro.redteam` |
-| [k41270075-stack/vouchai](https://github.com/k41270075-stack/vouchai) | A (README: Genesis Hackathon 2026) | `main` [`0e741228`](https://github.com/k41270075-stack/vouchai/tree/0e7412280196175b57205c0208d53b92203dc702), 21.11 21:34 +05 | Зонд 26/26, пары 0/5 [изм.]; демо [vouchai-ai.netlify.app](https://vouchai-ai.netlify.app/) (HTTP 200, [скриншот](evidence/demos/vouchai.png)) |
+| Репозиторий | SHA на срезе | Проверенные основания |
+|---|---|---|
+| [azamxvit/audit-rl-env](https://github.com/azamxvit/audit-rl-env) | `535aae42a4255edc2e5d57e4b12967befc4b4c53` | `backend/judge_adapter.py`, `scripts/train_learned.py`, `scripts/eval_learned.py`, `backend/runs/learned_eval.{md,json}`; adapter 26/26, pair 5/5, обучение-check и eval воспроизведены; GitHub Actions отсутствуют |
+| [madiyar-abi/genesis](https://github.com/madiyar-abi/genesis) | `911845ff` | adapter 26/26, pair 5/5; `python -m auditenv.check` повторён; [Actions 45006274943](https://github.com/madiyar-abi/genesis/actions/runs/45006274943) success |
+| [ibrahimerbol01-prog/auditgym](https://github.com/ibrahimerbol01-prog/auditgym) | `3ea176920667ec1401cb93b18b18d38da20f7c73` | adapter 24/26, pair 5/5; `python -m auditgym.verify` и `train/campaign.py --quick` повторены; [Actions 45041207429](https://github.com/ibrahimerbol01-prog/auditgym/actions/runs/45041207429) success |
+| [amirlankalm/genesis-fintech-intuition](https://github.com/amirlankalm/genesis-fintech-intuition) | `5c460…` | adapter 26/26, pair 5/5; репозиторий и trajectories просмотрены; hosted Actions нет |
+| [itsaibarr/auditgym](https://github.com/itsaibarr/auditgym) | `2fabb…` | adapter 25/26, pair 5/5; `training/README.md`, SFT-данные и bootstrap-отчёты просмотрены; hosted Actions нет |
+| [manskrutoy/auditgym-fintech](https://github.com/manskrutoy/auditgym-fintech) | `aa5c7c098fd01f676c89fdb1c64b544733cad230` | adapter 25/26, pair 5/5; `python -m auditgym check` повторён; [Actions 45042405353](https://github.com/manskrutoy/auditgym-fintech/actions/runs/45042405353) success |
+| [k41270075-stack/vouchai](https://github.com/k41270075-stack/vouchai) | `41b1c6856c580d30061858f4292b83e1b1e941a7` | adapter 26/26, pair 0/5; `reports/LEARNING.md`, learner и SFT-наборы просмотрены; [Actions 45040769677](https://github.com/k41270075-stack/vouchai/actions/runs/45040769677) success |
+| [MaratelloMaJo/letro](https://github.com/MaratelloMaJo/letro) | `c04…` | adapter 25/26, pair 5/5; red-team/CI просмотрены; [Actions 45028219768](https://github.com/MaratelloMaJo/letro/actions/runs/45028219768) success |
+| [alimasik/genesis-hackaton](https://github.com/alimasik/genesis-hackaton) | `412e914120324f5de792f4f1b5d35b8a4be46e8f` | adapter 24/26, pair 5/5; [Actions 45041836071](https://github.com/alimasik/genesis-hackaton/actions/runs/45041836071) success |
+| [Goslinuly/audit-rl-env](https://github.com/Goslinuly/audit-rl-env) | SHA раннего среза в raw evidence | adapter 26/26, pair 0/5; release/demo/CI просмотрены |
 
-## Остальные кандидаты
+Сокращённые SHA выше используются только там, где полный SHA уже зафиксирован сырым JSON либо
+репозиторием раннего прохода; все поздно изменившиеся кандидаты приведены полностью.
 
-| Проект | Кат. | SHA | Последнее изменение | Наблюдение |
-|---|---|---|---|---|
-| [Goslinuly/audit-rl-env](https://github.com/Goslinuly/audit-rl-env) | B (хакатон 19–22.11, команда из 4) | `4cd66a9a45ca` | 22.11 15:44 +05 | **Новый**; зонд 26/26, пары 0/5 (составные `invoices:…`); демо [railway](https://explorer-production-573177ce.up.railway.app) ([скриншот](evidence/demos/goslinuly-explorer.png)) |
-| [Kumisbek-Orken/genesis-audit-env](https://github.com/Kumisbek-Orken/genesis-audit-env) | A | `3dbe0bc53117` | 21.11 | 26/26, пары 5/5 |
-| [aibarryss/Redline](https://github.com/aibarryss/Redline) | A | `30e6e271c250` | 21.11 | 26/26, пары 5/5 |
-| [Beka486/audit-rl-env](https://github.com/Beka486/audit-rl-env) | B | `f1d689d8d6ba` | 22.11 | **Новый**; 26/26, пары 5/5; `AUDITENV_SECRET` |
-| [worldgay/finaudit-env](https://github.com/worldgay/finaudit-env) | B | `c8a99c7423a1` | 22.11 | **Новый**; 26/26 (нужен `tzdata`), пары 5/5 |
-| [rustem190209/genesis-fintech-audit-env](https://github.com/rustem190209/genesis-fintech-audit-env) | A | `d10b0f41cdab` | 21.11 | 26/26, пары 5/5 |
-| [thzsqeze/audit-rl-environment](https://github.com/thzsqeze/audit-rl-environment) | B | `04f0e01ede45` | 21.11 | 26/26, пары 5/5 |
-| [trapprey/audit-rl-env](https://github.com/trapprey/audit-rl-env) | B | `f224ec71d5a0` | 22.11 | 26/26, пары 5/5 |
-| [alimasik/genesis-hackaton](https://github.com/alimasik/genesis-hackaton) | A | `e5b88994e9b7` | 21.11 | 24/26: M06, X07 дают invalid вместо FP; пары 5/5 |
-| [ddemess1/genesis-fin-env](https://github.com/ddemess1/genesis-fin-env) | A | `728d6846f780` | 21.11 | 6/26: `steps_left`, калькулятор-объект, `score_episode` → `reward` ([L45](https://github.com/ddemess1/genesis-fin-env/blob/728d6846f7801a734c08287a95d8c5355df0cc89/judge_adapter.py#L45)) |
-| [Kaliakbarb/standout-fin-audit](https://github.com/Kaliakbarb/standout-fin-audit) | A | `6a18137cd415` | 21.11 12:19 | Без изменений; `judge_adapter.py` нет |
-| [nikogonetno/auditenv](https://github.com/nikogonetno/auditenv) | B | `1d3d57caf9a5` | 22.11 | **Новый**; около 477 тестов, CI-файл; `score_episode` не найден |
-| [sultandosym300-ops/auditforge](https://github.com/sultandosym300-ops/auditforge) | A (README: Хакатон Genesis) | `94571856b90f` | 22.11 | **Новый**; демо [vercel](https://auditforge-gilt.vercel.app) («REINFORCE … 21 вес» [авт.]); адаптера нет |
-| [manskrutoy/auditgym-fintech](https://github.com/manskrutoy/auditgym-fintech), [Aibek-S/auditgym](https://github.com/Aibek-S/auditgym) | B | `d0efabafd98b`, `aa5010ff5cf2` | 22.11 | **Новые**; адаптера нет |
-| [aiguzhin/in-audit-rl-gym](https://github.com/aiguzhin/in-audit-rl-gym) | B | `67269032bf41` | 22.11 | Демо [onrender](https://fin-audit-rl-gym.onrender.com) ([скриншот](evidence/demos/finspector.png)) |
-| azamxvit/audit-rl-env, alver714/auditgym, Tasel1/fin-audit-gym, AurorianJade136/genesis-audit-env | A/B | `82e08c90fcf9`, `5e91d930ca46`, `7a34c0ae0b18`, `f63b00c3ba41` | 22.11 | Мелкие обновления; не углублялся |
-| AyanbergenSaduakassov07/ledgerforge, nuradil-student/…, Own11/airship, slynqcode/hackaton, mansurt78956-glitch/fin-audit, xevrinn/ledger-lab, abylaichik0w0/rec-genesis-audit, Goslinuly/fintech-auditgym | A/B | см. обзор 21.11 | 19–22.11 | Без существенных изменений |
-| nk275c59kk-hub/auditforge, Boob-op/genesis-fintech-audit-rl, kaussaryerzhan-cloud/fintech-rl-audit., ayaruu/audit-rl-simulator, programmerdream2011/fintech-auditor, alivenoviop-afk/FinAuditAI | B (слабые или пустые) | — | 19–22.11 | MVP, пустые или не по кейсу |
+## Остальной каталог и триаж
 
-## Внешние аналоги (категория C, из обзора 21.11)
+В повторный поиск и fetch вошли также:
 
-ESCTR (OpenEnv Hackathon, GRPO), FinancialAuditBench, arXiv 2506.17282, FinMaster — для
-сравнения подходов, не конкуренты.
+- `Kumisbek-Orken/genesis-audit-env`, `aibarryss/Redline`, `Beka486/audit-rl-env`,
+  `rustem190209/genesis-fintech-audit-env`, `thzsqeze/audit-rl-environment`,
+  `trapprey/audit-rl-env`, `worldgay/finaudit-env`, `ddemess1/genesis-fin-env` — адаптеры
+  измерены в [evidence/adapter-probe/](evidence/adapter-probe/);
+- `Kaliakbarb/standout-fin-audit`, `nikogonetno/auditenv`, `sultandosym300-ops/auditforge`,
+  `Aibek-S/auditgym`, `aiguzhin/in-audit-rl-gym`, `alver714/auditgym`,
+  `Tasel1/fin-audit-gym`, `AurorianJade136/genesis-audit-env`,
+  `AyanbergenSaduakassov07/ledgerforge`, `nuradil-student/*`, `Own11/airship`,
+  `slynqcode/hackaton`, `mansurt78956-glitch/fin-audit`, `xevrinn/ledger-lab`,
+  `abylaichik0w0/rec-genesis-audit`, `Goslinuly/fintech-auditgym` — просмотрены/обновлены в
+  триаже, но не вытеснили лидеров по совокупности контракт+данные+agent evidence;
+- слабые, пустые или не по кейсу: `nk275c59kk-hub/auditforge`,
+  `Boob-op/genesis-fintech-audit-rl`, `kaussaryerzhan-cloud/fintech-rl-audit.`,
+  `ayaruu/audit-rl-simulator`, `programmerdream2011/fintech-auditor`,
+  `alivenoviop-afk/FinAuditAI`.
 
-## Как искали
+Публичные демо vouchai, Goslinuly, auditforge и FinSpector были smoke-проверены в раннем проходе;
+скриншоты находятся в [evidence/demos/](evidence/demos/). Наличие страницы не считается баллом.
 
-- Поиск кода GitHub: `"judge_adapter" score_episode make_env`, `claimed_amount_minor evidence_ids inspection_steps`, `debit_minor credit_minor invoice_refs`.
-- Поиск репозиториев: `genesis audit`, `audit rl`, `financial audit`, `fintech audit`, `audit env`, `аудит`, `genesis fintech`, `auditor environment`, `ledger audit rl`, `audit gym` с фильтрами `created:`/`pushed:` от 20–21.11.
-- Сайты и демо из README кандидатов.
-- Все кандидаты из обзора 21.11 перекачаны (`git fetch`).
+## Метод поиска
+
+- GitHub repository search: `genesis audit`, `audit rl`, `financial audit`, `fintech audit`,
+  `audit env`, `аудит`, `genesis fintech`, `auditor environment`, `ledger audit rl`, `audit gym`;
+- GitHub code search: `judge_adapter score_episode make_env`,
+  `claimed_amount_minor evidence_ids inspection_steps`,
+  `debit_minor credit_minor invoice_refs`, `trajectories.jsonl`;
+- фильтры `created:`/`pushed:` для 20–22 ноября; повтор в 16:18 UTC;
+- fetch всех кандидатов прежнего обзора и отдельный просмотр поздних коммитов, CI, release и demo.
+
+## Локальные измерения
+
+- Инструменты: [adapter_probe.py](evidence/adapter_probe.py),
+  [literal_pair_probe.py](evidence/literal_pair_probe.py),
+  [probe_auditlab.py](evidence/probe_auditlab.py).
+- Ранние результаты: [adapter-probe/](evidence/adapter-probe/),
+  [literal-pairs/](evidence/literal-pairs/),
+  [madiyar-auditenv-check.log](evidence/madiyar-auditenv-check.log).
+- Поздние JSON и журналы запусков: [refresh-2110/](evidence/refresh-2110/).
+- Поздние процессы запускались в `python:3.11-slim` с `--network none`, непривилегированным UID,
+  read-only rootfs, `cap-drop=ALL`, `no-new-privileges` и ограничениями CPU/RAM. Точные команды и
+  ограничения перечислены в `refresh-2110/RUNS.md`.
+
+## Ограничения источников
+
+- Самооценки команд (`100/100`, «96/96» и т. п.) не считаются официальными результатами.
+- Ошибка SSL при попытке Docker build azamxvit связана с certificate chain нашей среды; она не
+  засчитана как дефект проекта.
+- Полные training claims vouchai, ibrahimerbol и tryHard не перезапускались; это отмечено как
+  `[авт.]` или `[код/авт.]`.
+- Код конкурентов использовался только для чтения и изолированных запусков; реализация не копировалась.

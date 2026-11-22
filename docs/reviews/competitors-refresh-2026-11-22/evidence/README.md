@@ -15,6 +15,8 @@
 | `probe_auditlab.py`, `probe_auditlab.json` | AuditLab: размеры по умолчанию, суммы и доли по 10 seed, перебор seed без ключа и с ключом |
 | `madiyar-auditenv-check.log` | `python3.11 -m auditenv.check` в изоляции на `911845ff`: ALL CHECKS PASSED, 162,7 с |
 | `demos/*.png` | Скриншоты публичных демо конкурентов (Playwright, 1280×800) |
+| `refresh-2110/*.json` | Поздний повтор адаптерного и literal-зондов для azamxvit, ibrahimerbol, manskrutoy, alimasik и vouchai |
+| `refresh-2110/RUNS.md` | Журнал поздних isolated runs: точные SHA, ограничения, команды, результаты training/check и известная ошибка среды |
 
 Повтор для AuditLab из корня репозитория:
 

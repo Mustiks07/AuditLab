@@ -1,0 +1,119 @@
+{
+ "repo": "repo",
+ "rows": {
+  "C01_reset_pair_json": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C02_first_observation": {
+   "status": "passed",
+   "detail": "['episode_id', 'manifest', 'policy', 'remaining_steps', 'step', 'task', 'tools']"
+  },
+  "C03_manifest_fields": {
+   "status": "passed",
+   "detail": "[]"
+  },
+  "C04_step_tuple_types": {
+   "status": "passed",
+   "detail": "pages=11"
+  },
+  "C05_pagination_complete": {
+   "status": "passed",
+   "detail": "rows=547 pages=11 dup=0"
+  },
+  "C06_stable_cursor": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C09_calculator_decimal": {
+   "status": "failed",
+   "detail": "{'value': '0.3'}"
+  },
+  "C10_calculator_rejects_code": {
+   "status": "passed",
+   "detail": "{'code': 'calc_error', 'message': 'only digits, decimal point, + - * / // % ** and parentheses are allowed'}"
+  },
+  "C11_unknown_id_bounded_error": {
+   "status": "passed",
+   "detail": "({'code': 'not_found', 'message': \"no record 'ZZ-NOT-A-REAL-ID-9q' in table ledger\"}, 83, 84)"
+  },
+  "C13_unknown_action_costs_step": {
+   "status": "passed",
+   "detail": "({'code': 'unknown_action', 'message': \"unknown action 'drop_tables'\"}, 82)"
+  },
+  "C15_submit_terminates": {
+   "status": "passed",
+   "detail": "(True, False, {'submitted': True})"
+  },
+  "C19_closed_reward_zero": {
+   "status": "passed",
+   "detail": "0.0"
+  },
+  "C15b_after_finish_no_change": {
+   "status": "passed",
+   "detail": "({'code': 'episode_finished', 'message': 'episode already finished; call reset()'}, 0.0, True, False)"
+  },
+  "C16_submit_as_action_100": {
+   "status": "passed",
+   "detail": "(True, False, None)"
+  },
+  "C17_100_actions_truncate": {
+   "status": "passed",
+   "detail": "(99, False, True)"
+  },
+  "C20_no_truth_words_in_policy_channel": {
+   "status": "passed",
+   "detail": "[]"
+  },
+  "R1_oracle_full_credit": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 4, 'fp': 0, 'fn': 0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'return': 0.98, 'experimental_return': 0.98, 'inspection_steps': 10, 'error': None}"
+  },
+  "R2_silence_on_errors": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 0, 'fp': 0, 'fn': 4, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0, 'experimental_return': -1.0, 'inspection_steps': 10, 'error': None}"
+  },
+  "R5_duplicate_is_fp": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 4, 'fp': 1, 'fn': 0, 'precision': 0.8, 'recall': 1.0, 'f1': 0.8888888888888888, 'return': 0.7577777777777777, 'experimental_return': 0.6466666666666667, 'inspection_steps': 10, 'error': None}"
+  },
+  "R8_amount_plus_one_is_fp": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 0, 'fp': 1, 'fn': 4, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0, 'experimental_return': -1.0, 'inspection_steps': 10, 'error': None}"
+  },
+  "M04_unknown_extra_evidence_is_fp": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 0, 'fp': 1, 'fn': 4, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0, 'experimental_return': -1.0, 'inspection_steps': 10, 'error': None}"
+  },
+  "M06_currency_exact_string": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 0, 'fp': 1, 'fn': 4, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0, 'experimental_return': -1.0, 'inspection_steps': 10, 'error': None}"
+  },
+  "M09_bool_amount_invalid": {
+   "status": "passed",
+   "detail": "{'valid': False, 'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0, 'experimental_return': None, 'inspection_steps': 10, 'error': 'finding 0 claimed_amount_minor must be a JSON integer'}"
+  },
+  "X07_unknown_type_is_fp_not_invalid": {
+   "status": "passed",
+   "detail": "{'valid': True, 'tp': 0, 'fp': 1, 'fn': 4, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0, 'experimental_return': -1.0, 'inspection_steps': 10, 'error': None}"
+  },
+  "R18_31_findings_invalid": {
+   "status": "passed",
+   "detail": "{'valid': False, 'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0, 'experimental_return': None, 'inspection_steps': 10, 'error': 'more than 30 findings'}"
+  },
+  "R20_explanation_1001_invalid": {
+   "status": "passed",
+   "detail": "{'valid': False, 'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0, 'experimental_return': None, 'inspection_steps': 10, 'error': 'finding 0 explanation longer than 1000'}"
+  }
+ },
+ "notes": [],
+ "import_s": 0.15,
+ "generate_errors": [],
+ "episode_issues": 4,
+ "ledger_rows_seen": 547,
+ "summary": {
+  "passed": 25,
+  "failed": 1,
+  "not_checked": 0
+ }
+}
