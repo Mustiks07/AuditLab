@@ -1,0 +1,325 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "comparison-independent",
+  "protocol_id": "agent-generalization-1.1",
+  "source_sha": "c67327e4133dbe9c8dc073d8fa7bd5109012ce12",
+  "arms": {
+    "A": {
+      "attempts": 1,
+      "scored": 1,
+      "excluded_infra": 0,
+      "service_outcomes": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 1
+      },
+      "micro_f1_by_rule": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "every scored attempt; service failures as empty submissions"
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 1,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": -1.0,
+        "n": 1
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 0,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 0,
+        "timeout": 1,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 0,
+        "attempts": 1
+      },
+      "actions": {
+        "n": 1,
+        "mean": 34.0,
+        "median": 34,
+        "p90": 34
+      },
+      "input_tokens": {
+        "n": 1,
+        "mean": 2549441.0,
+        "median": 2549441,
+        "p90": 2549441
+      },
+      "output_tokens": {
+        "n": 1,
+        "mean": 3891.0,
+        "median": 3891,
+        "p90": 3891
+      },
+      "wall_time_s": {
+        "n": 1,
+        "mean": 601.601,
+        "median": 601.601,
+        "p90": 601.601
+      },
+      "cost_usd": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "live_attempts": 1
+    },
+    "B": {
+      "attempts": 1,
+      "scored": 1,
+      "excluded_infra": 0,
+      "service_outcomes": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 1
+      },
+      "micro_f1_by_rule": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "every scored attempt; service failures as empty submissions"
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 1,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": -1.0,
+        "n": 1
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 0,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 0,
+        "timeout": 1,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 0,
+        "attempts": 1
+      },
+      "actions": {
+        "n": 1,
+        "mean": 40.0,
+        "median": 40,
+        "p90": 40
+      },
+      "input_tokens": {
+        "n": 1,
+        "mean": 2168591.0,
+        "median": 2168591,
+        "p90": 2168591
+      },
+      "output_tokens": {
+        "n": 1,
+        "mean": 1353.0,
+        "median": 1353,
+        "p90": 1353
+      },
+      "wall_time_s": {
+        "n": 1,
+        "mean": 601.17,
+        "median": 601.17,
+        "p90": 601.17
+      },
+      "cost_usd": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "live_attempts": 1
+    },
+    "C": {
+      "attempts": 1,
+      "scored": 1,
+      "excluded_infra": 0,
+      "service_outcomes": 0,
+      "micro_f1": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "attempts ended by the agent (service failures excluded)",
+        "n": 1
+      },
+      "micro_f1_by_rule": {
+        "value": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "basis": "every scored attempt; service failures as empty submissions"
+      },
+      "mean_reward": {
+        "value": -1.0,
+        "n": 1,
+        "basis": "official rule over every scored attempt"
+      },
+      "mean_reward_agent_ended": {
+        "value": -1.0,
+        "n": 1
+      },
+      "fp_on_clean": {
+        "attempts_with_findings": 0,
+        "clean_attempts": 0,
+        "clean_attempts_service_failed": 0,
+        "fp_findings": 0
+      },
+      "status": {
+        "completed": 0,
+        "timeout": 1,
+        "provider_error": 0,
+        "invalid_response": 0,
+        "budget_stop": 0,
+        "infra_error_before_first_action": 0
+      },
+      "completion": {
+        "submitted": 0,
+        "attempts": 1
+      },
+      "actions": {
+        "n": 1,
+        "mean": 47.0,
+        "median": 47,
+        "p90": 47
+      },
+      "input_tokens": {
+        "n": 1,
+        "mean": 2942555.0,
+        "median": 2942555,
+        "p90": 2942555
+      },
+      "output_tokens": {
+        "n": 1,
+        "mean": 1842.0,
+        "median": 1842,
+        "p90": 1842
+      },
+      "wall_time_s": {
+        "n": 1,
+        "mean": 600.837,
+        "median": 600.837,
+        "p90": 600.837
+      },
+      "cost_usd": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p90": null
+      },
+      "live_attempts": 1
+    }
+  },
+  "paired_by_family": {
+    "B_vs_A": {
+      "a": "B",
+      "b": "A",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_A": {
+      "a": "C",
+      "b": "A",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_B": {
+      "a": "C",
+      "b": "B",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "paired_by_family_agent_ended": {
+    "B_vs_A": {
+      "a": "B",
+      "b": "A",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_A": {
+      "a": "C",
+      "b": "A",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    },
+    "C_vs_B": {
+      "a": "C",
+      "b": "B",
+      "families": 1,
+      "difference": 0.0,
+      "ci95": null,
+      "p_value": null,
+      "shown": false,
+      "missing_in_a": [],
+      "missing_in_b": [],
+      "reason": "at least two independent families are required for an uncertainty estimate"
+    }
+  },
+  "families": 1,
+  "episodes": 1,
+  "attempts": 3,
+  "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."
+}

@@ -1,0 +1,278 @@
+{
+  "arms": {
+    "A": {
+      "actions": {
+        "max": 7,
+        "mean": 7.0,
+        "median": 7,
+        "min": 7,
+        "n": 1
+      },
+      "attempts": 1,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": null,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 1,
+      "provider_calls": {
+        "max": 9,
+        "mean": 9.0,
+        "median": 9,
+        "min": 9,
+        "n": 1
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 1,
+        "statuses": {
+          "rate_limited": 1
+        }
+      },
+      "statuses": {
+        "rate_limited": 1
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 204312,
+        "cache_write": 0,
+        "input": 18152,
+        "output": 309
+      },
+      "unpriced_calls": 2,
+      "wall_seconds": {
+        "max": 31.907,
+        "mean": 31.907,
+        "median": 31.907,
+        "min": 31.907,
+        "n": 1
+      }
+    },
+    "B": {
+      "actions": {
+        "max": 7,
+        "mean": 7.0,
+        "median": 7,
+        "min": 7,
+        "n": 1
+      },
+      "attempts": 1,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": null,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 1,
+      "provider_calls": {
+        "max": 9,
+        "mean": 9.0,
+        "median": 9,
+        "min": 9,
+        "n": 1
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 1,
+        "statuses": {
+          "rate_limited": 1
+        }
+      },
+      "statuses": {
+        "rate_limited": 1
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 161438,
+        "cache_write": 0,
+        "input": 63245,
+        "output": 309
+      },
+      "unpriced_calls": 2,
+      "wall_seconds": {
+        "max": 58.878,
+        "mean": 58.878,
+        "median": 58.878,
+        "min": 58.878,
+        "n": 1
+      }
+    },
+    "C": {
+      "actions": {
+        "max": 12,
+        "mean": 12.0,
+        "median": 12,
+        "min": 12,
+        "n": 1
+      },
+      "attempts": 1,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": null,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 1,
+      "provider_calls": {
+        "max": 14,
+        "mean": 14.0,
+        "median": 14,
+        "min": 14,
+        "n": 1
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 1,
+        "statuses": {
+          "rate_limited": 1
+        }
+      },
+      "statuses": {
+        "rate_limited": 1
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 181334,
+        "cache_write": 0,
+        "input": 73229,
+        "output": 440
+      },
+      "unpriced_calls": 2,
+      "wall_seconds": {
+        "max": 59.869,
+        "mean": 59.869,
+        "median": 59.869,
+        "min": 59.869,
+        "n": 1
+      }
+    }
+  },
+  "attempts_total": 3,
+  "is_experiment": true,
+  "kind": "internal_summary",
+  "last_invocation": {
+    "attempts_started": [
+      "A--122970cc8915b79d",
+      "B--c8d4842521e5906a",
+      "C--309cd8bec9a30d86"
+    ],
+    "finished_at": "2026-11-22T13:36:01.274178+00:00",
+    "inter_attempt_waits_s": [
+      60.0,
+      60.0
+    ],
+    "service_waits_s": [],
+    "source_sha": "70a1ee1c0fc17a5183c00cdb50663f885ebd5c21",
+    "started_at": "2026-11-22T13:31:30.541830+00:00",
+    "stop_detail": "3 service failures in a row; last C--309cd8bec9a30d86: rate_limit: retry wait 59.0s would pass the attempt deadline after rate_limit",
+    "stop_reason": "consecutive_service_failures"
+  },
+  "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. Means over evaluable attempts; not_evaluable attempts are listed, never dropped.",
+  "paired": [
+    {
+      "a": "B",
+      "b": "A",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "C",
+      "b": "A",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "C",
+      "b": "B",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    }
+  ],
+  "plan_artifact_id": "abc-dev-balanced-no-slot-retry",
+  "plan_sha256": "b7db0ee6c2477fb955cc59ac4acc0edc939143d6b76f705f586f6a3404ba0768",
+  "protocol_id": "genesis-official-60s",
+  "schema_version": "1.0",
+  "test_double": false
+}

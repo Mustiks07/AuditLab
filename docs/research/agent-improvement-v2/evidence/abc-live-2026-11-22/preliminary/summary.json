@@ -1,0 +1,270 @@
+{
+  "arms": {
+    "A": {
+      "actions": {
+        "max": 8,
+        "mean": 7.5,
+        "median": 7.5,
+        "min": 7,
+        "n": 2
+      },
+      "attempts": 2,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": null,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 2,
+      "provider_calls": {
+        "max": 11,
+        "mean": 10.5,
+        "median": 10.5,
+        "min": 10,
+        "n": 2
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 2,
+        "statuses": {
+          "provider_error": 1,
+          "rate_limited": 1
+        }
+      },
+      "statuses": {
+        "provider_error": 1,
+        "rate_limited": 1
+      },
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 420945,
+        "cache_write": 0,
+        "input": 92293,
+        "output": 897
+      },
+      "unpriced_calls": 6,
+      "wall_seconds": {
+        "max": 60.223,
+        "mean": 52.2065,
+        "median": 52.2065,
+        "min": 44.19,
+        "n": 2
+      }
+    },
+    "B": {
+      "actions": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "attempts": 0,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": 0,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 0,
+        "statuses": {}
+      },
+      "statuses": {},
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      }
+    },
+    "C": {
+      "actions": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "attempts": 0,
+      "clean_attempts": 0,
+      "clean_with_fp": 0,
+      "content_outcomes": {
+        "attempts": 0,
+        "clean_attempts_with_false_accusation": 0,
+        "clean_variant_attempts": 0,
+        "diagnosed": 0,
+        "error_attempts_with_a_miss": 0,
+        "error_variant_attempts": 0,
+        "finding_labels": {},
+        "issues_missed": 0,
+        "issues_total": 0,
+        "missed_by_type": {},
+        "submitted": 0
+      },
+      "cost_usd_total": 0,
+      "evaluable": 0,
+      "invalid_submissions": 0,
+      "micro": {
+        "f1": null,
+        "fn": 0,
+        "fp": 0,
+        "tp": 0
+      },
+      "not_evaluable": 0,
+      "provider_calls": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "return": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      },
+      "service_outcomes": {
+        "attempts": 0,
+        "statuses": {}
+      },
+      "statuses": {},
+      "test_double": false,
+      "tokens_total": {
+        "cache_read": 0,
+        "cache_write": 0,
+        "input": 0,
+        "output": 0
+      },
+      "unpriced_calls": 0,
+      "wall_seconds": {
+        "max": null,
+        "mean": null,
+        "median": null,
+        "min": null,
+        "n": 0
+      }
+    }
+  },
+  "attempts_total": 2,
+  "is_experiment": true,
+  "kind": "internal_summary",
+  "last_invocation": {
+    "attempts_started": [
+      "A--978a0b2f23edae06",
+      "A--978a0b2f23edae06--retry1"
+    ],
+    "finished_at": "2026-11-22T13:31:02.081222+00:00",
+    "inter_attempt_waits_s": [],
+    "service_waits_s": [
+      60.0
+    ],
+    "source_sha": "64cbf9711a23c86803797c0fd20ff646c1ccd882",
+    "started_at": "2026-11-22T13:28:17.646061+00:00",
+    "stop_detail": "stop requested by the controller",
+    "stop_reason": "stop_requested"
+  },
+  "note": "AuditLab internal bookkeeping; independent comparison and final holdout belong to Claude Pro 2. Means over evaluable attempts; not_evaluable attempts are listed, never dropped.",
+  "paired": [
+    {
+      "a": "B",
+      "b": "A",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "C",
+      "b": "A",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    },
+    {
+      "a": "C",
+      "b": "B",
+      "ci95": null,
+      "families": 0,
+      "mean_difference": null,
+      "metric": "return",
+      "missing_families": []
+    }
+  ],
+  "plan_artifact_id": "abc-dev-balanced-rc5",
+  "plan_sha256": "fd8f34655fdc6e34459f0ae113be4b8b301811b1b349981100ad82a19cc8360f",
+  "protocol_id": "genesis-official-60s",
+  "schema_version": "1.0",
+  "test_double": false
+}

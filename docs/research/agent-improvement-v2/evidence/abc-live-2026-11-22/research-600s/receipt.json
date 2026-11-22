@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "abc-dev-balanced-research",
+  "plan_sha256": "18e400590dd287011a06b6373e138f7d60cf5592a2aebe2573fb565e1164eaef",
+  "invocations": [
+    {
+      "started_at": "2026-11-22T13:40:03.368848+00:00",
+      "source_sha": "c67327e4133dbe9c8dc073d8fa7bd5109012ce12",
+      "attempts_started": [
+        "A--f49dd7de5f0dd871",
+        "B--98e4b4ba4dcec302",
+        "C--1fa591c7485f7e27"
+      ],
+      "service_waits_s": [],
+      "inter_attempt_waits_s": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "stop_reason": "stop_requested",
+      "stop_detail": "stop requested during cooldown",
+      "finished_at": "2026-11-22T14:13:07.044508+00:00"
+    }
+  ],
+  "bridge_image_id": "sha256:f2d77d6261f47f4af435714d7c1cae25550be9f6649a41adbdae9d563601d0c8"
+}

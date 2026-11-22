@@ -1,0 +1,9 @@
+{
+  "stop": true,
+  "outcomes": {
+    "A": "timeout",
+    "B": "timeout",
+    "C": "timeout"
+  },
+  "criterion": "zero submissions in first complete ABC block"
+}

@@ -1,0 +1,6 @@
+{
+  "recorded_at_utc": "2026-11-22T13:51:05.790322+00:00",
+  "trigger": "First complete A/B/C block has zero completed submissions; stop remaining research slots for operational diagnosis. This is not a complete benchmark or a quality ranking.",
+  "decision_basis": "A reached the 600-second deadline after 34 actions; B and C have no final outcomes at gate registration.",
+  "scope": "research-600s only; preserve all prior attempts; no holdout access"
+}

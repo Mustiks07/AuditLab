@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "plan_artifact_id": "abc-dev-balanced-rc5",
+  "plan_sha256": "fd8f34655fdc6e34459f0ae113be4b8b301811b1b349981100ad82a19cc8360f",
+  "invocations": [
+    {
+      "started_at": "2026-11-22T13:28:17.646061+00:00",
+      "source_sha": "64cbf9711a23c86803797c0fd20ff646c1ccd882",
+      "attempts_started": [
+        "A--978a0b2f23edae06",
+        "A--978a0b2f23edae06--retry1"
+      ],
+      "service_waits_s": [
+        60.0
+      ],
+      "inter_attempt_waits_s": [],
+      "stop_reason": "stop_requested",
+      "stop_detail": "stop requested by the controller",
+      "finished_at": "2026-11-22T13:31:02.081222+00:00"
+    }
+  ],
+  "bridge_image_id": "sha256:f2d77d6261f47f4af435714d7c1cae25550be9f6649a41adbdae9d563601d0c8"
+}
