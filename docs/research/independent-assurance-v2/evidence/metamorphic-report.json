@@ -1,0 +1,4785 @@
+{
+ "protocol_id": "independent-assurance-2.0",
+ "strata": {
+  "multi_tranche_split": [
+   {
+    "seed": 9220001,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220002,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220003,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "partial_share": [
+   {
+    "seed": 9220004,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220005,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220006,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "full_omission": [
+   {
+    "seed": 9220007,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220008,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220009,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "refund_lookalike": [
+   {
+    "seed": 9220010,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220011,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220012,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "boundary_at": [
+   {
+    "seed": 9220013,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220014,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220015,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "boundary_after": [
+   {
+    "seed": 9220016,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220017,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220018,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "period_cutoff": [
+   {
+    "seed": 9220019,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220020,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220021,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "jpy_full_omission": [
+   {
+    "seed": 9220022,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220023,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220024,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "kwd_fx": [
+   {
+    "seed": 9220025,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220026,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220027,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "usd_base_fx": [
+   {
+    "seed": 9220028,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220029,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220030,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "interaction_allocation_fx": [
+   {
+    "seed": 9220031,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220032,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220033,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "interaction_cutoff_fx": [
+   {
+    "seed": 9220034,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220035,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220036,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_period_cutoff",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "status": "not_checked",
+      "reason": "transition changes cannot be partitioned by mutation"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "two_types_duplicate_allocation": [
+   {
+    "seed": 9220037,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220038,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220039,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "two_types_fx_allocation": [
+   {
+    "seed": 9220040,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220041,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220042,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       0,
+       2,
+       2
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_payment_allocation",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_fx_conversion",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR5_fix_one_keep_other",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_fx_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_own_allocation_fix",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       1,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR4_allocation_amount",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 2,
+      "solver": 2,
+      "truth_issues": 2,
+      "stale_score": [
+       1,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "lookalike_duplicate": [
+   {
+    "seed": 9220043,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220044,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220045,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "stale_score": [
+       0,
+       1,
+       1
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 1,
+      "solver": 1,
+      "truth_issues": 1,
+      "status": "passed"
+     },
+     {
+      "relation": "MR3_revert_duplicate_invoice",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       1,
+       0
+      ],
+      "scorer_rejects_stale": true,
+      "status": "passed"
+     }
+    ]
+   }
+  ],
+  "clean_lookalikes": [
+   {
+    "seed": 9220046,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220047,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     }
+    ]
+   },
+   {
+    "seed": 9220048,
+    "relations": [
+     {
+      "relation": "MR1_rename_reorder",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR1b_gpt1_renamed_snapshot",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "stale_score": [
+       0,
+       0,
+       0
+      ],
+      "scorer_rejects_stale": null,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_archive_copy",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     },
+     {
+      "relation": "MR2_same_amount_other_customer",
+      "solver_matches_prediction": true,
+      "scorer_accepts_prediction": true,
+      "predicted": 0,
+      "solver": 0,
+      "truth_issues": 0,
+      "status": "passed"
+     }
+    ]
+   }
+  ]
+ },
+ "gpt1_boundary_variants": [
+  {
+   "seed": 9229001,
+   "kind": "id_order",
+   "declared": "IDs and order change while the remaining balance stays 20,000 KZT",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/IBE9A13D4EBDE60A4886592CC', 'payment/P77E942B150FD8B95D4C4580C')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/IBE9A13D4EBDE60A4886592CC', 'payment/P77E942B150FD8B95D4C4580C')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229001,
+   "kind": "lawful_refund",
+   "declared": "A genuine independent deposit refund leaves the designated balance unchanged",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/I9E41686D2150311E5B2AA5E1', 'payment/P9C2721D69C22FDA454ACC071')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/I9E41686D2150311E5B2AA5E1', 'payment/P9C2721D69C22FDA454ACC071')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229001,
+   "kind": "fixed",
+   "declared": "The second tranche is posted before the exclusive deadline and the finding disappears",
+   "status": "passed",
+   "solver": [],
+   "declared_expected": [],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229001,
+   "kind": "currency",
+   "declared": "The designated contract is denominated in JPY with exponent zero, so the 20,000-unit balance changes currency and minor amount",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/I9E41686D2150311E5B2AA5E1', 'payment/P9C2721D69C22FDA454ACC071')",
+     "20000",
+     "JPY"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/I9E41686D2150311E5B2AA5E1', 'payment/P9C2721D69C22FDA454ACC071')",
+     "20000",
+     "JPY"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229002,
+   "kind": "id_order",
+   "declared": "IDs and order change while the remaining balance stays 20,000 KZT",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/I4E4F974CC1EB0D72EAB032D5', 'payment/P2B16A4728C216E1EFE418AA7')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/I4E4F974CC1EB0D72EAB032D5', 'payment/P2B16A4728C216E1EFE418AA7')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229002,
+   "kind": "lawful_refund",
+   "declared": "A genuine independent deposit refund leaves the designated balance unchanged",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/I97195120938A8D9B6D4A7413', 'payment/PB26BD7E2BD01EC043D26D42A')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/I97195120938A8D9B6D4A7413', 'payment/PB26BD7E2BD01EC043D26D42A')",
+     "2000000",
+     "KZT"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229002,
+   "kind": "fixed",
+   "declared": "The second tranche is posted before the exclusive deadline and the finding disappears",
+   "status": "passed",
+   "solver": [],
+   "declared_expected": [],
+   "parent_answer_amount": [
+    2000000
+   ]
+  },
+  {
+   "seed": 9229002,
+   "kind": "currency",
+   "declared": "The designated contract is denominated in JPY with exponent zero, so the 20,000-unit balance changes currency and minor amount",
+   "status": "passed",
+   "solver": [
+    [
+     "payment_allocation",
+     "('invoice/I97195120938A8D9B6D4A7413', 'payment/PB26BD7E2BD01EC043D26D42A')",
+     "20000",
+     "JPY"
+    ]
+   ],
+   "declared_expected": [
+    [
+     "payment_allocation",
+     "('invoice/I97195120938A8D9B6D4A7413', 'payment/PB26BD7E2BD01EC043D26D42A')",
+     "20000",
+     "JPY"
+    ]
+   ],
+   "parent_answer_amount": [
+    2000000
+   ]
+  }
+ ],
+ "tally": {
+  "MR1_rename_reorder": {
+   "passed": 48,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR1b_gpt1_renamed_snapshot": {
+   "passed": 48,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR2_archive_copy": {
+   "passed": 48,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR2_same_amount_other_customer": {
+   "passed": 48,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR3_revert_payment_allocation": {
+   "passed": 27,
+   "failed": 0,
+   "not_checked": 3
+  },
+  "MR3_own_allocation_fix": {
+   "passed": 30,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR4_allocation_amount": {
+   "passed": 30,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR3_revert_period_cutoff": {
+   "passed": 3,
+   "failed": 0,
+   "not_checked": 3
+  },
+  "MR3_revert_fx_conversion": {
+   "passed": 9,
+   "failed": 0,
+   "not_checked": 6
+  },
+  "MR4_fx_amount": {
+   "passed": 15,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR3_revert_duplicate_invoice": {
+   "passed": 6,
+   "failed": 0,
+   "not_checked": 0
+  },
+  "MR5_fix_one_keep_other": {
+   "passed": 12,
+   "failed": 0,
+   "not_checked": 0
+  }
+ }
+}

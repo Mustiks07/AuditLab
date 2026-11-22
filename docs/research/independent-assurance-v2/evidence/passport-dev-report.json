@@ -1,0 +1,2519 @@
+{
+ "rows": [
+  {
+   "episode": "boundary_after-0",
+   "stratum": "boundary_after",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "document_count": [
+      41,
+      40
+     ],
+     "invoices": [
+      25,
+      24
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "boundary_after-1",
+   "stratum": "boundary_after",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.14,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "boundary_after-2",
+   "stratum": "boundary_after",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 22,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "boundary_at-0",
+   "stratum": "boundary_at",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.125,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "boundary_at-1",
+   "stratum": "boundary_at",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.157,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "boundary_at-2",
+   "stratum": "boundary_at",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      54,
+      53
+     ],
+     "payments": [
+      56,
+      57
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "clean_lookalikes-0",
+   "stratum": "clean_lookalikes",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.14,
+   "truth_issues": 0
+  },
+  {
+   "episode": "clean_lookalikes-1",
+   "stratum": "clean_lookalikes",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 0
+  },
+  {
+   "episode": "clean_lookalikes-2",
+   "stratum": "clean_lookalikes",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 0
+  },
+  {
+   "episode": "full_omission-0",
+   "stratum": "full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.14,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      100,
+      101
+     ],
+     "ledger_rows": [
+      200,
+      202
+     ],
+     "manifest_ledger_rows": [
+      200,
+      202
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "full_omission-1",
+   "stratum": "full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      200,
+      201
+     ],
+     "ledger_rows": [
+      400,
+      402
+     ],
+     "manifest_ledger_rows": [
+      400,
+      402
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "full_omission-2",
+   "stratum": "full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 22,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      400,
+      401
+     ],
+     "ledger_rows": [
+      800,
+      802
+     ],
+     "manifest_ledger_rows": [
+      800,
+      802
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_allocation_fx-0",
+   "stratum": "interaction_allocation_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "fx_rows": [
+      19,
+      18
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_allocation_fx-1",
+   "stratum": "interaction_allocation_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_allocation_fx-2",
+   "stratum": "interaction_allocation_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      51,
+      50
+     ],
+     "payments": [
+      59,
+      60
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_cutoff_fx-0",
+   "stratum": "interaction_cutoff_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.14,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_cutoff_fx-1",
+   "stratum": "interaction_cutoff_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "interaction_cutoff_fx-2",
+   "stratum": "interaction_cutoff_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 22,
+   "solver_elapsed_s": 0.171,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "jpy_full_omission-0",
+   "stratum": "jpy_full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      100,
+      101
+     ],
+     "ledger_rows": [
+      200,
+      202
+     ],
+     "manifest_ledger_rows": [
+      200,
+      202
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "jpy_full_omission-1",
+   "stratum": "jpy_full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      200,
+      201
+     ],
+     "ledger_rows": [
+      400,
+      402
+     ],
+     "manifest_ledger_rows": [
+      400,
+      402
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "jpy_full_omission-2",
+   "stratum": "jpy_full_omission",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.219,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      400,
+      401
+     ],
+     "ledger_rows": [
+      800,
+      802
+     ],
+     "manifest_ledger_rows": [
+      800,
+      802
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "kwd_fx-0",
+   "stratum": "kwd_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "kwd_fx-1",
+   "stratum": "kwd_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "kwd_fx-2",
+   "stratum": "kwd_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "lookalike_duplicate-0",
+   "stratum": "lookalike_duplicate",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      100,
+      99
+     ],
+     "ledger_rows": [
+      200,
+      198
+     ],
+     "manifest_ledger_rows": [
+      200,
+      198
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "lookalike_duplicate-1",
+   "stratum": "lookalike_duplicate",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      200,
+      199
+     ],
+     "ledger_rows": [
+      400,
+      398
+     ],
+     "manifest_ledger_rows": [
+      400,
+      398
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "lookalike_duplicate-2",
+   "stratum": "lookalike_duplicate",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      400,
+      399
+     ],
+     "ledger_rows": [
+      800,
+      798
+     ],
+     "manifest_ledger_rows": [
+      800,
+      798
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "multi_tranche_split-0",
+   "stratum": "multi_tranche_split",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "multi_tranche_split-1",
+   "stratum": "multi_tranche_split",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "multi_tranche_split-2",
+   "stratum": "multi_tranche_split",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.171,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "partial_share-0",
+   "stratum": "partial_share",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "partial_share-1",
+   "stratum": "partial_share",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "partial_share-2",
+   "stratum": "partial_share",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "period_cutoff-0",
+   "stratum": "period_cutoff",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      23,
+      22
+     ],
+     "payments": [
+      17,
+      18
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "period_cutoff-1",
+   "stratum": "period_cutoff",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.172,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "period_cutoff-2",
+   "stratum": "period_cutoff",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      51,
+      50
+     ],
+     "payments": [
+      59,
+      60
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "refund_lookalike-0",
+   "stratum": "refund_lookalike",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "refund_lookalike-1",
+   "stratum": "refund_lookalike",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      32,
+      31
+     ],
+     "payments": [
+      33,
+      34
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "refund_lookalike-2",
+   "stratum": "refund_lookalike",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 22,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_duplicate_allocation-0",
+   "stratum": "two_types_duplicate_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.14,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      24,
+      22
+     ],
+     "payments": [
+      16,
+      18
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      100,
+      99
+     ],
+     "ledger_rows": [
+      200,
+      198
+     ],
+     "manifest_ledger_rows": [
+      200,
+      198
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_duplicate_allocation-1",
+   "stratum": "two_types_duplicate_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.125,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      33,
+      32
+     ],
+     "payments": [
+      32,
+      33
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      200,
+      199
+     ],
+     "ledger_rows": [
+      400,
+      398
+     ],
+     "manifest_ledger_rows": [
+      400,
+      398
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_duplicate_allocation-2",
+   "stratum": "two_types_duplicate_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 22,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": false,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "invoices": [
+      50,
+      49
+     ],
+     "payments": [
+      60,
+      61
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "failed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": false
+    },
+    "differing_features": {
+     "journals": [
+      400,
+      399
+     ],
+     "ledger_rows": [
+      800,
+      798
+     ],
+     "manifest_ledger_rows": [
+      800,
+      798
+     ]
+    },
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_fx_allocation-0",
+   "stratum": "two_types_fx_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_fx_allocation-1",
+   "stratum": "two_types_fx_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "two_types_fx_allocation-2",
+   "stratum": "two_types_fx_allocation",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 2,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "usd_base_fx-0",
+   "stratum": "usd_base_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 9,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "usd_base_fx-1",
+   "stratum": "usd_base_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 13,
+   "solver_elapsed_s": 0.141,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  },
+  {
+   "episode": "usd_base_fx-2",
+   "stratum": "usd_base_fx",
+   "status": "passed",
+   "checks": {
+    "formats": "passed",
+    "no_contradictions": "passed",
+    "source_book_consistent": "passed",
+    "mutation_explained": "passed",
+    "mutation_declared": "passed",
+    "answer_matches_truth": "passed",
+    "evidence_available": "passed",
+    "witness_trajectory": "passed",
+    "independent_solver": "passed",
+    "reproducible_generation": "passed"
+   },
+   "solver_actions": 23,
+   "solver_elapsed_s": 0.156,
+   "truth_issues": 1,
+   "P9_defect_off": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   },
+   "P9_source_book": {
+    "status": "passed",
+    "checks": {
+     "clean_has_no_finding": true,
+     "same_commercial_history_as_source_book": true,
+     "no_simple_public_signal": true
+    },
+    "differing_features": {},
+    "clean_findings": 0,
+    "clean_notes": []
+   }
+  }
+ ],
+ "tally": {
+  "overall": {
+   "passed": 48
+  },
+  "checks": {
+   "formats": {
+    "passed": 48
+   },
+   "no_contradictions": {
+    "passed": 48
+   },
+   "source_book_consistent": {
+    "passed": 48
+   },
+   "mutation_explained": {
+    "passed": 48
+   },
+   "mutation_declared": {
+    "passed": 48
+   },
+   "answer_matches_truth": {
+    "passed": 48
+   },
+   "evidence_available": {
+    "passed": 48
+   },
+   "witness_trajectory": {
+    "passed": 48
+   },
+   "independent_solver": {
+    "passed": 48
+   },
+   "reproducible_generation": {
+    "passed": 48
+   }
+  },
+  "solver_max_actions": 23,
+  "solver_max_elapsed_s": 0.219,
+  "P9": {
+   "P9_defect_off": {
+    "boundary_after": {
+     "failed": 3
+    },
+    "boundary_at": {
+     "failed": 3
+    },
+    "full_omission": {
+     "passed": 3
+    },
+    "interaction_allocation_fx": {
+     "failed": 3
+    },
+    "interaction_cutoff_fx": {
+     "passed": 3
+    },
+    "jpy_full_omission": {
+     "passed": 3
+    },
+    "kwd_fx": {
+     "passed": 3
+    },
+    "lookalike_duplicate": {
+     "passed": 3
+    },
+    "multi_tranche_split": {
+     "passed": 3
+    },
+    "partial_share": {
+     "passed": 3
+    },
+    "period_cutoff": {
+     "failed": 3
+    },
+    "refund_lookalike": {
+     "failed": 3
+    },
+    "two_types_duplicate_allocation": {
+     "failed": 3
+    },
+    "two_types_fx_allocation": {
+     "passed": 3
+    },
+    "usd_base_fx": {
+     "passed": 3
+    }
+   },
+   "P9_source_book": {
+    "boundary_after": {
+     "passed": 3
+    },
+    "boundary_at": {
+     "passed": 3
+    },
+    "full_omission": {
+     "failed": 3
+    },
+    "interaction_allocation_fx": {
+     "passed": 3
+    },
+    "interaction_cutoff_fx": {
+     "passed": 3
+    },
+    "jpy_full_omission": {
+     "failed": 3
+    },
+    "kwd_fx": {
+     "passed": 3
+    },
+    "lookalike_duplicate": {
+     "failed": 3
+    },
+    "multi_tranche_split": {
+     "passed": 3
+    },
+    "partial_share": {
+     "passed": 3
+    },
+    "period_cutoff": {
+     "passed": 3
+    },
+    "refund_lookalike": {
+     "passed": 3
+    },
+    "two_types_duplicate_allocation": {
+     "failed": 3
+    },
+    "two_types_fx_allocation": {
+     "passed": 3
+    },
+    "usd_base_fx": {
+     "passed": 3
+    }
+   }
+  },
+  "P9_signals": [
+   [
+    "P9_defect_off",
+    "boundary_after",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "boundary_after",
+    "document_count",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "boundary_after",
+    "invoices",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "boundary_at",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "boundary_at",
+    "invoices",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "boundary_at",
+    "payments",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "interaction_allocation_fx",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "interaction_allocation_fx",
+    "fx_rows",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "interaction_allocation_fx",
+    "invoices",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "interaction_allocation_fx",
+    "payments",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "period_cutoff",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "period_cutoff",
+    "invoices",
+    2
+   ],
+   [
+    "P9_defect_off",
+    "period_cutoff",
+    "payments",
+    2
+   ],
+   [
+    "P9_defect_off",
+    "refund_lookalike",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "refund_lookalike",
+    "invoices",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "refund_lookalike",
+    "payments",
+    1
+   ],
+   [
+    "P9_defect_off",
+    "two_types_duplicate_allocation",
+    "different_commercial_history",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "two_types_duplicate_allocation",
+    "invoices",
+    3
+   ],
+   [
+    "P9_defect_off",
+    "two_types_duplicate_allocation",
+    "payments",
+    3
+   ],
+   [
+    "P9_source_book",
+    "full_omission",
+    "journals",
+    3
+   ],
+   [
+    "P9_source_book",
+    "full_omission",
+    "ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "full_omission",
+    "manifest_ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "jpy_full_omission",
+    "journals",
+    3
+   ],
+   [
+    "P9_source_book",
+    "jpy_full_omission",
+    "ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "jpy_full_omission",
+    "manifest_ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "lookalike_duplicate",
+    "journals",
+    3
+   ],
+   [
+    "P9_source_book",
+    "lookalike_duplicate",
+    "ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "lookalike_duplicate",
+    "manifest_ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "two_types_duplicate_allocation",
+    "journals",
+    3
+   ],
+   [
+    "P9_source_book",
+    "two_types_duplicate_allocation",
+    "ledger_rows",
+    3
+   ],
+   [
+    "P9_source_book",
+    "two_types_duplicate_allocation",
+    "manifest_ledger_rows",
+    3
+   ]
+  ]
+ }
+}

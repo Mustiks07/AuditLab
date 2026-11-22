@@ -15,10 +15,10 @@ CURRENCIES = [["KZT", "USD"], ["KZT", "JPY", "KWD"], ["JPY", "USD"], ["KWD", "JP
 ZONES = [("Asia/Almaty", "2026-11"), ("Europe/Berlin", "2026-10"), ("America/New_York", "2026-03"), ("UTC", "2026-12"),
          ("Asia/Kathmandu", "2027-01"), ("Europe/Berlin", "2026-03"), ("America/New_York", "2026-11")]
 SIZES = [(200, 40), (400, 65), (800, 100), (1200, 150), (2000, 200)]
-STRATA = {  # holdout counts (protocol.json); full omission waits for #40
+STRATA = {  # holdout counts (protocol.json); full omission since generator 1.7 (holdout v2)
     "partial_allocation": 12, "full_omission_allocation": 12, "duplicate_invoice": 12, "fx_conversion": 12, "period_cutoff": 12,
     "interaction_allocation_fx": 10, "interaction_cutoff_fx": 10, "multi_issue": 10, "settlement_at_or_after_boundary": 10}
-PENDING = {"full_omission_allocation": "generator 1.6 has no documented full-omission setting; waits for #40",
+PENDING = {  # full omission: available since generator 1.7 (#40, PR #48); protocol independent-assurance-2.0
            # protocol 1.1: the boundary pair is one fixed commercial history (the S01/S02 chain, also in published train),
            # so seeds do not create new economic families in this stratum
            "settlement_at_or_after_boundary": "fixed template chain shared with published train; waits for a randomized boundary history"}
@@ -54,6 +54,8 @@ def stratum_config(stratum: str, k: int) -> dict | None:
     if stratum in PENDING:
         return None
     if stratum == "partial_allocation": c["issue_counts"]["payment_allocation"] = 1
+    elif stratum == "full_omission_allocation":
+        c["issue_counts"]["payment_allocation"] = 1; c["allocation_mode"] = "omitted"
     elif stratum in ("duplicate_invoice", "fx_conversion", "period_cutoff"): c["issue_counts"][stratum] = 1
     elif stratum == "interaction_allocation_fx":
         c.update(interaction="allocation_fx_same_payment"); c["issue_counts"].update(payment_allocation=1, fx_conversion=1)
@@ -69,10 +71,12 @@ def stratum_config(stratum: str, k: int) -> dict | None:
     return c
 
 
-def plan(split: str, seeds: list[int] | None = None) -> list[dict]:
+def plan(split: str, seeds: list[int] | None = None, only: set[str] | None = None) -> list[dict]:
     rows, i = [], 0
     scale = 1 if split == "holdout" else 0.3
     for stratum, n in STRATA.items():
+        if only and stratum not in only:
+            continue
         for k in range(round(n * scale)):
             cfg = stratum_config(stratum, k)
             rows.append({"stratum": stratum, "config": cfg, "pending": PENDING.get(stratum) if cfg is None else None})
@@ -91,10 +95,21 @@ def _tree(p: Path) -> str:
     return h.hexdigest()
 
 
-def build(adapter, split: str, work: Path, seeds: list[int] | None = None, max_replacements: int = 3) -> dict:
+# a clean variant copied from the source book has no provenance of its own: P4 and P10 are honestly not_checked
+DERIVED_CLEAN_NOT_CHECKED = {"mutation_declared", "reproducible_generation"}
+
+
+def acceptable(validation: dict, variant: str) -> bool:
+    if validation["status"] == "passed":
+        return True
+    open_checks = {k for k, c in validation["checks"].items() if c["status"] != "passed"}
+    return variant == "clean" and validation["status"] == "not_checked" and open_checks <= DERIVED_CLEAN_NOT_CHECKED
+
+
+def build(adapter, split: str, work: Path, seeds: list[int] | None = None, max_replacements: int = 3, only: set[str] | None = None) -> dict:
     """Generate both variants per family, validate, replace (before any agent run) when validation fails."""
     families, rejected = [], []
-    for entry in plan(split, seeds):
+    for entry in plan(split, seeds, only):
         if entry["config"] is None:
             families.append({"stratum": entry["stratum"], "status": "not_checked", "reason": entry["pending"]})
             continue
@@ -110,7 +125,7 @@ def build(adapter, split: str, work: Path, seeds: list[int] | None = None, max_r
                         "clean": {"status": "failed", "checks": {"matched_clean": {"status": "failed"}}, "truth_issues": 0}}
             else:
                 vals = {v: validate_candidate(d / v, adapter=adapter, work=d / f"{v}.validation") for v in ("error", "clean")}
-            if all(x["status"] == "passed" for x in vals.values()) or attempt >= max_replacements or seeds:
+            if all(acceptable(x, v) for v, x in vals.items()) or attempt >= max_replacements or seeds:
                 break
             rejected.append({"family_id": fid, "seed": seed, "stratum": entry["stratum"], "clean_kind": clean_kind,
                              "failed": {v: [k for k, c in x["checks"].items() if c["status"] == "failed"] for v, x in vals.items()}})
@@ -122,6 +137,7 @@ def build(adapter, split: str, work: Path, seeds: list[int] | None = None, max_r
         families.append({"family_id": fid, "stratum": entry["stratum"], "seed": seed, "config": entry["config"], "clean_kind": clean_kind,
                          "variants": {v: {"dir": str(d / v), "sha256": _tree(d / v), "validation": vals[v]["status"],
                                           "failed_checks": [k for k, c in vals[v]["checks"].items() if c["status"] == "failed"],
+                                          "accepted": acceptable(vals[v], v),
                                           "truth_issues": vals[v]["truth_issues"]} for v in ("error", "clean")}})
     return {"split": split, "families": families, "replaced_before_any_agent_run": rejected}
 

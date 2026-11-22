@@ -1,0 +1,29 @@
+{
+ "protocol_id": "independent-assurance-2.0",
+ "sealed_sha256": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c",
+ "families": 90,
+ "status": {
+  "clean:not_checked": 62,
+  "clean:passed": 28,
+  "error:passed": 90
+ },
+ "accepted": {
+  "clean:True": 90,
+  "error:True": 90
+ },
+ "checks_not_passed": {
+  "clean:mutation_declared:not_checked": 62,
+  "clean:reproducible_generation:not_checked": 62
+ },
+ "solver_max_actions": 48,
+ "p9": {
+  "duplicate_invoice:passed": 12,
+  "full_omission_allocation:passed": 12,
+  "fx_conversion:passed": 12,
+  "interaction_allocation_fx:passed": 10,
+  "interaction_cutoff_fx:passed": 10,
+  "multi_issue:passed": 10,
+  "partial_allocation:passed": 12,
+  "period_cutoff:passed": 12
+ }
+}
