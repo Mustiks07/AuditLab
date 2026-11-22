@@ -1,0 +1,75 @@
+{
+ "schema_version": "1.0",
+ "protocol_id": "independent-assurance-2.0",
+ "version": "v2",
+ "commitment": {
+  "file": "holdout-sealed-v2.json (trusted side only)",
+  "sha256": "6a50231e4f87cf580c84e1b4047add7c3cd4ee6a4046d98061e3555ea21ea57c"
+ },
+ "v1_commitment": "dcd56b939e6967e199087d1759802e264fc7d4efa4af52f4ad2cf57df959bc65",
+ "v1_regeneration_under_current_generator": {
+  "provenance_version_only": 78
+ },
+ "families_built": 90,
+ "strata": {
+  "partial_allocation": 12,
+  "duplicate_invoice": 12,
+  "fx_conversion": 12,
+  "period_cutoff": 12,
+  "interaction_allocation_fx": 10,
+  "interaction_cutoff_fx": 10,
+  "multi_issue": 10,
+  "full_omission_allocation": 12
+ },
+ "pending": {
+  "settlement_at_or_after_boundary": 10
+ },
+ "rejected": 0,
+ "validation": {
+  "error": {
+   "passed": 90
+  },
+  "clean": {
+   "passed": 90
+  }
+ },
+ "accepted": {
+  "error": 90,
+  "clean": 90
+ },
+ "sizes": {
+  "200": 21,
+  "400": 21,
+  "800": 16,
+  "1200": 16,
+  "2000": 16
+ },
+ "currencies": {
+  "KZT": 32,
+  "JPY": 16,
+  "KWD": 16,
+  "USD": 13,
+  "EUR": 13
+ },
+ "separation": {
+  "families": 90,
+  "whole_history_duplicates": 0,
+  "whole_history_equal_to_other_split": 0,
+  "defect_chain_reused": 0,
+  "clean_template_chains_shared_with_other_splits": 0
+ },
+ "shortcut_audit": {
+  "ledger_rows": false,
+  "document_count": false,
+  "ledger_rows_is_a_size_target": false,
+  "fx_valuation_rows": false,
+  "archive_groups": false
+ },
+ "origin_partition": {
+  "status": "passed",
+  "items": 624,
+  "violations": 0
+ },
+ "public_dev_material_snapshots": 424,
+ "replaced_before_any_agent_run": 0
+}

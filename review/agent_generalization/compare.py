@@ -21,6 +21,8 @@ from review.genesis_acceptance import reference as ref
 from review.genesis_acceptance.fixtures import public_refs
 
 OPERATIONAL = ("completed", "timeout", "provider_error", "invalid_response", "budget_stop", "infra_error_before_first_action")
+# outcomes of the service or of our own budget, never of the model (protocol independent-assurance-2.0, section 6)
+SERVICE = ("provider_error", "budget_stop", "infra_error_before_first_action")
 
 
 def rescore(attempt: dict, episode: dict, cache: dict) -> dict:
@@ -57,18 +59,32 @@ def _summary(xs):
     return {"n": len(xs), "mean": statistics.fmean(xs), "median": statistics.median(xs), "p90": ys[min(len(ys) - 1, int(0.9 * len(ys)))]}
 
 
+def _f1(rows):
+    valid = [r for r in rows if r["score"].get("valid")]
+    tp = sum(r["score"]["tp"] for r in valid); fp = sum(r["score"]["fp"] for r in valid); fn = sum(r["score"]["fn"] for r in valid)
+    fn += sum(r["truth_issues"] for r in rows if not r["score"].get("valid"))   # an invalid submit finds nothing
+    return {"value": float(Fraction(2 * tp, 2 * tp + fp + fn)) if 2 * tp + fp + fn else (1.0 if rows else None), "tp": tp, "fp": fp, "fn": fn}
+
+
 def metrics(rows: list[dict]) -> dict:
+    """Quality (micro F1, clean accusations) only over attempts in which the agent itself ended the episode
+    (completed, timeout, invalid_response). A service failure is counted separately and appears only in the
+    by-rule value, where the official rule scores it as an empty submission. (Fixed 2026-11-22: protocol 1.1
+    mixed service failures into micro F1 as misses.)"""
     n = len(rows)
     scored = [r for r in rows if not r["score"]["excluded"]]
-    valid = [r for r in scored if r["score"].get("valid")]
-    tp = sum(r["score"]["tp"] for r in valid); fp = sum(r["score"]["fp"] for r in valid); fn = sum(r["score"]["fn"] for r in valid)
-    fn += sum(r["truth_issues"] for r in scored if not r["score"].get("valid"))   # an invalid submit finds nothing
-    clean = [r for r in scored if r["variant"] == "clean"]
+    agent = [r for r in scored if r["status"] not in SERVICE]
+    clean = [r for r in agent if r["variant"] == "clean"]
     clean_accused = [r for r in clean if r["score"].get("valid") is False or (r["score"].get("n_findings") or 0) > 0]
     return {"attempts": n, "scored": len(scored), "excluded_infra": n - len(scored),
-            "micro_f1": {"value": float(Fraction(2 * tp, 2 * tp + fp + fn)) if 2 * tp + fp + fn else (1.0 if scored else None), "tp": tp, "fp": fp, "fn": fn},
-            "mean_reward": {"value": float(sum(r["score"]["return"] for r in scored) / len(scored)) if scored else None, "n": len(scored)},
+            "service_outcomes": sum(r["status"] in SERVICE for r in rows),
+            "micro_f1": {**_f1(agent), "basis": "attempts ended by the agent (service failures excluded)", "n": len(agent)},
+            "micro_f1_by_rule": {**_f1(scored), "basis": "every scored attempt; service failures as empty submissions"},
+            "mean_reward": {"value": float(sum(r["score"]["return"] for r in scored) / len(scored)) if scored else None, "n": len(scored),
+                            "basis": "official rule over every scored attempt"},
+            "mean_reward_agent_ended": {"value": float(sum(r["score"]["return"] for r in agent) / len(agent)) if agent else None, "n": len(agent)},
             "fp_on_clean": {"attempts_with_findings": len(clean_accused), "clean_attempts": len(clean),
+                            "clean_attempts_service_failed": sum(1 for r in scored if r["variant"] == "clean" and r["status"] in SERVICE),
                             "fp_findings": sum(r["score"]["fp"] or 0 for r in clean if r["score"].get("valid"))},
             "status": {s: sum(r["status"] == s for r in rows) for s in OPERATIONAL},
             "completion": {"submitted": sum(r["status"] == "completed" for r in rows), "attempts": n},
@@ -77,11 +93,11 @@ def metrics(rows: list[dict]) -> dict:
             "cost_usd": _summary([r.get("cost_usd") for r in rows]), "live_attempts": sum(bool(r.get("live")) for r in rows)}
 
 
-def family_values(rows: list[dict]) -> dict:
+def family_values(rows: list[dict], agent_ended_only: bool = False) -> dict:
     """Family value = mean reward over its episodes and repetitions (repeats are not independent companies)."""
     by = defaultdict(list)
     for r in rows:
-        if not r["score"]["excluded"]:
+        if not r["score"]["excluded"] and not (agent_ended_only and r["status"] in SERVICE):
             by[r["family_id"]].append(float(r["score"]["return"]))
     return {f: statistics.fmean(v) for f, v in by.items()}
 
@@ -117,7 +133,9 @@ def compare_experiment(experiment_ref, resamples=10000) -> dict:
     per_arm = {arm: metrics([r for r in rows if r["arm"] == arm]) for arm in arms}
     fam = {arm: family_values([r for r in rows if r["arm"] == arm]) for arm in arms}
     comps = {c["name"]: {"a": c["a"], "b": c["b"], **paired(fam.get(c["a"], {}), fam.get(c["b"], {}), resamples)} for c in exp.get("comparisons", [])}
+    fam2 = {arm: family_values([r for r in rows if r["arm"] == arm], agent_ended_only=True) for arm in arms}
+    comps2 = {c["name"]: {"a": c["a"], "b": c["b"], **paired(fam2.get(c["a"], {}), fam2.get(c["b"], {}), resamples)} for c in exp.get("comparisons", [])}
     return {"schema_version": "1.0", "artifact_id": f"comparison-{exp_dir.name}", "protocol_id": exp.get("protocol_id"),
-            "source_sha": exp.get("source_sha"), "arms": per_arm, "paired_by_family": comps,
+            "source_sha": exp.get("source_sha"), "arms": per_arm, "paired_by_family": comps, "paired_by_family_agent_ended": comps2,
             "families": len({r["family_id"] for r in rows}), "episodes": len({r["episode_key"] for r in rows}), "attempts": len(rows),
             "note": "Rescored by the reviewer's reference scorer; not an official score. live=false attempts are recordings or local policies, not live model calls."}

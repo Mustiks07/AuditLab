@@ -66,8 +66,12 @@ class ValidatorControls(unittest.TestCase):
         return validate_candidate(d, adapter=ja, work=d.parent / (d.name + ".v"))
 
     def test_genuine_pair_passes(self):
-        for v in ("err", "clean"):
-            self.assertEqual(self.validate(self.tmp / v)["status"], "passed", v)
+        self.assertEqual(self.validate(self.tmp / "err")["status"], "passed")
+        # the clean variant is derived from the source book: it has no provenance, so P4 and P10 are
+        # honestly not_checked (protocol independent-assurance-2.0) and every other check passes
+        r = self.validate(self.tmp / "clean")
+        self.assertEqual(r["status"], "not_checked")
+        self.assertEqual({k for k, c in r["checks"].items() if c["status"] != "passed"}, {"reproducible_generation", "mutation_declared"})
 
     def test_hidden_document_is_a_task_defect(self):
         d = self.copy("hidden")
