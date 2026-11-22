@@ -22,8 +22,9 @@
 - Этот обзор: [PR #68](https://github.com/Mustiks07/AuditLab/pull/68), ветка
   `review/competitors-refresh-2026-11-22`.
 - Отдельный submission-аудит: [PR #69](https://github.com/Mustiks07/AuditLab/pull/69), SHA
-  `5baad3d69dc0e421c3da3835d33e65f27b6f3072`; на финальной сверке открыт, `verify` выполняется и
-  изменения не входят в `main`/RC5.
+  `5baad3d69dc0e421c3da3835d33e65f27b6f3072`; на финальной сверке открыт, CI
+  [45043703599](https://github.com/Mustiks07/AuditLab/actions/runs/45043703599) зелёный, изменения не
+  входят в `main`/RC5.
 - Полностью прочитаны: `README.md`, `docs/SPEC.md`, `docs/INTERFACES.md`,
   `docs/GENESIS_ADAPTER.md`, `docs/release/{READINESS,VALIDATION,ACCEPTANCE_MAPPING,
   CANDIDATE_PUBLICATION,GENERALIZATION,MEASUREMENT_SEMANTICS,PR_REVIEW}.md`, offline-инструкции,
