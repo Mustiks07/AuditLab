@@ -1,0 +1,119 @@
+{
+ "repo": "repo",
+ "rows": {
+  "C01_reset_pair_json": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C02_first_observation": {
+   "status": "passed",
+   "detail": "['manifest', 'policy', 'remaining_steps', 'task']"
+  },
+  "C03_manifest_fields": {
+   "status": "passed",
+   "detail": "[]"
+  },
+  "C04_step_tuple_types": {
+   "status": "passed",
+   "detail": "pages=10"
+  },
+  "C05_pagination_complete": {
+   "status": "passed",
+   "detail": "rows=482 pages=10 dup=0"
+  },
+  "C06_stable_cursor": {
+   "status": "passed",
+   "detail": ""
+  },
+  "C09_calculator_decimal": {
+   "status": "passed",
+   "detail": "0.3"
+  },
+  "C10_calculator_rejects_code": {
+   "status": "passed",
+   "detail": "{'code': 'calc_error', 'message': 'unsupported character'}"
+  },
+  "C11_unknown_id_bounded_error": {
+   "status": "passed",
+   "detail": "({'code': 'not_found', 'message': 'no such id: ZZ-NOT-A-REAL-ID-9q'}, 84, 85)"
+  },
+  "C13_unknown_action_costs_step": {
+   "status": "passed",
+   "detail": "({'code': 'unknown_tool', 'message': 'unknown tool'}, 83)"
+  },
+  "C15_submit_terminates": {
+   "status": "passed",
+   "detail": "(True, False, {'accepted': True})"
+  },
+  "C19_closed_reward_zero": {
+   "status": "passed",
+   "detail": "0.0"
+  },
+  "C15b_after_finish_no_change": {
+   "status": "passed",
+   "detail": "({'code': 'episode_over', 'message': 'episode is over; call reset'}, 0.0, True, False)"
+  },
+  "C16_submit_as_action_100": {
+   "status": "passed",
+   "detail": "(True, False, None)"
+  },
+  "C17_100_actions_truncate": {
+   "status": "passed",
+   "detail": "(99, False, True)"
+  },
+  "C20_no_truth_words_in_policy_channel": {
+   "status": "passed",
+   "detail": "[]"
+  },
+  "R1_oracle_full_credit": {
+   "status": "passed",
+   "detail": "{'tp': 3, 'fp': 0, 'fn': 0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'return': 0.98}"
+  },
+  "R2_silence_on_errors": {
+   "status": "passed",
+   "detail": "{'tp': 0, 'fp': 0, 'fn': 3, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0}"
+  },
+  "R5_duplicate_is_fp": {
+   "status": "passed",
+   "detail": "{'tp': 3, 'fp': 1, 'fn': 0, 'precision': 0.75, 'recall': 1.0, 'f1': 0.8571428571428571, 'return': 0.6942857142857142}"
+  },
+  "R8_amount_plus_one_is_fp": {
+   "status": "passed",
+   "detail": "{'tp': 0, 'fp': 1, 'fn': 3, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0}"
+  },
+  "M04_unknown_extra_evidence_is_fp": {
+   "status": "passed",
+   "detail": "{'tp': 0, 'fp': 1, 'fn': 3, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0}"
+  },
+  "M06_currency_exact_string": {
+   "status": "passed",
+   "detail": "{'tp': 0, 'fp': 1, 'fn': 3, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0}"
+  },
+  "M09_bool_amount_invalid": {
+   "status": "passed",
+   "detail": "{'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0}"
+  },
+  "X07_unknown_type_is_fp_not_invalid": {
+   "status": "passed",
+   "detail": "{'tp': 0, 'fp': 1, 'fn': 3, 'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'return': -1.0}"
+  },
+  "R18_31_findings_invalid": {
+   "status": "passed",
+   "detail": "{'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0}"
+  },
+  "R20_explanation_1001_invalid": {
+   "status": "passed",
+   "detail": "{'tp': None, 'fp': None, 'fn': None, 'precision': None, 'recall': None, 'f1': None, 'return': -1.0}"
+  }
+ },
+ "notes": [],
+ "import_s": 0.04,
+ "generate_errors": [],
+ "episode_issues": 3,
+ "ledger_rows_seen": 482,
+ "summary": {
+  "passed": 26,
+  "failed": 0,
+  "not_checked": 0
+ }
+}

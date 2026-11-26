@@ -1,0 +1,54 @@
+[PASS] unit tests — 568 tests, 0 failures, 0 errors
+[PASS] data & truth verifier — 200/200 episodes valid (balanced journals, correct pre-injection books, truth == recomputed discrepancies)
+
+policy                P      R     F1   return  steps  time_s  exp_ret*
+random            0.000  0.000  0.000   -0.807   31.0   0.020    -0.807
+naive_reconcile   0.163  0.667  0.261   -0.529   17.5   0.020    -0.560
+reconcile         1.000  1.000  1.000    0.956   22.8   0.018     0.956
+flag_all          0.000  0.000  0.000   -1.000    3.8   0.010    -1.000
+oracle            1.000  1.000  1.000    1.000    1.0   0.009     1.000
+(dev split, 10 episodes; P/R/F1 micro-averaged; return/steps/time means; *exp_ret = experimental materiality-weighted reward, reported separately)
+
+[PASS] oracle reaches the maximum reward
+[PASS] flag-all attack is penalised — mean return -1.000
+[PASS] random explorer stays below oracle
+
+policy                P      R     F1   return  steps  time_s  exp_ret*
+random            0.000  0.000  0.000   -1.000   32.2   0.014    -1.000
+naive_reconcile   0.121  0.609  0.201   -0.653   16.5   0.015    -0.757
+reconcile         1.000  1.000  1.000    0.959   21.2   0.015     0.959
+flag_all          0.000  0.000  0.000   -1.000    3.6   0.012    -1.000
+oracle            1.000  1.000  1.000    1.000    1.0   0.009     1.000
+(eval_example split, 20 episodes; P/R/F1 micro-averaged; return/steps/time means; *exp_ret = experimental materiality-weighted reward, reported separately)
+
+[PASS] oracle reaches the maximum reward
+[PASS] flag-all attack is penalised — mean return -1.000
+[PASS] random explorer stays below oracle
+[PASS] paired checks (replay + relabel/permute) — 20/20 pairs pass; replay: reconcile, random; relabel: translated oracle answer stays full, oracle/reconcile rewards unchanged
+[PASS] out-of-process eval run — policy saw no reward/truth; 2 results in the grader log
+    random_explorer  P 0.000  R 0.000  F1 0.000  return -1.000  steps 33.0  max time 0.08 s
+    reconcile        P 1.000  R 1.000  F1 1.000  return 0.959  steps 21.3  max time 0.09 s
+    flag_all         P 0.000  R 0.000  F1 0.000  return -1.000  steps 3.6  max time 0.07 s
+    oracle           P 1.000  R 1.000  F1 1.000  return 1.000  steps 1.0  max time 0.02 s
+[PASS] jury flow: oracle reaches the maximum reward
+[PASS] jury flow: reconcile solves D01-D20 from the records
+[PASS] jury flow: flag-all and random are penalised
+[PASS] jury flow: every episode within the 60 s limit — 20 scenarios x 4 policies through judge_adapter, policies in their own process
+[PASS] hard-mode verifier — 50/50 hard episodes valid
+
+policy                P      R     F1   return  steps  time_s  exp_ret*
+random            0.000  0.000  0.000   -0.806   33.1   0.037    -0.806
+naive_reconcile   0.101  0.609  0.173   -0.725   33.1   0.043    -0.789
+reconcile         0.667  0.870  0.755    0.293   43.0   0.059     0.081
+reconcile_hard    1.000  1.000  1.000    0.916   43.0   0.041     0.916
+flag_all          0.000  0.000  0.000   -1.000    3.8   0.026    -1.000
+oracle            1.000  1.000  1.000    1.000    1.0   0.025     1.000
+(hard mode, configs/eval_hard.json, 20 episodes; same columns as above)
+
+[PASS] hard: oracle reaches the maximum reward
+[PASS] hard: solvable from the records — reconcile_hard F1 1.000
+[PASS] hard: default rules no longer suffice — reconcile F1 0.755
+[PASS] hard: flag-all attack is penalised
+[PASS] paired checks (hard mode) (replay + relabel/permute) — 20/20 pairs pass; replay: reconcile_hard, random; relabel: translated oracle answer stays full, oracle/reconcile_hard rewards unchanged
+
+ALL CHECKS PASSED in 162.7 s

@@ -1,0 +1,106 @@
+{
+ "repo": "repo",
+ "episodes": [
+  {
+   "seed": 11,
+   "issues": 3,
+   "affected_ids_not_renamed": 0,
+   "reset_ok": true,
+   "original": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "transformed": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "status": "passed"
+  },
+  {
+   "seed": 12,
+   "issues": 4,
+   "affected_ids_not_renamed": 0,
+   "reset_ok": true,
+   "original": {
+    "tp": 4,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "transformed": {
+    "tp": 4,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "status": "passed"
+  },
+  {
+   "seed": 13,
+   "issues": 2,
+   "affected_ids_not_renamed": 0,
+   "reset_ok": true,
+   "original": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "transformed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "status": "passed"
+  },
+  {
+   "seed": 14,
+   "issues": 6,
+   "affected_ids_not_renamed": 0,
+   "reset_ok": true,
+   "original": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "transformed": {
+    "tp": 6,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "status": "passed"
+  },
+  {
+   "seed": 15,
+   "issues": 2,
+   "affected_ids_not_renamed": 0,
+   "reset_ok": true,
+   "original": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "transformed": {
+    "tp": 2,
+    "fp": 0,
+    "fn": 0,
+    "return": 0.98
+   },
+   "status": "passed"
+  }
+ ],
+ "notes": [],
+ "summary": {
+  "passed": 5,
+  "failed": 0,
+  "not_checked": 0
+ }
+}
